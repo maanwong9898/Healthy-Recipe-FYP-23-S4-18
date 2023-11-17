@@ -4,6 +4,7 @@ import React from "react";
 import { useRouter } from "next/navigation";
 
 // Mock data for frontend to test the layout
+// need to fetch data from backend (database) in the future
 const images = [
   "https://pngimg.com/d/pasta_PNG88.png",
   "https://static.vecteezy.com/system/resources/previews/017/745/762/original/hainanese-chicken-rice-served-on-a-plate-with-soup-free-png.png",
@@ -32,8 +33,6 @@ const Home = () => {
           Redirect to recipes
         </button>
       </div>
-
-      <div>The layout inside Homepage page</div>
     </div>
   );
 };

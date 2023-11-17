@@ -1,7 +1,9 @@
-// pages/sysAdmin/index.tsx
 import React from "react";
 import SysAdminLayout from "./layout";
 import Link from "next/link";
+
+// home page for system admin
+// router path: /sysAdmin
 
 const AdminPage = () => {
   return (

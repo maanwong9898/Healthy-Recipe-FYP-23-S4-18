@@ -1,4 +1,4 @@
-// components/Header.tsx
+// components/Header.jsx
 "use client";
 import React from "react";
 import Link from "next/link";
@@ -8,7 +8,7 @@ const Header = () => {
     <>
       <header className="bg-purple-300 p-8">
         <nav className="flex justify-between items-center w-[92%] mx-auto">
-          <div className="text-2xl">Healthy recipe</div>
+          <div className="text-2xl font-bold">Healthy recipe</div>
           <div className="nav-links duration-500 md:static absolute md:min-h-fit min-h-[60vh] left-0 top-[-100%] md:w-auto  w-full flex items-center px-5">
             <ul className="flex md:flex-row flex-col md:items-center md:gap-2">
               <li>
@@ -67,7 +67,7 @@ const Header = () => {
             <Link href="/userLogin">
               <button
                 type="button"
-                className="text-white bg-gradient-to-br from-red-500 to-yellow-500 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium rounded-none text-sm px-5 py-2.5 text-center me-2 mb-2"
+                className="text-white bg-gradient-to-br from-red-500 to-yellow-500 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2"
               >
                 Log In
               </button>

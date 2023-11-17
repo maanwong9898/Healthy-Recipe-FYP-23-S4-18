@@ -44,42 +44,45 @@ const userLogin = () => {
 
   return (
     <div>
-      <p>Welcome to the Login page</p>
-
       <div className="flex flex-col items-center justify-center h-screen">
         <div className="w-full max-w-md bg-purple-300 rounded-xl shadow-md py-16 px-16">
-          <h2 className="text-[28px] font-bold text-white mb-6 text-center">
+          <h2 className="text-[28px] font-bold text-black mb-6 text-center">
             Login
           </h2>
-          <form className="flex flex-col">
-            <div className="flex space-x-8 mb-2">
+          <form className="flex flex-col items-center">
+            <div className="mb-2 w-full">
               <input
-                className="border-2 border-purple-500 rounded-md py-2 px-10"
+                className="border-2 border-purple-500 rounded-md py-2 px-10 w-full"
                 type="text"
                 placeholder="Username"
                 value={username}
                 onChange={(event) => setUsername(event.target.value)}
               />
             </div>
-            <div className="flex space-x-8 mb-2">
+            <div className="mb-2 w-full">
               <input
-                className="border-2 border-purple-500 rounded-md py-2 px-10"
-                type="password" // Set the type to "password" for a hidden input
+                className="border-2 border-purple-500 rounded-md py-2 px-10 w-full"
+                type="password"
                 placeholder="Password"
                 value={password}
                 onChange={(event) => setPassword(event.target.value)}
               />
             </div>
-            <div className="flex justify-center">
+            <div className="flex justify-center w-full">
               <button
                 className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full"
                 onClick={handleLogin}
               >
-                Login
+                Sign In
               </button>
             </div>
-            <div className="flex justify-center">
+            <div className="flex justify-center w-full">
               <p className="text-red-500 text-sm">{error}</p>
+            </div>
+            <div className="flex justify-center w-full">
+              <p className="text-purple-600 text-sm font-bold">
+                Dont have an account? Click Sign Up
+              </p>
             </div>
           </form>
         </div>

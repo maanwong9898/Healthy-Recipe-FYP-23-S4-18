@@ -7,9 +7,8 @@ import React from "react";
 function SysAdminLayout({ children }) {
   return (
     <>
-      {children}
       <UserNavigation />
-      <div>System admin layout page</div>
+      {children}
     </>
   );
 }

@@ -75,11 +75,6 @@ const Header = () => {
           </div>
         </nav>
       </header>
-
-      <style jsx>{`
-        /* Add any additional styles specific to the Header component here */
-        /* For example, you can add styles for the header, nav, etc. */
-      `}</style>
     </>
   );
 };

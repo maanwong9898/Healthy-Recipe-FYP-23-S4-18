@@ -1,6 +1,7 @@
 "use client";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+import Link from "next/link";
 
 // router path: /userLogin
 // mock data for testing
@@ -43,45 +44,51 @@ const userLogin = () => {
   };
 
   return (
-    <div>
+    <div className="bg-blue-900">
       <div className="flex flex-col items-center justify-center h-screen">
-        <div className="w-full max-w-md bg-purple-300 rounded-xl shadow-md py-16 px-16">
-          <h2 className="text-[28px] font-bold text-black mb-6 text-center">
-            Login
+        <div className="w-full max-w-md bg-blue-300 rounded-xl shadow-md py-16 px-16">
+          <h2 className="text-[28px] font-bold text-black mb-6">
+            Welcome Back
           </h2>
           <form className="flex flex-col items-center">
-            <div className="mb-2 w-full">
+            <div className="mb-5 w-full">
               <input
-                className="border-2 border-purple-500 rounded-md py-2 px-10 w-full"
+                className="border-1 border-blue-700 rounded-md py-2 px-4 w-full"
                 type="text"
                 placeholder="Username"
                 value={username}
-                onChange={(event) => setUsername(event.target.value)}
+                onChange={(e) => setUsername(e.target.value)}
               />
             </div>
-            <div className="mb-2 w-full">
+            <div className="mb-5 w-full">
               <input
-                className="border-2 border-purple-500 rounded-md py-2 px-10 w-full"
+                className="border-1 border-blue-700 rounded-md py-2 px-4 w-full"
                 type="password"
                 placeholder="Password"
                 value={password}
-                onChange={(event) => setPassword(event.target.value)}
+                onChange={(e) => setPassword(e.target.value)}
               />
             </div>
-            <div className="flex justify-center w-full">
+            <div className="flex w-full">
               <button
-                className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full"
+                className="bg-blue-500 hover:bg-blue-700 text-white  rounded-md font-bold py-2 px-4 w-full"
                 onClick={handleLogin}
               >
-                Sign In
+                Sign In to Your Account
               </button>
             </div>
             <div className="flex justify-center w-full">
               <p className="text-red-500 text-sm">{error}</p>
             </div>
             <div className="flex justify-center w-full">
-              <p className="text-purple-600 text-sm font-bold">
-                Dont have an account? Click Sign Up
+              <p className="text-[18px] font-light text-black-600 mt-6">
+                Don’t have an account yet?{" "}
+                <Link
+                  href="/"
+                  className="font-medium text-primary-600 hover:underline dark:text-primary-500"
+                >
+                  Sign up
+                </Link>
               </p>
             </div>
           </form>

@@ -2,6 +2,7 @@
 
 import React from "react";
 import { useRouter } from "next/navigation";
+import HomeNavBar from "./components/navigation/homeNavBar";
 
 // Mock data for frontend to test the layout
 // need to fetch data from backend (database) in the future
@@ -16,6 +17,7 @@ const Home = () => {
 
   return (
     <div>
+      <HomeNavBar />
       <div className="text-2xl">Recipes</div>
       <div className="flex">
         {images.map((image, index) => (

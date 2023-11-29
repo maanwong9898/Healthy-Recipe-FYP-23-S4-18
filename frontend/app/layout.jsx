@@ -14,7 +14,6 @@ const RootLayout = ({ children }) => {
   return (
     <html lang="en">
       <body>
-        <HomeNavBar />
         {children}
 
         <div>Root layout footer</div>

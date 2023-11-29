@@ -2,6 +2,7 @@
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import Link from "next/link";
+import HomeNavbar from "@/app/components/navigation/homeNavBar";
 
 // router path: /userLogin
 // mock data for testing
@@ -28,7 +29,7 @@ const userLogin = () => {
   const handleLogin = (event) => {
     event.preventDefault();
 
-    // Check if there is a user with the entered username
+    // Check if there is a user with the entered username (suppose to have login controller)
     const user = mockUsers.find((user) => user.username === username);
 
     // Check if username matches password
@@ -45,6 +46,7 @@ const userLogin = () => {
 
   return (
     <div className="bg-blue-900">
+      <HomeNavbar />
       <div className="flex flex-col items-center justify-center h-screen">
         <div className="w-full max-w-md bg-blue-300 rounded-xl shadow-md py-16 px-16">
           <h2 className="text-[28px] font-bold text-black mb-6">

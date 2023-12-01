@@ -13,11 +13,7 @@ export const metadata = {
 const RootLayout = ({ children }) => {
   return (
     <html lang="en">
-      <body>
-        {children}
-
-        <div>Root layout footer</div>
-      </body>
+      <body>{children}</body>
     </html>
   );
 };

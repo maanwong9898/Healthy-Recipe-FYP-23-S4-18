@@ -1,6 +1,7 @@
 // components/navigation/sysAdminNavBar/index.jsx
 "use client";
 import React, { useState, useRef } from "react";
+import { useRouter } from "next/navigation";
 import Link from "next/link";
 
 const DropdownMenu = () => {
@@ -23,6 +24,8 @@ const DropdownMenu = () => {
 };
 
 const SysAdminNavBar = () => {
+  const router = useRouter();
+
   const [isDropdownVisible, setDropdownVisible] = useState(false);
   const hideTimer = useRef(null);
 
@@ -37,6 +40,16 @@ const SysAdminNavBar = () => {
     hideTimer.current = setTimeout(() => {
       setDropdownVisible(false);
     }, 300);
+  };
+
+  const confirmAndLogout = () => {
+    console.log("logout");
+    // Clear user data from local storage
+    localStorage.removeItem("username");
+    localStorage.removeItem("profile");
+
+    // Redirect to the homepage
+    router.push("/");
   };
 
   return (
@@ -85,12 +98,12 @@ const SysAdminNavBar = () => {
             </Link>
           </div>
           <div className="ml-auto">
-            <Link
-              href="/userLogin"
+            <button
               className="bg-blue-800 text-white rounded-md px-3 py-2 text-sm font-bold"
+              onClick={confirmAndLogout}
             >
               Logout
-            </Link>
+            </button>
           </div>
         </div>
       </div>

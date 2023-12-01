@@ -34,9 +34,23 @@ const userLogin = () => {
 
     // Check if username matches password
     if (user && user.password === password) {
+      // Set username and profile in local storage
+      localStorage.setItem("username", user.username);
+      localStorage.setItem("profile", user.profile);
+
       if (user.profile === "registeredUser") {
+        console.log("registeredUser");
+        // print out the username and profile from local storage
+        console.log(localStorage.getItem("username"));
+        console.log(localStorage.getItem("profile"));
+
         router.push("/registeredUser");
       } else if (user.profile === "sysAdmin") {
+        console.log("sysAdmin");
+        // print out the username and profile from local storage
+        console.log(localStorage.getItem("username"));
+        console.log(localStorage.getItem("profile"));
+
         router.push("/sysAdmin");
       }
     } else {

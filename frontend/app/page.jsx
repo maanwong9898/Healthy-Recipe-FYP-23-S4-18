@@ -16,7 +16,7 @@ const Home = () => {
   const router = useRouter();
 
   return (
-    <div className="bg-blue-500 h-screen">
+    <div className="bg-blue-400 h-screen">
       <HomeNavBar />
       <div className="text-2xl font-bold">Recipes</div>
       {/* <div className="flex">

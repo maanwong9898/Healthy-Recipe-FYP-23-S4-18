@@ -28,13 +28,19 @@ const HomeNavbar = () => {
                 href="/"
                 className="text-blue-800 hover:bg-blue-900 hover:text-white rounded-md px-3 py-2 text-sm font-bold"
               >
-                Recipe
+                About Us
               </Link>
               <Link
                 href="/"
                 className="text-blue-800 hover:bg-blue-900 hover:text-white rounded-md px-3 py-2 text-sm font-bold"
               >
-                Meal Plan
+                Recipes
+              </Link>
+              <Link
+                href="/"
+                className="text-blue-800 hover:bg-blue-900 hover:text-white rounded-md px-3 py-2 text-sm font-bold"
+              >
+                Meal Plans
               </Link>
               <Link
                 href="/"
@@ -47,12 +53,6 @@ const HomeNavbar = () => {
                 className="text-blue-800 hover:bg-blue-900 hover:text-white rounded-md px-3 py-2 text-sm font-bold"
               >
                 Business Blog Post
-              </Link>
-              <Link
-                href="/"
-                className="text-blue-800 hover:bg-blue-900 hover:text-white rounded-md px-3 py-2 text-sm font-bold"
-              >
-                About Us
               </Link>
             </div>
             <div className="ml-auto">

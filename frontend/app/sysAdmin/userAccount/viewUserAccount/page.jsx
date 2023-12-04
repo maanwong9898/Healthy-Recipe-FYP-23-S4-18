@@ -1,7 +1,7 @@
 "use client";
 import React from "react";
 import Link from "next/link";
-// router path: /sysAdmin/viewUserAccount
+// router path: /sysAdmin/userAccount/viewUserAccount
 // this is used to view particular user account
 
 const ViewUserAccount = () => {

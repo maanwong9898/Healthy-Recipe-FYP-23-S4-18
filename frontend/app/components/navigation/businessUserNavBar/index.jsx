@@ -8,20 +8,17 @@ const DropdownMenu = () => {
     <div className="absolute left-0 top-10 w-48 rounded-md shadow-lg bg-white z-10">
       <ul>
         <li className="px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
-          View User Account
+          Create Blog Post
         </li>
         <li className="px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
-          Edit Account
-        </li>
-        <li className="px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
-          Another Option
+          View My Blog Posts
         </li>
       </ul>
     </div>
   );
 };
 
-const SysAdminNavBar = () => {
+const BusinessUserNavBar = () => {
   const router = useRouter();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
@@ -105,33 +102,21 @@ const SysAdminNavBar = () => {
               onMouseLeave={handleMouseLeave}
             >
               <span className="text-blue-800 hover:bg-blue-900 hover:text-white rounded-md px-3 py-2 text-sm font-bold cursor-pointer">
-                User Account
+                Business Blog Posts
               </span>
               {isDropdownVisible && <DropdownMenu />}
             </div>
             <Link
-              href="/sysAdmin/userProfile"
-              className="text-blue-800 hover:bg-blue-900 hover:text-white rounded-md px-3 py-2 text-sm font-bold"
-            >
-              User Profile
-            </Link>
-            <Link
-              href="/sysAdmin/foodCategory"
-              className="text-blue-800 hover:bg-blue-900 hover:text-white rounded-md px-3 py-2 text-sm font-bold"
-            >
-              Dietary Preferences
-            </Link>
-            <Link
-              href="/"
+              href="/businessUser/recipes"
               className="text-blue-800 hover:bg-blue-900 hover:text-white rounded-md px-3 py-2 text-sm font-bold"
             >
               Recipes
             </Link>
             <Link
-              href="/"
+              href="/businessUser/educationalContent"
               className="text-blue-800 hover:bg-blue-900 hover:text-white rounded-md px-3 py-2 text-sm font-bold"
             >
-              Business Blog Posts
+              Educational Content
             </Link>
             <button
               onClick={confirmAndLogout}
@@ -154,4 +139,4 @@ const SysAdminNavBar = () => {
   );
 };
 
-export default SysAdminNavBar;
+export default BusinessUserNavBar;

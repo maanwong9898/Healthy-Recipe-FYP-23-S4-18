@@ -14,9 +14,19 @@ const mockUsers = [
     profile: "registeredUser",
   },
   {
-    username: "user2",
-    password: "pw2",
+    username: "admin1",
+    password: "pw1",
     profile: "sysAdmin",
+  },
+  {
+    username: "business1",
+    password: "pw1",
+    profile: "businessUser",
+  },
+  {
+    username: "dietitian1",
+    password: "pw1",
+    profile: "dietitian",
   },
 ];
 
@@ -52,6 +62,20 @@ const userLogin = () => {
         console.log(localStorage.getItem("profile"));
 
         router.push("/sysAdmin");
+      } else if (user.profile === "businessUser") {
+        console.log("businessUser");
+        // print out the username and profile from local storage
+        console.log(localStorage.getItem("username"));
+        console.log(localStorage.getItem("profile"));
+
+        router.push("/businessUser");
+      } else if (user.profile === "dietitian") {
+        console.log("dietitian");
+        // print out the username and profile from local storage
+        console.log(localStorage.getItem("username"));
+        console.log(localStorage.getItem("profile"));
+
+        router.push("/dietitian");
       }
     } else {
       setError("Incorrect username or password"); // Set error message

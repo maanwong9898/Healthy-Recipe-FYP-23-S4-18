@@ -12,79 +12,64 @@ const mockUsers = [
     username: "user1",
     password: "pw1",
     profile: "Registered User",
+    email: "user1@gmail.com",
+    createdDate: "2023-10-01",
+    status: "Active",
+  },
+  {
+    username: "admin1",
+    password: "pw1",
+    profile: "System Admin",
+    email: "admin1@gmail.com",
+    createdDate: "2023-10-01",
+    status: "Active",
+  },
+  {
+    username: "business1",
+    password: "pw1",
+    profile: "Business User",
+    email: "business1@gmail.com",
+    createdDate: "2023-10-01",
+    status: "Active",
+  },
+  {
+    username: "dietitian1",
+    password: "pw1",
+    profile: "Dietitian",
+    email: "dietitian1@gmail.com",
+    createdDate: "2023-10-01",
     status: "Active",
   },
   {
     username: "user2",
-    password: "pw2",
+    password: "pw1",
+    profile: "Registered User",
+    email: "user1@gmail.com",
+    createdDate: "2023-12-01",
+    status: "Inactive",
+  },
+  {
+    username: "admin2",
+    password: "pw1",
     profile: "System Admin",
+    email: "admin1@gmail.com",
+    createdDate: "2023-12-01",
     status: "Active",
   },
   {
-    username: "user3",
-    password: "pw2",
-    profile: "System Admin",
-    status: "Active",
-  },
-  {
-    username: "user4",
-    password: "pw2",
-    profile: "Dietitian",
-    status: "Active",
-  },
-  {
-    username: "user5",
-    password: "pw2",
+    username: "business2",
+    password: "pw1",
     profile: "Business User",
+    email: "business1@gmail.com",
+    createdDate: "2023-12-01",
     status: "Active",
   },
-  ,
   {
-    username: "user6",
-    password: "pw2",
-    profile: "System Admin",
-    status: "Inactive",
-  },
-  {
-    username: "user7",
-    password: "pw2",
-    profile: "System Admin",
-    status: "Inactive",
-  },
-  {
-    username: "user8",
-    password: "pw2",
+    username: "dietitian2",
+    password: "pw1",
     profile: "Dietitian",
-    status: "Active",
-  },
-  {
-    username: "user9",
-    password: "pw2",
-    profile: "Business User",
-    status: "Active",
-  },
-  {
-    username: "user10",
-    password: "pw2",
-    profile: "System Admin",
-    status: "Inactive",
-  },
-  {
-    username: "user11",
-    password: "pw2",
-    profile: "System Admin",
-    status: "Inactive",
-  },
-  {
-    username: "user12",
-    password: "pw2",
-    profile: "Dietitian",
-    status: "Active",
-  },
-  {
-    username: "user13",
-    password: "pw2",
-    profile: "Business User",
+    email: "dietitian1@gmail.com",
+    createdDate: "2023-12-01",
     status: "Active",
   },
 ];
@@ -96,74 +81,65 @@ const UserAccount = () => {
         User Account List
       </h1>
       <div className="overflow-x-auto">
-        <ul className="min-w-full rounded-lg border-2">
-          <li className="flex flex-row sm:flex-row bg-blue-600 font-semibold text-white px-3 py-2 rounded-t-lg">
-            <div className="w-full sm:w-1/6 text-lg sm:text-xl mb-2 sm:mb-0 text-center sm:text-left">
-              Username
-            </div>
-            <div className="w-full sm:w-1/6 text-lg sm:text-xl mb-2 sm:mb-0 text-center sm:text-left">
-              Profile
-            </div>
-            <div className="w-full sm:w-1/6 text-lg sm:text-xl mb-2 sm:mb-0 text-center sm:text-left">
-              Status
-            </div>
-            <div className="w-full sm:w-3/6 mb-2 sm:mb-0"></div>
-          </li>
-          {mockUsers.map((user, index) => (
-            <li
-              key={index}
-              className="flex flex-row sm:flex-row justify-between items-center bg-white px-3 py-2 rounded border-b border-blue dark:border-blue-600"
-            >
-              <div className="w-full sm:w-1/6 text-sm mb-2 sm:mb-0 text-center sm:text-left">
-                {user.username}
-              </div>
-              <div className="w-full sm:w-1/6 text-sm mb-2 sm:mb-0 text-center sm:text-left">
-                {user.profile}
-              </div>
-              <div className="w-full sm:w-1/6 text-sm mb-2 sm:mb-0 text-center sm:text-left">
-                <span
-                  className={`rounded-full px-3 py-1 text-xs font-semibold
-                  ${
-                    user.status === "Active"
-                      ? "bg-green-200 text-green-900"
-                      : "bg-red-200 text-red-900"
-                  }
-                  `}
-                >
-                  {user.status}
-                </span>
-              </div>
-              <div className="w-full sm:w-3/6 flex flex-wrap justify-center sm:justify-end gap-2 sm:gap-8 font-bold">
-                <Link
-                  href={`/sysAdmin/userAccount/viewUserAccount/${user.username}`}
-                >
-                  <button
-                    type="button"
-                    className="text-white bg-gradient-to-br from-purple-600 to-blue-500 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 rounded-lg text-sm px-5 py-2.5 text-center"
+        <table className="min-w-full rounded-lg border-2">
+          <thead className="bg-blue-600 font-semibold text-white">
+            <tr>
+              <th className="px-3 py-2 text-left">Username</th>
+              <th className="px-3 py-2 text-left">Profile Type</th>
+              <th className="px-3 py-2 text-left">Email</th>
+              <th className="px-3 py-2 text-left">Created Date</th>
+              <th className="px-3 py-2 text-left">Status</th>
+              <th className="px-3 py-2 text-left"></th>
+            </tr>
+          </thead>
+          <tbody>
+            {mockUsers.map((user, index) => (
+              <tr
+                key={index}
+                className="bg-white border-b border-blue dark:border-blue-600"
+              >
+                <td className="px-3 py-2 text-sm text-center sm:text-left">
+                  {user.username}
+                </td>
+                <td className="px-3 py-2 text-sm text-center sm:text-left">
+                  {user.profile}
+                </td>
+                <td className="px-3 py-2 text-sm text-center sm:text-left">
+                  {user.email}
+                </td>
+                <td className="px-3 py-2 text-sm text-center sm:text-left">
+                  {user.createdDate}
+                </td>
+                <td className="px-3 py-2 text-sm text-center sm:text-left">
+                  <span
+                    className={`rounded-full px-3 py-1 text-xs font-semibold ${
+                      user.status === "Active"
+                        ? "bg-green-200 text-green-900"
+                        : "bg-red-200 text-red-900"
+                    }`}
                   >
-                    View
-                  </button>
-                </Link>
-                <Link href={`/sysAdmin/userAccount/${user.username}`}>
-                  <button
-                    type="button"
-                    className="text-white bg-gradient-to-br from-purple-600 to-blue-500 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 rounded-lg text-sm px-5 py-2.5 text-center"
+                    {user.status}
+                  </span>
+                </td>
+                <td className="px-3 py-2 flex flex-wrap justify-center sm:justify-start gap-2">
+                  <Link
+                    href={`/sysAdmin/userAccount/viewUserAccount/${user.username}`}
                   >
-                    Edit
-                  </button>
-                </Link>
-                <Link href={`/sysAdmin/userAccount/${user.username}`}>
-                  <button
-                    type="button"
-                    className="text-white bg-gradient-to-br from-red-600 to-red-600 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 rounded-lg text-sm px-5 py-2.5 text-center"
-                  >
-                    Suspend
-                  </button>
-                </Link>
-              </div>
-            </li>
-          ))}
-        </ul>
+                    <button className="text-white bg-gradient-to-br from-purple-600 to-blue-500 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 rounded-lg text-sm px-5 py-2.5 ml-7 mr-7 text-center">
+                      View
+                    </button>
+                  </Link>
+
+                  <Link href={`/sysAdmin/userAccount/suspend/${user.username}`}>
+                    <button className="text-white bg-gradient-to-br from-red-600 to-red-700 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 rounded-lg text-sm px-5 py-2.5 ml-7 mr-7 text-center">
+                      Suspend
+                    </button>
+                  </Link>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
       </div>
     </div>
   );

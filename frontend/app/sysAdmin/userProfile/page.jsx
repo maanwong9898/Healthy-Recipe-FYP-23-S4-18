@@ -4,6 +4,8 @@ import React from "react";
 import Link from "next/link";
 import { useState, useEffect } from "react";
 
+// can be tested
+// the page is for system admin to view all user profiles
 // router path: /sysAdmin/userProfile
 
 // Mock data for frontend to test the layout

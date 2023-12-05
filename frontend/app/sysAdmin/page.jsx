@@ -27,7 +27,7 @@ const AdminHomePage = () => {
   };
 
   const handleVerifyBusinessUserAccount = () => {
-    router.push("/sysAdmin/businessUserAccount");
+    router.push("/sysAdmin/verifyBusinessUser");
   };
 
   // The button under user profile management will redirect to corresponding page

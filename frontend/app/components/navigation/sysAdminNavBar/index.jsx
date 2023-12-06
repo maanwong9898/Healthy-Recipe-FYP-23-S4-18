@@ -11,7 +11,9 @@ const DropdownMenu = () => {
           <Link href="/sysAdmin/userAccount">View User Account</Link>
         </li>
         <li className="px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
-          Verify Business User Account
+          <Link href="/sysAdmin/verifyBusinessUser">
+            Verify Business User Acccount
+          </Link>
         </li>
       </ul>
     </div>

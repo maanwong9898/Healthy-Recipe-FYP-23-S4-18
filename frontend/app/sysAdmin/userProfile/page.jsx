@@ -65,11 +65,11 @@ const UserProfile = () => {
 
   return (
     <div className="bg-blue-400 min-h-screen flex flex-col justify-center items-center py-5">
-      <h1 className="text-2xl text-blue-800 font-bold mb-2 text-center sm:text-left">
+      <h1 className="text-2xl text-blue-800 font-bold mb-4 text-center sm:text-left">
         User Profile List
       </h1>
       <div className="overflow-x-auto w-full max-w-md">
-        <table className="w-full rounded-lg">
+        <table className="w-full rounded border-blue-900 border-2">
           <thead className="bg-blue-600 font-semibold text-white">
             <tr>
               <th className="px-2 py-1 mb-3 text-center sm:text-left">

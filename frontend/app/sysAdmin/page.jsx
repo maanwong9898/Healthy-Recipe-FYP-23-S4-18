@@ -37,7 +37,7 @@ const AdminHomePage = () => {
 
   // The button under dietary preferences management will redirect to corresponding page
   const handleCreateDietaryPreferences = () => {
-    router.push("/sysAdmin/dietaryPreferences");
+    router.push("/sysAdmin/createDietaryPreferences");
   };
 
   // The button under business blog post and recipes related will redirect to corresponding page

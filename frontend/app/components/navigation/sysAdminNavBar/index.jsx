@@ -8,13 +8,10 @@ const DropdownMenu = () => {
     <div className="absolute left-0 top-10 w-48 rounded-md shadow-lg bg-white z-10">
       <ul>
         <li className="px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
-          View User Account
+          <Link href="/sysAdmin/userAccount">View User Account</Link>
         </li>
         <li className="px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
-          Edit Account
-        </li>
-        <li className="px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
-          Another Option
+          Verify Business User Account
         </li>
       </ul>
     </div>
@@ -112,7 +109,7 @@ const SysAdminNavBar = () => {
               User Profile
             </Link>
             <Link
-              href="/sysAdmin/foodCategory"
+              href="/sysAdmin/createFoodCategory"
               className="text-blue-800 hover:bg-blue-900 hover:text-white rounded-md px-3 py-2 text-sm font-bold"
             >
               Dietary Preferences

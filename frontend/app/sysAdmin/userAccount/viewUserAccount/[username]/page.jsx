@@ -52,7 +52,7 @@ const ViewUserAccount = ({ params }) => {
         <div className="mt-8 space-y-6">
           <div className="rounded-md shadow-sm space-y-3">
             <div>
-              <label className="block text-sm font-medium text-gray-700">
+              <label className="block text-lg font-medium mb-2 text-gray-700">
                 Username:
               </label>
               <input
@@ -62,11 +62,11 @@ const ViewUserAccount = ({ params }) => {
                 autoComplete="username"
                 value={userAccount ? userAccount.username : ""}
                 readOnly
-                className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
+                className="border-1 border-blue-700 rounded-md py-2 px-4 w-full"
               />
             </div>
             <div>
-              <label className="block text-sm font-medium text-gray-700">
+              <label className="block text-lg font-medium text-gray-700">
                 Name:
               </label>
               <input
@@ -76,11 +76,11 @@ const ViewUserAccount = ({ params }) => {
                 autoComplete="name"
                 value={userAccount ? userAccount.name : ""}
                 readOnly
-                className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
+                className="border-1 border-blue-700 rounded-md py-2 px-4 w-full"
               />
             </div>
             <div>
-              <label className="block text-sm font-medium text-gray-700">
+              <label className="block text-lg font-medium text-gray-700">
                 User Profile:
               </label>
               <input
@@ -90,12 +90,12 @@ const ViewUserAccount = ({ params }) => {
                 autoComplete="userProfile"
                 value={userAccount ? userAccount.userProfile : ""}
                 readOnly
-                className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
+                className="border-1 border-blue-700 rounded-md py-2 px-4 w-full"
               />
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-gray-700">
+              <label className="block text-lg font-medium text-gray-700">
                 Email Address:
               </label>
               <input
@@ -105,11 +105,11 @@ const ViewUserAccount = ({ params }) => {
                 autoComplete="email"
                 value={userAccount ? userAccount.email : ""}
                 readOnly
-                className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
+                className="border-1 border-blue-700 rounded-md py-2 px-4 w-full"
               />
             </div>
             <div>
-              <label className="block text-sm font-medium text-gray-700">
+              <label className="block text-lg font-medium text-gray-700">
                 Date of Birth:
               </label>
               <input
@@ -118,11 +118,11 @@ const ViewUserAccount = ({ params }) => {
                 id="dob"
                 value={userAccount ? userAccount.dob : ""}
                 readOnly
-                className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
+                className="border-1 border-blue-700 rounded-md py-2 px-4 w-full"
               />
             </div>
             <div>
-              <label className="block text-sm font-medium text-gray-700">
+              <label className="block text-lg font-medium text-gray-700">
                 Date of Account Creation:
               </label>
               <input
@@ -131,7 +131,7 @@ const ViewUserAccount = ({ params }) => {
                 id="createdDate"
                 value={userAccount ? userAccount.createdDate : ""}
                 readOnly
-                className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
+                className="border-1 border-blue-700 rounded-md py-2 px-4 w-full"
               />
             </div>
           </div>

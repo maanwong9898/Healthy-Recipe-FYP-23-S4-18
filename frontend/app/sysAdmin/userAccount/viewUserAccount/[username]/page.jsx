@@ -13,7 +13,7 @@ const mockUserAccount = {
   username: "admin111",
   password: "password",
   email: "mike@gmail.com",
-  isActive: true,
+  isActive: false,
   userProfile: "System Admin",
   createdDate: "2019-01-01",
   dob: "1990-01-01",
@@ -137,8 +137,11 @@ const ViewUserAccount = ({ params }) => {
           </div>
           <div>
             <button
-              type="button"
-              className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500"
+              onClick={() => handleSuspendAccount(user.username)}
+              disabled={!userAccount.isActive} // This will disable the button if user.isActive is false
+              className={`group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 ${
+                !userAccount.isActive ? "opacity-50 cursor-not-allowed" : ""
+              }`}
             >
               Suspend Account
             </button>

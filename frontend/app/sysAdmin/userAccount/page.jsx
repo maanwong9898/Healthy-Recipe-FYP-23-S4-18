@@ -9,98 +9,101 @@ import { useState, useEffect } from "react";
 
 // Mock data for frontend to test the layout
 // need to fetch data from backend (database) in the future
-const mockUserAccountsList = [
-  {
-    id: "3104d2c8-d3d7-41c4-a982-5999a81d7450",
-    username: "admin111",
-    password: "password",
-    email: "mike@gmail.com",
-    isActive: true,
-    userProfile: "System Admin",
-    createdDate: "2019-01-01",
-  },
-  {
-    id: "52be9dca-d141-4eca-9c4d-daed894197c1",
-    username: "user111",
-    password: "password",
-    email: "will@gmail.com",
-    isActive: true,
-    userProfile: "Business User",
-    createdDate: "2022-01-01",
-  },
-  {
-    id: "ede716b9-75da-428d-b163-cc2a62ec1736",
-    username: "business111",
-    password: "password",
-    email: "peter@gmail.com",
-    isActive: true,
-    userProfile: "Dietitian",
-    createdDate: "2022-01-01",
-  },
-  {
-    id: "bd637956-d38b-418d-ad11-60ef002db03b",
-    username: "dietitian111",
-    password: "password",
-    email: "jack@gmail.com",
-    isActive: true,
-    userProfile: "Registered User",
-    createdDate: "2022-01-01",
-  },
-];
+// const mockUserAccountsList = [
+//   {
+//     id: "3104d2c8-d3d7-41c4-a982-5999a81d7450",
+//     username: "admin111",
+//     password: "password",
+//     email: "mike@gmail.com",
+//     isActive: true,
+//     userProfile: "System Admin",
+//     createdDate: "2019-01-01",
+//   },
+//   {
+//     id: "52be9dca-d141-4eca-9c4d-daed894197c1",
+//     username: "user111",
+//     password: "password",
+//     email: "will@gmail.com",
+//     isActive: true,
+//     userProfile: "Business User",
+//     createdDate: "2022-01-01",
+//   },
+//   {
+//     id: "ede716b9-75da-428d-b163-cc2a62ec1736",
+//     username: "business111",
+//     password: "password",
+//     email: "peter@gmail.com",
+//     isActive: true,
+//     userProfile: "Dietitian",
+//     createdDate: "2022-01-01",
+//   },
+//   {
+//     id: "bd637956-d38b-418d-ad11-60ef002db03b",
+//     username: "dietitian111",
+//     password: "password",
+//     email: "jack@gmail.com",
+//     isActive: true,
+//     userProfile: "Registered User",
+//     createdDate: "2022-01-01",
+//   },
+// ];
 
 const UserAccount = () => {
-  // const router = useRouter();
-  // const [userAccounts, setUserAccounts] = useState([]);
+  const router = useRouter();
+  const [userAccounts, setUserAccounts] = useState([]);
 
-  // // the url will be changed to the backend url
-  // const viewUserAccount = async () => {
-  //   try {
-  //     const response = await fetch(
-  //       "http://localhost:8080/api/userAccount/readAllUserAccounts"
-  //     );
-  //     if (response.ok) {
-  //       const data = await response.json();
-  //       // write the data into console for debugging
-  //       console.log("data from backend");
-  //       console.log(data);
-  //       setUserAccounts(data);
-  //     } else {
-  //       console.error("Failed to fetch user profile list");
-  //     }
-  //   } catch (error) {
-  //     console.error("Error fetching data", error);
-  //   }
-  // };
+  // the url will be changed to the backend url
+  const viewUserAccount = async () => {
+    try {
+      const response = await fetch(
+        "http://localhost:8080/api/userAccount/readAllUserAccounts"
+      );
+      if (response.ok) {
+        const data = await response.json();
+        // write the data into console for debugging
+        console.log("data from backend");
+        console.log(data);
+        setUserAccounts(data);
+      } else {
+        console.error("Failed to fetch user profile list");
+      }
+    } catch (error) {
+      console.error("Error fetching data", error);
+    }
+  };
 
-  // useEffect(() => {
-  //   viewUserAccount();
-  // }, []);
+  useEffect(() => {
+    viewUserAccount();
+  }, []);
 
-  // const handleViewClick = (username, profileType) => {
-  //   // Make sure profileType is being received correctly. You might want to log it.
-  //   console.log(`Profile Type: ${profileType}`); // Check if profileType is correct
+  const handleViewClick = (username, profileType) => {
+    // Make sure profileType is being received correctly. You might want to log it.
+    console.log(`Profile Type: ${profileType}`); // Check if profileType is correct
 
-  //   let userTypePath = "";
-  //   switch (profileType) {
-  //     case "Registered User":
-  //       userTypePath = "registeredUser";
-  //       break;
-  //     case "Business User":
-  //       userTypePath = "businessUser";
-  //       break;
-  //     case "System Admin":
-  //       userTypePath = "sysAdmin";
-  //       break;
-  //     case "Dietitian":
-  //       userTypePath = "dietitian";
-  //       break;
-  //     default:
-  //       console.error(`Unknown profile type: ${profileType}`);
-  //       return; // Exit the function if profile type is unknown
-  //   }
-  //   const routePath = `/${userTypePath}/userAccount/viewUserAccount`;
-  //   router.push(routePath);
-  // };
+    // Make sure the username is being received correctly. You might want to log it.
+    console.log(`Username: ${username}`); // Check if username is correct
+
+    let userTypePath = "";
+    switch (profileType) {
+      case "Registered User":
+        userTypePath = "registeredUser";
+        break;
+      case "Business User":
+        userTypePath = "businessUser";
+        break;
+      case "System Admin":
+        userTypePath = "sysAdmin";
+        break;
+      case "Dietitian":
+        userTypePath = "dietitian";
+        break;
+      default:
+        console.error(`Unknown profile type: ${profileType}`);
+        return; // Exit the function if profile type is unknown
+    }
+    const routePath = `/${userTypePath}/userAccount/viewUserAccount/${username}`;
+    router.push(routePath);
+  };
 
   return (
     <div className="px-2 sm:px-5">
@@ -120,7 +123,7 @@ const UserAccount = () => {
             </tr>
           </thead>
           <tbody>
-            {mockUserAccountsList.map((user, index) => (
+            {userAccounts.map((user, index) => (
               <tr
                 key={index}
                 className="bg-white border-b border-blue dark:border-blue-600"

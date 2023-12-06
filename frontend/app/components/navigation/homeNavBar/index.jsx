@@ -9,12 +9,8 @@ const HomeNavbar = () => {
       <nav className="bg-blue-300">
         <div className="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
           <div className="flex h-16 items-center">
-            <div className="flex items-center">
-              <img
-                className="h-8 w-auto"
-                src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=500"
-                alt="Website Logo"
-              />
+            <div className="flex items-center text-blue-950 rounded-md px-3 py-2 text-sm font-extrabold">
+              My Healthy Recipe
             </div>
             <div className="flex space-x-4">
               <Link

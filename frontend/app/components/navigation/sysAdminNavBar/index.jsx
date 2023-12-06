@@ -56,13 +56,9 @@ const SysAdminNavBar = () => {
       <div className="flex flex-wrap items-center p-3">
         {/* Logo and mobile menu button */}
         <div className="flex items-center justify-between w-full md:w-auto md:mr-4">
-          <Link href="/">
-            <img
-              className="h-8 w-auto cursor-pointer"
-              src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=500"
-              alt="Website Logo"
-            />
-          </Link>
+          <div className="flex items-center text-blue-950 rounded-md px-3 py-2 text-sm font-extrabold">
+            My Healthy Recipe
+          </div>
           <button
             className="text-blue-800 p-2 rounded-md hover:text-white hover:bg-blue-900 md:hidden"
             onClick={() => setIsMenuOpen(!isMenuOpen)}

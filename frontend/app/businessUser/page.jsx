@@ -55,13 +55,13 @@ const BusinessUserHomePage = () => {
         </div>
         <div className="flex flex-wrap pl-6 pb-4">
           <button
-            className="bg-blue-500 hover:bg-blue-700 text-white rounded-md font-bold py-2 px-4 mr-10 mb-4"
+            className="bg-blue-700 hover:bg-blue-950 text-white rounded-md font-bold py-2 px-4 mr-10 mb-4"
             onClick={handleCreateBlogPost}
           >
             Create Blog Post
           </button>
           <button
-            className="bg-blue-500 hover:bg-blue-700 text-white rounded-md font-bold py-2 px-4 mr-10 mb-4"
+            className="bg-blue-700 hover:bg-blue-950 text-white rounded-md font-bold py-2 px-4 mr-10 mb-4"
             onClick={handleViewBlogPost}
           >
             View My Blog Posts
@@ -72,13 +72,13 @@ const BusinessUserHomePage = () => {
         </div>
         <div className="flex flex-wrap pl-6 pb-4">
           <button
-            className="bg-blue-500 hover:bg-blue-700 text-white rounded-md font-bold py-2 px-4 mr-10 mb-4"
+            className="bg-blue-700 hover:bg-blue-950 text-white rounded-md font-bold py-2 px-4 mr-10 mb-4"
             onClick={handleCreateRecipe}
           >
             Create Recipe
           </button>
           <button
-            className="bg-blue-500 hover:bg-blue-700 text-white rounded-md font-bold py-2 px-4 mr-10 mb-4"
+            className="bg-blue-700 hover:bg-blue-950 text-white rounded-md font-bold py-2 px-4 mr-10 mb-4"
             onClick={handleViewRecipes}
           >
             View My Recipes
@@ -89,13 +89,13 @@ const BusinessUserHomePage = () => {
         </div>
         <div className="flex flex-wrap pl-6 pb-4">
           <button
-            className="bg-blue-500 hover:bg-blue-700 text-white rounded-md font-bold py-2 px-4 mr-10 mb-4"
+            className="bg-blue-700 hover:bg-blue-950 text-white rounded-md font-bold py-2 px-4 mr-10 mb-4"
             onClick={handleCreateEducationalContent}
           >
             Create Educational Content
           </button>
           <button
-            className="bg-blue-500 hover:bg-blue-700 text-white rounded-md font-bold py-2 px-4 mr-10 mb-4"
+            className="bg-blue-700 hover:bg-blue-950 text-white rounded-md font-bold py-2 px-4 mr-10 mb-4"
             onClick={handleViewEducationalContent}
           >
             View My Educational Content

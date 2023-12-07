@@ -58,19 +58,19 @@ const AdminHomePage = () => {
         </div>
         <div className="flex flex-wrap pl-6 pb-4">
           <button
-            className="bg-blue-500 hover:bg-blue-700 text-white rounded-md font-bold py-2 px-4 mr-10 mb-4"
+            className="bg-blue-700 hover:bg-blue-950 text-white rounded-md font-bold py-2 px-4 mr-10 mb-4"
             onClick={handleCreateUserAccount}
           >
             Create User Account
           </button>
           <button
-            className="bg-blue-500 hover:bg-blue-700 text-white rounded-md font-bold py-2 px-4 mr-10 mb-4"
+            className="bg-blue-700 hover:bg-blue-950 text-white rounded-md font-bold py-2 px-4 mr-10 mb-4"
             onClick={handleViewUserAccount}
           >
             View User Account
           </button>
           <button
-            className="bg-blue-500 hover:bg-blue-700 text-white rounded-md font-bold py-2 px-4 mr-10 mb-4"
+            className="bg-blue-700 hover:bg-blue-950 text-white rounded-md font-bold py-2 px-4 mr-10 mb-4"
             onClick={handleVerifyBusinessUserAccount}
           >
             Verify Business User Account
@@ -81,7 +81,7 @@ const AdminHomePage = () => {
         </div>
         <div className="flex flex-wrap pl-6 pb-4">
           <button
-            className="bg-blue-500 hover:bg-blue-700 text-white rounded-md font-bold py-2 px-4 mr-4"
+            className="bg-blue-700 hover:bg-blue-950 text-white rounded-md font-bold py-2 px-4 mr-4"
             onClick={handleViewUserProfile}
           >
             View User Profile
@@ -92,7 +92,7 @@ const AdminHomePage = () => {
         </div>
         <div className="flex flex-wrap pl-6 pb-4">
           <button
-            className="bg-blue-500 hover:bg-blue-700 text-white rounded-md font-bold py-2 px-4 mr-4"
+            className="bg-blue-700 hover:bg-blue-950 text-white rounded-md font-bold py-2 px-4 mr-4"
             onClick={handleCreateDietaryPreferences}
           >
             Create Dietary Preferences
@@ -103,13 +103,13 @@ const AdminHomePage = () => {
         </div>
         <div className="flex flex-wrap pl-6 pb-4">
           <button
-            className="bg-blue-500 hover:bg-blue-700 text-white rounded-md font-bold py-2 px-4 mr-10 mb-4"
+            className="bg-blue-700 hover:bg-blue-950 text-white rounded-md font-bold py-2 px-4 mr-10 mb-4"
             onClick={handleViewBlogPost}
           >
             View and Suspend Blog Post
           </button>
           <button
-            className="bg-blue-500 hover:bg-blue-700 text-white rounded-md font-bold py-2 px-4 mr-10 mb-4"
+            className="bg-blue-700 hover:bg-blue-950 text-white rounded-md font-bold py-2 px-4 mr-10 mb-4"
             onClick={handleViewRecipes}
           >
             View and Suspend Recipes

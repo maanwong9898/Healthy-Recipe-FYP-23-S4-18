@@ -16,7 +16,7 @@ const businessRegistration = () => {
   const [error, setError] = useState("");
   const emailValidation = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-  const handleSignUp = () => {
+  const handleSignUp = (event) => {
     event.preventDefault();
     // Checks if fields are empty
     if (
@@ -54,7 +54,7 @@ const businessRegistration = () => {
     }
 
     // To check if data passed is correct
-    console.log("Sign up details:", {
+    console.log("Business Sign up details:", {
       fullName,
       username,
       workEmail,
@@ -147,7 +147,7 @@ const businessRegistration = () => {
                     onChange={(e) => setBusinessUserType(e.target.value)}
                     className="border px-4 py-2 rounded-lg bg-gray-50 border-gray-300 text-gray-900 sm:text-sm focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
                   >
-                    <option value="" disabled selected>
+                    <option value="" disabled defaultValue>
                       Register As
                     </option>
                     <option value="businessUser">Business User</option>
@@ -179,7 +179,7 @@ const businessRegistration = () => {
                 {/* ERROR MSG */}
                 <p className="text-red-500 text-sm">{error}</p>
 
-                {/* SUBMIT BUTTON */}
+                {/* SUBMIT BTN */}
                 <button
                   type="submit"
                   onClick={handleSignUp}
@@ -189,14 +189,14 @@ const businessRegistration = () => {
                 </button>
 
                 {/* LOGIN LINK */}
-                <p class="text-sm font-light text-gray-500 dark:text-gray-400">
+                <p className="text-sm font-light text-gray-500 dark:text-gray-400">
                   Already have an account?{" "}
-                  <a
+                  <Link
                     href="/userLogin"
-                    class="font-medium text-blue-600 hover:underline dark:text-blue-500"
+                    className="font-medium text-blue-600 hover:underline dark:text-blue-500"
                   >
                     Login here
-                  </a>
+                  </Link>
                 </p>
               </form>
             </div>

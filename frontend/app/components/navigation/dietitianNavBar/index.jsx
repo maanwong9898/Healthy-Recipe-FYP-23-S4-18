@@ -36,9 +36,9 @@ const AccountDropdownMenu = () => {
 const DietitianNavBar = () => {
   const router = useRouter();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [isAccountMenuOpen, setIsAccountMenuOpen] = useState(false);
-
   const [isDropdownVisible, setDropdownVisible] = useState(false);
+
+  const [isAccountMenuOpen, setIsAccountMenuOpen] = useState(false);
   const [isAccountDropdownVisible, setAccountDropdownVisible] = useState(false);
   const hideTimer = useRef(null);
 

@@ -10,11 +10,16 @@ const businessRegistration = () => {
   const [workEmail, setWorkEmail] = useState("");
   const [organization, setOrganization] = useState("");
   const [uen, setUen] = useState("");
+  const [licenseNum, setLicenseNum] = useState("");
   const [businessUserType, setBusinessUserType] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPwd, setConfirmPwd] = useState("");
   const [error, setError] = useState("");
   const emailValidation = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+  // Set disabled text input when specific user type is selected
+  const uenDisabled = businessUserType === "dietitian";
+  const licenseNumDisabled = businessUserType === "businessUser";
 
   const handleSignUp = (event) => {
     event.preventDefault();
@@ -127,6 +132,24 @@ const businessRegistration = () => {
                   ></input>
                 </div>
 
+                <div className="flex flex-col">
+                  {/* USER TYPE */}
+                  <label htmlFor="userType">Register As</label>
+                  <select
+                    id="businessUserType"
+                    name="businessUserType"
+                    value={businessUserType}
+                    onChange={(e) => setBusinessUserType(e.target.value)}
+                    className="border px-4 py-2 rounded-lg bg-gray-50 border-gray-300 text-gray-900 sm:text-sm focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
+                  >
+                    <option value="" disabled defaultValue>
+                      Select One...
+                    </option>
+                    <option value="businessUser">Business User</option>
+                    <option value="dietitian">Dietitian</option>
+                  </select>
+                </div>
+
                 <div className="flex space-x-4">
                   {/* UEN */}
                   <input
@@ -137,22 +160,20 @@ const businessRegistration = () => {
                     value={uen}
                     onChange={(e) => setUen(e.target.value)}
                     className="border px-4 py-2 rounded-lg bg-gray-50 border-gray-300 text-gray-900 sm:text-sm focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 "
+                    disabled={uenDisabled}
                   ></input>
 
-                  {/* USER TYPE */}
-                  <select
-                    id="businessUserType"
-                    name="businessUserType"
-                    value={businessUserType}
-                    onChange={(e) => setBusinessUserType(e.target.value)}
-                    className="border px-4 py-2 rounded-lg bg-gray-50 border-gray-300 text-gray-900 sm:text-sm focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
-                  >
-                    <option value="" disabled defaultValue>
-                      Register As
-                    </option>
-                    <option value="businessUser">Business User</option>
-                    <option value="dietitian">Dietitian</option>
-                  </select>
+                  {/* LICENSE NUM */}
+                  <input
+                    type="text"
+                    name="licenseNum"
+                    id="licenseNum"
+                    placeholder="License Number"
+                    value={licenseNum}
+                    onChange={(e) => setLicenseNum(e.target.value)}
+                    className="border px-4 py-2 rounded-lg bg-gray-50 border-gray-300 text-gray-900 sm:text-sm focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 "
+                    disabled={licenseNumDisabled}
+                  ></input>
                 </div>
 
                 {/* PASSWORDS */}

@@ -49,9 +49,9 @@ const userRegistration = () => {
       return;
 
       // Checks if height is integer value
-    } else if (!Number.isInteger(Number(height))) {
-      setError("Height is invalid.");
-      return;
+      // } else if (!Number.isInteger(Number(height))) {
+      //   setError("Height is invalid.");
+      //   return;
 
       // Checks if registration successful
     } else {
@@ -130,7 +130,7 @@ const userRegistration = () => {
                   ></input>
                 </div>
 
-                {/* DOB */}
+                {/* DOB -- NEEDS TO BE CHANGED (FURTHER VALIDATION)*/}
                 <div className="flex flex-col">
                   <label htmlFor="dob">Date of Birth</label>
                   <DatePicker

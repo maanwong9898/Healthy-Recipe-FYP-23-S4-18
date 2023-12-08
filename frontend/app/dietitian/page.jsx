@@ -2,9 +2,8 @@
 import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 
-// home page for dietitian
 // router path: /dietitian
-
+// this is a home page for dietitian
 const DietitianHomePage = () => {
   const [username, setUsername] = useState("");
   const router = useRouter();

@@ -1,6 +1,6 @@
 
-INSERT INTO BLOG(PUBLISHER, TITLE, INFO) VALUES
-    ("Mark", "Mark's favourite dish", "Mark-ed"); 
+INSERT INTO BLOG(PUBLISHER, TITLE, INFO, EducationalContent) VALUES
+    ("Mark", "Mark's favourite dish", "Mark-ed", b'1'); 
 
 INSERT INTO RECIPE (TITLE, STEPS, INGREDIENTS, DESCRIPTION, INFO) VALUES
     ("BAKED CHICKEN", "1. You Bake Chicken.\n2.Done\n3.End", "200 pounds of chicken","You also need a oven", "'calories':'2000g'\n'carbs':'200g'\n'fat':'150g'\n'protein':'20g'");

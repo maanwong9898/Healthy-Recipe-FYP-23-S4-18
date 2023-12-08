@@ -1,7 +1,8 @@
 package com.FYP18.HealthyRecipe.Entity;
  
-import org.apache.catalina.User; 
+// import org.apache.catalina.User; 
 
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -31,5 +32,6 @@ public class RegisteredUser  {
     public String DietaryPreference;
   
     @Id
+    @OneToOne
     public User user;
 }

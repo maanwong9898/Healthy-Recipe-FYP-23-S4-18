@@ -3,6 +3,21 @@ package com.FYP18.HealthyRecipe.Entity;
 import java.time.LocalDateTime;
 
 import jakarta.persistence.Column;
+import lombok.*;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
+
+@Getter
+@Setter
+@Builder
+@AllArgsConstructor 
+@NoArgsConstructor
+@Entity
+@Table(name = "Blog")
 
 public class Blog {
       @Column(name = "CreatedDT", nullable = false)
@@ -19,6 +34,11 @@ public class Blog {
 
     @Column(name= "BlogID", nullable = false)
     public Integer blogID;
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "ID")
+    private Long id;
 
 }
 // ID MEDIUMINT NOT NULL AUTO_INCREMENT,

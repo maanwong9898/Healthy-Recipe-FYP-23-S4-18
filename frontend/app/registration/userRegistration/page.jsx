@@ -3,8 +3,6 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 import Link from "next/link";
 import HomeNavbar from "@/app/components/navigation/homeNavBar";
-import DatePicker from "react-datepicker";
-import "react-datepicker/dist/react-datepicker.css";
 
 const userRegistration = () => {
   const [fullName, setFullName] = useState("");
@@ -30,8 +28,6 @@ const userRegistration = () => {
       !email ||
       !dob ||
       !dietaryPreference ||
-      !height ||
-      !weight ||
       !password ||
       !confirmPwd
     ) {
@@ -129,17 +125,38 @@ const userRegistration = () => {
                     className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
                   ></input>
                 </div>
+                {/* PASSWORDS */}
+                <div className="flex space-x-4">
+                  <input
+                    type="password"
+                    name="pwd"
+                    id="pwd"
+                    placeholder="Password"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    className="border px-4 py-2 rounded-lg bg-gray-50 border-gray-300 text-gray-900 sm:text-sm focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
+                  ></input>
+                  <input
+                    type="password"
+                    name="confirm-pwd"
+                    id="confirm-pwd"
+                    placeholder="Confirm Password"
+                    value={confirmPwd}
+                    onChange={(e) => setConfirmPwd(e.target.value)}
+                    className="border px-4 py-2 rounded-lg bg-gray-50 border-gray-300 text-gray-900 sm:text-sm focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
+                  ></input>
+                </div>
 
-                {/* DOB -- NEEDS TO BE CHANGED (FURTHER VALIDATION)*/}
+                {/* DOB */}
                 <div className="flex flex-col">
                   <label htmlFor="dob">Date of Birth</label>
-                  <DatePicker
-                    selected={dob}
-                    onChange={(date) => setDOB(date)}
-                    dateFormat="dd/MM/yyyy" // Change the date format
-                    placeholderText="dd/mm/yyyy"
-                    className="border px-4 py-2 rounded-lg bg-gray-50 border-gray-300 text-gray-900 sm:text-sm focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
-                  />
+                  <input
+                    type="date"
+                    id="dob"
+                    name="dob"
+                    placeholder="dd/mm/yyyy"
+                    className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
+                  ></input>
                 </div>
 
                 {/* DIETARY PREFERENCE */}
@@ -158,7 +175,7 @@ const userRegistration = () => {
                     <option value="vegan">Vegan</option>
                     <option value="vegetarian">Vegetarian</option>
                     <option value="pescatarian">Pescatarian</option>
-                    <option value="omnivore">Omnivore</option>
+                    <option value="noPref">No Preference</option>
                   </select>
                 </div>
 
@@ -184,27 +201,7 @@ const userRegistration = () => {
                     placeholder="Weight (kg)"
                   ></input>
                 </div>
-                {/* PASSWORDS */}
-                <div className="flex space-x-4">
-                  <input
-                    type="password"
-                    name="pwd"
-                    id="pwd"
-                    placeholder="Password"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                    className="border px-4 py-2 rounded-lg bg-gray-50 border-gray-300 text-gray-900 sm:text-sm focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
-                  ></input>
-                  <input
-                    type="password"
-                    name="confirm-pwd"
-                    id="confirm-pwd"
-                    placeholder="Confirm Password"
-                    value={confirmPwd}
-                    onChange={(e) => setConfirmPwd(e.target.value)}
-                    className="border px-4 py-2 rounded-lg bg-gray-50 border-gray-300 text-gray-900 sm:text-sm focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
-                  ></input>
-                </div>
+
                 {/* ERROR MSG */}
                 <p className="text-red-500 text-sm">{error}</p>
                 {/* SUBMIT BTN */}

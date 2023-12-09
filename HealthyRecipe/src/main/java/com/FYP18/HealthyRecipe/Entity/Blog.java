@@ -20,33 +20,59 @@ import jakarta.persistence.Table;
 @Table(name = "Blog")
 
 public class Blog {
-      @Column(name = "CreatedDT", nullable = false)
+
+ 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "ID")
+    private Long id;
+
+    @Column(name = "CreatedDT", nullable = false)
     private LocalDateTime createdDateTime = LocalDateTime.now();
 
     @Column(name = "LastUpdatedDT")
     private LocalDateTime lastUpdatedDateTime = LocalDateTime.now();
 
     @Column(name= "ACTIVE")
-    private Boolean active;
+    private Boolean active = true;
+
+    @Column(name= "Educational_Content")
+    private Boolean educationalContent = true;
     
-    @Column(name= "UserID", nullable = false)
-    public String UserID;
+    
+    
+    @Column(name= "Publisher")
+    private String publisher;
 
-    @Column(name= "BlogID", nullable = false)
-    public Integer blogID;
+    
+    @Column(name= "Title")
+    private String title;
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "ID")
-    private Long id;
+    @Column(name= "Info")
+    private String info;
+     
+    @Column(name= "UserID")
+    private String userID;
+    
+ 
+}    
+ 
+    
+	// LastUpdatedDT DATETIME, 
+	
+	// EducationalContent	BIT(1) NOT NULL,  
+	// Info VARCHAR(255),  
 
-}
-// ID MEDIUMINT NOT NULL AUTO_INCREMENT,
-// 	ACTIVE BIT(1) NOT NULL DEFAULT b'1',
-// 	CreatedDT DATETIME NOT NULL DEFAULT (NOW()),
-// 	LastUpdatedDT DATETIME,
 
-// 	PUBLISHER VARCHAR(255) NOT NULL,
-// 	TITLE 	VARCHAR(50) NOT NULL,
-// 	INFO VARCHAR(255),
-// 	CONSTRAINT ID_PKey PRIMARY KEY (ID)
+        // b1_0.id,  
+        // b1_0.educational_content, 
+        // b1_0.last_updateddt,  
+
+        //        b1_0.id,
+        // b1_0.active,
+        // b1_0.createddt,
+        // b1_0.educational_content,
+        // b1_0.info,
+        // b1_0.last_updateddt,
+        // b1_0.publisher,
+        // b1_0.title 

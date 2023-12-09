@@ -1,10 +1,4 @@
 
-INSERT INTO BLOG(PUBLISHER, TITLE, INFO, EducationalContent) VALUES
-    ("Mark", "Mark's favourite dish", "Mark-ed", b'1'); 
-
-INSERT INTO RECIPE (TITLE, STEPS, INGREDIENTS, DESCRIPTION, INFO) VALUES
-    ("BAKED CHICKEN", "1. You Bake Chicken.\n2.Done\n3.End", "200 pounds of chicken","You also need a oven", "'calories':'2000g'\n'carbs':'200g'\n'fat':'150g'\n'protein':'20g'");
- 
  
 -- nutrition value, we only care about
 -- Calories, Carbs, Fat, Protein, Carbs, Satur
@@ -31,6 +25,14 @@ INSERT INTO USERACCOUNT (ID, Username, Password, Email, Full_Name) VALUES
     ("2", "useraccount2", "1", "admin@gmail.com"        , "Admin kun"  ),
     ("3", "useraccount3", "1", "business@gmail.com"     , "Business kun"  ),
     ("4", "useraccount4", "1", "randomEmail@gmail.com"  , "Dietitian kun"  );
+
+
+INSERT INTO BLOG(PUBLISHER, TITLE, INFO, Educational_Content, UserID) VALUES
+    ("Mark", "Mark's favourite dish", "Mark-ed", b'1', "3"); 
+
+INSERT INTO RECIPE (TITLE, STEPS, INGREDIENTS, DESCRIPTION, INFO, UserID) VALUES
+    ("BAKED CHICKEN", "1. You Bake Chicken.\n2.Done\n3.End", "200 pounds of chicken","You also need a oven", "'calories':'2000g'\n'carbs':'200g'\n'fat':'150g'\n'protein':'20g'",  "3");
+ 
 
 INSERT INTO RECIPE_REVIEW_RATING (Rating, Review, UserID, RecipeID) VALUES
     (3.2, "REVIEW-ed", "1", 1);

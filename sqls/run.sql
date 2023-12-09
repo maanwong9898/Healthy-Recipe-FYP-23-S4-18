@@ -1,22 +1,38 @@
+CREATE TABLE USERACCOUNT (
+	ID  	VARCHAR(255) 	NOT NULL,
+	Username VARCHAR(255)	NOT NULL,
+	Password VARCHAR(255)	NOT NULL,
+	Email VARCHAR(255) 		NOT NULL,
+	Full_Name VARCHAR(255)	NOT NULL, 
+	CONSTRAINT ID_PKey PRIMARY KEY (ID)
+);
+
+-- associates UserID to business user
 CREATE TABLE BLOG (
 	ID MEDIUMINT NOT NULL AUTO_INCREMENT,
 	Active BIT(1) NOT NULL DEFAULT b'1',
 	CreatedDT DATETIME NOT NULL DEFAULT (NOW()),
-	LastUpdatedDT DATETIME,
+	Last_UpdatedDT DATETIME,
 
-	EducationalContent	BIT(1) NOT NULL,
+	UserID 	VARCHAR(255) NOT NULL,
+	
+	Educational_Content	BIT(1) NOT NULL,
 	Publisher VARCHAR(255) NOT NULL,
 	Title 	VARCHAR(50) NOT NULL,
 	Info VARCHAR(255),
-	CONSTRAINT ID_PKey PRIMARY KEY (ID)
+	CONSTRAINT ID_PKey PRIMARY KEY (ID),
+	CONSTRAINT UserID_B_FKey FOREIGN KEY (UserID) REFERENCES USERACCOUNT (ID)
 );
 
 -- if EducationalContent is true, then its under educational content
 -- or else its under Business blog lol
 
+-- associates UserID to business user
 CREATE TABLE RECIPE (
 	ID MEDIUMINT NOT NULL AUTO_INCREMENT,
 	Active BIT(1) NOT NULL DEFAULT b'1',
+
+	UserID 	VARCHAR(255) NOT NULL,
 
 	Title VARCHAR(50) NOT NULL,
 	Steps VARCHAR(255) NOT NULL,  
@@ -24,7 +40,8 @@ CREATE TABLE RECIPE (
 	Description VARCHAR(255) NOT NULL,
 	Info VARCHAR(255),
 
-	CONSTRAINT ID_PKey PRIMARY KEY (ID)
+	CONSTRAINT ID_PKey PRIMARY KEY (ID),
+	CONSTRAINT UserID_R_FKey FOREIGN KEY (UserID) REFERENCES USERACCOUNT (ID)
 );
 
 -- INSERT INTO RECIPE (TITLE, STEPS, INGREDIENTS) VALUES ("Baked Chicken", "", "");
@@ -48,15 +65,6 @@ CREATE TABLE RECIPE (
 
 -- then backend can jump 
 
-CREATE TABLE USERACCOUNT (
-	ID  	VARCHAR(255) 	NOT NULL,
-	Username VARCHAR(255)	NOT NULL,
-	Password VARCHAR(255)	NOT NULL,
-	Email VARCHAR(255) 		NOT NULL,
-	Full_Name VARCHAR(255)	NOT NULL,
-
-	CONSTRAINT ID_PKey PRIMARY KEY (ID)
-);
 
 -- one of these line is giving me error, but its fine i only need to worry about it 
 -- when i'm dealing with fucking spring security

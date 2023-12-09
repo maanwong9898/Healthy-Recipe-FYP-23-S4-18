@@ -141,11 +141,11 @@ CREATE TABLE SystemAdmin(
 	CONSTRAINT Admin_ID_FKey FOREIGN KEY (ID) REFERENCES USERACCOUNT (ID)
 );
 
-CREATE TABLE BusinessUser(
+CREATE TABLE Business_User(
 	ID 					VARCHAR(255) NOT NULL,
-	CompanyName			VARCHAR(255),
+	Company_Name			VARCHAR(255),
 	UEN 				VARCHAR(255),
-	DietitanAccount 	BIT(1) NOT NULL,
+	Dietitan_Account 	BIT(1) NOT NULL,
 	Verified            BIT(1) NOT NULL DEFAULT b'0',
     
 	

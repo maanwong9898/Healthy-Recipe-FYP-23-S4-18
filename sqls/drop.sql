@@ -1,4 +1,4 @@
-DROP TABLE BusinessUser;
+DROP TABLE Business_User;
 DROP TABLE SystemAdmin;
 DROP TABLE UserInfoOverTime;
 DROP TABLE Registered_User;

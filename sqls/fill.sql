@@ -59,7 +59,7 @@ INSERT INTO SystemAdmin(ID, DOB) VALUES
     ("2", "2022-01-20");
  
 
-INSERT INTO BusinessUser(ID, CompanyName, UEN, DietitanAccount) VALUES
+INSERT INTO Business_User(ID, Company_Name, UEN, Dietitan_Account) VALUES
     ("3", "Trump Corporate", "4799-577594-29584",  b'0') 
 
 -- lock & enabled & expired is something that comes with

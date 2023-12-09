@@ -4,6 +4,7 @@ package com.FYP18.HealthyRecipe.Entity;
 
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Column;
+import jakarta.persistence.EmbeddedId;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
@@ -20,18 +21,18 @@ import java.time.LocalDate;
 import java.util.Collection;
 import java.util.Iterator;
 
+
 @Data 
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
 @Table(name = "RegisteredUser")
-public class RegisteredUser  {
+public class RegisteredUser extends User  {
 
-    public LocalDate dateOfBirth ;
+    @Column(name= "dob")
+    public LocalDate dob ;
 
-    public String DietaryPreference;
-  
-    @Id
-    @OneToOne
-    public User user;
+    @Column(name= "dietaryPreference")
+    public String dietaryPreference;
+    
 }

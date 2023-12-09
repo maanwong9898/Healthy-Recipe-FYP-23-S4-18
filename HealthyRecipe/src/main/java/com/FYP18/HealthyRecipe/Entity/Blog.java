@@ -13,12 +13,11 @@ import jakarta.persistence.Table;
 
 @Getter
 @Setter
-@Builder
+@Builder 
 @AllArgsConstructor 
 @NoArgsConstructor
 @Entity
-@Table(name = "Blog")
-
+@Table(name = "Blog") 
 public class Blog {
 
  
@@ -31,7 +30,7 @@ public class Blog {
     private LocalDateTime createdDateTime = LocalDateTime.now();
 
     @Column(name = "LastUpdatedDT")
-    private LocalDateTime lastUpdatedDateTime = LocalDateTime.now();
+    private LocalDateTime lastUpdatedDateTime;
 
     @Column(name= "ACTIVE")
     private Boolean active = true;

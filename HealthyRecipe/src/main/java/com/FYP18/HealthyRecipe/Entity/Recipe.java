@@ -25,4 +25,20 @@ public class Recipe {
     @Column(name = "STEPS", nullable = false)
     private String steps;
 
+    @Column(name = "Active", nullable = false)
+    private Boolean active;
+
+    @Column(name = "Title", nullable = false)
+    private String title;
+
+    @Column(name = "Description", nullable = false)
+    private String description;
+
+
+    @Column(name = "Info", nullable = false)
+    private String info;
+
+    @Column(name = "Ingredients", nullable = false)
+    private String Ingredients;
 }
+

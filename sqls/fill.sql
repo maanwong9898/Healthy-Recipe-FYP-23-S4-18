@@ -44,7 +44,7 @@ INSERT INTO BLOG_REVIEW_RATING (Rating, UserID, BlogID) VALUES
 -- rating can be nothing
 
 --	ID VARCHAR(255) NOT NULL DEFAULT (UUID()),
- INSERT INTO RegisteredUser (ID, DOB) VALUES
+ INSERT INTO Registered_User (ID, DOB) VALUES
     ("1",  "1969-09-11" );
 
 INSERT INTO UserInfoOverTime (ID, WeightOrHeight, Info) VALUES

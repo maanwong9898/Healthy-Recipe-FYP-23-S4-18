@@ -144,7 +144,7 @@ const SysAdminNavBar = () => {
               Dietary Preferences
             </Link>
             <Link
-              href="/"
+              href="/sysAdmin/suspendRecipe"
               className="text-blue-800 hover:bg-blue-900 hover:text-white rounded-md px-3 py-2 text-sm font-bold"
             >
               Recipes

@@ -46,7 +46,7 @@ const AdminHomePage = () => {
   };
 
   const handleViewRecipes = () => {
-    router.push("/sysAdmin/recipes");
+    router.push("/sysAdmin/suspendRecipe");
   };
 
   return (
@@ -106,13 +106,13 @@ const AdminHomePage = () => {
             className="bg-blue-700 hover:bg-blue-950 text-white rounded-md font-bold py-2 px-4 mr-10 mb-4"
             onClick={handleViewBlogPost}
           >
-            View and Suspend Blog Post
+            Suspend Blog Post
           </button>
           <button
             className="bg-blue-700 hover:bg-blue-950 text-white rounded-md font-bold py-2 px-4 mr-10 mb-4"
             onClick={handleViewRecipes}
           >
-            View and Suspend Recipes
+            Suspend Recipe
           </button>
         </div>
       </div>

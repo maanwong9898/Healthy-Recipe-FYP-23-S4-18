@@ -6,45 +6,36 @@ import { useState, useEffect } from "react";
 
 // router path: /sysAdmin/suspendRecipe
 
-// const mockUsers = [
-//     {
-//       username: "BusinessUser123",
-//       profile: "Business User",
-//       company: "Company 1",
-//       UEN: "123456789A",
-//       email: "user1@gmail.com",
-//       createdDate: "2023-10-01",
-//       status: "Pending",
-//     },];
 // Called the controller to get the list of all "Active" recipes
+// this is the simple mock data for recipes but a recipe should have more attributes
 const mockRecipes = [
   {
     recipeName: "Tomato Soup",
     dateCreated: "2021-10-01",
     ratings: 4.5,
     reviews: 5,
-    status: "Active",
+    isActive: true,
   },
   {
     recipeName: "Chicken Soup",
     dateCreated: "2021-10-01",
     ratings: 4.5,
     reviews: 10,
-    status: "Active",
+    isActive: true,
   },
   {
     recipeName: "Beef Soup",
     dateCreated: "2021-10-01",
     ratings: 4.5,
     reviews: 15,
-    status: "Active",
+    isActive: true,
   },
   {
     recipeName: "Pork Soup",
     dateCreated: "2021-10-01",
     ratings: 4.5,
     reviews: 20,
-    status: "Active",
+    isActive: true,
   },
 ];
 
@@ -87,7 +78,15 @@ const SuspendRecipePages = () => {
                   {recipe.reviews}
                 </td>
                 <td className="px-3 py-2 text-sm text-center sm:text-left">
-                  {recipe.status}
+                  <span
+                    className={`rounded-full px-3 py-1 text-xs font-semibold ${
+                      recipe.isActive === true
+                        ? "bg-green-200 text-green-900"
+                        : "bg-red-200 text-red-900"
+                    }`}
+                  >
+                    {recipe.isActive === true ? "Active" : "Inactive"}
+                  </span>
                 </td>
 
                 <td className="px-3 py-2 flex flex-wrap justify-center sm:justify-start gap-2">

@@ -49,56 +49,6 @@ const mockUsers = [
 const VerifyBusinessUserPage = () => {
   const [userAccounts, setUserAccounts] = useState(mockUsers);
 
-  // ready to be tested
-  // // the url will be changed to the backend url
-  // const viewPendingBusinessUsers = async () => {
-  //   try {
-  //     const response = await fetch(
-  //       "http://localhost:8080/api/userAccount/readAllPedingBusinessUsers"
-  //     );
-  //     if (response.ok) {
-  //       const data = await response.json();
-  //       // write the data into console for debugging
-  //       console.log("data from backend");
-  //       console.log(data);
-  //       setUserAccounts(data);
-  //     } else {
-  //       console.error("Failed to fetch user profile list");
-  //     }
-  //   } catch (error) {
-  //     console.error("Error fetching data", error);
-  //   }
-  // };
-
-  // useEffect(() => {
-  //   viewPendingBusinessUsers();
-  // }, []);
-
-  // this function is to verify particular business user account
-  const handleVerifyBusinessUser = async (username) => {
-    // Check the username
-    console.log(`Username that going to be verified: ${username}`);
-
-    // Send a request to backend to verify the account
-    try {
-      const response = await fetch(
-        `http://localhost:8080/api/userAccount/verifyUserAccount/${username}`,
-        {
-          method: "PUT",
-        }
-      );
-      if (response.ok) {
-        // Filter out the verified user from the list
-        const updatedUsers = users.filter((user) => user.username !== username);
-        setUserAccounts(updatedUsers); // Update the state to trigger a re-render
-      } else {
-        console.error("Failed to verify user account");
-      }
-    } catch (error) {
-      console.error("Error verifying user account", error);
-    }
-  };
-
   return (
     <div className="px-2 sm:px-5">
       <h1 className="text-xl text-blue-700 font-semibold p-3 text-center sm:text-left">
@@ -161,3 +111,53 @@ const VerifyBusinessUserPage = () => {
 };
 
 export default VerifyBusinessUserPage;
+
+// ready to be tested
+// // the url will be changed to the backend url
+// const viewPendingBusinessUsers = async () => {
+//   try {
+//     const response = await fetch(
+//       "http://localhost:8080/api/userAccount/readAllPedingBusinessUsers"
+//     );
+//     if (response.ok) {
+//       const data = await response.json();
+//       // write the data into console for debugging
+//       console.log("data from backend");
+//       console.log(data);
+//       setUserAccounts(data);
+//     } else {
+//       console.error("Failed to fetch user profile list");
+//     }
+//   } catch (error) {
+//     console.error("Error fetching data", error);
+//   }
+// };
+
+// useEffect(() => {
+//   viewPendingBusinessUsers();
+// }, []);
+
+// // this function is to verify particular business user account
+// const handleVerifyBusinessUser = async (username) => {
+//   // Check the username
+//   console.log(`Username that going to be verified: ${username}`);
+
+//   // Send a request to backend to verify the account
+//   try {
+//     const response = await fetch(
+//       `http://localhost:8080/api/userAccount/verifyUserAccount/${username}`,
+//       {
+//         method: "PUT",
+//       }
+//     );
+//     if (response.ok) {
+//       // Filter out the verified user from the list
+//       const updatedUsers = users.filter((user) => user.username !== username);
+//       setUserAccounts(updatedUsers); // Update the state to trigger a re-render
+//     } else {
+//       console.error("Failed to verify user account");
+//     }
+//   } catch (error) {
+//     console.error("Error verifying user account", error);
+//   }
+// };

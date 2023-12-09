@@ -2,11 +2,30 @@ package com.FYP18.HealthyRecipe.Entity;
 
 import java.time.LocalDateTime;
 
-import jakarta.persistence.Column;
-
+import jakarta.persistence.Column; 
+import jakarta.persistence.EmbeddedId;
  
+import lombok.*;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
+ 
+@Getter
+@Setter
+@Builder 
+@AllArgsConstructor 
+@NoArgsConstructor
+@Entity
+@Table(name = "BLOG_REVIEW_RATING") 
 public class BlogReviewRating {
 
+
+    @EmbeddedId
+    private BlogReviewRatingId blogReviewRatingId;
+ 
     @Column(name = "CreatedDT", nullable = false)
     private LocalDateTime createdDateTime = LocalDateTime.now();
 
@@ -19,17 +38,11 @@ public class BlogReviewRating {
     @Column(name= "Review")
     private String review;
 
-    @Column(name= "UserID", nullable = false)
-    public String UserID;
-
-    @Column(name= "BlogID", nullable = false)
-    public Integer blogID;
+    @Override 
+    public String toString()
+    {
+        return blogReviewRatingId.toString()+ ", rating: "+ rating + ", Review: " + review;
+    } 
     
-}
-// CreatedDT DATETIME NOT NULL DEFAULT (NOW()),
-// 	LastUpdatedDT DATETIME,
-// 	Rating DECIMAL(5,2) NOT NULL,
-// 	Review VARCHAR(255) DEFAULT "", 
+} 
 
-// 	UserID VARCHAR(255) NOT NULL,
-// 	BlogID MEDIUMINT NOT NULL,

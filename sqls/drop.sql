@@ -1,5 +1,5 @@
 DROP TABLE Business_User;
-DROP TABLE SystemAdmin;
+DROP TABLE System_Admin;
 DROP TABLE User_Info_Over_Time;
 DROP TABLE Registered_User;
 DROP TABLE BLOG_REVIEW_RATING;

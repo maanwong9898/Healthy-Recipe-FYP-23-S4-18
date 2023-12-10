@@ -55,7 +55,7 @@ INSERT INTO User_Info_Over_Time (UserID, Weight, Info) VALUES
 INSERT INTO User_Info_Over_Time (UserID, Weight, Info, Saved_Date) VALUES
     ("1", b'1', 150.50, "2022-12-08" );
 
-INSERT INTO SystemAdmin(ID, DOB) VALUES
+INSERT INTO System_Admin(ID, DOB) VALUES
     ("2", "2022-01-20");
  
 

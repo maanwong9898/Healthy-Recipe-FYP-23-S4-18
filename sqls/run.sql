@@ -131,7 +131,7 @@ CREATE TABLE User_Info_Over_Time(
 );
 -- if its true then its weight, else height
 
-CREATE TABLE SystemAdmin(
+CREATE TABLE System_Admin(
 	ID 					VARCHAR(255) NOT NULL,
 	DOB 				DATE 		NOT NULL,
 

@@ -13,7 +13,7 @@ import jakarta.persistence.Table;
 
 @Getter
 @Setter
-@Builder 
+@Builder
 @AllArgsConstructor 
 @NoArgsConstructor
 @Entity
@@ -23,23 +23,21 @@ public class Blog {
  
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "ID")
+    @Column(name = "ID", updatable = false)
     private Long id;
 
-    @Column(name = "CreatedDT", nullable = false)
-    private LocalDateTime createdDateTime = LocalDateTime.now();
+    @Column(name = "CreatedDT", nullable = false, columnDefinition="DATETIME default (NOW())")
+    private LocalDateTime createdDateTime;
 
     @Column(name = "LastUpdatedDT")
     private LocalDateTime lastUpdatedDateTime;
 
-    @Column(name= "ACTIVE")
-    private Boolean active = true;
+    @Column(name= "ACTIVE", columnDefinition="bit(1) default b'1'")
+    private Boolean active;
 
-    @Column(name= "Educational_Content")
-    private Boolean educationalContent = true;
-    
-    
-    
+    @Column(name= "Educational_Content", columnDefinition="bit(1) default b'1'")
+    private Boolean educationalContent ;
+     
     @Column(name= "Publisher")
     private String publisher;
 
@@ -55,23 +53,4 @@ public class Blog {
     
  
 }    
- 
-    
-	// LastUpdatedDT DATETIME, 
-	
-	// EducationalContent	BIT(1) NOT NULL,  
-	// Info VARCHAR(255),  
-
-
-        // b1_0.id,  
-        // b1_0.educational_content, 
-        // b1_0.last_updateddt,  
-
-        //        b1_0.id,
-        // b1_0.active,
-        // b1_0.createddt,
-        // b1_0.educational_content,
-        // b1_0.info,
-        // b1_0.last_updateddt,
-        // b1_0.publisher,
-        // b1_0.title 
+  

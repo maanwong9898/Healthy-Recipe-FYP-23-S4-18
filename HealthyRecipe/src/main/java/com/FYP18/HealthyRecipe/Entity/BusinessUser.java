@@ -32,6 +32,6 @@ public class BusinessUser extends User  {
     @Column(name= "UEN")
     private String UEN;
     
-    @Column(name="Dietitan_Account")
+    @Column(name="Dietitan_Account", updatable = false)
     private Boolean dietitanAccount;
 }

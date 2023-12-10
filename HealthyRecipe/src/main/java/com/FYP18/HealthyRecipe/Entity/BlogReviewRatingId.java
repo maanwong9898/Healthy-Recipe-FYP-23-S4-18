@@ -9,10 +9,10 @@ import jakarta.persistence.Id;
 @Embeddable
 public class BlogReviewRatingId implements Serializable
 { 
-    @Column(name= "UserID", nullable = false)
+    @Column(name= "UserID", nullable = false, updatable = false)
     public String UserID;
  
-    @Column(name= "BlogID", nullable = false)
+    @Column(name= "BlogID", nullable = false, updatable = false)
     public Integer blogID;
 
     @Override

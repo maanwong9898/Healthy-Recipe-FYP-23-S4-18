@@ -8,13 +8,13 @@ import jakarta.persistence.Embeddable;
 
 @Embeddable 
 public class UserInfoDateId implements Serializable  {
-     @Column(name= "UserID", nullable = false)
+     @Column(name= "UserID", nullable = false, updatable = false)
     public String UserID;
  
-    @Column(name= "SavedDate", nullable = false)
+    @Column(name= "SavedDate", nullable = false,  columnDefinition="DATETIME default (NOW())")
     public LocalDate SavedDate;
 
-    @Column(name= "Weight")
+    @Column(name= "Weight", columnDefinition="bit(1) default b'1'")
     private Boolean weight;
 
     @Override

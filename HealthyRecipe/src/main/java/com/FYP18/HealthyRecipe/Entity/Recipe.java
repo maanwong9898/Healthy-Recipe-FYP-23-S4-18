@@ -19,13 +19,13 @@ public class Recipe {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "ID")
+    @Column(name = "ID", updatable = false)
     private Long id;
 
     @Column(name = "STEPS", nullable = false)
     private String steps;
 
-    @Column(name = "Active", nullable = false)
+    @Column(name = "Active", nullable = false,columnDefinition="bit(1) default b'1'")
     private Boolean active;
 
     @Column(name = "Title", nullable = false)

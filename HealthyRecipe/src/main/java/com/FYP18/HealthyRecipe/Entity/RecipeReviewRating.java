@@ -25,11 +25,11 @@ public class RecipeReviewRating {
     @EmbeddedId
     private RecipeReviewRatingId recipeReviewRatingId;
     
-    @Column(name = "CreatedDT", nullable = false)
-    private LocalDateTime createdDateTime = LocalDateTime.now();
+    @Column(name = "CreatedDT", nullable = false,  columnDefinition="DATETIME default (NOW())")
+    private LocalDateTime createdDateTime ;
 
-    @Column(name = "LastUpdatedDT")
-    private LocalDateTime lastUpdatedDateTime = LocalDateTime.now();
+    @Column(name = "LastUpdatedDT", columnDefinition="DATETIME default (NOW())")
+    private LocalDateTime lastUpdatedDateTime;
 
     @Column(name = "Rating", nullable = false)
     private double rating;

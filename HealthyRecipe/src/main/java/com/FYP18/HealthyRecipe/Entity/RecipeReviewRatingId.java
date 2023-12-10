@@ -5,10 +5,10 @@ import jakarta.persistence.Embeddable;
 
 @Embeddable
 public class RecipeReviewRatingId {
-     @Column(name= "UserID", nullable = false)
+     @Column(name= "UserID", nullable = false, updatable = false)
     public String UserID;
  
-    @Column(name= "RecipeID", nullable = false)
+    @Column(name= "RecipeID", nullable = false, updatable =  false)
     public Integer RecipeID;
 
     @Override

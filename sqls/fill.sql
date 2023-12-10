@@ -49,10 +49,10 @@ INSERT INTO BLOG_REVIEW_RATING (Rating, UserID, BlogID) VALUES
  INSERT INTO Registered_User (ID, DOB) VALUES
     ("1",  "1969-09-11" );
 
-INSERT INTO UserInfoOverTime (ID, WeightOrHeight, Info) VALUES
+INSERT INTO User_Info_Over_Time (UserID, Weight, Info) VALUES
     ("1", b'1', 150.50);
    
-INSERT INTO UserInfoOverTime (ID, WeightOrHeight, Info, SavedDate) VALUES
+INSERT INTO User_Info_Over_Time (UserID, Weight, Info, Saved_Date) VALUES
     ("1", b'1', 150.50, "2022-12-08" );
 
 INSERT INTO SystemAdmin(ID, DOB) VALUES

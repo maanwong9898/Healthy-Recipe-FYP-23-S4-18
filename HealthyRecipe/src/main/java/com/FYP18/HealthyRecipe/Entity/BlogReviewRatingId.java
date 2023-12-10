@@ -19,6 +19,5 @@ public class BlogReviewRatingId implements Serializable
     public String toString()
     {
         return "User ID: " + UserID + ", Blog ID: " + blogID;
-    }
-    
+    } 
 }

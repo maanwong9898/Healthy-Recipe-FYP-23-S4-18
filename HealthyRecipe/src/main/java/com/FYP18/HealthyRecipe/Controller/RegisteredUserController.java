@@ -25,7 +25,7 @@ public class RegisteredUserController {
     private UserInfoRepository infoRepo;
 
     @GetMapping ("/get")
-    public List<RegisteredUser> GetAllRecipes()
+    public List<RegisteredUser> GetAllUsers()
     {
         List<RegisteredUser> controllers = repo.findAll(); 
         List<UserInfoOverTime> infos = infoRepo.findAll();

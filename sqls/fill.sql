@@ -60,8 +60,11 @@ INSERT INTO System_Admin(ID, DOB) VALUES
  
 
 INSERT INTO Business_User(ID, Company_Name, UEN, Dietitan_Account) VALUES
-    ("3", "Trump Corporate", "4799-577594-29584",  b'0') 
-
+    ("3", "Trump Corporate", "4799-577594-29584",  b'0') ;
 -- lock & enabled & expired is something that comes with
 -- UserDetails interface of Spring Security
   
+
+INSERT INTO RECIPE (TITLE, STEPS, INGREDIENTS, DESCRIPTION, INFO) VALUES
+("BAKED CHICKEN", "1. You Bake Chicken.\n2.Done\n3.End", "200 pounds of chicken","You also need a oven", "'calories':'2000g'\n'carbs':'200g'\n'fat':'150g'\n'protein':'20g'");
+ 

@@ -10,6 +10,9 @@ import com.FYP18.HealthyRecipe.Entity.BusinessUser;
 import com.FYP18.HealthyRecipe.Repository.BusinessUserRepository;
 import org.springframework.web.bind.annotation.GetMapping; 
 import java.util.List;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+
 
 @RestController
 @CrossOrigin()
@@ -19,9 +22,11 @@ public class BusinessUserController {
     private BusinessUserRepository repo;
 
     @GetMapping ("/get")
-    public List<BusinessUser> GetAllRecipes()
+    public List<BusinessUser> GetAllBusinessUsers()
     {
         List<BusinessUser> controllers = repo.findAll(); 
         return controllers;
     }
+ 
+    
 }

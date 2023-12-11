@@ -28,11 +28,12 @@ CREATE TABLE BLOG (
 -- or else its under Business blog lol
 
 -- associates UserID to business user
+-- i probably dont need to associate to user Id, i only
 CREATE TABLE RECIPE (
 	ID MEDIUMINT NOT NULL AUTO_INCREMENT,
 	Active BIT(1) NOT NULL DEFAULT b'1',
 
-	UserID 	VARCHAR(255) NOT NULL,
+	UserID 	VARCHAR(255),
 
 	Title VARCHAR(50) NOT NULL,
 	Steps VARCHAR(255) NOT NULL,  

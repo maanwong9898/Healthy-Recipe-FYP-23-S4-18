@@ -29,6 +29,7 @@ public class BusinessUser extends User  {
     @Column(name= "Company_Name")
     private String companyName ;
 
+    // if itsa dietitan, then UEN can be license number
     @Column(name= "UEN")
     private String UEN;
     

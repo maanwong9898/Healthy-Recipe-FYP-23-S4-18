@@ -37,7 +37,7 @@ public class User //implements UserDetails
     
     @Id
     @GeneratedValue(strategy= GenerationType.UUID)
-    @Column(updatable = false)
+    @Column(name = "ID", updatable = false)
     public String id;
 
     // @Enumerated(EnumType.STRING)
@@ -61,6 +61,9 @@ public class User //implements UserDetails
 
     @Column(name="Email")
     private String Email; 
+
+    @Column(name="Full_Name")
+    private String fullName;
     // private Boolean enabled; 
     // private Boolean expired; 
     // private Boolean locked;

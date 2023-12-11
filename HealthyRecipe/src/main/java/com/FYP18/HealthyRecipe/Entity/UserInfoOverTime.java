@@ -6,6 +6,9 @@ import jakarta.persistence.Column;
 import jakarta.persistence.EmbeddedId;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToOne;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -23,6 +26,12 @@ public class UserInfoOverTime {
   
     @Column(name= "Info")
     private double info;
+
+
+    // i can have many user info referencing the same user 
+    @ManyToOne
+    @JoinColumn(name = "UserID", referencedColumnName = "id", insertable = false, updatable = false)
+    private User userAccount;
 
     @Override
     public String toString()

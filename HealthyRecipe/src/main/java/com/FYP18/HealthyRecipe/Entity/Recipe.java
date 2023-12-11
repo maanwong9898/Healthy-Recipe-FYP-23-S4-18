@@ -6,6 +6,9 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 
 @Getter
@@ -40,5 +43,13 @@ public class Recipe {
 
     @Column(name = "Ingredients", nullable = false)
     private String Ingredients;
+
+      
+    // yes the userId can be null, credit may land on existing business 
+    // users or saved inside info column
+    @ManyToOne
+    @JoinColumn(name = "UserID", referencedColumnName = "id")
+    private User userID;
+ 
 }
 

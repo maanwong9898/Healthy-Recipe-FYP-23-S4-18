@@ -14,6 +14,7 @@ public class UserInfoDateId implements Serializable  {
     @Column(name= "SavedDate", nullable = false,  columnDefinition="DATETIME default (NOW())")
     public LocalDate SavedDate;
 
+    // if its false, means its info for height
     @Column(name= "Weight", columnDefinition="bit(1) default b'1'")
     private Boolean weight;
 

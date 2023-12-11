@@ -2,6 +2,7 @@ package com.FYP18.HealthyRecipe.Entity;
 
 import java.time.LocalDateTime;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import lombok.*;
 import jakarta.persistence.Column;
@@ -9,6 +10,9 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 
 @Getter
@@ -26,7 +30,7 @@ public class Blog {
     @Column(name = "ID", updatable = false)
     private Long id;
 
-    @Column(name = "CreatedDT", nullable = false, columnDefinition="DATETIME default (NOW())")
+    @Column(name = "CreatedDT", columnDefinition="DATETIME default (NOW())", updatable = false)
     private LocalDateTime createdDateTime;
 
     @Column(name = "LastUpdatedDT")
@@ -35,22 +39,27 @@ public class Blog {
     @Column(name= "ACTIVE", columnDefinition="bit(1) default b'1'")
     private Boolean active;
 
-    @Column(name= "Educational_Content", columnDefinition="bit(1) default b'1'")
+    @Column(name= "Educational_Content", updatable = false)
     private Boolean educationalContent ;
      
     @Column(name= "Publisher")
     private String publisher;
-
-    
+ 
     @Column(name= "Title")
     private String title;
 
     @Column(name= "Info")
     private String info;
-     
-    @Column(name= "UserID")
-    private String userID;
-    
+      
+    // yes the userId can be null, credit may land on existing business 
+    // users or saved inside info column
+    // i included cascadeType.persist just to 
+    @ManyToOne(cascade = CascadeType.MERGE)
+    @JoinColumn(name = "UserID", referencedColumnName = "id")
+    private User userID;
+ 
+    // this userId belongs to who wrote it, usually fellow 
+    // business user
  
 }    
   

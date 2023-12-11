@@ -11,6 +11,8 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
  
 @Getter
@@ -25,7 +27,16 @@ public class BlogReviewRating {
 
     @EmbeddedId
     private BlogReviewRatingId blogReviewRatingId;
- 
+  
+    @ManyToOne
+    @JoinColumn(name = "blogid", referencedColumnName = "id", insertable = false, updatable = false)
+    private Blog blog;
+
+    @ManyToOne
+    @JoinColumn(name = "UserID", referencedColumnName = "id", insertable = false, updatable = false)
+    private User userAccount;
+
+
     @Column(name = "CreatedDT", nullable = false, columnDefinition="DATETIME default (NOW())")
     private LocalDateTime createdDateTime;
 

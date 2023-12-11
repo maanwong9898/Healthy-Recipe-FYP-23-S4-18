@@ -2,6 +2,10 @@ package com.FYP18.HealthyRecipe.Entity;
 
 import java.time.LocalDateTime;
 
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
+
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column; 
 import jakarta.persistence.EmbeddedId;
  
@@ -28,8 +32,9 @@ public class BlogReviewRating {
     @EmbeddedId
     private BlogReviewRatingId blogReviewRatingId;
   
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.REMOVE)
     @JoinColumn(name = "blogid", referencedColumnName = "id", insertable = false, updatable = false)
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private Blog blog;
 
     @ManyToOne

@@ -18,7 +18,7 @@ public interface BlogRepository extends JpaRepository<Blog, Long>{
     @Transactional
     @Query("DELETE FROM Blog b WHERE b.ID = :id")
     void deleteByBlogId(Long id);
-
+ 
     // @Modifying
     // @Transactional
     // @Query("SELECT b FROM Blog b WHERE b.userID = :id")

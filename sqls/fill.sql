@@ -28,7 +28,9 @@ INSERT INTO USERACCOUNT (ID, Username, Password, Email, Full_Name) VALUES
 
 
 INSERT INTO BLOG(PUBLISHER, TITLE, INFO, Educational_Content, UserID) VALUES
-    ("Mark", "Mark's favourite dish", "Mark-ed", b'1', "3"); 
+    ("Mark1", "Mark1's favourite dish", "Mark-ed", b'1', "3"),
+    ("Mark2", "Mark2's favourite dish", "Mark-ed", b'1', "3"), 
+    ("Mark3", "Mark3's favourite dish", "Mark-ed", b'1', "3"); 
 
 INSERT INTO RECIPE (TITLE, STEPS, INGREDIENTS, DESCRIPTION, INFO, UserID) VALUES
     ("BAKED CHICKEN", "1. You Bake Chicken.\n2.Done\n3.End", "200 pounds of chicken","You also need a oven", "'calories':'2000g'\n'carbs':'200g'\n'fat':'150g'\n'protein':'20g'",  "3");
@@ -38,7 +40,9 @@ INSERT INTO RECIPE_REVIEW_RATING (Rating, Review, UserID, RecipeID) VALUES
     (3.2, "REVIEW-ed", "1", 1);
  
 INSERT INTO BLOG_REVIEW_RATING (Rating, UserID, BlogID) VALUES
-    (3.2, "1", 1);
+    (3.2, "1", 1),
+    (3.2, "1", 2),
+    (3.2, "1", 3);
   
 -- INSERT INTO REVIEW_RATING (RATING, USERID, RecipeID) VALUES
 -- (3.2, "4", 1);

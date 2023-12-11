@@ -81,6 +81,15 @@ public class BlogService {
         blogRepository.deleteByBlogId(id); 
         // apparently once i set the relationship accordingly, there's no need for me 
         // to delete blogReviewRatings myself
+
+        // i had to include ondelete cascade
+        // and also ManyToOne from blogreviewrating -> blog
+
+        // when i also include OneToMany from blog -> blogReviewRating,
+        // it ends up in an infinite loop when i call get
+
+        // i need time to research about how to include blogreviewrating
+        // insided blog, without creating those sqls columns 
     }
 
 }

@@ -53,7 +53,7 @@ public class Blog {
       
     // yes the userId can be null, credit may land on existing business 
     // users or saved inside info column
-    // i included cascadeType.persist just to 
+    // i included cascadeType.MERGE just to 
     @ManyToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name = "UserID", referencedColumnName = "id")
     private User userID;

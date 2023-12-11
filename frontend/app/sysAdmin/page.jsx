@@ -19,7 +19,7 @@ const AdminHomePage = () => {
 
   // The button under user account management will redirect to corresponding page
   const handleCreateUserAccount = () => {
-    router.push("/sysAdmin");
+    router.push("/sysAdmin/userAccount/createUserAccount");
   };
 
   const handleViewUserAccount = () => {

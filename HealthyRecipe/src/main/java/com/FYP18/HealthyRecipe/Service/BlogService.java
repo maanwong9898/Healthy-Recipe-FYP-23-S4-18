@@ -70,6 +70,11 @@ public class BlogService {
     //     return blogRepository.findByUserID(userId);
     // }
  
+    public List<Blog> findBlogByUserId(String userId)
+    {
+        return blogRepository.findByUserID(userId);
+    }
+ 
     public void deleteBlog(long id)
     {
         // blogReviewRatingRepository.deleteByBlogId(id);

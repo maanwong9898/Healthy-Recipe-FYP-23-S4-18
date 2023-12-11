@@ -21,9 +21,14 @@ public interface BlogRepository extends JpaRepository<Blog, Long>{
 
     // @Modifying
     // @Transactional
-    // @Query("SELECT b FROM Blog b WHERE b.userID.id = :id.")
-    // List<Blog> findByUserId(User id);
+    // @Query("SELECT b FROM Blog b WHERE b.userID = :id")
+    // List<Blog> findByUserId(String id);
 
+
+    @Modifying
+    @Transactional
+    @Query("SELECT b FROM Blog b WHERE b.userID.id = :userId")
+    List<Blog> findByUserID(String userId);
     // List<Blog> findByUserID(User userID);
 }
 

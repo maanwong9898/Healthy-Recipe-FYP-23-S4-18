@@ -55,6 +55,12 @@ public class BlogController {
     //     List<Blog> toReturn = blogService.findBlogByUserId(userId);
     //     return new ResponseEntity<>(toReturn, HttpStatus.OK);
     // }
+    @GetMapping ("/findByUserId/{id}")
+    public ResponseEntity<List<Blog>> findByUserId(@PathVariable String id)
+    { 
+        List<Blog> toReturn = blogService.findBlogByUserId(id);
+        return new ResponseEntity<>(toReturn, HttpStatus.OK);
+    }
 
     @PostMapping("/add")
     public ResponseEntity<Blog> addBlog(@RequestBody Blog blog)  

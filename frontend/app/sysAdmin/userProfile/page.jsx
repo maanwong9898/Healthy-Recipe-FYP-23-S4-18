@@ -15,22 +15,22 @@ const mockUserProfilesList = [
   {
     id: "883eac32-59af-472b-aa58-5822660acb83",
     isActive: true,
-    role: "system admin",
+    profileTitle: "System admin",
   },
   {
     id: "25930c96-e5d9-4f40-8d37-a6f4ed7cd235",
     isActive: true,
-    role: "registered user",
+    profileTitle: "Registered user",
   },
   {
     id: "668cb477-afde-437c-bf4f-5bdcc1dfec65",
     isActive: true,
-    role: "business user",
+    profileTitle: "Business user",
   },
   {
     id: "037acb05-1e48-4197-88aa-2bdca2e3ce47",
     isActive: true,
-    role: "dietitian",
+    profileTitle: "Dietitian",
   },
 ];
 
@@ -64,15 +64,15 @@ const UserProfile = () => {
   //   }, []);
 
   return (
-    <div className="bg-blue-400 min-h-screen flex flex-col justify-center items-center py-5">
-      <h1 className="text-2xl text-blue-800 font-bold mb-4 text-center sm:text-left">
+    <div className="bg-blue-800 min-h-screen flex flex-col justify-center items-center py-5">
+      <h1 className="text-2xl text-white font-bold mb-4 text-center sm:text-left">
         User Profile List
       </h1>
       <div className="overflow-x-auto w-full max-w-md">
-        <table className="w-full rounded border-blue-900 border-2">
+        <table className="w-full rounded border-black border-2">
           <thead className="bg-blue-600 font-semibold text-white">
             <tr>
-              <th className="px-2 py-1 mb-3 text-center sm:text-left">
+              <th className="px-2 py-1 mb-3 text-xl text-center sm:text-left border-2 border-black">
                 Profile Type
               </th>
             </tr>
@@ -83,8 +83,8 @@ const UserProfile = () => {
                 key={index}
                 className="bg-white border-b border-blue dark:border-blue-600"
               >
-                <td className="px-3 py-2 text-sm text-center sm:text-left">
-                  {eachList.role}
+                <td className="px-3 py-2 text-base text-center sm:text-left">
+                  {eachList.profileTitle}
                 </td>
               </tr>
             ))}

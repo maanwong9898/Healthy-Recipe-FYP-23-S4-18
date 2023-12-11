@@ -43,13 +43,13 @@ const SuspendRecipePages = () => {
   const [recipes, setRecipes] = useState(mockRecipes);
 
   return (
-    <div className="px-2 sm:px-5">
-      <h1 className="text-xl text-blue-700 font-semibold p-3 text-center sm:text-left">
+    <div className="px-2 sm:px-5  bg-blue-800 min-h-screen flex flex-col py-5">
+      <h1 className="text-2xl text-white p-3 mb-4 font-bold text-center sm:text-left">
         Recipes
       </h1>
       <div className="overflow-x-auto">
-        <table className="min-w-full rounded-lg border-2">
-          <thead className="bg-blue-600 font-semibold text-white">
+        <table className="min-w-full rounded-lg border-black border-2">
+          <thead className="bg-blue-600 font-semibold text-white border-black border-2">
             <tr>
               <th className="px-3 py-2 text-left">Recipe</th>
               <th className="px-3 py-2 text-left">Date Created</th>

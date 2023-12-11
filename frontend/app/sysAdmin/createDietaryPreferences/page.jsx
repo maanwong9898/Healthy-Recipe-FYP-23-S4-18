@@ -78,8 +78,8 @@ const CreateDietaryPreferences = () => {
   };
 
   return (
-    <div className="bg-blue-400 min-h-screen flex flex-col justify-center items-center py-5">
-      <h1 className="text-2xl text-blue-800 font-bold mb-4 text-center sm:text-left">
+    <div className="bg-blue-800  min-h-screen flex flex-col justify-center items-center py-5">
+      <h1 className="text-2xl text-white font-bold mb-4 text-center sm:text-left">
         Dietary Preferences List
       </h1>
       <div className="overflow-x-auto w-full max-w-md">
@@ -87,7 +87,7 @@ const CreateDietaryPreferences = () => {
           <div>
             <input
               type="text"
-              className="p-2 rounded mr-3 text-gray-800 bg-white text-sm w-40 border-blue-500 border-1"
+              className="p-2 rounded mr-3 text-gray-800 bg-white text-sm w-42 border-black border-2"
               placeholder="New Dietary Preference"
               value={newPreference}
               onChange={(e) => setNewPreference(e.target.value)}
@@ -96,16 +96,16 @@ const CreateDietaryPreferences = () => {
           <div>
             <button
               onClick={handleCreateDietaryPreferences}
-              className=" rounded bg-blue-700 text-white text-center font-bold p-2 w-20"
+              className=" rounded bg-blue-300 text-blue-900 text-center font-bold p-2 w-20"
             >
               Create
             </button>
           </div>
         </div>
-        <table className="w-full rounded border-blue-900 border-2">
-          <thead className="bg-blue-600 font-semibold text-white">
+        <table className="w-full rounded border-black border-2">
+          <thead className="bg-blue-600 font-semibold text-white border-black border-2">
             <tr>
-              <th className="px-2 py-1 mb-3 text-center sm:text-left">
+              <th className="px-2 py-1 mb-3 text-center text-xl sm:text-left">
                 Dietary Preferences
               </th>
             </tr>
@@ -116,7 +116,7 @@ const CreateDietaryPreferences = () => {
                 key={preference.id}
                 className="bg-white border-b border-blue dark:border-blue-600"
               >
-                <td className="px-3 py-2 text-sm text-center sm:text-left">
+                <td className="px-3 py-2 text-base text-center sm:text-left">
                   {preference.name}
                 </td>
               </tr>

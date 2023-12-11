@@ -135,13 +135,20 @@ const UserAccount = () => {
   };
 
   return (
-    <div className="px-2 sm:px-5">
-      <h1 className="text-xl text-blue-700 font-semibold p-3 text-center sm:text-left">
+    <div className="px-2 sm:px-5 bg-blue-800 min-h-screen flex flex-col py-5 ">
+      <h1 className="text-2xl text-white p-3 mb-4 font-bold text-center sm:text-left">
         User Account List
       </h1>
+      <div>
+        <button className="text-white bg-gradient-to-br from-purple-600 to-blue-500 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 rounded-lg text-base px-5 py-2.5 mr-7 mb-2 text-center">
+          <Link href="/sysAdmin/userAccount/createUserAccount">
+            Create User Account
+          </Link>
+        </button>
+      </div>
       <div className="overflow-x-auto">
-        <table className="min-w-full rounded-lg border-2">
-          <thead className="bg-blue-600 font-semibold text-white">
+        <table className="min-w-full rounded-lg border-black border-2">
+          <thead className="bg-blue-600 font-semibold text-white border-black border-2">
             <tr>
               <th className="px-3 py-2 text-left">Username</th>
               <th className="px-3 py-2 text-left">Profile Type</th>

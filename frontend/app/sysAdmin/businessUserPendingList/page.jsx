@@ -4,7 +4,7 @@ import React from "react";
 import Link from "next/link";
 import { useState, useEffect } from "react";
 
-// router path: /sysAdmin/verifyBusinessUser
+// router path: /sysAdmin/businessUserPendingList
 
 // Called the controller to get the list of business users and dietitians that status are "Pending"
 const mockUsers = [
@@ -50,13 +50,13 @@ const VerifyBusinessUserPage = () => {
   const [userAccounts, setUserAccounts] = useState(mockUsers);
 
   return (
-    <div className="px-2 sm:px-5">
-      <h1 className="text-xl text-blue-700 font-semibold p-3 text-center sm:text-left">
+    <div className="px-2 sm:px-5 bg-blue-800 min-h-screen flex flex-col py-5 ">
+      <h1 className="text-2xl text-white font-bold p-3 text-center mb-3 sm:text-left">
         Pending Business User List for Verification
       </h1>
       <div className="overflow-x-auto">
-        <table className="min-w-full rounded-lg border-2">
-          <thead className="bg-blue-600 font-semibold text-white">
+        <table className="min-w-full rounded-lg border-black border-2">
+          <thead className="bg-blue-600 font-semibold text-white border-black border-2">
             <tr>
               <th className="px-3 py-2 text-left">Username</th>
               <th className="px-3 py-2 text-left">Profile Type</th>
@@ -98,7 +98,7 @@ const VerifyBusinessUserPage = () => {
                     mr-7 text-center"
                   >
                     {" "}
-                    Verify
+                    Verify Details
                   </button>
                 </td>
               </tr>

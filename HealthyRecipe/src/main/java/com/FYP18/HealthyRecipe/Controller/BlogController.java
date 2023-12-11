@@ -46,15 +46,7 @@ public class BlogController {
         List<Blog> toReturn = blogService.getAllBlogs();
         return new ResponseEntity<>(toReturn, HttpStatus.OK);
     }
-
-
-    // Would attempt this when i got  time :)
-    // @GetMapping ("/findByUserId")
-    // public ResponseEntity<List<Blog>> findByUserId(@RequestBody User userId )  
-    // { 
-    //     List<Blog> toReturn = blogService.findBlogByUserId(userId);
-    //     return new ResponseEntity<>(toReturn, HttpStatus.OK);
-    // }
+ 
     @GetMapping ("/findByUserId/{id}")
     public ResponseEntity<List<Blog>> findByUserId(@PathVariable String id)
     { 

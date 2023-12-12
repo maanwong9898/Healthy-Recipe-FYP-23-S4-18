@@ -4,12 +4,12 @@ import { useState } from "react";
 import Link from "next/link";
 import HomeNavbar from "@/app/components/navigation/homeNavBar";
 
-const businessRegistration = () => {
+const dietitianRegistration = () => {
   const [fullName, setFullName] = useState("");
   const [username, setUsername] = useState("");
   const [workEmail, setWorkEmail] = useState("");
   const [organization, setOrganization] = useState("");
-  const [uen, setUen] = useState("");
+  const [licenseNum, setLicenseNum] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPwd, setConfirmPwd] = useState("");
   const [error, setError] = useState("");
@@ -23,7 +23,7 @@ const businessRegistration = () => {
       !username ||
       !workEmail ||
       !organization ||
-      !uen ||
+      !licenseNum ||
       !password ||
       !confirmPwd
     ) {
@@ -44,7 +44,7 @@ const businessRegistration = () => {
       setUsername("");
       setWorkEmail("");
       setOrganization("");
-      setUen("");
+      setLicenseNum("");
       setPassword("");
       setConfirmPwd("");
       setError("");
@@ -56,7 +56,7 @@ const businessRegistration = () => {
       username,
       workEmail,
       organization,
-      uen,
+      licenseNum,
       password,
       confirmPwd,
     });
@@ -70,7 +70,7 @@ const businessRegistration = () => {
           <div className="w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0">
             <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
               <h1 className="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">
-                Business User Sign Up
+                Dietitian Sign Up
               </h1>
               <form className="space-y-3">
                 <div className="flex space-x-4">
@@ -124,14 +124,14 @@ const businessRegistration = () => {
                 </div>
 
                 <div className="flex flex-row">
-                  {/* UEN */}
+                  {/* LICENSE NUMBER */}
                   <input
                     type="text"
-                    name="uen"
-                    id="uen"
-                    placeholder="UEN"
-                    value={uen}
-                    onChange={(e) => setUen(e.target.value)}
+                    name="licenseNum"
+                    id="licenseNum"
+                    placeholder="License Number"
+                    value={licenseNum}
+                    onChange={(e) => setLicenseNum(e.target.value)}
                     className="border px-4 py-2 rounded-lg bg-gray-50 border-gray-300 text-gray-900 sm:text-sm focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 "
                   ></input>
                 </div>
@@ -198,4 +198,4 @@ const businessRegistration = () => {
   );
 };
 
-export default businessRegistration;
+export default dietitianRegistration;

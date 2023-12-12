@@ -4,17 +4,15 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.stereotype.Service; 
 
 import com.FYP18.HealthyRecipe.Entity.Blog;
+import com.FYP18.HealthyRecipe.Entity.BlogReviewRating;
 import com.FYP18.HealthyRecipe.Entity.BlogReviewRatingId;
-import com.FYP18.HealthyRecipe.Entity.User;
+
 import com.FYP18.HealthyRecipe.Repository.BlogRepository;
 import com.FYP18.HealthyRecipe.Repository.BlogReviewRatingRepository;
-
-import jakarta.transaction.Transactional;
-
+ 
 
 @Service 
 public class BlogService {
@@ -25,8 +23,8 @@ public class BlogService {
     @Autowired
     private BlogReviewRatingRepository blogReviewRatingRepository;
 
-    // create, read all, read 1, update, delete
-    
+    // create, read all, read 1, update, delete for blogReviewRating
+ 
     public Blog createBlog(Blog blog)
     {
         blog.setCreatedDateTime(LocalDateTime.now());
@@ -92,4 +90,32 @@ public class BlogService {
         // insided blog, without creating those sqls columns 
     }
 
+    public List<BlogReviewRating> getAllRatings()
+    {
+        return blogReviewRatingRepository.findAll();
+    }
+
+    public List<BlogReviewRating> getAllRatingsOfUserId(String userId)
+    {
+        return blogReviewRatingRepository.findByUserID(userId);
+    }
+    // create, find, edit, delete rating
+    public BlogReviewRating createRating(BlogReviewRating blogReviewRating)
+    {
+        blogReviewRating.setCreatedDateTime(LocalDateTime.now());
+        return blogReviewRatingRepository.save(blogReviewRating);
+    }
+    public BlogReviewRating updateRating(BlogReviewRating blogReviewRating)
+    {
+        blogReviewRating.setLastUpdatedDateTime(LocalDateTime.now()); 
+        return blogReviewRatingRepository.save(blogReviewRating);
+    }
+    public void deleteRating(BlogReviewRating blogReviewRating)
+    {
+        blogReviewRatingRepository.delete(blogReviewRating); 
+    }
+    public void deleteRatingByBlogId(BlogReviewRatingId id)
+    {
+        blogReviewRatingRepository.deleteByBlogId(id.UserID, id.blogID);
+    } 
 }

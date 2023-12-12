@@ -88,13 +88,7 @@ public class BlogController {
 
 
 
-
-    // @GetMapping("/rating/get")
-    // public ResponseEntity<List<BlogReviewRating>> getAllBlogReviewRating()  
-    // { 
-    //    List<BlogReviewRating> toReturn = blogService.getAllRatings();
-    //     return new ResponseEntity<>(toReturn, HttpStatus.OK);
-    // }
+ 
     
     // if its empty, get everything(probably removing it)
     // if its not empty, try to get the userId of 
@@ -122,9 +116,7 @@ public class BlogController {
        BlogReviewRating toReturn = blogService.updateRating(blog); 
         return new ResponseEntity<>(toReturn, HttpStatus.OK);
     }
-      
-
- 
+       
     @DeleteMapping("/rating/delete")
     public ResponseEntity<?> deleteBlogReviewRating(@RequestBody BlogReviewRatingId id )
     {  

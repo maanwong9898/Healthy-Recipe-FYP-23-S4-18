@@ -9,7 +9,7 @@ public class RecipeReviewRatingId {
     public String UserID;
  
     @Column(name= "RecipeID", nullable = false, updatable =  false)
-    public Integer RecipeID;
+    public Long RecipeID;
 
     @Override
     public String toString()

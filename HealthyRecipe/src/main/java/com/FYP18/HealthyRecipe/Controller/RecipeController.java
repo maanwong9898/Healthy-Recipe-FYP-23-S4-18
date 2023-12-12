@@ -1,6 +1,5 @@
 package com.FYP18.HealthyRecipe.Controller;
-
-import org.springframework.beans.factory.annotation.Autowired;
+ 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -8,13 +7,10 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-
-import com.FYP18.HealthyRecipe.Entity.Blog;
+ 
 import com.FYP18.HealthyRecipe.Entity.Recipe;
 import com.FYP18.HealthyRecipe.Entity.RecipeReviewRating;
-import com.FYP18.HealthyRecipe.Repository.RecipeRepository;
-import com.FYP18.HealthyRecipe.Repository.RecipeReviewRatingRepository;
-import com.FYP18.HealthyRecipe.Service.BlogService;
+import com.FYP18.HealthyRecipe.Entity.RecipeReviewRatingId; 
 import com.FYP18.HealthyRecipe.Service.RecipeService;
 
 import org.springframework.web.bind.annotation.GetMapping;
@@ -23,8 +19,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-
-// import org.springframework.web.bind.annotation.RequestParam;
+ 
 import java.util.List;
 
 
@@ -89,6 +84,40 @@ public class RecipeController {
     public ResponseEntity<?> deleteBlog(@PathVariable("id") long id )
     {  
         recipeService.deleteRecipeById(id);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+
+
+       @GetMapping("/rating/get")
+    public ResponseEntity<List<RecipeReviewRating>> getAllBlogReviewRatingOfUserId
+                (@RequestParam(required = false) String userId)  
+    { 
+       List<RecipeReviewRating> toReturn = userId ==null ? recipeService.getAllRecipeReviewRating():
+                                                            recipeService.getAllRecipeReviewRatingOfUserId(userId);
+        return new ResponseEntity<>(toReturn, HttpStatus.OK);
+    }
+
+
+    @PostMapping("/rating/add")
+    public ResponseEntity<RecipeReviewRating> addBlogReviewRating(@RequestBody RecipeReviewRating blog)  
+    { 
+       RecipeReviewRating toReturn = recipeService.createRating(blog); 
+        return new ResponseEntity<>(toReturn, HttpStatus.CREATED);
+    }
+    
+
+    @PutMapping("/rating/edit")
+    public ResponseEntity<RecipeReviewRating> editBlogReviewRating(@RequestBody RecipeReviewRating blog)  
+    { 
+       RecipeReviewRating toReturn = recipeService.updateRating(blog); 
+        return new ResponseEntity<>(toReturn, HttpStatus.OK);
+    }
+       
+    @DeleteMapping("/rating/delete")
+    public ResponseEntity<?> deleteBlogReviewRating(@RequestBody RecipeReviewRatingId id )
+    {  
+        recipeService.deleteReviewById(id);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 }

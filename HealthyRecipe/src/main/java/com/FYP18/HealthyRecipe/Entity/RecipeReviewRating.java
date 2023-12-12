@@ -2,9 +2,16 @@ package com.FYP18.HealthyRecipe.Entity;
 
 import java.time.LocalDateTime;
 
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
+
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.EmbeddedId;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -25,7 +32,7 @@ public class RecipeReviewRating {
     @EmbeddedId
     private RecipeReviewRatingId recipeReviewRatingId;
     
-    @Column(name = "CreatedDT", nullable = false,  columnDefinition="DATETIME default (NOW())")
+    @Column(name = "CreatedDT",  columnDefinition="DATETIME default (NOW())")
     private LocalDateTime createdDateTime ;
 
     @Column(name = "LastUpdatedDT", columnDefinition="DATETIME default (NOW())")
@@ -36,6 +43,16 @@ public class RecipeReviewRating {
 
     @Column(name= "Review")
     private String review;
+ 
+    @ManyToOne(cascade = CascadeType.REMOVE, fetch = FetchType.EAGER)
+    @JoinColumn(name = "RecipeID", referencedColumnName = "id", insertable = false, updatable = false)
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    private Recipe recipe;
+
+    @ManyToOne
+    @JoinColumn(name = "UserID", referencedColumnName = "id", insertable = false, updatable = false)
+    private User userAccount;
+
 
     @Override 
     public String toString()

@@ -37,7 +37,6 @@ public class Recipe {
     @Column(name = "Description", nullable = false)
     private String description;
 
-
     @Column(name = "Info", nullable = false)
     private String info;
 

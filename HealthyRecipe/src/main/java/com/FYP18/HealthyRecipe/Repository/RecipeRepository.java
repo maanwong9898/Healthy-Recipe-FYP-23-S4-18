@@ -22,6 +22,11 @@ public interface RecipeRepository extends JpaRepository<Recipe, Long>{
 
 
     @Modifying
+    @Transactional
+    @Query("DELETE FROM Recipe b WHERE b.ID = :id")
+    void deleteByRecipeId(Long id);
+
+    @Modifying
     @Transactional 
     @Query("SELECT r FROM Recipe r WHERE r.title LIKE %:keyword%")
     List<Recipe> findByKeyword(@Param("keyword") String keyword);

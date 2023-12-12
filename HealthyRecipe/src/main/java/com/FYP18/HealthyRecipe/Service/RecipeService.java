@@ -1,20 +1,27 @@
 package com.FYP18.HealthyRecipe.Service;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cglib.core.Local;
 import org.springframework.stereotype.Service;
-
-import com.FYP18.HealthyRecipe.Entity.Blog;
+ 
 import com.FYP18.HealthyRecipe.Entity.Recipe;
+import com.FYP18.HealthyRecipe.Entity.RecipeReviewRating;
+import com.FYP18.HealthyRecipe.Entity.RecipeReviewRatingId;
 import com.FYP18.HealthyRecipe.Repository.RecipeRepository;
+import com.FYP18.HealthyRecipe.Repository.RecipeReviewRatingRepository;
 
 @Service  
 public class RecipeService {
     
     @Autowired
-    public RecipeRepository recipeRepository;
+    private RecipeRepository recipeRepository;
     
+    @Autowired
+    private RecipeReviewRatingRepository recipeReviewRatingRepository;
     // create, read all, read 1, update, delete for Recipe and review Ratings
 
     public Recipe createRecipe(Recipe recipe)
@@ -23,8 +30,7 @@ public class RecipeService {
         recipe.setActive(true);
         return recipeRepository.save(recipe);
     }
-
-
+ 
     // i know its the same, i'm just separating in case
     public Recipe updateRecipe(Recipe recipe)
     {  
@@ -48,6 +54,39 @@ public class RecipeService {
     
     public void deleteRecipeById(long id)
     {
-        recipeRepository.deleteById(id);
+        recipeRepository.deleteByRecipeId(id);
     }
+
+
+    //- rating's Create, Update, Read, Delete
+    
+    public RecipeReviewRating createRating(RecipeReviewRating recipeReviewRating)
+    {   
+        recipeReviewRating.setCreatedDateTime(LocalDateTime.now());
+        return recipeReviewRatingRepository.save(recipeReviewRating);
+    }
+ 
+     public RecipeReviewRating updateRating(RecipeReviewRating recipeReviewRating)
+    {  
+        // RecipeReviewRating toUpdate = recipeReviewRatingRepository.findById(recipeReviewRating.getRecipeReviewRatingId()).get();
+        recipeReviewRating.setLastUpdatedDateTime(LocalDateTime.now());
+        return recipeReviewRatingRepository.save(recipeReviewRating);
+    }
+      
+    public List<RecipeReviewRating> getAllRecipeReviewRatingOfUserId(String userId)
+    {   
+        return recipeReviewRatingRepository.findByUserID(userId);
+    }
+    
+    public List<RecipeReviewRating> getAllRecipeReviewRating()
+    {   
+        return recipeReviewRatingRepository.findAll();
+    }
+    public void deleteReviewById(RecipeReviewRatingId id)
+    {
+        recipeReviewRatingRepository.deleteById(id);
+    }
+
+    
+    
 }

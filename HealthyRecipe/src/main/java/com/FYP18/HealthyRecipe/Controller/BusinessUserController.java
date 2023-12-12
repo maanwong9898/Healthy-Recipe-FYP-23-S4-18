@@ -26,7 +26,5 @@ public class BusinessUserController {
     {
         List<BusinessUser> controllers = repo.findAll(); 
         return controllers;
-    }
- 
-    
+    } 
 }

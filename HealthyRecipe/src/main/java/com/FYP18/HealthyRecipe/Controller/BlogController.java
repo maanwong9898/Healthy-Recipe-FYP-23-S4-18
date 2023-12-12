@@ -6,10 +6,12 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.FYP18.HealthyRecipe.Entity.Blog;
 import com.FYP18.HealthyRecipe.Entity.BlogReviewRating;
+import com.FYP18.HealthyRecipe.Entity.BlogReviewRatingId;
 import com.FYP18.HealthyRecipe.Entity.User;
 import com.FYP18.HealthyRecipe.Repository.BlogRepository;
 import com.FYP18.HealthyRecipe.Repository.BlogReviewRatingRepository;
@@ -83,5 +85,53 @@ public class BlogController {
         blogService.deleteBlog(id);
         return new ResponseEntity<>(HttpStatus.OK);
     }
+
+
+
+
+    // @GetMapping("/rating/get")
+    // public ResponseEntity<List<BlogReviewRating>> getAllBlogReviewRating()  
+    // { 
+    //    List<BlogReviewRating> toReturn = blogService.getAllRatings();
+    //     return new ResponseEntity<>(toReturn, HttpStatus.OK);
+    // }
+    
+    // if its empty, get everything(probably removing it)
+    // if its not empty, try to get the userId of 
+    @GetMapping("/rating/get")
+    public ResponseEntity<List<BlogReviewRating>> getAllBlogReviewRatingOfUserId
+                (@RequestParam(required = false) String userId)  
+    { 
+       List<BlogReviewRating> toReturn = userId ==null ? blogService.getAllRatings():
+                                 blogService.getAllRatingsOfUserId(userId);
+        return new ResponseEntity<>(toReturn, HttpStatus.OK);
+    }
+
+
+    @PostMapping("/rating/add")
+    public ResponseEntity<BlogReviewRating> addBlogReviewRating(@RequestBody BlogReviewRating blog)  
+    { 
+       BlogReviewRating toReturn = blogService.createRating(blog); 
+        return new ResponseEntity<>(toReturn, HttpStatus.CREATED);
+    }
+    
+
+    @PutMapping("/rating/edit")
+    public ResponseEntity<BlogReviewRating> editBlogReviewRating(@RequestBody BlogReviewRating blog)  
+    { 
+       BlogReviewRating toReturn = blogService.updateRating(blog); 
+        return new ResponseEntity<>(toReturn, HttpStatus.OK);
+    }
+      
+
+ 
+    @DeleteMapping("/rating/delete")
+    public ResponseEntity<?> deleteBlogReviewRating(@RequestBody BlogReviewRatingId id )
+    {  
+        blogService.deleteRatingByBlogId(id);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+
 }
 

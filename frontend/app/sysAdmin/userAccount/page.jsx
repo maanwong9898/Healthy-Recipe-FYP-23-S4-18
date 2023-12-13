@@ -135,12 +135,12 @@ const UserAccount = () => {
   };
 
   return (
-    <div className="px-2 sm:px-5 bg-blue-800 min-h-screen flex flex-col py-5 ">
+    <div className="px-2 sm:px-5 bg-cyan-800 min-h-screen flex flex-col py-5 ">
       <h1 className="text-2xl text-white p-3 mb-4 font-bold text-center sm:text-left">
         User Account List
       </h1>
       <div>
-        <button className="text-white bg-gradient-to-br from-purple-600 to-blue-500 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 rounded-lg text-base px-5 py-2.5 mr-7 mb-2 text-center">
+        <button className="text-white border-2 border-black bg-gradient-to-br from-cyan-400 to-cyan-800 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 rounded-lg text-base font-bold px-5 py-2.5 mr-7 mb-4 text-center">
           <Link href="/sysAdmin/userAccount/createUserAccount">
             Create User Account
           </Link>
@@ -148,14 +148,14 @@ const UserAccount = () => {
       </div>
       <div className="overflow-x-auto">
         <table className="min-w-full rounded-lg border-black border-2">
-          <thead className="bg-blue-600 font-semibold text-white border-black border-2">
+          <thead className="bg-cyan-600 font-semibold text-cyan-950 border-black border-2">
             <tr>
-              <th className="px-3 py-2 text-left">Username</th>
-              <th className="px-3 py-2 text-left">Profile Type</th>
-              <th className="px-3 py-2 text-left">Email</th>
-              <th className="px-3 py-2 text-left">Created Date</th>
-              <th className="px-3 py-2 text-left">Status</th>
-              <th className="px-3 py-2 text-left"></th>
+              <th className="px-3 py-2 text-xl text-left">Username</th>
+              <th className="px-3 py-2 text-xl text-left">Profile Type</th>
+              <th className="px-3 py-2 text-xl text-left">Email</th>
+              <th className="px-3 py-2 text-xl text-left">Created Date</th>
+              <th className="px-3 py-2 text-xl text-left">Status</th>
+              <th className="px-3 py-2 text-xl text-left"></th>
             </tr>
           </thead>
           <tbody>
@@ -164,24 +164,24 @@ const UserAccount = () => {
                 key={index}
                 className="bg-white border-b border-blue dark:border-blue-600"
               >
-                <td className="px-3 py-2 text-sm text-center sm:text-left">
+                <td className="px-3 py-2 text-base text-center sm:text-left">
                   {user.username}
                 </td>
-                <td className="px-3 py-2 text-sm text-center sm:text-left">
+                <td className="px-3 py-2 text-base text-center sm:text-left">
                   {user.userProfile}
                 </td>
-                <td className="px-3 py-2 text-sm text-center sm:text-left">
+                <td className="px-3 py-2 text-base text-center sm:text-left">
                   {user.email}
                 </td>
-                <td className="px-3 py-2 text-sm text-center sm:text-left">
+                <td className="px-3 py-2 text-base text-center sm:text-left">
                   {user.createdDate}
                 </td>
-                <td className="px-3 py-2 text-sm text-center sm:text-left">
+                <td className="px-3 py-2 text-base text-center sm:text-left">
                   <span
-                    className={`rounded-full px-3 py-1 text-xs font-semibold ${
+                    className={`rounded-full px-3 py-1 text-base font-semibold ${
                       user.isActive === true
-                        ? "bg-green-200 text-green-900"
-                        : "bg-red-200 text-red-900"
+                        ? "text-white bg-gradient-to-br from-cyan-400 to-cyan-600"
+                        : "text-white bg-gradient-to-br from-orange-600 to-red-700"
                     }`}
                   >
                     {user.isActive === true ? "Active" : "Inactive"}
@@ -192,7 +192,7 @@ const UserAccount = () => {
                     onClick={() =>
                       handleViewAccount(user.username, user.userProfile)
                     }
-                    className="text-white bg-gradient-to-br from-purple-600 to-blue-500 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 rounded-lg text-sm px-5 py-2.5 ml-7 mr-7 text-center"
+                    className="text-white bg-gradient-to-br from-cyan-400 to-cyan-800 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 rounded-lg text-base font-bold px-5 py-2.5 ml-7 mr-7 text-center"
                   >
                     View
                   </button>
@@ -200,7 +200,7 @@ const UserAccount = () => {
                   <button
                     onClick={() => handleSuspendAccount(user.username)}
                     disabled={!user.isActive} // This will disable the button if user.isActive is false
-                    className={`text-white bg-gradient-to-br from-red-600 to-red-700 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 rounded-lg text-sm px-5 py-2.5 ml-7 mr-7 text-center ${
+                    className={`text-white bg-gradient-to-br from-orange-600 to-red-700 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 rounded-lg text-base font-bold px-5 py-2.5 ml-7 mr-7 text-center ${
                       !user.isActive ? "opacity-50 cursor-not-allowed" : ""
                     }`}
                   >

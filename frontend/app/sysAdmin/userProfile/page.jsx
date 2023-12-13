@@ -64,13 +64,13 @@ const UserProfile = () => {
   //   }, []);
 
   return (
-    <div className="bg-blue-800 min-h-screen flex flex-col justify-center items-center py-5">
+    <div className="bg-cyan-800 min-h-screen flex flex-col justify-center items-center py-5">
       <h1 className="text-2xl text-white font-bold mb-4 text-center sm:text-left">
         User Profile List
       </h1>
       <div className="overflow-x-auto w-full max-w-md">
         <table className="w-full rounded border-black border-2">
-          <thead className="bg-blue-600 font-semibold text-white">
+          <thead className="bg-cyan-600 font-semibold text-cyan-950 border-black border-2">
             <tr>
               <th className="px-2 py-1 mb-3 text-xl text-center sm:text-left border-2 border-black">
                 Profile Type

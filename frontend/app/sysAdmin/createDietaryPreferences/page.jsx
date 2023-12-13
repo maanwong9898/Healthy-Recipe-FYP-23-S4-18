@@ -78,7 +78,7 @@ const CreateDietaryPreferences = () => {
   };
 
   return (
-    <div className="bg-blue-800  min-h-screen flex flex-col justify-center items-center py-5">
+    <div className="bg-cyan-800  min-h-screen flex flex-col justify-center items-center py-5">
       <h1 className="text-2xl text-white font-bold mb-4 text-center sm:text-left">
         Dietary Preferences List
       </h1>
@@ -96,14 +96,14 @@ const CreateDietaryPreferences = () => {
           <div>
             <button
               onClick={handleCreateDietaryPreferences}
-              className=" rounded bg-blue-300 text-blue-900 text-center font-bold p-2 w-20"
+              className=" rounded text-white bg-gradient-to-br from-cyan-400 to-cyan-800 border-2 border-black text-center font-bold p-2 w-20"
             >
               Create
             </button>
           </div>
         </div>
         <table className="w-full rounded border-black border-2">
-          <thead className="bg-blue-600 font-semibold text-white border-black border-2">
+          <thead className="bg-cyan-600 font-semibold text-cyan-950 border-black border-2">
             <tr>
               <th className="px-2 py-1 mb-3 text-center text-xl sm:text-left">
                 Dietary Preferences

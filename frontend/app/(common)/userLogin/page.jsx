@@ -83,11 +83,11 @@ const userLogin = () => {
   };
 
   return (
-    <div className="bg-blue-900">
+    <div className="bg-cyan-900">
       <HomeNavbar />
       <div className="flex flex-col items-center justify-center h-screen">
-        <div className="w-full max-w-md bg-blue-300 rounded-xl shadow-md py-16 px-16">
-          <h2 className="text-[28px] font-bold text-black mb-6">
+        <div className="w-full max-w-md bg-cyan-600 rounded-xl shadow-md py-16 px-16">
+          <h2 className="text-[40px] font-bold text-cyan-950 mb-6">
             Welcome Back
           </h2>
           <form className="flex flex-col items-center">
@@ -111,17 +111,17 @@ const userLogin = () => {
             </div>
             <div className="flex w-full">
               <button
-                className="bg-blue-500 hover:bg-blue-700 text-white  rounded-md font-bold py-2 px-4 w-full"
+                className="bg-gradient-to-br from-cyan-400 to-cyan-800 hover:bg-blue-950 border-2 border-black text-white rounded-md font-bold py-2 px-4 w-full"
                 onClick={handleLogin}
               >
                 Sign In to Your Account
               </button>
             </div>
             <div className="flex justify-center w-full">
-              <p className="text-red-500 text-sm">{error}</p>
+              <p className="text-black font-bold text-xl">{error}</p>
             </div>
             <div className="flex justify-center w-full">
-              <p className="text-[18px] font-light text-black-600 mt-6">
+              <p className="text-[18px] font-light text-white mt-6">
                 Don’t have an account yet?{" "}
                 <Link
                   href="/registration"

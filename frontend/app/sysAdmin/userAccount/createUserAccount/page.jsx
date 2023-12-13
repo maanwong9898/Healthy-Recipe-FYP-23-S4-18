@@ -29,7 +29,7 @@ const CreateUserAccountPage = () => {
 
     // Checks if the fields are filled
     if (!fullName || !username || !email || !dob || !password || !confirmPwd) {
-      setError("All fields are required.");
+      setError("All fields are required!");
       return;
 
       // Checks if the pwd matches
@@ -73,105 +73,101 @@ const CreateUserAccountPage = () => {
   };
 
   return (
-    <div className="bg-blue-900">
-      <div className="flex flex-col items-center justify-center h-screen">
-        <div className="w-full max-w-md bg-blue-300 rounded-xl shadow-md py-3 px-8 mt-5 mb-3">
-          <h2 className="text-[28px] font-bold text-center text-black mb-6">
-            Create User Account
-          </h2>
-          <form
-            className="flex flex-col items-center"
-            onSubmit={handleCreateAccount}
-          >
-            {/* Full Name input */}
-            <div className="mb-5 w-full">
-              <input
-                className="border-1 border-blue-700 rounded-md py-2 px-4 w-full"
-                type="text"
-                name="name"
-                id="name"
-                placeholder="Full Name"
-                value={fullName}
-                onChange={clearErrorOnChange(setFullName)}
-              />
+    <div>
+      <div className="bg-cyan-900">
+        <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
+          <div className="w-full bg-cyan-600 rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0">
+            <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
+              <h1 className="text-xl font-bold leading-tight tracking-tight text-black md:text-2xl dark:text-white">
+                Create User Account
+              </h1>
+              <form className="space-y-3">
+                <div className="flex space-x-4">
+                  {/* NAME */}
+                  <input
+                    type="text"
+                    name="name"
+                    id="name"
+                    placeholder="Full Name"
+                    value={fullName}
+                    onChange={clearErrorOnChange(setFullName)}
+                    className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
+                  ></input>
+
+                  {/* USERNAME */}
+                  <input
+                    type="text"
+                    name="username"
+                    id="username"
+                    placeholder="Username"
+                    value={username}
+                    onChange={clearErrorOnChange(setUsername)}
+                    className="border px-4 py-2 rounded-lg bg-gray-50 border-gray-300 text-gray-900 sm:text-sm focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
+                  ></input>
+                </div>
+
+                {/* WORK EMAIL */}
+                <div>
+                  <input
+                    type="email"
+                    name="email"
+                    id="email"
+                    placeholder="Email Address"
+                    value={email}
+                    onChange={clearErrorOnChange(setEmail)}
+                    className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
+                  ></input>
+                </div>
+
+                {/* DOB */}
+                <div className="flex flex-col">
+                  <label htmlFor="dob">Date of Birth</label>
+                  <input
+                    type="date"
+                    id="dob"
+                    name="dob"
+                    max={todayDate}
+                    value={dob}
+                    onChange={(e) => setDOB(e.target.value)}
+                    className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
+                  ></input>
+                </div>
+
+                {/* PASSWORDS */}
+                <div className="flex space-x-4">
+                  <input
+                    type="password"
+                    name="pwd"
+                    id="pwd"
+                    placeholder="Password"
+                    value={password}
+                    onChange={clearErrorOnChange(setPassword)}
+                    className="border px-4 py-2 rounded-lg bg-gray-50 border-gray-300 text-gray-900 sm:text-sm focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                  ></input>
+                  <input
+                    type="password"
+                    name="confirm-pwd"
+                    id="confirm-pwd"
+                    placeholder="Confirm Password"
+                    value={confirmPwd}
+                    onChange={clearErrorOnChange(setConfirmPwd)}
+                    className="border px-4 py-2 rounded-lg bg-gray-50 border-gray-300 text-gray-900 sm:text-sm focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                  ></input>
+                </div>
+                {/* ERROR MSG */}
+                <p className="text-black font-bold text-xl">{error}</p>
+
+                {/* SUBMIT BTN */}
+                <button
+                  type="submit"
+                  onClick={handleCreateAccount}
+                  className="bg-gradient-to-br from-cyan-400 to-cyan-800 hover:bg-blue-950 border-2 border-black text-white  rounded-md font-bold py-2 px-4 w-full"
+                >
+                  Create an account
+                </button>
+              </form>
             </div>
-            {/* Username input */}
-            <div className="mb-5 w-full">
-              <input
-                className="border-1 border-blue-700 rounded-md py-2 px-4 w-full"
-                type="text"
-                name="username"
-                id="username"
-                placeholder="Username"
-                value={username}
-                onChange={clearErrorOnChange(setUsername)}
-              />
-            </div>
-            {/* Email input */}
-            <div className="mb-5 w-full">
-              <input
-                className="border-1 border-blue-700 rounded-md py-2 px-4 w-full"
-                type="email"
-                name="email"
-                id="email"
-                placeholder="Email Address"
-                value={email}
-                onChange={clearErrorOnChange(setEmail)}
-              />
-            </div>
-            {/* Date of Birth input */}
-            <div className="mb-5 w-full">
-              <label htmlFor="dob">Date of Birth</label>
-              <input
-                className="border-1 border-blue-700 rounded-md py-2 px-4 w-full"
-                type="date"
-                id="dob"
-                name="dob"
-                value={dob}
-                max={todayDate}
-                onChange={clearErrorOnChange(setDOB)}
-              />
-            </div>
-            {/* Password input */}
-            <div className="mb-5 w-full">
-              <input
-                className="border-1 border-blue-700 rounded-md py-2 px-4 w-full"
-                type="password"
-                name="pwd"
-                id="pwd"
-                placeholder="Password"
-                value={password}
-                onChange={clearErrorOnChange(setPassword)}
-              />
-            </div>
-            {/* Confirm Password input */}
-            <div className="mb-5 w-full">
-              <input
-                className="border-1 border-blue-700 rounded-md py-2 px-4 w-full"
-                type="password"
-                name="confirm-pwd"
-                id="confirm-pwd"
-                placeholder="Confirm Password"
-                value={confirmPwd}
-                onChange={clearErrorOnChange(setConfirmPwd)}
-              />
-            </div>
-            {/* Submit button */}
-            <div className="flex w-full">
-              <button
-                type="submit"
-                className="bg-blue-500 hover:bg-blue-700 text-white rounded-md font-bold py-2 px-4 w-full"
-              >
-                Create Account
-              </button>
-            </div>
-            {/* Error message display */}
-            {error && (
-              <div className="flex justify-center w-full">
-                <p className="text-red-500 text-base font-bold">{error}</p>
-              </div>
-            )}
-          </form>
+          </div>
         </div>
       </div>
     </div>

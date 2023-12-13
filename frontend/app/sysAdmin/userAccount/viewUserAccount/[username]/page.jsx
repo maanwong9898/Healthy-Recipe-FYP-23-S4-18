@@ -13,7 +13,7 @@ const mockAdminUserAccount = {
   username: "admin111",
   password: "password",
   email: "mike@gmail.com",
-  isActive: false,
+  isActive: true,
   userProfile: "System Admin",
   createdDate: "2019-01-01",
   dob: "1990-01-01",

@@ -4,88 +4,104 @@ import React from "react";
 import Link from "next/link";
 import { useState, useEffect } from "react";
 
-// router path: /sysAdmin/suspendRecipe
+// router path: /sysAdmin/suspendBlogPost
 
-// Called the controller to get the list of all "Active" recipes
-// this is the simple mock data for recipes but a recipe should have more attributes
-const mockRecipes = [
+// Called the controller to get the list of all "Active" business blog posts
+// this is the simple mock data for blog post but a blog post should have more attributes
+const mockBusinessBlogPosts = [
+  // Existing Entry
   {
-    recipeName: "Tomato Soup",
-    dateCreated: "2021-10-01",
-    ratings: 4,
-    reviews: 5,
+    blogTitle: "Seasonal Savors: A Cookbook for Every Time of the Year",
+    creator_name: "Jessica",
+    company_name: "Company A",
+    date_published: "2021-10-01",
+    isActive: true,
+  },
+  // New Entries
+  {
+    blogTitle: "Urban Gardening: Growing Greens in Small Spaces",
+    creator_name: "Michael",
+    company_name: "GreenThumb Inc.",
+    date_published: "2022-04-15",
     isActive: true,
   },
   {
-    recipeName: "Chicken Soup",
-    dateCreated: "2021-10-01",
-    ratings: 3,
-    reviews: 10,
+    blogTitle: "Tech Trends: Innovations Shaping Our Future",
+    creator_name: "Samantha",
+    company_name: "TechWorld Solutions",
+    date_published: "2023-01-10",
     isActive: true,
   },
   {
-    recipeName: "Beef Soup",
-    dateCreated: "2021-10-01",
-    ratings: 3,
-    reviews: 9,
+    blogTitle: "Fitness Fundamentals: A Guide to a Healthier Life",
+    creator_name: "Carlos",
+    company_name: "ActiveLife LLC",
+    date_published: "2022-07-21",
     isActive: true,
   },
   {
-    recipeName: "Pork Soup",
-    dateCreated: "2021-10-01",
-    ratings: 5,
-    reviews: 10,
+    blogTitle: "Artisan Baking: Secrets of Sourdough",
+    creator_name: "Emma",
+    company_name: "BakeCrafters",
+    date_published: "2021-12-05",
+    isActive: true,
+  },
+  {
+    blogTitle: "Travel Tales: Exploring Hidden Gems of the World",
+    creator_name: "Raj",
+    company_name: "GlobeTrotters Blog",
+    date_published: "2023-03-30",
     isActive: true,
   },
 ];
 
-const SuspendRecipePage = () => {
-  const [recipes, setRecipes] = useState(mockRecipes);
+const SuspendBusinessBlogPostPage = () => {
+  const [businessBlogs, setBusinessBlogs] = useState(mockBusinessBlogPosts);
 
   return (
     <div className="px-2 sm:px-5  bg-cyan-800 min-h-screen flex flex-col py-5">
       <h1 className="text-2xl text-white p-3 mb-4 font-bold text-center sm:text-left">
-        Recipes
+        Business Blog Posts
       </h1>
       <div className="overflow-x-auto">
         <table className="min-w-full rounded-lg border-black border-2">
           <thead className="bg-cyan-600 font-semibold text-cyan-950 border-black border-2">
             <tr>
-              <th className="px-3 py-2 text-xl text-left">Recipe</th>
-              <th className="px-3 py-2 text-xl text-left">Date Created</th>
-              <th className="px-3 py-2 text-xl text-left">Ratings</th>
-              <th className="px-3 py-2 text-xl text-left">Reviews</th>
+              <th className="px-3 py-2 text-xl text-left">Blog Post Title</th>
+              <th className="px-3 py-2 text-xl text-left">Posted By</th>
+              <th className="px-3 py-2 text-xl text-left">Company</th>
+              <th className="px-3 py-2 text-xl text-left">Date Published</th>
               <th className="px-3 py-2 text-xl text-left">Status</th>
               <th className="px-3 py-2 text-xl text-left"></th>
             </tr>
           </thead>
           <tbody>
-            {mockRecipes.map((recipe, index) => (
+            {mockBusinessBlogPosts.map((businessBlogPost, index) => (
               <tr
                 key={index}
                 className="bg-white border-b border-blue dark:border-blue-600"
               >
                 <td className="px-3 py-2 text-base text-center sm:text-left">
-                  {recipe.recipeName}
+                  {businessBlogPost.blogTitle}
                 </td>
                 <td className="px-3 py-2 text-base text-center sm:text-left">
-                  {recipe.dateCreated}
+                  {businessBlogPost.creator_name}
                 </td>
                 <td className="px-3 py-2 text-base text-center sm:text-left">
-                  {recipe.ratings}
+                  {businessBlogPost.company_name}
                 </td>
                 <td className="px-3 py-2 text-base text-center sm:text-left">
-                  {recipe.reviews}
+                  {businessBlogPost.date_published}
                 </td>
                 <td className="px-3 py-2 text-base text-center sm:text-left">
                   <span
                     className={`rounded-full px-3 py-1 text-base font-semibold ${
-                      recipe.isActive === true
+                      businessBlogPost.isActive === true
                         ? "text-white bg-gradient-to-br from-cyan-400 to-cyan-600"
                         : "text-white bg-gradient-to-br from-orange-600 to-red-700"
                     }`}
                   >
-                    {recipe.isActive === true ? "Active" : "Inactive"}
+                    {businessBlogPost.isActive === true ? "Active" : "Inactive"}
                   </span>
                 </td>
 
@@ -110,7 +126,7 @@ const SuspendRecipePage = () => {
   );
 };
 
-export default SuspendRecipePage;
+export default SuspendBusinessBlogPostPage;
 
 // // this function is to suspend the recipe
 //   // ready to be tested

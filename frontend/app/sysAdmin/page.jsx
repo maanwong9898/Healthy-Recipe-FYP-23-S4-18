@@ -42,7 +42,7 @@ const AdminHomePage = () => {
 
   // The button under business blog post and recipes related will redirect to corresponding page
   const handleViewBlogPost = () => {
-    router.push("/sysAdmin/blogPost");
+    router.push("/sysAdmin/suspendBlogPost");
   };
 
   const handleViewRecipes = () => {
@@ -50,38 +50,38 @@ const AdminHomePage = () => {
   };
 
   return (
-    <div className="bg-blue-400 min-h-screen w-full overflow-x-hidden">
-      <div className="p-6">
-        <p className=" text-3xl p-6">Hi, {username}</p>
+    <div className="bg-cyan-800 min-h-screen w-full overflow-x-hidden">
+      <div className="p-6 text-white">
+        <p className=" text-3xl text-white p-6">Hi, {username}</p>
         <div className="font-bold text-2xl pt-6 pl-6 pb-4">
           User Account Management:
         </div>
-        <div className="flex flex-wrap pl-6 pb-4">
+        <div className="flex flex-wrap  pl-6 pb-4">
           <button
-            className="bg-blue-700 hover:bg-blue-950 text-white rounded-md font-bold py-2 px-4 mr-10 mb-4"
+            className="bg-gradient-to-br from-cyan-400 to-cyan-800 hover:bg-blue-950 border-2 border-black rounded-md font-bold py-2 px-4 mr-10 mb-4"
             onClick={handleCreateUserAccount}
           >
             Create User Account
           </button>
           <button
-            className="bg-blue-700 hover:bg-blue-950 text-white rounded-md font-bold py-2 px-4 mr-10 mb-4"
+            className="bg-gradient-to-br from-cyan-400 to-cyan-800 hover:bg-blue-950 border-2 border-black rounded-md font-bold py-2 px-4 mr-10 mb-4"
             onClick={handleViewUserAccount}
           >
             View User Account
           </button>
           <button
-            className="bg-blue-700 hover:bg-blue-950 text-white rounded-md font-bold py-2 px-4 mr-10 mb-4"
+            className="bg-gradient-to-br from-cyan-400 to-cyan-800 hover:bg-blue-950 border-2 border-black rounded-md font-bold py-2 px-4 mr-10 mb-4"
             onClick={handleVerifyBusinessAccount}
           >
             Verify Business Account
           </button>
         </div>
-        <div className="font-bold text-2xl pt-6 pl-6 pb-6">
+        <div className="font-bold  text-2xl pt-6 pl-6 pb-6">
           User Profile Management:
         </div>
         <div className="flex flex-wrap pl-6 pb-4">
           <button
-            className="bg-blue-700 hover:bg-blue-950 text-white rounded-md font-bold py-2 px-4 mr-4"
+            className="bg-gradient-to-br from-cyan-400 to-cyan-800 hover:bg-blue-950 border-2 border-black text-white rounded-md font-bold py-2 px-4 mr-10 mb-4"
             onClick={handleViewUserProfile}
           >
             View User Profile
@@ -92,7 +92,7 @@ const AdminHomePage = () => {
         </div>
         <div className="flex flex-wrap pl-6 pb-4">
           <button
-            className="bg-blue-700 hover:bg-blue-950 text-white rounded-md font-bold py-2 px-4 mr-4"
+            className="bg-gradient-to-br from-cyan-400 to-cyan-800 hover:bg-blue-950 border-2 border-black text-white rounded-md font-bold py-2 px-4 mr-10 mb-4"
             onClick={handleCreateDietaryPreferences}
           >
             Create Dietary Preferences
@@ -103,16 +103,16 @@ const AdminHomePage = () => {
         </div>
         <div className="flex flex-wrap pl-6 pb-4">
           <button
-            className="bg-blue-700 hover:bg-blue-950 text-white rounded-md font-bold py-2 px-4 mr-10 mb-4"
+            className="bg-gradient-to-br from-cyan-400 to-cyan-800 hover:bg-blue-950 border-2 border-black text-white rounded-md font-bold py-2 px-4 mr-10 mb-4"
             onClick={handleViewBlogPost}
           >
-            Suspend Blog Post
+            Suspend Business Blog Posts
           </button>
           <button
-            className="bg-blue-700 hover:bg-blue-950 text-white rounded-md font-bold py-2 px-4 mr-10 mb-4"
+            className="bg-gradient-to-br from-cyan-400 to-cyan-800 hover:bg-blue-950 border-2 border-black text-white rounded-md font-bold py-2 px-4 mr-10 mb-4"
             onClick={handleViewRecipes}
           >
-            Suspend Recipe
+            Suspend Recipes
           </button>
         </div>
       </div>

@@ -26,8 +26,8 @@ const AdminHomePage = () => {
     router.push("/sysAdmin/userAccount");
   };
 
-  const handleVerifyBusinessUserAccount = () => {
-    router.push("/sysAdmin/businessUserPendingList");
+  const handleVerifyBusinessAccount = () => {
+    router.push("/sysAdmin/businessAccountPendingList");
   };
 
   // The button under user profile management will redirect to corresponding page
@@ -71,9 +71,9 @@ const AdminHomePage = () => {
           </button>
           <button
             className="bg-blue-700 hover:bg-blue-950 text-white rounded-md font-bold py-2 px-4 mr-10 mb-4"
-            onClick={handleVerifyBusinessUserAccount}
+            onClick={handleVerifyBusinessAccount}
           >
-            Verify Business User Account
+            Verify Business Account
           </button>
         </div>
         <div className="font-bold text-2xl pt-6 pl-6 pb-6">

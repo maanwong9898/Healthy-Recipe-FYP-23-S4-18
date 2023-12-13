@@ -16,8 +16,8 @@ const DropdownMenuForUserAccountRelated = () => {
           <Link href="/sysAdmin/userAccount">View User Account</Link>
         </li>
         <li className="px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
-          <Link href="/sysAdmin/businessUserPendingList">
-            Verify Business User Acccount
+          <Link href="/sysAdmin/businessAccountPendingList">
+            Verify Business Acccount
           </Link>
         </li>
       </ul>

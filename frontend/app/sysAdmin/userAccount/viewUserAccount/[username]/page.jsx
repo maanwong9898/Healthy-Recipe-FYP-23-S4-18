@@ -7,7 +7,7 @@ import { useState, useEffect } from "react";
 // this is to view particular user account under sysAdmin
 // router path: /sysAdmin/userAccount/viewUserAccount/[username]
 
-const mockUserAccount = {
+const mockAdminUserAccount = {
   id: "3104d2c8-d3d7-41c4-a982-5999a81d7450",
   name: "Mike",
   username: "admin111",
@@ -20,7 +20,7 @@ const mockUserAccount = {
 };
 
 const ViewUserAccount = ({ params }) => {
-  const [userAccount, setUserAccount] = useState(mockUserAccount);
+  const [userAccount, setUserAccount] = useState(mockAdminUserAccount);
 
   // // the url will be changed to the backend url
   // const viewUserAccount = async () => {

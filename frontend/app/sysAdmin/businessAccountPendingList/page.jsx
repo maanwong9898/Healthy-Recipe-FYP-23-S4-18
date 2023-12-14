@@ -5,43 +5,44 @@ import Link from "next/link";
 import { useState, useEffect } from "react";
 
 // router path: /sysAdmin/businessAccountPendingList
+// this is to view the list of business users and dietitians that status are waiting for verification
 
-// Called the controller to get the list of business users and dietitians that status are "Pending"
+// Called the controller to get the list of business users and dietitians that status are "Unverified"
 const mockUsers = [
   {
-    username: "BusinessUser123",
+    username: "BusinessUser1",
     profile: "Business User",
     company: "Company 1",
     UEN: "123456789A",
-    email: "user1@gmail.com",
-    createdDate: "2023-10-01",
+    email: "123@gmail.com",
+    createdDate: "2023-12-21",
     status: "Pending",
   },
   {
-    username: "BusinessUser222",
+    username: "BusinessUser2",
     profile: "Business User",
     company: "Company 2",
     UEN: "333456789A",
-    email: "admin1@gmail.com",
-    createdDate: "2023-10-01",
+    email: "222@gmail.com",
+    createdDate: "2023-12-22",
     status: "Pending",
   },
   {
-    username: "BusinessUser333",
+    username: "BusinessUser3",
     profile: "Business User",
     company: "Company 3",
     UEN: "555456789A",
-    email: "business1@gmail.com",
-    createdDate: "2023-10-01",
+    email: "333@gmail.com",
+    createdDate: "2023-12-23",
     status: "Pending",
   },
   {
-    username: "dietitian111",
+    username: "Dietitian1",
     profile: "Dietitian",
     company: "Company 4",
     UEN: "663456789A",
-    email: "dietitian1@gmail.com",
-    createdDate: "2023-10-01",
+    email: "dietitian111@gmail.com",
+    createdDate: "2023-12-23",
     status: "Pending",
   },
 ];
@@ -67,7 +68,8 @@ const BusinessAccountPendingList = () => {
         routePath = `/sysAdmin/businessAccountPendingList/verifyBusinessUserAccount/${username}`;
         break;
       case "Dietitian":
-        routePath = `/sysAdmin/businessAccountPendingList/verifyDietitianAccount/${username}`;
+        routePath = `/sysAdmin/businessAccountPendingList/verifyDietitianUserAccount/${username}`;
+
         break;
       default:
         console.error(`Unknown profile type: ${profileType}`);

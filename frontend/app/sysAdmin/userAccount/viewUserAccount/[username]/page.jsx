@@ -42,8 +42,8 @@ const ViewUserAccount = ({ params }) => {
   // }, []);
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-blue-600 py-12 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-md w-full space-y-8  bg-blue-300 p-6 rounded-lg shadow-lg">
+    <div className="flex flex-col items-center justify-center min-h-screen bg-cyan-900 py-12 px-4 sm:px-6 lg:px-8">
+      <div className="max-w-md w-full space-y-8  bg-cyan-600 p-6 rounded-lg shadow-lg">
         <div>
           <h2 className="mt-6 text-center text-3xl font-bold text-gray-900">
             User Account Details
@@ -52,7 +52,7 @@ const ViewUserAccount = ({ params }) => {
         <div className="mt-8 space-y-6">
           <div className="rounded-md shadow-sm space-y-3">
             <div>
-              <label className="block text-lg font-medium mb-2 text-gray-700">
+              <label className="block text-xl mb-2 font-bold text-cyan-950">
                 Username:
               </label>
               <input
@@ -66,7 +66,7 @@ const ViewUserAccount = ({ params }) => {
               />
             </div>
             <div>
-              <label className="block text-lg font-medium text-gray-700">
+              <label className="block text-xl mb-2 font-bold text-cyan-950">
                 Name:
               </label>
               <input
@@ -80,7 +80,7 @@ const ViewUserAccount = ({ params }) => {
               />
             </div>
             <div>
-              <label className="block text-lg font-medium text-gray-700">
+              <label className="block text-xl mb-2 font-bold text-cyan-950">
                 User Profile:
               </label>
               <input
@@ -95,7 +95,7 @@ const ViewUserAccount = ({ params }) => {
             </div>
 
             <div>
-              <label className="block text-lg font-medium text-gray-700">
+              <label className="block text-xl mb-2 font-bold text-cyan-950">
                 Email Address:
               </label>
               <input
@@ -109,7 +109,7 @@ const ViewUserAccount = ({ params }) => {
               />
             </div>
             <div>
-              <label className="block text-lg font-medium text-gray-700">
+              <label className="block text-xl mb-2 font-bold text-cyan-950">
                 Date of Birth:
               </label>
               <input
@@ -122,7 +122,7 @@ const ViewUserAccount = ({ params }) => {
               />
             </div>
             <div>
-              <label className="block text-lg font-medium text-gray-700">
+              <label className="block text-xl mb-2 font-bold text-cyan-950">
                 Date of Account Creation:
               </label>
               <input

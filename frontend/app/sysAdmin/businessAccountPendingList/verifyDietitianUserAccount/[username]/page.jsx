@@ -4,27 +4,26 @@ import React from "react";
 import Link from "next/link";
 import { useState, useEffect } from "react";
 
-// this is to verify particular business user under sysAdmin
-// router path: /sysAdmin/businessAccountPendingList/verifyBusinessUserAccount/[username]
+// this is to verify particular dietitian under sysAdmin
+// router path: /sysAdmin/businessAccountPendingList/verifyDietitianUserAccount/[username]
 
-const mockBusinessUserAccount = {
+const mockDieitianAccount = {
   id: "3104d2c8-d3d7-41c4-a982-5999a81d7450",
-  full_name: "William Lim",
-  username: "BusinessUser1",
+  full_name: "Peter Lim",
+  username: "Dietitian1",
   password: "password",
   email: "william@gmail.com",
   isActive: true,
-  userProfile: "Business User",
-  company_name: "Company 1",
-  UEN: "123456789A",
-  ifDietitian: false,
+  userProfile: "Dietitian",
+  company_name: "Company 4",
+  UEN: "663456789A",
+  ifDietitian: true,
   ifVerified: false,
 };
 
-const VerifyBusinessUser = ({ params }) => {
-  const [businessUserAccount, setBusinessUserAccount] = useState(
-    mockBusinessUserAccount
-  );
+const VerifyDieitian = ({ params }) => {
+  const [dietitanUserAccount, setBusinessUserAccount] =
+    useState(mockDieitianAccount);
 
   // // the url will be changed to the backend url
   // const viewBusinessUserAccount = async () => {
@@ -50,7 +49,7 @@ const VerifyBusinessUser = ({ params }) => {
       <div className="max-w-md w-full space-y-8  bg-cyan-600 p-6 rounded-lg shadow-lg">
         <div>
           <h2 className="mt-6 text-center text-3xl font-bold text-gray-900">
-            Business User Verification
+            Dietian Verification
           </h2>
         </div>
         <div className="mt-8 space-y-6">
@@ -64,7 +63,7 @@ const VerifyBusinessUser = ({ params }) => {
                 name="full_name"
                 id="full_name"
                 autoComplete="full_name"
-                value={businessUserAccount ? businessUserAccount.full_name : ""}
+                value={dietitanUserAccount ? dietitanUserAccount.full_name : ""}
                 readOnly
                 className="border-1 border-blue-700 rounded-md py-2 px-4 w-full"
               />
@@ -78,7 +77,7 @@ const VerifyBusinessUser = ({ params }) => {
                 name="username"
                 id="username"
                 autoComplete="username"
-                value={businessUserAccount ? businessUserAccount.username : ""}
+                value={dietitanUserAccount ? dietitanUserAccount.username : ""}
                 readOnly
                 className="border-1 border-blue-700 rounded-md py-2 px-4 w-full"
               />
@@ -92,7 +91,7 @@ const VerifyBusinessUser = ({ params }) => {
                 name="email"
                 id="email"
                 autoComplete="email"
-                value={businessUserAccount ? businessUserAccount.email : ""}
+                value={dietitanUserAccount ? dietitanUserAccount.email : ""}
                 readOnly
                 className="border-1 border-blue-700 rounded-md py-2 px-4 w-full"
               />
@@ -108,7 +107,7 @@ const VerifyBusinessUser = ({ params }) => {
                 id="company_name"
                 autoComplete="company_name"
                 value={
-                  businessUserAccount ? businessUserAccount.company_name : ""
+                  dietitanUserAccount ? dietitanUserAccount.company_name : ""
                 }
                 readOnly
                 className="border-1 border-blue-700 rounded-md py-2 px-4 w-full"
@@ -116,14 +115,14 @@ const VerifyBusinessUser = ({ params }) => {
             </div>
             <div>
               <label className="block text-lg font-bold text-cyan-950">
-                UEN:
+                License:
               </label>
               <input
                 type="text"
                 name="UEN"
                 id="UEN"
                 autoComplete="UEN"
-                value={businessUserAccount ? businessUserAccount.UEN : ""}
+                value={dietitanUserAccount ? dietitanUserAccount.UEN : ""}
                 readOnly
                 className="border-1 border-blue-700 rounded-md py-2 px-4 w-full"
               />
@@ -134,7 +133,7 @@ const VerifyBusinessUser = ({ params }) => {
               <button
                 onClick={() => handleSuspendAccount(user.username)}
                 className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500"
-                disabled={!businessUserAccount.isActive}
+                disabled={!dietitanUserAccount.isActive}
               >
                 Reject
               </button>
@@ -143,7 +142,7 @@ const VerifyBusinessUser = ({ params }) => {
               <button
                 onClick={() => handleApproveAccount(user.username)}
                 className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500"
-                disabled={!businessUserAccount.isActive}
+                disabled={!dietitanUserAccount.isActive}
               >
                 Approve
               </button>
@@ -155,4 +154,4 @@ const VerifyBusinessUser = ({ params }) => {
   );
 };
 
-export default VerifyBusinessUser;
+export default VerifyDieitian;

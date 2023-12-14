@@ -7,6 +7,7 @@ import HomeNavbar from "@/app/components/navigation/homeNavBar";
 // router path: /userLogin
 // mock data for testing
 
+// should have "profile type" to determine which page to go to
 const mockUsers = [
   {
     username: "user1",

@@ -12,7 +12,7 @@ const mockBusinessBlogPosts = [
   // Existing Entry
   {
     blogTitle: "Seasonal Savors: A Cookbook for Every Time of the Year",
-    creator_name: "Jessica",
+    creator_name: "Business1",
     company_name: "Company A",
     date_published: "2021-10-01",
     isActive: true,
@@ -20,14 +20,14 @@ const mockBusinessBlogPosts = [
   // New Entries
   {
     blogTitle: "Urban Gardening: Growing Greens in Small Spaces",
-    creator_name: "Michael",
+    creator_name: "Business1",
     company_name: "GreenThumb Inc.",
     date_published: "2022-04-15",
     isActive: true,
   },
   {
     blogTitle: "Tech Trends: Innovations Shaping Our Future",
-    creator_name: "Samantha",
+    creator_name: "Business1",
     company_name: "TechWorld Solutions",
     date_published: "2023-01-10",
     isActive: true,

@@ -23,7 +23,7 @@ const BusinessUserHomePage = () => {
   };
 
   const handleViewBlogPost = () => {
-    router.push("/businessUser/blogPost");
+    router.push("/businessUser/businessBlogPost");
   };
 
   // The button under recipe will redirect to corresponding page
@@ -45,23 +45,23 @@ const BusinessUserHomePage = () => {
   };
 
   return (
-    <div className="bg-blue-400 min-h-screen w-full overflow-x-hidden">
-      <div className="p-6">
-        <p className=" text-3xl p-6">
+    <div className="bg-cyan-800 min-h-screen w-full overflow-x-hidden">
+      <div className="p-6 text-white">
+        <p className=" text-4xl p-6">
           Welcome Back, {username}! Ready to grow your audience?
         </p>
-        <div className=" text-2xl pt-6 pl-6 pb-4">
+        <div className=" text-2xl font-bold pt-6 pl-6 pb-4">
           Ready to create business blog posts to promote your business?
         </div>
         <div className="flex flex-wrap pl-6 pb-4">
           <button
-            className="bg-blue-700 hover:bg-blue-950 text-white rounded-md font-bold py-2 px-4 mr-10 mb-4"
+            className="bg-gradient-to-br from-cyan-400 to-cyan-800 hover:bg-blue-950 border-2 border-black  rounded-md font-bold py-2 px-4 mr-10 mb-4"
             onClick={handleCreateBlogPost}
           >
             Create Blog Post
           </button>
           <button
-            className="bg-blue-700 hover:bg-blue-950 text-white rounded-md font-bold py-2 px-4 mr-10 mb-4"
+            className="bg-gradient-to-br from-cyan-400 to-cyan-800 hover:bg-blue-950 border-2 border-black  rounded-md font-bold py-2 px-4 mr-10 mb-4"
             onClick={handleViewBlogPost}
           >
             View My Blog Posts
@@ -72,13 +72,13 @@ const BusinessUserHomePage = () => {
         </div>
         <div className="flex flex-wrap pl-6 pb-4">
           <button
-            className="bg-blue-700 hover:bg-blue-950 text-white rounded-md font-bold py-2 px-4 mr-10 mb-4"
+            className="bg-gradient-to-br from-cyan-400 to-cyan-800 hover:bg-blue-950 border-2 border-black  rounded-md font-bold py-2 px-4 mr-10 mb-4"
             onClick={handleCreateRecipe}
           >
             Create Recipe
           </button>
           <button
-            className="bg-blue-700 hover:bg-blue-950 text-white rounded-md font-bold py-2 px-4 mr-10 mb-4"
+            className="bg-gradient-to-br from-cyan-400 to-cyan-800 hover:bg-blue-950 border-2 border-black  rounded-md font-bold py-2 px-4 mr-10 mb-4"
             onClick={handleViewRecipes}
           >
             View My Recipes
@@ -89,13 +89,13 @@ const BusinessUserHomePage = () => {
         </div>
         <div className="flex flex-wrap pl-6 pb-4">
           <button
-            className="bg-blue-700 hover:bg-blue-950 text-white rounded-md font-bold py-2 px-4 mr-10 mb-4"
+            className="bg-gradient-to-br from-cyan-400 to-cyan-800 hover:bg-blue-950 border-2 border-black  rounded-md font-bold py-2 px-4 mr-10 mb-4"
             onClick={handleCreateEducationalContent}
           >
             Create Educational Content
           </button>
           <button
-            className="bg-blue-700 hover:bg-blue-950 text-white rounded-md font-bold py-2 px-4 mr-10 mb-4"
+            className="bg-gradient-to-br from-cyan-400 to-cyan-800 hover:bg-blue-950 border-2 border-black  rounded-md font-bold py-2 px-4 mr-10 mb-4"
             onClick={handleViewEducationalContent}
           >
             View My Educational Content

@@ -15,7 +15,9 @@ const SideBarLayout = () => {
       <h2 className="text-lg font-semibold mb-10">My Dashboard</h2>
       <ul>
         <li className="mb-4 hover:underline">
-          <Link href="/registeredUser/userAccount/viewUpdateAccount">My Account</Link>
+          <Link href="/registeredUser/userAccount/viewUpdateAccount">
+            My Account
+          </Link>
         </li>
 
         <li className="mb-4 hover:underline m-4">
@@ -25,13 +27,15 @@ const SideBarLayout = () => {
         </li>
 
         <li className="mb-4 hover:underline">
-          <Link href="/">Dietary Preference</Link>
+          <Link href="/registeredUser/dietaryPreference">
+            Dietary Preference
+          </Link>
         </li>
         <li className="mb-4 hover:underline">
-          <Link href="/">Track Weight</Link>
+          <Link href="/registeredUser/trackWeight">Track Weight</Link>
         </li>
         <li className="mb-4 hover:underline">
-          <Link href="/">BMI Calculator</Link>
+          <Link href="/registeredUser/checkBMI">BMI Calculator</Link>
         </li>
         <li className="mb-4 hover:underline">
           <Link href="/">Logout</Link>

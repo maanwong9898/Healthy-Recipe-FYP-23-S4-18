@@ -15,7 +15,7 @@ const SideBarLayout = () => {
       <h2 className="text-lg font-semibold mb-10">My Dashboard</h2>
       <ul>
         <li className="mb-4 hover:underline">
-          <Link href="/registeredUser/userAccount/viewAccount">My Account</Link>
+          <Link href="/registeredUser/userAccount/viewUpdateAccount">My Account</Link>
         </li>
 
         <li className="mb-4 hover:underline m-4">

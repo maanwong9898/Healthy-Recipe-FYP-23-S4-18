@@ -17,6 +17,7 @@ const userRegistration = () => {
   const [weight, setWeight] = useState("");
 
   const [error, setError] = useState("");
+  const [success, setSuccess] = useState("");
 
   const emailValidation = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
@@ -58,7 +59,13 @@ const userRegistration = () => {
 
       // Checks if registration successful
     } else {
-      alert("Registration successful!");
+      setSuccess(
+        "Registration successful! A verification link has been sent to your email."
+      );
+      // Remove success msg after 5 seconds
+      setTimeout(() => {
+        setSuccess("");
+      }, 5000);
       // Reset fields in the form + error state
       setFullName("");
       setUsername("");
@@ -110,7 +117,7 @@ const userRegistration = () => {
                   placeholder="Full Name"
                   value={fullName}
                   onChange={(e) => setFullName(e.target.value)}
-                  className="border px-4 py-2 rounded-lg bg-gray-50 border-gray-300 text-gray-900 sm:text-sm focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
+                  className="border px-4 py-2 rounded-lg bg-gray-50 border-gray-300 text-gray-900 sm:text-sm block w-full p-2.5"
                 ></input>
 
                 {/* USERNAME */}
@@ -172,20 +179,20 @@ const userRegistration = () => {
                 ></input>
               </div>
               {/* LOGIN LINK */}
-              <p className="text-sm font-light text-gray-500 dark:text-gray-400">
+              <p className="text-sm font-light text-black">
                 Already have an account?{" "}
                 <Link
                   href="/userLogin"
-                  className="font-medium text-blue-600 hover:underline dark:text-blue-500"
+                  className="font-medium text-cyan-600 hover:underline"
                 >
                   Login here
                 </Link>
               </p>
-              <p className="text-sm font-light text-gray-500 dark:text-gray-400">
+              <p className="text-sm font-light text-black">
                 Sign up as a different user{" "}
                 <Link
                   href="/registration"
-                  className="font-medium text-blue-600 hover:underline dark:text-blue-500"
+                  className="font-medium text-cyan-600 hover:underline"
                 >
                   Sign up here
                 </Link>
@@ -288,30 +295,33 @@ const userRegistration = () => {
 
               {/* ERROR MSG */}
               <p className="text-red-500 text-sm">{error}</p>
+              <p className="text-green-500 text-sm">{success}</p>
+
               {/* SUBMIT BTN */}
               <button
                 type="submit"
                 onClick={handleSignUp}
-                className="bg-blue-500 hover:bg-blue-700 text-white rounded-md font-bold py-2 px-4 w-full"
+                className=" text-white bg-cyan-500 hover:bg-sky-700 rounded-md font-bold py-2 px-4 w-full"
               >
                 Create an account
               </button>
 
               {/* LOGIN LINK */}
-              <p className="text-sm font-light text-gray-500 dark:text-gray-400">
+              <p className="text-sm font-light text-black">
                 Already have an account?{" "}
                 <Link
                   href="/userLogin"
-                  className="font-medium text-blue-600 hover:underline dark:text-blue-500"
+                  className="font-medium text-cyan-600 hover:underline"
                 >
                   Login here
                 </Link>
               </p>
-              <p className="text-sm font-light text-gray-500 dark:text-gray-400">
+              {/* SIGN UP LINK */}
+              <p className="text-sm font-light text-black">
                 Sign up as a different user{" "}
                 <Link
                   href="/registration"
-                  className="font-medium text-blue-600 hover:underline dark:text-blue-500"
+                  className="font-medium text-cyan-600 hover:underline"
                 >
                   Sign up here
                 </Link>
@@ -335,7 +345,7 @@ const userRegistration = () => {
   return (
     <div>
       <HomeNavbar />
-      <div className="flex-grow bg-blue-900">
+      <div className="flex-grow bg-cyan-900">
         <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
           <div className="w-full max-w-md bg-slate-100 rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0">
             <div className="p-6 space-y-3 md:space-y-6 sm:p-8">

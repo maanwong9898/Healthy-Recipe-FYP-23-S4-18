@@ -65,6 +65,7 @@ const checkBMI = () => {
               type="text"
               name="height"
               id="height"
+              placeholder="Enter height in cm"
               value={height}
               onChange={(e) => setHeight(e.target.value)}
               className="border px-4 py-2 rounded-lg w-full bg-white border-gray-300 text-gray-900 sm:text-sm"
@@ -82,12 +83,13 @@ const checkBMI = () => {
               type="text"
               name="weight"
               id="weight"
+              placeholder="Enter weight in kg"
               value={weight}
               onChange={(e) => setWeight(e.target.value)}
               className="border px-4 py-2 rounded-lg w-full bg-white border-gray-300 text-gray-900 sm:text-sm"
             />
           </div>
-            {/* BUTTONS */}
+          {/* BUTTONS */}
           <div className="flex flex-row justify-center">
             <button
               onClick={resetVal}

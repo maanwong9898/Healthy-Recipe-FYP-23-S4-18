@@ -94,6 +94,7 @@ const TrackWeight = () => {
                 type="text"
                 id="targetWeight"
                 name="targetWeight"
+                placeholder="Enter weight in kg"
                 value={targetWeight}
                 onChange={(e) => setTargetWeight(e.target.value)}
                 className="border px-4 py-2 rounded-lg w-full bg-white border-gray-300 text-gray-900 sm:text-sm"
@@ -110,6 +111,7 @@ const TrackWeight = () => {
                 type="text"
                 id="currentWeight"
                 name="currentWeight"
+                placeholder="Enter weight in kg"
                 value={currentWeight}
                 onChange={(e) => setCurrentWeight(e.target.value)}
                 className="border px-4 py-2 rounded-lg w-full bg-white border-gray-300 text-gray-900 sm:text-sm"

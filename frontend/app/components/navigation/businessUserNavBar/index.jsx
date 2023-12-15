@@ -8,7 +8,9 @@ const BlogPostDropdownMenu = () => {
     <div className="absolute left-0 top-10 w-48 rounded-md shadow-lg bg-white z-10">
       <ul>
         <li className="px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
-          Create Blog Post
+          <Link href="/businessUser/businessBlogPost/createBusinessBlogPost">
+            Create Blog Post
+          </Link>
         </li>
         <li className="px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
           <Link href="/businessUser/businessBlogPost">View My Blog Posts</Link>
@@ -109,7 +111,7 @@ const BusinessUserNavBar = () => {
         >
           <div className="flex flex-col  md:flex-row md:space-x-8 md:mt-0 md:text-sm md:font-medium">
             <Link
-              href="/sysAdmin"
+              href="/businessUser"
               className=" hover:bg-blue-900 hover:text-white rounded-md px-3 py-2 text-sm font-bold"
             >
               Home

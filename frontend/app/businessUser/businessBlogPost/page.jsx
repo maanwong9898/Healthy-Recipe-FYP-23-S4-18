@@ -18,14 +18,14 @@ const mockMyBusinessBlogPosts = [
     isActive: true,
   },
   {
-    blogTitle: "Urban Gardening: Growing Greens in Small Spaces",
+    blogTitle: "Cutting Edge: The Ultimate Guide to Kitchen Knives",
     date_published: "2022-04-15",
     ratings: 2,
     reviews: 5,
     isActive: true,
   },
   {
-    blogTitle: "Tech Trends: Innovations Shaping Our Future",
+    blogTitle: "lend It Like a Pro: Mastering Mixers and Blenders",
     date_published: "2023-01-10",
     ratings: 4,
     reviews: 5,
@@ -44,6 +44,17 @@ const MyBusinessBlogPosts = () => {
 
     // Redirect to the correct route
     let routePath = `/businessUser/businessBlogPost/viewBusinessBlogPost/${blogPostTitle}`;
+
+    router.push(routePath);
+  };
+
+  // this function is to update particular blog post
+  const handleUpdateBlogPost = (blogPostTitle) => {
+    // Make sure the blogPostTitle
+    console.log(`Blog Title: ${blogPostTitle}`);
+
+    // Redirect to the correct route
+    let routePath = `/businessUser/businessBlogPost/updateBusinessBlogPost/${blogPostTitle}`;
 
     router.push(routePath);
   };
@@ -113,7 +124,9 @@ const MyBusinessBlogPosts = () => {
                 </td>
                 <td className="px-3 py-2 justify-center sm:justify-start">
                   <button
-                    // onClick={() => handleSuspendRecipe(recipe.recipeName)}
+                    onClick={() =>
+                      handleUpdateBlogPost(businessBlogPost.blogTitle)
+                    }
                     className="text-white font-bold bg-gradient-to-br from-cyan-400 to-cyan-800 hover:bg-blue-950 border-2 border-black
                     focus:ring-4 focus:outline-none focus:ring-blue-300
                     dark:focus:ring-blue-800 rounded-lg text-base px-5 py-2.5 ml-7

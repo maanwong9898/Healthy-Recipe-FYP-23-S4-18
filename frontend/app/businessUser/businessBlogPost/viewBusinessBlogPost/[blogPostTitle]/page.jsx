@@ -165,6 +165,19 @@ const ViewBusinessBlogPost = ({ params }) => {
           </div>
         ))}
       </footer>
+      <div className="flex flex-row space-x-5 ml-9">
+        <button className="bg-gradient-to-br from-cyan-400 to-cyan-800 hover:bg-blue-950 border-2 border-black text-white font-bold py-2 px-4 rounded">
+          <Link href="/businessUser/businessBlogPost/updateBusinessBlogPost/${blogPostTitle}">
+            Edit
+          </Link>
+        </button>
+        <button
+          type="submit"
+          className="bg-gradient-to-br from-red-500 to-red-700 hover:bg-blue-950 border-2 border-black text-white font-bold py-2 px-4 rounded"
+        >
+          Delete
+        </button>
+      </div>
     </div>
   );
 };

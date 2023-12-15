@@ -19,7 +19,7 @@ const BusinessUserHomePage = () => {
 
   // The button under business blog post will redirect to corresponding page
   const handleCreateBlogPost = () => {
-    router.push("/businessUser/createBlogPost");
+    router.push("/businessUser/businessBlogPost/createBusinessBlogPost");
   };
 
   const handleViewBlogPost = () => {

@@ -142,7 +142,7 @@ const RegisteredUserNavBar = () => {
               Educational Content
             </Link>
             <Link
-              href="/"
+              href="/registeredUser/businessBlogPost"
               className="text-white hover:bg-sky-200 hover:text-black rounded-md px-3 py-2 text-sm font-bold"
             >
               Business Blog Posts

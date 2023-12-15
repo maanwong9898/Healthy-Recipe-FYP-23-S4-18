@@ -4,27 +4,26 @@ import React from "react";
 import Link from "next/link";
 import { useState, useEffect } from "react";
 
-// this is to view particular blog post under business user
-// router path: /businessUser/businessBlogPost/viewBusinessBlogPost/[blogPostTitle]
+// this is to view particular blog post under registered user
+// router path: /registeredUser/businessBlogPost/viewBusinessBlogPost/[blogPostTitle]
 
 const mockBusinessBlogPost = {
-  id: "1234567890",
-  blogTitle: "Seasonal Savors: A Cookbook for Every Time of the Year",
-  publisher: "Michael Lim",
-  category: "Cookbook",
+  id: "1928374650",
+  blogTitle: "Essential Tools for the Modern Chef",
+  publisher: "Lucas Brown",
+  category: "Kitchen Utensils",
   introduction:
-    "Welcome to 'Seasonal Savors', your ultimate companion for year-round culinary adventures! This cookbook is crafted with love, featuring a medley of recipes that celebrate the unique flavors and ingredients each season has to offer. From the fresh blossoms of spring to the hearty harvest of autumn, we invite you to embark on a gastronomic journey through the year. Get ready to explore dishes that will not only nourish the body but also delight the senses.",
+    "Our 'Essential Tools for the Modern Chef' guide is the definitive resource for equipping your culinary workspace with the best kitchen gadgets and utensils.",
   main_content:
-    "Our journey begins with the rejuvenating tastes of spring, introducing dishes like 'Spring Pea Risotto' and 'Lemon Herb Chicken'. As we bask in the summer sun, we'll dive into refreshing 'Watermelon Gazpacho' and 'Grilled Peach Salad'. The crisp air of fall calls for 'Pumpkin Spice Soup' and 'Roasted Root Vegetables', while winter comforts with 'Hearty Beef Stew' and 'Decadent Chocolate Peppermint Cake'. Each recipe is accompanied by tips on sourcing the best seasonal produce and pairing your meals with appropriate wines and beverages.",
+    "Explore our top picks for innovative kitchen gadgets that streamline your cooking process, from smart thermometers to multipurpose blenders.",
   conclusion:
-    "As the year closes, we hope 'Seasonal Savors' has inspired you to embrace the beauty of seasonal cooking. The recipes provided are more than just instructions; they are a canvas for creativity and a chance to forge memorable moments with loved ones. So, cherish the flavors each season brings and let your kitchen be a place of discovery all year long.",
-
+    "With the right tools, cooking becomes an experience of precision and pleasure. Elevate your culinary creations with our recommended kitchen essentials.",
   image_url:
-    "https://cdn.pixabay.com/photo/2015/04/29/19/33/cookbook-746005_1280.jpg",
-  image_title: "Recipe Book",
-  date_published: "2021-10-01",
-  ratings: 4,
-  reviews: 10,
+    "https://img.freepik.com/free-photo/top-view-ice-cream-tools-concept_23-2148425369.jpg?w=826&t=st=1702639149~exp=1702639749~hmac=90330eb53a1f60067db8b4b6d0a313f1d29143679940cb3456ccdcdc52b65b28",
+  image_title: "Chef's Tools",
+  date_published: "2022-08-23",
+  ratings: 4.5,
+  reviews: 38,
   isActive: true,
 };
 
@@ -55,12 +54,28 @@ const slugify = (text) =>
     .replace(/^-+/, "") // Trim - from start of text
     .replace(/-+$/, ""); // Trim - from end of text
 
-const ViewBusinessBlogPost = ({ params }) => {
+const UserViewBusinessBlogPost = ({ params }) => {
   const [businessBlogPost, setBusinessBlogPost] =
     useState(mockBusinessBlogPost);
   const [reviewsAndRatings, setReviewsAndRatings] = useState(
     mockBusinessBlogPost_RatingAndReviews
   );
+
+  const [newReview, setNewReview] = useState("");
+  const [newRating, setNewRating] = useState(0);
+
+  const submitReview = () => {
+    // Add logic here to handle the submission of the review and rating
+    // For example, you could update the state to include the new review or send it to a backend server
+    console.log("Review:", newReview, "Rating:", newRating);
+    // Reset the state after submission
+    setNewReview("");
+    setNewRating(0);
+  };
+
+  const handleRatingChange = (ratingValue) => {
+    setNewRating(ratingValue);
+  };
 
   // this is to prevent unexpected error when title contains space
   // Decode params from URL
@@ -164,22 +179,48 @@ const ViewBusinessBlogPost = ({ params }) => {
             <p>{review.reviews}</p>
           </div>
         ))}
+        <div className="my-4 p-4">
+          <textarea
+            value={newReview}
+            onChange={(e) => setNewReview(e.target.value)}
+            placeholder="Write your review here"
+            className="w-full p-2 border rounded"
+          />
+          <div className="flex my-2">
+            {[...Array(5)].map((_, index) => {
+              const ratingValue = index + 1;
+              return (
+                <label key={ratingValue}>
+                  <input
+                    type="radio"
+                    name="rating"
+                    value={ratingValue}
+                    onClick={() => handleRatingChange(ratingValue)}
+                    className="hidden"
+                  />
+                  <span
+                    className={
+                      ratingValue <= newRating
+                        ? "text-yellow-500 cursor-pointer"
+                        : "text-gray-400 cursor-pointer"
+                    }
+                  >
+                    ★
+                  </span>
+                </label>
+              );
+            })}
+          </div>
+          <button
+            onClick={submitReview}
+            className="bg-cyan-600 hover:bg-cyan-700 text-white font-bold py-2 px-4 rounded"
+          >
+            Submit Review
+          </button>
+        </div>
       </footer>
-      <div className="flex flex-row space-x-5 justify-end mr-10">
-        <button className="bg-gradient-to-br from-cyan-400 to-cyan-800 hover:bg-blue-950 border-2 border-black text-white font-bold py-3 px-4 rounded ml-9">
-          <Link href="/businessUser/businessBlogPost/updateBusinessBlogPost/${blogPostTitle}">
-            Edit
-          </Link>
-        </button>
-        <button
-          type="submit"
-          className="bg-gradient-to-br from-red-500 to-red-700 hover:bg-blue-950 border-2 border-black text-white font-bold py-3 px-4 rounded"
-        >
-          Delete
-        </button>
-      </div>
     </div>
   );
 };
 
-export default ViewBusinessBlogPost;
+export default UserViewBusinessBlogPost;

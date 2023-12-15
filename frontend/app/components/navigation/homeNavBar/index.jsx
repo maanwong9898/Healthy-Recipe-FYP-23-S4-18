@@ -44,6 +44,7 @@ const HomeNavbar = () => {
           </div>
           <button
             className="text-white p-2 rounded-md hover:text-white hover:bg-blue-900 md:hidden"
+            className="text-white p-2 rounded-md hover:text-white hover:bg-blue-900 md:hidden"
             onClick={() => setIsMenuOpen(!isMenuOpen)}
           >
             {isMenuOpen ? "✖" : "☰"}

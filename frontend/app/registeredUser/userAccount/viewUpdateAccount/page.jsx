@@ -9,6 +9,7 @@ const mockUserAccount = {
   fullName: "Jenny Chia",
   username: "user1",
   email: "jenny@gmail.com",
+  // yyyy-mm-dd
   dob: "1996-03-12",
 };
 
@@ -67,7 +68,7 @@ const UpdateAccount = () => {
   return (
     <div className="flex">
       <SideBarLayout>
-        <div className="w-3/4 p-4">
+        <div className="w-3/4 p-4 max-w-sm">
           <h1 className="text-lg font-semibold mb-4">Account Information</h1>
           <form>
             {/* NAME */}

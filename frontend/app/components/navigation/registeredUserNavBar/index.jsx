@@ -18,7 +18,7 @@ const AccountDropdownMenu = () => {
           </Link>
         </li>
         <li className="px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
-          <Link href="/registeredUser/userAccount">
+          <Link href="/registeredUser/trackWeight">
             Track Weight Measurements
           </Link>
         </li>

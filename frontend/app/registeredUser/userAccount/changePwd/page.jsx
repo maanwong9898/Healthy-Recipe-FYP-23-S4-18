@@ -54,7 +54,7 @@ const changeUserPwd = () => {
   return (
     <div className="flex">
       <SideBarLayout>
-        <div className="w-3/4 p-4">
+        <div className="w-3/4 p-4 max-w-sm">
           <h1 className="text-lg font-semibold mb-4">Change Password</h1>
 
           {/* OLD PWD */}

@@ -32,7 +32,9 @@ const SideBarLayout = () => {
           </Link>
         </li>
         <li className="mb-4 hover:underline">
-          <Link href="/registeredUser/trackWeight">Track Weight</Link>
+          <Link href="/registeredUser/trackWeight">
+            Track Weight Measurements
+          </Link>
         </li>
         <li className="mb-4 hover:underline">
           <Link href="/registeredUser/checkBMI">BMI Calculator</Link>

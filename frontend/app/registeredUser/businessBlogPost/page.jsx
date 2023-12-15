@@ -188,6 +188,41 @@ const BusinessBlogPostsPageForUser = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [categoryFilter, setCategoryFilter] = useState("");
 
+  const handleSearchChange = (e) => {
+    setSearchQuery(e.target.value.toLowerCase());
+  };
+
+  const handleCategoryChange = (e) => {
+    setCategoryFilter(e.target.value);
+  };
+
+  const filteredBlogPosts = AllBusinessBlogPosts.filter(
+    (post) =>
+      post.isActive &&
+      post.blogTitle.toLowerCase().includes(searchQuery) &&
+      (categoryFilter ? post.category === categoryFilter : true)
+  );
+
+  // // Sort and filter logic
+  // const latestPosts = [...AllBusinessBlogPosts]
+  //   .filter((post) => post.isActive)
+  //   .sort((a, b) => new Date(b.date_published) - new Date(a.date_published))
+  //   .slice(0, 3);
+
+  // const topRatedPosts = [...AllBusinessBlogPosts]
+  //   .filter(
+  //     (post) => post.isActive && !latestPosts.find((p) => p.id === post.id)
+  //   )
+  //   .sort((a, b) => b.ratings - a.ratings || b.reviews - a.reviews)
+  //   .slice(0, 3);
+
+  // const otherPosts = AllBusinessBlogPosts.filter(
+  //   (post) =>
+  //     post.isActive &&
+  //     !latestPosts.find((latest) => latest.id === post.id) &&
+  //     !topRatedPosts.find((top) => top.id === post.id)
+  // );
+
   // this function is to view particular blog post
   const handleViewBlogPost = (blogPostTitle) => {
     // Make sure the blogPostTitle
@@ -202,23 +237,60 @@ const BusinessBlogPostsPageForUser = () => {
   // Filter the active blog posts
   const activeBlogPosts = AllBusinessBlogPosts.filter((post) => post.isActive);
 
+  // The JSX for each post, can be made into a separate component
+  // const renderPostCard = (post) => (
+  //   <div key={post.id} className="rounded shadow-lg overflow-hidden">
+  //     <div className="p-1.5 flex flex-col h-full">
+  //       <img
+  //         src={post.image_url}
+  //         alt={post.image_title}
+  //         className="w-full object-cover rounded-sm"
+  //         style={{ height: "192px" }}
+  //       />
+  //       <div className="p-4 flex-grow bg-white">
+  //         <h2 className="text-2xl font-extrabold mb-2">{post.blogTitle}</h2>
+  //         <p
+  //           className="text-gray-700 text-base mb-4 line-clamp-3"
+  //           style={{ height: "4.5rem" }}
+  //         >
+  //           {post.introduction}
+  //         </p>
+  //         <button
+  //           onClick={() => handleViewBlogPost(post.id)}
+  //           className="text-white font-bold bg-gradient-to-br from-cyan-400 to-cyan-800 hover:bg-blue-950 border-2 border-black focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 rounded-lg text-base px-5 py-2.5 text-center"
+  //         >
+  //           Read more
+  //         </button>
+  //       </div>
+  //     </div>
+  //   </div>
+  // );
+
   return (
-    <div className="bg-white p-10">
-      <h1 className="text-3xl font-bold font-mono text-cyan-800 mb-6">
+    <div className="bg-white p-4 md:p-10">
+      <h1 className="text-2xl md:text-4xl font-extrabold font-mono text-cyan-800 mb-4 md:mb-8">
         Business Blog Posts
       </h1>
-      <div className="mb-5 space-x-5 ">
-        <input
-          type="text"
-          value={searchQuery}
-          // onChange={handleSearchChange}
-          placeholder="Search blog posts..."
-          className="border-2 border-gray-300 bg-white h-10 px-5 pr-16 rounded-lg text-sm focus:outline-none"
-        />
+      <div className="flex flex-col md:flex-row justify-between items-center mb-4 md:mb-5">
+        <div className="flex flex-row md:flex-row border-2 border-gray-300 rounded-lg mb-4 md:mb-0">
+          <input
+            type="text"
+            value={searchQuery}
+            onChange={handleSearchChange}
+            placeholder="Search blog posts..."
+            className="px-4 py-2 h-10 rounded-lg rounded-r-none text-base focus:outline-none"
+          />
+          <button
+            // onClick={/* Function to handle search */}
+            className="px-4 py-2 bg-cyan-600 text-white rounded-lg rounded-l-none hover:bg-cyan-700 focus:outline-none"
+          >
+            Search
+          </button>
+        </div>
         <select
           value={categoryFilter}
-          // onChange={handleCategoryChange}
-          className="border-2 border-gray-300 bg-white h-10 px-5 rounded-lg text-sm focus:outline-none"
+          onChange={handleCategoryChange}
+          className="border-2 border-gray-300 bg-white h-10 px-4 md:px-5 rounded-lg text-base focus:outline-none"
         >
           <option value="">All Categories</option>
           <option value="Kitchen Utensils">Kitchen Utensils</option>
@@ -226,7 +298,12 @@ const BusinessBlogPostsPageForUser = () => {
           <option value="Miscellaneous">Miscellaneous</option>
         </select>
       </div>
-      <div className="grid grid-cols-3 gap-10">
+      {filteredBlogPosts.length === 0 && (
+        <p className="text-center font-semibold text-xl md:text-2xl mb-4 text-red-500">
+          No results found{searchQuery && ` for "${searchQuery}"`}.
+        </p>
+      )}
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-10">
         {activeBlogPosts.map((post) => (
           <div
             key={post.id}
@@ -247,7 +324,9 @@ const BusinessBlogPostsPageForUser = () => {
                 style={{ height: "192px" }} // Use inline style to set a fixed height for the image
               />
               <div className="p-4 flex-grow bg-white">
-                <h2 className="text-xl font-bold mb-2">{post.blogTitle}</h2>
+                <h2 className="text-2xl font-extrabold mb-2">
+                  {post.blogTitle}
+                </h2>
                 <p
                   className="text-gray-700 text-base mb-4 line-clamp-3"
                   style={{ height: "4.5rem" }}

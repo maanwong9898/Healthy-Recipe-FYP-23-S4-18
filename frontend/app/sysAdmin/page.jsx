@@ -36,8 +36,8 @@ const AdminHomePage = () => {
   };
 
   // The button under dietary preferences management will redirect to corresponding page
-  const handleCreateDietaryPreferences = () => {
-    router.push("/sysAdmin/createDietaryPreferences");
+  const handleCreateCategory = () => {
+    router.push("/sysAdmin/allCategory");
   };
 
   // The button under business blog post and recipes related will redirect to corresponding page
@@ -88,14 +88,14 @@ const AdminHomePage = () => {
           </button>
         </div>
         <div className="font-bold text-2xl pt-6 pl-6 pb-6">
-          Dietary Preferences Management:
+          Category Related Management:
         </div>
         <div className="flex flex-wrap pl-6 pb-4">
           <button
             className="bg-gradient-to-br from-cyan-400 to-cyan-800 hover:bg-blue-950 border-2 border-black text-white rounded-md font-bold py-2 px-4 mr-10 mb-4"
-            onClick={handleCreateDietaryPreferences}
+            onClick={handleCreateCategory}
           >
-            Create Dietary Preferences
+            Create Category
           </button>
         </div>
         <div className="font-bold text-2xl pt-6 pl-6 pb-6">

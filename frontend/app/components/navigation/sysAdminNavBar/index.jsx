@@ -138,10 +138,10 @@ const SysAdminNavBar = () => {
               User Profile
             </Link>
             <Link
-              href="/sysAdmin/createDietaryPreferences"
+              href="/sysAdmin/allCategory"
               className=" hover:bg-blue-900 hover:text-white rounded-md px-3 py-2 text-sm font-bold"
             >
-              Dietary Preferences
+              Create Category
             </Link>
             <Link
               href="/sysAdmin/suspendRecipe"

@@ -86,7 +86,7 @@ const BusinessAccountPendingList = () => {
       </h1>
       <div className="overflow-x-auto">
         <table className="min-w-full rounded-lg border-black border-2">
-          <thead className="bg-cyan-600 font-semibold text-cyan-950 border-black border-2">
+          <thead className="bg-cyan-600 font-semibold text-cyan-950 text-lg border-black border-2">
             <tr>
               <th className="px-3 py-2 text-left">Username</th>
               <th className="px-3 py-2 text-left">Profile Type</th>

@@ -87,8 +87,11 @@ const userLogin = () => {
     <div className="bg-cyan-900">
       <HomeNavbar />
       <div className="flex flex-col items-center justify-center h-screen">
-        <div className="w-full max-w-md bg-cyan-600 rounded-xl shadow-md py-16 px-16">
-          <h2 className="text-[40px] font-bold text-cyan-950 mb-6">
+        <p className="text-[40px] text-white font-extrabold mb-4">
+          My Healthy Recipe
+        </p>
+        <div className="w-full max-w-md bg-cyan-600 rounded-xl shadow-md py-8 px-8">
+          <h2 className="text-[24px] font-bold text-cyan-950 mb-6">
             Welcome Back
           </h2>
           <form className="flex flex-col items-center">

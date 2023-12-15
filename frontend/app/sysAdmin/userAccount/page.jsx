@@ -148,14 +148,14 @@ const UserAccount = () => {
       </div>
       <div className="overflow-x-auto">
         <table className="min-w-full rounded-lg border-black border-2">
-          <thead className="bg-cyan-600 font-semibold text-cyan-950 border-black border-2">
+          <thead className="bg-cyan-600 font-semibold text-cyan-950 text-lg border-black border-2">
             <tr>
-              <th className="px-3 py-2 text-xl text-left">Username</th>
-              <th className="px-3 py-2 text-xl text-left">Profile Type</th>
-              <th className="px-3 py-2 text-xl text-left">Email</th>
-              <th className="px-3 py-2 text-xl text-left">Created Date</th>
-              <th className="px-3 py-2 text-xl text-left">Status</th>
-              <th className="px-3 py-2 text-xl text-left"></th>
+              <th className="px-3 py-2 text-left">Username</th>
+              <th className="px-3 py-2 text-left">Profile Type</th>
+              <th className="px-3 py-2 text-left">Email</th>
+              <th className="px-3 py-2 text-left">Created Date</th>
+              <th className="px-3 py-2 text-left">Status</th>
+              <th className="px-3 py-2 text-left"></th>
             </tr>
           </thead>
           <tbody>

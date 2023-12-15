@@ -79,21 +79,21 @@ const DietitianNavBar = () => {
   };
 
   return (
-    <nav className="bg-blue-300">
+    <nav className="bg-cyan-600">
       <div className="flex flex-wrap items-center p-3">
         {/* Logo and mobile menu button (small screen) */}
         <div className="flex items-center justify-between w-full md:w-auto md:mr-4">
-          <div className="flex items-center text-blue-950 rounded-md px-3 py-2 text-sm font-extrabold">
+          <div className="flex items-center text-white rounded-md px-3 py-2 text-lg font-extrabold">
             My Healthy Recipe
           </div>
           <button
-            className="text-blue-800 p-2 rounded-md hover:text-white hover:bg-blue-900 md:hidden"
+            className="text-white p-2 rounded-md hover:text-white hover:bg-blue-900 md:hidden"
             onClick={() => setIsMenuOpen(!isMenuOpen)}
           >
             {isMenuOpen ? "✖" : "☰"}
           </button>
           <button
-            className="text-blue-800 p-2 rounded-md hover:text-white hover:bg-blue-900 md:hidden"
+            className="text-white p-2 rounded-md hover:text-white hover:bg-blue-900 md:hidden"
             onClick={() => setIsAccountMenuOpen(!isAccountMenuOpen)}
           >
             Account Settings
@@ -109,7 +109,7 @@ const DietitianNavBar = () => {
           <div className="flex flex-col  md:flex-row md:space-x-8 md:mt-0 md:text-sm md:font-medium">
             <Link
               href="/dietitian"
-              className="text-blue-800 hover:bg-blue-900 hover:text-white rounded-md px-3 py-2 text-sm font-bold"
+              className="text-white hover:bg-sky-200 hover:text-black rounded-md px-3 py-2 text-sm font-bold"
             >
               Home
             </Link>
@@ -118,7 +118,7 @@ const DietitianNavBar = () => {
               onMouseEnter={handleMouseEnterMenu}
               onMouseLeave={handleMouseLeaveMenu}
             >
-              <span className="text-blue-800 hover:bg-blue-900 hover:text-white rounded-md px-3 py-2 text-sm font-bold cursor-pointer">
+              <span className="text-white hover:bg-sky-200 hover:text-black rounded-md px-3 py-2 text-sm font-bold cursor-pointer">
                 Meal Plan
               </span>
               {isDropdownVisible && <DropdownMenu />}
@@ -135,7 +135,7 @@ const DietitianNavBar = () => {
           <div className="flex flex-col md:flex-row md:space-x-8 md:mt-0 md:text-sm md:font-medium">
             <Link
               href="/dietitian/viewAccount"
-              className="text-blue-800 sm:hidden hover:bg-blue-900 hover:text-white rounded-md px-3 py-2 text-sm font-bold"
+              className="text-white sm:hidden hover:bg-blue-900 hover:text-white rounded-md px-3 py-2 text-sm font-bold"
             >
               My Account
             </Link>
@@ -144,7 +144,7 @@ const DietitianNavBar = () => {
               onMouseEnter={handleMouseEnterAccount}
               onMouseLeave={handleMouseLeaveAccount}
             >
-              <span className="hidden md:block text-blue-800 hover:bg-blue-900 hover:text-white rounded-md px-3 py-2 text-sm font-bold cursor-pointer">
+              <span className="hidden md:block text-white hover:bg-blue-900 hover:text-white rounded-md px-3 py-2 text-sm font-bold cursor-pointer">
                 Account Settings
               </span>
               {isAccountDropdownVisible && <AccountDropdownMenu />}

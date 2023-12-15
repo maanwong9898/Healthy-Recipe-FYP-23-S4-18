@@ -83,10 +83,10 @@ const BusinessUserNavBar = () => {
 
   return (
     <nav className="bg-cyan-600">
-      <div className="flex flex-wrap items-center text-cyan-950 p-3">
+      <div className="flex flex-wrap items-center p-3">
         {/* Logo and mobile menu button (small screen) */}
         <div className="flex items-center justify-between w-full md:w-auto md:mr-4">
-          <div className="flex items-center text-blue-950 rounded-md px-3 py-2 text-sm font-extrabold">
+          <div className="flex items-center text-white rounded-md px-3 py-2 text-lg font-extrabold">
             My Healthy Recipe
           </div>
           <button
@@ -109,10 +109,10 @@ const BusinessUserNavBar = () => {
             isMenuOpen ? "block" : "hidden"
           }`}
         >
-          <div className="flex flex-col  md:flex-row md:space-x-8 md:mt-0 md:text-sm md:font-medium">
+          <div className="flex flex-col md:flex-row md:space-x-8 md:mt-0 md:text-sm md:font-medium">
             <Link
               href="/businessUser"
-              className=" hover:bg-blue-900 hover:text-white rounded-md px-3 py-2 text-sm font-bold"
+              className="text-white hover:bg-sky-200 hover:text-black rounded-md px-3 py-2 text-sm font-bold"
             >
               Home
             </Link>
@@ -121,20 +121,20 @@ const BusinessUserNavBar = () => {
               onMouseEnter={handleMouseEnter}
               onMouseLeave={handleMouseLeave}
             >
-              <span className=" hover:bg-blue-900 hover:text-white rounded-md px-3 py-2 text-sm font-bold cursor-pointer">
+              <span className="text-white hover:bg-sky-200 hover:text-black rounded-md px-3 py-2 text-sm font-bold cursor-pointer">
                 Business Blog Posts
               </span>
               {isDropdownVisible && <BlogPostDropdownMenu />}
             </div>
             <Link
               href="/businessUser/recipes"
-              className=" hover:bg-blue-900 hover:text-white rounded-md px-3 py-2 text-sm font-bold"
+              className="text-white hover:bg-sky-200 hover:text-black rounded-md px-3 py-2 text-sm font-bold"
             >
               Recipes
             </Link>
             <Link
               href="/businessUser/educationalContent"
-              className=" hover:bg-blue-900 hover:text-white rounded-md px-3 py-2 text-sm font-bold"
+              className="text-white hover:bg-sky-200 hover:text-black rounded-md px-3 py-2 text-sm font-bold"
             >
               Educational Content
             </Link>
@@ -155,7 +155,7 @@ const BusinessUserNavBar = () => {
           <div className="flex flex-col md:flex-row md:space-x-8 md:mt-0 md:text-sm md:font-medium">
             <Link
               href="/dietitian/viewAccount"
-              className=" sm:hidden hover:bg-blue-900 hover:text-white rounded-md px-3 py-2 text-sm font-bold"
+              className="sm:hidden hover:bg-sky-200 hover:text-black rounded-md px-3 py-2 text-sm font-bold"
             >
               My Account
             </Link>
@@ -164,7 +164,7 @@ const BusinessUserNavBar = () => {
               onMouseEnter={handleMouseEnterAccount}
               onMouseLeave={handleMouseLeaveAccount}
             >
-              <span className="hidden md:block  hover:bg-blue-900 hover:text-white rounded-md px-3 py-2 text-sm font-bold cursor-pointer">
+              <span className="hidden md:block text-white hover:bg-sky-200 hover:text-black rounded-md px-3 py-2 text-sm font-bold cursor-pointer">
                 Account Settings
               </span>
               {isAccountDropdownVisible && <AccountDropdownMenu />}

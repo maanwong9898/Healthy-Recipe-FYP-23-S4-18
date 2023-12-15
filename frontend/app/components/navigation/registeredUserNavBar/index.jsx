@@ -19,7 +19,7 @@ const AccountDropdownMenu = () => {
         </li>
         <li className="px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
           <Link href="/registeredUser/userAccount">
-            Track Weight and Measurements
+            Track Weight Measurements
           </Link>
         </li>
         <li className="px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
@@ -84,7 +84,7 @@ const RegisteredUserNavBar = () => {
       <div className="flex flex-wrap items-center p-3">
         {/* Logo and mobile menu button (small screen) */}
         <div className="flex items-center justify-between w-full md:w-auto md:mr-4">
-          <div className="flex items-center text-white rounded-md px-3 py-2 text-sm font-extrabold">
+          <div className="flex items-center text-white rounded-md px-3 py-2 text-lg font-extrabold">
             My Healthy Recipe
           </div>
           <button
@@ -107,9 +107,9 @@ const RegisteredUserNavBar = () => {
             isMenuOpen ? "block" : "hidden"
           }`}
         >
-          <div className="flex flex-col  md:flex-row md:space-x-4 md:mt-0 md:text-sm md:font-medium">
+          <div className="flex flex-col md:flex-row md:space-x-4 md:mt-0 md:text-sm md:font-medium">
             <Link
-              href="/"
+              href="/registeredUser"
               className="text-white hover:bg-sky-200 hover:text-black rounded-md px-3 py-2 text-sm font-bold"
             >
               Home
@@ -147,12 +147,12 @@ const RegisteredUserNavBar = () => {
             >
               Business Blog Posts
             </Link>
-            <button
+            {/* <button
               onClick={confirmAndLogout}
               className="block md:hidden py-2 pr-4 pl-3 text-blue-800 rounded md:bg-transparent md:ml-auto md:p-0"
             >
               Logout
-            </button>
+            </button> */}
           </div>
         </div>
 

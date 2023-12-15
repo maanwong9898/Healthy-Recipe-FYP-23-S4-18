@@ -36,14 +36,14 @@ const HomeNavbar = () => {
 
   return (
     <nav className="bg-cyan-600">
-      <div className="flex flex-wrap items-center text-cyan-950 p-3">
+      <div className="flex flex-wrap items-center p-3">
         {/* Logo and mobile menu button (small screen) */}
         <div className="flex items-center justify-between w-full md:w-auto md:mr-4">
-          <div className="flex items-center text-black rounded-md px-3 py-2 text-base font-extrabold">
+          <div className="flex items-center text-white rounded-md px-3 py-2 text-lg font-extrabold">
             My Healthy Recipe
           </div>
           <button
-            className="text-blue-800 p-2 rounded-md hover:text-white hover:bg-blue-900 md:hidden"
+            className="text-white p-2 rounded-md hover:text-white hover:bg-blue-900 md:hidden"
             onClick={() => setIsMenuOpen(!isMenuOpen)}
           >
             {isMenuOpen ? "✖" : "☰"}
@@ -56,53 +56,53 @@ const HomeNavbar = () => {
             isMenuOpen ? "block" : "hidden"
           }`}
         >
-          <div className="flex flex-col  md:flex-row md:space-x-8 md:mt-0 md:text-base md:font-medium">
+          <div className="flex flex-col md:flex-row md:space-x-8 md:mt-0 md:text-sm md:font-medium  ">
             <Link
               href="/"
-              className=" hover:bg-blue-900 hover:text-white rounded-md px-3 py-2 font-bold"
+              className="text-white hover:bg-sky-200 hover:text-black rounded-md px-3 py-2 font-bold"
             >
               Home
             </Link>
             <Link
               href="/aboutUs"
-              className=" hover:bg-blue-900 hover:text-white rounded-md px-3 py-2 font-bold"
+              className="text-white hover:bg-sky-200 hover:text-black rounded-md px-3 py-2 font-bold"
             >
               About Us
             </Link>
             <Link
               href="/recipes"
-              className=" hover:bg-blue-900 hover:text-white rounded-md px-3 py-2 font-bold"
+              className="text-white hover:bg-sky-200 hover:text-black rounded-md px-3 py-2 font-bold"
             >
               Recipes
             </Link>
             <Link
               href="/mealPlan"
-              className=" hover:bg-blue-900 hover:text-white rounded-md px-3 py-2 font-bold"
+              className="text-white hover:bg-sky-200 hover:text-black rounded-md px-3 py-2 font-bold"
             >
               Meal Plans
             </Link>
             <Link
               href="/"
-              className=" hover:bg-blue-900 hover:text-white rounded-md px-3 py-2 font-bold"
+              className="text-white hover:bg-sky-200 hover:text-black rounded-md px-3 py-2 font-bold"
             >
               Educational Content
             </Link>
             <Link
               href="/"
-              className=" hover:bg-blue-900 hover:text-white rounded-md px-3 py-2 font-bold"
+              className="text-white hover:bg-sky-200 hover:text-black rounded-md px-3 py-2 font-bold"
             >
               Business Blog Post
             </Link>
-            <Link href="/userLogin">
-              <button className=" md:hidden bg-gradient-to-br from-cyan-400 to-cyan-800 hover:bg-blue-950 border-2 border-black text-white rounded-md px-3 py-2 font-bold">
+            {/* <Link href="/userLogin">
+              <button className=" hidden md:block text-white hover:bg-sky-200 hover:text-black rounded-md px-3 py-2 text-sm font-bold">
                 Login/Sign Up
               </button>
-            </Link>
+            </Link> */}
           </div>
         </div>
         <div className="md:ml-auto">
           <Link href="/userLogin">
-            <button className=" hidden md:block bg-gradient-to-br from-cyan-600 to-cyan-800 hover:bg-blue-950 border-2 border-black text-white rounded-md px-3 py-2 font-bold">
+            <button className=" hidden md:block text-white hover:bg-sky-200 hover:text-black rounded-md px-3 py-2 text-sm font-bold">
               Login/Sign Up
             </button>
           </Link>

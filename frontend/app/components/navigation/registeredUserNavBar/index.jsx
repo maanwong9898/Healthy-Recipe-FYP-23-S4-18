@@ -114,15 +114,14 @@ const RegisteredUserNavBar = () => {
             >
               Home
             </Link>
-            <div
-              className="relative flex items-center"
-              onMouseEnter={handleMouseEnter}
-              onMouseLeave={handleMouseLeave}
+
+            <Link
+              href="/registeredUser/aboutUs"
+              className="text-white hover:bg-sky-200 hover:text-black rounded-md px-3 py-2 text-sm font-bold"
             >
-              <span className="text-white hover:bg-sky-200 hover:text-black rounded-md px-3 py-2 text-sm font-bold cursor-pointer">
-                About Us
-              </span>
-            </div>
+              About Us
+            </Link>
+
             <Link
               href="/"
               className="text-white hover:bg-sky-200 hover:text-black rounded-md px-3 py-2 text-sm font-bold"

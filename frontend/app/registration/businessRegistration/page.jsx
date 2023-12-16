@@ -12,6 +12,9 @@ const businessRegistration = () => {
   const [uen, setUen] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPwd, setConfirmPwd] = useState("");
+  const [contactNumber, setContactNumber] = useState("");
+  const [address, setAddress] = useState("");
+  const [postalCode, setPostalCode] = useState("");
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
   const emailValidation = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -47,11 +50,14 @@ const businessRegistration = () => {
       // Reset fields in the form + error state
       setFullName("");
       setUsername("");
-      setWorkEmail("");
-      setOrganization("");
-      setUen("");
       setPassword("");
       setConfirmPwd("");
+      setContactNumber("");
+      setWorkEmail("");
+      setOrganization("");
+      setAddress("");
+      setPostalCode("");
+      setUen("");
       setError("");
     }
 
@@ -77,7 +83,8 @@ const businessRegistration = () => {
               <h1 className="text-xl font-bold text-gray-900 md:text-2xl">
                 Business User Sign Up
               </h1>
-              <form className="space-y-3">
+              <form className="space-y-2">
+                <h2>Personal Details</h2>
                 <div className="flex space-x-4">
                   {/* NAME */}
                   <input
@@ -102,6 +109,42 @@ const businessRegistration = () => {
                   ></input>
                 </div>
 
+                {/* PASSWORDS */}
+                <div className="flex space-x-4">
+                  <input
+                    type="password"
+                    name="pwd"
+                    id="pwd"
+                    placeholder="Password"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    className="border px-4 py-2 rounded-lg bg-gray-50 border-gray-300 text-gray-900 sm:text-sm block w-full p-2.5"
+                  ></input>
+                  <input
+                    type="password"
+                    name="confirmPwd"
+                    id="confirmPwd"
+                    placeholder="Confirm Password"
+                    value={confirmPwd}
+                    onChange={(e) => setConfirmPwd(e.target.value)}
+                    className="border px-4 py-2 rounded-lg bg-gray-50 border-gray-300 text-gray-900 sm:text-sm block w-full p-2.5"
+                  ></input>
+                </div>
+
+                {/* CONTACT NUMBER */}
+                <div className="flex flex-row">
+                  <input
+                    type="text"
+                    name="contactNumber"
+                    id="contactNumber"
+                    placeholder="Contact Number"
+                    value={contactNumber}
+                    onChange={(e) => setContactNumber(e.target.value)}
+                    className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg block w-full p-2.5"
+                  ></input>
+                </div>
+
+                <h2>Organization Details</h2>
                 {/* WORK EMAIL */}
                 <div>
                   <input
@@ -128,8 +171,34 @@ const businessRegistration = () => {
                   ></input>
                 </div>
 
+                {/* ADDRESS */}
                 <div className="flex flex-row">
-                  {/* UEN */}
+                  <input
+                    type="text"
+                    name="address"
+                    id="address"
+                    placeholder="Address"
+                    value={address}
+                    onChange={(e) => setAddress(e.target.value)}
+                    className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg block w-full p-2.5"
+                  ></input>
+                </div>
+
+                {/* POSTAL CODE */}
+                <div className="flex flex-row">
+                  <input
+                    type="text"
+                    name="postalCode"
+                    id="postalCode"
+                    placeholder="Postal Code"
+                    value={postalCode}
+                    onChange={(e) => setPostalCode(e.target.value)}
+                    className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg block w-full p-2.5"
+                  ></input>
+                </div>
+
+                {/* UEN */}
+                <div className="flex flex-row">
                   <input
                     type="text"
                     name="uen"
@@ -137,31 +206,10 @@ const businessRegistration = () => {
                     placeholder="UEN"
                     value={uen}
                     onChange={(e) => setUen(e.target.value)}
-                    className="border px-4 py-2 rounded-lg bg-gray-50 border-gray-300 text-gray-900 sm:text-sm block w-full p-2.5 "
+                    className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg block w-full p-2.5"
                   ></input>
                 </div>
 
-                {/* PASSWORDS */}
-                <div className="flex space-x-4">
-                  <input
-                    type="password"
-                    name="pwd"
-                    id="pwd"
-                    placeholder="Password"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                    className="border px-4 py-2 rounded-lg bg-gray-50 border-gray-300 text-gray-900 sm:text-sm block w-full p-2.5"
-                  ></input>
-                  <input
-                    type="password"
-                    name="confirmPwd"
-                    id="confirmPwd"
-                    placeholder="Confirm Password"
-                    value={confirmPwd}
-                    onChange={(e) => setConfirmPwd(e.target.value)}
-                    className="border px-4 py-2 rounded-lg bg-gray-50 border-gray-300 text-gray-900 sm:text-sm block w-full p-2.5"
-                  ></input>
-                </div>
                 {/* ERROR MSG */}
                 <p className="text-red-500 text-sm">{error}</p>
                 <p className="text-green-500 text-sm">{success}</p>

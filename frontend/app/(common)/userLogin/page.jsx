@@ -87,17 +87,14 @@ const userLogin = () => {
     <div className="bg-cyan-900">
       <HomeNavbar />
       <div className="flex flex-col items-center justify-center h-screen">
-        <p className="text-[40px] text-white font-extrabold mb-4">
-          My Healthy Recipe
-        </p>
-        <div className="w-full max-w-md bg-cyan-600 rounded-xl shadow-md py-8 px-8">
-          <h2 className="text-[24px] font-bold text-cyan-950 mb-6">
+        <div className="w-full max-w-md bg-white rounded-xl shadow-md py-8 px-8">
+          <h2 className="text-[24px] font-bold text-gray-900 mb-6">
             Welcome Back
           </h2>
           <form className="flex flex-col items-center">
             <div className="mb-5 w-full">
               <input
-                className="border-1 border-blue-700 rounded-md py-2 px-4 w-full"
+                className="border-1 bg-gray-100 border-gray-300 rounded-lg text-sm py-2 px-4 w-full"
                 type="text"
                 placeholder="Username"
                 value={username}
@@ -106,7 +103,7 @@ const userLogin = () => {
             </div>
             <div className="mb-5 w-full">
               <input
-                className="border-1 border-blue-700 rounded-md py-2 px-4 w-full"
+                className="border-1 bg-gray-100 border-gray-300 rounded-md text-sm py-2 px-4 w-full"
                 type="password"
                 placeholder="Password"
                 value={password}
@@ -115,21 +112,21 @@ const userLogin = () => {
             </div>
             <div className="flex w-full">
               <button
-                className="bg-gradient-to-br from-cyan-400 to-cyan-800 hover:bg-blue-950 border-2 border-black text-white rounded-md font-bold py-2 px-4 w-full"
+                className="text-center text-white bg-cyan-500 hover:bg-sky-700 font-medium rounded-lg py-2 px-4 w-full"
                 onClick={handleLogin}
               >
                 Sign In to Your Account
               </button>
             </div>
             <div className="flex justify-center w-full">
-              <p className="text-black font-bold text-xl">{error}</p>
+              <p className="text-red-500 text-sm">{error}</p>
             </div>
             <div className="flex justify-center w-full">
-              <p className="text-[18px] font-light text-white mt-6">
+              <p className="text-sm font-light text-black mt-6">
                 Don’t have an account yet?{" "}
                 <Link
                   href="/registration"
-                  className="font-medium text-primary-600 hover:underline dark:text-primary-500"
+                  className="font-medium text-cyan-600 hover:underline"
                 >
                   Sign up
                 </Link>

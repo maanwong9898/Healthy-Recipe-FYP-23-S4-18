@@ -9,24 +9,23 @@ import { useState, useEffect } from "react";
 
 const mockBusinessBlogPost = {
   id: "1928374650",
-  blogTitle: "Essential Tools for the Modern Chef",
+  blogTitle: "Transform Your Cooking with Our Revolutionary Kitchen Tools",
   publisher: "Lucas Brown",
-  category: "Kitchen Utensils",
+  category: "Kitchenware",
   introduction:
-    "Our 'Essential Tools for the Modern Chef' guide is the definitive resource for equipping your culinary workspace with the best kitchen gadgets and utensils.",
+    "Discover the future of cooking with our exclusive line of advanced kitchen tools. Designed for efficiency and elegance, our products are a must-have for every modern kitchen.",
   main_content:
-    "Explore our top picks for innovative kitchen gadgets that streamline your cooking process, from smart thermometers to multipurpose blenders.",
+    "Our collection features the UltraBlend Pro, a multifunctional blender with smart settings for perfect textures every time, priced at $199. The PrecisionChef Smart Thermometer, available for $49, ensures your dishes are cooked to perfection. Don't miss our SpaceSaver Kitchen Set, an all-in-one solution for small kitchens, now only $129. Each product is crafted for durability and style, promising a seamless cooking experience.",
   conclusion:
-    "With the right tools, cooking becomes an experience of precision and pleasure. Elevate your culinary creations with our recommended kitchen essentials.",
+    "Elevate your culinary skills with our state-of-the-art kitchen tools. Exceptional quality at unbeatable prices – upgrade your kitchen today and cook like a pro!",
   image_url:
     "https://img.freepik.com/free-photo/top-view-ice-cream-tools-concept_23-2148425369.jpg?w=826&t=st=1702639149~exp=1702639749~hmac=90330eb53a1f60067db8b4b6d0a313f1d29143679940cb3456ccdcdc52b65b28",
-  image_title: "Chef's Tools",
+  image_title: "Revolutionary Kitchen Tools",
   date_published: "2022-08-23",
-  ratings: 4.5,
-  reviews: 38,
+  ratings: 4.8,
+  reviews: 105,
   isActive: true,
 };
-
 // should have a list of reviews and ratings for each blog post
 const mockBusinessBlogPost_RatingAndReviews = [
   {

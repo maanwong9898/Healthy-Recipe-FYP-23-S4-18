@@ -28,8 +28,8 @@ const mockData = {
   ],
   businessBlogPosts: [
     { id: "cookbook", name: "Cookbook" },
-    { id: "kitchenUtensils", name: "Kitchen Utensils" },
-    { id: "foodTechnology", name: "Food Technology" },
+    { id: "kitchenware", name: "Kitchenware" },
+    { id: "miscellaneous", name: "Miscellaneous" },
   ],
   educationalContent: [
     { id: "healthyEating", name: "Healthy Eating" },

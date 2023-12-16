@@ -52,7 +52,7 @@ const AllBusinessBlogPosts = [
     id: "2217913265",
     blogTitle: "The Chef's Choice: Top Utensils for Your Kitchen",
     publisher: "Emily Clarke",
-    category: "Kitchen Utensils",
+    category: "Kitchenware",
     introduction:
       "Discover the essential utensils that every aspiring chef needs in their kitchen.",
     main_content:
@@ -88,21 +88,21 @@ const AllBusinessBlogPosts = [
   },
   {
     id: "1928374650",
-    blogTitle: "Essential Tools for the Modern Chef",
+    blogTitle: "Transform Your Cooking with Our Revolutionary Kitchen Tools",
     publisher: "Lucas Brown",
-    category: "Kitchen Utensils",
+    category: "Kitchenware",
     introduction:
-      "Our 'Essential Tools for the Modern Chef' guide is the definitive resource for equipping your culinary workspace with the best kitchen gadgets and utensils.",
+      "Discover the future of cooking with our exclusive line of advanced kitchen tools. Designed for efficiency and elegance, our products are a must-have for every modern kitchen.",
     main_content:
-      "Explore our top picks for innovative kitchen gadgets that streamline your cooking process, from smart thermometers to multipurpose blenders.",
+      "Our collection features the UltraBlend Pro, a multifunctional blender with smart settings for perfect textures every time, priced at $199. The PrecisionChef Smart Thermometer, available for $49, ensures your dishes are cooked to perfection. Don't miss our SpaceSaver Kitchen Set, an all-in-one solution for small kitchens, now only $129. Each product is crafted for durability and style, promising a seamless cooking experience.",
     conclusion:
-      "With the right tools, cooking becomes an experience of precision and pleasure. Elevate your culinary creations with our recommended kitchen essentials.",
+      "Elevate your culinary skills with our state-of-the-art kitchen tools. Exceptional quality at unbeatable prices – upgrade your kitchen today and cook like a pro!",
     image_url:
       "https://img.freepik.com/free-photo/top-view-ice-cream-tools-concept_23-2148425369.jpg?w=826&t=st=1702639149~exp=1702639749~hmac=90330eb53a1f60067db8b4b6d0a313f1d29143679940cb3456ccdcdc52b65b28",
-    image_title: "Chef's Tools",
+    image_title: "Revolutionary Kitchen Tools",
     date_published: "2022-08-23",
-    ratings: 4.5,
-    reviews: 38,
+    ratings: 4.8,
+    reviews: 105,
     isActive: true,
   },
   {
@@ -128,7 +128,7 @@ const AllBusinessBlogPosts = [
     id: "3485723894",
     blogTitle: "Precision Baking: Digital Scales for Perfect Pastries",
     publisher: "Elena Torres",
-    category: "Kitchen Utensils",
+    category: "Kitchenware",
     introduction:
       "Precision is key in baking. 'Precision Baking: Digital Scales for Perfect Pastries' introduces the most accurate kitchen scales that ensure your ingredients are measured perfectly every time.",
     main_content:
@@ -203,25 +203,25 @@ const BusinessBlogPostsPageForUser = () => {
       (categoryFilter ? post.category === categoryFilter : true)
   );
 
-  // // Sort and filter logic
-  // const latestPosts = [...AllBusinessBlogPosts]
-  //   .filter((post) => post.isActive)
-  //   .sort((a, b) => new Date(b.date_published) - new Date(a.date_published))
-  //   .slice(0, 3);
+  // Latest posts
+  const latestPosts = [...AllBusinessBlogPosts]
+    .filter((post) => post.isActive)
+    .sort((a, b) => new Date(b.date_published) - new Date(a.date_published))
+    .slice(0, 3);
 
-  // const topRatedPosts = [...AllBusinessBlogPosts]
-  //   .filter(
-  //     (post) => post.isActive && !latestPosts.find((p) => p.id === post.id)
-  //   )
-  //   .sort((a, b) => b.ratings - a.ratings || b.reviews - a.reviews)
-  //   .slice(0, 3);
+  // Top rated posts
+  const topRatedPosts = [...AllBusinessBlogPosts]
+    .filter((post) => post.isActive)
+    .sort((a, b) => b.ratings - a.ratings || b.reviews - a.reviews)
+    .slice(0, 3);
 
-  // const otherPosts = AllBusinessBlogPosts.filter(
-  //   (post) =>
-  //     post.isActive &&
-  //     !latestPosts.find((latest) => latest.id === post.id) &&
-  //     !topRatedPosts.find((top) => top.id === post.id)
-  // );
+  // Other posts excluding latest and top rated
+  const otherPosts = AllBusinessBlogPosts.filter(
+    (post) =>
+      post.isActive &&
+      !latestPosts.some((latest) => latest.id === post.id) &&
+      !topRatedPosts.some((top) => top.id === post.id)
+  );
 
   // this function is to view particular blog post
   const handleViewBlogPost = (blogPostTitle) => {
@@ -237,34 +237,44 @@ const BusinessBlogPostsPageForUser = () => {
   // Filter the active blog posts
   const activeBlogPosts = AllBusinessBlogPosts.filter((post) => post.isActive);
 
-  // The JSX for each post, can be made into a separate component
-  // const renderPostCard = (post) => (
-  //   <div key={post.id} className="rounded shadow-lg overflow-hidden">
-  //     <div className="p-1.5 flex flex-col h-full">
-  //       <img
-  //         src={post.image_url}
-  //         alt={post.image_title}
-  //         className="w-full object-cover rounded-sm"
-  //         style={{ height: "192px" }}
-  //       />
-  //       <div className="p-4 flex-grow bg-white">
-  //         <h2 className="text-2xl font-extrabold mb-2">{post.blogTitle}</h2>
-  //         <p
-  //           className="text-gray-700 text-base mb-4 line-clamp-3"
-  //           style={{ height: "4.5rem" }}
-  //         >
-  //           {post.introduction}
-  //         </p>
-  //         <button
-  //           onClick={() => handleViewBlogPost(post.id)}
-  //           className="text-white font-bold bg-gradient-to-br from-cyan-400 to-cyan-800 hover:bg-blue-950 border-2 border-black focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 rounded-lg text-base px-5 py-2.5 text-center"
-  //         >
-  //           Read more
-  //         </button>
-  //       </div>
-  //     </div>
-  //   </div>
-  // );
+  // Function to render a single post card
+  const renderPostCard = (post) => (
+    <div
+      key={post.id}
+      className="rounded shadow-lg overflow-hidden flex flex-col"
+      style={{
+        border: "0.5px solid transparent",
+        background:
+          "linear-gradient(to right, #22d3ee 0%, #8b5cf6 100%), white",
+        backgroundOrigin: "border-box",
+        backgroundClip: "content-box, border-box",
+      }}
+    >
+      <img
+        src={post.image_url}
+        alt={post.image_title}
+        className="w-full object-cover rounded-sm"
+        style={{ height: "192px" }}
+      />
+      <div className="flex-grow flex flex-col justify-between p-4 bg-white">
+        <div>
+          <h2 className="text-2xl font-extrabold mb-2">{post.blogTitle}</h2>
+          <p
+            className="text-gray-700 text-base mb-4 line-clamp-3"
+            style={{ height: "4.5rem" }}
+          >
+            {post.introduction}
+          </p>
+        </div>
+        <button
+          onClick={() => handleViewBlogPost(post.blogTitle)}
+          className="text-white font-bold bg-gradient-to-br from-cyan-400 to-cyan-800 hover:bg-blue-950 border-2 border-black focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 rounded-lg text-sm mt-3 px-4 py-2 text-center"
+        >
+          Read more
+        </button>
+      </div>
+    </div>
+  );
 
   return (
     <div className="bg-white p-4 md:p-10">
@@ -293,7 +303,7 @@ const BusinessBlogPostsPageForUser = () => {
           className="border-2 border-gray-300 bg-white h-10 px-4 md:px-5 rounded-lg text-base focus:outline-none"
         >
           <option value="">All Categories</option>
-          <option value="Kitchen Utensils">Kitchen Utensils</option>
+          <option value="Kitchenware">Kitchenware</option>
           <option value="Cookbook">Cookbook</option>
           <option value="Miscellaneous">Miscellaneous</option>
         </select>
@@ -303,58 +313,88 @@ const BusinessBlogPostsPageForUser = () => {
           No results found{searchQuery && ` for "${searchQuery}"`}.
         </p>
       )}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-10">
-        {activeBlogPosts.map((post) => (
-          <div
-            key={post.id}
-            className="rounded shadow-lg overflow-hidden"
-            style={{
-              border: "0.5px solid transparent",
-              background:
-                "linear-gradient(to right, #22d3ee 0%, #8b5cf6 100%), white",
-              backgroundOrigin: "border-box",
-              backgroundClip: "content-box, border-box",
-            }}
-          >
-            <div className="p-1.5 flex flex-col h-full">
-              <img
-                src={post.image_url}
-                alt={post.image_title}
-                className="w-full object-cover rounded-sm"
-                style={{ height: "192px" }} // Use inline style to set a fixed height for the image
-              />
-              <div className="p-4 flex-grow bg-white">
-                <h2 className="text-2xl font-extrabold mb-2">
-                  {post.blogTitle}
-                </h2>
-                <p
-                  className="text-gray-700 text-base mb-4 line-clamp-3"
-                  style={{ height: "4.5rem" }}
-                >
-                  {post.introduction}
-                </p>
-                {/* <Link
-                  href={`/registeredUser/businessBlogPost/viewBusinessBlogPost/${blogPostTitle}`}
-                >
-                  Read me
-                </Link> */}
-                <button
-                  onClick={() => handleViewBlogPost(post.blogTitle)}
-                  className="text-white font-bold bg-gradient-to-br from-cyan-400 to-cyan-800 hover:bg-blue-950 border-2 border-black
-                    focus:ring-4 focus:outline-none focus:ring-blue-300
-                    dark:focus:ring-blue-800 rounded-lg text-base px-5 py-2.5
-                    mr-7 text-center"
-                >
-                  {" "}
-                  Read more
-                </button>
-              </div>
-            </div>
-          </div>
-        ))}
+      {/* Latest Posts Section */}
+      <div>
+        <h2 className="text-2xl font-bold mb-4 mt-4">
+          Latest Business Blog Post
+        </h2>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
+          {latestPosts.map((post) => renderPostCard(post))}
+        </div>
       </div>
+      {/* end of latest */}
+
+      {/* Post with most review Section */}
+      <div>
+        <h2 className="text-2xl font-bold mb-4 mt-4">
+          Most Popular Business Blog Post
+        </h2>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+          {topRatedPosts.map((post) => renderPostCard(post))}
+        </div>
+      </div>
+      {/* end of most popular */}
+      {/* Other Posts Section */}
+      <div>
+        <h2 className="text-2xl font-bold mb-4 mt-4">Other Blog Posts</h2>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+          {otherPosts.map((post) => renderPostCard(post))}
+        </div>
+      </div>
+      {/* end of other */}
     </div>
   );
 };
 
 export default BusinessBlogPostsPageForUser;
+
+// <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-10">
+//         {activeBlogPosts.map((post) => (
+//           <div
+//             key={post.id}
+//             className="rounded shadow-lg overflow-hidden"
+//             style={{
+//               border: "0.5px solid transparent",
+//               background:
+//                 "linear-gradient(to right, #22d3ee 0%, #8b5cf6 100%), white",
+//               backgroundOrigin: "border-box",
+//               backgroundClip: "content-box, border-box",
+//             }}
+//           >
+//             <div className="p-1.5 flex flex-col h-full">
+//               <img
+//                 src={post.image_url}
+//                 alt={post.image_title}
+//                 className="w-full object-cover rounded-sm"
+//                 style={{ height: "192px" }} // Use inline style to set a fixed height for the image
+//               />
+//               <div className="p-4 flex-grow bg-white">
+//                 <h2 className="text-2xl font-extrabold mb-2">
+//                   {post.blogTitle}
+//                 </h2>
+//                 <p
+//                   className="text-gray-700 text-base mb-4 line-clamp-3"
+//                   style={{ height: "4.5rem" }}
+//                 >
+//                   {post.introduction}
+//                 </p>
+//                 <Link
+//                   href={`/registeredUser/businessBlogPost/viewBusinessBlogPost/${blogPostTitle}`}
+//                 >
+//                   Read me
+//                 </Link>
+//                 <button
+//                   onClick={() => handleViewBlogPost(post.blogTitle)}
+//                   className="text-white font-bold bg-gradient-to-br from-cyan-400 to-cyan-800 hover:bg-blue-950 border-2 border-black
+//                     focus:ring-4 focus:outline-none focus:ring-blue-300
+//                     dark:focus:ring-blue-800 rounded-lg text-base px-5 py-2.5
+//                     mr-7 text-center"
+//                 >
+//                   {" "}
+//                   Read more
+//                 </button>
+//               </div>
+//             </div>
+//           </div>
+//         ))}
+//       </div>

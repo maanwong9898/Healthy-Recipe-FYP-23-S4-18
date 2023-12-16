@@ -56,14 +56,13 @@ public class Blog {
     private String info;
       
     // yes the userId can be null, credit may land on existing business 
-    // users or saved inside info column
-    // i included cascadeType.MERGE just to 
-    @ManyToOne(cascade = CascadeType.MERGE)
+    // users or saved inside info column 
+    @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "UserID", referencedColumnName = "id")
     private User userID;
  
     // this userId belongs to who wrote it, usually fellow 
     // business user
-  
+    
 }    
   

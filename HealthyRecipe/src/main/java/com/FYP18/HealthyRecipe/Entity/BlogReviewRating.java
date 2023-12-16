@@ -40,7 +40,7 @@ public class BlogReviewRating {
 
     @ManyToOne
     @JoinColumn(name = "UserID", referencedColumnName = "id", insertable = false, updatable = false)
-    private User userAccount;
+    private RegisteredUser userAccount;
 
 
     @Column(name = "CreatedDT", columnDefinition="DATETIME default (NOW())")

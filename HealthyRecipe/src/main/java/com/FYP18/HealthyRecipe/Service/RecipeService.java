@@ -4,6 +4,8 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import javax.management.RuntimeErrorException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cglib.core.Local;
 import org.springframework.stereotype.Service;
@@ -36,6 +38,22 @@ public class RecipeService {
     {  
         return recipeRepository.save(recipe);
     }
+
+
+    // this is limited to system admin and also the owner of the recipe
+    public Recipe updateRecipeActivity(Recipe recipe)
+    {
+        // hence the parameter should give in user's role + id of the recipe
+        
+        // .. or i should check for the roles in controllers idk..?
+        Recipe toUpdate = recipeRepository.findById(recipe.getId())
+
+        .orElseThrow(()->  new RuntimeException("Recipe Id: "+ recipe.getId() + " is not found"));  
+
+        toUpdate.setActive(recipe.getActive());
+
+        return recipeRepository.save(toUpdate);
+    }
     
     public List<Recipe> getAllRecipes()
     {
@@ -56,8 +74,7 @@ public class RecipeService {
     {
         recipeRepository.deleteByRecipeId(id);
     }
-
-
+ 
     //- rating's Create, Update, Read, Delete
     
     public RecipeReviewRating createRating(RecipeReviewRating recipeReviewRating)

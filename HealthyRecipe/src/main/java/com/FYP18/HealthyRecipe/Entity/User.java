@@ -37,7 +37,7 @@ public class User //implements UserDetails
     
     @Id
     @GeneratedValue(strategy= GenerationType.UUID)
-    @Column(name = "ID", updatable = false)
+    @Column(name = "id", updatable = false, nullable = false)
     public String id;
 
     // @Enumerated(EnumType.STRING)

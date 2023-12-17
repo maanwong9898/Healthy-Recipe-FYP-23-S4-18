@@ -13,6 +13,9 @@ const mockBusinessUserAccount = {
   username: "BusinessUser1",
   password: "password",
   email: "william@gmail.com",
+  contactNumber: "91234567",
+  address: "123, Jurong West Ave 6, #08-111",
+  postalCode: "515207",
   isActive: true,
   userProfile: "Business User",
   company_name: "Company 1",
@@ -84,6 +87,22 @@ const VerifyBusinessUser = ({ params }) => {
               />
             </div>
             <div>
+              <label className="block text-lg mb-2 font-bold text-cyan-950">
+                Contact Number:
+              </label>
+              <input
+                type="text"
+                name="contactNumber"
+                id="contactNumber"
+                autoComplete="contactNumber"
+                value={
+                  businessUserAccount ? businessUserAccount.contactNumber : ""
+                }
+                readOnly
+                className="border-1 border-blue-700 rounded-md py-2 px-4 w-full"
+              />
+            </div>
+            <div>
               <label className="block text-lg font-bold text-cyan-950">
                 Work Email Address:
               </label>
@@ -109,6 +128,36 @@ const VerifyBusinessUser = ({ params }) => {
                 autoComplete="company_name"
                 value={
                   businessUserAccount ? businessUserAccount.company_name : ""
+                }
+                readOnly
+                className="border-1 border-blue-700 rounded-md py-2 px-4 w-full"
+              />
+            </div>
+            <div>
+              <label className="block text-lg font-bold text-cyan-950">
+                Address:
+              </label>
+              <input
+                type="text"
+                name="address"
+                id="address"
+                autoComplete="address"
+                value={businessUserAccount ? businessUserAccount.address : ""}
+                readOnly
+                className="border-1 border-blue-700 rounded-md py-2 px-4 w-full"
+              />
+            </div>
+            <div>
+              <label className="block text-lg font-bold text-cyan-950">
+                Postal Code:
+              </label>
+              <input
+                type="text"
+                name="postalCode"
+                id="postalCode"
+                autoComplete="postalCode"
+                value={
+                  businessUserAccount ? businessUserAccount.postalCode : ""
                 }
                 readOnly
                 className="border-1 border-blue-700 rounded-md py-2 px-4 w-full"

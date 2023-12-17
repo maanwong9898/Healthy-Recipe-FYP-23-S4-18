@@ -64,6 +64,13 @@ const MyBusinessBlogPosts = () => {
       <h1 className="text-2xl text-white p-3 mb-4 font-bold text-center sm:text-left">
         My Business Blog Posts
       </h1>
+      <div>
+        <button className="text-white border-2 border-black bg-gradient-to-br from-cyan-400 to-cyan-800 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 rounded-lg text-base font-bold px-5 py-2.5 mr-7 mb-4 text-center">
+          <Link href="/businessUser/businessBlogPost/createBusinessBlogPost">
+            Create Business Blog Post
+          </Link>
+        </button>
+      </div>
       <div className="overflow-x-auto">
         <table className="min-w-full rounded-lg border-black border-2">
           <thead className="bg-cyan-600 font-semibold text-cyan-950 border-black border-2">

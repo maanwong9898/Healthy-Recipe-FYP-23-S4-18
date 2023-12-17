@@ -4,55 +4,51 @@ import React from "react";
 import Link from "next/link";
 import { useState, useEffect } from "react";
 
-// this is to view particular blog post under business user
-// router path: /businessUser/businessBlogPost/updateBusinessBlogPost/%5BblogPostTitle%5D
+// this is to update particular educational content under business user
+// router path: /businessUser/educationalContent/updateEducationalContent/[blogPostTitle]
 
-const mockBusinessBlogPost = {
-  id: "1234567890",
-  blogTitle: "Seasonal Savors: A Cookbook for Every Time of the Year",
-  publisher: "Michael Lim",
-  category: "Cookbook",
+const mockEducationalContent = {
+  id: "3456789012",
+  blogTitle: "Living Well: Daily Practices for a Vibrant Life",
+  publisher: "Jordan Smith",
+  category: "Healthy Lifestyle",
   introduction:
-    "Welcome to 'Seasonal Savors', your ultimate companion for year-round culinary adventures! This cookbook is crafted with love, featuring a medley of recipes that celebrate the unique flavors and ingredients each season has to offer. From the fresh blossoms of spring to the hearty harvest of autumn, we invite you to embark on a gastronomic journey through the year. Get ready to explore dishes that will not only nourish the body but also delight the senses.",
+    "Welcome to 'Living Well: Daily Practices for a Vibrant Life', a comprehensive guide to enhancing your daily routine for optimal health and happiness. This book is your ally in building a lifestyle that fosters physical, mental, and emotional well-being.",
   main_content:
-    "Our journey begins with the rejuvenating tastes of spring, introducing dishes like 'Spring Pea Risotto' and 'Lemon Herb Chicken'. As we bask in the summer sun, we'll dive into refreshing 'Watermelon Gazpacho' and 'Grilled Peach Salad'. The crisp air of fall calls for 'Pumpkin Spice Soup' and 'Roasted Root Vegetables', while winter comforts with 'Hearty Beef Stew' and 'Decadent Chocolate Peppermint Cake'. Each recipe is accompanied by tips on sourcing the best seasonal produce and pairing your meals with appropriate wines and beverages.",
+    "Explore chapters like 'Morning Yoga Routines', 'Mindful Meditation Techniques', 'Balanced Diet Plans', and 'Effective Exercise Regimens'. Each section provides practical advice, easy-to-follow activities, and motivational insights to help you create a balanced and enriching lifestyle.",
   conclusion:
-    "As the year closes, we hope 'Seasonal Savors' has inspired you to embrace the beauty of seasonal cooking. The recipes provided are more than just instructions; they are a canvas for creativity and a chance to forge memorable moments with loved ones. So, cherish the flavors each season brings and let your kitchen be a place of discovery all year long.",
-
+    "'Living Well' is more than a guide; it's a companion in your journey towards holistic well-being. By integrating these practices into your daily life, you'll discover a deeper sense of vitality, clarity, and joy. Embrace the path to a vibrant life, one day at a time.",
   image_url:
-    "https://cdn.pixabay.com/photo/2015/04/29/19/33/cookbook-746005_1280.jpg",
-  image_title: "Recipe Book",
-  date_published: "2021-10-01",
+    "https://img.freepik.com/free-photo/close-up-kid-meditating-mat_23-2149101612.jpg?w=826&t=st=1702698008~exp=1702698608~hmac=3493459a84121109aad5dd0837dbd50ad85e685e28eb107942118ebb3c13189f",
+  image_title: "Healthy Lifestyle",
+  date_published: "2023-03-22",
   ratings: 4,
-  reviews: 10,
+  reviews: 45,
   isActive: true,
 };
 
-// should have a list of reviews and ratings for each blog post
-const mockBusinessBlogPost_RatingAndReviews = [
+// should have a list of reviews and ratings for each eudcational blog post
+const mockEducationalContent_RatingAndReviews = [
   {
-    username: "Jason",
+    username: "Michael",
     ratings: 4,
     reviews: "This is a good blog post",
     date_published: "2021-10-01",
   },
   {
-    username: "Jessica",
+    username: "Jeniffer",
     ratings: 5,
     reviews: "Highly recommended!",
     date_published: "2023-11-15",
   },
 ];
 
-const mockBlogCategory = [
+const mockEducationalContentCategory = [
   {
-    category: "Cookbook",
+    category: "Healthy Eating",
   },
   {
-    category: "Kitchen Utensils",
-  },
-  {
-    category: "Miscellaneous",
+    category: "Healthy Lifestyle",
   },
 ];
 
@@ -68,26 +64,29 @@ const slugify = (text) =>
     .replace(/-+$/, ""); // Trim - from end of text
 
 const UpdateBusinessBlogPostPage = ({ params }) => {
-  const [businessBlogPost, setBusinessBlogPost] =
-    useState(mockBusinessBlogPost);
+  const [educationalContent, setEducationalContent] = useState(
+    mockEducationalContent
+  );
   const [reviewsAndRatings, setReviewsAndRatings] = useState(
-    mockBusinessBlogPost_RatingAndReviews
+    mockEducationalContent_RatingAndReviews
   );
 
   // States for the form fields
-  const [title, setTitle] = useState(mockBusinessBlogPost.blogTitle);
-  const [publisher, setPublisher] = useState(mockBusinessBlogPost.publisher);
-  const [category, setCategory] = useState(mockBusinessBlogPost.category);
+  const [title, setTitle] = useState(mockEducationalContent.blogTitle);
+  const [publisher, setPublisher] = useState(mockEducationalContent.publisher);
+  const [category, setCategory] = useState(mockEducationalContent.category);
   const [introduction, setIntroduction] = useState(
-    mockBusinessBlogPost.introduction
+    mockEducationalContent.introduction
   );
   const [mainContent, setMainContent] = useState(
-    mockBusinessBlogPost.main_content
+    mockEducationalContent.main_content
   );
-  const [conclusion, setConclusion] = useState(mockBusinessBlogPost.conclusion);
-  const [imageUrl, setImageUrl] = useState(mockBusinessBlogPost.image_url);
+  const [conclusion, setConclusion] = useState(
+    mockEducationalContent.conclusion
+  );
+  const [imageUrl, setImageUrl] = useState(mockEducationalContent.image_url);
   const [imageTitle, setImageTitle] = useState(
-    mockBusinessBlogPost.image_title
+    mockEducationalContent.image_title
   );
   const [error, setError] = useState("");
 
@@ -99,7 +98,7 @@ const UpdateBusinessBlogPostPage = ({ params }) => {
   const slugFromParams = slugify(decodedParams);
 
   // Slugify the blog title
-  const slugifiedBlogTitle = slugify(mockBusinessBlogPost.blogTitle);
+  const slugifiedBlogTitle = slugify(mockEducationalContent.blogTitle);
 
   // Compare the slugs
   const isMatchingTitle = slugFromParams === slugifiedBlogTitle;
@@ -125,7 +124,7 @@ const UpdateBusinessBlogPostPage = ({ params }) => {
         <div className="p-4 space-y-4 md:space-y-12">
           <div className="p-6 space-y-4 md:space-y-2 sm:p-4">
             <h1 className="text-xl font-bold mb-6 leading-tight tracking-tight text-black md:text-2xl">
-              Update Business Blog Post
+              Update Educational Content
             </h1>
             <form className="space-y-3">
               {/* TITLE */}
@@ -181,7 +180,7 @@ const UpdateBusinessBlogPostPage = ({ params }) => {
                   className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm  rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
                 >
                   <option value="">Select a category</option>
-                  {mockBlogCategory.map((cat, index) => (
+                  {mockEducationalContentCategory.map((cat, index) => (
                     <option key={index} value={cat.category}>
                       {cat.category}
                     </option>
@@ -283,13 +282,13 @@ const UpdateBusinessBlogPostPage = ({ params }) => {
               {/* SUBMIT BUTTON */}
               <div className="flex flex-row space-x-5">
                 <button className="bg-gradient-to-br from-red-500 to-red-700 hover:bg-blue-950 border-2 border-black text-white font-bold py-2 px-4 rounded">
-                  <Link href="/businessUser/businessBlogPost">Cancel</Link>
+                  <Link href="/businessUser/educationalContent">Cancel</Link>
                 </button>
                 <button
                   type="submit"
                   className="bg-gradient-to-br from-cyan-400 to-cyan-800 hover:bg-blue-950 border-2 border-black text-white font-bold py-2 px-4 rounded"
                 >
-                  Update Post
+                  Update Educational Content
                 </button>
               </div>
             </form>

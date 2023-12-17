@@ -37,7 +37,7 @@ const BusinessUserHomePage = () => {
 
   // The button under educational content will redirect to corresponding page
   const handleCreateEducationalContent = () => {
-    router.push("/businessUser/createEducationalContent");
+    router.push("/businessUser/educationalContent/createEducationalContent");
   };
 
   const handleViewEducationalContent = () => {

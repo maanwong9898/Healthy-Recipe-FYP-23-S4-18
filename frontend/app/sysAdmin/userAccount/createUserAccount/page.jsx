@@ -81,6 +81,12 @@ const CreateUserAccountPage = () => {
               <h1 className="text-xl font-bold leading-tight tracking-tight text-black md:text-2xl dark:text-white">
                 Create User Account
               </h1>
+              <div className="flex items-center justify-start space-x-2">
+                <p className="text-lg font-bold">User Profile:</p>
+                <div className="p-2 bg-gray-200 border-black border-2 text-gray-900 rounded-lg">
+                  <h3 className="text-base font-semibold ">System Admin</h3>
+                </div>
+              </div>
               <form className="space-y-3">
                 <div className="flex space-x-4">
                   {/* NAME */}

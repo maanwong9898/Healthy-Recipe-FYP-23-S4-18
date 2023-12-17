@@ -1,23 +1,20 @@
 "use client";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
 
-// router path: /businessUser/businessBlogPost/createBusinessBlogPost
-// this is the page to create business blog post according to user story
+// router path: /businessUser/educationalContent/createEducationalContent
+// this is the page to create educational content according to user story
 
-const mockBlogCategory = [
+const mockEducationalContentCategory = [
   {
-    category: "Cookbook",
+    category: "Healthy Eating",
   },
   {
-    category: "Kitchenware",
-  },
-  {
-    category: "Miscellaneous",
+    category: "Healthy Lifestyle",
   },
 ];
-const CreateBusinessBlogPostPage = () => {
+const CreateEducationalContentPage = () => {
   const [title, setTitle] = useState("");
   const [publisher, setPublisher] = useState("");
   const [category, setCategory] = useState("");
@@ -28,16 +25,28 @@ const CreateBusinessBlogPostPage = () => {
   const [imageTitle, setImageTitle] = useState("");
   const [error, setError] = useState("");
 
+  useEffect(() => {
+    // Access localStorage after component mounts and is on the client-side
+    const storedUsername = localStorage.getItem("username");
+    if (storedUsername) {
+      setPublisher(storedUsername);
+    }
+  }, []);
+
   // Function to handle category change
   const handleCategoryChange = (e) => {
     setCategory(e.target.value);
   };
 
-  const handleCreatePost = (event) => {
+  const handleCreateEducationalContent = (event) => {
     event.preventDefault();
 
+    console.log("Check the publisher details");
+    console.log(localStorage.getItem("username"));
+    console.log(localStorage.getItem("profile"));
+
     // Validation and submission logic here
-    console.log("Blog Post Details:", {
+    console.log("Educational Content Details:", {
       title,
       publisher,
       category,
@@ -77,41 +86,42 @@ const CreateBusinessBlogPostPage = () => {
         <div className="p-4 space-y-4 md:space-y-12 ">
           <div className="p-6 space-y-4 md:space-y-2 sm:p-4">
             <h1 className="text-xl font-bold mb-6 leading-tight tracking-tight text-black md:text-2xl">
-              Create Business Blog Post
+              Create Educational Content
             </h1>
             <form className="space-y-3">
               {/* TITLE */}
+              <label
+                htmlFor="title"
+                className="block text-xl mb-1 font-bold text-cyan-950"
+              >
+                Title:
+              </label>
               <div className="flex flex-col">
-                <label
-                  htmlFor="title"
-                  className="block text-xl mb-1 font-bold text-cyan-950"
-                >
-                  Title:
-                </label>
                 <input
                   type="text"
                   id="title"
                   name="title"
-                  placeholder="Title"
+                  placeholder="Enter title here"
                   value={title}
                   onChange={clearErrorOnChange(setTitle)}
                   className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-base rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
                 />
               </div>
               {/* PUBLISHER */}
+              <label
+                htmlFor="publisher"
+                className="block text-xl mb-1 font-bold text-cyan-950"
+              >
+                Publisher:
+              </label>
               <div className="flex flex-col">
-                <label
-                  htmlFor="publisher"
-                  className="block text-xl mb-1 font-bold text-cyan-950"
-                >
-                  Publisher:
-                </label>
                 <input
                   type="text"
-                  id="publisher"
                   name="publisher"
+                  id="publisher"
                   placeholder="Publisher"
                   value={publisher}
+                  readOnly
                   onChange={clearErrorOnChange(setPublisher)}
                   className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-base rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
                 />
@@ -123,9 +133,8 @@ const CreateBusinessBlogPostPage = () => {
                   htmlFor="category"
                   className="block text-xl mb-1 font-bold text-cyan-950"
                 >
-                  Category:
+                  Category
                 </label>
-
                 <select
                   id="category"
                   name="category"
@@ -134,7 +143,7 @@ const CreateBusinessBlogPostPage = () => {
                   className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-base rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
                 >
                   <option value="">Select a category</option>
-                  {mockBlogCategory.map((cat, index) => (
+                  {mockEducationalContentCategory.map((cat, index) => (
                     <option key={index} value={cat.category}>
                       {cat.category}
                     </option>
@@ -169,6 +178,7 @@ const CreateBusinessBlogPostPage = () => {
                 </label>
                 <textarea
                   name="mainContent"
+                  id="mainContent"
                   placeholder="Main Content"
                   value={mainContent}
                   onChange={clearErrorOnChange(setMainContent)}
@@ -235,14 +245,14 @@ const CreateBusinessBlogPostPage = () => {
               {/* SUBMIT BUTTON */}
               <div className="flex flex-row space-x-5">
                 <button className="bg-gradient-to-br from-red-500 to-red-700 hover:bg-blue-950 border-2 border-black text-white font-bold py-2 px-4 rounded">
-                  <Link href="/businessUser/businessBlogPost">Cancel</Link>
+                  <Link href="/businessUser/educationalContent">Cancel</Link>
                 </button>
                 <button
                   type="submit"
-                  onClick={handleCreatePost}
+                  onClick={handleCreateEducationalContent}
                   className="bg-gradient-to-br from-cyan-400 to-cyan-800 hover:bg-blue-950 border-2 border-black text-white font-bold py-2 px-4 rounded"
                 >
-                  Create Post
+                  Create
                 </button>
               </div>
             </form>
@@ -253,4 +263,4 @@ const CreateBusinessBlogPostPage = () => {
   );
 };
 
-export default CreateBusinessBlogPostPage;
+export default CreateEducationalContentPage;

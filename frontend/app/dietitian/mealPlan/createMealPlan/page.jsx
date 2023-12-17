@@ -343,7 +343,7 @@ const CreateMealPlanPage = () => {
                   htmlFor="category"
                   className="block text-xl mb-1 font-bold text-cyan-950"
                 >
-                  Meal Plan Category
+                  Health Goal Category
                 </label>
                 <select
                   id="category"
@@ -455,7 +455,7 @@ const CreateMealPlanPage = () => {
               {/* SUBMIT BUTTON */}
               <div className="flex flex-row space-x-5">
                 <button className="bg-gradient-to-br from-red-500 to-red-700 hover:bg-blue-950 border-2 border-black text-white font-bold py-2 px-4 rounded">
-                  <Link href="/businessUser/educationalContent">Cancel</Link>
+                  <Link href="/dietitian/mealPlan">Cancel</Link>
                 </button>
                 <button
                   type="submit"

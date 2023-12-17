@@ -9,7 +9,8 @@ import { useState, useEffect } from "react";
 
 const mockMealPlan = {
   id: "7890123456",
-  mealPlanTitle: "Healthy Transformation: Weight Loss Journey",
+  mealPlanTitle:
+    "Wholesome Slimming: Balanced Vegetarian Meals for Weight Loss",
   publisher: "Alex Johnson",
   dietaryPreference: "Vegetarian",
   dietaryRestriction: "Gluten-Free",
@@ -103,17 +104,17 @@ const slugify = (text) =>
 const DietaryTags = ({ preference, restriction }) => {
   return (
     <div className="my-4">
-      <h2 className="text-lg text-cyan-600 font-semibold">
+      <h2 className="text-xl text-cyan-600 font-semibold">
         Dietary Information:
       </h2>
       <div className="flex flex-wrap gap-2 justify-center">
         {preference && (
-          <span className="inline-block bg-green-200 text-green-800 text-sm font-semibold mr-2 px-2.5 py-0.5 rounded">
+          <span className="inline-block bg-green-200 text-green-800 text-base font-semibold mr-2 px-2.5 py-0.5 rounded">
             Preference: {preference}
           </span>
         )}
         {restriction && (
-          <span className="inline-block bg-red-200 text-red-800 text-sm font-semibold mr-2 px-2.5 py-0.5 rounded">
+          <span className="inline-block bg-red-200 text-red-800 text-base font-semibold mr-2 px-2.5 py-0.5 rounded">
             Restriction: {restriction}
           </span>
         )}

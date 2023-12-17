@@ -18,7 +18,7 @@ const DietitianHomePage = () => {
 
   // The button under meal plan will redirect to corresponding page
   const handleCreateMealPlan = () => {
-    router.push("/dietitian/createMealPlan");
+    router.push("/dietitian/mealPlan/createMealPlan");
   };
 
   const handleViewMealPlan = () => {

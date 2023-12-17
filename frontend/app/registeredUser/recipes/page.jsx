@@ -64,7 +64,7 @@ const AllRecipesContent = [
       "Step 2: In a small bowl, whisk together lime juice, olive oil, salt, and pepper. \n\n" +
       "Step 3: Pour dressing over quinoa mixture and toss gently to combine. Serve immediately.",
     total_calories: "280g",
-    sugar: "8g",
+    sugars: "8g",
     protien: "7g",
     fat: "10g",
     carbs: "40g",
@@ -103,7 +103,7 @@ const AllRecipesContent = [
       "Step 5: Add the cooked shrimp back to the skillet and toss everything together until heated through.\n\n" +
       "Step 6: Garnish with fresh parsley and serve hot.",
     total_calories: "280",
-    sugar: "4g",
+    sugars: "4g",
     protein: "25g",
     fat: "12g",
     carbs: "18g",
@@ -141,6 +141,7 @@ const AllRecipesContent = [
       "Step 4: Grill the chicken breasts for 6-7 minutes per side, or until fully cooked and grill marks appear.\n\n" +
       "Step 5: Garnish with fresh parsley and serve hot.",
     total_calories: "250",
+    sugars: "10g",
     protein: "30g",
     carbs: "2g",
     fat: "13g",
@@ -178,6 +179,7 @@ const AllRecipesContent = [
       "Step 5: Assemble the dish by placing a bed of quinoa on each plate, topping with grilled salmon and asparagus.\n\n" +
       "Step 6: Drizzle with lemon juice, garnish with fresh dill, and serve hot.",
     total_calories: "450",
+    sugars: "2g",
     protein: "40g",
     carbs: "30g",
     fat: "18g",

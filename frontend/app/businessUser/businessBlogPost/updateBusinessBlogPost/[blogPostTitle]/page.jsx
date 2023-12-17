@@ -4,7 +4,7 @@ import React from "react";
 import Link from "next/link";
 import { useState, useEffect } from "react";
 
-// this is to view particular blog post under business user
+// this is to update particular blog post under business user
 // router path: /businessUser/businessBlogPost/updateBusinessBlogPost/%5BblogPostTitle%5D
 
 const mockBusinessBlogPost = {

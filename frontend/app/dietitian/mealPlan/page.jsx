@@ -76,7 +76,7 @@ const MyMealPlan = () => {
     console.log(`Meal Plan Title: ${mealPlanTitle}`);
 
     // Redirect to the correct route
-    let routePath = `/businessUser/businessBlogPost/updateBusinessBlogPost/${mealPlanTitle}`;
+    let routePath = `/dietitian/mealPlan/updateMealPlan/${mealPlanTitle}`;
 
     router.push(routePath);
   };

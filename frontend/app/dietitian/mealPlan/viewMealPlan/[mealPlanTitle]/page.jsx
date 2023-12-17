@@ -293,7 +293,7 @@ const viewMealPlan = ({ params }) => {
       </footer>
       <div className="flex flex-row space-x-5 justify-end mr-10">
         <button className="bg-gradient-to-br from-cyan-400 to-cyan-800 hover:bg-blue-950 border-2 border-black text-white font-bold py-3 px-4 rounded ml-9">
-          <Link href="/businessUser/businessBlogPost/updateBusinessBlogPost/${mealPlanTitle}">
+          <Link href="/dietitian/mealPlan/updateMealPlan/${mealPlanTitle}">
             Edit
           </Link>
         </button>

@@ -6,7 +6,7 @@ import Link from "next/link";
 // router path: /dietitian/mealPlan/createMealPlan
 // this is the page to create a meal plan
 
-const mockMealPlanCategory = [
+const healthGoalCategory = [
   {
     category: "Weight Loss",
   },
@@ -353,7 +353,7 @@ const CreateMealPlanPage = () => {
                   className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-base rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
                 >
                   <option value="">Select a category</option>
-                  {mockMealPlanCategory.map((cat, index) => (
+                  {healthGoalCategory.map((cat, index) => (
                     <option key={index} value={cat.category}>
                       {cat.category}
                     </option>

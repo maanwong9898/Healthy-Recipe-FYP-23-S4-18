@@ -4,7 +4,7 @@ import { useState } from "react";
 import Link from "next/link";
 import HomeNavbar from "@/app/components/navigation/homeNavBar";
 
-const businessRegistration = () => {
+const BusinessRegistration = () => {
   const [fullName, setFullName] = useState("");
   const [username, setUsername] = useState("");
   const [workEmail, setWorkEmail] = useState("");
@@ -14,7 +14,6 @@ const businessRegistration = () => {
   const [confirmPwd, setConfirmPwd] = useState("");
   const [contactNumber, setContactNumber] = useState("");
   const [address, setAddress] = useState("");
-  const [postalCode, setPostalCode] = useState("");
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
   const emailValidation = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -23,13 +22,15 @@ const businessRegistration = () => {
     event.preventDefault();
     // Checks if fields are empty
     if (
-      !fullName ||
-      !username ||
-      !workEmail ||
-      !organization ||
-      !uen ||
-      !password ||
-      !confirmPwd
+      fullName === "" ||
+      username === "" ||
+      password === "" ||
+      confirmPwd === "" ||
+      contactNumber === "" ||
+      workEmail === "" ||
+      organization === "" ||
+      address === "" ||
+      uen === ""
     ) {
       setError("All fields are required.");
       return;
@@ -56,7 +57,6 @@ const businessRegistration = () => {
       setWorkEmail("");
       setOrganization("");
       setAddress("");
-      setPostalCode("");
       setUen("");
       setError("");
     }
@@ -65,11 +65,13 @@ const businessRegistration = () => {
     console.log("Business Sign up details:", {
       fullName,
       username,
-      workEmail,
-      organization,
-      uen,
       password,
       confirmPwd,
+      contactNumber,
+      workEmail,
+      organization,
+      address,
+      uen,
     });
   };
 
@@ -164,7 +166,7 @@ const businessRegistration = () => {
                     type="text"
                     name="organization"
                     id="organization"
-                    placeholder="Organization"
+                    placeholder="Company Name" 
                     value={organization}
                     onChange={(e) => setOrganization(e.target.value)}
                     className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg block w-full p-2.5"
@@ -177,22 +179,9 @@ const businessRegistration = () => {
                     type="text"
                     name="address"
                     id="address"
-                    placeholder="Address"
+                    placeholder="Company Address"
                     value={address}
                     onChange={(e) => setAddress(e.target.value)}
-                    className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg block w-full p-2.5"
-                  ></input>
-                </div>
-
-                {/* POSTAL CODE */}
-                <div className="flex flex-row">
-                  <input
-                    type="text"
-                    name="postalCode"
-                    id="postalCode"
-                    placeholder="Postal Code"
-                    value={postalCode}
-                    onChange={(e) => setPostalCode(e.target.value)}
                     className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg block w-full p-2.5"
                   ></input>
                 </div>
@@ -252,4 +241,4 @@ const businessRegistration = () => {
   );
 };
 
-export default businessRegistration;
+export default BusinessRegistration;

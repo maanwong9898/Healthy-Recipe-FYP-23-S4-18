@@ -3,7 +3,7 @@ import React, { useState, useRef } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 
-const SideBarLayout = () => {
+const UserSideBarLayout = () => {
   //Expand my account
   //   const [isExpanded, setIsExpanded] = useState(false);
   //   const ExpandMyAccount = () => {
@@ -46,4 +46,4 @@ const SideBarLayout = () => {
     </div>
   );
 };
-export default SideBarLayout;
+export default UserSideBarLayout;

@@ -5,7 +5,7 @@ const inter = Inter({ subsets: ["latin"] });
 import UserSidebar from "../components/sidebar/registeredUserSideBar/index.jsx";
 import React from "react";
 
-function SideBarLayout({ children }) {
+function UserSideBarLayout({ children }) {
   return (
     <>
       <Head>
@@ -24,4 +24,4 @@ function SideBarLayout({ children }) {
   );
 }
 
-export default SideBarLayout;
+export default UserSideBarLayout;

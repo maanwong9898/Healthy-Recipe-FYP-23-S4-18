@@ -25,7 +25,9 @@ const AccountDropdownMenu = () => {
     <div className="absolute left-0 top-10 w-48 rounded-md shadow-lg bg-white z-10">
       <ul>
         <li className="px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
-          <Link href="/">My Account</Link>
+          <Link href="/businessUser/businessAccount/viewAccount">
+            My Account
+          </Link>
         </li>
         <li className="px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
           <Link href="/">Logout</Link>

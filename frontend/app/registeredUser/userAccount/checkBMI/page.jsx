@@ -2,7 +2,7 @@
 import { useRouter } from "next/navigation";
 import React from "react";
 import { useState, useEffect } from "react";
-import SideBarLayout from "../sidebarLayout";
+import SideBarLayout from "../../sidebarLayout";
 
 const checkBMI = () => {
   const [height, setHeight] = useState("");

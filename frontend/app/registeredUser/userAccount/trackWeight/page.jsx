@@ -3,7 +3,7 @@ import { useRouter } from "next/navigation";
 import React from "react";
 import Link from "next/link";
 import { useState, useEffect } from "react";
-import SideBarLayout from "../sidebarLayout.jsx";
+import SideBarLayout from "../../sidebarLayout.jsx";
 
 const mockWeightData = [
   {

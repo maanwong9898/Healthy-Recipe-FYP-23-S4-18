@@ -4,14 +4,17 @@ import { useState } from "react";
 import Link from "next/link";
 import HomeNavbar from "@/app/components/navigation/homeNavBar";
 
-const dietitianRegistration = () => {
+const DietitianRegistration = () => {
   const [fullName, setFullName] = useState("");
   const [username, setUsername] = useState("");
   const [workEmail, setWorkEmail] = useState("");
-  const [organization, setOrganization] = useState("");
+  const [companyName, setCompanyName] = useState("");
   const [licenseNum, setLicenseNum] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPwd, setConfirmPwd] = useState("");
+  const [contactNumber, setContactNumber] = useState("");
+  const [address, setAddress] = useState("");
+  const [orgAssociated, setOrgAssociated] = useState("");
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
   const emailValidation = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -20,13 +23,13 @@ const dietitianRegistration = () => {
     event.preventDefault();
     // Checks if fields are empty
     if (
-      !fullName ||
-      !username ||
-      !workEmail ||
-      !organization ||
-      !licenseNum ||
-      !password ||
-      !confirmPwd
+      fullName === "" ||
+      username === "" ||
+      workEmail === "" ||
+      password === "" ||
+      confirmPwd === "" ||
+      contactNumber === "" ||
+      licenseNum === ""
     ) {
       setError("All fields are required.");
       return;
@@ -39,7 +42,9 @@ const dietitianRegistration = () => {
       setError("Invalid email address.");
       return;
     } else {
-      setSuccess("Registration successful!");
+      setSuccess(
+        "Registration successful! An email will be sent to you once the admin has verified your account."
+      );
       // Remove success msg after 5 seconds
       setTimeout(() => {
         setSuccess("");
@@ -47,11 +52,14 @@ const dietitianRegistration = () => {
       // Reset fields in the form + error state
       setFullName("");
       setUsername("");
-      setWorkEmail("");
-      setOrganization("");
-      setLicenseNum("");
       setPassword("");
       setConfirmPwd("");
+      setContactNumber("");
+      setWorkEmail("");
+      setCompanyName("");
+      setAddress("");
+      setOrgAssociated("");
+      setLicenseNum("");
       setError("");
     }
 
@@ -60,7 +68,10 @@ const dietitianRegistration = () => {
       fullName,
       username,
       workEmail,
-      organization,
+      companyName,
+      address,
+      contactNumber,
+      orgAssociated,
       licenseNum,
       password,
       confirmPwd,
@@ -74,10 +85,11 @@ const dietitianRegistration = () => {
         <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen">
           <div className="w-full bg-white rounded-lg shadow md:mt-0 sm:max-w-md xl:p-0">
             <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
-              <h1 className="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl">
+              <h1 className="text-xl font-bold text-gray-900 md:text-2xl">
                 Dietitian Sign Up
               </h1>
-              <form className="space-y-3">
+              <form className="space-y-2">
+                <h2>Personal Details</h2>
                 <div className="flex space-x-4">
                   {/* NAME */}
                   <input
@@ -87,7 +99,7 @@ const dietitianRegistration = () => {
                     placeholder="Full Name"
                     value={fullName}
                     onChange={(e) => setFullName(e.target.value)}
-                    className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg block w-full p-2.5"
+                    className=" bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg block w-full p-2.5"
                   ></input>
 
                   {/* USERNAME */}
@@ -98,46 +110,7 @@ const dietitianRegistration = () => {
                     placeholder="Username"
                     value={username}
                     onChange={(e) => setUsername(e.target.value)}
-                    className="border px-4 py-2 rounded-lg bg-gray-50 border-gray-300 text-gray-900 sm:text-sm block w-full p-2.5"
-                  ></input>
-                </div>
-
-                {/* WORK EMAIL */}
-                <div>
-                  <input
-                    type="email"
-                    name="workEmail"
-                    id="workEmail"
-                    placeholder="Work Email Address"
-                    value={workEmail}
-                    onChange={(e) => setWorkEmail(e.target.value)}
-                    className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg block w-full p-2.5"
-                  ></input>
-                </div>
-
-                {/* ORGANIZATION */}
-                <div>
-                  <input
-                    type="text"
-                    name="organization"
-                    id="organization"
-                    placeholder="Organization"
-                    value={organization}
-                    onChange={(e) => setOrganization(e.target.value)}
-                    className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg block w-full p-2.5"
-                  ></input>
-                </div>
-
-                <div className="flex flex-row">
-                  {/* LICENSE NUMBER */}
-                  <input
-                    type="text"
-                    name="licenseNum"
-                    id="licenseNum"
-                    placeholder="License Number"
-                    value={licenseNum}
-                    onChange={(e) => setLicenseNum(e.target.value)}
-                    className="border px-4 py-2 rounded-lg bg-gray-50 border-gray-300 text-gray-900 sm:text-sm block w-full p-2.5 "
+                    className=" bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5"
                   ></input>
                 </div>
 
@@ -162,7 +135,87 @@ const dietitianRegistration = () => {
                     className="border px-4 py-2 rounded-lg bg-gray-50 border-gray-300 text-gray-900 sm:text-sm block w-full p-2.5"
                   ></input>
                 </div>
-                {/* ERROR MSG */}
+
+                {/* CONTACT NUMBER */}
+                <div className="flex flex-row">
+                  <input
+                    type="text"
+                    name="contactNumber"
+                    id="contactNumber"
+                    placeholder="Contact Number"
+                    value={contactNumber}
+                    onChange={(e) => setContactNumber(e.target.value)}
+                    className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg block w-full p-2.5"
+                  ></input>
+                </div>
+
+                <h2>Organization Details</h2>
+                {/* WORK EMAIL */}
+                <div>
+                  <input
+                    type="email"
+                    name="workEmail"
+                    id="workEmail"
+                    placeholder="Email Address"
+                    value={workEmail}
+                    onChange={(e) => setWorkEmail(e.target.value)}
+                    className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5"
+                  ></input>
+                </div>
+
+                {/* ORGANIZATION */}
+                <div>
+                  <input
+                    type="text"
+                    name="companyName"
+                    id="companyName"
+                    placeholder="Company Name *Optional"
+                    value={companyName}
+                    onChange={(e) => setCompanyName(e.target.value)}
+                    className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg block w-full p-2.5"
+                  ></input>
+                </div>
+
+                {/* ADDRESS */}
+                <div className="flex flex-row">
+                  <input
+                    type="text"
+                    name="address"
+                    id="address"
+                    placeholder="Company Address *Optional"
+                    value={address}
+                    onChange={(e) => setAddress(e.target.value)}
+                    className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg block w-full p-2.5"
+                  ></input>
+                </div>
+
+                {/* Organization Associated */}
+                <div className="flex flex-row">
+                  <input
+                    type="text"
+                    name="orgAssociated"
+                    id="orgAssociated"
+                    placeholder="Organization Associated *Optional"
+                    value={orgAssociated}
+                    onChange={(e) => setOrgAssociated(e.target.value)}
+                    className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg block w-full p-2.5"
+                  ></input>
+                </div>
+
+                {/* UEN */}
+                <div className="flex flex-row">
+                  <input
+                    type="text"
+                    name="licenseNum"
+                    id="licenseNum"
+                    placeholder="License Number"
+                    value={licenseNum}
+                    onChange={(e) => setLicenseNum(e.target.value)}
+                    className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg block w-full p-2.5"
+                  ></input>
+                </div>
+
+                {/* ERROR/SUCCESS MSG */}
                 <p className="text-red-500 text-sm">{error}</p>
                 <p className="text-green-500 text-sm">{success}</p>
 
@@ -204,4 +257,4 @@ const dietitianRegistration = () => {
   );
 };
 
-export default dietitianRegistration;
+export default DietitianRegistration;

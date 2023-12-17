@@ -43,7 +43,9 @@ const BusinessRegistration = () => {
       setError("Invalid email address.");
       return;
     } else {
-      setSuccess("Registration successful!");
+      setSuccess(
+        "Registration successful! An email will be sent to you once the admin has verified your account."
+      );
       // Remove success msg after 5 seconds
       setTimeout(() => {
         setSuccess("");
@@ -166,7 +168,7 @@ const BusinessRegistration = () => {
                     type="text"
                     name="organization"
                     id="organization"
-                    placeholder="Company Name" 
+                    placeholder="Company Name"
                     value={organization}
                     onChange={(e) => setOrganization(e.target.value)}
                     className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg block w-full p-2.5"

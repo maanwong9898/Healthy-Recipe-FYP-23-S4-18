@@ -9,24 +9,29 @@ import { useState, useEffect } from "react";
 
 const mockDieitianAccount = {
   id: "3104d2c8-d3d7-41c4-a982-5999a81d7450",
-  full_name: "Peter Lim",
+  full_name: "Jessica Lim",
   username: "Dietitian1",
   password: "password",
-  email: "william@gmail.com",
+  email: "jessica@gmail.com",
+  contactNumber: "91239999",
+  address: "123, Tampines Ave 6, #08-111",
+  postalCode: "525207",
   isActive: true,
   userProfile: "Dietitian",
   company_name: "Company 4",
-  UEN: "663456789A",
-  ifDietitian: true,
+  licenseNumber: "123456888A",
+  organizationAssociated:
+    "Singapore Dietitian Nutrition and Dietetics Association",
+  ifDietitian: false,
   ifVerified: false,
 };
 
 const VerifyDieitian = ({ params }) => {
-  const [dietitanUserAccount, setBusinessUserAccount] =
+  const [dietitanUserAccount, setDietitanUserAccount] =
     useState(mockDieitianAccount);
 
   // // the url will be changed to the backend url
-  // const viewBusinessUserAccount = async () => {
+  // const viewDietitanUserAccount = async () => {
   //   try {
   //     const response = await fetch(
   //       "http://localhost:8080/api/userAccount/readUserAccountByUsername/" +
@@ -34,14 +39,14 @@ const VerifyDieitian = ({ params }) => {
   //     );
 
   //     const jsonData = await response.json();
-  //     setBusinessUserAccount(jsonData);
+  //     setDietitanUserAccount(jsonData);
   //   } catch (err) {
   //     console.error(err.message);
   //   }
   // };
 
   // useEffect(() => {
-  //   viewBusinessUserAccount();
+  //   viewDietitanUserAccount();
   // }, []);
 
   return (
@@ -49,7 +54,7 @@ const VerifyDieitian = ({ params }) => {
       <div className="max-w-md w-full space-y-8  bg-cyan-600 p-6 rounded-lg shadow-lg">
         <div>
           <h2 className="mt-6 text-center text-3xl font-bold text-gray-900">
-            Dietian Verification
+            Dietitian Verification
           </h2>
         </div>
         <div className="mt-8 space-y-6">
@@ -78,6 +83,22 @@ const VerifyDieitian = ({ params }) => {
                 id="username"
                 autoComplete="username"
                 value={dietitanUserAccount ? dietitanUserAccount.username : ""}
+                readOnly
+                className="border-1 border-blue-700 rounded-md py-2 px-4 w-full"
+              />
+            </div>
+            <div>
+              <label className="block text-lg mb-2 font-bold text-cyan-950">
+                Contact Number:
+              </label>
+              <input
+                type="text"
+                name="contactNumber"
+                id="contactNumber"
+                autoComplete="contactNumber"
+                value={
+                  dietitanUserAccount ? dietitanUserAccount.contactNumber : ""
+                }
                 readOnly
                 className="border-1 border-blue-700 rounded-md py-2 px-4 w-full"
               />
@@ -115,14 +136,49 @@ const VerifyDieitian = ({ params }) => {
             </div>
             <div>
               <label className="block text-lg font-bold text-cyan-950">
-                License:
+                Company Address:
               </label>
               <input
                 type="text"
-                name="UEN"
-                id="UEN"
-                autoComplete="UEN"
-                value={dietitanUserAccount ? dietitanUserAccount.UEN : ""}
+                name="address"
+                id="address"
+                autoComplete="address"
+                value={dietitanUserAccount ? dietitanUserAccount.address : ""}
+                readOnly
+                className="border-1 border-blue-700 rounded-md py-2 px-4 w-full"
+              />
+            </div>
+            <div>
+              <label className="block text-lg font-bold text-cyan-950">
+                Organisation Associated:
+              </label>
+              <input
+                type="text"
+                name="organizationAssociated"
+                id="organizationAssociated"
+                autoComplete="organizationAssociated"
+                value={
+                  dietitanUserAccount
+                    ? dietitanUserAccount.organizationAssociated
+                    : ""
+                }
+                readOnly
+                className="border-1 border-blue-700 rounded-md py-2 px-4 w-full"
+              />
+            </div>
+
+            <div>
+              <label className="block text-lg font-bold text-cyan-950">
+                License Number:
+              </label>
+              <input
+                type="text"
+                name="licenseNumber"
+                id="licenseNumber"
+                autoComplete="licenseNumber"
+                value={
+                  dietitanUserAccount ? dietitanUserAccount.licenseNumber : ""
+                }
                 readOnly
                 className="border-1 border-blue-700 rounded-md py-2 px-4 w-full"
               />

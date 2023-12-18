@@ -133,9 +133,10 @@ const VerifyBusinessUser = ({ params }) => {
                 className="border-1 border-blue-700 rounded-md py-2 px-4 w-full"
               />
             </div>
+
             <div>
               <label className="block text-lg font-bold text-cyan-950">
-                Address:
+                Company Address:
               </label>
               <input
                 type="text"
@@ -143,22 +144,6 @@ const VerifyBusinessUser = ({ params }) => {
                 id="address"
                 autoComplete="address"
                 value={businessUserAccount ? businessUserAccount.address : ""}
-                readOnly
-                className="border-1 border-blue-700 rounded-md py-2 px-4 w-full"
-              />
-            </div>
-            <div>
-              <label className="block text-lg font-bold text-cyan-950">
-                Postal Code:
-              </label>
-              <input
-                type="text"
-                name="postalCode"
-                id="postalCode"
-                autoComplete="postalCode"
-                value={
-                  businessUserAccount ? businessUserAccount.postalCode : ""
-                }
                 readOnly
                 className="border-1 border-blue-700 rounded-md py-2 px-4 w-full"
               />

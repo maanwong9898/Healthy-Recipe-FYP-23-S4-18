@@ -4,8 +4,8 @@ import React from "react";
 import Link from "next/link";
 import { useState, useEffect } from "react";
 
-// this is to view particular meal plan under dietitian
-// router path: /dietitian/mealPlan/viewMealPlan/[mealPlanTitle]
+// this is to view particular meal plan under registered user
+// router path: /registeredUser/mealPlan/viewMealPlan/[mealPlanTitle]
 
 const mockMealPlan = {
   id: "7890123456",

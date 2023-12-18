@@ -33,16 +33,13 @@ const userRegistration = () => {
 
     // Checks if the fields are filled
     if (
-      !fullName ||
-      !username ||
-      !email ||
-      !dob ||
-      !password ||
-      !confirmPwd ||
-      !dietaryPreference ||
-      !allergyRestriction ||
-      !healthGoals ||
-      !weight
+      fullName === "" ||
+      username === "" ||
+      email === "" ||
+      dob === "" ||
+      password === "" ||
+      confirmPwd === "" ||
+      weight === ""
     ) {
       setError("All fields are required.");
       return;
@@ -216,7 +213,7 @@ const userRegistration = () => {
             <form className="space-y-1">
               {/* DIETARY PREFERENCE */}
               <div className="flex flex-col">
-                <label htmlFor="dietPref">Dietary Preference</label>
+                <label htmlFor="dietPref">Dietary Preference *Optional</label>
                 <select
                   id="dietaryPreference"
                   name="dietaryPreference"
@@ -230,14 +227,13 @@ const userRegistration = () => {
                   <option value="vegan">Vegan</option>
                   <option value="vegetarian">Vegetarian</option>
                   <option value="pescatarian">Pescatarian</option>
-                  <option value="noPref">Anything</option>
                 </select>
               </div>
 
               {/* ALLERGY AND RESTRICTION */}
               <div className="flex flex-col">
                 <label htmlFor="allergyRestriction">
-                  Allergy and Restriction
+                  Allergy and Restriction *Optional
                 </label>
                 <select
                   id="allergyRestriction"
@@ -256,13 +252,12 @@ const userRegistration = () => {
                   <option value="soyFree">Soy-Free</option>
                   <option value="seafoodFree">Seafood-Free</option>
                   <option value="eggFree">Egg-Free</option>
-                  <option value="noAllergies">No Allergies</option>
                 </select>
               </div>
 
               {/* HEALTH GOALS */}
               <div className="flex flex-col">
-                <label htmlFor="healthGoals">Health Goal</label>
+                <label htmlFor="healthGoals">Health Goal *Optional</label>
                 <select
                   id="healthGoals"
                   name="healthGoals"
@@ -273,7 +268,7 @@ const userRegistration = () => {
                   <option value="" disabled defaultValue>
                     Select One...
                   </option>
-                  <option value="wheatFree">Low Carb</option>
+                  <option value="wheatFree">Bulk Up</option>
                   <option value="dairyFree">Weight Loss</option>
                   <option value="glutenFree">Balanced Meal</option>
                 </select>
@@ -345,9 +340,9 @@ const userRegistration = () => {
   return (
     <div>
       <HomeNavbar />
-      <div className=" bg-cyan-900 ">
+      <div className=" bg-cyan-900 min-h-screen">
         <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto">
-          <div className="w-full max-w-md bg-slate-100 rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0">
+          <div className="w-full max-w-md bg-slate-100 rounded-lg shadow md:mt-16 sm:max-w-md xl:p-0">
             <div className="p-6 space-y-3 md:space-y-6 sm:p-8">
               <h1 className="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl">
                 User Sign Up

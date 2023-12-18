@@ -169,6 +169,22 @@ const viewMealPlan = ({ params }) => {
     mockMealPlan_RatingAndReviews
   );
 
+  const [newReview, setNewReview] = useState("");
+  const [newRating, setNewRating] = useState(0);
+
+  const submitReview = () => {
+    // Add logic here to handle the submission of the review and rating
+    // For example, you could update the state to include the new review or send it to a backend server
+    console.log("Review:", newReview, "Rating:", newRating);
+    // Reset the state after submission
+    setNewReview("");
+    setNewRating(0);
+  };
+
+  const handleRatingChange = (ratingValue) => {
+    setNewRating(ratingValue);
+  };
+
   // this is to prevent unexpected error when title contains space
   // Decode params from URL
   const decodedParams = decodeURIComponent(params.mealPlanTitle);
@@ -290,20 +306,46 @@ const viewMealPlan = ({ params }) => {
             <p>{review.reviews}</p>
           </div>
         ))}
+        <div className="my-4 p-4">
+          <textarea
+            value={newReview}
+            onChange={(e) => setNewReview(e.target.value)}
+            placeholder="Write your review here"
+            className="w-full p-2 border rounded"
+          />
+          <div className="flex my-2">
+            {[...Array(5)].map((_, index) => {
+              const ratingValue = index + 1;
+              return (
+                <label key={ratingValue}>
+                  <input
+                    type="radio"
+                    name="rating"
+                    value={ratingValue}
+                    onClick={() => handleRatingChange(ratingValue)}
+                    className="hidden"
+                  />
+                  <span
+                    className={
+                      ratingValue <= newRating
+                        ? "text-yellow-500 cursor-pointer"
+                        : "text-gray-400 cursor-pointer"
+                    }
+                  >
+                    ★
+                  </span>
+                </label>
+              );
+            })}
+          </div>
+          <button
+            onClick={submitReview}
+            className="bg-cyan-600 hover:bg-cyan-700 text-white font-bold py-2 px-4 rounded"
+          >
+            Submit Review
+          </button>
+        </div>
       </footer>
-      <div className="flex flex-row space-x-5 justify-end mr-10">
-        <button className="bg-gradient-to-br from-cyan-400 to-cyan-800 hover:bg-blue-950 border-2 border-black text-white font-bold py-3 px-4 rounded ml-9">
-          <Link href="/dietitian/mealPlan/updateMealPlan/${mealPlanTitle}">
-            Edit
-          </Link>
-        </button>
-        <button
-          type="submit"
-          className="bg-gradient-to-br from-red-500 to-red-700 hover:bg-blue-950 border-2 border-black text-white font-bold py-3 px-4 rounded"
-        >
-          Delete
-        </button>
-      </div>
     </div>
   );
 };

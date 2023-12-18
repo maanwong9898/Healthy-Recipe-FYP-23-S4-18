@@ -1,13 +1,13 @@
 "use client";
 import { useRouter } from "next/navigation";
-import React from "react";
+import React, { use } from "react";
 import Link from "next/link";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 
 // router path: /registeredUser/viewRecipe/[recipeTitle]
 
-const mockBusinessBlogPost = {
-  id: "5678901234",
+const mockRecipeContent = {
+  id: "1234512345",
   recipeTitle: "Grilled Salmon with Quinoa and Asparagus",
   publisher: "Daniel Carter",
   category: "High-Protein",
@@ -45,7 +45,7 @@ const mockBusinessBlogPost = {
   isActive: true,
 };
 
-// should have a list of reviews and ratings for each blog post
+// should have a list of reviews and ratings for each recipe
 const mockRecipe_RatingAndReviews = [
   {
     username: "Jason",
@@ -62,12 +62,12 @@ const mockRecipe_RatingAndReviews = [
 ];
 
 const UserViewRecipe = ({ params }) => {
-  const [recipe, setRecipe] = useState(mockBusinessBlogPost);
+  const [recipe, setRecipe] = useState(mockRecipeContent);
   const [reviewsAndRatings, setReviewsAndRatings] = useState(
     mockRecipe_RatingAndReviews
   );
   const [newReview, setNewReview] = useState("");
-  const [newRating, setNewRating] = useState(0);
+  const [newRating, setNewRating] = useState(null);
 
   const submitReview = () => {
     // Add logic here to handle the submission of the review and rating
@@ -75,7 +75,7 @@ const UserViewRecipe = ({ params }) => {
     console.log("Review:", newReview, "Rating:", newRating);
     // Reset the state after submission
     setNewReview("");
-    setNewRating(0);
+    setNewRating(null);
   };
 
   const handleRatingChange = (ratingValue) => {
@@ -154,35 +154,27 @@ const UserViewRecipe = ({ params }) => {
             <p className="font-bold">Nutritional Information Per Serving:</p>
           </div>
           <div className="grid-rows-5 flex flex-row space-x-10">
-            <div className="rounded-full bg-blue-100 w-20 h-20 flex items-center text-center justify-center">
-              <p className="text-sm">
-                Calories <br />
-                <span className="text-cyan-600">{recipe.total_calories}</span>
+            <div className="rounded-full bg-blue-100 w-20 h-20 flex flex-col items-center text-center justify-center">
+              <p className="text-sm">Calories</p>
+              <p className="text-cyan-600 font-semibold">
+                {recipe.total_calories}
               </p>
             </div>
-            <div className="rounded-full bg-blue-100 w-20 h-20 flex items-center text-center justify-center">
-              <p className="text-sm">
-                Fat <br />
-                <span className="text-cyan-600">{recipe.fat}</span>
-              </p>
+            <div className="rounded-full bg-blue-100 w-20 h-20 flex flex-col items-center text-center justify-center">
+              <p className="text-sm">Fat</p>
+              <p className="text-cyan-600 font-semibold">{recipe.fat}</p>
             </div>
-            <div className="rounded-full bg-blue-100 w-20 h-20 flex items-center text-center justify-center">
-              <p className="text-sm">
-                Carbs <br />
-                <span className="text-cyan-600">{recipe.carbs}</span>
-              </p>
+            <div className="rounded-full bg-blue-100 w-20 h-20 flex flex-col items-center text-center justify-center">
+              <p className="text-sm">Carbs</p>
+              <p className="text-cyan-600 font-semibold">{recipe.carbs}</p>
             </div>
-            <div className="rounded-full bg-blue-100 w-20 h-20 flex items-center text-center justify-center">
-              <p className="text-sm">
-                Sugars <br />
-                <span className="text-cyan-600">{recipe.sugars}</span>
-              </p>
+            <div className="rounded-full bg-blue-100 w-20 h-20 flex flex-col items-center text-center justify-center">
+              <p className="text-sm">Sugars</p>
+              <p className="text-cyan-600 front-semibold">{recipe.sugars}</p>
             </div>
-            <div className="rounded-full bg-blue-100 w-20 h-20 flex items-center text-center justify-center">
-              <p className="text-sm">
-                Protein <br />
-                <span className="text-cyan-600">{recipe.protein}</span>
-              </p>
+            <div className="rounded-full bg-blue-100 w-20 h-20 flex flex-col items-center text-center justify-center">
+              <p className="text-sm">Protein</p>
+              <p className="text-cyan-600 font-semibold">{recipe.protein}</p>
             </div>
           </div>
         </div>
@@ -192,20 +184,20 @@ const UserViewRecipe = ({ params }) => {
       {/* Ingredients and Instructions */}
       <div className="flex flex-col md:flex-row mt-8 ml-7 px-20">
         {/* Ingredients column */}
-        <div className="flex flex-col md:w-1/2 whitespace-pre-line">
-          <p className="font-bold text-xl mb-2">Ingredients</p>
-          <p>{recipe.ingredients}</p>
-        </div>
+        <ul className="flex flex-col md:w-1/2 whitespace-pre-line">
+          <ol className="font-bold text-xl mb-2">Ingredients</ol>
+          <ol>{recipe.ingredients}</ol>
+        </ul>
 
         {/* Instructions column */}
-        <div className="flex flex-col md:w-1/2 md:ml-4 mt-4 md:mt-0 whitespace-pre-line">
-          <p className="font-bold text-xl mb-2">Instructions</p>
-          <p>{recipe.instructions}</p>
-        </div>
+        <ul className="flex flex-col md:w-1/2 md:ml-4 mt-4 md:mt-0 whitespace-pre-line">
+          <ol className="font-bold text-xl mb-2">Instructions</ol>
+          <ol>{recipe.instructions}</ol>
+        </ul>
       </div>
 
       {/* reviews and ratings */}
-      <footer className="blog-post-reviews mt-10 mx-auto max-w-screen-xl text-left">
+      <footer className="recipes-reviews mt-10 mx-auto max-w-screen-xl text-left">
         <p className="font-mono font-bold text-2xl text-cyan-600">
           Rating and Reviews
         </p>
@@ -216,7 +208,7 @@ const UserViewRecipe = ({ params }) => {
               <span className="font-bold mr-2">{review.username}</span>
               <div className="flex">{renderStars(review.ratings)}</div>
               <span className="text-sm text-gray-500 ml-2">
-                {new Date(review.date_published).toLocaleDateString()}
+                {new Date(recipe.date_published).toLocaleDateString()}
               </span>
             </div>
             <p>{review.reviews}</p>

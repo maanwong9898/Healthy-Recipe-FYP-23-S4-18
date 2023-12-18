@@ -154,7 +154,7 @@ const AllRecipesContent = [
     isActive: true,
   },
   {
-    id: "5678901234",
+    id: "1234512345",
     recipeTitle: "Grilled Salmon with Quinoa and Asparagus",
     publisher: "Daniel Carter",
     category: "High-Protein",
@@ -266,7 +266,7 @@ const RecipeOverviewPageForUser = () => {
     router.push(routePath);
   };
 
-  // Filter the active blog posts
+  // Filter the active recipes posts
   const activeRecipes = AllRecipesContent.filter((post) => post.isActive);
 
   // Function to render a single post card

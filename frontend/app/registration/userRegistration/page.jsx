@@ -106,7 +106,7 @@ const userRegistration = () => {
       case 1:
         return (
           <div>
-            <form className="space-y-3">
+            <form className="space-y-3 ">
               <h2>Personal Details</h2>
               <div className="flex space-x-4">
                 {/* FULL NAME */}
@@ -212,7 +212,7 @@ const userRegistration = () => {
       // PROILE BASED DETAILS
       case 2:
         return (
-          <div>
+          <div classname="flex flex-col items-center justify-center px-6 py-8 mx-auto min-h-screen">
             <form className="space-y-3">
               {/* DIETARY PREFERENCE */}
               <div className="flex flex-col">

@@ -447,7 +447,7 @@ const CreateRecipePage = () => {
               {/* SUBMIT BUTTON */}
               <div className="flex flex-row space-x-5">
                 <button className="bg-red-500 hover:bg-red-800 text-white font-bold py-2 px-4 rounded-lg">
-                  <Link href="/businessUser/businessBlogPost">Cancel</Link>
+                  <Link href="/businessUser/recipes">Cancel</Link>
                 </button>
                 <button
                   type="submit"

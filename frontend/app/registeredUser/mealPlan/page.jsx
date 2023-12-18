@@ -8,6 +8,7 @@ import { useState, useEffect } from "react";
 
 const AllMealPLan = [
   {
+    id: 1,
     mealPlanTitle:
       "Wholesome Slimming: Balanced Vegetarian Meals for Weight Loss",
     date_published: "2021-10-01",
@@ -21,6 +22,7 @@ const AllMealPLan = [
     isActive: true,
   },
   {
+    id: 2,
     mealPlanTitle: "3-Day Vegan Kickstart: Energizing Meal Plan",
     date_published: "2022-05-20",
     image_url:
@@ -33,6 +35,7 @@ const AllMealPLan = [
     isActive: true,
   },
   {
+    id: 3,
     mealPlanTitle: "Plant-Based Cleanse for Weight Loss",
     date_published: "2022-07-11",
     image_url:
@@ -45,6 +48,7 @@ const AllMealPLan = [
     isActive: true,
   },
   {
+    id: 4,
     mealPlanTitle: "5-Day Low-Carb Vegetarian Meal Plan for Busy Bees",
     date_published: "2023-03-15",
     image_url:
@@ -57,6 +61,7 @@ const AllMealPLan = [
     isActive: false,
   },
   {
+    id: 5,
     mealPlanTitle: "Gluten-Free Vegan Journey to Wellness",
     date_published: "2021-12-01",
     image_url:

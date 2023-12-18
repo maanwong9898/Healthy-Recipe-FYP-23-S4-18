@@ -33,9 +33,19 @@ const mockMyBusinessBlogPosts = [
   },
 ];
 
+// Sorting options
+const sortOptions = {
+  EARLIEST: { key: "EARLIEST", label: "By Earliest" },
+  OLDEST: { key: "OLDEST", label: "By Oldest" },
+  HIGHEST_RATINGS: { key: "HIGHEST_RATINGS", label: "Highest Ratings" },
+  LOWEST_RATINGS: { key: "LOWEST_RATINGS", label: "Lowest Ratings" },
+};
+
 const MyBusinessBlogPosts = () => {
   const router = useRouter();
   const [businessBlogs, setBusinessBlogs] = useState(mockMyBusinessBlogPosts);
+  const [searchTerm, setSearchTerm] = useState("");
+  const [sortOption, setSortOption] = useState(sortOptions.EARLIEST.key);
 
   // this function is to view particular blog post
   const handleViewBlogPost = (blogPostTitle) => {
@@ -59,6 +69,44 @@ const MyBusinessBlogPosts = () => {
     router.push(routePath);
   };
 
+  // Function to handle search
+  const handleSearch = () => {
+    const filteredBlogs = mockMyBusinessBlogPosts.filter((post) =>
+      post.blogTitle.toLowerCase().includes(searchTerm.toLowerCase())
+    );
+    setBusinessBlogs(filteredBlogs);
+  };
+
+  // Function to handle sort
+  const sortBlogs = (option) => {
+    let sortedBlogs;
+    switch (option) {
+      case sortOptions.OLDEST.key:
+        sortedBlogs = [...businessBlogs].sort(
+          (a, b) => new Date(a.date_published) - new Date(b.date_published)
+        );
+        break;
+      case sortOptions.EARLIEST.key:
+        sortedBlogs = [...businessBlogs].sort(
+          (a, b) => new Date(b.date_published) - new Date(a.date_published)
+        );
+        break;
+      case sortOptions.HIGHEST_RATINGS.key:
+        sortedBlogs = [...businessBlogs].sort((a, b) => b.ratings - a.ratings);
+        break;
+      case sortOptions.LOWEST_RATINGS.key:
+        sortedBlogs = [...businessBlogs].sort((a, b) => a.ratings - b.ratings);
+        break;
+      default:
+        sortedBlogs = [...businessBlogs];
+    }
+    setBusinessBlogs(sortedBlogs);
+  };
+
+  // useEffect(() => {
+  //   sortBlogs(sortOption);
+  // }, [sortOption, businessBlogs]);
+
   return (
     <div className="px-2 sm:px-5  bg-cyan-800 min-h-screen flex flex-col py-5">
       <h1 className="text-2xl text-white p-3 mb-4 font-bold text-center sm:text-left">
@@ -71,6 +119,44 @@ const MyBusinessBlogPosts = () => {
           </Link>
         </button>
       </div>
+      {/* Search and Sort Section */}
+      <div className="flex justify-between items-center mb-4">
+        <div>
+          <input
+            type="text"
+            id="blogSearch" // Adding an id attribute here
+            name="blogSearch" // Adding a name attribute here
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+            placeholder="Search blog posts"
+            className="mr-2 p-2 rounded border"
+          />
+          <button
+            onClick={handleSearch}
+            className="text-white border-2 border-black bg-gradient-to-br from-cyan-400 to-cyan-800 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 rounded-lg text-base font-bold px-5 py-2.5 mr-7 mb-3 mt-3 text-center"
+          >
+            Search
+          </button>
+        </div>
+        <div>
+          <label htmlFor="sort" className="mr-2 font-2xl text-white">
+            Sort By:
+          </label>
+          <select
+            id="sort"
+            value={sortOption}
+            onChange={(e) => setSortOption(e.target.value)}
+            className="p-2 rounded border"
+          >
+            {Object.values(sortOptions).map((option) => (
+              <option key={option.key} value={option.key}>
+                {option.label}
+              </option>
+            ))}
+          </select>
+        </div>
+      </div>
+
       <div className="overflow-x-auto">
         <table className="min-w-full rounded-lg border-black border-2">
           <thead className="bg-cyan-600 font-semibold text-cyan-950 border-black border-2">

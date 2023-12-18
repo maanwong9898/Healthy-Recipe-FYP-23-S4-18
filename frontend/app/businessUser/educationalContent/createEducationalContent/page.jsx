@@ -59,7 +59,7 @@ const CreateEducationalContentPage = () => {
 
     // Reset fields and error after submission
     setTitle("");
-    setPublisher("");
+    // setPublisher("");
     setCategory("");
     setIntroduction("");
     setMainContent("");
@@ -108,7 +108,7 @@ const CreateEducationalContentPage = () => {
                 />
               </div>
               {/* PUBLISHER */}
-              <label
+              {/* <label
                 htmlFor="publisher"
                 className="block text-xl mb-1 font-bold text-cyan-950"
               >
@@ -125,7 +125,7 @@ const CreateEducationalContentPage = () => {
                   onChange={clearErrorOnChange(setPublisher)}
                   className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-base rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
                 />
-              </div>
+              </div> */}
               {/* CATEGORY */}
               {/* CATEGORY DROPDOWN */}
               <div className="flex flex-col">

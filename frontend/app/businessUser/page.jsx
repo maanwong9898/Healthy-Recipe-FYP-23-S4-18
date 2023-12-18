@@ -28,11 +28,11 @@ const BusinessUserHomePage = () => {
 
   // The button under recipe will redirect to corresponding page
   const handleCreateRecipe = () => {
-    router.push("/businessUser/createRecipe");
+    router.push("/businessUser/recipes/createRecipe");
   };
 
   const handleViewRecipes = () => {
-    router.push("/businessUser/recipe");
+    router.push("/businessUser/recipes");
   };
 
   // The button under educational content will redirect to corresponding page

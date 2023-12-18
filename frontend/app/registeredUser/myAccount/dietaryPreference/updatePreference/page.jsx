@@ -16,7 +16,7 @@ const ViewDietaryPreference = () => {
   // handle the update and cancel btn
   const router = useRouter();
   const handleUpdate = () => {
-    router.push("/registeredUser/dietaryPreference");
+    router.push("/registeredUser/myAccount/dietaryPreference");
   };
 
   return (
@@ -43,7 +43,6 @@ const ViewDietaryPreference = () => {
               <option value="vegan">Vegan</option>
               <option value="vegetarian">Vegetarian</option>
               <option value="pescatarian">Pescatarian</option>
-              <option value="noPref">Any Diet</option>
             </select>
           </div>
 
@@ -69,7 +68,6 @@ const ViewDietaryPreference = () => {
               <option value="soyFree">Soy-Free</option>
               <option value="seafoodFree">Seafood-Free</option>
               <option value="eggFree">Egg-Free</option>
-              <option value="noAllergies">No Allergies</option>
             </select>
           </div>
 
@@ -88,7 +86,7 @@ const ViewDietaryPreference = () => {
               <option value="" disabled defaultValue>
                 Select One...
               </option>
-              <option value="wheatFree">Low Carb</option>
+              <option value="wheatFree">Bulk Up</option>
               <option value="dairyFree">Weight Loss</option>
               <option value="glutenFree">Balanced Meal</option>
             </select>

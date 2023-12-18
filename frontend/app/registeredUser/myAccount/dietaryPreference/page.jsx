@@ -4,13 +4,13 @@ import { useRouter } from "next/navigation";
 import React, { use } from "react";
 import Link from "next/link";
 import { useState, useEffect } from "react";
-import SideBarLayout from "../sidebarLayout";
+import SideBarLayout from "../../sidebarLayout.jsx";
 
 const ViewDietaryPreference = () => {
   const router = useRouter();
 
   const handleUpdate = () => {
-    router.push("/registeredUser/dietaryPreference/updatePreference");
+    router.push("/registeredUser/myAccount/dietaryPreference/updatePreference");
   };
   return (
     <div className="flex">

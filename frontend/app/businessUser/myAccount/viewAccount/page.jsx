@@ -11,9 +11,9 @@ const mockUserAccount = {
   workEmail: "michealbrowm@abc.com",
   // yyyy-mm-dd
   companyName: "Company ABC",
-  UEN: "123456789",
-  companyAddress: "123, ABC Road",
-  contactNumber: "65437789",
+  UEN: "123456789A",
+  companyAddress: "123, Tuas Avenue 1, Singapore 123456",
+  contactNumber: "98267365",
 };
 
 const UpdateAccount = () => {
@@ -90,7 +90,7 @@ const UpdateAccount = () => {
           <form>
             {/* NAME */}
             <div className="flex flex-col mb-3.5">
-              <label className="mb-1">Name:</label>
+              <label className="mb-1">Full Name:</label>
               <input
                 type="text"
                 id="fullName"
@@ -129,7 +129,7 @@ const UpdateAccount = () => {
 
             {/* EMAIL */}
             <div className="flex flex-col mb-3.5">
-              <label className="mb-1">Work Email:</label>
+              <label className="mb-1">Work Email Address:</label>
               <input
                 type="text"
                 id="workEmail"

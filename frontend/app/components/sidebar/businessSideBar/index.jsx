@@ -15,15 +15,11 @@ const BusinessSideBarLayout = () => {
       <h2 className="text-lg font-semibold mb-10">My Dashboard</h2>
       <ul>
         <li className="mb-4 hover:underline">
-          <Link href="/businessUser/businessAccount/viewAccount">
-            My Account
-          </Link>
+          <Link href="/businessUser/myAccount/viewAccount">My Account</Link>
         </li>
 
         <li className="mb-4 hover:underline m-4">
-          <Link href="/businessUser/businessAccount/changePwd">
-            Change Password
-          </Link>
+          <Link href="/businessUser/myAccount/changePwd">Change Password</Link>
         </li>
 
         <li className="mb-4 hover:underline">

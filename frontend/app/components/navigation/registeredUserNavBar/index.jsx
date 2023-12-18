@@ -8,22 +8,20 @@ const AccountDropdownMenu = () => {
     <div className="absolute left-0 top-10 w-48 rounded-md shadow-lg bg-white z-10">
       <ul>
         <li className="px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
-          <Link href="/registeredUser/userAccount/viewUpdateAccount">
-            My Account
-          </Link>
+          <Link href="/registeredUser/myAccount/viewAccount">My Account</Link>
         </li>
         <li className="px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
-          <Link href="/registeredUser/dietaryPreference">
+          <Link href="/registeredUser/myAccount/dietaryPreference">
             Dietary Preference
           </Link>
         </li>
         <li className="px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
-          <Link href="/registeredUser/trackWeight">
+          <Link href="/registeredUser/myAccount/trackWeight">
             Track Weight Measurements
           </Link>
         </li>
         <li className="px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
-          <Link href="/registeredUser/checkBMI">BMI Calculator</Link>
+          <Link href="/registeredUser/myAccount/checkBMI">BMI Calculator</Link>
         </li>
         <li className="px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
           <Link href="/">Logout</Link>

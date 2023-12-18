@@ -15,29 +15,27 @@ const UserSideBarLayout = () => {
       <h2 className="text-lg font-semibold mb-10">My Dashboard</h2>
       <ul>
         <li className="mb-4 hover:underline">
-          <Link href="/registeredUser/userAccount/viewUpdateAccount">
-            My Account
-          </Link>
+          <Link href="/registeredUser/myAccount/viewAccount">My Account</Link>
         </li>
 
         <li className="mb-4 hover:underline m-4">
-          <Link href="/registeredUser/userAccount/changePwd">
+          <Link href="/registeredUser/myAccount/changePwd">
             Change Password
           </Link>
         </li>
 
         <li className="mb-4 hover:underline">
-          <Link href="/registeredUser/dietaryPreference">
+          <Link href="/registeredUser/myAccount/dietaryPreference">
             Dietary Preference
           </Link>
         </li>
         <li className="mb-4 hover:underline">
-          <Link href="/registeredUser/trackWeight">
+          <Link href="/registeredUser/myAccount/trackWeight">
             Track Weight Measurements
           </Link>
         </li>
         <li className="mb-4 hover:underline">
-          <Link href="/registeredUser/checkBMI">BMI Calculator</Link>
+          <Link href="/registeredUser/myAccount/checkBMI">BMI Calculator</Link>
         </li>
         <li className="mb-4 hover:underline">
           <Link href="/">Logout</Link>

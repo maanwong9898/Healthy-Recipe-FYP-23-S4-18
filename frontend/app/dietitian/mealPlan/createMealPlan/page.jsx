@@ -8,10 +8,10 @@ import Link from "next/link";
 
 const healthGoalCategory = [
   {
-    category: "Weight Loss",
+    category: "Bulk Up",
   },
   {
-    category: "Low Carb",
+    category: "Weight Loss",
   },
   {
     category: "Balanced Meal",

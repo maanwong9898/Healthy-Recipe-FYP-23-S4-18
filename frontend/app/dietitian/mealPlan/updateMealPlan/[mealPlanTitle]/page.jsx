@@ -145,7 +145,7 @@ const healthGoalCategory = [
     category: "Weight Loss",
   },
   {
-    category: "Low Carb",
+    category: "Bulk Up",
   },
   {
     category: "Balanced Meal",

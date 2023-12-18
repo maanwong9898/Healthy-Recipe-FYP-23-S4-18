@@ -14,7 +14,7 @@ const mockData = {
   ],
   healthGoals: [
     { id: "weightLoss", name: "Weight Loss" },
-    { id: "lowCarb", name: "Low Carb" },
+    { id: "bulkUp", name: "Bulk Up" },
     { id: "balancedMeal", name: "Balanced Meal" },
   ],
   allergiesAndRestrictions: [

@@ -41,7 +41,7 @@ const ViewDietaryPreference = () => {
                 id="diet"
                 className="border rounded-full text-center p-2 w-full"
               >
-                Gluten-Free
+                Gluten
               </label>
             </div>
           </div>

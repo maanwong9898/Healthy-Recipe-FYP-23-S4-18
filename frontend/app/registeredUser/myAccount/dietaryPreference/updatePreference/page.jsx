@@ -8,6 +8,45 @@ import SideBarLayout from "../../../sidebarLayout.jsx";
 
 // router path: /registeredUser/dietaryPreference/updatePreference
 
+const mockHealthGoalsCat = [
+  {
+    category: "Weight Gain",
+  },
+  {
+    category: "Maintain Heatlth",
+  },
+  {
+    category: "Weight Loss",
+  },
+];
+
+const mockAllergiesCat = [
+  {
+    category: "Milk",
+  },
+  {
+    category: "Egg",
+  },
+  {
+    category: "Soy",
+  },
+  {
+    category: "Shellfish",
+  },
+  {
+    category: "Fish",
+  },
+  {
+    category: "Peanut",
+  },
+  {
+    category: "Tree Nuts",
+  },
+  {
+    category: "Gluten",
+  },
+];
+
 const ViewDietaryPreference = () => {
   const [dietaryPreference, setDietaryPreference] = useState("");
   const [allergyRestriction, setAllergyRestriction] = useState("");
@@ -58,16 +97,12 @@ const ViewDietaryPreference = () => {
               onChange={(e) => setAllergyRestriction(e.target.value)}
               className="border px-4 py-2 rounded-lg bg-gray-50 border-gray-300 text-gray-900 sm:text-sm block w-full p-2.5"
             >
-              <option value="" disabled defaultValue>
-                Select One...
-              </option>
-              <option value="wheatFree">Wheat-Free</option>
-              <option value="dairyFree">Dairy-Free</option>
-              <option value="glutenFree">Gluten-Free</option>
-              <option value="peanutFree">Peanut-free</option>
-              <option value="soyFree">Soy-Free</option>
-              <option value="seafoodFree">Seafood-Free</option>
-              <option value="eggFree">Egg-Free</option>
+              <option value="">Select Allergies</option>
+              {mockAllergiesCat.map((cat, index) => (
+                <option key={index} value={cat.category}>
+                  {cat.category}
+                </option>
+              ))}
             </select>
           </div>
 
@@ -83,12 +118,12 @@ const ViewDietaryPreference = () => {
               onChange={(e) => setHealthGoal(e.target.value)}
               className="border px-4 py-2 rounded-lg bg-gray-50 border-gray-300 text-gray-900 sm:text-sm block w-full p-2.5"
             >
-              <option value="" disabled defaultValue>
-                Select One...
-              </option>
-              <option value="wheatFree">Bulk Up</option>
-              <option value="dairyFree">Weight Loss</option>
-              <option value="glutenFree">Balanced Meal</option>
+              <option value="">Select Health Goals</option>
+              {mockHealthGoalsCat.map((cat, index) => (
+                <option key={index} value={cat.category}>
+                  {cat.category}
+                </option>
+              ))}
             </select>
           </div>
           {/* BUTTON */}

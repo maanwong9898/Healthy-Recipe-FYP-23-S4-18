@@ -78,7 +78,7 @@ const CreateEducationalContentPage = () => {
     <div className="bg-cyan-900 min-h-screen flex flex-col justify-center px-6 lg:px-8">
       {/* Adjust the max-width and width in the inline style */}
       <div
-        className="mt-16 mb-16 mx-auto bg-cyan-600 rounded-lg shadow"
+        className="mt-16 mb-16 mx-auto bg-slate-100 rounded-lg shadow"
         style={{ maxWidth: "600px", width: "100%" }} // Increase maxWidth and set width to 100%
       >
         {" "}
@@ -244,13 +244,13 @@ const CreateEducationalContentPage = () => {
               {error && <p className="text-red-500">{error}</p>}
               {/* SUBMIT BUTTON */}
               <div className="flex flex-row space-x-5">
-                <button className="bg-gradient-to-br from-red-500 to-red-700 hover:bg-blue-950 border-2 border-black text-white font-bold py-2 px-4 rounded">
+                <button className="bg-red-500 hover:bg-red-800 text-white font-bold py-2 px-4 rounded-lg">
                   <Link href="/businessUser/educationalContent">Cancel</Link>
                 </button>
                 <button
                   type="submit"
                   onClick={handleCreateEducationalContent}
-                  className="bg-gradient-to-br from-cyan-400 to-cyan-800 hover:bg-blue-950 border-2 border-black text-white font-bold py-2 px-4 rounded"
+                  className="bg-cyan-500 hover:bg-sky-700 text-white font-bold py-2 px-4 rounded-lg"
                 >
                   Create
                 </button>

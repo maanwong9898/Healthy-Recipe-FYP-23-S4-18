@@ -4,6 +4,45 @@ import { useState } from "react";
 import Link from "next/link";
 import HomeNavbar from "@/app/components/navigation/homeNavBar";
 
+const mockHealthGoalsCat = [
+  {
+    category: "Weight Gain",
+  },
+  {
+    category: "Maintain Heatlth",
+  },
+  {
+    category: "Weight Loss",
+  },
+];
+
+const mockAllergiesCat = [
+  {
+    category: "Milk",
+  },
+  {
+    category: "Egg",
+  },
+  {
+    category: "Soy",
+  },
+  {
+    category: "Shellfish",
+  },
+  {
+    category: "Fish",
+  },
+  {
+    category: "Peanut",
+  },
+  {
+    category: "Tree Nuts",
+  },
+  {
+    category: "Gluten",
+  },
+];
+
 const userRegistration = () => {
   const [fullName, setFullName] = useState("");
   const [username, setUsername] = useState("");
@@ -221,9 +260,7 @@ const userRegistration = () => {
                   onChange={(e) => setDietaryPreference(e.target.value)}
                   className="border px-4 py-2 rounded-lg bg-gray-50 border-gray-300 text-gray-900 sm:text-sm focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
                 >
-                  <option value="" disabled defaultValue>
-                    Select One...
-                  </option>
+                  <option value="">Select Dietary Preference </option>
                   <option value="vegan">Vegan</option>
                   <option value="vegetarian">Vegetarian</option>
                   <option value="pescatarian">Pescatarian</option>
@@ -242,16 +279,12 @@ const userRegistration = () => {
                   onChange={(e) => setAllergyRestriction(e.target.value)}
                   className="border px-4 py-2 rounded-lg bg-gray-50 border-gray-300 text-gray-900 sm:text-sm focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
                 >
-                  <option value="" disabled defaultValue>
-                    Select One...
-                  </option>
-                  <option value="wheatFree">Wheat-Free</option>
-                  <option value="dairyFree">Dairy-Free</option>
-                  <option value="glutenFree">Gluten-Free</option>
-                  <option value="peanutFree">Peanut-free</option>
-                  <option value="soyFree">Soy-Free</option>
-                  <option value="seafoodFree">Seafood-Free</option>
-                  <option value="eggFree">Egg-Free</option>
+                  <option value="">Select Allergies</option>
+                  {mockAllergiesCat.map((cat, index) => (
+                    <option key={index} value={cat.category}>
+                      {cat.category}
+                    </option>
+                  ))}
                 </select>
               </div>
 
@@ -265,18 +298,18 @@ const userRegistration = () => {
                   onChange={(e) => setHealthGoals(e.target.value)}
                   className="border px-4 py-2 rounded-lg bg-gray-50 border-gray-300 text-gray-900 sm:text-sm focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
                 >
-                  <option value="" disabled defaultValue>
-                    Select One...
-                  </option>
-                  <option value="wheatFree">Bulk Up</option>
-                  <option value="dairyFree">Weight Loss</option>
-                  <option value="glutenFree">Balanced Meal</option>
+                  <option value="">Select Health Goal</option>
+                  {mockHealthGoalsCat.map((cat, index) => (
+                    <option key={index} value={cat.category}>
+                      {cat.category}
+                    </option>
+                  ))}
                 </select>
               </div>
 
               {/* WEIGHT */}
               <div className="flex flex-col">
-                <label htmlFor="weight">Weight</label>
+                <label htmlFor="weight">Weight *Optional</label>
                 <input
                   type="text"
                   name="weight"

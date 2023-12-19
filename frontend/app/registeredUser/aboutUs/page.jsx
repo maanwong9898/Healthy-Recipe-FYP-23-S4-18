@@ -11,10 +11,13 @@ const AboutUs = () => {
       <section className="mb-4 ml-3">
         <h2 className="font-bold text-xl">Our Mission</h2>
         <p className="max-w-xl">
-          Welcome to My Healthy Recipe, your number one source for healthy and
-          delicious recipes. We're dedicated to providing you the very best of
-          recipes, with an emphasis on healthy, delicious, and easy to make
-          recipes.
+          Welcome to My Healthy Recipe, your number-one source for healthy and
+          delicious recipes. We're dedicated to providing nutritional,
+          delicious, and easy-to-make recipes. Committed to your well-being, we
+          follow HPB's guidelines for daily sodium intake to ensure that every
+          recipe aligns with the highest nutritional standards. More than just a
+          collection of recipes, our commitment to health is ingrained in every
+          dish we create.
         </p>
       </section>
 

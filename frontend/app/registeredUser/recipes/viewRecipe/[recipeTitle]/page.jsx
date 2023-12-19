@@ -10,27 +10,27 @@ const mockRecipeContent = {
   id: "1234512345",
   recipeTitle: "Grilled Salmon with Quinoa and Asparagus",
   publisher: "Daniel Carter",
-  category: "High-Protein",
+  category: "Pescatarian",
   cooking_time: "25 Mins",
   number_of_servings: "2 Pax",
   description:
     "A nutritious and delicious dish featuring grilled salmon, quinoa, and asparagus.",
   ingredients:
-    "2 salmon fillets \n\n" +
-    "1 cup quinoa, rinsed \n\n" +
-    "2 cups water \n\n" +
-    "1 bunch asparagus, trimmed \n\n" +
-    "2 tablespoons olive oil \n\n" +
-    "Juice of 1 lemon \n\n" +
-    "Salt and pepper to taste \n\n" +
+    "2 salmon fillets\n\n" +
+    "1 cup quinoa, rinsed\n\n" +
+    "2 cups water\n\n" +
+    "1 bunch asparagus, trimmed\n\n" +
+    "2 tablespoons olive oil\n\n" +
+    "Juice of 1 lemon\n\n" +
+    "Salt and pepper to taste\n\n" +
     "Fresh dill for garnish",
   instructions:
-    "Step 1: \n Preheat the grill to medium-high heat.\n\n" +
-    "Step 2: \n Season salmon fillets with salt, pepper, and a drizzle of olive oil. Grill for 4-5 minutes per side, or until cooked through. \n\n" +
-    "Step 3: \n In a saucepan, combine quinoa and water. Bring to a boil, then reduce heat, cover, and simmer for 15 minutes, or until quinoa is cooked and water is absorbed.\n\n" +
-    "Step 4: \n While quinoa is cooking, toss asparagus with olive oil, salt, and pepper. Grill for 3-4 minutes, or until tender-crisp.\n\n" +
-    "Step 5: \n Assemble the dish by placing a bed of quinoa on each plate, topping with grilled salmon and asparagus.\n\n" +
-    "Step 6: \n Drizzle with lemon juice, garnish with fresh dill, and serve hot.",
+    "Step 1: Preheat the grill to medium-high heat.\n\n" +
+    "Step 2: Season salmon fillets with salt, pepper, and a drizzle of olive oil. Grill for 4-5 minutes per side, or until cooked through.\n\n" +
+    "Step 3: In a saucepan, combine quinoa and water. Bring to a boil, then reduce heat, cover, and simmer for 15 minutes, or until quinoa is cooked and water is absorbed.\n\n" +
+    "Step 4: While quinoa is cooking, toss asparagus with olive oil, salt, and pepper. Grill for 3-4 minutes, or until tender-crisp.\n\n" +
+    "Step 5: Assemble the dish by placing a bed of quinoa on each plate, topping with grilled salmon and asparagus.\n\n" +
+    "Step 6: Drizzle with lemon juice, garnish with fresh dill, and serve hot.",
   total_calories: "450",
   carbs: "30g",
   protein: "40g",
@@ -145,7 +145,7 @@ const UserViewRecipe = ({ params }) => {
               <span className="text-cyan-600">{recipe.cooking_time}</span>
             </p>
             <p className="mr-4 text-bold">
-              Serving Size:{" "}
+              Total Serving:{" "}
               <span className="text-cyan-600">{recipe.number_of_servings}</span>
             </p>
           </div>

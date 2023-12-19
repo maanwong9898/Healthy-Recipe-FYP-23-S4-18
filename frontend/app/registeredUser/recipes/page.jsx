@@ -120,7 +120,7 @@ const AllRecipesContent = [
     id: "8374625142",
     recipeTitle: "Lemon Garlic Herb Grilled Chicken Breast",
     publisher: "Isabella Martinez",
-    category: "High-Protein",
+    category: "Pescatarian",
     cooking_time: "20 Mins",
     number_of_servings: "4",
     description:
@@ -180,10 +180,11 @@ const AllRecipesContent = [
       "Step 5: Assemble the dish by placing a bed of quinoa on each plate, topping with grilled salmon and asparagus.\n\n" +
       "Step 6: Drizzle with lemon juice, garnish with fresh dill, and serve hot.",
     total_calories: "450",
-
-    protein: "40g",
     carbs: "30g",
+    protein: "40g",
     fat: "18g",
+    fibre: "5g",
+    sodium: "100mg",
     image_url:
       "https://img.freepik.com/free-photo/baked-salmon-garnished-with-asparagus-tomatoes-with-herbs_2829-14481.jpg?w=1800&t=st=1702801194~exp=1702801794~hmac=3ccec1eb9e8014410d7d5a0f87530ae6909d6ed292f1ab0d6f0b26f6dcd1f22e",
     image_title: "Grilled Salmon with Quinoa and Asparagus",

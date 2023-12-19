@@ -40,9 +40,9 @@ const TrackWeight = () => {
 
   // Handle weight validations
   const handleWeightStorage = () => {
-    if (targetWeight === "" || currentWeight === "") {
-      setError("Please fill in all fields.");
-    } else if (isNaN(targetWeight) || isNaN(currentWeight)) {
+    if (currentWeight === "") {
+      setError("Please enter your weight.");
+    } else if (isNaN(currentWeight)) {
       setError("Please enter a valid input.");
     } else {
       setSuccess("Weight has been saved.");
@@ -52,7 +52,6 @@ const TrackWeight = () => {
       setError("");
 
       // For checking purposes
-      console.log("Target Weight: " + targetWeight);
       console.log("Current Weight: " + currentWeight);
     }
   };
@@ -70,7 +69,7 @@ const TrackWeight = () => {
             Track Weight Measurements
           </h2>
 
-          {/* STARTING WEIGHT */}
+          {/* STARTING WEIGHT
           <div className="flex flex-col mb-3.5 relative">
             <label className="mb-1">Starting Weight:</label>
             <div className="flex items-center">
@@ -84,9 +83,9 @@ const TrackWeight = () => {
               />
               <span className="ml-2">kg</span>
             </div>
-          </div>
+          </div> */}
 
-          {/* TARGET WEIGHT */}
+          {/* TARGET WEIGHT
           <div className="flex flex-col mb-3.5">
             <label className="mb-1">Target Weight:</label>
             <div className="flex items-center">
@@ -101,7 +100,7 @@ const TrackWeight = () => {
               />
               <span className="ml-2">kg</span>
             </div>
-          </div>
+          </div> */}
 
           {/* CURRENT WEIGHT */}
           <div className="flex flex-col mb-3.5">

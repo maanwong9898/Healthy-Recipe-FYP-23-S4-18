@@ -44,7 +44,6 @@ const HomeNavbar = () => {
           </div>
           <button
             className="text-white p-2 rounded-md hover:text-white hover:bg-blue-900 md:hidden"
-            className="text-white p-2 rounded-md hover:text-white hover:bg-blue-900 md:hidden"
             onClick={() => setIsMenuOpen(!isMenuOpen)}
           >
             {isMenuOpen ? "✖" : "☰"}
@@ -83,13 +82,13 @@ const HomeNavbar = () => {
               Meal Plans
             </Link>
             <Link
-              href="/"
+              href="/educationalContent"
               className="text-white hover:bg-sky-200 hover:text-black rounded-md px-3 py-2 font-bold"
             >
               Educational Content
             </Link>
             <Link
-              href="/"
+              href="/businessBlogPost"
               className="text-white hover:bg-sky-200 hover:text-black rounded-md px-3 py-2 font-bold"
             >
               Business Blog Post

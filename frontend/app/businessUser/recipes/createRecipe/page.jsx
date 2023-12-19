@@ -55,11 +55,12 @@ const CreateRecipePage = () => {
   };
 
   // Function to delete the ingredient
-  const handleDeleteIngredient = (index) => {
+  const handleDeleteIngredient = () => {
     const updatedList = [...ingredientList];
-    updatedList.splice(index, 1);
+    updatedList.pop();
     setIngredientList(updatedList);
   };
+
   useEffect(() => {
     // Access localStorage after component mounts and is on the client-side
     const storedUsername = localStorage.getItem("username");

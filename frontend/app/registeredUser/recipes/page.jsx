@@ -29,10 +29,11 @@ const AllRecipesContent = [
       "Step 1: Combine beans, cheese and 1/4 cup salsa in a medium bowl. Place tortillas on a work surface. Spread 1/2 cup filling on half of each tortilla. Fold tortillas in half, pressing gently to flatten. \n\n" +
       "Step 2: Heat 1 teaspoon oil in a large nonstick skillet over medium heat. Add 2 quesadillas and cook, turning once, until golden on both sides, 2 to 4 minutes total. Transfer to a cutting board and tent with foil to keep warm. Repeat with the remaining 1 teaspoon oil and quesadillas. Serve the quesadillas with avocado and the remaining salsa.",
     total_calories: "300g",
-    sugar: "2g",
-    protien: "10g",
-    fat: "5g",
     carbs: "20g",
+    protein: "10g",
+    fat: "5g",
+    fibre: "7g",
+    sodium: "10g",
     image_url:
       "https://img.freepik.com/free-photo/lavash-stuffed-with-meat-roasted_114579-1767.jpg?w=1480&t=st=1702795934~exp=1702796534~hmac=ab42006c4dee22b75a00928f8a00c970dd0bd3cc2f6a96a4131f504aac9b0013",
     image_title: "Black Bean Quesadillas",
@@ -179,7 +180,7 @@ const AllRecipesContent = [
       "Step 5: Assemble the dish by placing a bed of quinoa on each plate, topping with grilled salmon and asparagus.\n\n" +
       "Step 6: Drizzle with lemon juice, garnish with fresh dill, and serve hot.",
     total_calories: "450",
-    sugars: "2g",
+
     protein: "40g",
     carbs: "30g",
     fat: "18g",
@@ -266,7 +267,7 @@ const RecipeOverviewPageForUser = () => {
     router.push(routePath);
   };
 
-  // Filter the active recipes posts
+  // Filter the active blog posts
   const activeRecipes = AllRecipesContent.filter((post) => post.isActive);
 
   // Function to render a single post card

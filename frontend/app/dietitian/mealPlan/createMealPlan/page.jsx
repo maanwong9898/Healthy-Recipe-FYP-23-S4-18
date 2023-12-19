@@ -8,13 +8,13 @@ import Link from "next/link";
 
 const healthGoalCategory = [
   {
-    category: "Bulk Up",
+    category: "Weight Gain",
+  },
+  {
+    category: "Maintain Health",
   },
   {
     category: "Weight Loss",
-  },
-  {
-    category: "Balanced Meal",
   },
 ];
 
@@ -24,25 +24,25 @@ const mockRecipes = [
     id: 1,
     name: "Caprese Salad with Pesto Sauce",
     category: "Vegetarian",
-    restriction: "Nut-free",
+    restriction: "Milk",
   },
   {
     id: 2,
     name: "Vegetarian Lasagna",
     category: "Vegetarian",
-    restriction: "Dairy-free",
+    restriction: "Egg",
   },
   {
     id: 3,
     name: "Mushroom Stroganoff",
     category: "Vegetarian",
-    restriction: "Gluten-free",
+    restriction: "Soy",
   },
   {
     id: 4,
     name: "Spinach and Cheese Stuffed Shells",
     category: "Vegetarian",
-    restriction: "Egg-free",
+    restriction: "Egg",
   },
 
   // Vegan Recipes
@@ -50,25 +50,25 @@ const mockRecipes = [
     id: 5,
     name: "Vegan Black Bean Burgers",
     category: "Vegan",
-    restriction: "Gluten-free",
+    restriction: "Gluten",
   },
   {
     id: 6,
     name: "Vegan Thai Green Curry",
     category: "Vegan",
-    restriction: "Soy-free",
+    restriction: "Egg",
   },
   {
     id: 7,
     name: "Vegan Lentil Soup",
     category: "Vegan",
-    restriction: "Nut-free",
+    restriction: "Tree Nut",
   },
   {
     id: 8,
     name: "Chickpea Avocado Salad",
     category: "Vegan",
-    restriction: "Grain-free",
+    restriction: "Peanut",
   },
 
   // Any Diet Recipes
@@ -76,13 +76,13 @@ const mockRecipes = [
     id: 9,
     name: "Keto Zucchini Noodles",
     category: "Any diet",
-    restriction: "Dairy-free",
+    restriction: "Fish",
   },
   {
     id: 10,
     name: "Keto Cauliflower Pizza",
     category: "Any diet",
-    restriction: "Gluten-free",
+    restriction: "Shellfish",
   },
 ];
 
@@ -280,7 +280,7 @@ const CreateMealPlanPage = () => {
     <div className="bg-cyan-900 min-h-screen flex flex-col justify-center px-6 lg:px-8">
       {/* Adjust the max-width and width in the inline style */}
       <div
-        className="mt-16 mb-16 mx-auto bg-cyan-600 rounded-lg shadow"
+        className="mt-16 mb-16 mx-auto bg-slate-100 rounded-lg shadow"
         style={{ maxWidth: "600px", width: "100%" }} // Increase maxWidth and set width to 100%
       >
         {" "}
@@ -455,13 +455,13 @@ const CreateMealPlanPage = () => {
               {error && <p className="text-red-500">{error}</p>}
               {/* SUBMIT BUTTON */}
               <div className="flex flex-row space-x-5">
-                <button className="bg-gradient-to-br from-red-500 to-red-700 hover:bg-blue-950 border-2 border-black text-white font-bold py-2 px-4 rounded">
+                <button className="bg-red-500 hover:bg-red-800 text-white font-bold py-2 px-4 rounded-lg">
                   <Link href="/dietitian/mealPlan">Cancel</Link>
                 </button>
                 <button
                   type="submit"
                   onClick={handleCreateMealPlan}
-                  className="bg-gradient-to-br from-cyan-400 to-cyan-800 hover:bg-blue-950 border-2 border-black text-white font-bold py-2 px-4 rounded"
+                  className="bg-cyan-500 hover:bg-sky-700 text-white font-bold py-2 px-4 rounded-lg"
                 >
                   Create
                 </button>

@@ -13,25 +13,25 @@ const mockRecipes = [
     id: 1,
     name: "Caprese Salad with Pesto Sauce",
     category: "Vegetarian",
-    restriction: "Nut-free",
+    restriction: "Milk",
   },
   {
     id: 2,
     name: "Vegetarian Lasagna",
     category: "Vegetarian",
-    restriction: "Dairy-free",
+    restriction: "Egg",
   },
   {
     id: 3,
     name: "Mushroom Stroganoff",
     category: "Vegetarian",
-    restriction: "Gluten-free",
+    restriction: "Soy",
   },
   {
     id: 4,
     name: "Spinach and Cheese Stuffed Shells",
     category: "Vegetarian",
-    restriction: "Egg-free",
+    restriction: "Egg",
   },
 
   // Vegan Recipes
@@ -39,25 +39,25 @@ const mockRecipes = [
     id: 5,
     name: "Vegan Black Bean Burgers",
     category: "Vegan",
-    restriction: "Gluten-free",
+    restriction: "Gluten",
   },
   {
     id: 6,
     name: "Vegan Thai Green Curry",
     category: "Vegan",
-    restriction: "Soy-free",
+    restriction: "Egg",
   },
   {
     id: 7,
     name: "Vegan Lentil Soup",
     category: "Vegan",
-    restriction: "Nut-free",
+    restriction: "Tree Nut",
   },
   {
     id: 8,
     name: "Chickpea Avocado Salad",
     category: "Vegan",
-    restriction: "Grain-free",
+    restriction: "Peanut",
   },
 
   // Any Diet Recipes
@@ -65,13 +65,13 @@ const mockRecipes = [
     id: 9,
     name: "Keto Zucchini Noodles",
     category: "Any diet",
-    restriction: "Dairy-free",
+    restriction: "Fish",
   },
   {
     id: 10,
     name: "Keto Cauliflower Pizza",
     category: "Any diet",
-    restriction: "Gluten-free",
+    restriction: "Shellfish",
   },
 ];
 
@@ -81,7 +81,7 @@ const mockMealPlan = {
     "Wholesome Slimming: Balanced Vegetarian Meals for Weight Loss",
   publisher: "Alex Johnson",
   dietaryPreference: "Vegetarian",
-  dietaryRestriction: "Gluten-Free",
+  dietaryRestriction: "Gluten",
   healthGoal_category: "Weight Loss",
   introduction:
     "Embark on a transformative journey with 'Healthy Transformation: Weight Loss Journey'. This meticulously designed meal plan is your ally in achieving sustainable weight loss, ensuring you get all the essential nutrients without compromising on taste. Each meal is crafted to boost metabolism, reduce caloric intake, and increase satiety, guiding you towards a healthier lifestyle with every bite. Start your journey today towards a fitter, happier you with meals that are as delicious as they are nourishing.",
@@ -142,13 +142,13 @@ const mockMealPlan = {
 
 const healthGoalCategory = [
   {
+    category: "Weight Gain",
+  },
+  {
+    category: "Maintain Health",
+  },
+  {
     category: "Weight Loss",
-  },
-  {
-    category: "Bulk Up",
-  },
-  {
-    category: "Balanced Meal",
   },
 ];
 
@@ -254,7 +254,7 @@ const UpdateMealPlanPage = ({ params }) => {
   return (
     <div className="bg-cyan-900 min-h-screen flex flex-col justify-center px-6 lg:px-8">
       <div
-        className="mt-16 mb-16 mx-auto bg-cyan-600 rounded-lg shadow"
+        className="mt-16 mb-16 mx-auto bg-slate-100 rounded-lg shadow"
         style={{ maxWidth: "600px", width: "100%" }}
       >
         <div className="p-4 space-y-4 md:space-y-12">
@@ -463,14 +463,14 @@ const UpdateMealPlanPage = ({ params }) => {
               {error && <p className="text-red-500">{error}</p>}
               {/* SUBMIT BUTTON */}
               <div className="flex flex-row space-x-5">
-                <button className="bg-gradient-to-br from-red-500 to-red-700 hover:bg-blue-950 border-2 border-black text-white font-bold py-2 px-4 rounded">
-                  <Link href="/businessUser/businessBlogPost">Cancel</Link>
+                <button className="bg-red-500 hover:bg-red-800 text-white font-bold py-2 px-4 rounded-lg">
+                  <Link href="/dietitian/mealPlan">Cancel</Link>
                 </button>
                 <button
                   type="submit"
-                  className="bg-gradient-to-br from-cyan-400 to-cyan-800 hover:bg-blue-950 border-2 border-black text-white font-bold py-2 px-4 rounded"
+                  className="bg-cyan-500 hover:bg-sky-700 text-white font-bold py-2 px-4 rounded-lg"
                 >
-                  Update Meal Plan
+                  Update
                 </button>
               </div>
             </form>

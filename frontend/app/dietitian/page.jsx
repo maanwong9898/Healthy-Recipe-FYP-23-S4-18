@@ -26,8 +26,8 @@ const DietitianHomePage = () => {
   };
 
   return (
-    <div className="bg-blue-400 min-h-screen w-full overflow-x-hidden">
-      <div className="p-6">
+    <div className="bg-cyan-800 min-h-screen w-full overflow-x-hidden">
+      <div className="p-6 text-white">
         <p className=" text-3xl p-6">
           Welcome Back, {username}! Ready to grow your audience?
         </p>
@@ -36,13 +36,13 @@ const DietitianHomePage = () => {
         </div>
         <div className="flex flex-wrap pl-6 pb-4">
           <button
-            className="bg-blue-700 hover:bg-blue-950 text-white rounded-md font-bold py-2 px-4 mr-10 mb-4"
+            className="bg-gradient-to-br from-cyan-400 to-cyan-800 hover:bg-blue-950 border-2 border-black  rounded-md font-bold py-2 px-4 mr-10 mb-4"
             onClick={handleCreateMealPlan}
           >
             Create Meal Plan
           </button>
           <button
-            className="bg-blue-700 hover:bg-blue-950 text-white rounded-md font-bold py-2 px-4 mr-10 mb-4"
+            className="bg-gradient-to-br from-cyan-400 to-cyan-800 hover:bg-blue-950 border-2 border-black  rounded-md font-bold py-2 px-4 mr-10 mb-4"
             onClick={handleViewMealPlan}
           >
             View My Meal Plans

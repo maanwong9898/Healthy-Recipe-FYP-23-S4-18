@@ -76,7 +76,7 @@ const CreateUserAccountPage = () => {
     <div>
       <div className="bg-cyan-900">
         <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
-          <div className="w-full bg-cyan-600 rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0">
+          <div className="w-full bg-slate-100 rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0">
             <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
               <h1 className="text-xl font-bold leading-tight tracking-tight text-black md:text-2xl dark:text-white">
                 Create User Account
@@ -167,7 +167,7 @@ const CreateUserAccountPage = () => {
                 <button
                   type="submit"
                   onClick={handleCreateAccount}
-                  className="bg-gradient-to-br from-cyan-400 to-cyan-800 hover:bg-blue-950 border-2 border-black text-white  rounded-md font-bold py-2 px-4 w-full"
+                  className="bg-cyan-500 hover:bg-sky-700 text-white font-bold py-2 px-4 rounded-lg w-full"
                 >
                   Create an account
                 </button>

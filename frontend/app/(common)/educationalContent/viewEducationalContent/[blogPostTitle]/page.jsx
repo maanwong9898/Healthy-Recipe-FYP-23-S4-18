@@ -32,13 +32,14 @@ const mockEducationalContent_RatingAndReviews = [
   {
     username: "Jason",
     ratings: 4,
-    reviews: "This is a good blog post",
+    reviews: "This post is very informative!",
     date_published: "2021-10-01",
   },
   {
     username: "Jessica",
     ratings: 5,
-    reviews: "Highly recommended!",
+    reviews:
+      "This insightful and engaging healthy educational post provides a valuable resource for anyone looking to enhance their well-being.",
     date_published: "2023-11-15",
   },
 ];

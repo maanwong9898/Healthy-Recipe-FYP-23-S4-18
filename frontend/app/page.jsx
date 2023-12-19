@@ -528,10 +528,13 @@ const Home = () => {
           <section className="text-center justify-center p-14 mb-4 ml-10 bg-white ">
             <h2 className="font-bold text-4xl mb-4">Our Mission</h2>
             <p className="max-w-2xl">
-              Welcome to My Healthy Recipe, your number one source for healthy
-              and delicious recipes. We're dedicated to providing you the very
-              best of recipes, with an emphasis on healthy, delicious, and easy
-              to make recipes.
+              Welcome to My Healthy Recipe, your number-one source for healthy
+              and delicious recipes. We're dedicated to providing nutritional,
+              delicious, and easy-to-make recipes. Committed to your well-being,
+              we follow HPB's guidelines for daily sodium intake to ensure that
+              every recipe aligns with the highest nutritional standards. More
+              than just a collection of recipes, our commitment to health is
+              ingrained in every dish we create.
             </p>
           </section>
           <div className="flex flex-col p-6 ml-16">
@@ -541,9 +544,9 @@ const Home = () => {
             <div className="flex grid-rows-4 mt-8 space-x-5">
               <div className="bg-white p-4 rounded-full w-32 h-32 flex flex-col justify-center items-center">
                 <p className="text-cyan-600 text-lg md:text-xl font-bold text-center">
-                  45
+                  76
                 </p>
-                <p className="text-black text-center">Registered Users</p>
+                <p className="text-black text-center">Active Users</p>
               </div>
               <div className="bg-white p-4 rounded-full w-32 h-32 flex flex-col justify-center items-center">
                 <p className="text-cyan-600 text-lg md:text-xl font-bold text-center">

@@ -289,7 +289,7 @@ const UpdateBusinessBlogPostPage = ({ params }) => {
                   type="submit"
                   className="bg-cyan-500 hover:bg-sky-700 text-white font-bold py-2 px-4 rounded-lg"
                 >
-                  Update Post
+                  Update
                 </button>
               </div>
             </form>

@@ -14,7 +14,7 @@ const mockRecipeCategory = [
     category: "Vegetarian",
   },
   {
-    category: "Pescaetarian",
+    category: "Pescatarian",
   },
 ];
 
@@ -28,10 +28,11 @@ const CreateRecipePage = () => {
   const [ingredients, setIngredients] = useState("");
   const [instructions, setInstructions] = useState("");
   const [totalCalories, setTotalCalories] = useState("");
-  const [sugar, setSugar] = useState("");
-  const [protein, setProtein] = useState("");
   const [carbohydrates, setCarbohydrates] = useState("");
+  const [protein, setProtein] = useState("");
   const [fat, setFat] = useState("");
+  const [fibre, setFibre] = useState("");
+  const [sodium, setSodium] = useState("");
   const [imageUrl, setImageUrl] = useState("");
   const [imageTitle, setImageTitle] = useState("");
   const [error, setError] = useState("");
@@ -229,10 +230,10 @@ const CreateRecipePage = () => {
                   className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-base rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
                 >
                   <option value="">Select One...</option>
-                  <option value="2serving">2</option>
-                  <option value="4serving">4</option>
-                  <option value="6serving">6</option>
-                  <option value="8serving">8</option>
+                  <option value="2serving">2 Pax</option>
+                  <option value="4serving">4 Pax</option>
+                  <option value="6serving">6 Pax</option>
+                  <option value="8serving">8 Pax</option>
                 </select>
               </div>
 
@@ -323,36 +324,36 @@ const CreateRecipePage = () => {
                 >
                   Nutritional Information:
                 </label>
-                {/* TOTAL CALORIES */}
-                <div className="flex flex-col">
-                  <label htmlFor="calories" className="mb-1">
-                    Total Calories:
-                  </label>
-                  <input
-                    tyoe="text"
-                    name="totalCalories"
-                    id="totalCalories"
-                    placeholder="Total Calories"
-                    value={totalCalories}
-                    onChange={clearErrorOnChange(setTotalCalories)}
-                    className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-base rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-                  ></input>
-                </div>
 
-                {/* SUAGR, FAT, CARBS, PROTEIN */}
-                <div className="grid grid-cols-2 gap-4 mt-3">
-                  {/* SUGAR */}
+                <div className="grid grid-cols-2 gap-6 mt-3">
+                  {/* TOTAL CALORIES */}
                   <div className="flex flex-col">
-                    <label htmlFor="sugar" className="mb-1">
-                      Sugar:
+                    <label htmlFor="calories" className="mb-1">
+                      Total Calories:
+                    </label>
+                    <input
+                      tyoe="text"
+                      name="totalCalories"
+                      id="totalCalories"
+                      placeholder="Total Calories"
+                      value={totalCalories}
+                      onChange={clearErrorOnChange(setTotalCalories)}
+                      className="border px-4 py-2 rounded-lg bg-gray-50 border-gray-300 text-gray-900 sm:text-sm block w-full p-2.5"
+                    ></input>
+                  </div>
+
+                  {/* CARBS */}
+                  <div className="flex flex-col">
+                    <label htmlFor="carbohydrates" className="mb-1">
+                      Carbohydrates:
                     </label>
                     <input
                       type="text"
-                      name="sugar"
-                      id="sugar"
-                      placeholder="Enter sugar in grams"
-                      value={sugar}
-                      onChange={clearErrorOnChange(setSugar)}
+                      name="carbohydrates"
+                      id="carbohydrates"
+                      placeholder="Enter carbs in grams"
+                      value={carbohydrates}
+                      onChange={clearErrorOnChange(setCarbohydrates)}
                       className="border px-4 py-2 rounded-lg bg-gray-50 border-gray-300 text-gray-900 sm:text-sm block w-full p-2.5"
                     />
                   </div>
@@ -389,18 +390,34 @@ const CreateRecipePage = () => {
                     />
                   </div>
 
-                  {/* CARBS */}
+                  {/* FIBRE */}
                   <div className="flex flex-col">
-                    <label htmlFor="carbohydrates" className="mb-1">
-                      Carbohydrates:
+                    <label htmlFor="fibre" className="mb-1">
+                      Fibre:
                     </label>
                     <input
                       type="text"
-                      name="carbohydrates"
-                      id="carbohydrates"
-                      placeholder="Enter carbohydrates in grams"
-                      value={carbohydrates}
-                      onChange={clearErrorOnChange(setCarbohydrates)}
+                      name="fibre"
+                      id="fibre"
+                      placeholder="Enter fibre in grams"
+                      value={fibre}
+                      onChange={clearErrorOnChange(setFibre)}
+                      className="border px-4 py-2 rounded-lg bg-gray-50 border-gray-300 text-gray-900 sm:text-sm block w-full p-2.5"
+                    />
+                  </div>
+
+                  {/* SODIUM */}
+                  <div className="flex flex-col">
+                    <label htmlFor="sodium" className="mb-1">
+                      Sodium:
+                    </label>
+                    <input
+                      type="text"
+                      name="sodium"
+                      id="sodium"
+                      placeholder="Enter sodium in mg"
+                      value={sodium}
+                      onChange={clearErrorOnChange(setSodium)}
                       className="border px-4 py-2 rounded-lg bg-gray-50 border-gray-300 text-gray-900 sm:text-sm block w-full p-2.5"
                     />
                   </div>
@@ -455,7 +472,7 @@ const CreateRecipePage = () => {
                   onClick={handleCreateRecipe}
                   className="bg-cyan-500 hover:bg-sky-700 text-white font-bold py-2 px-4 rounded-lg"
                 >
-                  Create Recipe
+                  Create
                 </button>
               </div>
             </form>

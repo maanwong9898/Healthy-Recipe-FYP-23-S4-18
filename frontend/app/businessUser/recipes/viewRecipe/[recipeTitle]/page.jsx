@@ -10,9 +10,9 @@ const mockRecipeContent = {
   id: "1234512345",
   recipeTitle: "Grilled Salmon with Quinoa and Asparagus",
   publisher: "Daniel Carter",
-  category: "High-Protein",
+  category: "Pescatarian",
   cooking_time: "25 Mins",
-  number_of_servings: "2",
+  number_of_servings: "2 Pax",
   description:
     "A nutritious and delicious dish featuring grilled salmon, quinoa, and asparagus.",
   ingredients:
@@ -32,10 +32,11 @@ const mockRecipeContent = {
     "Step 5: \n Assemble the dish by placing a bed of quinoa on each plate, topping with grilled salmon and asparagus.\n\n" +
     "Step 6: \n Drizzle with lemon juice, garnish with fresh dill, and serve hot.",
   total_calories: "450",
-  sugars: "10g",
-  protein: "40g",
   carbs: "30g",
+  protein: "40g",
   fat: "18g",
+  fibre: "5g",
+  sodium: "100mg",
   image_url:
     "https://img.freepik.com/free-photo/baked-salmon-garnished-with-asparagus-tomatoes-with-herbs_2829-14481.jpg?w=1800&t=st=1702801194~exp=1702801794~hmac=3ccec1eb9e8014410d7d5a0f87530ae6909d6ed292f1ab0d6f0b26f6dcd1f22e",
   image_title: "Grilled Salmon with Quinoa and Asparagus",
@@ -129,7 +130,7 @@ const BusinessViewRecipe = ({ params }) => {
               <span className="text-cyan-600">{recipe.cooking_time}</span>
             </p>
             <p className="mr-4 text-bold">
-              Serving Size:{" "}
+              Total Serving:{" "}
               <span className="text-cyan-600">{recipe.number_of_servings}</span>
             </p>
           </div>
@@ -138,7 +139,7 @@ const BusinessViewRecipe = ({ params }) => {
           <div className="mt-40 mb-4">
             <p className="font-bold">Nutritional Information Per Serving:</p>
           </div>
-          <div className="grid-rows-5 flex flex-row space-x-10">
+          <div className="grid-rows-6 flex flex-row space-x-10">
             <div className="rounded-full bg-blue-100 w-20 h-20 flex flex-col items-center text-center justify-center">
               <p className="text-sm">Calories</p>
               <p className="text-cyan-600 font-semibold">
@@ -146,20 +147,24 @@ const BusinessViewRecipe = ({ params }) => {
               </p>
             </div>
             <div className="rounded-full bg-blue-100 w-20 h-20 flex flex-col items-center text-center justify-center">
-              <p className="text-sm">Fat</p>
-              <p className="text-cyan-600 font-semibold">{recipe.fat}</p>
-            </div>
-            <div className="rounded-full bg-blue-100 w-20 h-20 flex flex-col items-center text-center justify-center">
               <p className="text-sm">Carbs</p>
               <p className="text-cyan-600 font-semibold">{recipe.carbs}</p>
             </div>
             <div className="rounded-full bg-blue-100 w-20 h-20 flex flex-col items-center text-center justify-center">
-              <p className="text-sm">Sugars</p>
-              <p className="text-cyan-600 front-semibold">{recipe.sugars}</p>
-            </div>
-            <div className="rounded-full bg-blue-100 w-20 h-20 flex flex-col items-center text-center justify-center">
               <p className="text-sm">Protein</p>
               <p className="text-cyan-600 font-semibold">{recipe.protein}</p>
+            </div>
+            <div className="rounded-full bg-blue-100 w-20 h-20 flex flex-col items-center text-center justify-center">
+              <p className="text-sm">Fat</p>
+              <p className="text-cyan-600 font-semibold">{recipe.fat}</p>
+            </div>
+            <div className="rounded-full bg-blue-100 w-20 h-20 flex flex-col items-center text-center justify-center">
+              <p className="text-sm">Fibre</p>
+              <p className="text-cyan-600 font-semibold">{recipe.fibre}</p>
+            </div>
+            <div className="rounded-full bg-blue-100 w-20 h-20 flex flex-col items-center text-center justify-center">
+              <p className="text-sm">Sodium</p>
+              <p className="text-cyan-600 font-semibold">{recipe.sodium}</p>
             </div>
           </div>
         </div>
@@ -200,6 +205,19 @@ const BusinessViewRecipe = ({ params }) => {
           </div>
         ))}
       </footer>
+      <div className="flex flex-row space-x-5 justify-end mr-10">
+        <button className="bg-cyan-500 hover:bg-sky-700 text-white font-bold py-2 px-4 rounded-lg">
+          <Link href="/businessUser/recipes/updateRecipe/${recipeTitle}">
+            Edit
+          </Link>
+        </button>
+        <button
+          type="submit"
+          className="bg-red-500 hover:bg-red-800 text-white font-bold py-2 px-4 rounded-lg"
+        >
+          Delete
+        </button>
+      </div>
     </div>
   );
 };

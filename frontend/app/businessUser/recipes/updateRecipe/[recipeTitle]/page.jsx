@@ -8,9 +8,9 @@ const mockRecipeContent = {
   id: "1234512345",
   recipeTitle: "Grilled Salmon with Quinoa and Asparagus",
   publisher: "Daniel Carter",
-  category: "High-Protein",
+  category: "Pescatarian",
   cooking_time: "25 Mins",
-  number_of_servings: "2",
+  number_of_servings: "2 Pax",
   description:
     "A nutritious and delicious dish featuring grilled salmon, quinoa, and asparagus.",
   ingredients:
@@ -30,10 +30,11 @@ const mockRecipeContent = {
     "Step 5: \n Assemble the dish by placing a bed of quinoa on each plate, topping with grilled salmon and asparagus.\n\n" +
     "Step 6: \n Drizzle with lemon juice, garnish with fresh dill, and serve hot.",
   total_calories: "450",
-  sugars: "10g",
-  protein: "40g",
   carbs: "30g",
+  protein: "40g",
   fat: "18g",
+  fibre: "5g",
+  sodium: "100mg",
   image_url:
     "https://img.freepik.com/free-photo/baked-salmon-garnished-with-asparagus-tomatoes-with-herbs_2829-14481.jpg?w=1800&t=st=1702801194~exp=1702801794~hmac=3ccec1eb9e8014410d7d5a0f87530ae6909d6ed292f1ab0d6f0b26f6dcd1f22e",
   image_title: "Grilled Salmon with Quinoa and Asparagus",
@@ -45,15 +46,16 @@ const mockRecipeContent = {
 
 const mockRecipeCategory = [
   {
-    category: "High-Protein",
-  },
-  {
     category: "Vegan",
   },
   {
     category: "Vegetarian",
   },
+  {
+    category: "Pescatarian",
+  },
 ];
+
 const UpdateRecipe = (params) => {
   //form content
   const [title, setTitle] = useState(mockRecipeContent.recipeTitle);
@@ -73,10 +75,11 @@ const UpdateRecipe = (params) => {
   const [totalCalories, setTotalCalories] = useState(
     mockRecipeContent.total_calories
   );
-  const [sugar, setSugar] = useState(mockRecipeContent.sugars);
-  const [protein, setProtein] = useState(mockRecipeContent.protein);
   const [carbohydrates, setCarbohydrates] = useState(mockRecipeContent.carbs);
+  const [protein, setProtein] = useState(mockRecipeContent.protein);
   const [fat, setFat] = useState(mockRecipeContent.fat);
+  const [fibre, setFibre] = useState(mockRecipeContent.fibre);
+  const [sodium, setSodium] = useState(mockRecipeContent.sodium);
   const [imageUrl, setImageUrl] = useState(mockRecipeContent.image_url);
   const [imageTitle, setImageTitle] = useState(mockRecipeContent.image_title);
   const [ingredientList, setIngredientList] = useState([
@@ -231,10 +234,10 @@ const UpdateRecipe = (params) => {
                   className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-base rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
                 >
                   <option value="">Select One...</option>
-                  <option value="2">2</option>
-                  <option value="4">4</option>
-                  <option value="6">6</option>
-                  <option value="8">8</option>
+                  <option value="2 Pax">2 Pax</option>
+                  <option value="4 Pax">4 Pax</option>
+                  <option value="6 Pax">6 Pax</option>
+                  <option value="8 Pax">8 Pax</option>
                 </select>
               </div>
 
@@ -326,36 +329,36 @@ const UpdateRecipe = (params) => {
                 >
                   Nutritional Information:
                 </label>
-                {/* TOTAL CALORIES */}
-                <div className="flex flex-col">
-                  <label htmlFor="calories" className="mb-1">
-                    Total Calories:
-                  </label>
-                  <input
-                    tyoe="text"
-                    name="totalCalories"
-                    id="totalCalories"
-                    placeholder="Total Calories"
-                    value={totalCalories}
-                    onChange={(e) => setTotalCalories(e.target.value)}
-                    className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-base rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-                  ></input>
-                </div>
 
-                {/* SUAGR, FAT, CARBS, PROTEIN */}
-                <div className="grid grid-cols-2 gap-4 mt-3">
-                  {/* SUGAR */}
+                <div className="grid grid-cols-2 gap-6 mt-3">
+                  {/* TOTAL CALORIES */}
                   <div className="flex flex-col">
-                    <label htmlFor="sugar" className="mb-1">
-                      Sugar:
+                    <label htmlFor="calories" className="mb-1">
+                      Total Calories:
+                    </label>
+                    <input
+                      tyoe="text"
+                      name="totalCalories"
+                      id="totalCalories"
+                      placeholder="Total Calories"
+                      value={totalCalories}
+                      onChange={(e) => setTotalCalories(e.target.value)}
+                      className="border px-4 py-2 rounded-lg bg-gray-50 border-gray-300 text-gray-900 sm:text-sm block w-full p-2.5"
+                    ></input>
+                  </div>
+
+                  {/* CARBS */}
+                  <div className="flex flex-col">
+                    <label htmlFor="carbohydrates" className="mb-1">
+                      Carbohydrates:
                     </label>
                     <input
                       type="text"
-                      name="sugar"
-                      id="sugar"
-                      placeholder="Enter sugar in grams"
-                      value={sugar}
-                      onChange={(e) => setSugar(e.target.value)}
+                      name="carbohydrates"
+                      id="carbohydrates"
+                      placeholder="Enter carbs in grams"
+                      value={carbohydrates}
+                      onChange={(e) => setCarbohydrates(e.target.value)}
                       className="border px-4 py-2 rounded-lg bg-gray-50 border-gray-300 text-gray-900 sm:text-sm block w-full p-2.5"
                     />
                   </div>
@@ -392,18 +395,34 @@ const UpdateRecipe = (params) => {
                     />
                   </div>
 
-                  {/* CARBS */}
+                  {/* FIBRE */}
                   <div className="flex flex-col">
-                    <label htmlFor="carbohydrates" className="mb-1">
-                      Carbohydrates:
+                    <label htmlFor="fibre" className="mb-1">
+                      Fibre:
                     </label>
                     <input
                       type="text"
-                      name="carbohydrates"
-                      id="carbohydrates"
-                      placeholder="Enter carbohydrates in grams"
-                      value={carbohydrates}
-                      onChange={(e) => setCarbohydrates(e.target.value)}
+                      name="fibre"
+                      id="fibre"
+                      placeholder="Enter fibre in grams"
+                      value={fibre}
+                      onChange={(e) => setFibre(e.target.value)}
+                      className="border px-4 py-2 rounded-lg bg-gray-50 border-gray-300 text-gray-900 sm:text-sm block w-full p-2.5"
+                    />
+                  </div>
+
+                  {/* SODIUM */}
+                  <div className="flex flex-col">
+                    <label htmlFor="sodium" className="mb-1">
+                      Sodium:
+                    </label>
+                    <input
+                      type="text"
+                      name="sodium"
+                      id="sodium"
+                      placeholder="Enter sodium in mg"
+                      value={sodium}
+                      onChange={(e) => setSodium(e.target.value)}
                       className="border px-4 py-2 rounded-lg bg-gray-50 border-gray-300 text-gray-900 sm:text-sm block w-full p-2.5"
                     />
                   </div>
@@ -458,7 +477,7 @@ const UpdateRecipe = (params) => {
                   //onClick={handleCreateRecipe}
                   className="bg-cyan-500 hover:bg-sky-700 text-white font-bold py-2 px-4 rounded-lg"
                 >
-                  Update Recipe
+                  Update
                 </button>
               </div>
             </form>

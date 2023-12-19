@@ -169,7 +169,7 @@ const viewEducationalContent = ({ params }) => {
       </footer>
       <div className="flex flex-row space-x-5 justify-end mr-10">
         <button className="bg-cyan-500 hover:bg-sky-700 text-white font-bold py-2 px-4 rounded-lg">
-          <Link href="/businessUser/businessBlogPost/updateBusinessBlogPost/${blogPostTitle}">
+          <Link href="/businessUser/educationalContent/updateEducationalContent/${blogPostTitle}">
             Edit
           </Link>
         </button>

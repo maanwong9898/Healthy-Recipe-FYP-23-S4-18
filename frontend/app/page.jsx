@@ -318,6 +318,50 @@ const Home = () => {
     .sort((a, b) => new Date(b.date_published) - new Date(a.date_published))
     .slice(0, 3);
 
+  // this function is to view particular recipe under registered user
+  const handleViewRecipes = (recipeTitle) => {
+    // Make sure the recipeTitle
+    console.log(`Recipe Title: ${recipeTitle}`);
+
+    // Redirect to the correct route
+    let routePath = `/recipes/viewRecipe/${recipeTitle}`;
+
+    router.push(routePath);
+  };
+
+  // this function is to view particular Meal plan
+  const handleViewMealPlan = (blogPostTitle) => {
+    // Make sure the blogPostTitle
+    console.log(`Blog Title: ${blogPostTitle}`);
+
+    // Redirect to the correct route
+    let routePath = `/mealPlan/viewMealPlan/${blogPostTitle}`;
+
+    router.push(routePath);
+  };
+
+  // View particular educational content
+  const handleViewEducationalContent = (blogPostTitle) => {
+    // Make sure the blogPostTitle
+    console.log(`Blog Title: ${blogPostTitle}`);
+
+    // Redirect to the correct route
+    let routePath = `/educationalContent/viewEducationalContent/${blogPostTitle}`;
+
+    router.push(routePath);
+  };
+
+  // this function is to view particular blog post
+  const handleViewBlogPost = (blogPostTitle) => {
+    // Make sure the blogPostTitle
+    console.log(`Blog Title: ${blogPostTitle}`);
+
+    // Redirect to the correct route
+    let routePath = `/businessBlogPost/viewBusinessBlogPost/${blogPostTitle}`;
+
+    router.push(routePath);
+  };
+
   // Function to render Recipe a single post card
   const renderRecipePostCard = (post) => (
     <div
@@ -348,7 +392,7 @@ const Home = () => {
           </p>
         </div>
         <button
-          //onClick={() => handleViewRecipes(post.recipeTitle)}
+          onClick={() => handleViewRecipes(post.recipeTitle)}
           className="text-white font-bold bg-gradient-to-br from-cyan-400 to-cyan-800 hover:bg-blue-950 border-2 border-black focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 rounded-lg text-sm mt-3 px-4 py-2 text-center"
         >
           Read more
@@ -389,7 +433,7 @@ const Home = () => {
           </p>
         </div>
         <button
-          //onClick={() => handleViewMealPlan(mealPlan.mealPlanTitle)}
+          onClick={() => handleViewMealPlan(mealPlan.mealPlanTitle)}
           className="text-white font-bold bg-gradient-to-br from-cyan-400 to-cyan-800 hover:bg-blue-950 border-2 border-black focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 rounded-lg text-sm mt-3 px-4 py-2 text-center"
         >
           Read more
@@ -428,7 +472,7 @@ const Home = () => {
           </p>
         </div>
         <button
-          //onClick={() => handleViewBlogPost(blogPost.blogTitle)}
+          onClick={() => handleViewBlogPost(blogPost.blogTitle)}
           className="text-white font-bold bg-gradient-to-br from-cyan-400 to-cyan-800 hover:bg-blue-950 border-2 border-black focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 rounded-lg text-sm mt-3 px-4 py-2 text-center"
         >
           Read more
@@ -469,9 +513,9 @@ const Home = () => {
           </p>
         </div>
         <button
-          // onClick={() =>
-          //   handleViewEducationalContent(educationalPost.blogTitle)
-          // }
+          onClick={() =>
+            handleViewEducationalContent(educationalPost.blogTitle)
+          }
           className="text-white font-bold bg-gradient-to-br from-cyan-400 to-cyan-800 hover:bg-blue-950 border-2 border-black focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 rounded-lg text-sm mt-3 px-4 py-2 text-center"
         >
           Read more

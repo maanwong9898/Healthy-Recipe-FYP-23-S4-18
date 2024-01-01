@@ -16,7 +16,7 @@ public class DietaryPreferences {
     @Column(name = "id", updatable = false)
     public Long id;
     
-    //Vegan, Pescatarian, Vegetarian
+    //Vegan, Pescatarian, Vegetarian， Others
     @Column(name = "subcategoryName", nullable = false)
     public String subcategoryName;
 }

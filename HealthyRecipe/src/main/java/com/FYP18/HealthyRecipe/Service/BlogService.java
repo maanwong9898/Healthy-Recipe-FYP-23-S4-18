@@ -4,7 +4,8 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service; 
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.FYP18.HealthyRecipe.Entity.Blog;
 import com.FYP18.HealthyRecipe.Entity.BlogReviewRating;
@@ -12,8 +13,12 @@ import com.FYP18.HealthyRecipe.Entity.BlogReviewRatingId;
 
 import com.FYP18.HealthyRecipe.Repository.BlogRepository;
 import com.FYP18.HealthyRecipe.Repository.BlogReviewRatingRepository;
+
+// import org.springframework.transaction.annotation.Transactional;
+// import jakarta.transaction.Transactional;
  
 
+@Transactional
 @Service 
 public class BlogService {
 

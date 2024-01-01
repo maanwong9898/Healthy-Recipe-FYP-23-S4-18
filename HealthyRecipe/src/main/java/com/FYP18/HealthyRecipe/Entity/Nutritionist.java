@@ -16,27 +16,29 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
-
-
+import java.util.List;
 @Data 
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "BusinessUser")
-public class BusinessUser extends User  {
+@Table(name = "Nutritionist") 
+public class Nutritionist extends User   {
+    
+    @Column(name = "filePath")
+    private List<String> filePath = new ArrayList<>();
 
-    @Column(name= "Company_Name")
-    private String companyName ;
+    @Column(name = "companyName")
+    private String companyName;
 
-    // if itsa dietitan, then UEN can be license number
-    @Column(name= "UEN", unique = true)
-    private String UEN;
-
-     @PrePersist
+    @Column(name = "companyAddress")
+    private String companyAddress;
+    
+    @PrePersist
     public void prePersist()
     {
-        setRole(Role.BUSINESS_USER);
+        setRole(Role.NUTRITIONIST);
     }
 }

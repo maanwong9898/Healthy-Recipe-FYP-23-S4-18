@@ -19,7 +19,14 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
+import java.util.stream.Collectors;
+
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 // import org.springframework.security.core.GrantedAuthority;
 // import org.springframework.security.core.userdetails.UserDetails;
@@ -32,24 +39,26 @@ import java.util.Collection;
 @Entity 
 @Table(name = "USERACCOUNT")
 @Inheritance(strategy = InheritanceType.JOINED)
-public class User //implements UserDetails
+public class User implements UserDetails
 {
+    //<T extends Enum<T>>
     
     @Id
     @GeneratedValue(strategy= GenerationType.UUID)
     @Column(name = "id", updatable = false, nullable = false)
     public String id;
 
-    // @Enumerated(EnumType.STRING)
-    // private Role role;
+    @Column(name="role",nullable = false)
+    @Enumerated(EnumType.STRING)
+    private Role role;
 
-    // private enum Role
-    // {
-    //     ADMIN,
-    //     REGISTERED_USER,
-    //     BUSINESS_USER,
-    //     DIETITIAN
-    // }
+    public enum Role
+    {
+        ADMIN,
+        REGISTERED_USER,
+        BUSINESS_USER,
+        NUTRITIONIST
+    }
  
     @Column(name="password")
     private String password;
@@ -59,38 +68,61 @@ public class User //implements UserDetails
     private String username; 
 
 
-    @Column(name="Email")
+    @Column(name="Email", unique = true)
     private String Email; 
 
     @Column(name="Full_Name")
     private String fullName;
-    // private Boolean enabled; 
-    // private Boolean expired; 
-    // private Boolean locked;
-     
-    // @Override
-    // public Collection<? extends GrantedAuthority> getAuthorities() {
-    //     // TODO Auto-generated method stub
-    //     throw new UnsupportedOperationException("Unimplemented method 'getAuthorities'");
-    // }
-    // @Override
-    // public boolean isAccountNonExpired() {
-    //     // TODO Auto-generated method stub
-    //     throw new UnsupportedOperationException("Unimplemented method 'isAccountNonExpired'");
-    // }
 
-    // @Override
-    // public boolean isAccountNonLocked() {
-    //     return locked;
-    // }
+    @Column(name="enabled",columnDefinition ="boolean default false")
+    private Boolean enabled = false; 
 
-    // @Override
-    // public boolean isCredentialsNonExpired() {
-    //     return expired;
-    // }
+    // @Column(name="expired",columnDefinition ="boolean default false")
+    // private Boolean expired = false; 
 
-    // @Override
-    // public boolean isEnabled() {
-    //     return enabled;
-    // }
+    // @Column(name="locked",columnDefinition ="boolean default false")
+    // private Boolean locked = false;
+ 
+
+    //     public List<SimpleGrantedAuthority> getAuthorities() {
+    // var authorities = getPermissions()
+    //         .stream()
+    //         .map(permission -> new SimpleGrantedAuthority(permission.getPermission()))
+    //         .collect(Collectors.toList());
+    // authorities.add(new SimpleGrantedAuthority("ROLE_" + this.name()));
+    // return authorities;
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() { 
+        List<SimpleGrantedAuthority> c = new ArrayList<>();
+
+        c.add(new SimpleGrantedAuthority("ROLE_"  + role));
+        return c; 
+    }
+
+
+    // probably set false by default, then after verified them trn to true
+    @Override
+    public boolean isEnabled() {
+        return enabled;
+    } 
+
+
+
+    // these are not implemented, just return default values
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return false;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true; 
+    }
 }

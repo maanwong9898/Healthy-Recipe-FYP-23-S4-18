@@ -35,7 +35,10 @@ const HomeNavbar = () => {
   };
 
   return (
-    <nav className="bg-cyan-600">
+    <nav
+      style={{ position: "sticky", top: 0, zIndex: 1000 }}
+      className="bg-cyan-600"
+    >
       <div className="flex flex-wrap items-center p-3">
         {/* Logo and mobile menu button (small screen) */}
         <div className="flex items-center justify-between w-full md:w-auto md:mr-4">

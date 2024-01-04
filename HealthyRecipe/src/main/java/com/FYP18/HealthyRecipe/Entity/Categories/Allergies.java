@@ -1,5 +1,7 @@
 package com.FYP18.HealthyRecipe.Entity.Categories;
 
+import org.springframework.beans.factory.annotation.Value;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -27,9 +29,10 @@ public class Allergies {
     //  egg, soy, shellfish, fish, gluten
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id", updatable = false)
-    public Long id;
+    @Column(name = "id", updatable = false, nullable = false)
+    private Long id;
      
-    @Column(name = "subcategoryName", nullable = false)
-    public String subcategoryName;
+    // shouldn't be empty la
+    @Column(name = "subcategoryName", nullable = false) 
+    private String subcategoryName;
 }

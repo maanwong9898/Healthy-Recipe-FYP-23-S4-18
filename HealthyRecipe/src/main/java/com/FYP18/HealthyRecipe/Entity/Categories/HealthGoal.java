@@ -6,7 +6,17 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
+@Getter
+@Setter
+@Builder 
+@AllArgsConstructor 
+@NoArgsConstructor 
 @Entity
 @Table(name= "HealthGoal")
 public class HealthGoal {
@@ -14,9 +24,9 @@ public class HealthGoal {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", updatable = false)
-    public Long id;
+    private Long id;
     
     // Weight gain, Balanced diet, Weight loss, Misc
     @Column(name = "subcategoryName", nullable = false)
-    public String subcategoryName;
+    private String subcategoryName;
 }

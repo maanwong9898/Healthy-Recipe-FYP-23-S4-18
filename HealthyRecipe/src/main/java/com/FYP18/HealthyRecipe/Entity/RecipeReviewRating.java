@@ -52,8 +52,7 @@ public class RecipeReviewRating {
     @ManyToOne
     @JoinColumn(name = "UserID", referencedColumnName = "id", insertable = false, updatable = false)
     private RegisteredUser userAccount;
-
-
+ 
     @Override 
     public String toString()
     {

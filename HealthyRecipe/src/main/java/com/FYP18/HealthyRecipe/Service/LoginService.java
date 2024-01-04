@@ -1,6 +1,7 @@
 package com.FYP18.HealthyRecipe.Service;
 
 import java.util.List;
+import java.util.regex.Pattern;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -41,10 +42,30 @@ public class LoginService {
     {
         return userRepository.findAll();
     }
+    private static final String EMAIL_REGEX =
+            "^[a-zA-Z0-9_+&*-]+(?:\\.[a-zA-Z0-9_+&*-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,7}$";
 
-    void CheckForUser(String email) throws Exception
+    private static final Pattern pattern = Pattern.compile(EMAIL_REGEX);
+    
+    private static String USERNAME_REGEX  = "^[a-zA-Z0-9]+$";
+ 
+    private static final Pattern usernamePattern = Pattern.compile(USERNAME_REGEX);
+
+    void CheckForUsername(String username) throws Exception
     {
-        User exists =userRepository.findByEmail(email);
+        if(!usernamePattern.matcher(username).matches())
+        {
+            throw new Exception("Username is not in valid format.");
+        }
+    }
+    
+    void CheckForEmail(String email) throws Exception
+    {
+        if(!pattern.matcher(email).matches())
+        {
+            throw new Exception("This is not a valid email");
+        }
+        User exists = userRepository.findByEmail(email);
         if(exists != null)
         { 
             throw new Exception("Email is already used");
@@ -53,7 +74,8 @@ public class LoginService {
 
     public BusinessUser CreateNewBusinessUser(BusinessUser user) throws Exception
     {
-        CheckForUser(user.getEmail());
+        CheckForUsername(user.getUsername());
+        CheckForEmail(user.getEmail());
        
         if(user.getUEN() == null || user.getUEN().isEmpty())
         {
@@ -72,7 +94,8 @@ public class LoginService {
      
     public SystemAdmin CreateNewSystemAdmin(SystemAdmin user) throws Exception
     { 
-        CheckForUser(user.getEmail());
+        CheckForUsername(user.getUsername());
+        CheckForEmail(user.getEmail());
         user.setRole(Role.ADMIN);
         // user.setRole("ADMIN");
         return systemAdminRepository.save(user); 
@@ -80,13 +103,17 @@ public class LoginService {
 
     public RegisteredUser CreateNewRegisterUser(RegisteredUser user)throws Exception
     {
-        CheckForUser(user.getEmail());
+        CheckForUsername(user.getUsername());
+        CheckForEmail(user.getEmail());
         return registeredUserRepository.save(user);
     }
 
     public Nutritionist CreateNewNutritionist(Nutritionist user)throws Exception
     {
-        CheckForUser(user.getEmail());
+        CheckForUsername(user.getUsername());
+        CheckForEmail(user.getEmail());
         return nutritionistRepository.save(user);
     }
+    
+ 
 }

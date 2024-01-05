@@ -6,6 +6,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+
+import jakarta.annotation.security.RolesAllowed;
+
 import org.springframework.web.bind.annotation.GetMapping;
 
 
@@ -36,6 +39,12 @@ public class TestController {
     public String nutritionistTest()
     {
         return "Hello nutritionistTest";
+    }
+      
+    @GetMapping("/userAndAdmin")
+     public String userAndAdminTest()
+    {
+        return "Hello user and admin";
     }
     
 }

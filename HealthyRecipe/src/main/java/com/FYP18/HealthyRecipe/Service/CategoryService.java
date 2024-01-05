@@ -33,6 +33,7 @@ public class CategoryService {
 
     public Allergies createNewAllergy(Allergies allergy)
     {
+        // Allergies find = allergiesRepo.find
         return allergiesRepo.save(allergy);
     }
 
@@ -93,6 +94,27 @@ public class CategoryService {
         healthGoalRepo.delete(al);
     }
 
+    public void deleteAllergy(long id)
+    { 
+        allergiesRepo.deleteById(id);  
+    }
+    public void deleteBlogPostCategory(long id)
+    { 
+        blogPostCategoryRepo.deleteById(id);  
+    }
+    public void deleteDietaryPreference(long id)
+    { 
+        dietaryPreferenceRepo.deleteById(id);  
+    }
+    public void deleteEducationalContent(long id)
+    { 
+        educationalContentCategoryRepo.deleteById(id);  
+    }
+    public void deleteHealthGoal(long id)
+    { 
+        healthGoalRepo.deleteById(id);  
+    }
+    
 
     public Allergies updateNewAllergy(Allergies allergy) throws Exception
     {     

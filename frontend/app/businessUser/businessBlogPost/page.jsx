@@ -1,37 +1,12 @@
 "use client";
+// import axios from "axios";
+import axiosInterceptorInstance from "../../axiosInterceptorInstance.js";
 import { useRouter } from "next/navigation";
-import React from "react";
+import React, { useState, useEffect } from "react";
 import Link from "next/link";
-import { useState, useEffect } from "react";
 
-// router path: /businessUser/businessBlogPost
-// this is the page for business user to view all of their blog posts
-
-// Called the controller to get the list of all business blog posts belongs to this business user
-// this is the simple mock data for blog post but a blog post should have more attributes
-const mockMyBusinessBlogPosts = [
-  {
-    blogTitle: "Seasonal Savors: A Cookbook for Every Time of the Year",
-    date_published: "2021-10-01",
-    ratings: 4,
-    reviews: 10,
-    isActive: true,
-  },
-  {
-    blogTitle: "Cutting Edge: The Ultimate Guide to Kitchen Knives",
-    date_published: "2022-04-15",
-    ratings: 2,
-    reviews: 5,
-    isActive: true,
-  },
-  {
-    blogTitle: "lend It Like a Pro: Mastering Mixers and Blenders",
-    date_published: "2023-01-10",
-    ratings: 4,
-    reviews: 5,
-    isActive: true,
-  },
-];
+// router path is /businessUser/advanceBlog
+// Function to fetch blog posts from the backend
 
 // Sorting options
 const sortOptions = {
@@ -41,74 +16,94 @@ const sortOptions = {
   LOWEST_RATINGS: { key: "LOWEST_RATINGS", label: "Lowest Ratings" },
 };
 
+// Fetch all blog posts from the backend
+const fetchBlogPosts = async () => {
+  try {
+    const response = await axiosInterceptorInstance.get("/blog/get");
+
+    // Filter the data to include only those with educationalContent === false
+    const filteredData = response.data.filter(
+      (post) => post.educationalContent === false
+    );
+    return filteredData;
+    // return response.data;
+  } catch (error) {
+    console.error("Failed to fetch blog posts:", error);
+    throw error;
+  }
+};
+
 const MyBusinessBlogPosts = () => {
   const router = useRouter();
-  const [businessBlogs, setBusinessBlogs] = useState(mockMyBusinessBlogPosts);
+  const [businessBlogs, setBusinessBlogs] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
-  const [sortOption, setSortOption] = useState(sortOptions.EARLIEST.key);
+  const [sortOption, setSortOption] = useState("EARLIEST");
 
+  useEffect(() => {
+    const getData = async () => {
+      try {
+        const fetchedData = await fetchBlogPosts();
+        console.log("Data fetched from backend:", fetchedData); // Log the fetched data
+        setBusinessBlogs(fetchedData); // Set the fetched data in state
+        console.log("Data set in state:", fetchedData); // Log the data set in state
+      } catch (error) {
+        console.error("Error while fetching data:", error);
+      }
+    };
+
+    getData();
+  }, []);
+
+  //
+  // Implement handleViewBlogPost and handleUpdateBlogPost as needed
   // this function is to view particular blog post
-  const handleViewBlogPost = (blogPostTitle) => {
-    // Make sure the blogPostTitle
-    console.log(`Blog Title: ${blogPostTitle}`);
+  const handleViewBlogPost = (id) => {
+    console.log("Viewing blog post with id:", id);
 
-    // Redirect to the correct route
-    let routePath = `/businessUser/businessBlogPost/viewBusinessBlogPost/${blogPostTitle}`;
+    //Redirect to the correct route
+    let routePath = `/businessUser/businessBlogPost/viewBusinessBlogPost/${id}`;
 
     router.push(routePath);
   };
 
   // this function is to update particular blog post
-  const handleUpdateBlogPost = (blogPostTitle) => {
-    // Make sure the blogPostTitle
-    console.log(`Blog Title: ${blogPostTitle}`);
+  const handleUpdateBlogPost = (id) => {
+    console.log("Updating blog post with id:", id);
 
-    // Redirect to the correct route
-    let routePath = `/businessUser/businessBlogPost/updateBusinessBlogPost/${blogPostTitle}`;
+    // // Redirect to the correct route
+    // let routePath = `/businessUser/advanceBlog/updateBlog/${id}`;
 
-    router.push(routePath);
+    // router.push(routePath);
+  };
+
+  // Function to delete a blog post
+  const handleDeleteBlogPost = async (id) => {
+    try {
+      const response = await axiosInterceptorInstance.delete(
+        `/blog/delete/${id}`
+      );
+      console.log("Blog post deleted:", response.data);
+
+      // Update UI after delete
+      setBusinessBlogs(businessBlogs.filter((post) => post.id !== id));
+    } catch (error) {
+      console.error("Error deleting blog post:", error);
+      // Handle error, maybe show a message to the user
+    }
   };
 
   // Function to handle search
   const handleSearch = () => {
-    const filteredBlogs = mockMyBusinessBlogPosts.filter((post) =>
-      post.blogTitle.toLowerCase().includes(searchTerm.toLowerCase())
-    );
-    setBusinessBlogs(filteredBlogs);
+    // Implement search functionality based on your API or local filtering
   };
 
   // Function to handle sort
-  const sortBlogs = (option) => {
-    let sortedBlogs;
-    switch (option) {
-      case sortOptions.OLDEST.key:
-        sortedBlogs = [...businessBlogs].sort(
-          (a, b) => new Date(a.date_published) - new Date(b.date_published)
-        );
-        break;
-      case sortOptions.EARLIEST.key:
-        sortedBlogs = [...businessBlogs].sort(
-          (a, b) => new Date(b.date_published) - new Date(a.date_published)
-        );
-        break;
-      case sortOptions.HIGHEST_RATINGS.key:
-        sortedBlogs = [...businessBlogs].sort((a, b) => b.ratings - a.ratings);
-        break;
-      case sortOptions.LOWEST_RATINGS.key:
-        sortedBlogs = [...businessBlogs].sort((a, b) => a.ratings - b.ratings);
-        break;
-      default:
-        sortedBlogs = [...businessBlogs];
-    }
-    setBusinessBlogs(sortedBlogs);
+  const handleSort = () => {
+    // Implement sort functionality based on your API or local sorting
   };
 
-  // useEffect(() => {
-  //   sortBlogs(sortOption);
-  // }, [sortOption, businessBlogs]);
-
   return (
-    <div className="px-2 sm:px-5  bg-cyan-800 min-h-screen flex flex-col py-5">
+    <div className="px-2 sm:px-5 bg-cyan-800 min-h-screen flex flex-col py-5">
       <h1 className="text-2xl text-white p-3 mb-4 font-bold text-center sm:text-left">
         My Business Blog Posts
       </h1>
@@ -157,55 +152,54 @@ const MyBusinessBlogPosts = () => {
         </div>
       </div>
 
+      {/* Table of blog posts */}
       <div className="overflow-x-auto">
         <table className="min-w-full rounded-lg border-black border-2">
           <thead className="bg-cyan-600 font-semibold text-cyan-950 border-black border-2">
-            <tr>
-              <th className="px-3 py-2 text-xl text-left">Blog Post Title</th>
-              <th className="px-3 py-2 text-xl text-left">Date Published</th>
-              <th className="px-3 py-2 text-xl text-left">Ratings</th>
-              <th className="px-3 py-2 text-xl text-left">Reviews</th>
-              <th className="px-3 py-2 text-xl text-left">Status</th>
-              <th className="px-3 py-2 text-xl text-left"></th>
-              <th className="px-3 py-2 text-xl text-left"></th>
-              <th className="px-3 py-2 text-xl text-left"></th>
+            <tr className="text-center text-xl">
+              <th className="px-3 py-2">Blog Post Title</th>
+              <th className="px-3 py-2">Date Published</th>
+              <th className="px-3 py-2">Category</th>
+              <th className="px-3 py-2">Status</th>
+              <th className="px-3 py-2"></th>
+              <th className="px-3 py-2"></th>
+              <th className="px-3 py-2"></th>
             </tr>
           </thead>
           <tbody>
-            {mockMyBusinessBlogPosts.map((businessBlogPost, index) => (
+            {businessBlogs.map((businessBlogPost, index) => (
               <tr
                 key={index}
                 className="bg-white border-b border-blue dark:border-blue-600"
               >
-                <td className="px-3 py-2 text-base text-center sm:text-left">
-                  {businessBlogPost.blogTitle}
+                <td className="px-3 py-2 text-base text-center">
+                  {businessBlogPost.title}
                 </td>
-                <td className="px-3 py-2 text-base text-center sm:text-left">
-                  {businessBlogPost.date_published}
+                <td className="px-3 py-2 text-base text-center">
+                  {new Date(
+                    businessBlogPost.createdDateTime
+                  ).toLocaleDateString()}
                 </td>
-                <td className="px-3 py-2 text-base text-center sm:text-left">
-                  {businessBlogPost.ratings}
+                {/* <td className="px-3 py-2 text-base text-center sm:text-left">
+                  {businessBlogPost.publisher}
+                </td> */}
+                <td className="px-3 py-2 text-base text-center">
+                  {businessBlogPost.category}
                 </td>
-                <td className="px-3 py-2 text-base text-center sm:text-left">
-                  {businessBlogPost.reviews}
-                </td>
-                <td className="px-3 py-2 text-base text-center sm:text-left">
+                <td className="px-3 py-2 text-base text-center">
                   <span
                     className={`rounded-full px-3 py-1 text-base font-semibold ${
-                      businessBlogPost.isActive === true
+                      businessBlogPost.active
                         ? "text-white bg-gradient-to-br from-cyan-400 to-cyan-600"
                         : "text-white bg-gradient-to-br from-orange-600 to-red-700"
                     }`}
                   >
-                    {businessBlogPost.isActive === true ? "Active" : "Inactive"}
+                    {businessBlogPost.active ? "Active" : "Inactive"}
                   </span>
                 </td>
-
                 <td className="px-3 py-2 justify-center sm:justify-start">
                   <button
-                    onClick={() =>
-                      handleViewBlogPost(businessBlogPost.blogTitle)
-                    }
+                    onClick={() => handleViewBlogPost(businessBlogPost.id)}
                     className="text-white font-bold bg-gradient-to-br from-cyan-400 to-cyan-800 hover:bg-blue-950 border-2 border-black
                     focus:ring-4 focus:outline-none focus:ring-blue-300
                     dark:focus:ring-blue-800 rounded-lg text-base px-5 py-2.5 ml-7
@@ -217,9 +211,7 @@ const MyBusinessBlogPosts = () => {
                 </td>
                 <td className="px-3 py-2 justify-center sm:justify-start">
                   <button
-                    onClick={() =>
-                      handleUpdateBlogPost(businessBlogPost.blogTitle)
-                    }
+                    onClick={() => handleUpdateBlogPost(businessBlogPost.id)}
                     className="text-white font-bold bg-gradient-to-br from-cyan-400 to-cyan-800 hover:bg-blue-950 border-2 border-black
                     focus:ring-4 focus:outline-none focus:ring-blue-300
                     dark:focus:ring-blue-800 rounded-lg text-base px-5 py-2.5 ml-7
@@ -231,7 +223,7 @@ const MyBusinessBlogPosts = () => {
                 </td>
                 <td className="px-3 py-2 justify-center sm:justify-start">
                   <button
-                    // onClick={() => handleSuspendRecipe(recipe.recipeName)}
+                    onClick={() => handleDeleteBlogPost(businessBlogPost.id)}
                     className="text-white font-bold bg-gradient-to-br from-orange-600 to-red-700 hover:bg-gradient-to-bl border-2 border-black
                     focus:ring-4 focus:outline-none focus:ring-blue-300
                     dark:focus:ring-blue-800 rounded-lg text-base px-5 py-2.5 ml-7

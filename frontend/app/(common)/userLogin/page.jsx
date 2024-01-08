@@ -149,6 +149,8 @@ import HomeNavbar from "@/app/components/navigation/homeNavBar";
 import Image from "next/image"; // Import Image component from next/image
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
+import axiosInterceptorInstance from "../../axiosInterceptorInstance.js";
+import axios from "axios";
 
 // router path: /userLogin
 // mock data for testing
@@ -206,49 +208,104 @@ const userLogin = () => {
     return () => clearInterval(intervalId); // Clear interval on component unmount
   }, []);
 
-  const handleLogin = (event) => {
+  // const handleLogin = (event) => {
+  //   event.preventDefault();
+
+  //   // Check if there is a user with the entered username (suppose to have login controller)
+  //   const user = mockUsers.find((user) => user.username === username);
+
+  //   // Check if username matches password
+  //   if (user && user.password === password) {
+  //     // Set username and profile in local storage
+  //     localStorage.setItem("username", user.username);
+  //     localStorage.setItem("profile", user.profile);
+
+  //     if (user.profile === "registeredUser") {
+  //       console.log("registeredUser");
+  //       // print out the username and profile from local storage
+  //       console.log(localStorage.getItem("username"));
+  //       console.log(localStorage.getItem("profile"));
+
+  //       router.push("/registeredUser");
+  //     } else if (user.profile === "sysAdmin") {
+  //       console.log("sysAdmin");
+  //       // print out the username and profile from local storage
+  //       console.log(localStorage.getItem("username"));
+  //       console.log(localStorage.getItem("profile"));
+
+  //       router.push("/sysAdmin");
+  //     } else if (user.profile === "businessUser") {
+  //       console.log("businessUser");
+  //       // print out the username and profile from local storage
+  //       console.log(localStorage.getItem("username"));
+  //       console.log(localStorage.getItem("profile"));
+
+  //       router.push("/businessUser");
+  //     } else if (user.profile === "dietitian") {
+  //       console.log("dietitian");
+  //       // print out the username and profile from local storage
+  //       console.log(localStorage.getItem("username"));
+  //       console.log(localStorage.getItem("profile"));
+
+  //       router.push("/dietitian");
+  //     }
+  //   } else {
+  //     setError("Incorrect username or password"); // Set error message
+  //   }
+  // };
+
+  // Function to call the /test/userAndAdmin endpoint
+  const fetchUserAndAdminData = async () => {
+    try {
+      // Retrieve the token from localStorage
+      const token = localStorage.getItem("token");
+
+      if (!token) {
+        console.error("No token found");
+        return;
+      }
+
+      // Set up the authorization header with the bearer token
+      const config = {
+        headers: { Authorization: `Bearer ${token}` },
+      };
+
+      // Make the GET request to the userAndAdmin endpoint
+      const response = await axiosInterceptorInstance.get("/test/user", config);
+
+      console.log("User and Admin data:", response.data);
+      // Handle the response data as needed
+    } catch (error) {
+      console.error("Error fetching user and admin data:", error);
+      // Handle error, maybe show a message to the user
+    }
+  };
+
+  // Function to handle user login
+  const handleLogin = async (event) => {
     event.preventDefault();
 
-    // Check if there is a user with the entered username (suppose to have login controller)
-    const user = mockUsers.find((user) => user.username === username);
+    try {
+      const response = await axiosInterceptorInstance.post("/register/login", {
+        email: username,
+        password: password,
+      });
 
-    // Check if username matches password
-    if (user && user.password === password) {
-      // Set username and profile in local storage
-      localStorage.setItem("username", user.username);
-      localStorage.setItem("profile", user.profile);
+      const { token } = response.data; // Destructure the token from response data
 
-      if (user.profile === "registeredUser") {
-        console.log("registeredUser");
-        // print out the username and profile from local storage
-        console.log(localStorage.getItem("username"));
-        console.log(localStorage.getItem("profile"));
+      // Now you can store the token in localStorage and redirect the user as needed
+      localStorage.setItem("token", token);
 
-        router.push("/registeredUser");
-      } else if (user.profile === "sysAdmin") {
-        console.log("sysAdmin");
-        // print out the username and profile from local storage
-        console.log(localStorage.getItem("username"));
-        console.log(localStorage.getItem("profile"));
+      console.log("Login successful:", response.data);
 
-        router.push("/sysAdmin");
-      } else if (user.profile === "businessUser") {
-        console.log("businessUser");
-        // print out the username and profile from local storage
-        console.log(localStorage.getItem("username"));
-        console.log(localStorage.getItem("profile"));
+      // Call the function to make a request to the userAndAdmin endpoint
+      await fetchUserAndAdminData();
 
-        router.push("/businessUser");
-      } else if (user.profile === "dietitian") {
-        console.log("dietitian");
-        // print out the username and profile from local storage
-        console.log(localStorage.getItem("username"));
-        console.log(localStorage.getItem("profile"));
-
-        router.push("/dietitian");
-      }
-    } else {
-      setError("Incorrect username or password"); // Set error message
+      // Redirect based on profile type
+      // ... rest of your redirection logic based on profile
+    } catch (error) {
+      console.error("Error during login:", error);
+      setError("Login failed"); // Update the state to display the error message
     }
   };
 

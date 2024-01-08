@@ -3,6 +3,7 @@
 import React, { useState, useRef, useEffect } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import Image from "next/image";
 
 const HomeNavbar = () => {
   const router = useRouter();
@@ -35,18 +36,20 @@ const HomeNavbar = () => {
   };
 
   return (
-    <nav
-      style={{ position: "sticky", top: 0, zIndex: 1000 }}
-      className="bg-cyan-600"
-    >
+    <nav className="bg-orange-50 shadow-lg">
       <div className="flex flex-wrap items-center p-3">
         {/* Logo and mobile menu button (small screen) */}
         <div className="flex items-center justify-between w-full md:w-auto md:mr-4">
-          <div className="flex items-center text-white rounded-md px-3 py-2 text-lg font-extrabold">
-            My Healthy Recipe
+          <div className="flex items-center text-gray-800 rounded-md px-3 py-2 text-lg font-extrabold">
+            <Image
+              src="/logo.png"
+              width={100}
+              height={100}
+              className="items-center justify-center"
+            />
           </div>
           <button
-            className="text-white p-2 rounded-md hover:text-white hover:bg-blue-900 md:hidden"
+            className="text-black p-2 rounded-md hover:bg-orange-400 md:hidden"
             onClick={() => setIsMenuOpen(!isMenuOpen)}
           >
             {isMenuOpen ? "✖" : "☰"}
@@ -59,54 +62,49 @@ const HomeNavbar = () => {
             isMenuOpen ? "block" : "hidden"
           }`}
         >
-          <div className="flex flex-col md:flex-row md:space-x-8 md:mt-0 md:text-sm md:font-medium  ">
+          <div className="flex flex-col md:flex-row md:space-x-8 md:mt-0 md:text-sm md:font-medium ">
             <Link
               href="/"
-              className="text-white hover:bg-sky-200 hover:text-black rounded-md px-3 py-2 font-bold"
+              className="text-black hover:bg-orange-400 rounded-md px-3 py-2 font-bold"
             >
               Home
             </Link>
             <Link
               href="/aboutUs"
-              className="text-white hover:bg-sky-200 hover:text-black rounded-md px-3 py-2 font-bold"
+              className="text-black hover:bg-orange-400 hover:text-black rounded-md px-3 py-2 font-bold"
             >
               About Us
             </Link>
             <Link
               href="/recipes"
-              className="text-white hover:bg-sky-200 hover:text-black rounded-md px-3 py-2 font-bold"
+              className="text-black hover:bg-orange-400 hover:text-black rounded-md px-3 py-2 font-bold"
             >
               Recipes
             </Link>
             <Link
               href="/mealPlan"
-              className="text-white hover:bg-sky-200 hover:text-black rounded-md px-3 py-2 font-bold"
+              className="text-black hover:bg-orange-400 hover:text-black rounded-md px-3 py-2 font-bold"
             >
               Meal Plans
             </Link>
             <Link
               href="/educationalContent"
-              className="text-white hover:bg-sky-200 hover:text-black rounded-md px-3 py-2 font-bold"
+              className="text-black hover:bg-orange-400 hover:text-black rounded-md px-3 py-2 font-bold"
             >
               Educational Content
             </Link>
             <Link
               href="/businessBlogPost"
-              className="text-white hover:bg-sky-200 hover:text-black rounded-md px-3 py-2 font-bold"
+              className="text-black hover:bg-orange-400 hover:text-black rounded-md px-3 py-2 font-bold"
             >
-              Business Blog Post
+              Blogs
             </Link>
-            {/* <Link href="/userLogin">
-              <button className=" hidden md:block text-white hover:bg-sky-200 hover:text-black rounded-md px-3 py-2 text-sm font-bold">
-                Login/Sign Up
-              </button>
-            </Link> */}
           </div>
         </div>
-        <div className="md:ml-auto">
+        <div className="md:ml-auto px-5">
           <Link href="/userLogin">
-            <button className=" hidden md:block text-white hover:bg-sky-200 hover:text-black rounded-md px-3 py-2 text-sm font-bold">
-              Login/Sign Up
+            <button className=" hidden md:block text-black bg-orange-500 hover:bg-orange-600 shadow-lg hover:text-black rounded-md px-5 py-2 text-sm font-semibold">
+              Login
             </button>
           </Link>
         </div>

@@ -1,11 +1,14 @@
 package com.FYP18.HealthyRecipe.Service;
 
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.List;
 import java.util.regex.Pattern;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.FYP18.HealthyRecipe.DTO.UserInfoDTO;
 import com.FYP18.HealthyRecipe.Entity.BusinessUser;
 import com.FYP18.HealthyRecipe.Entity.Nutritionist;
 import com.FYP18.HealthyRecipe.Entity.RegisteredUser;
@@ -116,4 +119,45 @@ public class LoginService {
     }
     
  
+
+    public UserInfoDTO GetDashboardInfo(String username)
+    {
+        UserInfoDTO dto = new UserInfoDTO();
+        User user = userRepository.findByUsername(username).get();
+       Role role =  user.getRole();
+
+       dto.setUsername(user.getUsername());
+       dto.setFullName(user.getFullName());
+       dto.setEmail(user.getEmail());
+    //    private String contactNumber;
+    //    private String companyName;
+    //    private String companyAddress;
+    //    private String UEN;
+   
+       switch(role)
+       {
+            case BUSINESS_USER:
+                BusinessUser b = businessUserRepository.findById(user.getId()).get();
+                dto.setContactNumber(b.getContactNumber());
+                dto.setCompanyName(b.getCompanyName());
+                dto.setCompanyAddress(b.getCompanyAddress());
+                dto.setUEN(b.getUEN());  
+                break;
+            case NUTRITIONIST:
+                Nutritionist n = nutritionistRepository.findById(user.getId()).get();
+                dto.setContactNumber(n.getContactNumber());
+                dto.setCompanyName(n.getCompanyName());
+                dto.setCompanyAddress(n.getCompanyAddress());
+                break; 
+        default:
+            LocalDate date = role.equals(Role.REGISTERED_USER)  ? 
+                            registeredUserRepository.findById(user.getId()).get().getDob(): 
+                            systemAdminRepository.findById(user.getId()).get().getDOB();
+
+              dto.setDob(date); 
+            break;
+       }  
+       System.out.println("REEP+ " + dto.toString());
+        return dto;
+    }
 }

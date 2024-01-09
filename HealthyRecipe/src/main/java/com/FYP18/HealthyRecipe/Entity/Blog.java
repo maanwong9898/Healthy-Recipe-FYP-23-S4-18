@@ -3,6 +3,8 @@ package com.FYP18.HealthyRecipe.Entity;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import org.hibernate.Length;
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import lombok.*;
@@ -13,6 +15,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.Lob;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
@@ -52,7 +55,9 @@ public class Blog {
     @Column(name= "Title")
     private String title;
 
-    @Column(name= "Info")
+    // @Column(name= "Info")
+    @Column(nullable = false, columnDefinition="TEXT")
+    @Lob 
     private String info;
       
     // yes the userId can be null, credit may land on existing business 

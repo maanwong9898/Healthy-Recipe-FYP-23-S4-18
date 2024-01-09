@@ -36,6 +36,8 @@ public class Nutritionist extends User   {
     @Column(name = "companyAddress")
     private String companyAddress;
     
+    @Column
+    private String contactNumber;
     @PrePersist
     public void prePersist()
     {

@@ -30,10 +30,16 @@ public class BusinessUser extends User  {
     @Column(name= "Company_Name")
     private String companyName ;
 
+
+    @Column
+    private String companyAddress;
+
     // if itsa dietitan, then UEN can be license number
     @Column(name= "UEN", unique = true)
     private String UEN;
 
+    @Column
+    private String contactNumber;
      @PrePersist
     public void prePersist()
     {

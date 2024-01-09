@@ -2,6 +2,7 @@
 import React, { useState, useRef } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
+import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 
 const DropdownMenuForUserAccountRelated = () => {
   return (
@@ -42,6 +43,7 @@ const AccountDropdownMenu = () => {
 
 const SysAdminNavBar = () => {
   const router = useRouter();
+  const [username, setUsername] = useState("");
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isDropdownVisible, setDropdownVisible] = useState(false);
 
@@ -87,7 +89,10 @@ const SysAdminNavBar = () => {
   };
 
   return (
-    <nav className="bg-cyan-600">
+    <nav
+      style={{ position: "sticky", top: 0, zIndex: 1000 }}
+      className="bg-cyan-600"
+    >
       <div className="flex flex-wrap items-center p-3">
         {/* Logo and mobile menu button (small screen) */}
         <div className="flex items-center justify-between w-full md:w-auto md:mr-4">
@@ -100,11 +105,17 @@ const SysAdminNavBar = () => {
           >
             {isMenuOpen ? "✖" : "☰"}
           </button>
-          <button
+          {/* <button
             className=" p-2 rounded-md hover:text-white hover:bg-blue-900 md:hidden"
             onClick={() => setIsAccountMenuOpen(!isAccountMenuOpen)}
           >
             Account Settings
+          </button> */}
+          <button
+            className=" p-2 rounded-md hover:text-white md:hidden"
+            onClick={() => setIsAccountMenuOpen(!isAccountMenuOpen)}
+          >
+            <AccountCircleIcon /> {username || "My Account"}
           </button>
         </div>
 
@@ -172,7 +183,7 @@ const SysAdminNavBar = () => {
         >
           <div className="flex flex-col md:flex-row md:space-x-8 md:mt-0 md:text-sm md:font-medium">
             <Link
-              href="/dietitian/viewAccount"
+              href="/sysAdmin/myAccount/viewAccount"
               className=" sm:hidden hover:bg-blue-900 hover:text-white rounded-md px-3 py-2 text-sm font-bold"
             >
               My Account
@@ -182,8 +193,8 @@ const SysAdminNavBar = () => {
               onMouseEnter={handleMouseEnterAccount}
               onMouseLeave={handleMouseLeaveAccount}
             >
-              <span className="hidden md:block text-white hover:bg-sky-200 hover:text-black rounded-md px-3 py-2 text-sm font-bold cursor-pointer">
-                Account Settings
+              <span className="hidden md:block rounded font-bold hover:text-white text-base cursor-pointer">
+                <AccountCircleIcon /> {username || "My Account"}
               </span>
               {isAccountDropdownVisible && <AccountDropdownMenu />}
             </div>

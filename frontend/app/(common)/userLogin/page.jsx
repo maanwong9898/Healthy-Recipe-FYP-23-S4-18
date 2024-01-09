@@ -128,9 +128,12 @@ const userLogin = () => {
       };
 
       // Make the GET request to the userAndAdmin endpoint
-      const response = await axiosInterceptorInstance.get("/test/user", config);
+      const response = await axiosInterceptorInstance.get(
+        "/test/admin",
+        config
+      );
 
-      console.log("User and Admin data:", response.data);
+      console.log("Admin data:", response.data);
       // Handle the response data as needed
     } catch (error) {
       console.error("Error fetching user and admin data:", error);

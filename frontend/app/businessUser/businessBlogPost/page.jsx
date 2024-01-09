@@ -5,26 +5,30 @@ import { useRouter } from "next/navigation";
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
 
-// router path is /businessUser/advanceBlog
-// Function to fetch blog posts from the backend
+// router path is /businessUser/businessBlogPost
 
 // Sorting options
 const sortOptions = {
-  EARLIEST: { key: "EARLIEST", label: "By Earliest" },
+  LATEST: { key: "LATEST", label: "By Latest" },
   OLDEST: { key: "OLDEST", label: "By Oldest" },
   HIGHEST_RATINGS: { key: "HIGHEST_RATINGS", label: "Highest Ratings" },
   LOWEST_RATINGS: { key: "LOWEST_RATINGS", label: "Lowest Ratings" },
+  ALPHABETICAL_AZ: { key: "ALPHABETICAL_AZ", label: "A-Z" },
+  ALPHABETICAL_ZA: { key: "ALPHABETICAL_ZA", label: "Z-A" },
 };
 
-// Fetch all blog posts from the backend
+// Fetch all blog posts from the backend - backend controller is BlogController
 const fetchBlogPosts = async () => {
   try {
     const response = await axiosInterceptorInstance.get("/blog/get");
+    console.log("Inside the view all blog - response data is:", response.data);
 
     // Filter the data to include only those with educationalContent === false
     const filteredData = response.data.filter(
       (post) => post.educationalContent === false
     );
+
+    console.log("filtered data(educationContent == false) is:", filteredData);
     return filteredData;
     // return response.data;
   } catch (error) {
@@ -36,25 +40,74 @@ const fetchBlogPosts = async () => {
 const MyBusinessBlogPosts = () => {
   const router = useRouter();
   const [businessBlogs, setBusinessBlogs] = useState([]);
+  const [displayedBlogs, setDisplayedBlogs] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
-  const [sortOption, setSortOption] = useState("EARLIEST");
+  const [sortOption, setSortOption] = useState("LATEST");
 
+  // useEffect(() => {
+  //   const getData = async () => {
+  //     try {
+  //       const fetchedBlog = await fetchBlogPosts();
+  //       console.log("Blog fetched from backend:", fetchedBlog); // Log the fetched data
+  //       setBusinessBlogs(fetchedBlog); // Set the fetched data in businessBlogs state
+  //     } catch (error) {
+  //       console.error("Error while fetching data:", error);
+  //     }
+  //   };
+
+  //   getData();
+  // }, []);
+
+  // Fetch data only once
   useEffect(() => {
     const getData = async () => {
       try {
-        const fetchedData = await fetchBlogPosts();
-        console.log("Data fetched from backend:", fetchedData); // Log the fetched data
-        setBusinessBlogs(fetchedData); // Set the fetched data in state
-        console.log("Data set in state:", fetchedData); // Log the data set in state
+        const fetchedBlog = await fetchBlogPosts();
+        setBusinessBlogs(fetchedBlog); // Set the fetched data in businessBlogs state
+        setDisplayedBlogs(fetchedBlog); // Initialize displayedBlogs
       } catch (error) {
         console.error("Error while fetching data:", error);
       }
     };
-
     getData();
   }, []);
 
-  //
+  useEffect(() => {
+    let sortedBlogs = [...businessBlogs]; // Create a copy of the original blog list
+
+    console.log(
+      "Before sorting:",
+      sortedBlogs.map((blog) => blog.createdDateTime)
+    );
+
+    switch (sortOption) {
+      case "LATEST":
+        sortedBlogs.sort(
+          (a, b) => new Date(b.createdDateTime) - new Date(a.createdDateTime)
+        );
+        break;
+      case "OLDEST":
+        sortedBlogs.sort(
+          (a, b) => new Date(a.createdDateTime) - new Date(b.createdDateTime)
+        );
+        break;
+      case "ALPHABETICAL_AZ":
+        sortedBlogs.sort((a, b) => a.title.localeCompare(b.title));
+        break;
+      case "ALPHABETICAL_ZA":
+        sortedBlogs.sort((a, b) => b.title.localeCompare(a.title));
+        break;
+      // ... other sorting cases for ratings and reviews
+    }
+
+    console.log(
+      "After sorting:",
+      sortedBlogs.map((blog) => blog.createdDateTime)
+    );
+
+    setDisplayedBlogs(sortedBlogs); // Update only the displayed blogs
+  }, [sortOption, businessBlogs]);
+
   // Implement handleViewBlogPost and handleUpdateBlogPost as needed
   // this function is to view particular blog post
   const handleViewBlogPost = (id) => {
@@ -70,10 +123,10 @@ const MyBusinessBlogPosts = () => {
   const handleUpdateBlogPost = (id) => {
     console.log("Updating blog post with id:", id);
 
-    // // Redirect to the correct route
-    // let routePath = `/businessUser/advanceBlog/updateBlog/${id}`;
+    // Redirect to the correct route
+    let routePath = `/businessUser/businessBlogPost/updateBusinessBlogPost/${id}`;
 
-    // router.push(routePath);
+    router.push(routePath);
   };
 
   // Function to delete a blog post
@@ -167,7 +220,7 @@ const MyBusinessBlogPosts = () => {
             </tr>
           </thead>
           <tbody>
-            {businessBlogs.map((businessBlogPost, index) => (
+            {displayedBlogs.map((businessBlogPost, index) => (
               <tr
                 key={index}
                 className="bg-white border-b border-blue dark:border-blue-600"
@@ -178,11 +231,8 @@ const MyBusinessBlogPosts = () => {
                 <td className="px-3 py-2 text-base text-center">
                   {new Date(
                     businessBlogPost.createdDateTime
-                  ).toLocaleDateString()}
+                  ).toLocaleDateString("en-GB")}
                 </td>
-                {/* <td className="px-3 py-2 text-base text-center sm:text-left">
-                  {businessBlogPost.publisher}
-                </td> */}
                 <td className="px-3 py-2 text-base text-center">
                   {businessBlogPost.category}
                 </td>

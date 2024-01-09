@@ -8,27 +8,6 @@ import axiosInterceptorInstance from "../../../../axiosInterceptorInstance.js";
 // this is to view particular blog post under business user
 // router path: /businessUser/businessBlogPost/viewBusinessBlogPost/[id]
 
-// const mockBusinessBlogPost = {
-//   id: "1234567890",
-//   blogTitle: "Seasonal Savors: A Cookbook for Every Time of the Year",
-//   publisher: "Michael Lim",
-//   category: "Cookbook",
-//   introduction:
-//     "Welcome to 'Seasonal Savors', your ultimate companion for year-round culinary adventures! This cookbook is crafted with love, featuring a medley of recipes that celebrate the unique flavors and ingredients each season has to offer. From the fresh blossoms of spring to the hearty harvest of autumn, we invite you to embark on a gastronomic journey through the year. Get ready to explore dishes that will not only nourish the body but also delight the senses.",
-//   main_content:
-//     "Our journey begins with the rejuvenating tastes of spring, introducing dishes like 'Spring Pea Risotto' and 'Lemon Herb Chicken'. As we bask in the summer sun, we'll dive into refreshing 'Watermelon Gazpacho' and 'Grilled Peach Salad'. The crisp air of fall calls for 'Pumpkin Spice Soup' and 'Roasted Root Vegetables', while winter comforts with 'Hearty Beef Stew' and 'Decadent Chocolate Peppermint Cake'. Each recipe is accompanied by tips on sourcing the best seasonal produce and pairing your meals with appropriate wines and beverages.",
-//   conclusion:
-//     "As the year closes, we hope 'Seasonal Savors' has inspired you to embrace the beauty of seasonal cooking. The recipes provided are more than just instructions; they are a canvas for creativity and a chance to forge memorable moments with loved ones. So, cherish the flavors each season brings and let your kitchen be a place of discovery all year long.",
-
-//   image_url:
-//     "https://cdn.pixabay.com/photo/2015/04/29/19/33/cookbook-746005_1280.jpg",
-//   image_title: "Recipe Book",
-//   date_published: "2021-10-01",
-//   ratings: 4,
-//   reviews: 10,
-//   isActive: true,
-// };
-
 // should have a list of reviews and ratings for each blog post
 const mockBusinessBlogPost_RatingAndReviews = [
   {
@@ -82,25 +61,71 @@ const fetchBlogPostById = async (postId) => {
   }
 };
 
+// // Fetch all reviews and ratings for this particular blog post - backend controller is BlogController
+// const fetchBlogRatingsAndReviews = async () => {
+//   try {
+//     const response = await axiosInterceptorInstance.get("/blog/rating/get");
+//     console.log(
+//       "Inside the view all blog - all ratings response data is:",
+//       response.data
+//     );
+
+//     return response.data;
+//     // // Filter the data to include only those with educationalContent === false
+//     // const filteredData = response.data.filter(
+//     //   (post) => post.educationalContent === false
+//     // );
+
+//     // console.log("filtered data(educationContent == false) is:", filteredData);
+//     // return filteredData;
+//     // return response.data;
+//   } catch (error) {
+//     console.error("Failed to fetch blog posts:", error);
+//     throw error;
+//   }
+// };
+
 const ViewBusinessBlogPost = ({ params }) => {
   // const [businessBlogPost, setBusinessBlogPost] =
   //   useState(mockBusinessBlogPost);
   const [businessBlogPost, setBusinessBlogPost] = useState(null);
-  const [reviewsAndRatings, setReviewsAndRatings] = useState(
-    mockBusinessBlogPost_RatingAndReviews
-  );
+  const [reviewsAndRatings, setReviewsAndRatings] = useState([]);
 
   useEffect(() => {
     const postId = decodeURIComponent(params.id); // Make sure to decode the ID
     fetchBlogPostById(postId)
       .then((data) => {
         setBusinessBlogPost(data);
+        // Assuming the blog ID is needed to fetch the reviews
+        fetchBlogRatingsAndReviews(data.id);
       })
       .catch((error) => {
         console.error("Error fetching blog post:", error);
-        // Handle the error appropriately
       });
   }, [params.id]);
+
+  const fetchBlogRatingsAndReviews = async (blogId) => {
+    try {
+      const response = await axiosInterceptorInstance.get(`/blog/rating/get`);
+      console.log("All ratings response data:", response.data);
+
+      // Filter the reviews to match the current blog post ID
+      const filteredReviews = response.data.filter(
+        (review) => review.blogReviewRatingId.blogID === blogId
+      );
+
+      console.log("filtered reviews:", filteredReviews);
+
+      // Log each review to the console
+      filteredReviews.forEach((reviewData, index) => {
+        console.log(`Review ${index + 1}:`, reviewData.review);
+      });
+
+      setReviewsAndRatings(filteredReviews);
+    } catch (error) {
+      console.error("Failed to fetch ratings and reviews:", error);
+    }
+  };
 
   if (!businessBlogPost) {
     return <div>Loading...</div>;
@@ -163,9 +188,17 @@ const ViewBusinessBlogPost = ({ params }) => {
           <p>
             Posted on:{" "}
             <span className="text-cyan-600">
-              {new Date(businessBlogPost.createdDateTime).toLocaleDateString()}
+              {new Date(businessBlogPost.createdDateTime).toLocaleDateString(
+                "en-GB",
+                {
+                  day: "2-digit",
+                  month: "short",
+                  year: "numeric",
+                }
+              )}
             </span>
           </p>
+
           <p>
             Category:{" "}
             <span className="text-cyan-600">{businessBlogPost.category}</span>
@@ -173,43 +206,70 @@ const ViewBusinessBlogPost = ({ params }) => {
         </div>
       </div>
       <article>
-        <section className="introduction  mt-10 pl-9 pr-9 mx-auto max-w-screen-xl md:text-base text-left">
-          {businessBlogPost.info}
-        </section>
-
         <img
           src={businessBlogPost.image_url}
           alt={businessBlogPost.image_title}
           className="max-w-xl mx-auto mt-8 mb-8 rounded-lg shadow-xl sm:mt-16 sm:mb-16"
         />
 
-        {/* <section className="main-content  mt-10 pl-9 pr-9 mx-auto max-w-screen-xl md:text-base text-left">
-          {businessBlogPost.main_content}
+        {/* Main Content */}
+        <section className="main-content mt-10 pl-9 pr-9 mx-auto max-w-screen-xl md:text-base text-left">
+          <div
+            dangerouslySetInnerHTML={{
+              __html: businessBlogPost.info,
+            }}
+          />
         </section>
-        <p className="font-mono font-bold text-cyan-600  mt-10 pl-9 pr-9 mx-auto max-w-screen-xl text-2xl text-left">
-          Conclusion
-        </p>
-        <section className="conclusion  mt-5 pl-9 pr-9 mx-auto max-w-screen-xl md:text-base text-left">
-          {businessBlogPost.conclusion}
-        </section> */}
       </article>
       <footer className="blog-post-reviews mt-10 px-9 mx-auto max-w-screen-xl text-left">
         <p className="font-mono font-bold text-2xl text-cyan-600">
           Rating and Reviews
         </p>
 
-        {reviewsAndRatings.map((review, index) => (
+        {/* {reviewsAndRatings.map((review, index) => (
           <div key={index} className="my-4 p-4 border-b border-gray-200">
             <div className="flex items-center mb-2">
-              <span className="font-bold mr-2">{review.username}</span>
-              <div className="flex">{renderStars(review.ratings)}</div>
+              <span className="font-bold mr-2">{review.review}</span>
+              <div className="flex">{renderStars(review.rating)}</div>
               <span className="text-sm text-gray-500 ml-2">
-                {new Date(review.date_published).toLocaleDateString()}
+                {new Date(review.createdDateTime).toLocaleDateString("en-GB", {
+                  day: "2-digit",
+                  month: "short",
+                  year: "numeric",
+                })}
               </span>
             </div>
             <p>{review.reviews}</p>
           </div>
-        ))}
+        ))} */}
+        {/* Check if reviews exist */}
+        {reviewsAndRatings.length > 0 ? (
+          reviewsAndRatings.map((review, index) => (
+            <div key={index} className="my-4 p-4 border-b border-gray-200">
+              <div className="flex items-center mb-2">
+                <span className="font-bold mr-2">
+                  {review.userAccount.fullName}
+                </span>
+                <div className="flex">{renderStars(review.rating)}</div>
+                <span className="text-sm text-gray-500 ml-2">
+                  {new Date(review.createdDateTime).toLocaleDateString(
+                    "en-GB",
+                    {
+                      day: "2-digit",
+                      month: "short",
+                      year: "numeric",
+                    }
+                  )}
+                </span>
+              </div>
+              <p>{review.review}</p>
+            </div>
+          ))
+        ) : (
+          <p className="text-center text-gray-600">
+            No ratings and reviews yet.
+          </p>
+        )}
       </footer>
       <div className="flex flex-row space-x-5 justify-end mr-10">
         <button className="bg-cyan-500 hover:bg-sky-700 text-white font-bold py-2 px-4 rounded-lg">

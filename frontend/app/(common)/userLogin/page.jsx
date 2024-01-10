@@ -7,7 +7,7 @@ import Image from "next/image"; // Import Image component from next/image
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
 import axiosInterceptorInstance from "../../axiosInterceptorInstance.js";
-import axios from "axios";
+import { jwtDecode } from "jwt-decode";
 
 // router path: /userLogin
 // mock data for testing
@@ -116,6 +116,13 @@ const userLogin = () => {
     try {
       // Retrieve the token from localStorage
       const token = localStorage.getItem("token");
+
+      // ...later in your code, when you need to decode the token:
+
+      const decodedToken = jwtDecode(token);
+
+      // check what payload is
+      console.log(decodedToken);
 
       if (!token) {
         console.error("No token found");

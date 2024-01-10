@@ -2,9 +2,18 @@
 import { useRouter } from "next/navigation";
 import { useState, useEffect } from "react";
 import Link from "next/link";
+import axiosInterceptorInstance from "../../../axiosInterceptorInstance.js";
+import dynamic from "next/dynamic";
+import "react-quill/dist/quill.snow.css";
 
 // router path: /businessUser/businessBlogPost/createBusinessBlogPost
 // this is the page to create business blog post according to user story
+
+// Import the Quill editor only on the client-side
+const QuillNoSSRWrapper = dynamic(() => import("react-quill"), {
+  ssr: false,
+  loading: () => <p>Loading editor...</p>,
+});
 
 const mockBlogCategory = [
   {
@@ -17,16 +26,16 @@ const mockBlogCategory = [
     category: "Miscellaneous",
   },
 ];
+
 const CreateBusinessBlogPostPage = () => {
   const [title, setTitle] = useState("");
   const [publisher, setPublisher] = useState("");
   const [category, setCategory] = useState("");
-  const [introduction, setIntroduction] = useState("");
-  const [mainContent, setMainContent] = useState("");
-  const [conclusion, setConclusion] = useState("");
+  const [info, setInfo] = useState("");
   const [imageUrl, setImageUrl] = useState("");
   const [imageTitle, setImageTitle] = useState("");
   const [error, setError] = useState("");
+  const [success, setSuccess] = useState(false);
 
   // Function to handle category change
   const handleCategoryChange = (e) => {
@@ -36,42 +45,64 @@ const CreateBusinessBlogPostPage = () => {
   useEffect(() => {
     // Access localStorage after component mounts and is on the client-side
     const storedUsername = localStorage.getItem("username");
+    const storedUserId = localStorage.getItem("userId"); // Retrieve user ID from localStorage
     if (storedUsername) {
       setPublisher(storedUsername);
     }
   }, []);
-
-  const handleCreatePost = (event) => {
+  const handleCreatePost = async (event) => {
     event.preventDefault();
 
-    // Validation and submission logic here
-    console.log("Blog Post Details:", {
-      title,
-      publisher,
-      category,
-      introduction,
-      mainContent,
-      conclusion,
-      imageUrl,
-      imageTitle,
-    });
+    // Check if any of the required fields are empty
+    if (!title.trim() || !publisher.trim() || !info.trim()) {
+      setError("Please fill in all the required fields.");
+      return;
+    }
 
-    // Reset fields and error after submission
-    setTitle("");
-    // setPublisher("");
-    setCategory("");
-    setIntroduction("");
-    setMainContent("");
-    setConclusion("");
-    setImageUrl("");
-    setImageTitle("");
-    setError("");
+    // Construct the payload according to the required format
+    const blogPostData = {
+      educationalContent: false, // Assuming this is a constant for all posts
+      publisher: publisher, // Retrieved from state
+      title: title, // Retrieved from state
+      info: info, // Retrieved from state
+      userID: { id: "3" }, // Assuming static user ID, replace with dynamic value if needed
+      // userID: { id: storedUserId }, // replace above
+    };
+
+    try {
+      const response = await axiosInterceptorInstance.post(
+        "/blog/add",
+        blogPostData
+      );
+      console.log("Blog post created successfully:", response.data);
+
+      // Consider navigation or success message here
+      setSuccess(true); // Set success to true on successful update
+
+      // Reset fields after successful submission
+      setTitle("");
+      setCategory("");
+      setInfo("");
+      setImageUrl("");
+      setImageTitle("");
+      setError("");
+
+      // Optionally redirect to another page or show success message
+      // Example: router.push('/path-to-redirect-to');
+    } catch (error) {
+      setSuccess(false); // Ensure success is false on error
+      console.error("Error creating blog post:", error);
+      setError(error.message || "Failed to create blog post");
+    }
   };
 
   const clearErrorOnChange = (setter) => (e) => {
     setter(e.target.value);
     setError("");
   };
+
+  // Quill editor wrapper should have an id that matches the label's for attribute
+  const quillEditorId = "info";
 
   return (
     <div className="bg-cyan-900 min-h-screen flex flex-col justify-center px-6 lg:px-8">
@@ -150,7 +181,7 @@ const CreateBusinessBlogPostPage = () => {
                 </select>
               </div>
               {/* INTRODUCTION */}
-              <div className="flex flex-col">
+              {/* <div className="flex flex-col">
                 <label
                   htmlFor="introduction"
                   className="block text-xl mb-1 font-bold text-cyan-950"
@@ -166,27 +197,27 @@ const CreateBusinessBlogPostPage = () => {
                   rows={4} // Adjust this number to increase height
                   className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-base rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
                 />
-              </div>
-              {/* MAIN CONTENT */}
+              </div> */}
+              {/* Info */}
               <div className="flex flex-col">
                 <label
-                  htmlFor="mainContent"
+                  htmlFor={quillEditorId}
                   className="block text-xl mb-1 font-bold text-cyan-950"
                 >
-                  Main Content:
+                  Info:
                 </label>
-                <textarea
-                  name="mainContent"
-                  id="mainContent"
-                  placeholder="Main Content"
-                  value={mainContent}
-                  onChange={clearErrorOnChange(setMainContent)}
-                  rows={7} // Adjust this number to increase height
-                  className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-base rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                <QuillNoSSRWrapper
+                  theme="snow"
+                  value={info}
+                  onChange={setInfo}
+                  modules={CreateBusinessBlogPostPage.modules}
+                  formats={CreateBusinessBlogPostPage.formats}
+                  className="h-44 pb-7"
+                  id={quillEditorId} // Make sure this id is unique and matches the htmlFor attribute of the label
                 />
               </div>
               {/* CONCLUSION */}
-              <div className="flex flex-col">
+              {/* <div className="flex flex-col">
                 <label
                   htmlFor="conclusion"
                   className="block text-xl mb-1 font-bold text-cyan-950"
@@ -202,12 +233,12 @@ const CreateBusinessBlogPostPage = () => {
                   rows={4} // Adjust this number to increase height
                   className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-base rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
                 />
-              </div>
+              </div> */}
               {/* IMAGE URL */}
               <div className="flex flex-col">
                 <label
                   htmlFor="imageUrl"
-                  className="block text-xl mb-1 font-bold text-cyan-950"
+                  className="block text-xl mb-1 font-bold text-cyan-950 mt-4"
                 >
                   Image URL:
                 </label>
@@ -241,6 +272,11 @@ const CreateBusinessBlogPostPage = () => {
               </div>
               {/* ERROR MESSAGE */}
               {error && <p className="text-red-500">{error}</p>}
+              {success && (
+                <p className="text-green-500">
+                  Blog post was created successfully!
+                </p>
+              )}
               {/* SUBMIT BUTTON */}
               <div className="flex flex-row space-x-5">
                 <button className="bg-red-500 hover:bg-red-800 text-white font-bold py-2 px-4 rounded-lg">

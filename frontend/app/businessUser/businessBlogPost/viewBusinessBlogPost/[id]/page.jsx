@@ -8,22 +8,6 @@ import axiosInterceptorInstance from "../../../../axiosInterceptorInstance.js";
 // this is to view particular blog post under business user
 // router path: /businessUser/businessBlogPost/viewBusinessBlogPost/[id]
 
-// should have a list of reviews and ratings for each blog post
-const mockBusinessBlogPost_RatingAndReviews = [
-  {
-    username: "Jason",
-    ratings: 4,
-    reviews: "This is a good blog post",
-    date_published: "2021-10-01",
-  },
-  {
-    username: "Jessica",
-    ratings: 5,
-    reviews: "Highly recommended!",
-    date_published: "2023-11-15",
-  },
-];
-
 // Slugify utility function
 const slugify = (text) =>
   text
@@ -61,35 +45,10 @@ const fetchBlogPostById = async (postId) => {
   }
 };
 
-// // Fetch all reviews and ratings for this particular blog post - backend controller is BlogController
-// const fetchBlogRatingsAndReviews = async () => {
-//   try {
-//     const response = await axiosInterceptorInstance.get("/blog/rating/get");
-//     console.log(
-//       "Inside the view all blog - all ratings response data is:",
-//       response.data
-//     );
-
-//     return response.data;
-//     // // Filter the data to include only those with educationalContent === false
-//     // const filteredData = response.data.filter(
-//     //   (post) => post.educationalContent === false
-//     // );
-
-//     // console.log("filtered data(educationContent == false) is:", filteredData);
-//     // return filteredData;
-//     // return response.data;
-//   } catch (error) {
-//     console.error("Failed to fetch blog posts:", error);
-//     throw error;
-//   }
-// };
-
 const ViewBusinessBlogPost = ({ params }) => {
-  // const [businessBlogPost, setBusinessBlogPost] =
-  //   useState(mockBusinessBlogPost);
   const [businessBlogPost, setBusinessBlogPost] = useState(null);
   const [reviewsAndRatings, setReviewsAndRatings] = useState([]);
+  const router = useRouter();
 
   useEffect(() => {
     const postId = decodeURIComponent(params.id); // Make sure to decode the ID
@@ -125,6 +84,16 @@ const ViewBusinessBlogPost = ({ params }) => {
     } catch (error) {
       console.error("Failed to fetch ratings and reviews:", error);
     }
+  };
+
+  // this function is to update particular blog post
+  const handleUpdateBlogPost = (id) => {
+    console.log("Updating blog post with id:", id);
+
+    // Redirect to the correct route
+    let routePath = `/businessUser/businessBlogPost/updateBusinessBlogPost/${id}`;
+
+    router.push(routePath);
   };
 
   if (!businessBlogPost) {
@@ -225,23 +194,6 @@ const ViewBusinessBlogPost = ({ params }) => {
         <p className="font-mono font-bold text-2xl text-cyan-600">
           Rating and Reviews
         </p>
-
-        {/* {reviewsAndRatings.map((review, index) => (
-          <div key={index} className="my-4 p-4 border-b border-gray-200">
-            <div className="flex items-center mb-2">
-              <span className="font-bold mr-2">{review.review}</span>
-              <div className="flex">{renderStars(review.rating)}</div>
-              <span className="text-sm text-gray-500 ml-2">
-                {new Date(review.createdDateTime).toLocaleDateString("en-GB", {
-                  day: "2-digit",
-                  month: "short",
-                  year: "numeric",
-                })}
-              </span>
-            </div>
-            <p>{review.reviews}</p>
-          </div>
-        ))} */}
         {/* Check if reviews exist */}
         {reviewsAndRatings.length > 0 ? (
           reviewsAndRatings.map((review, index) => (
@@ -272,10 +224,11 @@ const ViewBusinessBlogPost = ({ params }) => {
         )}
       </footer>
       <div className="flex flex-row space-x-5 justify-end mr-10">
-        <button className="bg-cyan-500 hover:bg-sky-700 text-white font-bold py-2 px-4 rounded-lg">
-          <Link href="/businessUser/businessBlogPost/updateBusinessBlogPost/${id}">
-            Edit
-          </Link>
+        <button
+          onClick={() => handleUpdateBlogPost(businessBlogPost.id)}
+          className="bg-cyan-500 hover:bg-sky-700 text-white font-bold py-2 px-4 rounded-lg"
+        >
+          Edit
         </button>
         <button
           type="submit"

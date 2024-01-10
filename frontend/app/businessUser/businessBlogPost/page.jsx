@@ -11,17 +11,20 @@ import Link from "next/link";
 const sortOptions = {
   LATEST: { key: "LATEST", label: "By Latest" },
   OLDEST: { key: "OLDEST", label: "By Oldest" },
-  HIGHEST_RATINGS: { key: "HIGHEST_RATINGS", label: "Highest Ratings" },
-  LOWEST_RATINGS: { key: "LOWEST_RATINGS", label: "Lowest Ratings" },
-  ALPHABETICAL_AZ: { key: "ALPHABETICAL_AZ", label: "A-Z" },
-  ALPHABETICAL_ZA: { key: "ALPHABETICAL_ZA", label: "Z-A" },
+  // HIGHEST_RATINGS: { key: "HIGHEST_RATINGS", label: "Highest Ratings" },
+  // LOWEST_RATINGS: { key: "LOWEST_RATINGS", label: "Lowest Ratings" },
+  ALPHABETICAL_AZ: { key: "ALPHABETICAL_AZ", label: "Alphabetically (A to Z)" },
+  ALPHABETICAL_ZA: { key: "ALPHABETICAL_ZA", label: "Alphabetically (Z to A)" },
 };
 
 // Fetch all blog posts from the backend - backend controller is BlogController
 const fetchBlogPosts = async () => {
+  const userID = 3;
   try {
-    const response = await axiosInterceptorInstance.get("/blog/get");
-    console.log("Inside the view all blog - response data is:", response.data);
+    const response = await axiosInterceptorInstance.get(
+      "/blog/findByUserId/" + userID
+    );
+    console.log("All business blog posts belongs to user id 3:", response.data);
 
     // Filter the data to include only those with educationalContent === false
     const filteredData = response.data.filter(
@@ -35,6 +38,22 @@ const fetchBlogPosts = async () => {
     console.error("Failed to fetch blog posts:", error);
     throw error;
   }
+  // try {
+  //   const response = await axiosInterceptorInstance.get("/blog/get");
+  //   console.log("Inside the view all blog - response data is:", response.data);
+
+  //   // Filter the data to include only those with educationalContent === false
+  //   const filteredData = response.data.filter(
+  //     (post) => post.educationalContent === false
+  //   );
+
+  //   console.log("filtered data(educationContent == false) is:", filteredData);
+  //   return filteredData;
+  //   // return response.data;
+  // } catch (error) {
+  //   console.error("Failed to fetch blog posts:", error);
+  //   throw error;
+  // }
 };
 
 const MyBusinessBlogPosts = () => {

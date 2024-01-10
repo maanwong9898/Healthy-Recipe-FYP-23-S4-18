@@ -4,25 +4,17 @@ import React from "react";
 import Link from "next/link";
 import { useState, useEffect } from "react";
 import axiosInterceptorInstance from "../../../../axiosInterceptorInstance.js";
+import dynamic from "next/dynamic";
+import "react-quill/dist/quill.snow.css";
 
 // this is to update particular blog post under business user
 // router path: /businessUser/businessBlogPost/updateBusinessBlogPost/[id]
 
-// should have a list of reviews and ratings for each blog post
-const mockBusinessBlogPost_RatingAndReviews = [
-  {
-    username: "Jason",
-    ratings: 4,
-    reviews: "This is a good blog post",
-    date_published: "2021-10-01",
-  },
-  {
-    username: "Jessica",
-    ratings: 5,
-    reviews: "Highly recommended!",
-    date_published: "2023-11-15",
-  },
-];
+// Import the Quill editor only on the client-side
+const QuillNoSSRWrapper = dynamic(() => import("react-quill"), {
+  ssr: false,
+  loading: () => <p>Loading editor...</p>,
+});
 
 const mockBlogCategory = [
   {
@@ -61,6 +53,7 @@ const fetchBlogPostById = async (postId) => {
     throw error;
   }
 };
+
 const updateBlogPost = async (updatedPost) => {
   console.log("Sending the following data to update:", updatedPost);
   try {
@@ -80,14 +73,7 @@ const updateBlogPost = async (updatedPost) => {
 };
 
 const UpdateBusinessBlogPostPage = ({ params }) => {
-  // const [businessBlogPost, setBusinessBlogPost] =
-  //   useState(mockBusinessBlogPost);
   const [businessBlogPost, setBusinessBlogPost] = useState("");
-  const [reviewsAndRatings, setReviewsAndRatings] = useState(
-    mockBusinessBlogPost_RatingAndReviews
-  );
-
-  // States for the form fields
   const [title, setTitle] = useState("");
   const [publisher, setPublisher] = useState("");
   const [category, setCategory] = useState("");
@@ -95,6 +81,13 @@ const UpdateBusinessBlogPostPage = ({ params }) => {
   const [imageUrl, setImageUrl] = useState("");
   const [imageTitle, setImageTitle] = useState("");
   const [error, setError] = useState("");
+  const [success, setSuccess] = useState(false);
+
+  useEffect(() => {
+    console.log("The success state is being called");
+    // Reset success state when component mounts or postId changes
+    setSuccess(false);
+  }, [params.id]);
 
   useEffect(() => {
     const postId = decodeURIComponent(params.id); // Make sure to decode the ID
@@ -117,21 +110,25 @@ const UpdateBusinessBlogPostPage = ({ params }) => {
 
   const handleTitleChange = (e) => {
     setTitle(e.target.value); // Updating the title state
+    setSuccess(false); // Reset success state on change
     console.log("New title:", e.target.value); // Log to check the updated value
   };
 
   const handlePublisherChange = (e) => {
     setPublisher(e.target.value); // Correctly setting the publisher state
+    setSuccess(false); // Reset success state on change
     console.log("New publisher:", e.target.value); // Log to check the updated value
   };
 
-  const handleMainContentChange = (e) => {
+  const handleInfoChange = (e) => {
     setInfo(e.target.value); // Correctly setting the main content state
+    setSuccess(false); // Reset success state on change
     console.log("New info:", e.target.value); // Log to check the updated value
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
     try {
       const updatedPost = {
         id: businessBlogPost.id, // Assuming businessBlogPost.id is the right ID
@@ -144,10 +141,16 @@ const UpdateBusinessBlogPostPage = ({ params }) => {
 
       await updateBlogPost(updatedPost);
       // Consider navigation or success message here
+      setSuccess(true); // Set success to true on successful update
+      setError(""); // Clear any previous errors
     } catch (updateError) {
+      setSuccess(false); // Ensure success is false on error
       setError(updateError.message || "Failed to update blog post");
     }
   };
+
+  // Quill editor wrapper should have an id that matches the label's for attribute
+  const quillEditorId = "info";
 
   return (
     <div className="bg-cyan-900 min-h-screen flex flex-col justify-center px-6 lg:px-8">
@@ -208,27 +211,26 @@ const UpdateBusinessBlogPostPage = ({ params }) => {
               {/* info */}
               <div className="flex flex-col">
                 <label
-                  htmlFor="info"
-                  className="text-xl font-medium text-black mb-2"
+                  htmlFor={quillEditorId}
+                  className="block text-xl mb-1 font-medium text-cyan-950"
                 >
-                  Info
+                  Info:
                 </label>
-                <textarea
-                  name="info"
-                  id="info"
-                  placeholder="Info"
+                <QuillNoSSRWrapper
+                  theme="snow"
                   value={info}
-                  onChange={handleMainContentChange}
-                  rows={7} // Adjust this number to increase height
-                  className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm  rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                  onChange={setInfo}
+                  modules={UpdateBusinessBlogPostPage.modules}
+                  formats={UpdateBusinessBlogPostPage.formats}
+                  className="h-44 pb-7"
+                  id={quillEditorId} // Make sure this id is unique and matches the htmlFor attribute of the label
                 />
               </div>
-
               {/* IMAGE URL */}
               <div className="flex flex-col">
                 <label
                   htmlFor="imageUrl"
-                  className="text-xl font-medium text-black mb-2"
+                  className="text-xl font-medium text-black mb-2 mt-6"
                 >
                   Image URL
                 </label>
@@ -262,10 +264,15 @@ const UpdateBusinessBlogPostPage = ({ params }) => {
               </div>
               {/* ERROR MESSAGE */}
               {error && <p className="text-red-500">{error}</p>}
+              {success && (
+                <p className="text-green-500">
+                  Blog post updated successfully!
+                </p>
+              )}
               {/* SUBMIT BUTTON */}
               <div className="flex flex-row space-x-5">
                 <button className="bg-red-500 hover:bg-red-800 text-white font-bold py-2 px-4 rounded-lg">
-                  <Link href="/businessUser/businessBlogPost">Cancel</Link>
+                  <Link href="/businessUser/businessBlogPost">Back</Link>
                 </button>
                 <button
                   type="submit"

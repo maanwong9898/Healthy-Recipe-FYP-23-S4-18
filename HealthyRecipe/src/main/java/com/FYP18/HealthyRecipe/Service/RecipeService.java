@@ -9,7 +9,8 @@ import javax.management.RuntimeErrorException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cglib.core.Local;
 import org.springframework.stereotype.Service;
- 
+
+import com.FYP18.HealthyRecipe.DTO.RecipeDTO;
 import com.FYP18.HealthyRecipe.Entity.Recipe;
 import com.FYP18.HealthyRecipe.Entity.RecipeReviewRating;
 import com.FYP18.HealthyRecipe.Entity.RecipeReviewRatingId;
@@ -29,6 +30,7 @@ public class RecipeService {
     public Recipe createRecipe(Recipe recipe)
     {  
         // create on default haiz
+        recipe.setCreatedDT(LocalDate.now());
         recipe.setActive(true);
         return recipeRepository.save(recipe);
     }
@@ -36,6 +38,7 @@ public class RecipeService {
     // i know its the same, i'm just separating in case
     public Recipe updateRecipe(Recipe recipe)
     {  
+        recipe.setLastUpdatedDT(LocalDate.now());
         return recipeRepository.save(recipe);
     }
 
@@ -68,6 +71,11 @@ public class RecipeService {
     public List<Recipe> getRecipesByUserId(String userId)
     {   
         return recipeRepository.findByUserID(userId);
+    }
+
+    public List<RecipeDTO> getRecipeDTOs(String keyword)
+    {
+        return recipeRepository.findRecipeDTOsByKeyword(keyword);
     }
     
     public void deleteRecipeById(long id)

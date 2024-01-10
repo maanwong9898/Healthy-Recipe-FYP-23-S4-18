@@ -8,7 +8,8 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
- 
+
+import com.FYP18.HealthyRecipe.DTO.RecipeDTO;
 import com.FYP18.HealthyRecipe.Entity.Recipe;
 import com.FYP18.HealthyRecipe.Entity.RecipeReviewRating;
 import com.FYP18.HealthyRecipe.Entity.RecipeReviewRatingId; 
@@ -55,6 +56,13 @@ public class RecipeController {
     public ResponseEntity<List<Recipe>> findByKeyword(@RequestParam String keyword)
     { 
         List<Recipe> toReturn = recipeService.getKeywordsOfRecipe(keyword);
+        return new ResponseEntity<>(toReturn, HttpStatus.OK);
+    }
+
+    @GetMapping ("/findDTO")
+    public ResponseEntity<List<RecipeDTO>> getRecipeDTOs(@RequestParam String keyword)
+    { 
+        List<RecipeDTO> toReturn = recipeService.getRecipeDTOs(keyword);
         return new ResponseEntity<>(toReturn, HttpStatus.OK);
     }
 

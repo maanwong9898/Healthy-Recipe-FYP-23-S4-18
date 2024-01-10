@@ -2,6 +2,8 @@ package com.FYP18.HealthyRecipe.Entity;
 
 import lombok.*;
 
+import java.time.LocalDate;
+
 import org.hibernate.Length;
 
 import jakarta.persistence.Column;
@@ -28,8 +30,7 @@ public class Recipe {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ID", updatable = false)
     private Long id;
-
-    // @Column(name = "STEPS", nullable = false, columnDefinition="TEXT")
+ 
     @Column(nullable = false, columnDefinition="TEXT")
     @Lob 
     private String steps;
@@ -47,6 +48,27 @@ public class Recipe {
     @Column(name = "Info", nullable = false)
     private String info;
 
+    @Column 
+    private Float calories;
+
+    @Column 
+    private Float protein;
+
+    @Column 
+    private Float fat;
+
+    @Column 
+    private Float fibre;
+
+    @Column 
+    private Float sodium;
+    
+    @Column 
+    private Integer servingSize;
+
+    private LocalDate createdDT;
+
+    private LocalDate lastUpdatedDT;
 
     @Column(nullable = false, columnDefinition="TEXT")
     @Lob

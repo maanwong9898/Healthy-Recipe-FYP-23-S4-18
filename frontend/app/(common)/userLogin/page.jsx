@@ -170,92 +170,97 @@ const userLogin = () => {
   };
   // max-w-4xl mx-auto bg-cyan-600/50 grid grid-cols-1 md:grid-cols-2 items-center gap-20 p-5 rounded-2xl
   return (
-    <div className="bg-orange-50 min-h-screen py-16">
-      <div className="container mx-auto">
-        <div className="flex flex-col md:flex-row rounded-2xl mx-auto bg-slate-100 shadow-lg overflow-hidden">
-          {/* BG IMG */}
-          <div className="w-full md:w-1/2 bg-white">
-            <div
-              className="h-full w-full bg-cover bg-center flex items-center justify-center flex-col p-8"
-              style={{ backgroundImage: `url('${images[currentImageIndex]}')` }}
-            ></div>
-          </div>
-          {/* LOGIN FORM CONTAINER*/}
-          <div className="w-full md:w-1/2 mx-5 flex items-center justify-center">
-            <div className="w-full p-4 md:p-10">
-              <Image
-                src="/logo.png"
-                width={180}
-                height={180}
-                className="mx-auto mb-3"
-              />
-              <h1 className="text-4xl font-bold text-black mb-4 text-center">
-                Welcome Back
-              </h1>
-              <form className="space-y-6" onSubmit={handleLogin}>
-                {/* Email Input */}
-                <div className="flex items-center relative mx-auto">
-                  <div className="absolute top-2.5 left-3">
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      strokeWidth="1.5"
-                      stroke="currentColor"
-                      className="w-6 h-6"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        d="M17.982 18.725A7.488 7.488 0 0 0 12 15.75a7.488 7.488 0 0 0-5.982 2.975m11.963 0a9 9 0 1 0-11.963 0m11.963 0A8.966 8.966 0 0 1 12 21a8.966 8.966 0 0 1-5.982-2.275M15 9.75a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"
-                      />
-                    </svg>
-                  </div>
-                  <input
-                    type="text"
-                    placeholder="Username"
-                    value={username}
-                    className="w-full bg-white py-2 pl-12 pr-3 rounded-full border border-white focus:border-black focus:outline-none focus:ring-1 focus:ring-black"
-                    onChange={(e) => setUsername(e.target.value)} // Assuming you have a setUsername function
-                  />
-                </div>
-
-                {/* Password Input */}
-                <div className="flex items-center relative">
-                  <div
-                    className="absolute top-2.5 left-3 cursor-pointer"
-                    onClick={togglePasswordVisibility}
-                  >
-                    <FontAwesomeIcon
-                      icon={passwordVisible ? faEyeSlash : faEye}
+    <div>
+      <HomeNavbar />
+      <div className="bg-orange-50 min-h-screen py-16">
+        <div className="container mx-auto">
+          <div className="flex flex-col md:flex-row rounded-2xl mx-auto bg-slate-100 shadow-lg overflow-hidden">
+            {/* BG IMG */}
+            <div className="w-full md:w-1/2 bg-white">
+              <div
+                className="h-full w-full bg-cover bg-center flex items-center justify-center flex-col p-8"
+                style={{
+                  backgroundImage: `url('${images[currentImageIndex]}')`,
+                }}
+              ></div>
+            </div>
+            {/* LOGIN FORM CONTAINER*/}
+            <div className="w-full md:w-1/2 mx-5 flex items-center justify-center">
+              <div className="w-full p-4 md:p-10">
+                <Image
+                  src="/logo.png"
+                  width={180}
+                  height={180}
+                  className="mx-auto mb-3"
+                />
+                <h1 className="text-4xl font-bold text-black mb-4 text-center">
+                  Welcome Back
+                </h1>
+                <form className="space-y-6" onSubmit={handleLogin}>
+                  {/* Email Input */}
+                  <div className="flex items-center relative mx-auto">
+                    <div className="absolute top-2.5 left-3">
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        strokeWidth="1.5"
+                        stroke="currentColor"
+                        className="w-6 h-6"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          d="M17.982 18.725A7.488 7.488 0 0 0 12 15.75a7.488 7.488 0 0 0-5.982 2.975m11.963 0a9 9 0 1 0-11.963 0m11.963 0A8.966 8.966 0 0 1 12 21a8.966 8.966 0 0 1-5.982-2.275M15 9.75a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"
+                        />
+                      </svg>
+                    </div>
+                    <input
+                      type="text"
+                      placeholder="Username"
+                      value={username}
+                      className="w-full bg-white py-2 pl-12 pr-3 rounded-full border border-white focus:border-black focus:outline-none focus:ring-1 focus:ring-black"
+                      onChange={(e) => setUsername(e.target.value)} // Assuming you have a setUsername function
                     />
                   </div>
-                  <input
-                    type={passwordVisible ? "text" : "password"}
-                    placeholder="Password"
-                    className="w-full bg-white py-2 pl-12 pr-3 rounded-full border border-white focus:border-black focus:outline-none focus:ring-1 focus:ring-black"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                  />
+
+                  {/* Password Input */}
+                  <div className="flex items-center relative">
+                    <div
+                      className="absolute top-2.5 left-3 cursor-pointer"
+                      onClick={togglePasswordVisibility}
+                    >
+                      <FontAwesomeIcon
+                        icon={passwordVisible ? faEyeSlash : faEye}
+                      />
+                    </div>
+                    <input
+                      type={passwordVisible ? "text" : "password"}
+                      placeholder="Password"
+                      className="w-full bg-white py-2 pl-12 pr-3 rounded-full border border-white focus:border-black focus:outline-none focus:ring-1 focus:ring-black"
+                      value={password}
+                      onChange={(e) => setPassword(e.target.value)}
+                    />
+                  </div>
+                  {/* Submit Button */}
+                  <button
+                    type="submit"
+                    className="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-full py-2 "
+                  >
+                    Sign In to Your Account
+                  </button>
+                </form>
+                {/* Links */}
+                <div className="text-black pt-4 mt-4 space-y-4 text-base border-t border-gray-800 border-opacity-70">
+                  <p>
+                    Don't have an account?{" "}
+                    <Link href="/registration">
+                      <span className="text-blue-700 font-semibold cursor-pointer">
+                        Sign up
+                      </span>
+                    </Link>
+                  </p>
                 </div>
-                {/* Submit Button */}
-                <button
-                  type="submit"
-                  className="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-full py-2 "
-                >
-                  Sign In to Your Account
-                </button>
-              </form>
-              {/* Links */}
-              <div className="text-black pt-4 mt-4 space-y-4 text-base border-t border-gray-800 border-opacity-70">
-                <p>
-                  Don't have an account?{" "}
-                  <Link href="/registration">
-                    <span className="text-blue-700 font-semibold cursor-pointer">
-                      Sign up
-                    </span>
-                  </Link>
-                </p>
               </div>
             </div>
           </div>

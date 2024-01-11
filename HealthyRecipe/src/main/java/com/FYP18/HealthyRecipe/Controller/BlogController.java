@@ -2,6 +2,7 @@ package com.FYP18.HealthyRecipe.Controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.FYP18.HealthyRecipe.Entity.Blog;
 import com.FYP18.HealthyRecipe.Entity.BlogReviewRating;
 import com.FYP18.HealthyRecipe.Entity.BlogReviewRatingId;
+import com.FYP18.HealthyRecipe.Entity.Recipe;
 import com.FYP18.HealthyRecipe.Entity.User;
 import com.FYP18.HealthyRecipe.Repository.BlogRepository;
 import com.FYP18.HealthyRecipe.Repository.BlogReviewRatingRepository;
@@ -48,7 +50,20 @@ public class BlogController {
         List<Blog> toReturn = blogService.getAllBlogs();
         return new ResponseEntity<>(toReturn, HttpStatus.OK);
     }
- 
+    @GetMapping("/get/{id}")
+    public ResponseEntity<Blog> getBlogById(@PathVariable Long id)
+    {
+        Blog toReturn = blogService.findBlogById(id);
+        return new ResponseEntity<>(toReturn, HttpStatus.OK);
+    }
+
+    @GetMapping ("/find")
+    public ResponseEntity<List<Blog>> findByKeyword(@RequestParam String keyword)
+    { 
+        List<Blog> toReturn = blogService.findBlogsByKeyword(keyword);
+        return new ResponseEntity<>(toReturn, HttpStatus.OK);
+    }
+
     @GetMapping ("/findByUserId/{id}")
     public ResponseEntity<List<Blog>> findByUserId(@PathVariable String id)
     { 
@@ -71,6 +86,12 @@ public class BlogController {
         return new ResponseEntity<>(toReturn, HttpStatus.OK);
     }
     
+     @PutMapping("/suspend")
+    public ResponseEntity<Blog> suspendBlog(@RequestBody Blog blog)  
+    { 
+       Blog toReturn = blogService.suspendBlog(blog); 
+        return new ResponseEntity<>(toReturn, HttpStatus.OK);
+    }
     @PatchMapping("/update")
     public ResponseEntity<Blog> updateBlog(@RequestBody Blog blog)  
     { 

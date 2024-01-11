@@ -3,12 +3,15 @@ package com.FYP18.HealthyRecipe.Repository;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.FYP18.HealthyRecipe.Entity.Blog;
+import com.FYP18.HealthyRecipe.Entity.Recipe;
 import com.FYP18.HealthyRecipe.Entity.User;
 
 import java.util.List;
+import java.util.Optional;
 
 
 public interface BlogRepository extends JpaRepository<Blog, Long>{
@@ -19,6 +22,16 @@ public interface BlogRepository extends JpaRepository<Blog, Long>{
     @Query("DELETE FROM Blog b WHERE b.ID = :id")
     void deleteByBlogId(Long id);
  
+    @Modifying
+    @Transactional 
+    @Query("SELECT r FROM Blog r WHERE r.title LIKE %:keyword%")
+    List<Blog> findByKeyword(@Param("keyword") String keyword);
+
+ 
+    // @Modifying
+    // @Transactional
+    // @Query("SELECT b FROM Blog b WHERE b.ID = :id")
+    // Blog findById(Long id);
     // @Modifying
     // @Transactional
     // @Query("SELECT b FROM Blog b WHERE b.userID = :id")

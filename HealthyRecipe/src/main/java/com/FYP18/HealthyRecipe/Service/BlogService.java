@@ -56,11 +56,22 @@ public class BlogService {
         return blogRepository.save(blog);
     }
 
+    public Blog suspendBlog(Blog _blog)
+    {
+        Blog blog = blogRepository.findById(_blog.getId()).get();
+        blog.setActive(_blog.getActive());
+        return blogRepository.save(blog);
+    }
+
     public List<Blog> getAllBlogs()
     {
         return blogRepository.findAll();
     }
 
+    public List<Blog> findBlogsByKeyword(String keyword)
+    {
+        return blogRepository.findByKeyword(keyword);
+    }
     public Blog findBlogById(long blogId)
     {
         return blogRepository.findById(blogId)

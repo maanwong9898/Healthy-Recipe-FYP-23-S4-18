@@ -15,22 +15,11 @@ const QuillNoSSRWrapper = dynamic(() => import("react-quill"), {
   loading: () => <p>Loading editor...</p>,
 });
 
-const mockBlogCategory = [
-  {
-    category: "Cookbook",
-  },
-  {
-    category: "Kitchenware",
-  },
-  {
-    category: "Miscellaneous",
-  },
-];
-
 const CreateBusinessBlogPostPage = () => {
   const [title, setTitle] = useState("");
   const [publisher, setPublisher] = useState("");
-  const [category, setCategory] = useState("");
+  const [category, setCategory] = useState(""); // State to store selected category
+  const [categories, setCategories] = useState([]); // State to store categories
   const [info, setInfo] = useState("");
   const [imageUrl, setImageUrl] = useState("");
   const [imageTitle, setImageTitle] = useState("");
@@ -49,7 +38,24 @@ const CreateBusinessBlogPostPage = () => {
     if (storedUsername) {
       setPublisher(storedUsername);
     }
+
+    // Fetch all business blog categories from backend
+    const fetchCategories = async () => {
+      console.log("Fetching categories...");
+      try {
+        const response = await axiosInterceptorInstance.get(
+          "category/getAllBlogPostCategories"
+        );
+        console.log("Categories fetched:", response.data);
+        setCategories(response.data);
+      } catch (error) {
+        console.error("Error fetching categories:", error);
+      }
+    };
+
+    fetchCategories();
   }, []);
+
   const handleCreatePost = async (event) => {
     event.preventDefault();
 
@@ -58,6 +64,9 @@ const CreateBusinessBlogPostPage = () => {
       setError("Please fill in all the required fields.");
       return;
     }
+
+    // Check what category was selected
+    console.log("Category selected:", category);
 
     // Construct the payload according to the required format
     const blogPostData = {
@@ -170,34 +179,16 @@ const CreateBusinessBlogPostPage = () => {
                   name="category"
                   value={category}
                   onChange={handleCategoryChange}
-                  className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-base rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                  className="bg-gray-50 border border-gray-300 text-black sm:text-base rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
                 >
                   <option value="">Select a category</option>
-                  {mockBlogCategory.map((cat, index) => (
-                    <option key={index} value={cat.category}>
-                      {cat.category}
+                  {categories.map((cat, index) => (
+                    <option key={index} value={cat.subcategoryName}>
+                      {cat.subcategoryName}
                     </option>
                   ))}
                 </select>
               </div>
-              {/* INTRODUCTION */}
-              {/* <div className="flex flex-col">
-                <label
-                  htmlFor="introduction"
-                  className="block text-xl mb-1 font-bold text-cyan-950"
-                >
-                  Introduction:
-                </label>
-                <textarea
-                  name="introduction"
-                  id="introduction"
-                  placeholder="Introduction"
-                  value={introduction}
-                  onChange={clearErrorOnChange(setIntroduction)}
-                  rows={4} // Adjust this number to increase height
-                  className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-base rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-                />
-              </div> */}
               {/* Info */}
               <div className="flex flex-col">
                 <label
@@ -216,24 +207,6 @@ const CreateBusinessBlogPostPage = () => {
                   id={quillEditorId} // Make sure this id is unique and matches the htmlFor attribute of the label
                 />
               </div>
-              {/* CONCLUSION */}
-              {/* <div className="flex flex-col">
-                <label
-                  htmlFor="conclusion"
-                  className="block text-xl mb-1 font-bold text-cyan-950"
-                >
-                  Conclusion:
-                </label>
-                <textarea
-                  name="conclusion"
-                  id="conclusion"
-                  placeholder="Conclusion"
-                  value={conclusion}
-                  onChange={clearErrorOnChange(setConclusion)}
-                  rows={4} // Adjust this number to increase height
-                  className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-base rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-                />
-              </div> */}
               {/* IMAGE URL */}
               <div className="flex flex-col">
                 <label

@@ -40,7 +40,7 @@ public class JwtUtil {
         Date tokenCreateTime = new Date();
                                 // this timing + 10 minutes
         Date tokenValidity = new Date(tokenCreateTime.getTime() 
-                            + TimeUnit.MINUTES.toMillis(10));
+                            + TimeUnit.DAYS.toMillis(10));
 
         Claims claims = Jwts.claims()
                         .setSubject(email)

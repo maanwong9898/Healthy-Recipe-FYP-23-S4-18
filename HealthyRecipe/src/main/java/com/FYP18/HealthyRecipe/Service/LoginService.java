@@ -120,19 +120,16 @@ public class LoginService {
     
  
 
-    public DashboardDTO GetDashboardInfo(String username)
+    public DashboardDTO GetDashboardInfo(String id)
     {
         DashboardDTO dto = new DashboardDTO();
-        User user = userRepository.findByUsername(username).get();
+        User user = userRepository.findById(id).get();
        Role role =  user.getRole();
 
        dto.setUsername(user.getUsername());
        dto.setFullName(user.getFullName());
        dto.setEmail(user.getEmail());
-    //    private String contactNumber;
-    //    private String companyName;
-    //    private String companyAddress;
-    //    private String UEN;
+       dto.setId(user.getId()); 
    
        switch(role)
        {

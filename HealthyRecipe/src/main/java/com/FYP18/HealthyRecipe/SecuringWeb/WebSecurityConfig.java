@@ -164,13 +164,13 @@ public class WebSecurityConfig {
 
                 .authorizeHttpRequests((authz) -> authz
                         // .anyRequest().permitAll()
-                        .requestMatchers("/login").permitAll()
-                        .requestMatchers("/test/admin").hasRole("ADMIN")
-                        .requestMatchers("/test/business").hasRole("BUSINESS_USER")
-                        .requestMatchers("/test/nut").hasRole("NUTRITIONIST")
-                        .requestMatchers("/test/user").hasRole("REGISTERED_USER")
-                        .requestMatchers("/test/userAndAdmin").hasAnyRole("ADMIN", "USER")
-                        .requestMatchers("/register/**").permitAll()
+                        // .requestMatchers("/login").permitAll()
+                        // .requestMatchers("/test/admin").hasRole("ADMIN")
+                        // .requestMatchers("/test/business").hasRole("BUSINESS_USER")
+                        // .requestMatchers("/test/nut").hasRole("NUTRITIONIST")
+                        // .requestMatchers("/test/user").hasRole("REGISTERED_USER")
+                        // .requestMatchers("/test/userAndAdmin").hasAnyRole("ADMIN", "USER")
+                        // .requestMatchers("/register/**").permitAll()
                         .anyRequest().permitAll())
 
                 .sessionManagement(x -> x.sessionCreationPolicy(SessionCreationPolicy.STATELESS))

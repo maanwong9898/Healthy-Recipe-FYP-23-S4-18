@@ -20,7 +20,7 @@ public class DashboardDTO {
     private String fullName;
     private String username;
     private String email;
-    
+    private String id;
     private LocalDate dob; //this only applies to registered user + System admin
 
     private String contactNumber;

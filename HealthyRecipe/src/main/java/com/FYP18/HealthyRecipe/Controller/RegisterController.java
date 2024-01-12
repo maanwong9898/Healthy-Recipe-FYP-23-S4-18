@@ -100,10 +100,10 @@ public class RegisterController {
         // loginService.
     }
     
-    @GetMapping("/dashboard/{username}")
-    public DashboardDTO getDTO(@PathVariable("username") String username)
+    @GetMapping("/dashboard/{id}")
+    public DashboardDTO getDTO(@PathVariable("id") String id)
     {   
-       return loginService.GetDashboardInfo(username);
+       return loginService.GetDashboardInfo(id);
     }
 
 }

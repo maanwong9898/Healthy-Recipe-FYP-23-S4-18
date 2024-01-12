@@ -16,37 +16,23 @@ const QuillNoSSRWrapper = dynamic(() => import("react-quill"), {
   loading: () => <p>Loading editor...</p>,
 });
 
-const mockBlogCategory = [
-  {
-    category: "Cookbook",
-  },
-  {
-    category: "Kitchen Utensils",
-  },
-  {
-    category: "Miscellaneous",
-  },
-];
-
 const fetchBlogPostById = async (postId) => {
   try {
-    const response = await axiosInterceptorInstance.get("/blog/get");
-    console.log("response data is:", response.data);
+    // Ensure postId is a string if the IDs in your URL need to be strings
+    postId = postId;
 
-    const filteredData = response.data.filter(
-      (post) => post.educationalContent === false
-    );
+    const response = await axiosInterceptorInstance.get(`/blog/get/${postId}`);
+    console.log("Fetched blog post data is:", response.data);
 
-    console.log("filtered data is:", filteredData);
-
-    // Ensure postId is an integer if the IDs in data are integers
-    postId = parseInt(postId, 10);
-
-    const blogPost = filteredData.find((post) => post.id === postId);
-    if (!blogPost) {
-      console.error(`Blog post with ID ${postId} not found in filtered data`);
+    if (!response.data) {
+      console.error(`Blog post with ID ${postId} not found`);
       throw new Error(`Blog post with ID ${postId} not found`);
     }
+
+    console.log("try update blog post");
+    // Assuming the response contains the blog post directly
+    const blogPost = response.data;
+
     return blogPost;
   } catch (error) {
     console.error("Failed to fetch blog post:", error);
@@ -77,6 +63,7 @@ const UpdateBusinessBlogPostPage = ({ params }) => {
   const [title, setTitle] = useState("");
   const [publisher, setPublisher] = useState("");
   const [category, setCategory] = useState("");
+  const [categories, setCategories] = useState([]);
   const [info, setInfo] = useState("");
   const [imageUrl, setImageUrl] = useState("");
   const [imageTitle, setImageTitle] = useState("");
@@ -106,6 +93,22 @@ const UpdateBusinessBlogPostPage = ({ params }) => {
         console.error("Error fetching blog post:", error);
         // Handle the error appropriately
       });
+
+    // Fetch all business blog categories from backend
+    const fetchCategories = async () => {
+      console.log("Fetching categories...");
+      try {
+        const response = await axiosInterceptorInstance.get(
+          "category/getAllBlogPostCategories"
+        );
+        console.log("Categories fetched:", response.data);
+        setCategories(response.data);
+      } catch (error) {
+        console.error("Error fetching categories:", error);
+      }
+    };
+
+    fetchCategories();
   }, [params.id]);
 
   const handleTitleChange = (e) => {
@@ -200,9 +203,9 @@ const UpdateBusinessBlogPostPage = ({ params }) => {
                   className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm  rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
                 >
                   <option value="">Select a category</option>
-                  {mockBlogCategory.map((cat, index) => (
-                    <option key={index} value={cat.category}>
-                      {cat.category}
+                  {categories.map((cat, index) => (
+                    <option key={index} value={cat.subcategoryName}>
+                      {cat.subcategoryName}
                     </option>
                   ))}
                 </select>

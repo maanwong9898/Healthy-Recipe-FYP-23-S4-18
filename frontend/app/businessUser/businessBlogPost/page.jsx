@@ -19,12 +19,12 @@ const sortOptions = {
 
 // Fetch all blog posts from the backend - backend controller is BlogController
 const fetchBlogPosts = async () => {
-  const userID = 3;
+  const userID = "3";
   try {
     const response = await axiosInterceptorInstance.get(
       "/blog/findByUserId/" + userID
     );
-    console.log("All business blog posts belongs to user id 3:", response.data);
+    console.log("All business blog posts belongs to this user:", response.data);
 
     // Filter the data to include only those with educationalContent === false
     const filteredData = response.data.filter(
@@ -38,22 +38,6 @@ const fetchBlogPosts = async () => {
     console.error("Failed to fetch blog posts:", error);
     throw error;
   }
-  // try {
-  //   const response = await axiosInterceptorInstance.get("/blog/get");
-  //   console.log("Inside the view all blog - response data is:", response.data);
-
-  //   // Filter the data to include only those with educationalContent === false
-  //   const filteredData = response.data.filter(
-  //     (post) => post.educationalContent === false
-  //   );
-
-  //   console.log("filtered data(educationContent == false) is:", filteredData);
-  //   return filteredData;
-  //   // return response.data;
-  // } catch (error) {
-  //   console.error("Failed to fetch blog posts:", error);
-  //   throw error;
-  // }
 };
 
 const MyBusinessBlogPosts = () => {
@@ -62,28 +46,29 @@ const MyBusinessBlogPosts = () => {
   const [displayedBlogs, setDisplayedBlogs] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [sortOption, setSortOption] = useState("LATEST");
+  const [isSearchEmpty, setIsSearchEmpty] = useState(false);
+  const [searchPerformed, setSearchPerformed] = useState(false);
+  const [searchResultsCount, setSearchResultsCount] = useState(0);
 
-  // useEffect(() => {
-  //   const getData = async () => {
-  //     try {
-  //       const fetchedBlog = await fetchBlogPosts();
-  //       console.log("Blog fetched from backend:", fetchedBlog); // Log the fetched data
-  //       setBusinessBlogs(fetchedBlog); // Set the fetched data in businessBlogs state
-  //     } catch (error) {
-  //       console.error("Error while fetching data:", error);
-  //     }
-  //   };
-
-  //   getData();
-  // }, []);
-
-  // Fetch data only once
   useEffect(() => {
     const getData = async () => {
       try {
+        console.log("first time render");
         const fetchedBlog = await fetchBlogPosts();
-        setBusinessBlogs(fetchedBlog); // Set the fetched data in businessBlogs state
-        setDisplayedBlogs(fetchedBlog); // Initialize displayedBlogs
+        console.log("Fetched blog posts:", fetchedBlog);
+
+        // Set the fetched data in businessBlogs state
+        setBusinessBlogs(fetchedBlog);
+
+        // Now sort the fetched data immediately
+        const sortedBlogs = [...fetchedBlog].sort(
+          (a, b) => new Date(b.createdDateTime) - new Date(a.createdDateTime)
+        );
+
+        console.log("first time render sortedBlogs***:", sortedBlogs);
+
+        // Set the sorted blogs as displayedBlogs
+        setDisplayedBlogs(sortedBlogs);
       } catch (error) {
         console.error("Error while fetching data:", error);
       }
@@ -124,7 +109,13 @@ const MyBusinessBlogPosts = () => {
       sortedBlogs.map((blog) => blog.createdDateTime)
     );
 
-    setDisplayedBlogs(sortedBlogs); // Update only the displayed blogs
+    console.log("force render");
+    // setDisplayedBlogs(sortedBlogs); // Update only the displayed blogs
+    setDisplayedBlogs([...sortedBlogs]);
+    // check what is sortedBlogs
+    console.log("sortedBlogs:", sortedBlogs);
+
+    console.log("Displayed blogs after sorting:", displayedBlogs);
   }, [sortOption, businessBlogs]);
 
   // Implement handleViewBlogPost and handleUpdateBlogPost as needed
@@ -148,6 +139,31 @@ const MyBusinessBlogPosts = () => {
     router.push(routePath);
   };
 
+  // Function to suspend a business blog post
+  const handleSuspendBlogPost = async (blogPostId) => {
+    try {
+      const response = await axiosInterceptorInstance.put("/blog/suspend", {
+        id: blogPostId,
+        active: false,
+      });
+
+      // Check if the response is successful before updating the state
+      if (response.status === 200) {
+        const updatedBlogs = businessBlogs.map((blog) => {
+          if (blog.id === blogPostId) {
+            return { ...blog, active: false };
+          }
+          return blog;
+        });
+        setBusinessBlogs(updatedBlogs);
+      } else {
+        console.error("Failed to suspend the blog post:", response);
+      }
+    } catch (error) {
+      console.error("Error suspending blog post", error);
+    }
+  };
+
   // Function to delete a blog post
   const handleDeleteBlogPost = async (id) => {
     try {
@@ -164,10 +180,58 @@ const MyBusinessBlogPosts = () => {
     }
   };
 
-  // Function to handle search
-  const handleSearch = () => {
-    // Implement search functionality based on your API or local filtering
+  // Function to handle search when user clicks the search button
+  const handleSearchClick = async () => {
+    setSearchPerformed(true); // Indicates that a search was performed
+
+    if (!searchTerm.trim()) {
+      setDisplayedBlogs(businessBlogs); // Reset to original list if search term is empty
+      setIsSearchEmpty(false);
+      setSearchPerformed(false); // No search performed if the term is empty
+      setSearchResultsCount(0); // Reset search results count
+      return;
+    }
+
+    // Assuming you have a way to get the current user's ID
+    const currentUserId = "3"; // Replace this with actual logic to retrieve the user's ID
+
+    try {
+      const formattedSearchTerm = searchTerm.trim().replace(/\s+/g, "+");
+      const response = await axiosInterceptorInstance.get(
+        `/blog/find?keyword=${formattedSearchTerm}`
+      );
+      console.log("Search results:", response.data);
+
+      // Filter the search results to only include posts from the current user
+      const filteredResults = response.data.filter(
+        (post) => post.userID.id === currentUserId
+      );
+
+      if (filteredResults.length > 0) {
+        setDisplayedBlogs(filteredResults);
+        setIsSearchEmpty(false);
+        setSearchResultsCount(filteredResults.length); // Update search results count
+      } else {
+        setDisplayedBlogs(businessBlogs); // Keep the original list displayed
+        setIsSearchEmpty(true);
+        setSearchResultsCount(0); // No results found
+      }
+    } catch (error) {
+      console.error("Error searching blog posts:", error);
+      // Optionally handle the error, e.g., display an error message
+    }
   };
+
+  useEffect(() => {
+    // If the search term is cleared, show the original list and hide the "No results" message
+    if (!searchTerm.trim()) {
+      console.log("Search term is empty");
+      setDisplayedBlogs(displayedBlogs);
+      setIsSearchEmpty(false);
+      setSearchPerformed(false); // Reset search status when search term is cleared
+      // setSearchResultsCount(0); // Reset search results count
+    }
+  }, [searchTerm, displayedBlogs]);
 
   // Function to handle sort
   const handleSort = () => {
@@ -198,12 +262,25 @@ const MyBusinessBlogPosts = () => {
             placeholder="Search blog posts"
             className="mr-2 p-2 rounded border"
           />
+
           <button
-            onClick={handleSearch}
+            onClick={handleSearchClick}
             className="text-white border-2 border-black bg-gradient-to-br from-cyan-400 to-cyan-800 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 rounded-lg text-base font-bold px-5 py-2.5 mr-7 mb-3 mt-3 text-center"
           >
             Search
           </button>
+          {/* "Results found" message */}
+          {searchPerformed && !isSearchEmpty && (
+            <p className="text-left text-white font-bold text-xl">
+              {searchResultsCount} results found.
+            </p>
+          )}
+          {/* "No results found" message */}
+          {searchPerformed && isSearchEmpty && (
+            <p className="text-left text-white font-bold text-xl">
+              No results found.
+            </p>
+          )}
         </div>
         <div>
           <label htmlFor="sort" className="mr-2 font-2xl text-white">
@@ -233,6 +310,7 @@ const MyBusinessBlogPosts = () => {
               <th className="px-3 py-2">Date Published</th>
               <th className="px-3 py-2">Category</th>
               <th className="px-3 py-2">Status</th>
+              <th className="px-3 py-2"></th>
               <th className="px-3 py-2"></th>
               <th className="px-3 py-2"></th>
               <th className="px-3 py-2"></th>
@@ -288,6 +366,22 @@ const MyBusinessBlogPosts = () => {
                   >
                     {" "}
                     Edit
+                  </button>
+                </td>
+                <td className="px-3 py-2 justify-center sm:justify-start">
+                  <button
+                    onClick={() => handleSuspendBlogPost(businessBlogPost.id)}
+                    disabled={!businessBlogPost.active}
+                    className={`text-white font-bold bg-gradient-to-br ${
+                      businessBlogPost.active
+                        ? "from-orange-600 to-red-700"
+                        : "bg-gray-300"
+                    } hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-blue-300
+                    dark:focus:ring-blue-800 rounded-lg text-base px-5 py-2.5 ml-7
+                    mr-7 text-center`}
+                  >
+                    {" "}
+                    Suspend
                   </button>
                 </td>
                 <td className="px-3 py-2 justify-center sm:justify-start">

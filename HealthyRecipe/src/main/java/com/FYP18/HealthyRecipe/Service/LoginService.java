@@ -8,7 +8,7 @@ import java.util.regex.Pattern;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.FYP18.HealthyRecipe.DTO.UserInfoDTO;
+import com.FYP18.HealthyRecipe.DTO.DashboardDTO;
 import com.FYP18.HealthyRecipe.Entity.BusinessUser;
 import com.FYP18.HealthyRecipe.Entity.Nutritionist;
 import com.FYP18.HealthyRecipe.Entity.RegisteredUser;
@@ -120,9 +120,9 @@ public class LoginService {
     
  
 
-    public UserInfoDTO GetDashboardInfo(String username)
+    public DashboardDTO GetDashboardInfo(String username)
     {
-        UserInfoDTO dto = new UserInfoDTO();
+        DashboardDTO dto = new DashboardDTO();
         User user = userRepository.findByUsername(username).get();
        Role role =  user.getRole();
 

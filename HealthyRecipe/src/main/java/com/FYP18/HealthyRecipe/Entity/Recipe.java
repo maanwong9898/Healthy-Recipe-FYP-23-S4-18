@@ -62,6 +62,9 @@ public class Recipe {
 
     @Column 
     private Float sodium;
+
+    @Column 
+    private Float carbs;
     
     @Column 
     private Integer servingSize;
@@ -74,7 +77,7 @@ public class Recipe {
     @Lob
     private String ingredients;
 
-      
+    private String img;
     // yes the userId can be null, credit may land on existing business 
     // users or saved inside info column
     @ManyToOne

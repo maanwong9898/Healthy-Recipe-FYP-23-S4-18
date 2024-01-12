@@ -34,7 +34,8 @@ public interface RecipeRepository extends JpaRepository<Recipe, Long>{
 
  
     @Transactional
-    @Query(value ="SELECT r.title AS title, r.description AS description FROM Recipe r WHERE r.title LIKE %:keyword%", nativeQuery = false)
+    @Query(value ="SELECT r.title AS title, r.description AS description, r.id AS id, r.img AS img, r.calories AS calories, r.protein AS protein, r.fat AS fat, r.fibre AS fibre, r.sodium AS sodium, r.carbs AS carbs FROM Recipe r WHERE r.title LIKE %:keyword%", nativeQuery = false)
+    // @Query(value ="SELECT r.title AS title, r.description AS description FROM Recipe r WHERE r.title LIKE %:keyword%", nativeQuery = false)
     List<RecipeDTO> findRecipeDTOsByKeyword(@Param("keyword") String keyword);
 
 }

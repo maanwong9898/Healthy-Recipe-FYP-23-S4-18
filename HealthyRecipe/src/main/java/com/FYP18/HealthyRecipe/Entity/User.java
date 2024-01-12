@@ -19,6 +19,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -68,8 +69,8 @@ public class User implements UserDetails
     private String username; 
 
 
-    @Column(name="Email", unique = true)
-    private String Email; 
+    @Column(name="email", unique = true)
+    private String email; 
 
     @Column(name="Full_Name")
     private String fullName;
@@ -77,6 +78,8 @@ public class User implements UserDetails
     @Column(name="enabled",columnDefinition ="boolean default false")
     private Boolean enabled = false; 
 
+    @Column
+    private LocalDate createdDate;
     // @Column(name="expired",columnDefinition ="boolean default false")
     // private Boolean expired = false; 
 

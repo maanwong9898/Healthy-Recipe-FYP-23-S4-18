@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.FYP18.HealthyRecipe.DTO.JWTResponseDTO;
 import com.FYP18.HealthyRecipe.DTO.LoginRequestDTO;
-import com.FYP18.HealthyRecipe.DTO.UserInfoDTO;
+import com.FYP18.HealthyRecipe.DTO.DashboardDTO;
 import com.FYP18.HealthyRecipe.Entity.BusinessUser;
 import com.FYP18.HealthyRecipe.Entity.Nutritionist;
 import com.FYP18.HealthyRecipe.Entity.RegisteredUser;
@@ -101,7 +101,7 @@ public class RegisterController {
     }
     
     @GetMapping("/dashboard/{username}")
-    public UserInfoDTO getDTO(@PathVariable("username") String username)
+    public DashboardDTO getDTO(@PathVariable("username") String username)
     {   
        return loginService.GetDashboardInfo(username);
     }

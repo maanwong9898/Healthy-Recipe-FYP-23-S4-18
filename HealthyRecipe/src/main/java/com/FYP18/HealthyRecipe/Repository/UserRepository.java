@@ -8,6 +8,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.FYP18.HealthyRecipe.DTO.UserInfoDTO;
 import com.FYP18.HealthyRecipe.Entity.User;
 import java.util.List;
 
@@ -27,11 +28,18 @@ public interface UserRepository extends JpaRepository<User,String> {
     // Optional<User> findById(String id);  
  
     @Transactional
-    @Query("SELECT b FROM User b WHERE b.Email = :email")
+    @Query("SELECT b FROM User b WHERE b.email = :email")
     User findByEmail(String email); 
  
     @Query("SELECT b FROM User b WHERE b.username = :username")
     Optional<User> findByUsername(String username); 
+
+    
+    @Query(value ="SELECT r.id AS id, r.username AS username, r.role AS role, r.email AS email, r.createdDate AS createdDate, r.enabled AS enabled FROM User r WHERE r.id = :id")
+    UserInfoDTO getUserInfoDTO(String id);
+
+    @Query(value ="SELECT r.id AS id, r.username AS username, r.role AS role, r.email AS email, r.createdDate AS createdDate, r.enabled AS enabled FROM User r")
+    List<UserInfoDTO> getUsersDTO();
     // List<User> findByUsername(String username);
     // @Modifying
     // @Transactional

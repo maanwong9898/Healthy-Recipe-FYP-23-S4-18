@@ -81,14 +81,14 @@ public class RecipeController {
     //     return new ResponseEntity<>(toReturn, HttpStatus.OK);
     // }
     
-    @PatchMapping("/update")
+    @PutMapping("/update")
     public ResponseEntity<Recipe> updateBlog(@RequestBody Recipe recipe)  
     { 
        Recipe toReturn = recipeService.updateRecipe(recipe); 
         return new ResponseEntity<>(toReturn, HttpStatus.OK);
     }
 
-    @PatchMapping("/updateActivity")
+    @PutMapping("/updateActivity")
     public ResponseEntity<Recipe> updateRecipeActivity(@RequestBody Recipe recipe)
     {
         Recipe toReturn  = recipeService.updateRecipeActivity(recipe);

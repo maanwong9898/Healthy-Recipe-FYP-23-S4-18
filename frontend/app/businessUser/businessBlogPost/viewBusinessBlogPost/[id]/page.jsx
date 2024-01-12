@@ -19,25 +19,49 @@ const slugify = (text) =>
     .replace(/^-+/, "") // Trim - from start of text
     .replace(/-+$/, ""); // Trim - from end of text
 
+// const fetchBlogPostById = async (postId) => {
+//   try {
+//     const response = await axiosInterceptorInstance.get("/blog/get");
+//     console.log("response data is:", response.data);
+
+//     const filteredData = response.data.filter(
+//       (post) => post.educationalContent === false
+//     );
+
+//     console.log("filtered data is:", filteredData);
+
+//     // Ensure postId is an integer if the IDs in data are integers
+//     postId = parseInt(postId, 10);
+
+//     const blogPost = filteredData.find((post) => post.id === postId);
+//     if (!blogPost) {
+//       console.error(`Blog post with ID ${postId} not found in filtered data`);
+//       throw new Error(`Blog post with ID ${postId} not found`);
+//     }
+//     return blogPost;
+//   } catch (error) {
+//     console.error("Failed to fetch blog post:", error);
+//     throw error;
+//   }
+// };
+
 const fetchBlogPostById = async (postId) => {
   try {
-    const response = await axiosInterceptorInstance.get("/blog/get");
-    console.log("response data is:", response.data);
+    // Ensure postId is a string if the IDs in your URL need to be strings
+    postId = postId;
 
-    const filteredData = response.data.filter(
-      (post) => post.educationalContent === false
-    );
+    const response = await axiosInterceptorInstance.get(`/blog/get/${postId}`);
+    console.log("Fetched blog post data is:", response.data);
 
-    console.log("filtered data is:", filteredData);
-
-    // Ensure postId is an integer if the IDs in data are integers
-    postId = parseInt(postId, 10);
-
-    const blogPost = filteredData.find((post) => post.id === postId);
-    if (!blogPost) {
-      console.error(`Blog post with ID ${postId} not found in filtered data`);
+    if (!response.data) {
+      console.error(`Blog post with ID ${postId} not found`);
       throw new Error(`Blog post with ID ${postId} not found`);
     }
+
+    console.log("try blog post by id");
+    // Assuming the response contains the blog post directly
+    const blogPost = response.data;
+
     return blogPost;
   } catch (error) {
     console.error("Failed to fetch blog post:", error);

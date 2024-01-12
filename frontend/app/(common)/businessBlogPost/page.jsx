@@ -7,7 +7,7 @@ import HomeNavbar from "@/app/components/navigation/homeNavBar";
 import axiosInterceptorInstance from "../../axiosInterceptorInstance.js";
 import Home from "@/app/page";
 
-// router path: /registeredUser/businessBlogPost
+// router path: /businessBlogPost
 
 // Fetch all blog posts from the backend - backend controller is BlogController
 const fetchBlogPosts = async () => {
@@ -130,8 +130,6 @@ const BusinessBlogPostsPageForUser = () => {
         (post) => post.educationalContent === false && post.active === true
       );
 
-      console("inside handle search click");
-
       // Check if the search results are empty
       if (filteredResults.length > 0) {
         setSearchResults(filteredResults); // Update the search results state
@@ -182,8 +180,8 @@ const BusinessBlogPostsPageForUser = () => {
       }}
     >
       <img
-        src={post.image_url}
-        alt={post.image_title}
+        src={post.img}
+        alt="Designed by Freepik"
         className="w-full object-cover rounded-sm"
         style={{ height: "192px" }}
       />
@@ -215,59 +213,47 @@ const BusinessBlogPostsPageForUser = () => {
           Business Blog Posts
         </h1>
         {/* Search and Sort Section */}
-        <div className="flex justify-between items-center mb-4">
-          <div className="flex">
+        <div className="flex sm:justify-between sm:items-center mb-4">
+          <div className="flex flex-col sm:flex-row sm:items-center mb-4 sm:mb-0">
             <input
               type="text"
-              id="blogSearch" // Adding an id attribute here
-              name="blogSearch" // Adding a name attribute here
+              id="blogSearch"
+              name="blogSearch"
               value={searchTerm}
-              style={{
-                width: "200px",
-                height: "50px",
-                boxSizing: "border-box",
-              }} // Ensure box-sizing is border-box
               onChange={(e) => setSearchTerm(e.target.value)}
               placeholder="Search blog posts"
-              className="mr-2 p-2 rounded border-2 border-black"
+              className="mr-2 p-2 rounded border-2 border-black mb-2 sm:mb-0" // Removed inline styles for width and height to allow flex-grow
+              style={{ flex: 1 }} // Added flex-grow for input
             />
-
             <button
               onClick={handleSearchClick}
-              sstyle={{
-                width: "150px",
-                height: "50px",
-                boxSizing: "border-box",
-              }} // Ensure box-sizing is border-box
-              className="text-white p-2 border-2 border-black bg-gradient-to-br from-cyan-400 to-cyan-800 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 rounded-lg text-base font-bold px-5 py-2.5 mr-7 mb-3 text-center"
+              className="text-white p-2 border-2 border-black bg-gradient-to-br from-cyan-400 to-cyan-800 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 rounded-lg text-base font-bold px-5 py-2.5 text-center"
+              style={{ flexShrink: 0 }} // Prevent the button from shrinking
             >
               Search
             </button>
-            {/* "Results found" message */}
-            {searchPerformed && !isSearchEmpty && (
-              <p className="text-left text-red font-bold text-xl">
-                {searchResultsCount} results found.
-              </p>
-            )}
-            {/* "No results found" message */}
-            {searchPerformed && isSearchEmpty && (
-              <p className="text-left text-red font-bold text-xl">
-                No results found.
+            {/* Conditional messages */}
+            {searchPerformed && (
+              <p className="text-left text-red font-bold text-xl sm:ml-2">
+                {isSearchEmpty
+                  ? "No results found."
+                  : `${searchResultsCount} results found.`}
               </p>
             )}
           </div>
-          <div>
+          <div className="flex flex-col sm:flex-row sm:items-center">
             <label
               htmlFor="categoryFilter"
-              className="mr-2 font-2xl text-black"
+              className="font-2xl text-black mb-2 sm:mb-0 sm:mr-2"
             >
               Filter By:
             </label>
             <select
               id="categoryFilter"
-              value={categoryFilter} // Change this line
-              onChange={(e) => setCategoryFilter(e.target.value)} // And this line
+              value={categoryFilter}
+              onChange={(e) => setCategoryFilter(e.target.value)}
               className="p-2 rounded border-2 border-black text-black"
+              style={{ width: "100%", maxWidth: "300px" }} // Added max-width for select
             >
               <option value="">All Categories</option>
               {categories.map((category) => (

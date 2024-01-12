@@ -130,8 +130,6 @@ const BusinessBlogPostsPageForRegisteredUser = () => {
         (post) => post.educationalContent === false && post.active === true
       );
 
-      console("inside handle search click");
-
       // Check if the search results are empty
       if (filteredResults.length > 0) {
         setSearchResults(filteredResults); // Update the search results state
@@ -182,8 +180,8 @@ const BusinessBlogPostsPageForRegisteredUser = () => {
       }}
     >
       <img
-        src={post.image_url}
-        alt={post.image_title}
+        src={post.img}
+        alt="Designed by Freepik"
         className="w-full object-cover rounded-sm"
         style={{ height: "192px" }}
       />
@@ -209,7 +207,6 @@ const BusinessBlogPostsPageForRegisteredUser = () => {
 
   return (
     <div>
-      <HomeNavbar />
       <div className="bg-white p-4 md:p-10">
         <h1 className="text-2xl md:text-4xl font-extrabold font-mono text-cyan-800 mb-4 md:mb-8">
           Business Blog Posts

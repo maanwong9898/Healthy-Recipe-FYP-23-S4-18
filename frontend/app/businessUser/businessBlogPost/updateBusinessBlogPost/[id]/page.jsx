@@ -88,6 +88,7 @@ const UpdateBusinessBlogPostPage = ({ params }) => {
         setPublisher(data.publisher);
         setCategory(data.category);
         setInfo(data.info);
+        setImageUrl(data.img);
       })
       .catch((error) => {
         console.error("Error fetching blog post:", error);

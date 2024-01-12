@@ -372,7 +372,7 @@ const MyBusinessBlogPosts = () => {
                   <button
                     onClick={() => handleSuspendBlogPost(businessBlogPost.id)}
                     disabled={!businessBlogPost.active}
-                    className={`text-white font-bold bg-gradient-to-br ${
+                    className={`text-white font-bold bg-gradient-to-br border-black border-2 ${
                       businessBlogPost.active
                         ? "from-orange-600 to-red-700"
                         : "bg-gray-300"

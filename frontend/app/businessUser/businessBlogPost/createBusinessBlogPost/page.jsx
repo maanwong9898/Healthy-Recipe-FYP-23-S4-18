@@ -74,6 +74,7 @@ const CreateBusinessBlogPostPage = () => {
       publisher: publisher, // Retrieved from state
       title: title, // Retrieved from state
       info: info, // Retrieved from state
+      img: imageUrl, // Retrieved from state
       userID: { id: "3" }, // Assuming static user ID, replace with dynamic value if needed
       // userID: { id: storedUserId }, // replace above
     };

@@ -3,44 +3,60 @@ import { useRouter } from "next/navigation";
 import React from "react";
 import Link from "next/link";
 import { useState, useEffect } from "react";
+import axiosInterceptorInstance from "../../axiosInterceptorInstance.js";
 
 // router path: /sysAdmin/suspendRecipe
 
 // Called the controller to get the list of all "Active" recipes
 // this is the simple mock data for recipes but a recipe should have more attributes
-const mockRecipes = [
-  {
-    recipeName: "Tomato Soup",
-    dateCreated: "2021-10-01",
-    ratings: 4,
-    reviews: 5,
-    isActive: true,
-  },
-  {
-    recipeName: "Chicken Soup",
-    dateCreated: "2021-10-01",
-    ratings: 3,
-    reviews: 10,
-    isActive: true,
-  },
-  {
-    recipeName: "Beef Soup",
-    dateCreated: "2021-10-01",
-    ratings: 3,
-    reviews: 9,
-    isActive: true,
-  },
-  {
-    recipeName: "Pork Soup",
-    dateCreated: "2021-10-01",
-    ratings: 5,
-    reviews: 10,
-    isActive: true,
-  },
-];
+// const mockRecipes = [
+//   {
+//     recipeName: "Tomato Soup",
+//     dateCreated: "2021-10-01",
+//     ratings: 4,
+//     reviews: 5,
+//     isActive: true,
+//   },
+//   {
+//     recipeName: "Chicken Soup",
+//     dateCreated: "2021-10-01",
+//     ratings: 3,
+//     reviews: 10,
+//     isActive: true,
+//   },
+//   {
+//     recipeName: "Beef Soup",
+//     dateCreated: "2021-10-01",
+//     ratings: 3,
+//     reviews: 9,
+//     isActive: true,
+//   },
+//   {
+//     recipeName: "Pork Soup",
+//     dateCreated: "2021-10-01",
+//     ratings: 5,
+//     reviews: 10,
+//     isActive: true,
+//   },
+// ];
 
 const SuspendRecipePage = () => {
-  const [recipes, setRecipes] = useState(mockRecipes);
+  const [recipes, setRecipes] = useState([]);
+
+  // get all the recipes from the backend
+  const viewUserRecipe = async () => {
+    try {
+      const response = await axiosInterceptorInstance.get("/recipe/get");
+      console.log(response.data);
+      setRecipes(response.data);
+    } catch (error) {
+      console.error("Error fetching data", error);
+    }
+  };
+
+  useEffect(() => {
+    viewUserRecipe();
+  }, []);
 
   return (
     <div className="px-2 sm:px-5  bg-cyan-800 min-h-screen flex flex-col py-5">
@@ -53,39 +69,43 @@ const SuspendRecipePage = () => {
             <tr>
               <th className="px-3 py-2 text-xl text-left">Recipe</th>
               <th className="px-3 py-2 text-xl text-left">Date Created</th>
-              <th className="px-3 py-2 text-xl text-left">Ratings</th>
-              <th className="px-3 py-2 text-xl text-left">Reviews</th>
+              <th className="px-3 py-2 text-xl text-left">Publisher</th>
+              {/* <th className="px-3 py-2 text-xl text-left">Ratings</th> */}
+              {/* <th className="px-3 py-2 text-xl text-left">Reviews</th> */}
               <th className="px-3 py-2 text-xl text-left">Status</th>
               <th className="px-3 py-2 text-xl text-left"></th>
             </tr>
           </thead>
           <tbody>
-            {mockRecipes.map((recipe, index) => (
+            {recipes.map((recipe, index) => (
               <tr
                 key={index}
                 className="bg-white border-b border-blue dark:border-blue-600"
               >
                 <td className="px-3 py-2 text-base text-center sm:text-left">
-                  {recipe.recipeName}
+                  {recipe.title}
                 </td>
                 <td className="px-3 py-2 text-base text-center sm:text-left">
-                  {recipe.dateCreated}
+                  {new Date(recipe.createdDT).toLocaleDateString("en-GB")}
                 </td>
                 <td className="px-3 py-2 text-base text-center sm:text-left">
+                  {recipe.userID?.fullName || "nil"}
+                </td>
+                {/* <td className="px-3 py-2 text-base text-center sm:text-left">
                   {recipe.ratings}
-                </td>
-                <td className="px-3 py-2 text-base text-center sm:text-left">
+                </td> */}
+                {/* <td className="px-3 py-2 text-base text-center sm:text-left">
                   {recipe.reviews}
-                </td>
+                </td> */}
                 <td className="px-3 py-2 text-base text-center sm:text-left">
                   <span
                     className={`rounded-full px-3 py-1 text-base font-semibold ${
-                      recipe.isActive === true
+                      recipe.active === true
                         ? "text-white bg-gradient-to-br from-cyan-400 to-cyan-600"
                         : "text-white bg-gradient-to-br from-orange-600 to-red-700"
                     }`}
                   >
-                    {recipe.isActive === true ? "Active" : "Inactive"}
+                    {recipe.active === true ? "Active" : "Inactive"}
                   </span>
                 </td>
 
@@ -111,53 +131,3 @@ const SuspendRecipePage = () => {
 };
 
 export default SuspendRecipePage;
-
-// // this function is to suspend the recipe
-//   // ready to be tested
-//   // the url will be changed to the backend url
-//   const viewUserRecipe = async () => {
-//     try {
-//       const response = await fetch(
-//         "http://localhost:8080/api/recipe/readAllRecipes"
-//       );
-//       if (response.ok) {
-//         const data = await response.json();
-//         // write the data into console for debugging
-//         console.log("data from backend");
-//         console.log(data);
-//         setRecipes(data);
-//       } else {
-//         console.error("Failed to fetch recipe list");
-//       }
-//     } catch (error) {
-//       console.error("Error fetching data", error);
-//     }
-//   };
-
-//   // this function is to suspend particular recipe
-//   const handleSuspendRecipe = async (recipeName) => {
-//     // Check the username
-//     console.log(`Recipe: ${recipeName}`);
-
-//     // Send a request to backend to suspend the account
-//     try {
-//       const response = await fetch(
-//         `http://localhost:8080/api/recipe/suspendRecipe/${recipeName}`,
-//         {
-//           method: "PUT",
-//         }
-//       );
-//       if (response.ok) {
-//         // Refresh the recipe list
-//         viewUserRecipe();
-//       } else {
-//         console.error("Failed to suspend recipe");
-//       }
-//     } catch (error) {
-//       console.error("Error suspending recipe", error);
-//     }
-//   };
-
-//   useEffect(() => {
-//     viewUserRecipe();
-//   }, []);

@@ -25,6 +25,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 
 // import org.springframework.web.bind.annotation.RequestParam;
 import java.util.List;
+import java.util.Map;
+
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -48,6 +50,7 @@ public class BlogController {
     public ResponseEntity<List<Blog>> getAllBlogs()  
     { 
         List<Blog> toReturn = blogService.getAllBlogs();
+        System.out.println("VEEEE : " +toReturn.get(0).getBlogType().getSubcategoryName());
         return new ResponseEntity<>(toReturn, HttpStatus.OK);
     }
     @GetMapping("/get/{id}")
@@ -56,6 +59,15 @@ public class BlogController {
         Blog toReturn = blogService.findBlogById(id);
         return new ResponseEntity<>(toReturn, HttpStatus.OK);
     }
+
+    //  @GetMapping("/get/{id}")
+    // public ResponseEntity<Map<String,String>> getBlogById(@PathVariable Long id)
+    // {
+    //     // Blog toReturn = blogService.findBlogById(id);
+    //     Map<String,String> toReturn = blogService.findBlogBy(id);
+    //     return new ResponseEntity<>(toReturn, HttpStatus.OK);
+    // }
+
 
     @GetMapping ("/find")
     public ResponseEntity<List<Blog>> findByKeyword(@RequestParam String keyword)
@@ -70,6 +82,7 @@ public class BlogController {
         List<Blog> toReturn = blogService.findBlogByUserId(id);
         return new ResponseEntity<>(toReturn, HttpStatus.OK);
     }
+    
 
     @PostMapping("/add")
     public ResponseEntity<Blog> addBlog(@RequestBody Blog blog)  

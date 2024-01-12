@@ -24,6 +24,12 @@ public interface BlogReviewRatingRepository extends JpaRepository<BlogReviewRati
     @Query("SELECT b FROM BlogReviewRating b WHERE b.blogReviewRatingId.UserID = :userId")
     List<BlogReviewRating> findByUserID(String userId);
 
+
+    @Modifying
+    @Transactional
+    @Query("SELECT b FROM BlogReviewRating b WHERE b.blogReviewRatingId.blogID = :blogId")
+    List<BlogReviewRating> findByBlogId(Long blogId);
+
     // List<BlogReviewRating> findByBlogReviewRatingId(BlogReviewRatingId blogReviewRatingId);
     // List<Blog> findByUserID(User userID);
 }

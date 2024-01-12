@@ -5,6 +5,8 @@ import java.util.List;
 
 import org.hibernate.Length;
 
+import com.FYP18.HealthyRecipe.Entity.Categories.BlogPostCategory;
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import lombok.*;
@@ -54,6 +56,17 @@ public class Blog {
  
     @Column(name= "Title")
     private String title;
+ 
+    // @ManyToOne
+    // @JoinColumn(name = "blog_type_id")
+    //  private BlogPostCategory category;
+
+    // @Column(name = "blog_type_id", nullable = true)
+    // private Long blogTypeId;
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "blog_type_id", insertable = false, updatable = false)
+    private BlogPostCategory blogType;
 
     // @Column(name= "Info")
     @Column(nullable = false, columnDefinition="TEXT")

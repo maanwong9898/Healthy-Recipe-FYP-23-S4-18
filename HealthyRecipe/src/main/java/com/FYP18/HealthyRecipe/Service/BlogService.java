@@ -1,12 +1,15 @@
 package com.FYP18.HealthyRecipe.Service;
 
 import java.time.LocalDateTime;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.FYP18.HealthyRecipe.ObjectToMapConverter;
 import com.FYP18.HealthyRecipe.Entity.Blog;
 import com.FYP18.HealthyRecipe.Entity.BlogReviewRating;
 import com.FYP18.HealthyRecipe.Entity.BlogReviewRatingId;
@@ -78,6 +81,27 @@ public class BlogService {
             .orElseThrow(()->  new RuntimeException("Blog Id: "+ blogId + "is not found"));
     }
     
+
+      public Map<String, String> findBlogBy(long id)
+      {
+        Map<String,String> kvp = new HashMap<>(),
+        blogMap = new HashMap<>();
+
+        Blog blog = blogRepository.findById(id)
+        .orElseThrow(()->  new RuntimeException("Blog Id: "+ id + "is not found")); 
+        
+       List<BlogReviewRating> rrs =  blogReviewRatingRepository.findByBlogId(blog.getId());
+       System.out.println("CAUSED BYY: " + rrs);
+        blogMap = ObjectToMapConverter.convertObjectToMap(blog);
+        if(rrs != null && !rrs.isEmpty() )
+        {
+            kvp = ObjectToMapConverter.convertObjectToMap(rrs);
+            blogMap.putAll(kvp); 
+
+        }
+
+        return blogMap;
+    }
     // this is a failure, i have spent too much time :)
     // public List<Blog> findBlogByUserId(User userId)
     // {

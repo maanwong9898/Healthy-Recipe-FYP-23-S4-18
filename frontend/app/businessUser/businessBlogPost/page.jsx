@@ -139,28 +139,30 @@ const MyBusinessBlogPosts = () => {
     router.push(routePath);
   };
 
-  // Function to suspend a business blog post
-  const handleSuspendBlogPost = async (blogPostId) => {
+  // Combined Function to toggle a business blog post active status
+  const handleToggleBlogPostStatus = async (blogPostId, isActive) => {
+    const newStatus = !isActive;
+
     try {
       const response = await axiosInterceptorInstance.put("/blog/suspend", {
         id: blogPostId,
-        active: false,
+        active: newStatus,
       });
 
       // Check if the response is successful before updating the state
       if (response.status === 200) {
         const updatedBlogs = businessBlogs.map((blog) => {
           if (blog.id === blogPostId) {
-            return { ...blog, active: false };
+            return { ...blog, active: newStatus };
           }
           return blog;
         });
         setBusinessBlogs(updatedBlogs);
       } else {
-        console.error("Failed to suspend the blog post:", response);
+        console.error("Failed to update the blog post status:", response);
       }
     } catch (error) {
-      console.error("Error suspending blog post", error);
+      console.error("Error updating blog post status", error);
     }
   };
 
@@ -331,7 +333,9 @@ const MyBusinessBlogPosts = () => {
                   ).toLocaleDateString("en-GB")}
                 </td>
                 <td className="px-3 py-2 text-base text-center">
-                  {businessBlogPost.category}
+                  {businessBlogPost.blogType
+                    ? businessBlogPost.blogType.subcategoryName
+                    : "Not specified"}
                 </td>
                 <td className="px-3 py-2 text-base text-center">
                   <span
@@ -349,8 +353,8 @@ const MyBusinessBlogPosts = () => {
                     onClick={() => handleViewBlogPost(businessBlogPost.id)}
                     className="text-white font-bold bg-gradient-to-br from-cyan-400 to-cyan-800 hover:bg-blue-950 border-2 border-black
                     focus:ring-4 focus:outline-none focus:ring-blue-300
-                    dark:focus:ring-blue-800 rounded-lg text-base px-5 py-2.5 ml-7
-                    mr-7 text-center"
+                    dark:focus:ring-blue-800 rounded-lg text-base px-5 py-2.5 ml-2
+                    mr-2 text-center"
                   >
                     {" "}
                     View
@@ -361,8 +365,8 @@ const MyBusinessBlogPosts = () => {
                     onClick={() => handleUpdateBlogPost(businessBlogPost.id)}
                     className="text-white font-bold bg-gradient-to-br from-cyan-400 to-cyan-800 hover:bg-blue-950 border-2 border-black
                     focus:ring-4 focus:outline-none focus:ring-blue-300
-                    dark:focus:ring-blue-800 rounded-lg text-base px-5 py-2.5 ml-7
-                    mr-7 text-center"
+                    dark:focus:ring-blue-800 rounded-lg text-base px-5 py-2.5 ml-2
+                    mr-2 text-center"
                   >
                     {" "}
                     Edit
@@ -370,18 +374,20 @@ const MyBusinessBlogPosts = () => {
                 </td>
                 <td className="px-3 py-2 justify-center sm:justify-start">
                   <button
-                    onClick={() => handleSuspendBlogPost(businessBlogPost.id)}
-                    disabled={!businessBlogPost.active}
+                    onClick={() =>
+                      handleToggleBlogPostStatus(
+                        businessBlogPost.id,
+                        businessBlogPost.active
+                      )
+                    }
                     className={`text-white font-bold bg-gradient-to-br border-black border-2 ${
                       businessBlogPost.active
-                        ? "from-orange-600 to-red-700"
-                        : "bg-gray-300"
-                    } hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-blue-300
-                    dark:focus:ring-blue-800 rounded-lg text-base px-5 py-2.5 ml-7
-                    mr-7 text-center`}
+                        ? "from-orange-600 to-red-700 hover:bg-gradient-to-bl"
+                        : "from-blue-400 to-purple-600 hover:bg-gradient-to-bl"
+                    } focus:ring-4 focus:outline-none focus:ring-blue-300
+    dark:focus:ring-blue-800 rounded-lg text-base px-5 py-2.5 text-center`}
                   >
-                    {" "}
-                    Suspend
+                    {businessBlogPost.active ? "Suspend" : "Unsuspend"}
                   </button>
                 </td>
                 <td className="px-3 py-2 justify-center sm:justify-start">

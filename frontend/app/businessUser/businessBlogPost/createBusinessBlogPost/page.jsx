@@ -6,6 +6,8 @@ import axiosInterceptorInstance from "../../../axiosInterceptorInstance.js";
 import dynamic from "next/dynamic";
 import "react-quill/dist/quill.snow.css";
 
+// https://uiwjs.github.io/react-md-editor/
+
 // router path: /businessUser/businessBlogPost/createBusinessBlogPost
 // this is the page to create business blog post according to user story
 
@@ -65,29 +67,17 @@ const CreateBusinessBlogPostPage = () => {
       return;
     }
 
-    // Check what category was selected
-    console.log("Category selected:", category);
-
-    // Find the selected category object
-    const selectedCategory = categories.find(
-      (cat) => cat.id.toString() === category
-    );
-    if (!selectedCategory) {
-      setError("Please select a valid category.");
-      return;
-    }
-
-    console.log("Selected category object:", selectedCategory);
+    console.log("category id:", category);
 
     // Construct the payload according to the required format
     const blogPostData = {
       educationalContent: false, // Assuming this is a constant for all posts
-      publisher: publisher, // Retrieved from state
+      publisher: publisher, // will be return from backend
       title: title, // Retrieved from state
       info: info, // Retrieved from state
       img: imageUrl, // Retrieved from state
       // blogType: { id: categoryId, subcategoryName: "Cookbook" }, // Retrieved from state
-      blogType: selectedCategory, // Pass the entire selected category object
+      blogTypeId: category, // Pass the entire selected category id
       userID: { id: "3" }, // Assuming static user ID, replace with dynamic value if needed
       // userID: { id: storedUserId }, // replace above
     };

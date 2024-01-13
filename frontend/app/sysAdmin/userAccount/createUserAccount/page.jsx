@@ -2,6 +2,7 @@
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import Link from "next/link";
+import axiosInterceptorInstance from "../../../axiosInterceptorInstance";
 
 // router path: /sysAdmin/userAccount/createUserAccount
 // this is the page to create user account (systen admin only) according to user story
@@ -14,6 +15,7 @@ const CreateUserAccountPage = () => {
   const [password, setPassword] = useState("");
   const [confirmPwd, setConfirmPwd] = useState("");
   const [error, setError] = useState("");
+  const [success, setSuccess] = useState("");
 
   const emailValidation = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
@@ -24,38 +26,71 @@ const CreateUserAccountPage = () => {
 
   const todayDate = getFormattedDate(new Date());
 
-  const handleCreateAccount = (event) => {
+  const handleCreateAdminAccount = async (event) => {
     event.preventDefault();
 
     // Checks if the fields are filled
-    if (!fullName || !username || !email || !dob || !password || !confirmPwd) {
+    if (
+      !fullName.trim() ||
+      !username.trim() ||
+      !email.trim() ||
+      !dob.trim() ||
+      !password.trim() ||
+      !confirmPwd.trim()
+    ) {
       setError("All fields are required!");
       return;
-
-      // Checks if the pwd matches
     } else if (password !== confirmPwd) {
       setError("Passwords do not match.");
       return;
-
-      // Checks if email is in the right format
     } else if (!emailValidation.test(email)) {
       setError("Invalid email address.");
       return;
-
-      // Checks if registration successful
+    } else if (dob > todayDate) {
+      setError("Invalid date of birth.");
+      return;
     } else {
-      alert("Account creation is successful!");
-      // Reset fields in the form + error state
+      setSuccess("Account created successfully!");
+    }
+
+    console.log("Creating admin account...");
+
+    const formData = {
+      password: password,
+      username: username,
+      fullName: fullName,
+      dob: dob,
+      email: email,
+    };
+
+    console.log(formData);
+
+    try {
+      const response = await axiosInterceptorInstance.post(
+        "/register/admin",
+        formData
+      );
+      console.log("Account created successfully:", response.data);
+      setSuccess(true);
+
+      // Reset fields in the form
       setFullName("");
       setUsername("");
       setEmail("");
       setDOB("");
       setPassword("");
       setConfirmPwd("");
+
       setError("");
+
+      setTimeout(() => {
+        setSuccess("");
+      }, 10000);
+    } catch (error) {
+      console.error("Error creating admin account:", error);
+      setError(error.messcage || "Failed to create account.");
     }
 
-    // To check if data passed is correct
     console.log("User Account Details:", {
       fullName,
       username,
@@ -161,12 +196,15 @@ const CreateUserAccountPage = () => {
                   ></input>
                 </div>
                 {/* ERROR MSG */}
-                <p className="text-black font-bold text-xl">{error}</p>
+                <p className="text-red-500 text-sm">{error}</p>
+
+                {/* SUCCESS MSG */}
+                <p className="text-green-600 text-sm">{success}</p>
 
                 {/* SUBMIT BTN */}
                 <button
                   type="submit"
-                  onClick={handleCreateAccount}
+                  onClick={handleCreateAdminAccount}
                   className="bg-cyan-500 hover:bg-sky-700 text-white font-bold py-2 px-4 rounded-lg w-full"
                 >
                   Create an account

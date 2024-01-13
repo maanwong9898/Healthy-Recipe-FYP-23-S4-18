@@ -86,7 +86,7 @@ const UpdateBusinessBlogPostPage = ({ params }) => {
         // Set each piece of state with the corresponding data
         setTitle(data.title);
         setPublisher(data.publisher);
-        setCategory(data.category);
+        setCategory(data.blogType.subcategoryName || "No Subcategory"); // Display "No Subcategory" if subcategory is null
         setInfo(data.info);
         setImageUrl(data.img);
       })

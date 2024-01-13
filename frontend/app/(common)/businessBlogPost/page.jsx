@@ -12,6 +12,7 @@ import Home from "@/app/page";
 // Fetch all blog posts from the backend - backend controller is BlogController
 const fetchBlogPosts = async () => {
   try {
+    console.log("Fetching blog posts...");
     const response = await axiosInterceptorInstance.get("/blog/get");
     console.log("All blogs:", response.data);
 

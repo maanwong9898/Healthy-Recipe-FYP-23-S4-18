@@ -68,6 +68,17 @@ const CreateBusinessBlogPostPage = () => {
     // Check what category was selected
     console.log("Category selected:", category);
 
+    // Find the selected category object
+    const selectedCategory = categories.find(
+      (cat) => cat.id.toString() === category
+    );
+    if (!selectedCategory) {
+      setError("Please select a valid category.");
+      return;
+    }
+
+    console.log("Selected category object:", selectedCategory);
+
     // Construct the payload according to the required format
     const blogPostData = {
       educationalContent: false, // Assuming this is a constant for all posts
@@ -75,9 +86,13 @@ const CreateBusinessBlogPostPage = () => {
       title: title, // Retrieved from state
       info: info, // Retrieved from state
       img: imageUrl, // Retrieved from state
+      // blogType: { id: categoryId, subcategoryName: "Cookbook" }, // Retrieved from state
+      blogType: selectedCategory, // Pass the entire selected category object
       userID: { id: "3" }, // Assuming static user ID, replace with dynamic value if needed
       // userID: { id: storedUserId }, // replace above
     };
+
+    console.log("Blog post data for creation:", blogPostData);
 
     try {
       const response = await axiosInterceptorInstance.post(
@@ -96,9 +111,6 @@ const CreateBusinessBlogPostPage = () => {
       setImageUrl("");
       setImageTitle("");
       setError("");
-
-      // Optionally redirect to another page or show success message
-      // Example: router.push('/path-to-redirect-to');
     } catch (error) {
       setSuccess(false); // Ensure success is false on error
       console.error("Error creating blog post:", error);
@@ -184,7 +196,7 @@ const CreateBusinessBlogPostPage = () => {
                 >
                   <option value="">Select a category</option>
                   {categories.map((cat, index) => (
-                    <option key={index} value={cat.subcategoryName}>
+                    <option key={index} value={cat.id}>
                       {cat.subcategoryName}
                     </option>
                   ))}
@@ -245,9 +257,9 @@ const CreateBusinessBlogPostPage = () => {
                 />
               </div>
               {/* ERROR MESSAGE */}
-              {error && <p className="text-red-500">{error}</p>}
+              {error && <p className="text-red-800 text-xl">{error}</p>}
               {success && (
-                <p className="text-green-500">
+                <p className="text-green-800 text-xl">
                   Blog post was created successfully!
                 </p>
               )}

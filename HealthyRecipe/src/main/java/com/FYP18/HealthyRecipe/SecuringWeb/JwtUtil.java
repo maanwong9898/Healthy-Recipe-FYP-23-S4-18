@@ -36,7 +36,9 @@ public class JwtUtil {
         this.jwtParser = Jwts.parser().setSigningKey(secret_key.getBytes()); 
     } 
 
-    public String createToken(String email) {
+    public String createToken(String email
+    , String role, String id
+    ) {
         Date tokenCreateTime = new Date();
                                 // this timing + 10 minutes
         Date tokenValidity = new Date(tokenCreateTime.getTime() 
@@ -45,7 +47,9 @@ public class JwtUtil {
         Claims claims = Jwts.claims()
                         .setSubject(email)
                         .setIssuedAt(tokenCreateTime);
-  
+
+        claims.put("role", role);
+        claims.put("id", id);
         String toReturn = Jwts.builder()
                 .setClaims(claims)
                 .setExpiration(tokenValidity)

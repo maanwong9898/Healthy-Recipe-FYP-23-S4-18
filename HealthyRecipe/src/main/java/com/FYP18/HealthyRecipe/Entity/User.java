@@ -98,8 +98,9 @@ public class User implements UserDetails
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() { 
         List<SimpleGrantedAuthority> c = new ArrayList<>();
-
         c.add(new SimpleGrantedAuthority("ROLE_"  + role));
+
+        // c.add(new SimpleGrantedAuthority(role.toString()));
         return c; 
     }
 
@@ -107,16 +108,15 @@ public class User implements UserDetails
     // probably set false by default, then after verified them trn to true
     @Override
     public boolean isEnabled() {
-        return enabled;
+        return true;
     } 
-
-
+ 
 
     // these are not implemented, just return default values
 
     @Override
     public boolean isAccountNonExpired() {
-        return false;
+        return true;
     }
 
     @Override

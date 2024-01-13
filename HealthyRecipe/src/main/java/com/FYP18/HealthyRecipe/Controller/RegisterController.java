@@ -23,6 +23,7 @@ import com.FYP18.HealthyRecipe.Entity.BusinessUser;
 import com.FYP18.HealthyRecipe.Entity.Nutritionist;
 import com.FYP18.HealthyRecipe.Entity.RegisteredUser;
 import com.FYP18.HealthyRecipe.Entity.SystemAdmin;
+import com.FYP18.HealthyRecipe.Entity.User;
 import com.FYP18.HealthyRecipe.SecuringWeb.JwtUtil;
 import com.FYP18.HealthyRecipe.Service.CustomUserDetailService;
 import com.FYP18.HealthyRecipe.Service.LoginService; 
@@ -84,11 +85,13 @@ public class RegisterController {
         Authentication auth = authenticationManager.authenticate(
             new UsernamePasswordAuthenticationToken(loginRequestDTO.getEmail(), loginRequestDTO.getPassword()));
 
-        System.out.println("LAOUT");
-        System.out.println(auth.toString());
+        // System.out.println("AUTH :" +auth.getPrincipal()); 
          if(auth.isAuthenticated())
-        { 
-            String token = jwtUtil.createToken(loginRequestDTO.getEmail());
+        {   
+            User user = (User) auth.getPrincipal();
+            System.out.println(user.toString());
+            String token = jwtUtil.createToken(loginRequestDTO.getEmail(),//,
+            user.getRole().toString(), user.getId());
             System.out.println("token: " + token);
             // RefreshToken refreshToken = refreshTokenService.createRefreshToken(authRequestDTO.getUsername());
            return JWTResponseDTO.builder() 
@@ -96,8 +99,7 @@ public class RegisterController {
 
         } else {
             throw new UsernameNotFoundException("invalid user request..!!");
-        } 
-        // loginService.
+        }  
     }
     
     @GetMapping("/dashboard/{id}")

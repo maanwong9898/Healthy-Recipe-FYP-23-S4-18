@@ -27,6 +27,12 @@ public interface BlogRepository extends JpaRepository<Blog, Long>{
     @Query("SELECT r FROM Blog r WHERE r.title LIKE %:keyword%")
     List<Blog> findByKeyword(@Param("keyword") String keyword);
 
+    @Modifying
+    @Transactional 
+    @Query("SELECT r FROM Blog r WHERE r.blogTypeId = :blogTypeId")
+    List<Blog> findByBlogTypeId(Long blogTypeId);
+
+    
  
     // @Modifying
     // @Transactional

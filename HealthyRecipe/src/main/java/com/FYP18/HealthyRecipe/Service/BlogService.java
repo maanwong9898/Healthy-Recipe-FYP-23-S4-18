@@ -4,6 +4,7 @@ import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -13,9 +14,10 @@ import com.FYP18.HealthyRecipe.ObjectToMapConverter;
 import com.FYP18.HealthyRecipe.Entity.Blog;
 import com.FYP18.HealthyRecipe.Entity.BlogReviewRating;
 import com.FYP18.HealthyRecipe.Entity.BlogReviewRatingId;
-
+import com.FYP18.HealthyRecipe.Entity.Categories.BlogPostCategory;
 import com.FYP18.HealthyRecipe.Repository.BlogRepository;
 import com.FYP18.HealthyRecipe.Repository.BlogReviewRatingRepository;
+import com.FYP18.HealthyRecipe.Repository.Categories.BlogPostCategoryRepo;
 
 // import org.springframework.transaction.annotation.Transactional;
 // import jakarta.transaction.Transactional;
@@ -31,6 +33,8 @@ public class BlogService {
     @Autowired
     private BlogReviewRatingRepository blogReviewRatingRepository;
 
+    @Autowired
+    private BlogPostCategoryRepo blogTypeRepo;
     // create, read all, read 1, update, delete for blogReviewRating
  
     public Blog createBlog(Blog blog)
@@ -54,7 +58,10 @@ public class BlogService {
     // to overwrites all content
     public Blog updateBlog(Blog blog)
     {
-        // automatically sets the last updated time
+        Optional<BlogPostCategory> blogType = blogTypeRepo.findById(blog.getBlogTypeId());
+
+        blog.setBlogTypeId(!blogType.isPresent() ? null :blogType.get().getId());
+         // automatically sets the last updated time
         blog.setLastUpdatedDateTime(LocalDateTime.now());
         return blogRepository.save(blog);
     }

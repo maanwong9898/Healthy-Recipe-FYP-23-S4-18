@@ -50,7 +50,7 @@ public class BlogController {
     public ResponseEntity<List<Blog>> getAllBlogs()  
     { 
         List<Blog> toReturn = blogService.getAllBlogs();
-        System.out.println("VEEEE : " +toReturn.get(0).getBlogType().getSubcategoryName());
+        // System.out.println("VEEEE : " +toReturn.get(0).getBlogType().getSubcategoryName());
         return new ResponseEntity<>(toReturn, HttpStatus.OK);
     }
     @GetMapping("/get/{id}")
@@ -87,7 +87,7 @@ public class BlogController {
     @PostMapping("/add")
     public ResponseEntity<Blog> addBlog(@RequestBody Blog blog)  
     { 
-       Blog toReturn = blogService.createBlog(blog); 
+        Blog toReturn = blogService.createBlog(blog); 
         return new ResponseEntity<>(toReturn, HttpStatus.CREATED);
     }
     
@@ -95,14 +95,14 @@ public class BlogController {
     @PutMapping("/edit")
     public ResponseEntity<Blog> editBlog(@RequestBody Blog blog)  
     { 
-       Blog toReturn = blogService.updateBlog(blog); 
-        return new ResponseEntity<>(toReturn, HttpStatus.OK);
+        Blog toReturn = blogService.updateBlog(blog);  
+        return new ResponseEntity<>(toReturn, HttpStatus.OK);   
     }
     
      @PutMapping("/suspend")
     public ResponseEntity<Blog> suspendBlog(@RequestBody Blog blog)  
     { 
-       Blog toReturn = blogService.suspendBlog(blog); 
+        Blog toReturn = blogService.suspendBlog(blog); 
         return new ResponseEntity<>(toReturn, HttpStatus.OK);
     }
     @PatchMapping("/update")

@@ -1,12 +1,15 @@
 package com.FYP18.HealthyRecipe.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.FYP18.HealthyRecipe.Entity.Blog;
 import com.FYP18.HealthyRecipe.Entity.Categories.*;
+import com.FYP18.HealthyRecipe.Repository.BlogRepository;
 import com.FYP18.HealthyRecipe.Repository.Categories.*;
 @Transactional 
 @Service
@@ -56,50 +59,40 @@ public class CategoryService {
     {
         return healthGoalRepo.save(allergy);
     }
-
-    public void deleteAllergy(Allergies allergies) throws Exception
-    {
-        Allergies al = allergiesRepo.findById(allergies.getId()) 
-                        .orElseThrow(()-> new Exception("Cant find allergy: " + allergies.getSubcategoryName()));
-
-        allergiesRepo.delete(al);
-    }
-    public void deleteBlogPostCategory(BlogPostCategory healthGoal)throws Exception
-    {
-         BlogPostCategory al = blogPostCategoryRepo.findById(healthGoal.getId()) 
-                        .orElseThrow(()-> new Exception("Cant find BlogPostCategory: " + healthGoal.getSubcategoryName()));
-
-        blogPostCategoryRepo.delete(al);
-
-    }
-    public void deleteDietaryPreference(DietaryPreferences healthGoal)throws Exception
-    {
-         DietaryPreferences al =  dietaryPreferenceRepo.findById(healthGoal.getId()) 
-                        .orElseThrow(()-> new Exception("Cant find DietaryPreferences: " + healthGoal.getSubcategoryName()));
-
-        dietaryPreferenceRepo.delete(al);
-    }
-    public void deleteEducationalContent(EducationalContentCategory healthGoal)throws Exception
-    {
-        EducationalContentCategory al =  educationalContentCategoryRepo.findById(healthGoal.getId()) 
-                                .orElseThrow(()-> new Exception("Cant find EducationalContentCategory: " + healthGoal.getSubcategoryName()));
-
-        educationalContentCategoryRepo.delete(al);
-    }
-    public void deleteHealthGoal(HealthGoal healthGoal)throws Exception
-    {
-         HealthGoal al =  healthGoalRepo.findById(healthGoal.getId())
-                        .orElseThrow(()-> new Exception("Cant find HealthGoal: " + healthGoal.getSubcategoryName()));
-
-        healthGoalRepo.delete(al);
-    }
+ 
+    
 
     public void deleteAllergy(long id)
     { 
         allergiesRepo.deleteById(id);  
     }
+
+    @Autowired
+    private BlogRepository blogRepo;
+   
     public void deleteBlogPostCategory(long id)
     { 
+
+        Optional<BlogPostCategory> al = blogPostCategoryRepo.findById(id) ;
+                                // 
+        
+        if(al.isPresent())
+        {
+           List<Blog> list = blogRepo.findByBlogTypeId(id);
+            for(Blog b: list)
+            {
+                b.setBlogTypeId(null);
+            }
+            System.out.println("FOUND: " +list.size());
+            blogRepo.saveAll(list);
+       
+            blogPostCategoryRepo.delete(al.get());
+        } 
+        else
+        {
+            System.out.println("FOUND: EMPTY");
+
+        }
         blogPostCategoryRepo.deleteById(id);  
     }
     public void deleteDietaryPreference(long id)

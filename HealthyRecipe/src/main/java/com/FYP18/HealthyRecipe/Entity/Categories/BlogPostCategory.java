@@ -11,6 +11,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+
 @Getter
 @Setter
 @Builder 
@@ -28,4 +29,13 @@ public class BlogPostCategory {
      
     @Column(name = "subcategoryName", nullable = false)
     private String subcategoryName;
+
+    public BlogPostCategory(Long id)
+    {
+        this.id = id;
+    }
+    @Override 
+    public String toString() { 
+        return subcategoryName;
+    }
 }

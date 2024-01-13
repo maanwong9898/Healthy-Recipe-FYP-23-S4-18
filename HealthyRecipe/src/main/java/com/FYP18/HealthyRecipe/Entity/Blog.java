@@ -21,6 +21,7 @@ import jakarta.persistence.Lob;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
+import jakarta.persistence.PreRemove;
 import jakarta.persistence.Table;
 
 
@@ -32,7 +33,6 @@ import jakarta.persistence.Table;
 @Entity
 @Table(name = "Blog") 
 public class Blog {
-
  
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -56,18 +56,15 @@ public class Blog {
  
     @Column(name= "Title")
     private String title;
+  
+    @Column(name = "blog_type_id", nullable = true)
+    private Long blogTypeId;
  
-    // @ManyToOne
-    // @JoinColumn(name = "blog_type_id")
-    //  private BlogPostCategory category;
-
-    // @Column(name = "blog_type_id", nullable = true)
-    // private Long blogTypeId;
-
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH})
     @JoinColumn(name = "blog_type_id", insertable = false, updatable = false)
     private BlogPostCategory blogType;
-
+ 
+    
     // @Column(name= "Info")
     @Column(nullable = false, columnDefinition="TEXT")
     @Lob 
@@ -80,9 +77,7 @@ public class Blog {
     @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "UserID", referencedColumnName = "id")
     private User userID;
- 
-    // this userId belongs to who wrote it, usually fellow 
-    // business user
+  
     
 }    
   

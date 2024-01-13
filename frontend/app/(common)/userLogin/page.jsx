@@ -47,11 +47,25 @@ const images = [
 
 const userLogin = () => {
   const router = useRouter();
-  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState(""); // New state for error message
   const [passwordVisible, setPasswordVisible] = useState(false); // New state for password visibility
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
+
+  // // Function to convert UNIX epoch time to a human-readable date
+  // function convertEpochToHumanReadable(epoch) {
+  //   return new Date(epoch * 1000).toUTCString();
+  // }
+
+  // // Convert the given times
+  // const iatHumanReadable = convertEpochToHumanReadable(1704900795);
+  // const expHumanReadable = convertEpochToHumanReadable(1704901395);
+  // const currentHumanReadable = convertEpochToHumanReadable(1704900795.588);
+
+  // console.log(`Issued at: ${iatHumanReadable}`);
+  // console.log(`Expires at: ${expHumanReadable}`);
+  // console.log(`Current time: ${currentHumanReadable}`);
 
   const togglePasswordVisibility = () => {
     setPasswordVisible(!passwordVisible);
@@ -124,6 +138,27 @@ const userLogin = () => {
       // check what payload is
       console.log(decodedToken);
 
+      // const payload = JSON.parse(atob(token.split(".")[1])); // Decode base64 payload of the token
+      // const currentTime = Date.now() / 1000; // Get current time in seconds
+
+      // if (payload.exp < currentTime) {
+      //   // Token has expired
+      //   // Prompt user to log in again or automatically log out
+      //   localStorage.removeItem("token"); // Remove the expired token
+      //   // Redirect to login or do a full page refresh to clear app state
+      //   window.location.href = "/login";
+      // } else if (payload.exp > currentTime) {
+      //   // Token is still valid
+      //   // check what time is it
+      //   console.log("Current time: " + currentTime);
+
+      //   // check what time is the token expired
+      //   console.log("Token expired at: " + payload.exp);
+
+      //   // Do whatever you want with the token
+      //   console.log("token is still valid");
+      // }
+
       if (!token) {
         console.error("No token found");
         return;
@@ -154,7 +189,7 @@ const userLogin = () => {
 
     try {
       const response = await axiosInterceptorInstance.post("/register/login", {
-        email: username,
+        email: email,
         password: password,
       });
 
@@ -224,10 +259,10 @@ const userLogin = () => {
                     </div>
                     <input
                       type="text"
-                      placeholder="Username"
-                      value={username}
+                      placeholder="Email"
+                      value={email}
                       className="w-full bg-white py-2 pl-12 pr-3 rounded-full border border-white focus:border-black focus:outline-none focus:ring-1 focus:ring-black"
-                      onChange={(e) => setUsername(e.target.value)} // Assuming you have a setUsername function
+                      onChange={(e) => setEmail(e.target.value)} // Assuming you have a setEmail function
                     />
                   </div>
 
@@ -316,7 +351,7 @@ const userLogin = () => {
     //               placeholder="Username"
     //               value={username}
     //               className="w-full bg-cyan-200 text-cyan py-2 pl-12 pr-3 rounded-full border border-white focus:border-black focus:outline-none focus:ring-2 focus:ring-black"
-    //               onChange={(e) => setUsername(e.target.value)} // Assuming you have a setUsername function
+    //               onChange={(e) => setEmail(e.target.value)} // Assuming you have a setEmail function
     //             />
     //           </div>
 

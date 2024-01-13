@@ -21,28 +21,81 @@ const SuspendRecipePage = () => {
     }
   };
 
-  // Function to suspend a business blog post
-  const handleSuspendRecipe = async (recipeId) => {
+  // // Function to suspend a business blog post
+  // const handleSuspendRecipe = async (recipeId) => {
+  //   try {
+  //     const response = await axiosInterceptorInstance.put(
+  //       "/recipe/updateActivity",
+  //       {
+  //         id: recipeId,
+  //         active: false,
+  //       }
+  //     );
+
+  //     // Update local state to reflect the change
+  //     const updatedRecipes = recipes.map((recipe) => {
+  //       if (recipe.id === recipeId) {
+  //         return { ...recipe, active: false };
+  //       }
+  //       return recipe;
+  //     });
+
+  //     setRecipes(updatedRecipes);
+  //   } catch (error) {
+  //     console.error("Error suspending recipe", error);
+  //   }
+  // };
+
+  // const handleUnsuspendRecipe = async (recipeId) => {
+  //   try {
+  //     const response = await axiosInterceptorInstance.put(
+  //       "/recipe/updateActivity",
+  //       {
+  //         id: recipeId,
+  //         active: true,
+  //       }
+  //     );
+
+  //     // Update local state to reflect the change
+  //     const updatedRecipes = recipes.map((recipe) => {
+  //       if (recipe.id === recipeId) {
+  //         return { ...recipe, active: true };
+  //       }
+  //       return recipe;
+  //     });
+
+  //     setRecipes(updatedRecipes);
+  //   } catch (error) {
+  //     console.error("Error unsuspend recipe", error);
+  //   }
+  // };
+
+  const handleToggleRecipeStatus = async (recipeID, isActive) => {
+    const newStatus = !isActive;
+
     try {
       const response = await axiosInterceptorInstance.put(
         "/recipe/updateActivity",
         {
-          id: recipeId,
-          active: false,
+          id: recipeID,
+          active: newStatus,
         }
       );
 
-      // Update local state to reflect the change
-      const updatedRecipes = recipes.map((recipe) => {
-        if (recipe.id === recipeId) {
-          return { ...recipe, active: false };
-        }
-        return recipe;
-      });
-
-      setRecipes(updatedRecipes);
+      // Check if the response is successful before updating the state
+      if (response.status === 200) {
+        const updatedRecipes = recipes.map((recipe) => {
+          if (recipe.id === recipeID) {
+            return { ...recipe, active: newStatus };
+          }
+          return recipe;
+        });
+        setRecipes(updatedRecipes);
+      } else {
+        console.error("Failed to update the recipe status:", response);
+      }
     } catch (error) {
-      console.error("Error suspending recipe", error);
+      console.error("Error updating recipe status", error);
     }
   };
 
@@ -53,15 +106,16 @@ const SuspendRecipePage = () => {
   return (
     <div className="px-2 sm:px-5  bg-cyan-800 min-h-screen flex flex-col py-5">
       <h1 className="text-2xl text-white p-3 mb-4 font-bold text-center sm:text-left">
-        Recipes
+        All Recipes
       </h1>
       <div className="overflow-x-auto">
         <table className="min-w-full rounded-lg border-black border-2">
           <thead className="bg-cyan-600 font-semibold text-cyan-950 border-black border-2">
             <tr>
               <th className="px-3 py-2 text-xl text-left">Recipe</th>
-              <th className="px-3 py-2 text-xl text-left">Date Created</th>
               <th className="px-3 py-2 text-xl text-left">Publisher</th>
+              <th className="px-3 py-2 text-xl text-left">Company</th>
+              <th className="px-3 py-2 text-xl text-left">Date Published</th>
               {/* <th className="px-3 py-2 text-xl text-left">Ratings</th> */}
               {/* <th className="px-3 py-2 text-xl text-left">Reviews</th> */}
               <th className="px-3 py-2 text-xl text-left">Status</th>
@@ -78,11 +132,15 @@ const SuspendRecipePage = () => {
                   {recipe.title}
                 </td>
                 <td className="px-3 py-2 text-base text-center sm:text-left">
-                  {new Date(recipe.createdDT).toLocaleDateString("en-GB")}
-                </td>
-                <td className="px-3 py-2 text-base text-center sm:text-left">
                   {recipe.userID?.fullName || "nil"}
                 </td>
+                <td className="px-3 py-2 text-base text-center sm:text-left">
+                  {recipe.userID?.companyName || "nil"}
+                </td>
+                <td className="px-3 py-2 text-base text-center sm:text-left">
+                  {new Date(recipe.createdDT).toLocaleDateString("en-GB")}
+                </td>
+
                 {/* <td className="px-3 py-2 text-base text-center sm:text-left">
                   {recipe.ratings}
                 </td> */}
@@ -101,20 +159,19 @@ const SuspendRecipePage = () => {
                   </span>
                 </td>
 
-                <td className="px-3 py-2 flex flex-wrap justify-center sm:justify-start gap-2">
+                <td className="px-3 py-2 justify-center sm:justify-start">
                   <button
-                    onClick={() => handleSuspendRecipe(recipe.id)}
-                    disabled={!recipe.active}
-                    className={`text-white font-bold bg-gradient-to-br ${
+                    onClick={() =>
+                      handleToggleRecipeStatus(recipe.id, recipe.active)
+                    }
+                    className={`text-white font-bold bg-gradient-to-br border-black border-2 ${
                       recipe.active
-                        ? "from-orange-600 to-red-700"
-                        : "bg-gray-300"
-                    } hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-blue-300
-                    dark:focus:ring-blue-800 rounded-lg text-base px-5 py-2.5 ml-7
-                    mr-7 text-center`}
+                        ? "from-orange-600 to-red-700 hover:bg-gradient-to-bl"
+                        : "from-blue-400 to-purple-600 hover:bg-gradient-to-bl"
+                    } focus:ring-4 focus:outline-none focus:ring-blue-300
+    dark:focus:ring-blue-800 rounded-lg text-base px-5 py-2.5 text-center`}
                   >
-                    {" "}
-                    Suspend
+                    {recipe.active ? "Suspend" : "Unsuspend"}
                   </button>
                 </td>
               </tr>

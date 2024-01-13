@@ -1,47 +1,9 @@
 "use client";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import HomeNavbar from "@/app/components/navigation/homeNavBar";
-
-const mockHealthGoalsCat = [
-  {
-    category: "Weight Gain",
-  },
-  {
-    category: "Maintain Heatlth",
-  },
-  {
-    category: "Weight Loss",
-  },
-];
-
-const mockAllergiesCat = [
-  {
-    category: "Milk",
-  },
-  {
-    category: "Egg",
-  },
-  {
-    category: "Soy",
-  },
-  {
-    category: "Shellfish",
-  },
-  {
-    category: "Fish",
-  },
-  {
-    category: "Peanut",
-  },
-  {
-    category: "Tree Nuts",
-  },
-  {
-    category: "Gluten",
-  },
-];
+import axiosInterceptorInstance from "../../axiosInterceptorInstance.js";
 
 const userRegistration = () => {
   const [fullName, setFullName] = useState("");
@@ -50,14 +12,17 @@ const userRegistration = () => {
   const [password, setPassword] = useState("");
   const [confirmPwd, setConfirmPwd] = useState("");
   const [dob, setDOB] = useState("");
+  const [dietaryPreferencesCategory, setDietaryPreferencesCategory] = useState(
+    []
+  );
   const [dietaryPreference, setDietaryPreference] = useState("");
-  const [allergyRestriction, setAllergyRestriction] = useState("");
+  const [allergyCategory, setAllergyCategory] = useState([]); // Store category of allergies
+  const [allergyRestriction, setAllergyRestriction] = useState([]); // Store selected allergies
+  const [healthGoalsCategory, setHealthGoalsCategory] = useState([]);
   const [healthGoals, setHealthGoals] = useState("");
   const [weight, setWeight] = useState("");
-
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
-
   const emailValidation = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
   // Get today's date in the correct format for the max attribute (yyyy-mm-dd)
@@ -65,322 +30,373 @@ const userRegistration = () => {
     return date.toISOString().split("T")[0];
   };
 
+  // Set the date max input to be today's date
   const todayDate = getFormattedDate(new Date());
 
-  const handleSignUp = (event) => {
+  useEffect(() => {
+    // Fetch all business blog categories from backend
+    const fetchHealthGoals = async () => {
+      console.log("Fetching health goals...");
+      try {
+        const response = await axiosInterceptorInstance.get(
+          "/category/getAllHealthGoals"
+        );
+        console.log("Health Goals Categories Fetched", response.data);
+        setHealthGoalsCategory(response.data);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    // Fetch all dietary preferences categories from backend
+    const fetchDietaryPreferences = async () => {
+      console.log("Fetching dietary preferences...");
+      try {
+        const response = await axiosInterceptorInstance.get(
+          "/category/getAllDietaryPreferences"
+        );
+        console.log("Dietary Preferences Categories Fetched", response.data);
+        setDietaryPreferencesCategory(response.data);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    // Fetch all allergies categories from backend
+    const fetchAllergies = async () => {
+      console.log("Fetching allergies...");
+      try {
+        const response = await axiosInterceptorInstance.get(
+          "/category/getAllAllergies"
+        );
+        console.log("Allergies Categories Fetched", response.data);
+        setAllergyCategory(response.data);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    fetchHealthGoals();
+    fetchDietaryPreferences();
+    fetchAllergies();
+  }, []);
+
+  // Function to handle health goals category change
+  const handleHealthCategoryChange = (e) => {
+    setHealthGoals(e.target.value);
+  };
+
+  // Function to handle dietary preference category change
+  const handleDietaryPreferenceCategoryChange = (e) => {
+    setDietaryPreference(e.target.value);
+  };
+
+  // Function to handle allergy category change
+  const handleAllergyCategoryChange = (e, allergyId) => {
+    const checked = e.target.checked;
+
+    if (checked) {
+      // If the checkbox is checked, add the allergyId to the array
+      setAllergyRestriction((prevAllergies) => [...prevAllergies, allergyId]);
+    } else {
+      // If the checkbox is unchecked, remove the allergyId from the array
+      setAllergyRestriction((prevAllergies) =>
+        prevAllergies.filter((id) => id !== allergyId)
+      );
+    }
+  };
+
+  // Function to handlle form submission
+  const handleCreateNewUserAccount = async (event) => {
     event.preventDefault();
 
-    // Checks if the fields are filled
-    if (
-      fullName === "" ||
-      username === "" ||
-      email === "" ||
-      dob === "" ||
-      password === "" ||
-      confirmPwd === "" ||
-      weight === ""
-    ) {
-      setError("All fields are required.");
-      return;
+    console.log("Health goal selected:", healthGoals);
+    console.log("Dietary preference selected:", dietaryPreference);
+    console.log("Allergies selected:", allergyRestriction);
+    console.log("Creating new user account...");
 
-      // Checks if the pwd matches
-    } else if (password !== confirmPwd) {
-      setError("Passwords do not match.");
-      return;
+    const formData = {
+      fullName: fullName,
+      username: username,
+      email: email,
+      password: password,
+      dob: dob,
+      dietaryPreferences: {
+        id: dietaryPreference,
+      },
+      allergies: allergyRestriction.map((id) => ({ id })),
+      healthGoal: {
+        id: healthGoals,
+      },
+      weight: weight,
+    };
+    console.log(formData);
 
-      // Checks if email is in the right format
-    } else if (!emailValidation.test(email)) {
-      setError("Invalid email address.");
-      return;
-
-      // Checks if registration successful
-    } else {
-      setSuccess(
-        "Registration successful! A verification link has been sent to your email."
+    try {
+      const response = await axiosInterceptorInstance.post(
+        "/register/user",
+        formData
       );
-      // Remove success msg after 5 seconds
-      setTimeout(() => {
-        setSuccess("");
-      }, 5000);
-      // Reset fields in the form + error state
+      console.log("Account successfully:", response.data);
       setFullName("");
       setUsername("");
-      setEmail("");
-      setDOB("");
       setPassword("");
       setConfirmPwd("");
+      setDOB("");
+      setEmail("");
       setDietaryPreference("");
       setAllergyRestriction("");
       setHealthGoals("");
       setWeight("");
       setError("");
-    }
-
-    // To check if data passed is correct
-    console.log("User Sign up details:", {
-      fullName,
-      username,
-      email,
-      dob,
-      password,
-      confirmPwd,
-      dietaryPreference,
-      allergyRestriction,
-      healthGoals,
-      weight,
-    });
-  };
-
-  // render the page
-  const [step, setStep] = useState(1);
-  const nextStep = () => setStep(step + 1);
-  const prevStep = () => setStep(step - 1);
-
-  const renderForm = () => {
-    switch (step) {
-      // PERSONAL DETAILS
-      case 1:
-        return (
-          <div>
-            <form className="space-y-3 ">
-              <h2>Personal Details</h2>
-              <div className="flex space-x-4">
-                {/* FULL NAME */}
-                <input
-                  type="text"
-                  name="name"
-                  id="name"
-                  placeholder="Full Name"
-                  value={fullName}
-                  onChange={(e) => setFullName(e.target.value)}
-                  className="border px-4 py-2 rounded-lg bg-gray-50 border-gray-300 text-gray-900 sm:text-sm block w-full p-2.5"
-                ></input>
-
-                {/* USERNAME */}
-                <input
-                  type="text"
-                  name="username"
-                  id="username"
-                  placeholder="Username"
-                  value={username}
-                  onChange={(e) => setUsername(e.target.value)}
-                  className="border px-4 py-2 rounded-lg bg-gray-50 border-gray-300 text-gray-900 sm:text-sm focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
-                ></input>
-              </div>
-              {/* EMAIL */}
-              <div>
-                <input
-                  type="email"
-                  name="email"
-                  id="email"
-                  placeholder="Email Address"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
-                ></input>
-              </div>
-              {/* PASSWORDS */}
-              <div className="flex space-x-4">
-                <input
-                  type="password"
-                  name="pwd"
-                  id="pwd"
-                  placeholder="Password"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  className="border px-4 py-2 rounded-lg bg-gray-50 border-gray-300 text-gray-900 sm:text-sm focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
-                ></input>
-                <input
-                  type="password"
-                  name="confirm-pwd"
-                  id="confirm-pwd"
-                  placeholder="Confirm Password"
-                  value={confirmPwd}
-                  onChange={(e) => setConfirmPwd(e.target.value)}
-                  className="border px-4 py-2 rounded-lg bg-gray-50 border-gray-300 text-gray-900 sm:text-sm focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
-                ></input>
-              </div>
-
-              {/* DOB */}
-              <div className="flex flex-col">
-                <label htmlFor="dob">Date of Birth</label>
-                <input
-                  type="date"
-                  id="dob"
-                  name="dob"
-                  max={todayDate}
-                  value={dob}
-                  onChange={(e) => setDOB(e.target.value)}
-                  className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
-                ></input>
-              </div>
-              {/* LOGIN LINK */}
-              <p className="text-sm font-light text-black">
-                Already have an account?{" "}
-                <Link
-                  href="/userLogin"
-                  className="font-medium text-cyan-600 hover:underline"
-                >
-                  Login here
-                </Link>
-              </p>
-              <p className="text-sm font-light text-black">
-                Sign up as a different user{" "}
-                <Link
-                  href="/registration"
-                  className="font-medium text-cyan-600 hover:underline"
-                >
-                  Sign up here
-                </Link>
-              </p>
-            </form>
-            <div className="flex flex-row justify-end">
-              <button
-                className="text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2"
-                onClick={nextStep}
-              >
-                Next
-              </button>
-            </div>
-          </div>
-        );
-
-      // PROILE BASED DETAILS
-      case 2:
-        return (
-          <div>
-            <form className="space-y-1">
-              {/* DIETARY PREFERENCE */}
-              <div className="flex flex-col">
-                <label htmlFor="dietPref">Dietary Preference *Optional</label>
-                <select
-                  id="dietaryPreference"
-                  name="dietaryPreference"
-                  value={dietaryPreference}
-                  onChange={(e) => setDietaryPreference(e.target.value)}
-                  className="border px-4 py-2 rounded-lg bg-gray-50 border-gray-300 text-gray-900 sm:text-sm focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
-                >
-                  <option value="">Select Dietary Preference </option>
-                  <option value="vegan">Vegan</option>
-                  <option value="vegetarian">Vegetarian</option>
-                  <option value="pescatarian">Pescatarian</option>
-                </select>
-              </div>
-
-              {/* ALLERGY AND RESTRICTION */}
-              <div className="flex flex-col">
-                <label htmlFor="allergyRestriction">
-                  Allergy and Restriction *Optional
-                </label>
-                <select
-                  id="allergyRestriction"
-                  name="allergyRestriction"
-                  value={allergyRestriction}
-                  onChange={(e) => setAllergyRestriction(e.target.value)}
-                  className="border px-4 py-2 rounded-lg bg-gray-50 border-gray-300 text-gray-900 sm:text-sm focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
-                >
-                  <option value="">Select Allergies</option>
-                  {mockAllergiesCat.map((cat, index) => (
-                    <option key={index} value={cat.category}>
-                      {cat.category}
-                    </option>
-                  ))}
-                </select>
-              </div>
-
-              {/* HEALTH GOALS */}
-              <div className="flex flex-col">
-                <label htmlFor="healthGoals">Health Goal *Optional</label>
-                <select
-                  id="healthGoals"
-                  name="healthGoals"
-                  value={healthGoals}
-                  onChange={(e) => setHealthGoals(e.target.value)}
-                  className="border px-4 py-2 rounded-lg bg-gray-50 border-gray-300 text-gray-900 sm:text-sm focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
-                >
-                  <option value="">Select Health Goal</option>
-                  {mockHealthGoalsCat.map((cat, index) => (
-                    <option key={index} value={cat.category}>
-                      {cat.category}
-                    </option>
-                  ))}
-                </select>
-              </div>
-
-              {/* WEIGHT */}
-              <div className="flex flex-col">
-                <label htmlFor="weight">Weight *Optional</label>
-                <input
-                  type="text"
-                  name="weight"
-                  id="weight"
-                  value={weight}
-                  onChange={(e) => setWeight(e.target.value)}
-                  className="border px-4 py-2 rounded-lg bg-gray-50 border-gray-300 text-gray-900 sm:text-sm focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
-                  placeholder="Weight in kg"
-                ></input>
-              </div>
-
-              {/* ERROR MSG */}
-              <p className="text-red-500 text-sm">{error}</p>
-              <p className="text-green-500 text-sm">{success}</p>
-
-              {/* SUBMIT BTN */}
-              <button
-                type="submit"
-                onClick={handleSignUp}
-                className=" text-white bg-cyan-500 hover:bg-sky-700 rounded-md font-bold py-2 px-4 w-full"
-              >
-                Create an account
-              </button>
-
-              {/* LOGIN LINK */}
-              <p className="text-sm font-light text-black">
-                Already have an account?{" "}
-                <Link
-                  href="/userLogin"
-                  className="font-medium text-cyan-600 hover:underline"
-                >
-                  Login here
-                </Link>
-              </p>
-              {/* SIGN UP LINK */}
-              <p className="text-sm font-light text-black">
-                Sign up as a different user{" "}
-                <Link
-                  href="/registration"
-                  className="font-medium text-cyan-600 hover:underline"
-                >
-                  Sign up here
-                </Link>
-              </p>
-            </form>
-            <div className="flex flex-row justify-end">
-              <button
-                className="text-white bg-gray-800 hover:bg-gray-900 font-medium rounded-lg text-sm px-5 py-2.5"
-                onClick={prevStep}
-              >
-                Back
-              </button>
-            </div>
-          </div>
-        );
-      default:
-        null;
+    } catch (error) {
+      console.log("Error:", error.response.data);
     }
   };
 
   return (
     <div>
       <HomeNavbar />
-      <div className=" bg-cyan-900 min-h-screen">
-        <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto">
-          <div className="w-full max-w-md bg-slate-100 rounded-lg shadow md:mt-16 sm:max-w-md xl:p-0">
-            <div className="p-6 space-y-3 md:space-y-6 sm:p-8">
-              <h1 className="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl">
-                User Sign Up
-              </h1>
-              {renderForm()}
+      <div className="bg-orange-50 min-h-screen py-16">
+        <div className="container mx-auto">
+          <div className="flex flex-col md:flex-row rounded-xl mx-auto bg-slate-100 shadow-lg overflow-hidden">
+            {/* IMG + REGISTER AS ANOTHER USER */}
+            <div className="w-full md:w-1/2 p-4 md:p-10 bg-white">
+              <div className="text-center">
+                <h1 className="font-semibold text-3xl">Sign Up as a User</h1>
+                <p className="text-sm font-light text-black">
+                  Sign up as a different user{" "}
+                  <Link
+                    href="/registration"
+                    className="font-medium text-blue-600 hover:underline"
+                  >
+                    Sign up here
+                  </Link>
+                </p>
+                {/* LOGIN LINK */}
+                <p className="text-sm font-light text-black">
+                  Already have an account?{" "}
+                  <Link
+                    href="/userLogin"
+                    className="font-medium text-blue-600 hover:underline"
+                  >
+                    Login here
+                  </Link>
+                </p>
+              </div>
+
+              <div
+                className="h-full w-full bg-cover bg-center flex items-center justify-center flex-col text-center p-8"
+                style={{ backgroundImage: `url('/user_registration.jpg')` }}
+              ></div>
+            </div>
+            {/* REGISTRATION FORM */}
+            <div className="w-full md:w-1/2 mx-5 flex items-center justify-center">
+              <div className="w-full p-4 md:p-10">
+                <h1 className="text-3xl md:text-4xl font-semibold mb-4">
+                  Create an Account
+                </h1>
+                <form>
+                  <div className="grid grid-cols-2 gap-3 mt-2">
+                    <label htmlFor="fullName" className="flex items-center">
+                      Full Name
+                      <span className="text-red-500">*</span>
+                    </label>
+                    <label htmlFor="username" className="flex items-center">
+                      Username
+                      <span className="text-red-500">*</span>
+                    </label>
+                  </div>
+                  <div className="grid grid-cols-2 gap-3">
+                    <input
+                      type="text"
+                      id="fullName"
+                      name="fullName"
+                      placeholder="Your Name"
+                      className=" bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg p-2.5"
+                      value={fullName}
+                      onChange={(event) => setFullName(event.target.value)}
+                    />
+
+                    <input
+                      type="text"
+                      id="userName"
+                      name="userName"
+                      placeholder="Your Username"
+                      className=" bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg p-2.5"
+                      value={username}
+                      onChange={(event) => setUsername(event.target.value)}
+                    />
+                  </div>
+
+                  <div className="mt-3">
+                    <label htmlFor="email" className="flex items-center">
+                      Email Address
+                      <span className="text-red-500">*</span>
+                    </label>
+                    <input
+                      type="text"
+                      id="email"
+                      name="email"
+                      placeholder="Email Address"
+                      className=" bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg w-full p-2.5"
+                      value={email}
+                      onChange={(event) => setEmail(event.target.value)}
+                    />
+                  </div>
+                  <div className="grid grid-cols-2 gap-3 mt-2">
+                    <label htmlFor="password" className="flex items-center">
+                      Password
+                      <span className="text-red-500">*</span>
+                    </label>
+                    <label
+                      htmlFor="repeatPassword"
+                      className="flex items-center"
+                    >
+                      Repeat Password
+                      <span className="text-red-500">*</span>
+                    </label>
+                  </div>
+
+                  <div className="grid grid-cols-2 gap-3">
+                    <input
+                      type="password"
+                      id="password"
+                      name="password"
+                      placeholder="Password"
+                      className=" bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg p-2.5"
+                      value={password}
+                      onChange={(event) => setPassword(event.target.value)}
+                    />
+
+                    <input
+                      type="password"
+                      id="repeatPassword"
+                      name="repeatPassword"
+                      placeholder="Repeat Password"
+                      className=" bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg p-2.5"
+                      value={confirmPwd}
+                      onChange={(event) => setConfirmPwd(event.target.value)}
+                    />
+                  </div>
+
+                  <div className="mt-3">
+                    <label htmlFor="dob" className="flex items-center">
+                      Date of Birth
+                      <span className="text-red-500">*</span>
+                    </label>
+                    <input
+                      type="date"
+                      id="workEmail"
+                      name="workEmail"
+                      placeholder="Work Email"
+                      className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg w-full p-2.5"
+                      value={dob}
+                      onChange={(event) => setDOB(event.target.value)}
+                    />
+                  </div>
+
+                  {/* DIETARY PREFERENCE */}
+                  <div className="mt-3">
+                    <label
+                      htmlFor="dietaryPreference"
+                      className="flex items-center"
+                    >
+                      Dietary Preference
+                    </label>
+                    <select
+                      id="dietaryPreference"
+                      name="dietaryPreference"
+                      value={dietaryPreference}
+                      onChange={handleDietaryPreferenceCategoryChange}
+                      className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg w-full p-2.5"
+                    >
+                      <option value="">Select Dietary Preference</option>
+                      {dietaryPreferencesCategory.map((cat, index) => (
+                        <option key={index} value={cat.id}>
+                          {cat.subcategoryName}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+
+                  {/* ALLERGIES AND RESTRICTIONS */}
+                  <div className="mt-3">
+                    <label
+                      htmlFor="allergyRestriction"
+                      className="flex items-center"
+                    >
+                      Allergies and Restrictions
+                    </label>
+                    <div>
+                      {allergyCategory.map((cat, index) => (
+                        <label key={index} className="mr-2 items-center">
+                          <input
+                            type="checkbox"
+                            name="allergies"
+                            value={cat.id}
+                            checked={allergyRestriction.includes(cat.id)}
+                            onChange={(e) =>
+                              handleAllergyCategoryChange(e, cat.id)
+                            }
+                            className="mr-2"
+                          />
+                          {cat.subcategoryName}
+                        </label>
+                      ))}
+                    </div>
+                  </div>
+
+                  {/* HEALTH GOAL */}
+                  <div className="mt-3">
+                    <label htmlFor="healthGoals" className="flex items-center">
+                      Health Goal
+                    </label>
+                    <select
+                      id="healthGoals"
+                      name="healthGoals"
+                      value={healthGoals}
+                      onChange={handleHealthCategoryChange}
+                      className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg w-full p-2.5"
+                    >
+                      <option value="">Select Health Goal</option>
+                      {healthGoalsCategory.map((cat, index) => (
+                        <option key={index} value={cat.id}>
+                          {cat.subcategoryName}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+
+                  <div className="mt-3">
+                    <label htmlFor="weight" className="flex items-center">
+                      Weight
+                    </label>
+                    <input
+                      type="text"
+                      id="weight"
+                      name="weight"
+                      placeholder="Your Weight In kg"
+                      className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg w-full p-2.5"
+                      value={weight}
+                      onChange={(event) => setWeight(event.target.value)}
+                    />
+                  </div>
+
+                  {/* ERROR MSG */}
+                  {/* <p className="text-red-500 text-sm">{error}</p> */}
+
+                  <div className="flex flex-row justify-center">
+                    <button
+                      type="submit"
+                      onClick={handleCreateNewUserAccount}
+                      className="text-white bg-blue-600 hover:bg-blue-700 rounded-md font-bold w-full py-2 px-4 mt-4"
+                    >
+                      Create an Account
+                    </button>
+                  </div>
+                </form>
+              </div>
             </div>
           </div>
         </div>

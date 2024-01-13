@@ -3,8 +3,61 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 import Link from "next/link";
 import HomeNavbar from "@/app/components/navigation/homeNavBar";
+import axiosInterceptorInstance from "../../axiosInterceptorInstance.js";
 
 const NutritionistRegistration = () => {
+  const [fullName, setFullName] = useState("");
+  const [userName, setUserName] = useState("");
+  const [password, setPassword] = useState("");
+  const [repeatPassword, setRepeatPassword] = useState("");
+  const [contactNumber, setContactNumber] = useState("");
+  const [workEmail, setWorkEmail] = useState("");
+  const [companyName, setCompanyName] = useState("");
+  const [companyAddress, setCompanyAddress] = useState("");
+  const [nutriCert, setNutriCert] = useState("");
+  const [error, setError] = useState("");
+  const [success, setSuccess] = useState(false);
+
+  const handleCreateNutritionistAccount = async (event) => {
+    event.preventDefault();
+    console.log("Creating account...");
+    const formData = {
+      password: password,
+      username: userName,
+      fullName: fullName,
+      email: workEmail,
+      companyName: companyName,
+      companyAddress: companyAddress,
+      contactNumber: contactNumber,
+      nutriCert: nutriCert,
+    };
+    console.log(formData);
+
+    try {
+      const response = await axiosInterceptorInstance.post(
+        "/register/nut",
+        formData
+      );
+      console.log("Account successfully:", response.data);
+
+      // Reset fields after successful submission
+      setFullName("");
+      setUserName("");
+      setPassword("");
+      setRepeatPassword("");
+      setContactNumber("");
+      setWorkEmail("");
+      setCompanyName("");
+      setCompanyAddress("");
+      setNutriCert("");
+
+      // Optionally redirect to another page or show success message
+      // Example: router.push('/path-to-redirect-to');
+    } catch (error) {
+      setSuccess(false); // Ensure success is false on error
+    }
+  };
+
   return (
     <div>
       <HomeNavbar />
@@ -49,7 +102,11 @@ const NutritionistRegistration = () => {
                 <h1 className="text-3xl md:text-4xl font-semibold mb-4">
                   Create an Account
                 </h1>
-                <form>
+                <form
+                  action="https://localhost:8080/register/upload"
+                  method="POST"
+                  encType="multipart/formdata"
+                >
                   <div className="grid grid-cols-2 gap-3 mt-2">
                     <label htmlFor="fullName" className="flex items-center">
                       Full Name
@@ -67,8 +124,8 @@ const NutritionistRegistration = () => {
                       name="fullName"
                       placeholder="Your Name"
                       className=" bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg p-2.5"
-                      // value=
-                      // onChange={}
+                      value={fullName}
+                      onChange={(event) => setFullName(event.target.value)}
                     />
 
                     <input
@@ -77,8 +134,8 @@ const NutritionistRegistration = () => {
                       name="userName"
                       placeholder="Your Username"
                       className=" bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg p-2.5"
-                      // value=
-                      // onChange={}
+                      value={userName}
+                      onChange={(event) => setUserName(event.target.value)}
                     />
                   </div>
                   <div className="grid grid-cols-2 gap-3 mt-2">
@@ -101,8 +158,8 @@ const NutritionistRegistration = () => {
                       name="password"
                       placeholder="Password"
                       className=" bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg p-2.5"
-                      // value=
-                      // onChange={}
+                      value={password}
+                      onChange={(event) => setPassword(event.target.value)}
                     />
 
                     <input
@@ -111,8 +168,10 @@ const NutritionistRegistration = () => {
                       name="repeatPassword"
                       placeholder="Repeat Password"
                       className=" bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg p-2.5"
-                      // value=
-                      // onChange={}
+                      value={repeatPassword}
+                      onChange={(event) =>
+                        setRepeatPassword(event.target.value)
+                      }
                     />
                   </div>
                   <div className="mt-3">
@@ -129,8 +188,8 @@ const NutritionistRegistration = () => {
                       name="contactNumber"
                       placeholder="+65 1234 5678"
                       className=" bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg w-full p-2.5"
-                      // value=
-                      // onChange={}
+                      value={contactNumber}
+                      onChange={(event) => setContactNumber(event.target.value)}
                     />
                   </div>
                   <div className="mt-3">
@@ -144,8 +203,8 @@ const NutritionistRegistration = () => {
                       name="workEmail"
                       placeholder="Work Email"
                       className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg w-full p-2.5"
-                      // value=
-                      // onChange={}
+                      value={workEmail}
+                      onChange={(event) => setWorkEmail(event.target.value)}
                     />
                   </div>
 
@@ -159,8 +218,8 @@ const NutritionistRegistration = () => {
                       name="companyName"
                       placeholder="Company Name"
                       className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg w-full p-2.5"
-                      // value=
-                      // onChange={}
+                      value={companyName}
+                      onChange={(event) => setCompanyName(event.target.value)}
                     />
                   </div>
 
@@ -177,8 +236,10 @@ const NutritionistRegistration = () => {
                       name="companyAddress"
                       placeholder="Company Address"
                       className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg w-full p-2.5"
-                      // value=
-                      // onChange={}
+                      value={companyAddress}
+                      onChange={(event) =>
+                        setCompanyAddress(event.target.value)
+                      }
                     />
                   </div>
 
@@ -201,6 +262,8 @@ const NutritionistRegistration = () => {
                       className="border-solid mt-3"
                       multiple
                       accept=".pdf, .jpg, .png .jpeg"
+                      value={nutriCert}
+                      onChange={(event) => setNutriCert(event.target.value)}
                     ></input>
                   </div>
 
@@ -210,6 +273,7 @@ const NutritionistRegistration = () => {
                   <div className="flex flex-row justify-center">
                     <button
                       type="submit"
+                      onClick={handleCreateNutritionistAccount}
                       className="text-white bg-blue-600 hover:bg-blue-700 rounded-md font-bold w-full py-2 px-4 mt-4"
                     >
                       Create an Account

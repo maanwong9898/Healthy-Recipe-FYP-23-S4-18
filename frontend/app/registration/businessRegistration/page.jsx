@@ -4,6 +4,7 @@ import { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import HomeNavbar from "@/app/components/navigation/homeNavBar";
+import axiosInterceptorInstance from "../../axiosInterceptorInstance.js";
 
 const businessRegistration = () => {
   const [fullName, setFullName] = useState("");
@@ -19,39 +20,64 @@ const businessRegistration = () => {
   const [success, setSuccess] = useState("");
   const emailValidation = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-  const handleSignUp = () => {
+  const handleCreateBusinessAccount = async (event) => {
+    event.preventDefault();
+
+    // Check if all fields are filled
     if (
-      fullName === "" ||
-      username === "" ||
-      password === "" ||
-      confirmPwd === "" ||
-      contactNumber === "" ||
-      workEmail === "" ||
-      companyName === "" ||
-      companyAddress === "" ||
-      uen === ""
+      !fullName.trim() ||
+      !username.trim() ||
+      !password.trim() ||
+      !confirmPwd.trim() ||
+      !contactNumber.trim() ||
+      !workEmail.trim() ||
+      !companyName.trim() ||
+      !companyAddress.trim() ||
+      !uen.trim()
     ) {
-      setError("All fields are required.");
+      setError("Please fill in all the required fields.");
       return;
-    }
-    // Checks if the pwd matches
-    else if (password !== confirmPwd) {
+    } else if (!emailValidation.test(workEmail)) {
+      setError("Please enter a valid email address.");
+      return;
+    } else if (password !== confirmPwd) {
       setError("Passwords do not match.");
       return;
-    }
-    // Checks if email is in the right format
-    else if (!emailValidation.test(workEmail)) {
-      setError("Invalid email address.");
+    } else if (contactNumber.length !== 8) {
+      setError("Please enter a valid contact number.");
+      return;
+    } else if (uen.length !== 9) {
+      setError("Please enter a valid UEN.");
       return;
     } else {
       setSuccess(
-        "Registration successful! An email will be sent to you once the admin has verified your account."
+        "Account created successfully! An email will be sent to you once your account has been approved."
       );
-      // Remove success msg after 5 seconds
-      setTimeout(() => {
-        setSuccess("");
-      }, 5000);
-      // Reset fields in the form + error state
+    }
+
+    console.log("Creating business account...");
+
+    const formData = {
+      fullName: fullName,
+      username: username,
+      password: password,
+      contactNumber: contactNumber,
+      email: workEmail,
+      companyName: companyName,
+      companyAddress: companyAddress,
+      uen: uen,
+    };
+    console.log(formData);
+
+    try {
+      const response = await axiosInterceptorInstance.post(
+        "/register/bUser",
+        formData
+      );
+      console.log("Account successfully:", response.data);
+      setSuccess(true);
+
+      // Clear all fields after submitting form
       setFullName("");
       setUsername("");
       setPassword("");
@@ -61,7 +87,16 @@ const businessRegistration = () => {
       setCompanyName("");
       setCompanyAddress("");
       setUen("");
+
       setError("");
+
+      setTimeout(() => {
+        setSuccess("");
+      }, 10000);
+    } catch (error) {
+      setSuccess(false); // Ensure success is false on error
+      console.error("Error creating business user account:", error);
+      setError(error.message || "Failed to create account.");
     }
   };
 
@@ -109,7 +144,7 @@ const businessRegistration = () => {
                 <h1 className="text-3xl md:text-4xl font-semibold mb-4">
                   Create an Account
                 </h1>
-                <form action={handleSignUp}>
+                <form>
                   <div className="grid grid-cols-2 gap-3 mt-2">
                     <label htmlFor="fullName" className="flex items-center">
                       Full Name
@@ -127,8 +162,8 @@ const businessRegistration = () => {
                       name="fullName"
                       placeholder="Your Name"
                       className=" bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg p-2.5"
-                      // value=
-                      // onChange={}
+                      value={fullName}
+                      onChange={(event) => setFullName(event.target.value)}
                     />
 
                     <input
@@ -137,8 +172,8 @@ const businessRegistration = () => {
                       name="userName"
                       placeholder="Your Username"
                       className=" bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg p-2.5"
-                      // value=
-                      // onChange={}
+                      value={username}
+                      onChange={(event) => setUsername(event.target.value)}
                     />
                   </div>
 
@@ -162,8 +197,8 @@ const businessRegistration = () => {
                       name="password"
                       placeholder="Password"
                       className=" bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg p-2.5"
-                      // value=
-                      // onChange={}
+                      value={password}
+                      onChange={(event) => setPassword(event.target.value)}
                     />
 
                     <input
@@ -172,8 +207,8 @@ const businessRegistration = () => {
                       name="repeatPassword"
                       placeholder="Repeat Password"
                       className=" bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg p-2.5"
-                      // value=
-                      // onChange={}
+                      value={confirmPwd}
+                      onChange={(event) => setConfirmPwd(event.target.value)}
                     />
                   </div>
 
@@ -191,8 +226,8 @@ const businessRegistration = () => {
                       name="contactNumber"
                       placeholder="+65 1234 5678"
                       className=" bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg w-full p-2.5"
-                      // value=
-                      // onChange={}
+                      value={contactNumber}
+                      onChange={(event) => setContactNumber(event.target.value)}
                     />
                   </div>
 
@@ -214,8 +249,8 @@ const businessRegistration = () => {
                       name="workEmail"
                       placeholder="Work Email"
                       className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg p-2.5"
-                      // value=
-                      // onChange={}
+                      value={workEmail}
+                      onChange={(event) => setWorkEmail(event.target.value)}
                     />
 
                     <input
@@ -224,8 +259,8 @@ const businessRegistration = () => {
                       name="uen"
                       placeholder="UEN"
                       className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg p-2.5"
-                      // value=
-                      // onChange={}
+                      value={uen}
+                      onChange={(event) => setUen(event.target.value)}
                     />
                   </div>
                   <div className="mt-3">
@@ -239,8 +274,8 @@ const businessRegistration = () => {
                       name="companyName"
                       placeholder="Company Name"
                       className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg w-full p-2.5"
-                      // value=
-                      // onChange={}
+                      value={companyName}
+                      onChange={(event) => setCompanyName(event.target.value)}
                     />
                   </div>
                   <div className="mt-3">
@@ -257,17 +292,22 @@ const businessRegistration = () => {
                       name="companyAddress"
                       placeholder="Company Address"
                       className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg w-full p-2.5"
-                      // value=
-                      // onChange={}
+                      value={companyAddress}
+                      onChange={(event) =>
+                        setCompanyAddress(event.target.value)
+                      }
                     />
                   </div>
                   {/* ERROR MSG */}
                   <p className="text-red-500 text-sm">{error}</p>
 
+                  {/* SUCCESS MSG */}
+                  <p className="text-green-600 text-sm">{success}</p>
+
                   <div className="flex flex-row justify-center">
                     <button
                       type="submit"
-                      onChange={handleSignUp}
+                      onClick={handleCreateBusinessAccount}
                       className="text-white bg-blue-600 hover:bg-blue-700 rounded-md font-bold w-full py-2 px-4 mt-4"
                     >
                       Create an Account

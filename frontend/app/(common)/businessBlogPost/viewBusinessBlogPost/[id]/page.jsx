@@ -141,7 +141,11 @@ const ViewBusinessBlogPost = ({ params }) => {
 
           <p>
             Category:{" "}
-            <span className="text-cyan-600">{businessBlogPost.category}</span>
+            <span className="text-cyan-600">
+              {businessBlogPost.blogType
+                ? businessBlogPost.blogType.subcategoryName
+                : "Not specified"}
+            </span>
           </p>
         </div>
       </div>

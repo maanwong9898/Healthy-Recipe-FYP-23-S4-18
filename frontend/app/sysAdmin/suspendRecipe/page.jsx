@@ -7,39 +7,6 @@ import axiosInterceptorInstance from "../../axiosInterceptorInstance.js";
 
 // router path: /sysAdmin/suspendRecipe
 
-// Called the controller to get the list of all "Active" recipes
-// this is the simple mock data for recipes but a recipe should have more attributes
-// const mockRecipes = [
-//   {
-//     recipeName: "Tomato Soup",
-//     dateCreated: "2021-10-01",
-//     ratings: 4,
-//     reviews: 5,
-//     isActive: true,
-//   },
-//   {
-//     recipeName: "Chicken Soup",
-//     dateCreated: "2021-10-01",
-//     ratings: 3,
-//     reviews: 10,
-//     isActive: true,
-//   },
-//   {
-//     recipeName: "Beef Soup",
-//     dateCreated: "2021-10-01",
-//     ratings: 3,
-//     reviews: 9,
-//     isActive: true,
-//   },
-//   {
-//     recipeName: "Pork Soup",
-//     dateCreated: "2021-10-01",
-//     ratings: 5,
-//     reviews: 10,
-//     isActive: true,
-//   },
-// ];
-
 const SuspendRecipePage = () => {
   const [recipes, setRecipes] = useState([]);
 
@@ -51,6 +18,31 @@ const SuspendRecipePage = () => {
       setRecipes(response.data);
     } catch (error) {
       console.error("Error fetching data", error);
+    }
+  };
+
+  // Function to suspend a business blog post
+  const handleSuspendRecipe = async (recipeId) => {
+    try {
+      const response = await axiosInterceptorInstance.put(
+        "/recipe/updateActivity",
+        {
+          id: recipeId,
+          active: false,
+        }
+      );
+
+      // Update local state to reflect the change
+      const updatedRecipes = recipes.map((recipe) => {
+        if (recipe.id === recipeId) {
+          return { ...recipe, active: false };
+        }
+        return recipe;
+      });
+
+      setRecipes(updatedRecipes);
+    } catch (error) {
+      console.error("Error suspending recipe", error);
     }
   };
 
@@ -111,11 +103,15 @@ const SuspendRecipePage = () => {
 
                 <td className="px-3 py-2 flex flex-wrap justify-center sm:justify-start gap-2">
                   <button
-                    // onClick={() => handleSuspendRecipe(recipe.recipeName)}
-                    className="text-white font-bold bg-gradient-to-br from-orange-600 to-red-700 hover:bg-gradient-to-bl
-                    focus:ring-4 focus:outline-none focus:ring-blue-300
+                    onClick={() => handleSuspendRecipe(recipe.id)}
+                    disabled={!recipe.active}
+                    className={`text-white font-bold bg-gradient-to-br ${
+                      recipe.active
+                        ? "from-orange-600 to-red-700"
+                        : "bg-gray-300"
+                    } hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-blue-300
                     dark:focus:ring-blue-800 rounded-lg text-base px-5 py-2.5 ml-7
-                    mr-7 text-center"
+                    mr-7 text-center`}
                   >
                     {" "}
                     Suspend

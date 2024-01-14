@@ -125,18 +125,41 @@ const userLogin = () => {
   //   }
   // };
 
-  // Function to call the /test/userAndAdmin endpoint
-  const fetchUserAndAdminData = async () => {
+  // Function to retrieve user info from the token
+  const fetchUserInfo = async () => {
     try {
       // Retrieve the token from localStorage
       const token = localStorage.getItem("token");
 
-      // ...later in your code, when you need to decode the token:
+      // Check if token exists
+      if (!token) {
+        console.error("No token found");
+        return;
+      }
 
+      // Decode the token
       const decodedToken = jwtDecode(token);
 
-      // check what payload is
+      // check what payload is in the token
       console.log(decodedToken);
+
+      // Set the user info in localStorage (role and id)
+      localStorage.setItem("role", decodedToken.role);
+      localStorage.setItem("id", decodedToken.id);
+
+      {
+        /* 
+          exp : 1706024535
+
+          iat : 1705160535
+          
+          id : "1"
+
+          role : "ADMIN"
+
+          sub  : "1@gmail.com"
+        */
+      }
 
       // const payload = JSON.parse(atob(token.split(".")[1])); // Decode base64 payload of the token
       // const currentTime = Date.now() / 1000; // Get current time in seconds
@@ -159,11 +182,6 @@ const userLogin = () => {
       //   console.log("token is still valid");
       // }
 
-      if (!token) {
-        console.error("No token found");
-        return;
-      }
-
       // Set up the authorization header with the bearer token
       const config = {
         headers: { Authorization: `Bearer ${token}` },
@@ -175,7 +193,8 @@ const userLogin = () => {
         config
       );
 
-      console.log("Admin data:", response.data);
+      // console.log("Admin data:", response.data);
+
       // Handle the response data as needed
     } catch (error) {
       console.error("Error fetching user and admin data:", error);
@@ -201,10 +220,27 @@ const userLogin = () => {
       console.log("Login successful:", response.data);
 
       // Call the function to make a request to the userAndAdmin endpoint
-      await fetchUserAndAdminData();
+      await fetchUserInfo();
 
       // Redirect based on profile type
-      // ... rest of your redirection logic based on profile
+      const profile = localStorage.getItem("role");
+      switch (profile) {
+        case "ADMIN":
+          router.push("/sysAdmin");
+          break;
+        case "REGISTERED_USER":
+          router.push("/registeredUser");
+          break;
+        case "BUSINESS_USER":
+          router.push("/businessUser");
+          break;
+        case "NUTRITIONIST":
+          router.push("/dietitian");
+          break;
+        default:
+          console.error(`Unknown profile type: ${profile}`);
+          return; // Exit the function if profile type is unknown
+      }
     } catch (error) {
       console.error("Error during login:", error);
       setError("Login failed"); // Update the state to display the error message

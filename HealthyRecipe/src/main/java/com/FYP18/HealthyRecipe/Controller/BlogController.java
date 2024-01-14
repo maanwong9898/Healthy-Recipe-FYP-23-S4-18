@@ -134,8 +134,14 @@ public class BlogController {
                                  blogService.getAllRatingsOfUserId(userId);
         return new ResponseEntity<>(toReturn, HttpStatus.OK);
     }
-
-
+    @GetMapping("/rating/getBlog")
+    public ResponseEntity<List<BlogReviewRating>> getAllBlogReviewRatingOfUserId
+                (@RequestParam Long blogId)  
+    { 
+       List<BlogReviewRating> toReturn =   blogService.getAllRatingsOfBlogId(blogId);
+        return new ResponseEntity<>(toReturn, HttpStatus.OK);
+    }
+    
     @PostMapping("/rating/add")
     public ResponseEntity<BlogReviewRating> addBlogReviewRating(@RequestBody BlogReviewRating blog)  
     { 

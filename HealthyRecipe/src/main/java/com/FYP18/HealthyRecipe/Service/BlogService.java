@@ -11,12 +11,14 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.FYP18.HealthyRecipe.ObjectToMapConverter;
+import com.FYP18.HealthyRecipe.DTO.UserInfoDTO;
 import com.FYP18.HealthyRecipe.Entity.Blog;
 import com.FYP18.HealthyRecipe.Entity.BlogReviewRating;
 import com.FYP18.HealthyRecipe.Entity.BlogReviewRatingId;
 import com.FYP18.HealthyRecipe.Entity.Categories.BlogPostCategory;
 import com.FYP18.HealthyRecipe.Repository.BlogRepository;
 import com.FYP18.HealthyRecipe.Repository.BlogReviewRatingRepository;
+import com.FYP18.HealthyRecipe.Repository.UserRepository;
 import com.FYP18.HealthyRecipe.Repository.Categories.BlogPostCategoryRepo;
 
 // import org.springframework.transaction.annotation.Transactional;
@@ -145,6 +147,19 @@ public class BlogService {
     public List<BlogReviewRating> getAllRatingsOfUserId(String userId)
     {
         return blogReviewRatingRepository.findByUserID(userId);
+    }
+    @Autowired
+    private UserRepository userRepo;
+    public List<BlogReviewRating> getAllRatingsOfBlogId(Long blogId)
+    {
+        List<BlogReviewRating> toReturn = blogReviewRatingRepository.findByBlogId(blogId);
+       for(BlogReviewRating b: toReturn)
+       {
+        
+        UserInfoDTO dto = userRepo.getUserInfoDTO(b.getBlogReviewRatingId().UserID);
+        b.setUserDTO(dto);
+       }
+        return toReturn;
     }
     // create, find, edit, delete rating
     public BlogReviewRating createRating(BlogReviewRating blogReviewRating)

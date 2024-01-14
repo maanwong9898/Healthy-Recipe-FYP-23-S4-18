@@ -2,8 +2,12 @@ package com.FYP18.HealthyRecipe.Entity;
 
 import java.time.LocalDateTime;
 
+import org.hibernate.annotations.Formula;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
+import org.springframework.data.jpa.repository.Query;
+
+import com.FYP18.HealthyRecipe.DTO.UserInfoDTO;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column; 
@@ -19,6 +23,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+import jakarta.persistence.Transient;
  
 @Getter
 @Setter
@@ -33,16 +38,21 @@ public class BlogReviewRating {
     @EmbeddedId
     private BlogReviewRatingId blogReviewRatingId;
   
-    @ManyToOne(cascade = CascadeType.REMOVE, fetch = FetchType.EAGER)
-    @JoinColumn(name = "blogid", referencedColumnName = "id", insertable = false, updatable = false)
-    @OnDelete(action = OnDeleteAction.CASCADE)
-    private Blog blog;
+    // @ManyToOne(cascade = CascadeType.REMOVE, fetch = FetchType.EAGER)
+    // @JoinColumn(name = "blogid", referencedColumnName = "id", insertable = false, updatable = false)
+    // @OnDelete(action = OnDeleteAction.CASCADE)
+    // private Blog blog;
 
-    @ManyToOne
-    @JoinColumn(name = "UserID", referencedColumnName = "id", insertable = false, updatable = false)
-    private RegisteredUser userAccount;
+    // @ManyToOne
+    // @JoinColumn(name = "UserID", referencedColumnName = "id", insertable = false, updatable = false)
+    // private RegisteredUser userAccount;
 
-
+    @Transient
+    @Formula("SELECT u.id AS id, u.username AS username FROM User u WHERE u.id = UserID")
+    private UserInfoDTO userDTO;
+ 
+    //  @Query(value ="SELECT r.id AS id, r.username AS username,  FROM User r WHERE r.id = :id")
+    // UserInfoDTO getUserInfoDTO(String id);
     @Column(name = "CreatedDT", columnDefinition="DATETIME default (NOW())")
     private LocalDateTime createdDateTime;
 

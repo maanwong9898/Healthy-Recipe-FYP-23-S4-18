@@ -21,55 +21,6 @@ const SuspendRecipePage = () => {
     }
   };
 
-  // // Function to suspend a business blog post
-  // const handleSuspendRecipe = async (recipeId) => {
-  //   try {
-  //     const response = await axiosInterceptorInstance.put(
-  //       "/recipe/updateActivity",
-  //       {
-  //         id: recipeId,
-  //         active: false,
-  //       }
-  //     );
-
-  //     // Update local state to reflect the change
-  //     const updatedRecipes = recipes.map((recipe) => {
-  //       if (recipe.id === recipeId) {
-  //         return { ...recipe, active: false };
-  //       }
-  //       return recipe;
-  //     });
-
-  //     setRecipes(updatedRecipes);
-  //   } catch (error) {
-  //     console.error("Error suspending recipe", error);
-  //   }
-  // };
-
-  // const handleUnsuspendRecipe = async (recipeId) => {
-  //   try {
-  //     const response = await axiosInterceptorInstance.put(
-  //       "/recipe/updateActivity",
-  //       {
-  //         id: recipeId,
-  //         active: true,
-  //       }
-  //     );
-
-  //     // Update local state to reflect the change
-  //     const updatedRecipes = recipes.map((recipe) => {
-  //       if (recipe.id === recipeId) {
-  //         return { ...recipe, active: true };
-  //       }
-  //       return recipe;
-  //     });
-
-  //     setRecipes(updatedRecipes);
-  //   } catch (error) {
-  //     console.error("Error unsuspend recipe", error);
-  //   }
-  // };
-
   const handleToggleRecipeStatus = async (recipeID, isActive) => {
     const newStatus = !isActive;
 

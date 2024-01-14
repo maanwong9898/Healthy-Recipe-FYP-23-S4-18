@@ -3,6 +3,21 @@ import React, { useState, useRef } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 
+const RecipeDropdownMenu = () => {
+  return (
+    <div className="absolute left-0 top-10 w-48 rounded-md shadow-lg bg-white z-10">
+      <ul>
+        <li className="px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
+          <Link href="/businessUser/recipes/createRecipe">Create Recipe</Link>
+        </li>
+        <li className="px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
+          <Link href="/businessUser/recipes">View My Recipes</Link>
+        </li>
+      </ul>
+    </div>
+  );
+};
+
 const BlogPostDropdownMenu = () => {
   return (
     <div className="absolute left-0 top-10 w-48 rounded-md shadow-lg bg-white z-10">
@@ -43,6 +58,10 @@ const BusinessUserNavBar = () => {
   const [isAccountMenuOpen, setIsAccountMenuOpen] = useState(false);
   const [isAccountDropdownVisible, setAccountDropdownVisible] = useState(false);
 
+  // Additional state for Recipe dropdown
+  const [isRecipeMenuOpen, setIsRecipeMenuOpen] = useState(false);
+  const [isRecipeDropdownVisible, setRecipeDropdownVisible] = useState(false);
+
   const hideTimer = useRef(null);
 
   const handleMouseEnter = () => {
@@ -68,6 +87,20 @@ const BusinessUserNavBar = () => {
   const handleMouseLeaveAccount = () => {
     hideTimer.current = setTimeout(() => {
       setAccountDropdownVisible(false);
+    }, 300);
+  };
+
+  // Handlers for Recipe dropdown
+  const handleMouseEnterRecipe = () => {
+    if (hideTimer.current) {
+      clearTimeout(hideTimer.current);
+    }
+    setRecipeDropdownVisible(true);
+  };
+
+  const handleMouseLeaveRecipe = () => {
+    hideTimer.current = setTimeout(() => {
+      setRecipeDropdownVisible(false);
     }, 300);
   };
 
@@ -126,12 +159,16 @@ const BusinessUserNavBar = () => {
               </span>
               {isDropdownVisible && <BlogPostDropdownMenu />}
             </div>
-            <Link
-              href="/businessUser/recipes"
-              className="text-white hover:bg-sky-200 hover:text-black rounded-md px-3 py-2 text-sm font-bold"
+            <div
+              className="relative flex items-center"
+              onMouseEnter={handleMouseEnterRecipe}
+              onMouseLeave={handleMouseLeaveRecipe}
             >
-              Recipes
-            </Link>
+              <span className="text-white hover:bg-sky-200 hover:text-black rounded-md px-3 py-2 text-sm font-bold">
+                Recipes
+              </span>
+              {isRecipeDropdownVisible && <RecipeDropdownMenu />}
+            </div>
             <Link
               href="/businessUser/educationalContent"
               className="text-white hover:bg-sky-200 hover:text-black rounded-md px-3 py-2 text-sm font-bold"

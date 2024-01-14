@@ -27,6 +27,7 @@ const CreateBusinessBlogPostPage = () => {
   const [imageTitle, setImageTitle] = useState("");
   const [error, setError] = useState("");
   const [success, setSuccess] = useState(false);
+  const [userId, setUserId] = useState("");
 
   // Function to handle category change
   const handleCategoryChange = (e) => {
@@ -36,9 +37,13 @@ const CreateBusinessBlogPostPage = () => {
   useEffect(() => {
     // Access localStorage after component mounts and is on the client-side
     const storedUsername = localStorage.getItem("username");
-    const storedUserId = localStorage.getItem("userId"); // Retrieve user ID from localStorage
+    const storedUserId = localStorage.getItem("id"); // Retrieve user ID from localStorage
+    console.log("Current id", storedUserId);
     if (storedUsername) {
       setPublisher(storedUsername);
+    }
+    if (storedUserId) {
+      setUserId(storedUserId);
     }
 
     // Fetch all business blog categories from backend
@@ -76,10 +81,8 @@ const CreateBusinessBlogPostPage = () => {
       title: title, // Retrieved from state
       info: info, // Retrieved from state
       img: imageUrl, // Retrieved from state
-      // blogType: { id: categoryId, subcategoryName: "Cookbook" }, // Retrieved from state
       blogTypeId: category, // Pass the entire selected category id
-      userID: { id: "3" }, // Assuming static user ID, replace with dynamic value if needed
-      // userID: { id: storedUserId }, // replace above
+      userID: { id: userId }, // replace above
     };
 
     console.log("Blog post data for creation:", blogPostData);
@@ -149,24 +152,6 @@ const CreateBusinessBlogPostPage = () => {
                   className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-base rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
                 />
               </div>
-              {/* PUBLISHER */}
-              {/* <div className="flex flex-col">
-                <label
-                  htmlFor="publisher"
-                  className="block text-xl mb-1 font-bold text-cyan-950"
-                >
-                  Publisher:
-                </label>
-                <input
-                  type="text"
-                  id="publisher"
-                  name="publisher"
-                  placeholder="Publisher"
-                  value={publisher}
-                  onChange={clearErrorOnChange(setPublisher)}
-                  className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-base rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-                />
-              </div> */}
               {/* CATEGORY */}
               {/* CATEGORY DROPDOWN */}
               <div className="flex flex-col">
@@ -228,26 +213,12 @@ const CreateBusinessBlogPostPage = () => {
                   className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-base rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
                 />
               </div>
-              {/* IMAGE TITLE */}
-              <div className="flex flex-col">
-                <label
-                  htmlFor="imageTitle"
-                  className="block text-xl mb-1 font-bold text-cyan-950"
-                >
-                  Image Title:
-                </label>
-                <input
-                  type="text"
-                  id="imageTitle"
-                  name="imageTitle"
-                  placeholder="Image Title"
-                  value={imageTitle}
-                  onChange={clearErrorOnChange(setImageTitle)}
-                  className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-base rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-                />
-              </div>
               {/* ERROR MESSAGE */}
-              {error && <p className="text-red-800 text-xl">{error}</p>}
+              {error && (
+                <p className="text-red-800 text-xl">
+                  Unable to create blog post. Please try again.
+                </p>
+              )}
               {success && (
                 <p className="text-green-800 text-xl">
                   Blog post was created successfully!

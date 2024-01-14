@@ -19,7 +19,8 @@ const sortOptions = {
 
 // Fetch all blog posts from the backend - backend controller is BlogController
 const fetchBlogPosts = async () => {
-  const userID = "3";
+  const userID = localStorage.getItem("id");
+  console.log("Current id", userID);
   try {
     const response = await axiosInterceptorInstance.get(
       "/blog/findByUserId/" + userID

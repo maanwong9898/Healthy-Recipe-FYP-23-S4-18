@@ -248,24 +248,6 @@ const UpdateBusinessBlogPostPage = ({ params }) => {
                   className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm  rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
                 />
               </div>
-              {/* IMAGE TITLE */}
-              <div className="flex flex-col">
-                <label
-                  htmlFor="imageTitle"
-                  className="text-xl font-medium text-black mb-2"
-                >
-                  Image Title
-                </label>
-                <input
-                  type="text"
-                  name="imageTitle"
-                  id="imageTitle"
-                  placeholder="Image Title"
-                  value={imageTitle}
-                  onChange={(e) => setImageTitle(e.target.value)}
-                  className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm  rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-                />
-              </div>
               {/* ERROR MESSAGE */}
               {error && <p className="text-red-500">{error}</p>}
               {success && (

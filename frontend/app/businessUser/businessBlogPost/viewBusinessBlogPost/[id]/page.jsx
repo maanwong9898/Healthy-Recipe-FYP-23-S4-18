@@ -124,33 +124,6 @@ const ViewBusinessBlogPost = ({ params }) => {
     return <div>Loading...</div>;
   }
 
-  // this is to prevent unexpected error when title contains space
-  // Decode params from URL
-  // const decodedParams = decodeURIComponent(params.id);
-
-  // console.log("the decoded params is: " + decodedParams);
-
-  // // Slugify the decoded params
-  // const slugFromParams = slugify(decodedParams);
-
-  // // Slugify the blog title
-  // const slugifiedBlogTitle = slugify(mockBusinessBlogPost.blogTitle);
-
-  // // Compare the slugs
-  // const isMatchingTitle = slugFromParams === slugifiedBlogTitle;
-
-  // if (!isMatchingTitle) {
-  //   // Handle the mismatch here
-  //   console.error(
-  //     "The blog post id from the URL does not match the title of the mock data."
-  //   );
-  // } else {
-  //   console.log(
-  //     "The blog post id from the URL matches the title of the mock data."
-  //   );
-  // }
-  // end of checking whitespace in title
-
   // Function to render stars based on rating
   const renderStars = (rating) => {
     let stars = [];

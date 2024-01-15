@@ -10,6 +10,8 @@ import "react-quill/dist/quill.snow.css";
 // this is to update particular blog post under business user
 // router path: /businessUser/businessBlogPost/updateBusinessBlogPost/[id]
 
+// need to change user id to the current user id
+
 // Import the Quill editor only on the client-side
 const QuillNoSSRWrapper = dynamic(() => import("react-quill"), {
   ssr: false,
@@ -40,24 +42,6 @@ const fetchBlogPostById = async (postId) => {
   }
 };
 
-const updateBlogPost = async (updatedPost) => {
-  console.log("Sending the following data to update:", updatedPost);
-  try {
-    // Ensure all values are simple data types
-    const response = await axiosInterceptorInstance.put(
-      "/blog/edit",
-      updatedPost
-    );
-    console.log("Blog post updated successfully:", response.data);
-
-    // Handle successful update (e.g., redirect or show a message)
-  } catch (error) {
-    console.error("Error updating blog post:", error);
-    // Update the state to show the error
-    setError(error.message || "Failed to update blog post");
-  }
-};
-
 const UpdateBusinessBlogPostPage = ({ params }) => {
   const [businessBlogPost, setBusinessBlogPost] = useState("");
   const [title, setTitle] = useState("");
@@ -81,18 +65,17 @@ const UpdateBusinessBlogPostPage = ({ params }) => {
     fetchBlogPostById(postId)
       .then((data) => {
         setBusinessBlogPost(data);
-        console.log("data is:", data);
+        console.log("The displayed particular blog is:", data);
 
         // Set each piece of state with the corresponding data
-        setTitle(data.title);
-        setPublisher(data.publisher);
-        setCategory(data.blogType.subcategoryName || "No Subcategory"); // Display "No Subcategory" if subcategory is null
-        setInfo(data.info);
-        setImageUrl(data.img);
+        setTitle(data.title || "No Title");
+        setPublisher(data.publisher || "No Publisher");
+        setCategory(data.blogType.id || "");
+        setInfo(data.info || "No Info");
+        setImageUrl(data.img || "No Image");
       })
       .catch((error) => {
         console.error("Error fetching blog post:", error);
-        // Handle the error appropriately
       });
 
     // Fetch all business blog categories from backend
@@ -112,16 +95,29 @@ const UpdateBusinessBlogPostPage = ({ params }) => {
     fetchCategories();
   }, [params.id]);
 
+  const updateBlogPost = async (updatedPost) => {
+    console.log("Sending the following data to update:", updatedPost);
+    try {
+      // Ensure all values are simple data types
+      const response = await axiosInterceptorInstance.put(
+        "/blog/edit",
+        updatedPost
+      );
+      console.log("Blog post updated successfully:", response.data);
+      setSuccess(true);
+      setError(""); // Now 'setError' is available
+
+      // Handle successful update (e.g., redirect or show a message)
+    } catch (error) {
+      setError("Failed to update the blog post.");
+      setSuccess(false);
+    }
+  };
+
   const handleTitleChange = (e) => {
     setTitle(e.target.value); // Updating the title state
     setSuccess(false); // Reset success state on change
     console.log("New title:", e.target.value); // Log to check the updated value
-  };
-
-  const handlePublisherChange = (e) => {
-    setPublisher(e.target.value); // Correctly setting the publisher state
-    setSuccess(false); // Reset success state on change
-    console.log("New publisher:", e.target.value); // Log to check the updated value
   };
 
   const handleInfoChange = (e) => {
@@ -134,13 +130,15 @@ const UpdateBusinessBlogPostPage = ({ params }) => {
     e.preventDefault();
 
     try {
+      console.log("Updated category is:", category.id);
       const updatedPost = {
         id: businessBlogPost.id, // Assuming businessBlogPost.id is the right ID
         active: true, // Assuming you always want this to be true
         publisher: publisher,
         title: title,
         info: info,
-        userID: { id: "3" }, // Assuming userID should always be "3"
+        blogTypeId: category,
+        userID: { id: "3" }, // Need to change to the current user ID
       };
 
       await updateBlogPost(updatedPost);
@@ -199,13 +197,12 @@ const UpdateBusinessBlogPostPage = ({ params }) => {
                   id="category"
                   name="category"
                   value={category}
-                  // onChange={handleCategoryChange}
                   onChange={(e) => setCategory(e.target.value)}
                   className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm  rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
                 >
                   <option value="">Select a category</option>
                   {categories.map((cat, index) => (
-                    <option key={index} value={cat.subcategoryName}>
+                    <option key={index} value={cat.id}>
                       {cat.subcategoryName}
                     </option>
                   ))}

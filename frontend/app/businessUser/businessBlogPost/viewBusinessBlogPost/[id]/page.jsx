@@ -19,32 +19,6 @@ const slugify = (text) =>
     .replace(/^-+/, "") // Trim - from start of text
     .replace(/-+$/, ""); // Trim - from end of text
 
-// const fetchBlogPostById = async (postId) => {
-//   try {
-//     const response = await axiosInterceptorInstance.get("/blog/get");
-//     console.log("response data is:", response.data);
-
-//     const filteredData = response.data.filter(
-//       (post) => post.educationalContent === false
-//     );
-
-//     console.log("filtered data is:", filteredData);
-
-//     // Ensure postId is an integer if the IDs in data are integers
-//     postId = parseInt(postId, 10);
-
-//     const blogPost = filteredData.find((post) => post.id === postId);
-//     if (!blogPost) {
-//       console.error(`Blog post with ID ${postId} not found in filtered data`);
-//       throw new Error(`Blog post with ID ${postId} not found`);
-//     }
-//     return blogPost;
-//   } catch (error) {
-//     console.error("Failed to fetch blog post:", error);
-//     throw error;
-//   }
-// };
-
 const fetchBlogPostById = async (postId) => {
   try {
     // Ensure postId is a string if the IDs in your URL need to be strings
@@ -89,22 +63,19 @@ const ViewBusinessBlogPost = ({ params }) => {
 
   const fetchBlogRatingsAndReviews = async (blogId) => {
     try {
-      const response = await axiosInterceptorInstance.get(`/blog/rating/get`);
+      // Include the blogId in the URL as a query parameter
+      const response = await axiosInterceptorInstance.get(
+        `/blog/rating/getBlog?blogId=${blogId}`
+      );
       console.log("All ratings response data:", response.data);
 
-      // Filter the reviews to match the current blog post ID
-      const filteredReviews = response.data.filter(
-        (review) => review.blogReviewRatingId.blogID === blogId
-      );
+      // Assuming response.data is the array of reviews for the given blogId
+      setReviewsAndRatings(response.data);
 
-      console.log("filtered reviews:", filteredReviews);
-
-      // Log each review to the console
-      filteredReviews.forEach((reviewData, index) => {
+      // Optionally, log each review to the console
+      response.data.forEach((reviewData, index) => {
         console.log(`Review ${index + 1}:`, reviewData.review);
       });
-
-      setReviewsAndRatings(filteredReviews);
     } catch (error) {
       console.error("Failed to fetch ratings and reviews:", error);
     }
@@ -201,11 +172,11 @@ const ViewBusinessBlogPost = ({ params }) => {
             <div key={index} className="my-4 p-4 border-b border-gray-200">
               <div className="flex items-center mb-2">
                 <span className="font-bold mr-2">
-                  {review.userAccount.fullName}
+                  {review?.userDTO?.username || "Anonymous"}
                 </span>
                 <div className="flex">{renderStars(review.rating)}</div>
                 <span className="text-sm text-gray-500 ml-2">
-                  {new Date(review.createdDateTime).toLocaleDateString(
+                  {new Date(review?.createdDateTime).toLocaleDateString(
                     "en-GB",
                     {
                       day: "2-digit",

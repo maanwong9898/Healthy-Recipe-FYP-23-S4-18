@@ -35,4 +35,9 @@ public class RegisteredUserService {
         }
         return userInfoRepository.save(info);
     }
+    public void deleteSpecificWeight(UserInfoOverTime info)
+    {
+        UserInfoOverTime _info = userInfoRepository.findById(info.getId()).get();
+        userInfoRepository.delete(_info);
+    }
 }

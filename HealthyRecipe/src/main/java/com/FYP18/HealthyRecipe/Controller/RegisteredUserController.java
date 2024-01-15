@@ -46,6 +46,11 @@ public class RegisteredUserController {
         return service.getWeights(id);
     }
 
+    @DeleteMapping("/deleteWeight")
+    public void deleteWeight(@RequestBody UserInfoOverTime info)
+    {
+        service.deleteSpecificWeight(info);
+    }
     @PostMapping("/setWeight")
     public UserInfoOverTime setWeight(@RequestBody UserInfoOverTime info)
     {    

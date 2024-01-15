@@ -5,28 +5,24 @@ import java.time.LocalDate;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;
+import lombok.Getter;
+import lombok.Setter;
 
+@Getter
+@Setter
 @Embeddable 
 public class UserInfoDateId implements Serializable  {
-     @Column(name= "UserID", nullable = false, updatable = false)
-    public String UserID;
- 
-    @Column(name= "SavedDate", nullable = false,  columnDefinition="DATETIME default (NOW())")
-    public LocalDate SavedDate;
 
-    // if its false, means its info for height
-    @Column(name= "Weight", columnDefinition="bit(1) default b'1'")
-    private Boolean weight;
+    @Column(name= "userId")
+    private String userId;
+ 
+    @Column(name= "date")
+    private LocalDate date;
+ 
 
     @Override
     public String toString()
     {
-        return "User ID: " + UserID + ", Blog ID: " + SavedDate;
+        return "User ID: " + userId + ", Blog ID: " + date;
     }
-}
-
-	// UserID 					VARCHAR(255) NOT NULL,
-	// SavedDate			DATE NOT NULL DEFAULT(CURDATE()),
-	// Weight 		BIT(1) NOT NULL, 
-    // Info                DECIMAL(5,2) NOT NULL,
- 	// CONSTRAINT ID_PKey PRIMARY KEY (UserID, SavedDate, Weight),
+} 

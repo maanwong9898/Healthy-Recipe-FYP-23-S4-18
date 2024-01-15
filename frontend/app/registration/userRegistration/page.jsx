@@ -6,12 +6,15 @@ import HomeNavbar from "@/app/components/navigation/homeNavBar";
 import axiosInterceptorInstance from "../../axiosInterceptorInstance.js";
 
 const userRegistration = () => {
+  // state for personal information
   const [fullName, setFullName] = useState("");
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPwd, setConfirmPwd] = useState("");
   const [dob, setDOB] = useState("");
+
+  // state for all the categories needed for user registration
   const [dietaryPreferencesCategory, setDietaryPreferencesCategory] = useState(
     []
   );
@@ -20,9 +23,15 @@ const userRegistration = () => {
   const [allergyRestriction, setAllergyRestriction] = useState([]); // Store selected allergies
   const [healthGoalsCategory, setHealthGoalsCategory] = useState([]);
   const [healthGoals, setHealthGoals] = useState("");
+
+  // state for weight input to be called for another controller
   const [weight, setWeight] = useState("");
+
+  // state for error and success message
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
+
+  // Regex for email validation
   const emailValidation = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
   // Get today's date in the correct format for the max attribute (yyyy-mm-dd)
@@ -33,8 +42,9 @@ const userRegistration = () => {
   // Set the date max input to be today's date
   const todayDate = getFormattedDate(new Date());
 
+  // useEffect to fetch all the categories needed for user registration
   useEffect(() => {
-    // Fetch all business blog categories from backend
+    // Fetch all health goal from backend
     const fetchHealthGoals = async () => {
       console.log("Fetching health goals...");
       try {
@@ -110,6 +120,28 @@ const userRegistration = () => {
   const handleCreateNewUserAccount = async (event) => {
     event.preventDefault();
 
+    // Validation for mandatory fields
+    if (!fullName.trim()) {
+      setError("Full Name cannot be empty.");
+      return;
+    }
+    if (!username.trim()) {
+      setError("Username cannot be empty.");
+      return;
+    }
+    if (!email.match(emailValidation)) {
+      setError("Invalid email address.");
+      return;
+    }
+    if (!password) {
+      setError("Password cannot be empty.");
+      return;
+    }
+    if (password !== confirmPwd) {
+      setError("Passwords do not match.");
+      return;
+    }
+
     console.log("Health goal selected:", healthGoals);
     console.log("Dietary preference selected:", dietaryPreference);
     console.log("Allergies selected:", allergyRestriction);
@@ -121,13 +153,9 @@ const userRegistration = () => {
       email: email,
       password: password,
       dob: dob,
-      dietaryPreferences: {
-        id: dietaryPreference,
-      },
+      dietaryPreferencesId: dietaryPreference,
       allergies: allergyRestriction.map((id) => ({ id })),
-      healthGoal: {
-        id: healthGoals,
-      },
+      healthGoalId: healthGoals,
       weight: weight,
     };
     console.log(formData);
@@ -138,6 +166,39 @@ const userRegistration = () => {
         formData
       );
       console.log("Account successfully:", response.data);
+      setSuccess("Account successfully created!");
+
+      console.log("user id is:", response.data.id);
+
+      // Check if weight is provided and send it to the setWeight endpoint
+      if (weight) {
+        // make sure the weight is a valid number
+        const parsedWeight = parseFloat(weight);
+        if (!isNaN(parsedWeight)) {
+          // Check if parsedWeight is a valid number
+          const weightData = {
+            id: {
+              userId: response.data.id, // Assuming the user ID is returned in the response
+            },
+            weight: parsedWeight,
+          };
+
+          try {
+            const weightResponse = await axiosInterceptorInstance.post(
+              "http://localhost:8080/registeredUsers/setWeight",
+              weightData
+            );
+            console.log("Weight set successfully", weightResponse.data);
+          } catch (weightError) {
+            console.error("Invalid weight input");
+            setError("Invalid weight input. Please enter a valid weight.");
+            return; // Stop the form submission
+          }
+        } else {
+          console.error("Invalid weight input");
+        }
+      }
+
       setFullName("");
       setUsername("");
       setPassword("");
@@ -384,7 +445,13 @@ const userRegistration = () => {
                   </div>
 
                   {/* ERROR MSG */}
-                  {/* <p className="text-red-500 text-sm">{error}</p> */}
+                  {error && <p className="text-red-500 text-sm">{error}</p>}
+                  {/* SUCCESS MSG */}
+                  {success && (
+                    <p className="text-green-500 text-sm">{success}</p>
+                  )}
+
+                  {/* SUBMIT BUTTON */}
 
                   <div className="flex flex-row justify-center">
                     <button

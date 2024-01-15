@@ -145,7 +145,7 @@ const userLogin = () => {
 
       // Set the user info in localStorage (role and id)
       localStorage.setItem("role", decodedToken.role);
-      localStorage.setItem("id", decodedToken.id);
+      localStorage.setItem("userId", decodedToken.id);
 
       {
         /* 

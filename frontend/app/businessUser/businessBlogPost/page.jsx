@@ -50,8 +50,12 @@ const MyBusinessBlogPosts = () => {
   const [isSearchEmpty, setIsSearchEmpty] = useState(false);
   const [searchPerformed, setSearchPerformed] = useState(false);
   const [searchResultsCount, setSearchResultsCount] = useState(0);
+  const [categories, setCategories] = useState([]);
+  const [categoryFilter, setCategoryFilter] = useState("ALL");
 
+  // fetch all business blog posts and categories from backend
   useEffect(() => {
+    // Fetch all business blog posts from backend
     const getData = async () => {
       try {
         console.log("first time render");
@@ -74,50 +78,142 @@ const MyBusinessBlogPosts = () => {
         console.error("Error while fetching data:", error);
       }
     };
+
     getData();
+
+    // Fetch all business blog categories from backend
+    const fetchCategories = async () => {
+      console.log("Fetching blog categories...");
+      try {
+        const response = await axiosInterceptorInstance.get(
+          "category/getAllBlogPostCategories"
+        );
+        console.log("Categories fetched:", response.data);
+        setCategories(response.data);
+      } catch (error) {
+        console.error("Error fetching categories:", error);
+      }
+    };
+
+    fetchCategories();
   }, []);
 
+  // UseEffect to sort the displayed blogs when the sort option changes
+  // useEffect(() => {
+  //   let sortedBlogs = [...businessBlogs]; // Create a copy of the original blog list
+
+  //   console.log(
+  //     "Before sorting:",
+  //     sortedBlogs.map((blog) => blog.createdDateTime)
+  //   );
+
+  //   switch (sortOption) {
+  //     case "LATEST":
+  //       sortedBlogs.sort(
+  //         (a, b) => new Date(b.createdDateTime) - new Date(a.createdDateTime)
+  //       );
+  //       break;
+  //     case "OLDEST":
+  //       sortedBlogs.sort(
+  //         (a, b) => new Date(a.createdDateTime) - new Date(b.createdDateTime)
+  //       );
+  //       break;
+  //     case "ALPHABETICAL_AZ":
+  //       sortedBlogs.sort((a, b) => a.title.localeCompare(b.title));
+  //       break;
+  //     case "ALPHABETICAL_ZA":
+  //       sortedBlogs.sort((a, b) => b.title.localeCompare(a.title));
+  //       break;
+  //     // ... other sorting cases for ratings and reviews
+  //   }
+
+  //   console.log(
+  //     "After sorting:",
+  //     sortedBlogs.map((blog) => blog.createdDateTime)
+  //   );
+
+  //   console.log("force render");
+  //   // setDisplayedBlogs(sortedBlogs); // Update only the displayed blogs
+  //   setDisplayedBlogs([...sortedBlogs]);
+  //   // check what is sortedBlogs
+  //   console.log("sortedBlogs:", sortedBlogs);
+
+  //   console.log("Displayed blogs after sorting:", displayedBlogs);
+  // }, [sortOption, businessBlogs]);
+
+  // UseEffect to filter blog posts based on the search term
+  // useEffect(() => {
+  //   // If the search term is cleared, show the original list and hide the "No results" message
+  //   if (!searchTerm.trim()) {
+  //     console.log("Search term is empty");
+  //     setDisplayedBlogs(displayedBlogs);
+  //     setIsSearchEmpty(false);
+  //     setSearchPerformed(false); // Reset search status when search term is cleared
+  //     // setSearchResultsCount(0); // Reset search results count
+  //   }
+  // }, [searchTerm, displayedBlogs]);
+
+  // UseEffect to filter blog posts based on the selected category
+  // useEffect(() => {
+  //   console.log("Category filter changed:", categoryFilter);
+  //   console.log("Business blogs:", businessBlogs);
+
+  //   const filteredBlogs =
+  //     categoryFilter === "ALL"
+  //       ? businessBlogs
+  //       : businessBlogs.filter((blog) => {
+  //           // Ensure both values are compared as the same type
+  //           return blog.blogTypeId === Number(categoryFilter);
+  //         });
+
+  //   console.log("category filter:", categoryFilter);
+  //   console.log("Filtered blogs:", filteredBlogs);
+  //   setDisplayedBlogs(filteredBlogs);
+  // }, [businessBlogs, categoryFilter]);
+
+  // All in 1 -- sort, filter, search
   useEffect(() => {
-    let sortedBlogs = [...businessBlogs]; // Create a copy of the original blog list
+    // Start with the full list of blogs
+    let processedBlogs = [...businessBlogs];
 
-    console.log(
-      "Before sorting:",
-      sortedBlogs.map((blog) => blog.createdDateTime)
-    );
+    // Search filter
+    if (searchTerm) {
+      processedBlogs = processedBlogs.filter((blog) =>
+        blog.title.toLowerCase().includes(searchTerm.toLowerCase())
+      );
+    }
 
+    // Category filter
+    if (categoryFilter !== "ALL") {
+      processedBlogs = processedBlogs.filter(
+        (blog) => blog.blogTypeId === Number(categoryFilter)
+      );
+    }
+
+    // Sorting
     switch (sortOption) {
       case "LATEST":
-        sortedBlogs.sort(
+        processedBlogs.sort(
           (a, b) => new Date(b.createdDateTime) - new Date(a.createdDateTime)
         );
         break;
       case "OLDEST":
-        sortedBlogs.sort(
+        processedBlogs.sort(
           (a, b) => new Date(a.createdDateTime) - new Date(b.createdDateTime)
         );
         break;
       case "ALPHABETICAL_AZ":
-        sortedBlogs.sort((a, b) => a.title.localeCompare(b.title));
+        processedBlogs.sort((a, b) => a.title.localeCompare(b.title));
         break;
       case "ALPHABETICAL_ZA":
-        sortedBlogs.sort((a, b) => b.title.localeCompare(a.title));
+        processedBlogs.sort((a, b) => b.title.localeCompare(a.title));
         break;
-      // ... other sorting cases for ratings and reviews
+      // ... other sorting cases
     }
 
-    console.log(
-      "After sorting:",
-      sortedBlogs.map((blog) => blog.createdDateTime)
-    );
-
-    console.log("force render");
-    // setDisplayedBlogs(sortedBlogs); // Update only the displayed blogs
-    setDisplayedBlogs([...sortedBlogs]);
-    // check what is sortedBlogs
-    console.log("sortedBlogs:", sortedBlogs);
-
-    console.log("Displayed blogs after sorting:", displayedBlogs);
-  }, [sortOption, businessBlogs]);
+    // Update the displayed blogs
+    setDisplayedBlogs(processedBlogs);
+  }, [businessBlogs, searchTerm, categoryFilter, sortOption]);
 
   // Implement handleViewBlogPost and handleUpdateBlogPost as needed
   // this function is to view particular blog post
@@ -184,61 +280,17 @@ const MyBusinessBlogPosts = () => {
   };
 
   // Function to handle search when user clicks the search button
-  const handleSearchClick = async () => {
+  const handleSearchClick = () => {
     setSearchPerformed(true); // Indicates that a search was performed
 
     if (!searchTerm.trim()) {
-      setDisplayedBlogs(businessBlogs); // Reset to original list if search term is empty
+      // If the search term is empty, reset relevant states
+      setIsSearchEmpty(true);
+      setSearchResultsCount(0);
+    } else {
+      // If there is a search term, the useEffect will handle filtering
       setIsSearchEmpty(false);
-      setSearchPerformed(false); // No search performed if the term is empty
-      setSearchResultsCount(0); // Reset search results count
-      return;
     }
-
-    // Assuming you have a way to get the current user's ID
-    const currentUserId = "3"; // Replace this with actual logic to retrieve the user's ID
-
-    try {
-      const formattedSearchTerm = searchTerm.trim().replace(/\s+/g, "+");
-      const response = await axiosInterceptorInstance.get(
-        `/blog/find?keyword=${formattedSearchTerm}`
-      );
-      console.log("Search results:", response.data);
-
-      // Filter the search results to only include posts from the current user
-      const filteredResults = response.data.filter(
-        (post) => post.userID.id === currentUserId
-      );
-
-      if (filteredResults.length > 0) {
-        setDisplayedBlogs(filteredResults);
-        setIsSearchEmpty(false);
-        setSearchResultsCount(filteredResults.length); // Update search results count
-      } else {
-        setDisplayedBlogs(businessBlogs); // Keep the original list displayed
-        setIsSearchEmpty(true);
-        setSearchResultsCount(0); // No results found
-      }
-    } catch (error) {
-      console.error("Error searching blog posts:", error);
-      // Optionally handle the error, e.g., display an error message
-    }
-  };
-
-  useEffect(() => {
-    // If the search term is cleared, show the original list and hide the "No results" message
-    if (!searchTerm.trim()) {
-      console.log("Search term is empty");
-      setDisplayedBlogs(displayedBlogs);
-      setIsSearchEmpty(false);
-      setSearchPerformed(false); // Reset search status when search term is cleared
-      // setSearchResultsCount(0); // Reset search results count
-    }
-  }, [searchTerm, displayedBlogs]);
-
-  // Function to handle sort
-  const handleSort = () => {
-    // Implement sort functionality based on your API or local sorting
   };
 
   return (
@@ -255,6 +307,7 @@ const MyBusinessBlogPosts = () => {
       </div>
       {/* Search and Sort Section */}
       <div className="flex justify-between items-center mb-4">
+        {/* Search bar */}
         <div>
           <input
             type="text"
@@ -273,19 +326,21 @@ const MyBusinessBlogPosts = () => {
             Search
           </button>
           {/* "Results found" message */}
-          {searchPerformed && !isSearchEmpty && (
+          {/* {searchPerformed && !isSearchEmpty && (
             <p className="text-left text-white font-bold text-xl">
               {searchResultsCount} results found.
             </p>
-          )}
+          )} */}
           {/* "No results found" message */}
-          {searchPerformed && isSearchEmpty && (
+          {/* {searchPerformed && isSearchEmpty && (
             <p className="text-left text-white font-bold text-xl">
               No results found.
             </p>
-          )}
+          )} */}
         </div>
+        {/* Sort dropdown and filter dropdown */}
         <div>
+          {/* Sort dropdown */}
           <label htmlFor="sort" className="mr-2 font-2xl text-white">
             Sort By:
           </label>
@@ -298,6 +353,25 @@ const MyBusinessBlogPosts = () => {
             {Object.values(sortOptions).map((option) => (
               <option key={option.key} value={option.key}>
                 {option.label}
+              </option>
+            ))}
+          </select>
+          {/* Filter dropdown */}
+          <label
+            htmlFor="categoryFilter"
+            className="ml-2 mr-2 font-2xl text-white"
+          >
+            Filter By Category:
+          </label>
+          <select
+            id="categoryFilter"
+            onChange={(e) => setCategoryFilter(e.target.value)}
+            className="p-2 rounded border"
+          >
+            <option value="ALL">All Categories</option>
+            {categories.map((category, index) => (
+              <option key={index} value={category.id} className="text-black">
+                {category.subcategoryName}
               </option>
             ))}
           </select>

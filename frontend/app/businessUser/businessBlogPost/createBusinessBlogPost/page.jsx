@@ -36,12 +36,12 @@ const CreateBusinessBlogPostPage = () => {
 
   useEffect(() => {
     // Access localStorage after component mounts and is on the client-side
-    const storedUsername = localStorage.getItem("username");
+    // const storedUsername = localStorage.getItem("username");
     const storedUserId = localStorage.getItem("id"); // Retrieve user ID from localStorage
     console.log("Current id", storedUserId);
-    if (storedUsername) {
-      setPublisher(storedUsername);
-    }
+    // if (storedUsername) {
+    //   setPublisher(storedUsername);
+    // }
     if (storedUserId) {
       setUserId(storedUserId);
     }
@@ -66,8 +66,9 @@ const CreateBusinessBlogPostPage = () => {
   const handleCreatePost = async (event) => {
     event.preventDefault();
 
+    console.log("Create method called.");
     // Check if any of the required fields are empty
-    if (!title.trim() || !publisher.trim() || !info.trim()) {
+    if (!title.trim() || !info.trim()) {
       setError("Please fill in all the required fields.");
       return;
     }
@@ -77,7 +78,6 @@ const CreateBusinessBlogPostPage = () => {
     // Construct the payload according to the required format
     const blogPostData = {
       educationalContent: false, // Assuming this is a constant for all posts
-      publisher: publisher, // will be return from backend
       title: title, // Retrieved from state
       info: info, // Retrieved from state
       img: imageUrl, // Retrieved from state
@@ -119,6 +119,11 @@ const CreateBusinessBlogPostPage = () => {
   // Quill editor wrapper should have an id that matches the label's for attribute
   const quillEditorId = "info";
 
+  // Adding constraint for input text
+  // Set character limits
+  const TITLE_MAX_LENGTH = 100; // Example limit for title
+  const IMAGE_URL_MAX_LENGTH = 255; // Example limit for image URL
+
   return (
     <div className="bg-cyan-900 min-h-screen flex flex-col justify-center px-6 lg:px-8">
       {/* Adjust the max-width and width in the inline style */}
@@ -148,6 +153,7 @@ const CreateBusinessBlogPostPage = () => {
                   name="title"
                   placeholder="Title"
                   value={title}
+                  maxLength={TITLE_MAX_LENGTH} // Set the maximum length here
                   onChange={clearErrorOnChange(setTitle)}
                   className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-base rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
                 />
@@ -209,6 +215,7 @@ const CreateBusinessBlogPostPage = () => {
                   name="imageUrl"
                   placeholder="Image URL"
                   value={imageUrl}
+                  maxLength={IMAGE_URL_MAX_LENGTH} // Set the maximum length here
                   onChange={clearErrorOnChange(setImageUrl)}
                   className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-base rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
                 />
@@ -216,7 +223,7 @@ const CreateBusinessBlogPostPage = () => {
               {/* ERROR MESSAGE */}
               {error && (
                 <p className="text-red-800 text-xl">
-                  Unable to create blog post. Please try again.
+                  Error creating blog post: {error}
                 </p>
               )}
               {success && (

@@ -107,5 +107,11 @@ public class RegisterController {
     {   
        return loginService.GetDashboardInfo(id);
     }
+    @PostMapping("/dashboardSet")
+    public DashboardDTO setDTO(@RequestBody DashboardDTO dashboard)
+    {   
+       return loginService.SetDashboardInfo(dashboard);
+    }
+    
 
 }

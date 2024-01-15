@@ -82,9 +82,9 @@ public class LoginService {
        
         if(user.getUEN() == null || user.getUEN().isEmpty())
         {
-            throw new Exception("UEN IS EMPTY");
-
+            throw new Exception("UEN IS EMPTY"); 
         }
+        user.setCreatedDate(LocalDate.now());
         BusinessUser businessUser = businessUserRepository.findByUEN(user.getUEN());
  
         if(businessUser != null)
@@ -100,7 +100,7 @@ public class LoginService {
         CheckForUsername(user.getUsername());
         CheckForEmail(user.getEmail());
         user.setRole(Role.ADMIN);
-        // user.setRole("ADMIN");
+        user.setCreatedDate(LocalDate.now()); 
         return systemAdminRepository.save(user); 
     }
 
@@ -108,6 +108,7 @@ public class LoginService {
     {
         CheckForUsername(user.getUsername());
         CheckForEmail(user.getEmail());
+        user.setCreatedDate(LocalDate.now());
         return registeredUserRepository.save(user);
     }
 
@@ -115,16 +116,62 @@ public class LoginService {
     {
         CheckForUsername(user.getUsername());
         CheckForEmail(user.getEmail());
+        user.setCreatedDate(LocalDate.now());
         return nutritionistRepository.save(user);
     }
-    
- 
+      
+    public DashboardDTO SetDashboardInfo(DashboardDTO dto)
+    {  
+        User user = userRepository.findById(dto.getId()).get();
+        Role role =  user.getRole(); 
+        user.setUsername(dto.getUsername());
+        user.setFullName(dto.getFullName());
+        user.setEmail(dto.getEmail()); 
+
+        userRepository.save(user);
+        switch(role)
+        {
+            case BUSINESS_USER:
+                BusinessUser b = businessUserRepository.findById(user.getId()).get();
+                b.setContactNumber(dto.getContactNumber());
+                b.setCompanyName(dto.getCompanyName());
+                b.setCompanyAddress(dto.getCompanyAddress());
+                b.setUEN(dto.getUEN());  
+
+                businessUserRepository.save(b);
+                break;
+            case NUTRITIONIST:
+                Nutritionist n = nutritionistRepository.findById(user.getId()).get();
+                n.setContactNumber(dto.getContactNumber());
+                n.setCompanyName(dto.getCompanyName());
+                n.setCompanyAddress(dto.getCompanyAddress());
+
+                nutritionistRepository.save(n);
+                break; 
+
+            case REGISTERED_USER:
+                RegisteredUser rUser = registeredUserRepository.findById(user.getId()).get();
+                rUser.setDob(dto.getDob());
+                rUser.setAllergies(dto.getAllergies());
+                rUser.setDietaryPreferencesId(dto.getDietaryPreferences().getId());
+                rUser.setHealthGoalId(dto.getHealthGoal().getId());
+                registeredUserRepository.save(rUser);
+            break;
+            default:
+                SystemAdmin admin = systemAdminRepository.findById(user.getId()).get();
+                admin.setDOB(dto.getDob());
+                systemAdminRepository.save(admin);
+                
+            break;
+       }
+       return dto;
+    }
 
     public DashboardDTO GetDashboardInfo(String id)
     {
         DashboardDTO dto = new DashboardDTO();
         User user = userRepository.findById(id).get();
-       Role role =  user.getRole();
+        Role role =  user.getRole();
 
        dto.setUsername(user.getUsername());
        dto.setFullName(user.getFullName());
@@ -146,15 +193,21 @@ public class LoginService {
                 dto.setCompanyName(n.getCompanyName());
                 dto.setCompanyAddress(n.getCompanyAddress());
                 break; 
-        default:
-            LocalDate date = role.equals(Role.REGISTERED_USER)  ? 
-                            registeredUserRepository.findById(user.getId()).get().getDob(): 
-                            systemAdminRepository.findById(user.getId()).get().getDOB();
+
+            case REGISTERED_USER:
+                RegisteredUser registeredUser =  registeredUserRepository.findById(user.getId()).get();
+                // registeredUser.
+                dto.setAllergies(registeredUser.getAllergies());
+                dto.setHealthGoal(registeredUser.getHealthGoal());
+                dto.setDietaryPreferences(registeredUser.getDietaryPreferences());
+                dto.setDob(registeredUser.getDob());
+                break;
+            default:
+                LocalDate date = systemAdminRepository.findById(user.getId()).get().getDOB();
 
               dto.setDob(date); 
             break;
-       }  
-       System.out.println("REEP+ " + dto.toString());
+        }   
         return dto;
     }
 }

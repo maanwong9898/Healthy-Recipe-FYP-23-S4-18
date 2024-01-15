@@ -1,5 +1,11 @@
 package com.FYP18.HealthyRecipe.DTO;
 import java.time.LocalDate;
+import java.util.List;
+import java.util.Set;
+
+import com.FYP18.HealthyRecipe.Entity.Categories.Allergies;
+import com.FYP18.HealthyRecipe.Entity.Categories.DietaryPreferences;
+import com.FYP18.HealthyRecipe.Entity.Categories.HealthGoal;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -28,6 +34,15 @@ public class DashboardDTO {
     private String companyAddress;
     private String UEN;
 
+
+    private Set<Allergies> allergies;
+    private DietaryPreferences dietaryPreferences;
+    private HealthGoal healthGoal;
+    // private List<String> allergies;
+    // private String dietaryPreference;
+    // private String 
+    // private Long dietaryPreferenceId;
+    // private List<
 } 
  
 

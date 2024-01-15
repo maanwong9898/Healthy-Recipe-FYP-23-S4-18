@@ -1,5 +1,7 @@
 package com.FYP18.HealthyRecipe.Controller;
 
+import java.io.IOException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,7 +16,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.FYP18.HealthyRecipe.DTO.JWTResponseDTO;
 import com.FYP18.HealthyRecipe.DTO.LoginRequestDTO;
@@ -26,6 +30,7 @@ import com.FYP18.HealthyRecipe.Entity.SystemAdmin;
 import com.FYP18.HealthyRecipe.Entity.User;
 import com.FYP18.HealthyRecipe.SecuringWeb.JwtUtil;
 import com.FYP18.HealthyRecipe.Service.CustomUserDetailService;
+import com.FYP18.HealthyRecipe.Service.FirebaseStorageService;
 import com.FYP18.HealthyRecipe.Service.LoginService; 
  
 @RestController
@@ -114,4 +119,25 @@ public class RegisterController {
     }
     
 
+    @PostMapping("/test")
+    public void Test(@RequestParam("nutriCert") MultipartFile file)
+    {
+        System.out.println(file.getOriginalFilename());
+    }
+
+     @Autowired
+    private FirebaseStorageService service;
+    @PostMapping("/upload") 
+	public String handleFileUpload(@RequestParam("nutriCert") MultipartFile file
+			// RedirectAttributes redirectAttributes
+            ) throws IOException {
+ 
+
+        if(file.isEmpty()) return "EMPTY";
+        String uploaded = service.uploadFile(file);
+		// redirectAttributes.addFlashAttribute("message",
+		// 		"You successfully uploaded " + file.getOriginalFilename() + "!");
+
+		return uploaded;
+	}
 }

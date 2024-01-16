@@ -17,5 +17,8 @@ public interface BusinessUserRepository extends JpaRepository<BusinessUser, Stri
     @Query("SELECT b FROM BusinessUser b WHERE b.UEN = :UEN")
     BusinessUser findByUEN(String UEN);
     
+    @Transactional
+    @Query("SELECT b FROM BusinessUser b WHERE b.enabled = false")
+    List<BusinessUser> findUnverifiedUsers();
     
 }

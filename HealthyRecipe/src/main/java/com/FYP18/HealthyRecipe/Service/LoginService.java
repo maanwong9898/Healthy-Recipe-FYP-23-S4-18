@@ -210,4 +210,31 @@ public class LoginService {
         }   
         return dto;
     }
+
+    public List<Nutritionist> getUnverifiedNutritionists()
+    {
+        List<Nutritionist> toReturn = nutritionistRepository.findUnverifiedUsers();
+
+        for(Nutritionist n :toReturn)
+        {
+            n.setPassword("");
+        }
+        return toReturn;
+    }
+    public List<BusinessUser> getUnverifiedBusinessUser()
+    {
+        List<BusinessUser> toReturn = businessUserRepository.findUnverifiedUsers();
+
+        for(BusinessUser b: toReturn)
+        {
+            b.setPassword("");
+        }
+        return toReturn;
+    }
+    // public DashboardDTO verifyUser(String userId)
+    // {
+    //     User user = userRepository.findById(userId).get();
+
+        
+    // }
 }

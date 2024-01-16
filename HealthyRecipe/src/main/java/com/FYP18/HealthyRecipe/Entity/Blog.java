@@ -24,60 +24,53 @@ import jakarta.persistence.OneToOne;
 import jakarta.persistence.PreRemove;
 import jakarta.persistence.Table;
 
-
 @Getter
 @Setter
 @Builder
-@AllArgsConstructor 
+@AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "Blog") 
+@Table(name = "Blog")
 public class Blog {
- 
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ID", updatable = false)
     private Long id;
 
-    @Column(name = "CreatedDT", columnDefinition="DATETIME default (NOW())", updatable = false)
+    @Column(name = "CreatedDT", columnDefinition = "DATETIME default (NOW())", updatable = false)
     private LocalDateTime createdDateTime;
 
     @Column(name = "LastUpdatedDT")
     private LocalDateTime lastUpdatedDateTime;
 
-    @Column(name= "ACTIVE", columnDefinition="bit(1) default b'1'")
+    @Column(name = "ACTIVE", columnDefinition = "bit(1) default b'1'")
     private Boolean active;
 
-    @Column(name= "Educational_Content", updatable = false)
-    private Boolean educationalContent ;
-     
-    @Column(name= "Publisher")
+    @Column(name = "Publisher")
     private String publisher;
- 
-    @Column(name= "Title")
+
+    @Column(name = "Title")
     private String title;
-  
+
     @Column(name = "blog_type_id", nullable = true)
     private Long blogTypeId;
- 
-    @ManyToOne(fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH})
+
+    @ManyToOne(fetch = FetchType.EAGER, cascade = { CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH })
     @JoinColumn(name = "blog_type_id", insertable = false, updatable = false)
     private BlogPostCategory blogType;
- 
-    
+
     // @Column(name= "Info")
-    @Column(nullable = false, columnDefinition="TEXT")
-    @Lob 
+    @Column(nullable = false, columnDefinition = "TEXT")
+    @Lob
     private String info;
 
     private String img;
-      
-    // yes the userId can be null, credit may land on existing business 
-    // users or saved inside info column 
+
+    // yes the userId can be null, credit may land on existing business
+    // users or saved inside info column
     @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "UserID", referencedColumnName = "id")
     private User userID;
-  
-    
-}    
-  
+
+}

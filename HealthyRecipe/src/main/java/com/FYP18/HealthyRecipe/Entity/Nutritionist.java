@@ -1,4 +1,5 @@
 package com.FYP18.HealthyRecipe.Entity;
+
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.PrePersist;
 import jakarta.persistence.Column;
@@ -20,13 +21,14 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
-@Data 
+
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "Nutritionist") 
-public class Nutritionist extends User   {
-    
+@Table(name = "Nutritionist")
+public class Nutritionist extends User {
+
     @Column(name = "filePath")
     private List<String> filePath = new ArrayList<>();
 
@@ -35,12 +37,15 @@ public class Nutritionist extends User   {
 
     @Column(name = "companyAddress")
     private String companyAddress;
-    
+
+    @Column(name = "postalCode")
+    private String postalCode;
+
     @Column
     private String contactNumber;
+
     @PrePersist
-    public void prePersist()
-    {
+    public void prePersist() {
         setRole(Role.NUTRITIONIST);
     }
 }

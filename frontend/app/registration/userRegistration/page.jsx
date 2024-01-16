@@ -389,7 +389,7 @@ const userRegistration = () => {
                     >
                       Allergies and Restrictions
                     </label>
-                    <div>
+                    <div className="grid grid-cols-4 gap-1">
                       {allergyCategory.map((cat, index) => (
                         <label key={index} className="mr-2 items-center">
                           <input

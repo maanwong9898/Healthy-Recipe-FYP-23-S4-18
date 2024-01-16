@@ -1,4 +1,5 @@
 package com.FYP18.HealthyRecipe.Entity;
+
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.PrePersist;
 import jakarta.persistence.Column;
@@ -19,30 +20,31 @@ import java.time.LocalDate;
 import java.util.Collection;
 import java.util.Iterator;
 
-
-@Data 
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
 @Table(name = "BusinessUser")
-public class BusinessUser extends User  {
+public class BusinessUser extends User {
 
-    @Column(name= "Company_Name")
-    private String companyName ;
-
+    @Column(name = "Company_Name")
+    private String companyName;
 
     @Column
     private String companyAddress;
 
+    @Column(name = "postalCode")
+    private String postalCode;
+
     // if itsa dietitan, then UEN can be license number
-    @Column(name= "UEN", unique = true)
+    @Column(name = "UEN", unique = true)
     private String UEN;
 
     @Column
     private String contactNumber;
-     @PrePersist
-    public void prePersist()
-    {
+
+    @PrePersist
+    public void prePersist() {
         setRole(Role.BUSINESS_USER);
     }
 }

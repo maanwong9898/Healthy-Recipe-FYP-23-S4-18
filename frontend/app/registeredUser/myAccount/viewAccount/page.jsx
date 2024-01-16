@@ -4,6 +4,27 @@ import React from "react";
 import Link from "next/link";
 import { useState, useEffect } from "react";
 import SideBarLayout from "../../sidebarLayout.jsx";
+import axiosInterceptorInstance from "../../../axiosInterceptorInstance.js";
+
+// router path = /registeredUser/myAccount/viewAccount
+
+// to look at dashboard
+// needs token to access, and id to get the user
+
+// http://localhost:8080/register/dashboard/b1932542-cf36-4073-b5e4-3b9d50e491b2
+
+// // Set up the authorization header with the bearer token
+// const config = {
+//   headers: { Authorization: `Bearer ${token}` },
+// };
+
+// // Make the GET request to the userAndAdmin endpoint
+// const response = await axiosInterceptorInstance.get(
+//   "/test/admin",
+//   config
+// );
+
+// console.log("Admin data:", response.data);
 
 const mockUserAccount = {
   fullName: "Jenny Chia",
@@ -14,13 +35,40 @@ const mockUserAccount = {
 };
 
 const UpdateAccount = () => {
-  const [userAccount, setUserAccount] = useState(mockUserAccount);
+  const [userAccount, setUserAccount] = useState("");
   const [fullName, setFullName] = useState("");
+  const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [dob, setDOB] = useState("");
   const emailValidation = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
+
+  const viewUserDashboard = async () => {
+    try {
+      const userId = localStorage.getItem("userId");
+      const token = localStorage.getItem("token");
+
+      const config = {
+        headers: { Authorization: `Bearer ${token}` },
+      };
+
+      // Make the GET request to the userAndAdmin endpoint
+      const response = await axiosInterceptorInstance.get(
+        "/register/dashboard/" + userId,
+        config
+      );
+
+      console.log(response.data);
+      setUserAccount(response.data);
+    } catch (error) {
+      console.error("Error fetching user data", error);
+    }
+  };
+
+  useEffect(() => {
+    viewUserDashboard();
+  }, []);
 
   const getFormattedDate = (date) => {
     return date.toISOString().split("T")[0];
@@ -91,10 +139,9 @@ const UpdateAccount = () => {
                 type="text"
                 id="username"
                 name="username"
-                className="border px-4 py-2 rounded-lg w-full bg-gray-200 border-gray-300 text-gray-900 sm:text-sm"
+                className="border px-4 py-2 rounded-lg w-full border-gray-300 text-gray-900 sm:text-sm"
                 value={userAccount ? userAccount.username : ""}
                 onChange={(e) => setUsername(e.target.value)}
-                disabled
               />
             </div>
 

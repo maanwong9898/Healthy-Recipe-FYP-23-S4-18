@@ -15,6 +15,7 @@ const businessRegistration = () => {
   const [workEmail, setWorkEmail] = useState("");
   const [companyName, setCompanyName] = useState("");
   const [companyAddress, setCompanyAddress] = useState("");
+  const [postalCode, setPostalCode] = useState("");
   const [uen, setUen] = useState("");
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
@@ -33,6 +34,7 @@ const businessRegistration = () => {
       !workEmail.trim() ||
       !companyName.trim() ||
       !companyAddress.trim() ||
+      !postalCode.trim() ||
       !uen.trim()
     ) {
       setError("Please fill in all the required fields.");
@@ -46,8 +48,11 @@ const businessRegistration = () => {
     } else if (contactNumber.length !== 8) {
       setError("Please enter a valid contact number.");
       return;
-    } else if (uen.length !== 9) {
+    } else if (uen.length !== 10) {
       setError("Please enter a valid UEN.");
+      return;
+    } else if (postalCode.length !== 6) {
+      setError("Please enter a valid postal code.");
       return;
     } else {
       setSuccess(
@@ -65,6 +70,7 @@ const businessRegistration = () => {
       email: workEmail,
       companyName: companyName,
       companyAddress: companyAddress,
+      postalCode: postalCode,
       uen: uen,
     };
     console.log(formData);
@@ -74,9 +80,7 @@ const businessRegistration = () => {
         "/register/bUser",
         formData
       );
-      console.log("Account successfully:", response.data);
-      setSuccess(true);
-
+      console.log("Account created successfully:", response.data);
       // Clear all fields after submitting form
       setFullName("");
       setUsername("");
@@ -86,18 +90,24 @@ const businessRegistration = () => {
       setWorkEmail("");
       setCompanyName("");
       setCompanyAddress("");
+      setPostalCode("");
       setUen("");
 
       setError("");
-
+      // Clear success msg after 5 seconds
       setTimeout(() => {
         setSuccess("");
-      }, 10000);
+      }, 5000);
     } catch (error) {
       setSuccess(false); // Ensure success is false on error
       console.error("Error creating business user account:", error);
-      setError(error.message || "Failed to create account.");
+      //setError(error.message || "Failed to create account.");
     }
+  };
+
+  const clearErrorOnChange = (setter) => (e) => {
+    setter(e.target.value);
+    setError("");
   };
 
   return (
@@ -105,7 +115,7 @@ const businessRegistration = () => {
       <HomeNavbar />
       <div className="bg-orange-50 min-h-screen py-16">
         <div className="container mx-auto">
-          <div className="flex flex-col md:flex-row rounded-xl mx-auto bg-slate-200 shadow-lg overflow-hidden">
+          <div className="flex flex-col md:flex-row rounded-xl mx-auto bg-slate-100 shadow-lg overflow-hidden">
             {/* IMG + REGISTER AS ANOTHER USER */}
             <div className="w-full md:w-1/2 p-4 md:p-10 bg-white">
               <div className="text-center">
@@ -163,7 +173,7 @@ const businessRegistration = () => {
                       placeholder="Your Name"
                       className=" bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg p-2.5"
                       value={fullName}
-                      onChange={(event) => setFullName(event.target.value)}
+                      onChange={clearErrorOnChange(setFullName)}
                     />
 
                     <input
@@ -173,7 +183,7 @@ const businessRegistration = () => {
                       placeholder="Your Username"
                       className=" bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg p-2.5"
                       value={username}
-                      onChange={(event) => setUsername(event.target.value)}
+                      onChange={clearErrorOnChange(setUsername)}
                     />
                   </div>
 
@@ -198,7 +208,7 @@ const businessRegistration = () => {
                       placeholder="Password"
                       className=" bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg p-2.5"
                       value={password}
-                      onChange={(event) => setPassword(event.target.value)}
+                      onChange={clearErrorOnChange(setPassword)}
                     />
 
                     <input
@@ -208,7 +218,7 @@ const businessRegistration = () => {
                       placeholder="Repeat Password"
                       className=" bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg p-2.5"
                       value={confirmPwd}
-                      onChange={(event) => setConfirmPwd(event.target.value)}
+                      onChange={clearErrorOnChange(setConfirmPwd)}
                     />
                   </div>
 
@@ -227,7 +237,7 @@ const businessRegistration = () => {
                       placeholder="+65 1234 5678"
                       className=" bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg w-full p-2.5"
                       value={contactNumber}
-                      onChange={(event) => setContactNumber(event.target.value)}
+                      onChange={clearErrorOnChange(setContactNumber)}
                     />
                   </div>
 
@@ -250,7 +260,7 @@ const businessRegistration = () => {
                       placeholder="Work Email"
                       className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg p-2.5"
                       value={workEmail}
-                      onChange={(event) => setWorkEmail(event.target.value)}
+                      onChange={clearErrorOnChange(setWorkEmail)}
                     />
 
                     <input
@@ -260,7 +270,7 @@ const businessRegistration = () => {
                       placeholder="UEN"
                       className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg p-2.5"
                       value={uen}
-                      onChange={(event) => setUen(event.target.value)}
+                      onChange={clearErrorOnChange(setUen)}
                     />
                   </div>
                   <div className="mt-3">
@@ -275,7 +285,7 @@ const businessRegistration = () => {
                       placeholder="Company Name"
                       className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg w-full p-2.5"
                       value={companyName}
-                      onChange={(event) => setCompanyName(event.target.value)}
+                      onChange={clearErrorOnChange(setCompanyName)}
                     />
                   </div>
                   <div className="mt-3">
@@ -293,9 +303,23 @@ const businessRegistration = () => {
                       placeholder="Company Address"
                       className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg w-full p-2.5"
                       value={companyAddress}
-                      onChange={(event) =>
-                        setCompanyAddress(event.target.value)
-                      }
+                      onChange={clearErrorOnChange(setCompanyAddress)}
+                    />
+                  </div>
+
+                  <div className="mt-3">
+                    <label htmlFor="postalCode" className="flex items-center">
+                      Postal Code
+                      <span className="text-red-500">*</span>
+                    </label>
+                    <input
+                      type="text"
+                      id="postalCode"
+                      name="postalCode"
+                      placeholder="Postal Code"
+                      className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg w-full p-2.5"
+                      value={postalCode}
+                      onChange={clearErrorOnChange(setPostalCode)}
                     />
                   </div>
                   {/* ERROR MSG */}

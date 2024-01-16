@@ -79,52 +79,6 @@ const userLogin = () => {
     return () => clearInterval(intervalId); // Clear interval on component unmount
   }, []);
 
-  // const handleLogin = (event) => {
-  //   event.preventDefault();
-
-  //   // Check if there is a user with the entered username (suppose to have login controller)
-  //   const user = mockUsers.find((user) => user.username === username);
-
-  //   // Check if username matches password
-  //   if (user && user.password === password) {
-  //     // Set username and profile in local storage
-  //     localStorage.setItem("username", user.username);
-  //     localStorage.setItem("profile", user.profile);
-
-  //     if (user.profile === "registeredUser") {
-  //       console.log("registeredUser");
-  //       // print out the username and profile from local storage
-  //       console.log(localStorage.getItem("username"));
-  //       console.log(localStorage.getItem("profile"));
-
-  //       router.push("/registeredUser");
-  //     } else if (user.profile === "sysAdmin") {
-  //       console.log("sysAdmin");
-  //       // print out the username and profile from local storage
-  //       console.log(localStorage.getItem("username"));
-  //       console.log(localStorage.getItem("profile"));
-
-  //       router.push("/sysAdmin");
-  //     } else if (user.profile === "businessUser") {
-  //       console.log("businessUser");
-  //       // print out the username and profile from local storage
-  //       console.log(localStorage.getItem("username"));
-  //       console.log(localStorage.getItem("profile"));
-
-  //       router.push("/businessUser");
-  //     } else if (user.profile === "dietitian") {
-  //       console.log("dietitian");
-  //       // print out the username and profile from local storage
-  //       console.log(localStorage.getItem("username"));
-  //       console.log(localStorage.getItem("profile"));
-
-  //       router.push("/dietitian");
-  //     }
-  //   } else {
-  //     setError("Incorrect username or password"); // Set error message
-  //   }
-  // };
-
   // Function to retrieve user info from the token
   const fetchUserInfo = async () => {
     try {
@@ -145,7 +99,7 @@ const userLogin = () => {
 
       // Set the user info in localStorage (role and id)
       localStorage.setItem("role", decodedToken.role);
-      localStorage.setItem("id", decodedToken.id);
+      localStorage.setItem("userId", decodedToken.id);
 
       {
         /* 
@@ -193,7 +147,7 @@ const userLogin = () => {
         config
       );
 
-      // console.log("Admin data:", response.data);
+      console.log("Admin data:", response.data);
 
       // Handle the response data as needed
     } catch (error) {

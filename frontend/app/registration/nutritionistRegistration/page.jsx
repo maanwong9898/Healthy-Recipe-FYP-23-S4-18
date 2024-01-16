@@ -9,17 +9,49 @@ const NutritionistRegistration = () => {
   const [fullName, setFullName] = useState("");
   const [userName, setUserName] = useState("");
   const [password, setPassword] = useState("");
-  const [repeatPassword, setRepeatPassword] = useState("");
+  const [confirmPwd, setConfirmPwd] = useState("");
   const [contactNumber, setContactNumber] = useState("");
   const [workEmail, setWorkEmail] = useState("");
   const [companyName, setCompanyName] = useState("");
   const [companyAddress, setCompanyAddress] = useState("");
+  const [postalCode, setPostalCode] = useState("");
   const [nutriCert, setNutriCert] = useState("");
   const [error, setError] = useState("");
   const [success, setSuccess] = useState(false);
+  const emailValidation = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
   const handleCreateNutritionistAccount = async (event) => {
     event.preventDefault();
+
+    if (
+      !fullName.trim() ||
+      !userName.trim() ||
+      !password.trim() ||
+      !confirmPwd.trim() ||
+      !contactNumber.trim() ||
+      !workEmail.trim() ||
+      !nutriCert
+    ) {
+      setError("Please fill in all the required fields.");
+      return;
+    } else if (!emailValidation.test(workEmail)) {
+      setError("Please enter a valid email address.");
+      return;
+    } else if (password !== confirmPwd) {
+      setError("Passwords do not match.");
+      return;
+    } else if (contactNumber.length !== 8) {
+      setError("Please enter a valid contact number.");
+      return;
+    } else if (postalCode.length !== 6) {
+      setError("Please enter a valid postal code.");
+      return;
+    } else {
+      setSuccess(
+        "Account created successfully! An email will be sent to you once your account has been approved."
+      );
+    }
+
     console.log("Creating account...");
     const formData = {
       password: password,
@@ -29,6 +61,7 @@ const NutritionistRegistration = () => {
       companyName: companyName,
       companyAddress: companyAddress,
       contactNumber: contactNumber,
+      postalCode: postalCode,
       nutriCert: nutriCert,
     };
     console.log(formData);
@@ -44,18 +77,29 @@ const NutritionistRegistration = () => {
       setFullName("");
       setUserName("");
       setPassword("");
-      setRepeatPassword("");
+      setConfirmPwd("");
       setContactNumber("");
       setWorkEmail("");
       setCompanyName("");
       setCompanyAddress("");
+      setPostalCode("");
       setNutriCert("");
 
-      // Optionally redirect to another page or show success message
-      // Example: router.push('/path-to-redirect-to');
+      setError("");
+      // Clear success msg after 5 seconds
+      setTimeout(() => {
+        setSuccess("");
+      }, 5000);
     } catch (error) {
       setSuccess(false); // Ensure success is false on error
+      console.error("Error creating nutritionist account:", error);
+      //setError(error.message || "Failed to create account.");
     }
+  };
+
+  const clearErrorOnChange = (setter) => (e) => {
+    setter(e.target.value);
+    setError("");
   };
 
   return (
@@ -93,7 +137,9 @@ const NutritionistRegistration = () => {
 
               <div
                 className="h-full w-full bg-cover bg-center flex items-center justify-center flex-col text-center p-8"
-                style={{ backgroundImage: `url('/nutritionist.jpg')` }}
+                style={{
+                  backgroundImage: `url('/nutritionist_registration.jpg')`,
+                }}
               ></div>
             </div>
             {/* REGISTRATION FORM */}
@@ -125,7 +171,7 @@ const NutritionistRegistration = () => {
                       placeholder="Your Name"
                       className=" bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg p-2.5"
                       value={fullName}
-                      onChange={(event) => setFullName(event.target.value)}
+                      onChange={clearErrorOnChange(setFullName)}
                     />
 
                     <input
@@ -135,7 +181,7 @@ const NutritionistRegistration = () => {
                       placeholder="Your Username"
                       className=" bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg p-2.5"
                       value={userName}
-                      onChange={(event) => setUserName(event.target.value)}
+                      onChange={clearErrorOnChange(setUserName)}
                     />
                   </div>
                   <div className="grid grid-cols-2 gap-3 mt-2">
@@ -159,7 +205,7 @@ const NutritionistRegistration = () => {
                       placeholder="Password"
                       className=" bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg p-2.5"
                       value={password}
-                      onChange={(event) => setPassword(event.target.value)}
+                      onChange={clearErrorOnChange(setPassword)}
                     />
 
                     <input
@@ -168,10 +214,8 @@ const NutritionistRegistration = () => {
                       name="repeatPassword"
                       placeholder="Repeat Password"
                       className=" bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg p-2.5"
-                      value={repeatPassword}
-                      onChange={(event) =>
-                        setRepeatPassword(event.target.value)
-                      }
+                      value={confirmPwd}
+                      onChange={clearErrorOnChange(setConfirmPwd)}
                     />
                   </div>
                   <div className="mt-3">
@@ -189,7 +233,7 @@ const NutritionistRegistration = () => {
                       placeholder="+65 1234 5678"
                       className=" bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg w-full p-2.5"
                       value={contactNumber}
-                      onChange={(event) => setContactNumber(event.target.value)}
+                      onChange={clearErrorOnChange(setContactNumber)}
                     />
                   </div>
                   <div className="mt-3">
@@ -204,7 +248,7 @@ const NutritionistRegistration = () => {
                       placeholder="Work Email"
                       className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg w-full p-2.5"
                       value={workEmail}
-                      onChange={(event) => setWorkEmail(event.target.value)}
+                      onChange={clearErrorOnChange(setWorkEmail)}
                     />
                   </div>
 
@@ -219,7 +263,7 @@ const NutritionistRegistration = () => {
                       placeholder="Company Name"
                       className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg w-full p-2.5"
                       value={companyName}
-                      onChange={(event) => setCompanyName(event.target.value)}
+                      onChange={clearErrorOnChange(setCompanyName)}
                     />
                   </div>
 
@@ -237,9 +281,22 @@ const NutritionistRegistration = () => {
                       placeholder="Company Address"
                       className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg w-full p-2.5"
                       value={companyAddress}
-                      onChange={(event) =>
-                        setCompanyAddress(event.target.value)
-                      }
+                      onChange={clearErrorOnChange(setCompanyAddress)}
+                    />
+                  </div>
+
+                  <div className="mt-3">
+                    <label htmlFor="postalCode" className="flex items-center">
+                      Postal Code
+                    </label>
+                    <input
+                      type="text"
+                      id="postalCode"
+                      name="postalCode"
+                      placeholder="Postal Code"
+                      className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg w-full p-2.5"
+                      value={postalCode}
+                      onChange={clearErrorOnChange(setPostalCode)}
                     />
                   </div>
 
@@ -263,12 +320,15 @@ const NutritionistRegistration = () => {
                       multiple
                       accept=".pdf, .jpg, .png .jpeg"
                       value={nutriCert}
-                      onChange={(event) => setNutriCert(event.target.value)}
+                      onChange={clearErrorOnChange(setNutriCert)}
                     ></input>
                   </div>
 
                   {/* ERROR MSG */}
-                  {/* <p className="text-red-500 text-sm">{error}</p> */}
+                  <p className="text-red-500 text-sm">{error}</p>
+
+                  {/* SUCCESS MSG */}
+                  <p className="text-green-600 text-sm">{success}</p>
 
                   <div className="flex flex-row justify-center">
                     <button

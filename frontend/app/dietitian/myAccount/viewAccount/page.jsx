@@ -4,22 +4,23 @@ import React from "react";
 import Link from "next/link";
 import { useState, useEffect } from "react";
 import DietitianSideBar from "../../sideBarLayout.jsx";
+import axiosInterceptorInstance from "../../../axiosInterceptorInstance.js";
 
 //router path for this page: /dietitian/myAccount/viewAccount
-const mockUserAccount = {
-  fullName: "Peter Parker",
-  username: "dietitian1",
-  workEmail: "peter@abc.com",
-  // yyyy-mm-dd
-  companyName: "Company AAA",
-  licenseNumber: "666456789A",
-  companyAddress: "123, Tuas Avenue 1, Singapore 123456",
-  contactNumber: "98267365",
-  organizationAssociated: "Singapore Nutrition and Dietetics Association",
-};
+// const mockUserAccount = {
+//   fullName: "Peter Parker",
+//   username: "dietitian1",
+//   workEmail: "peter@abc.com",
+//   // yyyy-mm-dd
+//   companyName: "Company AAA",
+//   licenseNumber: "666456789A",
+//   companyAddress: "123, Tuas Avenue 1, Singapore 123456",
+//   contactNumber: "98267365",
+//   organizationAssociated: "Singapore Nutrition and Dietetics Association",
+// };
 
 const UpdateAccount = () => {
-  const [userAccount, setUserAccount] = useState(mockUserAccount);
+  const [userAccount, setUserAccount] = useState("");
   const [fullName, setFullName] = useState("");
   const [username, setUsername] = useState("");
   const [workEmail, setWorkEmail] = useState("");
@@ -32,6 +33,31 @@ const UpdateAccount = () => {
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
 
+  const viewUserDashboard = async () => {
+    try {
+      const userId = localStorage.getItem("userId");
+      const token = localStorage.getItem("token");
+
+      const config = {
+        headers: { Authorization: `Bearer ${token}` },
+      };
+
+      // Make the GET request to the userAndAdmin endpoint
+      const response = await axiosInterceptorInstance.get(
+        "/register/dashboard/" + userId,
+        config
+      );
+
+      setUserAccount(response.data);
+      console.log(response.data);
+    } catch (error) {
+      console.error("Error fetching user data", error);
+    }
+  };
+
+  useEffect(() => {
+    viewUserDashboard();
+  }, []);
   useEffect(() => {
     // Set the initial value when userAccount changes
     setFullName(userAccount ? userAccount.fullName : "");
@@ -143,8 +169,8 @@ const UpdateAccount = () => {
                 id="workEmail"
                 name="workEmail"
                 className="border px-4 py-2 rounded-lg w-full bg-white border-gray-300 text-gray-900 sm:text-sm"
-                value={userAccount ? userAccount.workEmail : ""}
-                onChange={(e) => setworkEmail(e.target.value)}
+                value={userAccount ? userAccount.email : ""}
+                onChange={(e) => setWorkEmail(e.target.value)}
               />
             </div>
 
@@ -174,7 +200,7 @@ const UpdateAccount = () => {
               />
             </div>
             {/* ORGANIZATION ASSOCIATED  */}
-            <div className="flex flex-col mb-3.5">
+            {/* <div className="flex flex-col mb-3.5">
               <label className="mb-1">Organization Associated:</label>
               <input
                 type="text"
@@ -184,10 +210,10 @@ const UpdateAccount = () => {
                 value={userAccount ? userAccount.organizationAssociated : ""}
                 onChange={(e) => setOrganizationAssociated(e.target.value)}
               />
-            </div>
+            </div> */}
 
             {/* licenseNumber  */}
-            <div className="flex flex-col mb-3.5">
+            {/* <div className="flex flex-col mb-3.5">
               <label className="mb-1">License Number:</label>
               <input
                 type="text"
@@ -197,7 +223,7 @@ const UpdateAccount = () => {
                 value={userAccount ? userAccount.licenseNumber : ""}
                 onChange={(e) => setLicenseNumber(e.target.value)}
               />
-            </div>
+            </div> */}
 
             <p className="text-red-500 text-sm">{error}</p>
             <p className="text-green-500 text-sm">{success}</p>

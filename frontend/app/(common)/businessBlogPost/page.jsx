@@ -17,9 +17,7 @@ const fetchBlogPosts = async () => {
     console.log("All blogs:", response.data);
 
     // Filter to get only business blog posts
-    const filteredData = response.data.filter(
-      (post) => post.educationalContent === false && post.active === true
-    );
+    const filteredData = response.data.filter((post) => post.active === true);
 
     console.log("filtered data(educationContent == false) is:", filteredData);
     return filteredData;
@@ -43,6 +41,9 @@ const BusinessBlogPostsPageForUser = () => {
   const [showingSearchResults, setShowingSearchResults] = useState(false);
   const [defaultBlogPosts, setDefaultBlogPosts] = useState([]);
 
+  // separate displayed blog posts from filtering
+  const [displayedBlogPosts, setDisplayedBlogPosts] = useState([]);
+
   useEffect(() => {
     const getData = async () => {
       try {
@@ -52,6 +53,8 @@ const BusinessBlogPostsPageForUser = () => {
 
         // Set the fetched data in businessBlogs state
         setAllBusinessBlogPosts(fetchedBlog);
+
+        setDisplayedBlogPosts(fetchedBlog); // Set displayed posts initially to all fetched posts (no filtering) new
 
         // Set the default blog posts state
         setDefaultBlogPosts(fetchedBlog);
@@ -79,23 +82,53 @@ const BusinessBlogPostsPageForUser = () => {
   }, []);
 
   // This effect runs whenever searchTerm changes.
+  // useEffect(() => {
+  //   console.log("Search term changed:", searchTerm);
+  //   // If searchTerm is empty, reset the search-related states.
+  //   if (searchTerm.trim() === "") {
+  //     console.log("inside second effect");
+  //     console.log("default blog posts:", defaultBlogPosts);
+  //     // set the default blog posts state when the search term is empty and no search is performed
+  //     setAllBusinessBlogPosts(defaultBlogPosts);
+  //     setSearchPerformed(false);
+  //     setIsSearchEmpty(false);
+  //     setShowingSearchResults(false);
+  //     setSearchResultsCount(0);
+  //     setSearchResults([]);
+  //     console.log("Search term is empty. Resetting search states...");
+  //     console.log("end of second effect");
+  //   }
+  // }, [searchTerm, AllBusinessBlogPosts]); // Only re-run the effect if searchTerm changes
+
   useEffect(() => {
-    console.log("Search term changed:", searchTerm);
-    // If searchTerm is empty, reset the search-related states.
-    if (searchTerm.trim() === "") {
-      console.log("inside second effect");
-      console.log("default blog posts:", defaultBlogPosts);
-      // set the default blog posts state when the search term is empty and no search is performed
-      setAllBusinessBlogPosts(defaultBlogPosts);
-      setSearchPerformed(false);
-      setIsSearchEmpty(false);
-      setShowingSearchResults(false);
-      setSearchResultsCount(0);
-      setSearchResults([]);
-      console.log("Search term is empty. Resetting search states...");
-      console.log("end of second effect");
-    }
-  }, [searchTerm, AllBusinessBlogPosts]); // Only re-run the effect if searchTerm changes
+    // Function to apply category filter
+    const applyFilter = () => {
+      const filteredPosts = categoryFilter
+        ? AllBusinessBlogPosts.filter(
+            (post) => post.blogType.subcategoryName === categoryFilter
+          )
+        : AllBusinessBlogPosts;
+      setDisplayedBlogPosts(filteredPosts);
+    };
+
+    applyFilter();
+  }, [categoryFilter, AllBusinessBlogPosts]);
+
+  useEffect(() => {
+    // Function to apply search
+    const applySearch = () => {
+      if (!searchTerm.trim()) {
+        setDisplayedBlogPosts(AllBusinessBlogPosts);
+        return;
+      }
+      const searchResults = AllBusinessBlogPosts.filter((post) =>
+        post.title.toLowerCase().includes(searchTerm.toLowerCase())
+      );
+      setDisplayedBlogPosts(searchResults);
+    };
+
+    applySearch();
+  }, [searchTerm, AllBusinessBlogPosts]);
 
   // Sort and slice directly in the component
   const latestPosts = [...AllBusinessBlogPosts]
@@ -128,7 +161,7 @@ const BusinessBlogPostsPageForUser = () => {
 
       // Filter the search results to meet your criteria
       const filteredResults = response.data.filter(
-        (post) => post.educationalContent === false && post.active === true
+        (post) => post.active === true
       );
 
       // Check if the search results are empty
@@ -254,7 +287,7 @@ const BusinessBlogPostsPageForUser = () => {
               value={categoryFilter}
               onChange={(e) => setCategoryFilter(e.target.value)}
               className="p-2 rounded border-2 border-black text-black"
-              style={{ width: "100%", maxWidth: "300px" }} // Added max-width for select
+              style={{ width: "100%", maxWidth: "300px" }}
             >
               <option value="">All Categories</option>
               {categories.map((category) => (
@@ -265,11 +298,13 @@ const BusinessBlogPostsPageForUser = () => {
             </select>
           </div>
         </div>
-        {/* end of search and sort */}
-        {/* Latest Posts Section */}
-        {/* Conditional rendering based on search state */}
-        {!showingSearchResults ? (
-          // Display the default blog posts if not showing search results
+        {/*Starrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrt from here to display data */}
+        {/* Check if a search or filter is active */}
+        {searchPerformed || categoryFilter ? (
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            {displayedBlogPosts.map((post) => renderPostCard(post))}
+          </div>
+        ) : (
           <>
             {/* Latest Business Blog Post Section */}
             <div className="mb-5">
@@ -282,6 +317,31 @@ const BusinessBlogPostsPageForUser = () => {
             </div>
 
             {/* Other Business Blog Post Section */}
+            <h2 className="text-2xl font-bold mb-4 mt-4">
+              Other Business Blog Post
+            </h2>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+              {otherBusinessBlogPosts.map((post) => renderPostCard(post))}
+            </div>
+          </>
+        )}
+
+        {/* end of search and sort */}
+        {/* Latest Posts Section */}
+        {/* Conditional rendering based on search state */}
+        {/* {!showingSearchResults ? (
+          // Display the default blog posts if not showing search results
+          <>
+          
+            <div className="mb-5">
+              <h2 className="text-2xl font-bold mb-4 mt-4">
+                Latest Business Blog Post
+              </h2>
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
+                {latestPosts.map((post) => renderPostCard(post))}
+              </div>
+            </div>
+
             <h2 className="text-2xl font-bold mb-4 mt-4">
               Other Business Blog Post
             </h2>
@@ -302,7 +362,7 @@ const BusinessBlogPostsPageForUser = () => {
           <p className="text-center text-xl font-semibold">
             No search results found. Displaying all posts.
           </p>
-        )}
+        )} */}
       </div>
     </div>
   );

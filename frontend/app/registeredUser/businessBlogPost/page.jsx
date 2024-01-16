@@ -16,11 +16,9 @@ const fetchBlogPosts = async () => {
     console.log("All blogs:", response.data);
 
     // Filter to get only business blog posts
-    const filteredData = response.data.filter(
-      (post) => post.educationalContent === false && post.active === true
-    );
+    const filteredData = response.data.filter((post) => post.active === true);
 
-    console.log("filtered data(educationContent == false) is:", filteredData);
+    // console.log("filtered data(educationContent == false) is:", filteredData);
     return filteredData;
     // return response.data;
   } catch (error) {
@@ -127,7 +125,7 @@ const BusinessBlogPostsPageForRegisteredUser = () => {
 
       // Filter the search results to meet your criteria
       const filteredResults = response.data.filter(
-        (post) => post.educationalContent === false && post.active === true
+        (post) => post.active === true
       );
 
       // Check if the search results are empty

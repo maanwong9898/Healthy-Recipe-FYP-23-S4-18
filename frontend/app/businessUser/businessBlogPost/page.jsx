@@ -11,8 +11,8 @@ import Link from "next/link";
 const sortOptions = {
   LATEST: { key: "LATEST", label: "By Latest" },
   OLDEST: { key: "OLDEST", label: "By Oldest" },
-  // HIGHEST_RATINGS: { key: "HIGHEST_RATINGS", label: "Highest Ratings" },
-  // LOWEST_RATINGS: { key: "LOWEST_RATINGS", label: "Lowest Ratings" },
+  HIGHEST_RATINGS: { key: "HIGHEST_RATINGS", label: "Highest Ratings" },
+  LOWEST_RATINGS: { key: "LOWEST_RATINGS", label: "Lowest Ratings" },
   ALPHABETICAL_AZ: { key: "ALPHABETICAL_AZ", label: "Alphabetically (A to Z)" },
   ALPHABETICAL_ZA: { key: "ALPHABETICAL_ZA", label: "Alphabetically (Z to A)" },
 };
@@ -20,6 +20,7 @@ const sortOptions = {
 // Fetch all blog posts from the backend - backend controller is BlogController
 const fetchBlogPosts = async () => {
   const userID = localStorage.getItem("id");
+  // const userID = "3";
   console.log("Current id", userID);
   try {
     const response = await axiosInterceptorInstance.get(
@@ -28,18 +29,34 @@ const fetchBlogPosts = async () => {
     console.log("All business blog posts belongs to this user:", response.data);
 
     // Filter the data to include only those with educationalContent === false
-    const filteredData = response.data.filter(
-      (post) => post.educationalContent === false
-    );
+    // const filteredData = response.data.filter(
+    //   (post) => post.educationalContent === false
+    // );
 
-    console.log("filtered data(educationContent == false) is:", filteredData);
-    return filteredData;
-    // return response.data;
+    // console.log("filtered data(educationContent == false) is:", filteredData);
+    // return filteredData;
+    return response.data;
   } catch (error) {
     console.error("Failed to fetch blog posts:", error);
     throw error;
   }
 };
+
+// Fetch the average rating for each single blog post
+const fetchBlogAverage = async (blogId) => {
+  try {
+    const response = await axiosInterceptorInstance.get(
+      `/blog/getAverage/${blogId}`
+    );
+    console.log("Average rating for blog post", blogId, "is:", response.data);
+    return response.data; // Assuming this returns the average data for the blog
+  } catch (error) {
+    console.error(`Failed to fetch average for blog post ${blogId}:`, error);
+    return null; // or handle the error as you see fit
+  }
+};
+
+//http://localhost:8080/blog/getAverage/1
 
 const MyBusinessBlogPosts = () => {
   const router = useRouter();
@@ -52,28 +69,22 @@ const MyBusinessBlogPosts = () => {
   const [searchResultsCount, setSearchResultsCount] = useState(0);
   const [categories, setCategories] = useState([]);
   const [categoryFilter, setCategoryFilter] = useState("ALL");
+  const [blogAverageRating, setBlogAverageRating] = useState([]);
 
   // fetch all business blog posts and categories from backend
   useEffect(() => {
-    // Fetch all business blog posts from backend
     const getData = async () => {
       try {
-        console.log("first time render");
         const fetchedBlog = await fetchBlogPosts();
-        console.log("Fetched blog posts:", fetchedBlog);
-
-        // Set the fetched data in businessBlogs state
-        setBusinessBlogs(fetchedBlog);
-
-        // Now sort the fetched data immediately
-        const sortedBlogs = [...fetchedBlog].sort(
-          (a, b) => new Date(b.createdDateTime) - new Date(a.createdDateTime)
+        const blogsWithAverage = await Promise.all(
+          fetchedBlog.map(async (blog) => {
+            const average = await fetchBlogAverage(blog.id);
+            return { ...blog, average }; // Augment each blog post with its average
+          })
         );
-
-        console.log("first time render sortedBlogs***:", sortedBlogs);
-
-        // Set the sorted blogs as displayedBlogs
-        setDisplayedBlogs(sortedBlogs);
+        console.log("Blog with average:", blogsWithAverage);
+        setBusinessBlogs(blogsWithAverage);
+        // ... [sorting and other logic]
       } catch (error) {
         console.error("Error while fetching data:", error);
       }
@@ -97,79 +108,6 @@ const MyBusinessBlogPosts = () => {
 
     fetchCategories();
   }, []);
-
-  // UseEffect to sort the displayed blogs when the sort option changes
-  // useEffect(() => {
-  //   let sortedBlogs = [...businessBlogs]; // Create a copy of the original blog list
-
-  //   console.log(
-  //     "Before sorting:",
-  //     sortedBlogs.map((blog) => blog.createdDateTime)
-  //   );
-
-  //   switch (sortOption) {
-  //     case "LATEST":
-  //       sortedBlogs.sort(
-  //         (a, b) => new Date(b.createdDateTime) - new Date(a.createdDateTime)
-  //       );
-  //       break;
-  //     case "OLDEST":
-  //       sortedBlogs.sort(
-  //         (a, b) => new Date(a.createdDateTime) - new Date(b.createdDateTime)
-  //       );
-  //       break;
-  //     case "ALPHABETICAL_AZ":
-  //       sortedBlogs.sort((a, b) => a.title.localeCompare(b.title));
-  //       break;
-  //     case "ALPHABETICAL_ZA":
-  //       sortedBlogs.sort((a, b) => b.title.localeCompare(a.title));
-  //       break;
-  //     // ... other sorting cases for ratings and reviews
-  //   }
-
-  //   console.log(
-  //     "After sorting:",
-  //     sortedBlogs.map((blog) => blog.createdDateTime)
-  //   );
-
-  //   console.log("force render");
-  //   // setDisplayedBlogs(sortedBlogs); // Update only the displayed blogs
-  //   setDisplayedBlogs([...sortedBlogs]);
-  //   // check what is sortedBlogs
-  //   console.log("sortedBlogs:", sortedBlogs);
-
-  //   console.log("Displayed blogs after sorting:", displayedBlogs);
-  // }, [sortOption, businessBlogs]);
-
-  // UseEffect to filter blog posts based on the search term
-  // useEffect(() => {
-  //   // If the search term is cleared, show the original list and hide the "No results" message
-  //   if (!searchTerm.trim()) {
-  //     console.log("Search term is empty");
-  //     setDisplayedBlogs(displayedBlogs);
-  //     setIsSearchEmpty(false);
-  //     setSearchPerformed(false); // Reset search status when search term is cleared
-  //     // setSearchResultsCount(0); // Reset search results count
-  //   }
-  // }, [searchTerm, displayedBlogs]);
-
-  // UseEffect to filter blog posts based on the selected category
-  // useEffect(() => {
-  //   console.log("Category filter changed:", categoryFilter);
-  //   console.log("Business blogs:", businessBlogs);
-
-  //   const filteredBlogs =
-  //     categoryFilter === "ALL"
-  //       ? businessBlogs
-  //       : businessBlogs.filter((blog) => {
-  //           // Ensure both values are compared as the same type
-  //           return blog.blogTypeId === Number(categoryFilter);
-  //         });
-
-  //   console.log("category filter:", categoryFilter);
-  //   console.log("Filtered blogs:", filteredBlogs);
-  //   setDisplayedBlogs(filteredBlogs);
-  // }, [businessBlogs, categoryFilter]);
 
   // All in 1 -- sort, filter, search
   useEffect(() => {
@@ -207,6 +145,22 @@ const MyBusinessBlogPosts = () => {
         break;
       case "ALPHABETICAL_ZA":
         processedBlogs.sort((a, b) => b.title.localeCompare(a.title));
+        break;
+      case "HIGHEST_RATINGS":
+        processedBlogs.sort((a, b) => {
+          const ratingDiff =
+            (b.average?.averageRatings || 0) - (a.average?.averageRatings || 0);
+          if (ratingDiff !== 0) return ratingDiff;
+          return new Date(b.createdDateTime) - new Date(a.createdDateTime); // Latest date first if tie
+        });
+        break;
+      case "LOWEST_RATINGS":
+        processedBlogs.sort((a, b) => {
+          const ratingDiff =
+            (a.average?.averageRatings || 0) - (b.average?.averageRatings || 0);
+          if (ratingDiff !== 0) return ratingDiff;
+          return new Date(b.createdDateTime) - new Date(a.createdDateTime); // Latest date first if tie
+        });
         break;
       // ... other sorting cases
     }
@@ -387,6 +341,8 @@ const MyBusinessBlogPosts = () => {
               <th className="px-3 py-2">Date Published</th>
               <th className="px-3 py-2">Category</th>
               <th className="px-3 py-2">Status</th>
+              <th className="px-3 py-2">Ratings</th>
+              <th className="px-3 py-2"></th>
               <th className="px-3 py-2"></th>
               <th className="px-3 py-2"></th>
               <th className="px-3 py-2"></th>
@@ -412,6 +368,7 @@ const MyBusinessBlogPosts = () => {
                     ? businessBlogPost.blogType.subcategoryName
                     : "Not specified"}
                 </td>
+
                 <td className="px-3 py-2 text-base text-center">
                   <span
                     className={`rounded-full px-3 py-1 text-base font-semibold ${
@@ -423,6 +380,40 @@ const MyBusinessBlogPosts = () => {
                     {businessBlogPost.active ? "Active" : "Inactive"}
                   </span>
                 </td>
+                <td className="px-3 py-2 text-base text-center">
+                  <div
+                    className="rating-container"
+                    style={{ minWidth: "100px" }}
+                  >
+                    {businessBlogPost.average !== null &&
+                    typeof businessBlogPost.average.averageRatings ===
+                      "number" &&
+                    typeof businessBlogPost.average.totalNumber === "number" ? (
+                      <span
+                        className="rating-text"
+                        style={{ fontWeight: "bold", color: "#004d40" }}
+                      >
+                        {businessBlogPost.average.averageRatings.toFixed(1)}
+                      </span>
+                    ) : (
+                      "No ratings yet"
+                    )}
+                    {businessBlogPost.average &&
+                      businessBlogPost.average.totalNumber > 0 && (
+                        <span
+                          className="rating-count"
+                          style={{ fontSize: "0.8rem", color: "#666" }}
+                        >
+                          ({businessBlogPost.average.totalNumber} rating
+                          {businessBlogPost.average.totalNumber !== 1
+                            ? "s"
+                            : ""}
+                          )
+                        </span>
+                      )}
+                  </div>
+                </td>
+                <td className="px-3 py-2 text-base text-center"></td>
                 <td className="px-3 py-2 justify-center sm:justify-start">
                   <button
                     onClick={() => handleViewBlogPost(businessBlogPost.id)}

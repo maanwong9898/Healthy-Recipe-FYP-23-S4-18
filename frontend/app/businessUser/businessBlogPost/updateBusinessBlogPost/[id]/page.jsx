@@ -129,6 +129,7 @@ const UpdateBusinessBlogPostPage = ({ params }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    const userId = localStorage.getItem("id");
     try {
       console.log("Updated category is:", category.id);
       const updatedPost = {
@@ -137,8 +138,9 @@ const UpdateBusinessBlogPostPage = ({ params }) => {
         publisher: publisher,
         title: title,
         info: info,
+        img: imageUrl,
         blogTypeId: category,
-        userID: { id: "3" }, // Need to change to the current user ID
+        userID: { id: userId }, // Need to change to the current user ID
       };
 
       await updateBlogPost(updatedPost);

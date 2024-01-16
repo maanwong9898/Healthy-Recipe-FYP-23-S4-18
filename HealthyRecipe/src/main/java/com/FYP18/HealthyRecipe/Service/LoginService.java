@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.FYP18.HealthyRecipe.DTO.DashboardDTO;
+import com.FYP18.HealthyRecipe.DTO.DeleteUserRequest;
 import com.FYP18.HealthyRecipe.Entity.BusinessUser;
 import com.FYP18.HealthyRecipe.Entity.Nutritionist;
 import com.FYP18.HealthyRecipe.Entity.RegisteredUser;
@@ -238,6 +239,18 @@ public class LoginService {
         user.setEnabled(true);
         userRepository.save(user);
         // return "Verified";
+    }
+    public void deleteUser(DeleteUserRequest request )
+    {
+        if(request.getRole().equals(Role.BUSINESS_USER))
+        {
+            businessUserRepository.deleteById(request.getId());
+        }
+        else
+        {
+            nutritionistRepository.deleteById(request.getId());
+        }
+        userRepository.deleteById(request.getId());
     }
     // public DashboardDTO verifyUser(String userId)
     // {

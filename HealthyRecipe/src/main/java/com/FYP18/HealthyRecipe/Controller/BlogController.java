@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.FYP18.HealthyRecipe.DTO.ReviewRatingDTO;
 import com.FYP18.HealthyRecipe.Entity.Blog;
 import com.FYP18.HealthyRecipe.Entity.BlogReviewRating;
 import com.FYP18.HealthyRecipe.Entity.BlogReviewRatingId;
@@ -90,8 +91,8 @@ public class BlogController {
         Blog toReturn = blogService.createBlog(blog); 
         return new ResponseEntity<>(toReturn, HttpStatus.CREATED);
     }
-    
 
+     
     @PutMapping("/edit")
     public ResponseEntity<Blog> editBlog(@RequestBody Blog blog)  
     { 
@@ -121,7 +122,11 @@ public class BlogController {
     }
 
 
-
+    @GetMapping("/getAverage/{blogId}") 
+    public ReviewRatingDTO getAvgAndTotalNum(@PathVariable Long blogId)
+    {
+        return blogService.findAvgByBlogId(blogId);
+    }
  
     
     // if its empty, get everything(probably removing it)

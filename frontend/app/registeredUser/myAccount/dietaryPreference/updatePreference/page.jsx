@@ -5,6 +5,7 @@ import React from "react";
 import Link from "next/link";
 import { useState, useEffect } from "react";
 import SideBarLayout from "../../../sidebarLayout.jsx";
+import axiosInterceptorInstance from "../../../../axiosInterceptorInstance.js";
 
 // router path: /registeredUser/dietaryPreference/updatePreference
 

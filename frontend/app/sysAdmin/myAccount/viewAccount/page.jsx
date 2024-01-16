@@ -4,18 +4,14 @@ import React from "react";
 import Link from "next/link";
 import { useState, useEffect } from "react";
 import SideBarLayout from "../../sidebarLayout.jsx";
+import axiosInterceptorInstance from "../../../axiosInterceptorInstance.js";
 
+// things to do:
+// edit the user account details
 // router path for this page: /sysAdmin/myAccount/viewAccount
-const mockUserAccount = {
-  fullName: "Amanda",
-  username: "admin1",
-  email: "amanda@gmail.com",
-  // yyyy-mm-dd
-  dob: "2000-03-12",
-};
 
 const UpdateAccount = () => {
-  const [userAccount, setUserAccount] = useState(mockUserAccount);
+  const [userAccount, setUserAccount] = useState("");
   const [fullName, setFullName] = useState("");
   const [email, setEmail] = useState("");
   const [dob, setDOB] = useState("");
@@ -28,6 +24,32 @@ const UpdateAccount = () => {
   };
 
   const todayDate = getFormattedDate(new Date());
+
+  const viewUserDashboard = async () => {
+    try {
+      const userId = localStorage.getItem("userId");
+      const token = localStorage.getItem("token");
+
+      const config = {
+        headers: { Authorization: `Bearer ${token}` },
+      };
+
+      // Make the GET request to the userAndAdmin endpoint
+      const response = await axiosInterceptorInstance.get(
+        "/register/dashboard/" + userId,
+        config
+      );
+
+      setUserAccount(response.data);
+      console.log(response.data);
+    } catch (error) {
+      console.error("Error fetching user data", error);
+    }
+  };
+
+  useEffect(() => {
+    viewUserDashboard();
+  }, []);
 
   useEffect(() => {
     // Set the initial value when userAccount changes
@@ -80,7 +102,7 @@ const UpdateAccount = () => {
                 id="fullName"
                 name="fullName"
                 className="border px-4 py-2 rounded-lg w-full bg-white border-gray-300 text-gray-900 sm:text-sm"
-                value={fullName}
+                value={userAccount ? userAccount.fullName : ""}
                 onChange={(e) => setFullName(e.target.value)}
               />
             </div>
@@ -92,10 +114,9 @@ const UpdateAccount = () => {
                 type="text"
                 id="username"
                 name="username"
-                className="border px-4 py-2 rounded-lg w-full bg-gray-200 border-gray-300 text-gray-900 sm:text-sm"
+                className="border px-4 py-2 rounded-lg w-full border-gray-300 text-gray-900 sm:text-sm"
                 value={userAccount ? userAccount.username : ""}
                 onChange={(e) => setUsername(e.target.value)}
-                disabled
               />
             </div>
 

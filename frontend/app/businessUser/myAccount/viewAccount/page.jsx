@@ -4,20 +4,14 @@ import React from "react";
 import Link from "next/link";
 import { useState, useEffect } from "react";
 import BusinessSideBar from "../../sideBarLayout.jsx";
+import axiosInterceptorInstance from "../../../axiosInterceptorInstance.js";
 
-const mockUserAccount = {
-  fullName: "Micheal Brown",
-  username: "business1",
-  workEmail: "michealbrowm@abc.com",
-  // yyyy-mm-dd
-  companyName: "Company ABC",
-  UEN: "123456789A",
-  companyAddress: "123, Tuas Avenue 1, Singapore 123456",
-  contactNumber: "98267365",
-};
+// router path for this page: /businessUser/myAccount/viewAccount
+// things to do:
+// edit the user account details
 
 const UpdateAccount = () => {
-  const [userAccount, setUserAccount] = useState(mockUserAccount);
+  const [userAccount, setUserAccount] = useState("");
   const [fullName, setFullName] = useState("");
   const [username, setUsername] = useState("");
   const [workEmail, setWorkEmail] = useState("");
@@ -29,12 +23,38 @@ const UpdateAccount = () => {
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
 
+  const viewUserDashboard = async () => {
+    try {
+      const userId = localStorage.getItem("userId");
+      const token = localStorage.getItem("token");
+
+      const config = {
+        headers: { Authorization: `Bearer ${token}` },
+      };
+
+      // Make the GET request to the userAndAdmin endpoint
+      const response = await axiosInterceptorInstance.get(
+        "/register/dashboard/" + userId,
+        config
+      );
+
+      setUserAccount(response.data);
+      console.log(response.data);
+    } catch (error) {
+      console.error("Error fetching user data", error);
+    }
+  };
+
+  useEffect(() => {
+    viewUserDashboard();
+  }, []);
+
   useEffect(() => {
     // Set the initial value when userAccount changes
     setFullName(userAccount ? userAccount.fullName : "");
     setWorkEmail(userAccount ? userAccount.workEmail : "");
     setCompanyName(userAccount ? userAccount.companyName : "");
-    setUEN(userAccount ? userAccount.UEN : "");
+    setUEN(userAccount ? userAccount.uen : "");
     setCompanyAddress(userAccount ? userAccount.companyAddress : "");
     setContactNumber(userAccount ? userAccount.contactNumber : "");
     setUsername(userAccount ? userAccount.username : "");
@@ -135,8 +155,8 @@ const UpdateAccount = () => {
                 id="workEmail"
                 name="workEmail"
                 className="border px-4 py-2 rounded-lg w-full bg-white border-gray-300 text-gray-900 sm:text-sm"
-                value={userAccount ? userAccount.workEmail : ""}
-                onChange={(e) => setworkEmail(e.target.value)}
+                value={userAccount ? userAccount.email : ""}
+                onChange={(e) => setWorkEmail(e.target.value)}
               />
             </div>
 
@@ -174,7 +194,7 @@ const UpdateAccount = () => {
                 id="uen"
                 name="uen"
                 className="border px-4 py-2 rounded-lg w-full bg-white border-gray-300 text-gray-900 sm:text-sm"
-                value={userAccount ? userAccount.UEN : ""}
+                value={userAccount ? userAccount.uen : ""}
                 onChange={(e) => setUEN(e.target.value)}
               />
             </div>

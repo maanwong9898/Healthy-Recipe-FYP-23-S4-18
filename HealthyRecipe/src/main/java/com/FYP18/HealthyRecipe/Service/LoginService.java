@@ -231,6 +231,14 @@ public class LoginService {
         }
         return toReturn;
     }
+
+    public void verifyUser(String userId)
+    {
+        User user = userRepository.findById(userId).get();
+        user.setEnabled(true);
+        userRepository.save(user);
+        // return "Verified";
+    }
     // public DashboardDTO verifyUser(String userId)
     // {
     //     User user = userRepository.findById(userId).get();

@@ -58,15 +58,15 @@ public class RegisteredUserController {
     }
     
     @GetMapping ("/get")
-    public List<UserInfoOverTime> GetAllUsers()
+    public List<RegisteredUser> GetAllUsers()
     {
         List<RegisteredUser> controllers = repo.findAll(); 
         List<UserInfoOverTime> infos = infoRepo.findAll();
 
-        for(UserInfoOverTime info : infos)
+        for(RegisteredUser info : controllers)
         {
             System.out.println(info.toString());
         }
-        return infos;
+        return controllers;
     }
 }

@@ -11,16 +11,19 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.FYP18.HealthyRecipe.ObjectToMapConverter;
+import com.FYP18.HealthyRecipe.DTO.ReviewRatingDTO;
 import com.FYP18.HealthyRecipe.DTO.UserInfoDTO;
 import com.FYP18.HealthyRecipe.Entity.Blog;
 import com.FYP18.HealthyRecipe.Entity.BlogReviewRating;
 import com.FYP18.HealthyRecipe.Entity.BlogReviewRatingId;
 import com.FYP18.HealthyRecipe.Entity.Categories.BlogPostCategory;
+import com.FYP18.HealthyRecipe.Entity.Categories.EducationalContentCategory;
 import com.FYP18.HealthyRecipe.Repository.BlogRepository;
 import com.FYP18.HealthyRecipe.Repository.BlogReviewRatingRepository;
 import com.FYP18.HealthyRecipe.Repository.UserRepository;
 import com.FYP18.HealthyRecipe.Repository.Categories.BlogPostCategoryRepo;
-
+import com.FYP18.HealthyRecipe.Repository.Categories.EducationalContentCategoryRepo;
+ 
 // import org.springframework.transaction.annotation.Transactional;
 // import jakarta.transaction.Transactional;
  
@@ -37,12 +40,24 @@ public class BlogService {
 
     @Autowired
     private BlogPostCategoryRepo blogTypeRepo;
-    // create, read all, read 1, update, delete for blogReviewRating
  
+    // create, read all, read 1, update, delete for blogReviewRating
+     
     public Blog createBlog(Blog blog)
     {
         blog.setCreatedDateTime(LocalDateTime.now());
         blog.setActive(true);
+        if(blog.getPublisher() == null)
+        {  
+            blog.setPublisher(userRepo.findById(blog.getUserID().getId()).get().getFullName());
+        }
+
+        Optional<BlogPostCategory> blogType = blogTypeRepo.findById(blog.getBlogTypeId());
+  
+        blog.setBlogTypeId((blogType.isPresent() ? blogType.get().getId(): null));
+        
+     
+        
         // for some reason, i thought when i set the defaults in the 
         // columnDefinition would work, but it doesnt, i have to set the default values
         // i want here..
@@ -59,11 +74,12 @@ public class BlogService {
     // but for now, all content thats specified in the argument would be used 
     // to overwrites all content
     public Blog updateBlog(Blog blog)
-    {
+    {  
         Optional<BlogPostCategory> blogType = blogTypeRepo.findById(blog.getBlogTypeId());
-
-        blog.setBlogTypeId(!blogType.isPresent() ? null :blogType.get().getId());
-         // automatically sets the last updated time
+  
+        blog.setBlogTypeId((blogType.isPresent() ? blogType.get().getId(): null));
+        
+     
         blog.setLastUpdatedDateTime(LocalDateTime.now());
         return blogRepository.save(blog);
     }
@@ -76,8 +92,8 @@ public class BlogService {
     }
 
     public List<Blog> getAllBlogs()
-    {
-        return blogRepository.findAll();
+    {  
+        return blogRepository.findAll() ;
     }
 
     public List<Blog> findBlogsByKeyword(String keyword)
@@ -121,7 +137,10 @@ public class BlogService {
     {
         return blogRepository.findByUserID(userId);
     }
- 
+    public ReviewRatingDTO findAvgByBlogId(Long blogId)
+    {
+        return blogReviewRatingRepository.findAverageDTOByBlogId(blogId);
+    }
     public void deleteBlog(long id)
     {
         // blogReviewRatingRepository.deleteByBlogId(id);

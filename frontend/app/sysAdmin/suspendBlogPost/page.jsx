@@ -10,7 +10,7 @@ import axiosInterceptorInstance from "../../axiosInterceptorInstance.js";
 const SuspendBusinessBlogPostPage = () => {
   const [businessBlogs, setBusinessBlogs] = useState([]);
 
-  // get all the recipes from the backend
+  // get all the blog from the backend
   const viewAllBusinessBlogs = async () => {
     try {
       const response = await axiosInterceptorInstance.get("/blog/get");

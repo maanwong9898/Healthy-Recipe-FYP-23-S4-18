@@ -37,7 +37,7 @@ const CreateBusinessBlogPostPage = () => {
   useEffect(() => {
     // Access localStorage after component mounts and is on the client-side
     // const storedUsername = localStorage.getItem("username");
-    const storedUserId = localStorage.getItem("id"); // Retrieve user ID from localStorage
+    const storedUserId = localStorage.getItem("userId"); // Retrieve user ID from localStorage
     console.log("Current id", storedUserId);
     // if (storedUsername) {
     //   setPublisher(storedUsername);

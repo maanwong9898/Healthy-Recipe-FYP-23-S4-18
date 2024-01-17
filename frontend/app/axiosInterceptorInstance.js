@@ -1,9 +1,14 @@
-import axios from 'axios';
+import axios from "axios";
+
+// https://quickstart-1614178089364.et.r.appspot.com/
+
+// const axiosInterceptorInstance = axios.create({
+//   baseURL: "http://localhost:8080", // Replace with your API base URL
+// });
 
 const axiosInterceptorInstance = axios.create({
-  baseURL: 'http://localhost:8080', // Replace with your API base URL
+  baseURL: "https://quickstart-1614178089364.et.r.appspot.com", // Replace with your API base URL
 });
-
 
 // Request interceptor
 // axiosInterceptorInstance.interceptors.request.use(
@@ -24,8 +29,6 @@ const axiosInterceptorInstance = axios.create({
 //   }
 // );
 // End of Request interceptor
-
-
 
 // // Response interceptor
 // axiosInterceptorInstance.interceptors.response.use(

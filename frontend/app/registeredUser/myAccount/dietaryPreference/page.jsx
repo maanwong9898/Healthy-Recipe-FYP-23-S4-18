@@ -6,16 +6,15 @@ import Link from "next/link";
 import { useState, useEffect } from "react";
 import SideBarLayout from "../../sidebarLayout.jsx";
 import axiosInterceptorInstance from "../../../axiosInterceptorInstance.js";
+
+// router path = /registeredUser/myAccount/dietaryPreference
+
 const ViewDietaryPreference = () => {
   const router = useRouter();
   const [userAccount, setUserAccount] = useState({});
   const [dietaryPreference, setDietaryPreference] = useState("");
   const [allergies, setAllergies] = useState([]);
   const [healthGoal, setHealthGoal] = useState("");
-
-  useEffect(() => {
-    viewUserDashboard();
-  }, []);
 
   const viewUserDashboard = async () => {
     try {
@@ -39,10 +38,19 @@ const ViewDietaryPreference = () => {
       setHealthGoal(
         response.data.healthGoal?.subcategoryName || "Not specified"
       );
+
+      console.log(
+        "User data fetched from backend in view dietary :",
+        response.data
+      );
     } catch (error) {
       console.error("Error fetching user data", error);
     }
   };
+
+  useEffect(() => {
+    viewUserDashboard();
+  }, []);
 
   const handleUpdate = () => {
     router.push("/registeredUser/myAccount/dietaryPreference/updatePreference");

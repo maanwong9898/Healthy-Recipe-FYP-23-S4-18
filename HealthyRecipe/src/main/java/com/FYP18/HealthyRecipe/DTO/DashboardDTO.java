@@ -33,6 +33,7 @@ public class DashboardDTO {
     private String companyName;
     private String companyAddress;
     private String UEN;
+    private String postalCode;
 
 
     private Set<Allergies> allergies;

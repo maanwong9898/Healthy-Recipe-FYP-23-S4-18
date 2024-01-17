@@ -43,14 +43,21 @@ const NutritionistRegistration = () => {
     } else if (contactNumber.length !== 8) {
       setError("Please enter a valid contact number.");
       return;
-    } else if (postalCode.length !== 6) {
-      setError("Please enter a valid postal code.");
+    } else if (
+      companyName.trim() &&
+      (!companyAddress.trim() || !postalCode.trim())
+    ) {
+      setError("Please provide both company address and postal code.");
       return;
     } else {
       setSuccess(
         "Account created successfully! An email will be sent to you once your account has been approved."
       );
     }
+    // else if (postalCode.length !== 6) {
+    //   setError("Please enter a valid postal code.");
+    //   return;
+    // }
 
     console.log("Creating account...");
     const formData = {

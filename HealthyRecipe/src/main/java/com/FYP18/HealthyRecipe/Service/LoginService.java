@@ -137,7 +137,8 @@ public class LoginService {
                 b.setContactNumber(dto.getContactNumber());
                 b.setCompanyName(dto.getCompanyName());
                 b.setCompanyAddress(dto.getCompanyAddress());
-                b.setUEN(dto.getUEN());  
+                b.setUEN(dto.getUEN());
+                b.setPostalCode(dto.getPostalCode());  
 
                 businessUserRepository.save(b);
                 break;
@@ -146,6 +147,7 @@ public class LoginService {
                 n.setContactNumber(dto.getContactNumber());
                 n.setCompanyName(dto.getCompanyName());
                 n.setCompanyAddress(dto.getCompanyAddress());
+                n.setPostalCode(dto.getPostalCode());
 
                 nutritionistRepository.save(n);
                 break; 
@@ -187,12 +189,14 @@ public class LoginService {
                 dto.setCompanyName(b.getCompanyName());
                 dto.setCompanyAddress(b.getCompanyAddress());
                 dto.setUEN(b.getUEN());  
+                dto.setPostalCode(b.getPostalCode());
                 break;
             case NUTRITIONIST:
                 Nutritionist n = nutritionistRepository.findById(user.getId()).get();
                 dto.setContactNumber(n.getContactNumber());
                 dto.setCompanyName(n.getCompanyName());
                 dto.setCompanyAddress(n.getCompanyAddress());
+                dto.setPostalCode(n.getPostalCode());
                 break; 
 
             case REGISTERED_USER:

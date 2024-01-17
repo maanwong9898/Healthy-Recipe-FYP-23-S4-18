@@ -10,31 +10,6 @@ import axiosInterceptorInstance from "../../axiosInterceptorInstance.js";
 import { jwtDecode } from "jwt-decode";
 
 // router path: /userLogin
-// mock data for testing
-
-// should have "profile type" to determine which page to go to
-const mockUsers = [
-  {
-    username: "user1",
-    password: "pw1",
-    profile: "registeredUser",
-  },
-  {
-    username: "admin1",
-    password: "pw1",
-    profile: "sysAdmin",
-  },
-  {
-    username: "business1",
-    password: "pw1",
-    profile: "businessUser",
-  },
-  {
-    username: "dietitian1",
-    password: "pw1",
-    profile: "dietitian",
-  },
-];
 
 const images = [
   "https://img.freepik.com/free-photo/top-view-delicious-vegetable-soup-with-different-seasonings-dark-green-surface-food-meal-vegetables-soup-ingredient-product_140725-72452.jpg?w=826&t=st=1703904601~exp=1703905201~hmac=f28fb9ae08c8acf6be078c1d04c4d5c0eefbd0d883f11a0eb4d14c94099fb958",
@@ -189,7 +164,7 @@ const userLogin = () => {
           router.push("/businessUser");
           break;
         case "NUTRITIONIST":
-          router.push("/dietitian");
+          router.push("/nutritionist");
           break;
         default:
           console.error(`Unknown profile type: ${profile}`);
@@ -299,93 +274,6 @@ const userLogin = () => {
         </div>
       </div>
     </div>
-    // <div>
-    //   <div className="bg-orange-50 flex items-center justify-center min-h-screen">
-    //     <div className="max-w-4xl mx-auto bg-cyan-600/50 grid grid-cols-1 md:grid-cols-2 items-center gap-20 p-5 rounded-2xl">
-    //       {/* Image container */}
-    //       <div className="hidden md:block">
-    //         <img
-    //           src={images[currentImageIndex]} // Dynamically set the image source
-    //           alt="Slideshow"
-    //           className="rounded-2xl w-full h-auto" // Adjust width and height as needed
-    //         />
-    //       </div>
-
-    //       {/* Login form container */}
-    //       <div className="max-w-md grid gap-5">
-    //         <h1 className="text-4xl font-bold text-white mb-3">
-    //           My Healthy Recipe
-    //         </h1>
-
-    //         <form className="space-y-6" onSubmit={handleLogin}>
-    //           {/* Email Input */}
-    //           <div className="relative">
-    //             <div className="absolute top-2.5 left-3">
-    //               <svg
-    //                 xmlns="http://www.w3.org/2000/svg"
-    //                 fill="none"
-    //                 viewBox="0 0 24 24"
-    //                 strokeWidth="1.5"
-    //                 stroke="currentColor"
-    //                 className="w-6 h-6"
-    //               >
-    //                 <path
-    //                   strokeLinecap="round"
-    //                   strokeLinejoin="round"
-    //                   d="M17.982 18.725A7.488 7.488 0 0 0 12 15.75a7.488 7.488 0 0 0-5.982 2.975m11.963 0a9 9 0 1 0-11.963 0m11.963 0A8.966 8.966 0 0 1 12 21a8.966 8.966 0 0 1-5.982-2.275M15 9.75a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"
-    //                 />
-    //               </svg>
-    //             </div>
-    //             <input
-    //               type="text"
-    //               placeholder="Username"
-    //               value={username}
-    //               className="w-full bg-cyan-200 text-cyan py-2 pl-12 pr-3 rounded-full border border-white focus:border-black focus:outline-none focus:ring-2 focus:ring-black"
-    //               onChange={(e) => setEmail(e.target.value)} // Assuming you have a setEmail function
-    //             />
-    //           </div>
-
-    //           {/* Password Input */}
-    //           <div className="relative">
-    //             <div
-    //               className="absolute top-2.5 left-3 cursor-pointer"
-    //               onClick={togglePasswordVisibility}
-    //             >
-    //               <FontAwesomeIcon
-    //                 icon={passwordVisible ? faEyeSlash : faEye}
-    //               />
-    //             </div>
-    //             <input
-    //               type={passwordVisible ? "text" : "password"}
-    //               placeholder="Password"
-    //               className="w-full bg-cyan-200 text-cyan py-2 pl-12 pr-3 rounded-full border border-white focus:border-black focus:outline-none focus:ring-2 focus:ring-black"
-    //               value={password}
-    //               onChange={(e) => setPassword(e.target.value)}
-    //             />
-    //           </div>
-    //           {/* Submit Button */}
-    //           <button
-    //             type="submit"
-    //             className="w-full bg-blue-700 text-white font-semibold rounded-full py-2"
-    //           >
-    //             Sign In to Your Account
-    //           </button>
-    //         </form>
-    //         {/* Links */}
-    //         <div className="text-white opacity-70 border-t border-white-light pt-4 space-y-4 text-base">
-    //           <p>
-    //             Don't have an account?{" "}
-    //             <Link href="/registration">
-    //               <span className="text-blue-900 font-semibold cursor-pointer">
-    //                 Sign up
-    //               </span>
-    //             </Link>
-    //           </p>
-    //         </div>
-    //       </div>
-    //     </div>
-    //   </div>
-    // </div>
   );
 };
 

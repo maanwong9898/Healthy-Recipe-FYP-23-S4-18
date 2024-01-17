@@ -3,10 +3,10 @@ import { useRouter } from "next/navigation";
 import React from "react";
 import Link from "next/link";
 import { useState, useEffect } from "react";
-import DietitianSideBar from "../../sideBarLayout.jsx";
+import NutritionistSideBar from "../../sideBarLayout.jsx";
 import axiosInterceptorInstance from "../../../axiosInterceptorInstance.js";
 
-//router path for this page: /dietitian/myAccount/viewAccount
+//router path for this page: /nutritionist/myAccount/viewAccount
 
 const UpdateAccount = () => {
   const [userAccount, setUserAccount] = useState("");
@@ -139,7 +139,7 @@ const UpdateAccount = () => {
 
   return (
     <div className="flex">
-      <DietitianSideBar>
+      <NutritionistSideBar>
         <div className="w-3/4 p-4 max-w-sm">
           <h1 className="text-lg font-semibold mb-4">Account Information</h1>
           <form>
@@ -250,7 +250,7 @@ const UpdateAccount = () => {
             </div>
           </form>
         </div>
-      </DietitianSideBar>
+      </NutritionistSideBar>
     </div>
   );
 };

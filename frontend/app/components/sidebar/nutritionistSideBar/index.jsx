@@ -3,7 +3,7 @@ import React, { useState, useRef } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 
-const DietitianSideBarLayout = () => {
+const NutritionistSideBarLayout = () => {
   //Expand my account
   //   const [isExpanded, setIsExpanded] = useState(false);
   //   const ExpandMyAccount = () => {
@@ -15,11 +15,11 @@ const DietitianSideBarLayout = () => {
       <h2 className="text-lg font-semibold mb-10">My Dashboard</h2>
       <ul>
         <li className="mb-4 hover:underline">
-          <Link href="/dietitian/myAccount/viewAccount">My Account</Link>
+          <Link href="/nutritionist/myAccount/viewAccount">My Account</Link>
         </li>
 
         <li className="mb-4 hover:underline m-4">
-          <Link href="/dietitian/myAccount/changePwd">Change Password</Link>
+          <Link href="/nutritionist/myAccount/changePwd">Change Password</Link>
         </li>
 
         <li className="mb-4 hover:underline">
@@ -29,4 +29,4 @@ const DietitianSideBarLayout = () => {
     </div>
   );
 };
-export default DietitianSideBarLayout;
+export default NutritionistSideBarLayout;

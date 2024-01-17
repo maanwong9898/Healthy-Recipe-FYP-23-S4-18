@@ -2,9 +2,9 @@
 import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 
-// router path: /dietitian
-// this is a home page for dietitian
-const DietitianHomePage = () => {
+// router path: /nutritionist
+// this is a home page for nutritionist
+const NutritionistHomePage = () => {
   const [username, setUsername] = useState("");
   const router = useRouter();
 
@@ -18,11 +18,11 @@ const DietitianHomePage = () => {
 
   // The button under meal plan will redirect to corresponding page
   const handleCreateMealPlan = () => {
-    router.push("/dietitian/mealPlan/createMealPlan");
+    router.push("/nutritionist/mealPlan/createMealPlan");
   };
 
   const handleViewMealPlan = () => {
-    router.push("/dietitian/mealPlan");
+    router.push("/nutritionist/mealPlan");
   };
 
   return (
@@ -53,4 +53,4 @@ const DietitianHomePage = () => {
   );
 };
 
-export default DietitianHomePage;
+export default NutritionistHomePage;

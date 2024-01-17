@@ -5,12 +5,12 @@ import Link from "next/link";
 import { useState, useEffect } from "react";
 import SideBarLayout from "../../sideBarLayout.jsx";
 
-//router path for this page: /dietitian/changePwd
+//router path for this page: /nutritionist/changePwd
 const mockUserPwd = {
   oldPwd: "pw1",
 };
 
-const ChangeDietitianPwd = () => {
+const ChangeNutritionistPwd = () => {
   const [userOldPwd, setUserOldPwd] = useState(mockUserPwd);
   const [oldPwd, setOldPwd] = useState("");
   const [newPwd, setNewPwd] = useState("");
@@ -117,4 +117,4 @@ const ChangeDietitianPwd = () => {
   );
 };
 
-export default ChangeDietitianPwd;
+export default ChangeNutritionistPwd;

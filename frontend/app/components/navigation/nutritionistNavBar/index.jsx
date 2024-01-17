@@ -8,12 +8,12 @@ const DropdownMenu = () => {
     <div className="absolute left-0 top-10 w-48 rounded-md shadow-lg bg-white z-10">
       <ul>
         <li className="px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
-          <Link href="/dietitian/mealPlan/createMealPlan">
+          <Link href="/nutritionist/mealPlan/createMealPlan">
             Create Meal Plan
           </Link>
         </li>
         <li className="px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
-          <Link href="/dietitian/mealPlan">View My Meal Plans</Link>
+          <Link href="/nutritionist/mealPlan">View My Meal Plans</Link>
         </li>
       </ul>
     </div>
@@ -25,7 +25,7 @@ const AccountDropdownMenu = () => {
     <div className="absolute left-0 top-10 w-48 rounded-md shadow-lg bg-white z-10">
       <ul>
         <li className="px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
-          <Link href="/dietitian/myAccount/viewAccount">My Account</Link>
+          <Link href="/nutritionist/myAccount/viewAccount">My Account</Link>
         </li>
         <li className="px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
           <Link href="/">Logout</Link>
@@ -35,7 +35,7 @@ const AccountDropdownMenu = () => {
   );
 };
 
-const DietitianNavBar = () => {
+const NutritionistNavBar = () => {
   const router = useRouter();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isDropdownVisible, setDropdownVisible] = useState(false);
@@ -102,7 +102,7 @@ const DietitianNavBar = () => {
           </button>
         </div>
 
-        {/* Links for large screens for dietitian nav bar */}
+        {/* Links for large screens for nutritionist nav bar */}
         <div
           className={`w-full md:flex md:w-auto ${
             isMenuOpen ? "block" : "hidden"
@@ -110,7 +110,7 @@ const DietitianNavBar = () => {
         >
           <div className="flex flex-col  md:flex-row md:space-x-8 md:mt-0 md:text-sm md:font-medium">
             <Link
-              href="/dietitian"
+              href="/nutritionist"
               className="text-white hover:bg-sky-200 hover:text-black rounded-md px-3 py-2 text-sm font-bold"
             >
               Home
@@ -136,7 +136,7 @@ const DietitianNavBar = () => {
         >
           <div className="flex flex-col md:flex-row md:space-x-8 md:mt-0 md:text-sm md:font-medium">
             <Link
-              href="/dietitian/viewAccount"
+              href="/nutritionist/myAccount/viewAccount"
               className="text-white sm:hidden hover:bg-blue-900 hover:text-white rounded-md px-3 py-2 text-sm font-bold"
             >
               My Account
@@ -164,4 +164,4 @@ const DietitianNavBar = () => {
   );
 };
 
-export default DietitianNavBar;
+export default NutritionistNavBar;

@@ -2,15 +2,14 @@
 import Head from "next/head"; // Import the Head component from Next.js
 import { Inter } from "next/font/google";
 const inter = Inter({ subsets: ["latin"] });
-import DietitianSideBar from "../components/sidebar/dietitianSideBar/index.jsx";
+import NutritionistNavigation from "../components/navigation/nutritionistNavBar";
 import React from "react";
 
-function DietitianSideBarLayout({ children }) {
+function NutritionistLayout({ children }) {
   return (
     <>
       <Head>
-        <title>Account Settings Side Bar</title>{" "}
-        {/* Set the title for SEO purposes */}
+        <title>Nutritionist Panel</title> {/* Set the title for SEO purposes */}
         <meta
           name="viewport"
           content="width=device-width, initial-scale=1"
@@ -18,10 +17,10 @@ function DietitianSideBarLayout({ children }) {
         {/* Viewport meta tag */}
         {/* Other meta tags and links to stylesheets can be added here */}
       </Head>
-      <DietitianSideBar />
+      <NutritionistNavigation />
       <div className="w-full overflow-x-hidden">{children}</div>
     </>
   );
 }
 
-export default DietitianSideBarLayout;
+export default NutritionistLayout;

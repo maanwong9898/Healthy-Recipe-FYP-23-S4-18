@@ -19,22 +19,15 @@ const sortOptions = {
 
 // Fetch all blog posts from the backend - backend controller is BlogController
 const fetchBlogPosts = async () => {
-  const userID = localStorage.getItem("id");
-  // const userID = "3";
+  const userID = localStorage.getItem("userId");
   console.log("Current id", userID);
   try {
     const response = await axiosInterceptorInstance.get(
       "/blog/findByUserId/" + userID
     );
+
     console.log("All business blog posts belongs to this user:", response.data);
 
-    // Filter the data to include only those with educationalContent === false
-    // const filteredData = response.data.filter(
-    //   (post) => post.educationalContent === false
-    // );
-
-    // console.log("filtered data(educationContent == false) is:", filteredData);
-    // return filteredData;
     return response.data;
   } catch (error) {
     console.error("Failed to fetch blog posts:", error);

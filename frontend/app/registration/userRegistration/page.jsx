@@ -18,10 +18,11 @@ const userRegistration = () => {
   const [dietaryPreferencesCategory, setDietaryPreferencesCategory] = useState(
     []
   );
-  const [dietaryPreference, setDietaryPreference] = useState("");
   const [allergyCategory, setAllergyCategory] = useState([]); // Store category of allergies
-  const [allergyRestriction, setAllergyRestriction] = useState([]); // Store selected allergies
   const [healthGoalsCategory, setHealthGoalsCategory] = useState([]);
+
+  const [allergyRestriction, setAllergyRestriction] = useState([]); // Store selected allergies
+  const [dietaryPreference, setDietaryPreference] = useState("");
   const [healthGoals, setHealthGoals] = useState("");
 
   // state for weight input to be called for another controller

@@ -2,21 +2,10 @@
 import { useRouter } from "next/navigation";
 import { useState, useEffect } from "react";
 import Link from "next/link";
+import axiosInterceptorInstance from "../../../axiosInterceptorInstance.js";
 
-// router path: /businessUser/businessBlogPost/createBusinessBlogPost
-// this is the page to create business blog post according to user story
-
-const mockRecipeCategory = [
-  {
-    category: "Vegan",
-  },
-  {
-    category: "Vegetarian",
-  },
-  {
-    category: "Pescatarian",
-  },
-];
+// router path: /businessUser/recipes/createRecipe
+// this is the page to create a recipe
 
 const CreateRecipePage = () => {
   const [title, setTitle] = useState("");
@@ -25,6 +14,7 @@ const CreateRecipePage = () => {
   const [cookingTime, setCookingTime] = useState("");
   const [servingSize, setServingSize] = useState("");
   const [description, setDescription] = useState("");
+  const [dietaryInformation, setDietaryInformation] = useState("");
   const [ingredients, setIngredients] = useState("");
   const [instructions, setInstructions] = useState("");
   const [totalCalories, setTotalCalories] = useState("");
@@ -35,31 +25,77 @@ const CreateRecipePage = () => {
   const [sodium, setSodium] = useState("");
   const [imageUrl, setImageUrl] = useState("");
   const [imageTitle, setImageTitle] = useState("");
+
+  // Display success or error message after submission
+  const [success, setSuccess] = useState("");
   const [error, setError] = useState("");
+
+  // Initialize instructionList state similar to ingredientList
+  const [instructionList, setInstructionList] = useState([""]);
   const [ingredientList, setIngredientList] = useState([""]);
 
-  // Function to handle category change
-  const handleCategoryChange = (e) => {
-    setCategory(e.target.value);
+  // store category
+  const [dietaryPreferencesCategory, setDietaryPreferencesCategory] = useState(
+    []
+  );
+  const [allergyCategory, setAllergyCategory] = useState([]); // Store category of allergies
+
+  // selected category
+  const [allergyRestriction, setAllergyRestriction] = useState([]); // Store selected allergies
+  const [dietaryPreference, setDietaryPreference] = useState("");
+
+  // useEffect to fetch all the categories needed for user registration
+  useEffect(() => {
+    // Fetch all dietary preferences categories from backend
+    const fetchDietaryPreferences = async () => {
+      console.log("Fetching dietary preferences...");
+      try {
+        const response = await axiosInterceptorInstance.get(
+          "/category/getAllDietaryPreferences"
+        );
+        console.log("Dietary Preferences Categories Fetched", response.data);
+        setDietaryPreferencesCategory(response.data);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    // Fetch all allergies categories from backend
+    const fetchAllergies = async () => {
+      console.log("Fetching allergies...");
+      try {
+        const response = await axiosInterceptorInstance.get(
+          "/category/getAllAllergies"
+        );
+        console.log("Allergies Categories Fetched", response.data);
+        setAllergyCategory(response.data);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    fetchDietaryPreferences();
+    fetchAllergies();
+  }, []);
+
+  // Function to handle dietary preference category change
+  const handleDietaryPreferenceCategoryChange = (e) => {
+    setDietaryPreference(e.target.value);
   };
 
-  // Function to handle add ingredietns
-  const handleAddIngredient = () => {
-    setIngredientList([...ingredientList, ""]);
-  };
+  // Function to handle allergy category change
+  const handleAllergyCategoryChange = (e, allergyId) => {
+    const checked = e.target.checked;
 
-  // Function to change the ingredient list
-  const handleIngredientChange = (index, value) => {
-    const updatedList = [...ingredientList];
-    updatedList[index] = value;
-    setIngredientList(updatedList);
-  };
-
-  // Function to delete the ingredient
-  const handleDeleteIngredient = () => {
-    const updatedList = [...ingredientList];
-    updatedList.pop();
-    setIngredientList(updatedList);
+    if (checked) {
+      // If the checkbox is checked, add the allergyId to the array
+      setAllergyRestriction((prevAllergies) => [...prevAllergies, allergyId]);
+    } else {
+      // If the checkbox is unchecked, remove the allergyId from the array
+      setAllergyRestriction((prevAllergies) =>
+        prevAllergies.filter((id) => id !== allergyId)
+      );
+    }
   };
 
   useEffect(() => {
@@ -70,52 +106,135 @@ const CreateRecipePage = () => {
     }
   }, []);
 
-  const handleCreateRecipe = (event) => {
+  const validateForm = () => {
+    // Checking only essential fields
+    if (
+      !title.trim() ||
+      !cookingTime.trim() ||
+      !servingSize.trim() ||
+      !description.trim() ||
+      !totalCalories.trim() ||
+      !carbohydrates.trim() ||
+      !protein.trim() ||
+      !fat.trim() ||
+      !fibre.trim() ||
+      !sodium.trim() ||
+      !imageUrl.trim() ||
+      ingredientList.some((ingredient) => !ingredient.trim()) ||
+      instructionList.some((instruction) => !instruction.trim())
+    ) {
+      setError("Please fill out all required fields.");
+      return false;
+    }
+
+    // Ensure integer fields are integers and greater than or equal to 0
+    const integerFields = [
+      { field: servingSize, name: "Serving Size" },
+      { field: totalCalories, name: "Total Calories" },
+      { field: carbohydrates, name: "Carbohydrates" },
+      { field: protein, name: "Protein" },
+      { field: fat, name: "Fat" },
+      { field: fibre, name: "Fibre" },
+      { field: sodium, name: "Sodium" },
+    ];
+
+    for (let i = 0; i < integerFields.length; i++) {
+      const value = parseInt(integerFields[i].field);
+      if (!Number.isInteger(value) || value < 0) {
+        setError(
+          `Please enter a valid integer (0 or above) for ${integerFields[i].name}.`
+        );
+        return false;
+      }
+    }
+
+    return true;
+  };
+
+  const handleCreateRecipe = async (event) => {
     event.preventDefault();
 
-    // Validation and submission logic here
-    console.log("Recipe Details:", {
+    if (!validateForm()) {
+      return;
+    }
+
+    // Format the ingredients and instructions
+    const formattedIngredients = ingredientList.join("\n");
+    const formattedInstructions = instructionList.join("\n");
+
+    // Construct the payload
+    const recipeData = {
+      steps: formattedInstructions,
       title,
-      publisher,
-      category,
-      cookingTime,
-      servingSize,
       description,
-      ingredientList,
-      instructions,
-      totalCalories,
-      sugar,
-      protein,
-      carbohydrates,
-      fat,
-      imageUrl,
-      imageTitle,
-    });
+      info: dietaryInformation,
+      userID: { id: "3" }, // Replace with actual user ID or fetch dynamically
+      calories: parseInt(totalCalories),
+      protein: parseInt(protein),
+      fat: parseInt(fat),
+      fibre: parseInt(fibre),
+      sodium: parseInt(sodium),
+      carbs: parseInt(carbohydrates),
+      ingredients: formattedIngredients,
+      servingSize: parseInt(servingSize),
+      cookingTime: parseInt(cookingTime),
+      dietaryPreferencesId: parseInt(dietaryPreference),
+      allergies: allergyRestriction.map((id) => ({ id })),
+      img: imageUrl,
+    };
 
-    // Reset fields and error after submission
-    setTitle("");
-    // setPublisher("");
-    setCategory("");
-    setCookingTime("");
-    setServingSize("");
-    setDescription("");
-    setIngredients("");
-    setIngredientList([""]);
-    setInstructions("");
-    setTotalCalories("");
-    setSugar("");
-    setProtein("");
-    setCarbohydrates("");
-    setFat("");
-    setImageUrl("");
-    setImageTitle("");
+    console.log("Recipe Data filled up by user", recipeData);
 
-    setError("");
+    try {
+      // Send POST request
+      const response = await axiosInterceptorInstance.post(
+        "http://localhost:8080/recipe/add",
+        recipeData
+      );
+      console.log("Recipe Created", response.data);
+
+      // Set success message and clear any existing error messages
+      setSuccess("Recipe created successfully!");
+      setError("");
+
+      // Make success message disappear after 6 seconds
+      setTimeout(() => {
+        setSuccess("");
+      }, 6000);
+    } catch (error) {
+      console.error("Error creating recipe", error);
+      setError("Failed to create recipe. " + error.message);
+      setSuccess(""); // Clear any existing success message
+    }
   };
 
   const clearErrorOnChange = (setter) => (e) => {
     setter(e.target.value);
     setError("");
+  };
+
+  // Add field to list
+  const handleAddField = (setter, list) => {
+    setter([...list, ""]);
+  };
+
+  // Remove field from list at specific index
+  const handleRemoveField = (setter, list, index) => {
+    setter(list.filter((_, idx) => idx !== index));
+  };
+
+  // Handle change for ingredient
+  const handleIngredientChange = (index, value) => {
+    const updatedList = [...ingredientList];
+    updatedList[index] = value;
+    setIngredientList(updatedList);
+  };
+
+  // Handle change for instruction
+  const handleInstructionChange = (index, value) => {
+    const updatedList = [...instructionList];
+    updatedList[index] = value;
+    setInstructionList(updatedList);
   };
 
   return (
@@ -151,48 +270,53 @@ const CreateRecipePage = () => {
                   className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-base rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
                 />
               </div>
-              {/* PUBLISHER */}
-              {/* <div className="flex flex-col">
-                <label
-                  htmlFor="publisher"
-                  className="block text-xl mb-1 font-bold text-cyan-950"
-                >
-                  Publisher:
-                </label>
-                <input
-                  type="text"
-                  id="publisher"
-                  name="publisher"
-                  placeholder="Publisher"
-                  value={publisher}
-                  onChange={clearErrorOnChange(setPublisher)}
-                  className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-base rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-                />
-              </div> */}
-              {/* CATEGORY */}
-              {/* CATEGORY DROPDOWN */}
+              {/* DIETARY PREFERENCE */}
               <div className="flex flex-col">
                 <label
-                  htmlFor="category"
+                  htmlFor="dietaryPreference"
                   className="block text-xl mb-1 font-bold text-cyan-950"
                 >
-                  Category:
+                  Dietary Preference
                 </label>
-
                 <select
-                  id="category"
-                  name="category"
-                  value={category}
-                  onChange={handleCategoryChange}
-                  className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-base rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                  id="dietaryPreference"
+                  name="dietaryPreference"
+                  value={dietaryPreference}
+                  onChange={handleDietaryPreferenceCategoryChange}
+                  className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg w-full p-2.5"
                 >
-                  <option value="">Select a category</option>
-                  {mockRecipeCategory.map((cat, index) => (
-                    <option key={index} value={cat.category}>
-                      {cat.category}
+                  <option value="">Select Dietary Preference</option>
+                  {dietaryPreferencesCategory.map((cat, index) => (
+                    <option key={index} value={cat.id}>
+                      {cat.subcategoryName}
                     </option>
                   ))}
                 </select>
+              </div>
+
+              {/* ALLERGIES AND RESTRICTIONS */}
+              <div className="flex flex-col">
+                <label
+                  htmlFor="allergyRestriction"
+                  className="block text-xl mb-1 font-bold text-cyan-950"
+                >
+                  Allergens Contained
+                </label>
+                <div className="grid grid-cols-4 gap-1">
+                  {allergyCategory.map((cat, index) => (
+                    <label key={index} className="mr-2 items-center">
+                      <input
+                        type="checkbox"
+                        name="allergies"
+                        value={cat.id}
+                        checked={allergyRestriction.includes(cat.id)}
+                        onChange={(e) => handleAllergyCategoryChange(e, cat.id)}
+                        className="mr-2"
+                      />
+                      {cat.subcategoryName}
+                    </label>
+                  ))}
+                </div>
               </div>
 
               {/* COOKING TIME */}
@@ -222,19 +346,16 @@ const CreateRecipePage = () => {
                 >
                   Serving Size:
                 </label>
-                <select
-                  id="servingSize"
+                <input
                   name="servingSize"
+                  type="number"
+                  id="servingSize"
+                  placeholder="Serving Size"
                   value={servingSize}
-                  onChange={handleCategoryChange}
+                  onChange={clearErrorOnChange(setServingSize)}
+                  rows={4} // Adjust this number to increase height
                   className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-base rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-                >
-                  <option value="">Select One...</option>
-                  <option value="2serving">2 Pax</option>
-                  <option value="4serving">4 Pax</option>
-                  <option value="6serving">6 Pax</option>
-                  <option value="8serving">8 Pax</option>
-                </select>
+                />
               </div>
 
               {/* DESCRIPTION */}
@@ -256,6 +377,25 @@ const CreateRecipePage = () => {
                 />
               </div>
 
+              {/* Dietary Information for user to input */}
+              <div className="flex flex-col">
+                <label
+                  htmlFor="dietaryInformation"
+                  className="block text-xl mb-1 font-bold text-cyan-950"
+                >
+                  Dietary Information:
+                </label>
+                <textarea
+                  name="dietaryInformation"
+                  id="dietaryInformation"
+                  placeholder="Write a short description about your recipe"
+                  value={dietaryInformation}
+                  onChange={clearErrorOnChange(setDietaryInformation)}
+                  rows={7} // Adjust this number to increase height
+                  className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-base rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                />
+              </div>
+
               {/* INGREDIENTS */}
               <div className="flex flex-col">
                 <label
@@ -265,36 +405,42 @@ const CreateRecipePage = () => {
                   Ingredients:
                 </label>
                 {ingredientList.map((ingredient, index) => (
-                  <div key={index} className="flex space-x-2 mb-2 flex-col">
+                  <div key={index} className="flex mb-2">
                     <input
+                      name="ingredient"
                       placeholder={`Ingredient ${index + 1}`}
                       value={ingredient}
                       onChange={(e) =>
                         handleIngredientChange(index, e.target.value)
                       }
-                      className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-base rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                      className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-base rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 mr-2"
                     />
-                    {index === ingredientList.length - 1 && (
-                      <div className="flex flex-row space-x-5 justify-center">
-                        <button
-                          type="button"
-                          onClick={handleDeleteIngredient}
-                          disabled={ingredientList.length === 1}
-                          className="text-white bg-red-500 hover:bg-red-800 font-medium text-sm px-3 py-2.5 w-40 mt-3 rounded-lg"
-                        >
-                          Delete Ingredient
-                        </button>
-                        <button
-                          type="button"
-                          onClick={handleAddIngredient}
-                          className="text-white bg-gray-800 hover:bg-gray-900 font-medium text-sm px-3 py-2.5 w-40 mt-3 rounded-lg"
-                        >
-                          Add Ingredient
-                        </button>
-                      </div>
+                    {ingredientList.length > 1 && (
+                      <button
+                        type="button"
+                        onClick={() =>
+                          handleRemoveField(
+                            setIngredientList,
+                            ingredientList,
+                            index
+                          )
+                        }
+                        className="text-white bg-red-500 hover:bg-red-800 font-medium text-sm px-3 py-2.5 rounded-lg"
+                      >
+                        Remove
+                      </button>
                     )}
                   </div>
                 ))}
+                <button
+                  type="button"
+                  onClick={() =>
+                    handleAddField(setIngredientList, ingredientList)
+                  }
+                  className="text-white bg-gray-800 hover:bg-gray-900 font-medium text-sm px-3 py-2.5 mt-3 rounded-lg"
+                >
+                  Add Ingredient
+                </button>
               </div>
 
               {/* INSTRUCTIONS */}
@@ -305,15 +451,43 @@ const CreateRecipePage = () => {
                 >
                   Instructions:
                 </label>
-                <textarea
-                  name="instructions"
-                  id="instructions"
-                  placeholder="Seperate each step with a semicolon (;)"
-                  value={instructions}
-                  onChange={clearErrorOnChange(setInstructions)}
-                  rows={3} // Adjust this number to increase height
-                  className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-base rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-                />
+                {instructionList.map((instruction, index) => (
+                  <div key={index} className="flex mb-2">
+                    <input
+                      name="instruction"
+                      placeholder={`Step ${index + 1}`}
+                      value={instruction}
+                      onChange={(e) =>
+                        handleInstructionChange(index, e.target.value)
+                      }
+                      className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-base rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 mr-2"
+                    />
+                    {instructionList.length > 1 && (
+                      <button
+                        type="button"
+                        onClick={() =>
+                          handleRemoveField(
+                            setInstructionList,
+                            instructionList,
+                            index
+                          )
+                        }
+                        className="text-white bg-red-500 hover:bg-red-800 font-medium text-sm px-3 py-2.5 rounded-lg"
+                      >
+                        Remove
+                      </button>
+                    )}
+                  </div>
+                ))}
+                <button
+                  type="button"
+                  onClick={() =>
+                    handleAddField(setInstructionList, instructionList)
+                  }
+                  className="text-white bg-gray-800 hover:bg-gray-900 font-medium text-sm px-3 py-2.5 mt-3 rounded-lg"
+                >
+                  Add Step
+                </button>
               </div>
 
               {/* NUTRITIONAL INFORMATION */}
@@ -332,7 +506,7 @@ const CreateRecipePage = () => {
                       Total Calories:
                     </label>
                     <input
-                      tyoe="text"
+                      type="number"
                       name="totalCalories"
                       id="totalCalories"
                       placeholder="Total Calories"
@@ -348,7 +522,7 @@ const CreateRecipePage = () => {
                       Carbohydrates:
                     </label>
                     <input
-                      type="text"
+                      type="number"
                       name="carbohydrates"
                       id="carbohydrates"
                       placeholder="Enter carbs in grams"
@@ -364,7 +538,7 @@ const CreateRecipePage = () => {
                       Protein:
                     </label>
                     <input
-                      type="text"
+                      type="number"
                       name="protein"
                       id="protein"
                       placeholder="Enter protein in grams"
@@ -380,7 +554,7 @@ const CreateRecipePage = () => {
                       Fat:
                     </label>
                     <input
-                      type="text"
+                      type="number"
                       name="fat"
                       id="fat"
                       placeholder="Enter fat in grams"
@@ -396,7 +570,7 @@ const CreateRecipePage = () => {
                       Fibre:
                     </label>
                     <input
-                      type="text"
+                      type="number"
                       name="fibre"
                       id="fibre"
                       placeholder="Enter fibre in grams"
@@ -412,7 +586,7 @@ const CreateRecipePage = () => {
                       Sodium:
                     </label>
                     <input
-                      type="text"
+                      type="number"
                       name="sodium"
                       id="sodium"
                       placeholder="Enter sodium in mg"
@@ -442,26 +616,14 @@ const CreateRecipePage = () => {
                   className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-base rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
                 />
               </div>
-              {/* IMAGE TITLE */}
-              <div className="flex flex-col">
-                <label
-                  htmlFor="imageTitle"
-                  className="block text-xl mb-1 font-bold text-cyan-950"
-                >
-                  Image Title:
-                </label>
-                <input
-                  type="text"
-                  id="imageTitle"
-                  name="imageTitle"
-                  placeholder="Image Title"
-                  value={imageTitle}
-                  onChange={clearErrorOnChange(setImageTitle)}
-                  className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-base rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-                />
-              </div>
-              {/* ERROR MESSAGE */}
-              {error && <p className="text-red-500">{error}</p>}
+
+              {/* Display error or success message */}
+              {error && (
+                <p className="text-red-500 font-bold text-2xl">{error}</p>
+              )}
+              {success && (
+                <p className="text-green-500 font-bold text-2xl">{success}</p>
+              )}
               {/* SUBMIT BUTTON */}
               <div className="flex flex-row space-x-5">
                 <button className="bg-red-500 hover:bg-red-800 text-white font-bold py-2 px-4 rounded-lg">

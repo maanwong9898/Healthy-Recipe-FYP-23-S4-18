@@ -24,7 +24,7 @@ const sortOptions = {
 
 // Fetch all recipes from the backend - backend controller is Recipe Controller
 const fetchRecipes = async () => {
-  const userID = localStorage.getItem("id");
+  const userID = localStorage.getItem("userId");
   console.log("Current id", userID);
   try {
     const response = await axiosInterceptorInstance.get(

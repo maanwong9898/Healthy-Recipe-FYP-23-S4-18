@@ -7,7 +7,7 @@ import axiosInterceptorInstance from "../../../../axiosInterceptorInstance.js";
 
 // router path: /businessUser/recipes/viewRecipe/[id]
 
-// serving size and nutriotinal issue
+// rating and reviews not done yet
 
 // To render the steps as a list
 const renderSteps = (stepsString) => {
@@ -53,7 +53,7 @@ const fetchRecipesById = async (recipeID) => {
       throw new Error(`Recipe with ID ${recipeID} not found`);
     }
 
-    // Assuming the response contains the blog post directly
+    // Assuming the response contains the recipes directly
     const recipe = response.data;
 
     // check the content of the recipe
@@ -64,11 +64,30 @@ const fetchRecipesById = async (recipeID) => {
     throw error;
   }
 };
+
+const fetchRecipesRatingsAndReviews = async (recipeId) => {
+  try {
+    // Include the recipeId in the URL as a query parameter
+    const response = await axiosInterceptorInstance.get(
+      `/blog/rating/getBlog?recipeId=${recipeId}`
+    );
+    console.log("All ratings response data:", response.data);
+
+    // Assuming response.data is the array of reviews for the given recipeId
+    setReviewsAndRatings(response.data);
+
+    // Optionally, log each review to the console
+    response.data.forEach((reviewData, index) => {
+      console.log(`Review ${index + 1}:`, reviewData.review);
+    });
+  } catch (error) {
+    console.error("Failed to fetch ratings and reviews:", error);
+  }
+};
+
 const BusinessViewRecipe = ({ params }) => {
   const [recipe, setRecipe] = useState(null);
-  const [reviewsAndRatings, setReviewsAndRatings] = useState(
-    mockRecipe_RatingAndReviews
-  );
+  const [reviewsAndRatings, setReviewsAndRatings] = useState([]);
 
   useEffect(() => {
     const recipeId = decodeURIComponent(params.id); // Make sure to decode the ID
@@ -76,7 +95,7 @@ const BusinessViewRecipe = ({ params }) => {
       .then((data) => {
         setRecipe(data);
         // Assuming the blog ID is needed to fetch the reviews
-        // fetchBlogRatingsAndReviews(data.id);
+        // fetchRecipesRatingsAndReviews(data.id);
       })
       .catch((error) => {
         console.error("Error fetching recipe in use effect:", error);
@@ -98,6 +117,35 @@ const BusinessViewRecipe = ({ params }) => {
     return stars;
   };
 
+  const renderAllergens = (allergies) => {
+    if (!allergies || allergies.length === 0) {
+      return <span>None</span>;
+    }
+    return (
+      <div className="flex flex-wrap">
+        {allergies.map((allergy, index) => (
+          <span
+            key={index}
+            className="m-1 bg-red-200 text-red-700 px-2 py-1 rounded"
+          >
+            {allergy.subcategoryName}
+          </span>
+        ))}
+      </div>
+    );
+  };
+
+  const renderDietaryPreferences = (dietaryPreferences) => {
+    if (!dietaryPreferences) {
+      return <span>Not specified</span>;
+    }
+    return (
+      <span className="bg-green-200 text-green-700 px-2 py-1 rounded">
+        {dietaryPreferences.subcategoryName}
+      </span>
+    );
+  };
+
   return (
     <div className="pt-8 pb-16 lg:pt-16 lg:pb-24 bg-white dark:bg-gray-900">
       <div className="px-10 text-left font-semibold font-mono">
@@ -115,19 +163,32 @@ const BusinessViewRecipe = ({ params }) => {
           <p>
             Posted on:{" "}
             <span className="text-cyan-600">
-              {new Date(recipe.createdDT).toLocaleDateString("en-GB", {
-                day: "2-digit",
-                month: "short",
-                year: "numeric",
-              })}
+              {recipe
+                ? new Date(recipe.createdDT).toLocaleDateString("en-GB", {
+                    day: "2-digit",
+                    month: "short",
+                    year: "numeric",
+                  })
+                : "Not specified"}
             </span>
           </p>
-          <p>
-            Category:{" "}
-            <span className="text-cyan-600">
-              {recipe?.category || "Not specified"}
-            </span>
-          </p>
+        </div>
+
+        {/* Combined Allergens and Dietary Preferences section */}
+        <div className="mt-8 flex justify-start space-x-4">
+          {/* Allergens section */}
+          <div className="flex-1 p-3" role="alert">
+            <p className="font-bold">Contains Allergens:</p>
+            {recipe ? renderAllergens(recipe.allergies) : "Not specified"}
+          </div>
+
+          {/* Dietary Preferences section */}
+          <div className="flex-1 p-3" role="alert">
+            <p className="font-bold">Dietary Preferences:</p>
+            {recipe
+              ? renderDietaryPreferences(recipe.dietaryPreferences)
+              : "Not specified"}
+          </div>
         </div>
 
         {/* Show ratings at the top of the title temporary no need*/}
@@ -142,7 +203,7 @@ const BusinessViewRecipe = ({ params }) => {
       </div>
 
       {/* start of summary card */}
-      <div className="flex flex-col md:flex-row mt-4 p-5 bg-gray-50">
+      <div className="flex flex-col lg:flex-row mt-4 p-5 bg-gray-50">
         <img
           className="h-auto max-w-lg rounded-lg ml-5 shadow-md"
           src={recipe?.img || "Not specified"}
@@ -153,13 +214,15 @@ const BusinessViewRecipe = ({ params }) => {
             <p className="mr-4">
               Cooking Time:{" "}
               <span className="text-cyan-600">
-                {recipe?.cooking_time || "Not specified"}
+                {recipe?.cookingTime
+                  ? `Approx. ${recipe.cookingTime} mins`
+                  : "Not specified"}
               </span>
             </p>
             <p className="mr-4 text-bold">
               Total Serving:{" "}
               <span className="text-cyan-600">
-                {recipe?.servingSize || "Not specified"}
+                {recipe?.servingSize || "Not specified"} pax
               </span>
             </p>
           </div>
@@ -218,11 +281,15 @@ const BusinessViewRecipe = ({ params }) => {
       {/* Ingredients and Instructions */}
       <div className="flex flex-col md:flex-row mt-8 ml-7 px-20">
         <ul className="flex flex-col md:w-1/2 whitespace-pre-line">
-          <ol className="font-bold text-xl mb-2">Ingredients</ol>
-          <ol>{recipe?.ingredients || "Not specified"}</ol>
+          <li className="font-bold text-xl mb-2">Ingredients</li>
+          {recipe?.ingredients.split("\n").map((ingredient, index) => (
+            <li key={index} className="list-disc ml-4">
+              {ingredient}
+            </li>
+          )) || <li>Not specified</li>}
         </ul>
 
-        <ul className="flex flex-col md:w-1/2 md:ml-4 mt-4 md:mt-0 whitespace-pre-line">
+        <ul className="flex flex-col md:w-1/2 md:ml-7 mt-4 md:mt-0 whitespace-pre-line">
           <ol className="font-bold text-xl mb-2">Instructions</ol>
           <ol>{recipe ? renderSteps(recipe.steps) : <li>Not specified</li>}</ol>
         </ul>

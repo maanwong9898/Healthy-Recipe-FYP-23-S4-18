@@ -44,6 +44,15 @@ public class RecipeController {
         return new ResponseEntity<>(toReturn, HttpStatus.OK);
     }
 
+    @GetMapping ("/get/{id}")
+    public ResponseEntity<Recipe> getRecipeById(@PathVariable long id)
+    { 
+        Recipe toReturn = recipeService.getRecipeById(id);
+        return new ResponseEntity<>(toReturn, HttpStatus.OK);
+    }
+
+
+
    @GetMapping ("/findByUserId/{id}")
     public ResponseEntity<List<Recipe>> findByUserId(@PathVariable String id)
     { 

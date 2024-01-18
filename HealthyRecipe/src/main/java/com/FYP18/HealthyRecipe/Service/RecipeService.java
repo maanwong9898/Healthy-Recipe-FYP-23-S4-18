@@ -73,6 +73,12 @@ public class RecipeService {
         return recipeRepository.findByUserID(userId);
     }
 
+    public Recipe getRecipeById(long id)
+    {
+        return recipeRepository.findById(id)
+        .orElseThrow(()->  new RuntimeException("Recipe Id: "+ id + " is not found"));  
+    }
+
     public List<RecipeDTO> getRecipeDTOs(String keyword)
     {
         return recipeRepository.findRecipeDTOsByKeyword(keyword);

@@ -112,19 +112,22 @@ const ViewBusinessBlogPost = ({ params }) => {
   };
 
   return (
-    <div className="pt-8 pb-16 lg:pt-16 lg:pb-24 bg-white dark:bg-gray-900 ">
-      <div className="text-center font-semibold font-mono">
-        <h1 className="mb-4 text-2xl font-extrabold leading-tight text-cyan-900 lg:mb-6 lg:text-4xl dark:text-white">
+    <div className="pt-8 pb-16 lg:pt-16 lg:pb-24">
+      <div className="text-center font-semibold font-sans">
+        <h1 className="mb-4 text-2xl font-extrabold text-gray-900 lg:mb-6 lg:text-5xl">
           {businessBlogPost.title}
         </h1>
-        <div className="flex justify-center text-base lg:text-xl text-black space-x-6 mx-auto max-w-screen-xl">
+        {/* sub section */}
+        <div className="flex justify-center text-base lg:text-xl text-gray-700 space-x-6 mx-auto max-w-screen-xl font-serif font-medium">
           <p>
             Published by:{" "}
-            <span className="text-cyan-600">{businessBlogPost.publisher}</span>
+            <span className="text-gray-900 font-bold tracking-tight">
+              {businessBlogPost.publisher}
+            </span>
           </p>
           <p>
             Posted on:{" "}
-            <span className="text-cyan-600">
+            <span className="text-gray-900 font-bold tracking-tight">
               {new Date(businessBlogPost.createdDateTime).toLocaleDateString(
                 "en-GB",
                 {
@@ -138,7 +141,7 @@ const ViewBusinessBlogPost = ({ params }) => {
 
           <p>
             Category:{" "}
-            <span className="text-cyan-600">
+            <span className="text-gray-900 font-bold tracking-tight">
               {businessBlogPost.blogType
                 ? businessBlogPost.blogType.subcategoryName
                 : "Not specified"}
@@ -146,6 +149,7 @@ const ViewBusinessBlogPost = ({ params }) => {
           </p>
         </div>
       </div>
+      {/* Image section */}
       <article>
         <img
           src={businessBlogPost.img}
@@ -163,7 +167,7 @@ const ViewBusinessBlogPost = ({ params }) => {
         </section>
       </article>
       <footer className="blog-post-reviews mt-10 px-9 mx-auto max-w-screen-xl text-left">
-        <p className="font-mono font-bold text-2xl text-cyan-600">
+        <p className="font-mono font-bold text-2xl text-gray-900">
           Rating and Reviews
         </p>
         {/* Check if reviews exist */}
@@ -198,13 +202,13 @@ const ViewBusinessBlogPost = ({ params }) => {
       <div className="flex flex-row space-x-5 justify-end mr-10">
         <button
           onClick={() => handleUpdateBlogPost(businessBlogPost.id)}
-          className="bg-cyan-500 hover:bg-sky-700 text-white font-bold py-2 px-4 rounded-lg"
+          className="bg-blue-600 hover:bg-blue-700 text-white w-24 font-bold py-2 px-4 rounded-lg"
         >
           Edit
         </button>
         <button
           type="submit"
-          className="bg-red-500 hover:bg-red-800 text-white font-bold py-2 px-4 rounded-lg"
+          className="bg-red-600 hover:bg-red-700 text-white w-24 font-bold py-2 px-4 rounded-lg"
         >
           Delete
         </button>

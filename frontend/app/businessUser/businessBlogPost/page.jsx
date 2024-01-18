@@ -241,21 +241,21 @@ const MyBusinessBlogPosts = () => {
   };
 
   return (
-    <div className="px-2 sm:px-5 bg-cyan-800 min-h-screen flex flex-col py-5">
-      <h1 className="text-2xl text-white p-3 mb-4 font-bold text-center sm:text-left">
-        My Business Blog Posts
+    <div className="px-2 sm:px-5 min-h-screen flex flex-col py-5">
+      <h1 className="text-6xl text-gray-900 p-3 mb-4 font-bold text-center sm:text-center">
+        My Blog Posts
       </h1>
       <div>
-        <button className="text-white border-2 border-black bg-gradient-to-br from-cyan-400 to-cyan-800 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 rounded-lg text-base font-bold px-5 py-2.5 mr-7 mb-4 text-center">
+        <button className="text-white bg-blue-600 hover:bg-blue-700 rounded-lg text-base font-semibold px-5 py-2.5 mr-7 mb-4 text-center">
           <Link href="/businessUser/businessBlogPost/createBusinessBlogPost">
-            Create Business Blog Post
+            Create Blog Post
           </Link>
         </button>
       </div>
       {/* Search and Sort Section */}
-      <div className="flex justify-between items-center mb-4">
+      <div className="flex flex-col md:flex-row justify-between items-center mb-4">
         {/* Search bar */}
-        <div>
+        <div className="mb-4 md:mb-0 md:mr-2">
           <input
             type="text"
             id="blogSearch" // Adding an id attribute here
@@ -263,12 +263,12 @@ const MyBusinessBlogPosts = () => {
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
             placeholder="Search blog posts"
-            className="mr-2 p-2 rounded border"
+            className="mr-2 p-2 rounded-lg borde w-full md:w-auto"
           />
 
           <button
             onClick={handleSearchClick}
-            className="text-white border-2 border-black bg-gradient-to-br from-cyan-400 to-cyan-800 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 rounded-lg text-base font-bold px-5 py-2.5 mr-7 mb-3 mt-3 text-center"
+            className="text-white bg-blue-600 hover:bg-blue-700 rounded-full text-base font-semibold px-5 py-1 w-full md:w-auto mt-3 md:mt-0 md:ml-2"
           >
             Search
           </button>
@@ -285,51 +285,56 @@ const MyBusinessBlogPosts = () => {
             </p>
           )} */}
         </div>
+
         {/* Sort dropdown and filter dropdown */}
-        <div>
+        <div className="flex flex-col md:flex-row items-center">
           {/* Sort dropdown */}
-          <label htmlFor="sort" className="mr-2 font-2xl text-white">
-            Sort By:
-          </label>
-          <select
-            id="sort"
-            value={sortOption}
-            onChange={(e) => setSortOption(e.target.value)}
-            className="p-2 rounded border"
-          >
-            {Object.values(sortOptions).map((option) => (
-              <option key={option.key} value={option.key}>
-                {option.label}
-              </option>
-            ))}
-          </select>
+          <div className="mb-2 md:mb-0 md:mr-6">
+            <label htmlFor="sort" className="mr-2 font-2xl text-gray-900">
+              Sort By:
+            </label>
+            <select
+              id="sort"
+              value={sortOption}
+              onChange={(e) => setSortOption(e.target.value)}
+              className="p-2 rounded-lg border mr-6"
+            >
+              {Object.values(sortOptions).map((option) => (
+                <option key={option.key} value={option.key}>
+                  {option.label}
+                </option>
+              ))}
+            </select>
+          </div>
           {/* Filter dropdown */}
-          <label
-            htmlFor="categoryFilter"
-            className="ml-2 mr-2 font-2xl text-white"
-          >
-            Filter By Category:
-          </label>
-          <select
-            id="categoryFilter"
-            onChange={(e) => setCategoryFilter(e.target.value)}
-            className="p-2 rounded border"
-          >
-            <option value="ALL">All Categories</option>
-            {categories.map((category, index) => (
-              <option key={index} value={category.id} className="text-black">
-                {category.subcategoryName}
-              </option>
-            ))}
-          </select>
+          <div className="mb-2 md:mb-0 md:mr-6">
+            <label
+              htmlFor="categoryFilter"
+              className="ml-2 mr-2 font-2xl text-gray-900"
+            >
+              Filter By:
+            </label>
+            <select
+              id="categoryFilter"
+              onChange={(e) => setCategoryFilter(e.target.value)}
+              className="p-2 rounded-lg border"
+            >
+              <option value="ALL">All Categories</option>
+              {categories.map((category, index) => (
+                <option key={index} value={category.id} className="text-black">
+                  {category.subcategoryName}
+                </option>
+              ))}
+            </select>
+          </div>
         </div>
       </div>
 
       {/* Table of blog posts */}
       <div className="overflow-x-auto">
-        <table className="min-w-full rounded-lg border-black border-2">
-          <thead className="bg-cyan-600 font-semibold text-cyan-950 border-black border-2">
-            <tr className="text-center text-xl">
+        <table className="min-w-full rounded-lg border-zinc-200 border-2">
+          <thead className="bg-zinc-700 font-normal text-white border-gray-800 border-2">
+            <tr className="text-center text-lg">
               <th className="px-3 py-2">Blog Post Title</th>
               <th className="px-3 py-2">Date Published</th>
               <th className="px-3 py-2">Category</th>
@@ -344,10 +349,7 @@ const MyBusinessBlogPosts = () => {
           </thead>
           <tbody>
             {displayedBlogs.map((businessBlogPost, index) => (
-              <tr
-                key={index}
-                className="bg-white border-b border-blue dark:border-blue-600"
-              >
+              <tr key={index} className="bg-white border-b">
                 <td className="px-3 py-2 text-base text-center">
                   {businessBlogPost.title}
                 </td>
@@ -366,8 +368,8 @@ const MyBusinessBlogPosts = () => {
                   <span
                     className={`rounded-full px-3 py-1 text-base font-semibold ${
                       businessBlogPost.active
-                        ? "text-white bg-gradient-to-br from-cyan-400 to-cyan-600"
-                        : "text-white bg-gradient-to-br from-orange-600 to-red-700"
+                        ? "text-white bg-green-500"
+                        : "text-white bg-red-500"
                     }`}
                   >
                     {businessBlogPost.active ? "Active" : "Inactive"}
@@ -384,7 +386,7 @@ const MyBusinessBlogPosts = () => {
                     typeof businessBlogPost.average.totalNumber === "number" ? (
                       <span
                         className="rating-text"
-                        style={{ fontWeight: "bold", color: "#004d40" }}
+                        style={{ fontWeight: "bold", color: "#0a0a0a" }}
                       >
                         {businessBlogPost.average.averageRatings.toFixed(1)}
                       </span>
@@ -410,10 +412,7 @@ const MyBusinessBlogPosts = () => {
                 <td className="px-3 py-2 justify-center sm:justify-start">
                   <button
                     onClick={() => handleViewBlogPost(businessBlogPost.id)}
-                    className="text-white font-bold bg-gradient-to-br from-cyan-400 to-cyan-800 hover:bg-blue-950 border-2 border-black
-                    focus:ring-4 focus:outline-none focus:ring-blue-300
-                    dark:focus:ring-blue-800 rounded-lg text-base px-5 py-2.5 ml-2
-                    mr-2 text-center"
+                    className="text-white font-bold bg-blue-600 hover:bg-blue-700 rounded-lg text-base px-5 py-2 ml-2 mr-2 text-center"
                   >
                     {" "}
                     View
@@ -422,10 +421,7 @@ const MyBusinessBlogPosts = () => {
                 <td className="px-3 py-2 justify-center sm:justify-start">
                   <button
                     onClick={() => handleUpdateBlogPost(businessBlogPost.id)}
-                    className="text-white font-bold bg-gradient-to-br from-cyan-400 to-cyan-800 hover:bg-blue-950 border-2 border-black
-                    focus:ring-4 focus:outline-none focus:ring-blue-300
-                    dark:focus:ring-blue-800 rounded-lg text-base px-5 py-2.5 ml-2
-                    mr-2 text-center"
+                    className="text-white font-bold bg-slate-700 hover:bg-slate-800 rounded-lg text-base px-5 py-2 ml-2 mr-2 text-center"
                   >
                     {" "}
                     Edit
@@ -439,12 +435,11 @@ const MyBusinessBlogPosts = () => {
                         businessBlogPost.active
                       )
                     }
-                    className={`text-white font-bold bg-gradient-to-br border-black border-2 ${
+                    className={`text-white font-bold ${
                       businessBlogPost.active
-                        ? "from-orange-600 to-red-700 hover:bg-gradient-to-bl"
-                        : "from-blue-400 to-purple-600 hover:bg-gradient-to-bl"
-                    } focus:ring-4 focus:outline-none focus:ring-blue-300
-    dark:focus:ring-blue-800 rounded-lg text-base px-5 py-2.5 text-center`}
+                        ? "bg-red-600 hover:bg-red-700"
+                        : "bg-stone-400 hover:bg-stone-500"
+                    } rounded-lg text-base px-5 py-2 text-center`}
                   >
                     {businessBlogPost.active ? "Suspend" : "Unsuspend"}
                   </button>
@@ -452,10 +447,7 @@ const MyBusinessBlogPosts = () => {
                 <td className="px-3 py-2 justify-center sm:justify-start">
                   <button
                     onClick={() => handleDeleteBlogPost(businessBlogPost.id)}
-                    className="text-white font-bold bg-gradient-to-br from-orange-600 to-red-700 hover:bg-gradient-to-bl border-2 border-black
-                    focus:ring-4 focus:outline-none focus:ring-blue-300
-                    dark:focus:ring-blue-800 rounded-lg text-base px-5 py-2.5 ml-7
-                    mr-7 text-center"
+                    className="text-white font-bold bg-red-600 hover:bg-red-700 rounded-lg text-base px-5 py-2 ml-2 mr-2 text-center"
                   >
                     {" "}
                     Delete

@@ -1,126 +1,299 @@
 "use client";
 import { useRouter } from "next/navigation";
-import React from "react";
-import Link from "next/link";
 import { useState, useEffect } from "react";
+import Link from "next/link";
+import axiosInterceptorInstance from "../../../../axiosInterceptorInstance.js";
 
-const mockRecipeContent = {
-  id: "1234512345",
-  recipeTitle: "Grilled Salmon with Quinoa and Asparagus",
-  publisher: "Daniel Carter",
-  category: "Pescatarian",
-  cooking_time: "25 Mins",
-  number_of_servings: "2 Pax",
-  description:
-    "A nutritious and delicious dish featuring grilled salmon, quinoa, and asparagus.",
-  ingredients:
-    "2 salmon fillets \n\n" +
-    "1 cup quinoa, rinsed \n\n" +
-    "2 cups water \n\n" +
-    "1 bunch asparagus, trimmed \n\n" +
-    "2 tablespoons olive oil \n\n" +
-    "Juice of 1 lemon \n\n" +
-    "Salt and pepper to taste \n\n" +
-    "Fresh dill for garnish",
-  instructions:
-    "Step 1: \n Preheat the grill to medium-high heat.\n\n" +
-    "Step 2: \n Season salmon fillets with salt, pepper, and a drizzle of olive oil. Grill for 4-5 minutes per side, or until cooked through. \n\n" +
-    "Step 3: \n In a saucepan, combine quinoa and water. Bring to a boil, then reduce heat, cover, and simmer for 15 minutes, or until quinoa is cooked and water is absorbed.\n\n" +
-    "Step 4: \n While quinoa is cooking, toss asparagus with olive oil, salt, and pepper. Grill for 3-4 minutes, or until tender-crisp.\n\n" +
-    "Step 5: \n Assemble the dish by placing a bed of quinoa on each plate, topping with grilled salmon and asparagus.\n\n" +
-    "Step 6: \n Drizzle with lemon juice, garnish with fresh dill, and serve hot.",
-  total_calories: "450",
-  carbs: "30g",
-  protein: "40g",
-  fat: "18g",
-  fibre: "5g",
-  sodium: "100mg",
-  image_url:
-    "https://img.freepik.com/free-photo/baked-salmon-garnished-with-asparagus-tomatoes-with-herbs_2829-14481.jpg?w=1800&t=st=1702801194~exp=1702801794~hmac=3ccec1eb9e8014410d7d5a0f87530ae6909d6ed292f1ab0d6f0b26f6dcd1f22e",
-  image_title: "Grilled Salmon with Quinoa and Asparagus",
-  date_published: "2023-12-15",
-  ratings: 4.8,
-  reviews: 20,
-  isActive: true,
-};
+// router path: /businessUser/recipes/updateRecipe/[id]
+// this is the page to update a recipe
 
-const mockRecipeCategory = [
-  {
-    category: "Vegan",
-  },
-  {
-    category: "Vegetarian",
-  },
-  {
-    category: "Pescatarian",
-  },
-];
+const UpdateRecipePage = ({ params }) => {
+  const [title, setTitle] = useState("");
+  const [publisher, setPublisher] = useState("");
+  const [category, setCategory] = useState("");
+  const [cookingTime, setCookingTime] = useState("");
+  const [servingSize, setServingSize] = useState("");
+  const [description, setDescription] = useState("");
+  const [dietaryInformation, setDietaryInformation] = useState("");
+  const [ingredients, setIngredients] = useState("");
+  const [instructions, setInstructions] = useState("");
+  const [totalCalories, setTotalCalories] = useState("");
+  const [carbohydrates, setCarbohydrates] = useState("");
+  const [protein, setProtein] = useState("");
+  const [fat, setFat] = useState("");
+  const [fibre, setFibre] = useState("");
+  const [sodium, setSodium] = useState("");
+  const [imageUrl, setImageUrl] = useState("");
+  const [imageTitle, setImageTitle] = useState("");
 
-const UpdateRecipe = (params) => {
-  //form content
-  const [title, setTitle] = useState(mockRecipeContent.recipeTitle);
-  //const [publisher, setPublisher] = useState("");
-  const [category, setCategory] = useState(mockRecipeContent.category);
-  const [cookingTime, setCookingTime] = useState(
-    mockRecipeContent.cooking_time
-  );
-  const [servingSize, setServingSize] = useState(
-    mockRecipeContent.number_of_servings
-  );
-  const [description, setDescription] = useState(mockRecipeContent.description);
-  const [ingredients, setIngredients] = useState(mockRecipeContent.ingredients);
-  const [instructions, setInstructions] = useState(
-    mockRecipeContent.instructions
-  );
-  const [totalCalories, setTotalCalories] = useState(
-    mockRecipeContent.total_calories
-  );
-  const [carbohydrates, setCarbohydrates] = useState(mockRecipeContent.carbs);
-  const [protein, setProtein] = useState(mockRecipeContent.protein);
-  const [fat, setFat] = useState(mockRecipeContent.fat);
-  const [fibre, setFibre] = useState(mockRecipeContent.fibre);
-  const [sodium, setSodium] = useState(mockRecipeContent.sodium);
-  const [imageUrl, setImageUrl] = useState(mockRecipeContent.image_url);
-  const [imageTitle, setImageTitle] = useState(mockRecipeContent.image_title);
-  const [ingredientList, setIngredientList] = useState([
-    mockRecipeContent.ingredients,
-  ]);
-
+  // Display success or error message after submission
+  const [success, setSuccess] = useState("");
   const [error, setError] = useState("");
 
-  //New State
-  const [selectedCategory, setSelectedCategory] = useState("");
+  // Initialize instructionList state similar to ingredientList
+  const [instructionList, setInstructionList] = useState([""]);
+  const [ingredientList, setIngredientList] = useState([""]);
 
-  // Function to handle category change
-  const handleCategorySelection = (e) => {
-    setSelectedCategory(e.target.value);
+  // store category
+  const [dietaryPreferencesCategory, setDietaryPreferencesCategory] = useState(
+    []
+  );
+  const [allergyCategory, setAllergyCategory] = useState([]); // Store category of allergies
+
+  // selected category
+  const [allergyRestriction, setAllergyRestriction] = useState([]); // Store selected allergies
+  const [dietaryPreference, setDietaryPreference] = useState("");
+
+  // useEffect to fetch all the categories needed for user registration
+  useEffect(() => {
+    // Fetch all dietary preferences categories from backend
+    const fetchDietaryPreferences = async () => {
+      console.log("Fetching dietary preferences...");
+      try {
+        const response = await axiosInterceptorInstance.get(
+          "/category/getAllDietaryPreferences"
+        );
+        console.log("Dietary Preferences Categories Fetched", response.data);
+        setDietaryPreferencesCategory(response.data);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    // Fetch all allergies categories from backend
+    const fetchAllergies = async () => {
+      console.log("Fetching allergies...");
+      try {
+        const response = await axiosInterceptorInstance.get(
+          "/category/getAllAllergies"
+        );
+        console.log("Allergies Categories Fetched", response.data);
+        setAllergyCategory(response.data);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    const fetchRecipesById = async (recipeID) => {
+      try {
+        // Ensure recipeID is a string if the IDs in your URL need to be strings
+        recipeID = recipeID;
+
+        const response = await axiosInterceptorInstance.get(
+          `/recipe/get/${recipeID}`
+        );
+        console.log("Fetched recipe data is:", response.data);
+
+        if (!response.data) {
+          console.error(`Recipe with ID ${recipeID} not found`);
+          throw new Error(`Recipe with ID ${recipeID} not found`);
+        }
+
+        // Assuming the response contains the recipes directly
+        const recipe = response.data;
+
+        // Update state variables with fetched recipe data
+        setTitle(recipe.title || "");
+        setDescription(recipe.description || "");
+        setDietaryInformation(recipe.info || "");
+        setIngredients(
+          recipe.ingredients ? recipe.ingredients.split("\n") : [""]
+        );
+        setInstructions(recipe.steps ? recipe.steps.split("\n") : [""]);
+        setTotalCalories(recipe.calories ? recipe.calories.toString() : "0");
+        setCarbohydrates(recipe.carbs ? recipe.carbs.toString() : "0");
+        setProtein(recipe.protein ? recipe.protein.toString() : "0");
+        setFat(recipe.fat ? recipe.fat.toString() : "0");
+        setFibre(recipe.fibre ? recipe.fibre.toString() : "0");
+        setSodium(recipe.sodium ? recipe.sodium.toString() : "0");
+        setCookingTime(recipe.cookingTime ? recipe.cookingTime.toString() : "");
+        setServingSize(recipe.servingSize ? recipe.servingSize.toString() : "");
+        setImageUrl(recipe.img || "");
+        // Split the ingredients and instructions into arrays and update state
+        setIngredientList(
+          recipe.ingredients ? recipe.ingredients.split("\n") : []
+        );
+        setInstructionList(recipe.steps ? recipe.steps.split("\n") : []);
+
+        if (recipe.allergies) {
+          setAllergyRestriction(recipe.allergies.map((allergy) => allergy.id));
+        } else {
+          setAllergyRestriction([]);
+        }
+
+        if (recipe.dietaryPreferencesId) {
+          setDietaryPreference(recipe.dietaryPreferencesId.toString());
+        } else {
+          setDietaryPreference("");
+        }
+      } catch (error) {
+        console.error("Failed to fetch recipe:", error);
+        throw error;
+      }
+    };
+
+    fetchDietaryPreferences();
+    fetchAllergies();
+    fetchRecipesById(params.id);
+  }, []);
+
+  // Function to handle dietary preference category change
+  const handleDietaryPreferenceCategoryChange = (e) => {
+    setDietaryPreference(e.target.value);
   };
 
-  // Function to handle add ingredietns
-  const handleAddIngredient = () => {
-    setIngredientList([...ingredientList, ""]);
+  // Function to handle allergy category change
+  const handleAllergyCategoryChange = (e, allergyId) => {
+    const checked = e.target.checked;
+
+    if (checked) {
+      // If the checkbox is checked, add the allergyId to the array
+      setAllergyRestriction((prevAllergies) => [...prevAllergies, allergyId]);
+    } else {
+      // If the checkbox is unchecked, remove the allergyId from the array
+      setAllergyRestriction((prevAllergies) =>
+        prevAllergies.filter((id) => id !== allergyId)
+      );
+    }
   };
 
-  // Function to change the ingredient list
+  const validateForm = () => {
+    // Checking only essential fields
+    if (
+      !title.trim() ||
+      !cookingTime.trim() ||
+      !servingSize.trim() ||
+      !description.trim() ||
+      !totalCalories.trim() ||
+      !carbohydrates.trim() ||
+      !protein.trim() ||
+      !fat.trim() ||
+      !fibre.trim() ||
+      !sodium.trim() ||
+      !imageUrl.trim() ||
+      ingredientList.some((ingredient) => !ingredient.trim()) ||
+      instructionList.some((instruction) => !instruction.trim())
+    ) {
+      setError("Please fill out all required fields.");
+      return false;
+    }
+
+    // Ensure integer fields are integers and greater than or equal to 0
+    const integerFields = [
+      { field: servingSize, name: "Serving Size" },
+      { field: totalCalories, name: "Total Calories" },
+      { field: carbohydrates, name: "Carbohydrates" },
+      { field: protein, name: "Protein" },
+      { field: fat, name: "Fat" },
+      { field: fibre, name: "Fibre" },
+      { field: sodium, name: "Sodium" },
+    ];
+
+    for (let i = 0; i < integerFields.length; i++) {
+      const value = parseInt(integerFields[i].field);
+      if (!Number.isInteger(value) || value < 0) {
+        setError(
+          `Please enter a valid integer (0 or above) for ${integerFields[i].name}.`
+        );
+        return false;
+      }
+    }
+
+    return true;
+  };
+
+  // Update recipe (calling controller)
+  const handleUpdateRecipe = async (event) => {
+    event.preventDefault();
+
+    if (!validateForm()) {
+      return;
+    }
+
+    // Format the ingredients and instructions
+    const formattedIngredients = ingredientList.join("\n");
+    const formattedInstructions = instructionList.join("\n");
+
+    const userId = localStorage.getItem("userId");
+
+    // Construct the payload
+    const recipeData = {
+      id: params.id, // Make sure this is the correct ID
+      steps: formattedInstructions,
+      active: true, // or fetch this dynamically if needed
+      title,
+      description,
+      cookingTime: parseInt(cookingTime),
+      info: dietaryInformation,
+      calories: parseInt(totalCalories),
+      protein: parseInt(protein),
+      fat: parseInt(fat),
+      fibre: parseInt(fibre),
+      sodium: parseInt(sodium),
+      carbs: parseInt(carbohydrates),
+      servingSize: parseInt(servingSize),
+      // createdDT: null, // Set this accordingly
+      // lastUpdatedDT: new Date().toISOString(), // Current timestamp
+      ingredients: formattedIngredients,
+      img: imageUrl,
+      userID: { id: userId }, // Replace with actual user ID or fetch dynamically
+      dietaryPreferencesId: parseInt(dietaryPreference),
+      allergies: allergyRestriction.map((id) => ({ id })),
+    };
+
+    console.log("Recipe Data to be sent to update", recipeData);
+
+    try {
+      // Send PUT request
+      const response = await axiosInterceptorInstance.put(
+        "http://localhost:8080/recipe/update",
+        recipeData
+      );
+      console.log("Recipe Updated", response.data);
+
+      // Set success message and clear any existing error messages
+      setSuccess("Recipe updated successfully!");
+      setError("");
+
+      // Make success message disappear after 6 seconds
+      setTimeout(() => {
+        setSuccess("");
+      }, 6000);
+    } catch (error) {
+      console.error("Error updating recipe", error);
+      setError("Failed to update recipe. " + error.message);
+      setSuccess(""); // Clear any existing success message
+    }
+  };
+
+  const clearErrorOnChange = (setter) => (e) => {
+    setter(e.target.value);
+    setError("");
+  };
+
+  // Add field to list
+  const handleAddField = (setter, list) => {
+    setter([...list, ""]);
+  };
+
+  // Remove field from list at specific index
+  const handleRemoveField = (setter, list, index) => {
+    setter(list.filter((_, idx) => idx !== index));
+  };
+
+  // Handle change for ingredient
   const handleIngredientChange = (index, value) => {
     const updatedList = [...ingredientList];
     updatedList[index] = value;
     setIngredientList(updatedList);
   };
 
-  // Function to delete the ingredient
-  const handleDeleteIngredient = () => {
-    const updatedList = [...ingredientList];
-    updatedList.pop();
-    setIngredientList(updatedList);
+  // Handle change for instruction
+  const handleInstructionChange = (index, value) => {
+    const updatedList = [...instructionList];
+    updatedList[index] = value;
+    setInstructionList(updatedList);
   };
-
-  // Function to seperate the ingredients
-  const ingredientsArray = ingredients.split("\n\n");
-
-  useEffect(() => {
-    setIngredientList(ingredientsArray);
-  }, [ingredients]);
 
   return (
     <div className="bg-cyan-900 min-h-screen flex flex-col justify-center px-6 lg:px-8">
@@ -143,7 +316,7 @@ const UpdateRecipe = (params) => {
                   htmlFor="title"
                   className="block text-xl mb-1 font-bold text-cyan-950"
                 >
-                  Title:
+                  Title
                 </label>
                 <input
                   type="text"
@@ -151,52 +324,57 @@ const UpdateRecipe = (params) => {
                   name="title"
                   placeholder="Title"
                   value={title}
-                  onChange={(e) => setTitle(e.target.value)}
+                  onChange={clearErrorOnChange(setTitle)}
                   className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-base rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
                 />
               </div>
-              {/* PUBLISHER */}
-              {/* <div className="flex flex-col">
-                <label
-                  htmlFor="publisher"
-                  className="block text-xl mb-1 font-bold text-cyan-950"
-                >
-                  Publisher:
-                </label>
-                <input
-                  type="text"
-                  id="publisher"
-                  name="publisher"
-                  placeholder="Publisher"
-                  value={publisher}
-                  onChange={clearErrorOnChange(setPublisher)}
-                  className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-base rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-                />
-              </div> */}
-
-              {/* CATEGORY DROPDOWN */}
+              {/* DIETARY PREFERENCE */}
               <div className="flex flex-col">
                 <label
-                  htmlFor="category"
+                  htmlFor="dietaryPreference"
                   className="block text-xl mb-1 font-bold text-cyan-950"
                 >
-                  Category:
+                  Dietary Preference
                 </label>
-
                 <select
-                  id="category"
-                  name="category"
-                  value={category}
-                  onChange={(e) => setCategory(e.target.value)}
-                  className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-base rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                  id="dietaryPreference"
+                  name="dietaryPreference"
+                  value={dietaryPreference}
+                  onChange={handleDietaryPreferenceCategoryChange}
+                  className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg w-full p-2.5"
                 >
-                  <option value="">Select a category</option>
-                  {mockRecipeCategory.map((cat, index) => (
-                    <option key={index} value={cat.category}>
-                      {cat.category}
+                  <option value="">Select Dietary Preference</option>
+                  {dietaryPreferencesCategory.map((cat, index) => (
+                    <option key={index} value={cat.id}>
+                      {cat.subcategoryName}
                     </option>
                   ))}
                 </select>
+              </div>
+
+              {/* ALLERGIES AND RESTRICTIONS */}
+              <div className="flex flex-col">
+                <label
+                  htmlFor="allergyRestriction"
+                  className="block text-xl mb-1 font-bold text-cyan-950"
+                >
+                  Allergens Contained
+                </label>
+                <div className="grid grid-cols-4 gap-1">
+                  {allergyCategory.map((cat, index) => (
+                    <label key={index} className="mr-2 items-center">
+                      <input
+                        type="checkbox"
+                        name="allergies"
+                        value={cat.id}
+                        checked={allergyRestriction.includes(cat.id)}
+                        onChange={(e) => handleAllergyCategoryChange(e, cat.id)}
+                        className="mr-2"
+                      />
+                      {cat.subcategoryName}
+                    </label>
+                  ))}
+                </div>
               </div>
 
               {/* COOKING TIME */}
@@ -210,9 +388,10 @@ const UpdateRecipe = (params) => {
                 <input
                   name="cookingTime"
                   id="cookingTime"
+                  type="number"
                   placeholder="Cooking Time (in mins)"
                   value={cookingTime}
-                  onChange={(e) => setCookingTime(e.target.value)}
+                  onChange={clearErrorOnChange(setCookingTime)}
                   rows={4} // Adjust this number to increase height
                   className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-base rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
                 />
@@ -224,21 +403,18 @@ const UpdateRecipe = (params) => {
                   htmlFor="servingSize"
                   className="block text-xl mb-1 font-bold text-cyan-950"
                 >
-                  Serving Size:
+                  Serving Size
                 </label>
-                <select
-                  id="servingSize"
+                <input
                   name="servingSize"
+                  type="number"
+                  id="servingSize"
+                  placeholder="Serving Size"
                   value={servingSize}
-                  onChange={(e) => setServingSize(e.target.value)}
+                  onChange={clearErrorOnChange(setServingSize)}
+                  rows={4} // Adjust this number to increase height
                   className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-base rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-                >
-                  <option value="">Select One...</option>
-                  <option value="2 Pax">2 Pax</option>
-                  <option value="4 Pax">4 Pax</option>
-                  <option value="6 Pax">6 Pax</option>
-                  <option value="8 Pax">8 Pax</option>
-                </select>
+                />
               </div>
 
               {/* DESCRIPTION */}
@@ -247,22 +423,40 @@ const UpdateRecipe = (params) => {
                   htmlFor="description"
                   className="block text-xl mb-1 font-bold text-cyan-950"
                 >
-                  Description:
+                  Description
                 </label>
                 <textarea
                   name="description"
                   id="description"
                   placeholder="Write a short description about your recipe"
                   value={description}
-                  setDescription
-                  onChange={(e) => setDescription(e.target.value)}
+                  onChange={clearErrorOnChange(setDescription)}
+                  rows={7} // Adjust this number to increase height
+                  className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-base rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                />
+              </div>
+
+              {/* Dietary Information for user to input */}
+              <div className="flex flex-col">
+                <label
+                  htmlFor="dietaryInformation"
+                  className="block text-xl mb-1 font-bold text-cyan-950"
+                >
+                  Dietary Information
+                </label>
+                <textarea
+                  name="dietaryInformation"
+                  id="dietaryInformation"
+                  placeholder="Write a short description about your recipe"
+                  value={dietaryInformation}
+                  onChange={clearErrorOnChange(setDietaryInformation)}
                   rows={7} // Adjust this number to increase height
                   className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-base rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
                 />
               </div>
 
               {/* INGREDIENTS */}
-              <div className="flex flex-col">
+              {/* <div className="flex flex-col">
                 <label
                   htmlFor="ingredients"
                   className="block text-xl mb-1 font-bold text-cyan-950"
@@ -270,36 +464,89 @@ const UpdateRecipe = (params) => {
                   Ingredients:
                 </label>
                 {ingredientList.map((ingredient, index) => (
-                  <div key={index} className="flex space-x-2 mb-2 flex-col">
+                  <div key={index} className="flex mb-2">
                     <input
+                      name="ingredient"
                       placeholder={`Ingredient ${index + 1}`}
                       value={ingredient}
                       onChange={(e) =>
                         handleIngredientChange(index, e.target.value)
                       }
-                      className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-base rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                      className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-base rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 mr-2"
                     />
-                    {index === ingredientList.length - 1 && (
-                      <div className="flex flex-row space-x-5 justify-center">
-                        <button
-                          type="button"
-                          onClick={handleDeleteIngredient}
-                          disabled={ingredientList.length === 1}
-                          className="text-white bg-red-500 hover:bg-red-800 font-medium text-sm px-3 py-2.5 w-40 mt-3 rounded-lg"
-                        >
-                          Delete Ingredient
-                        </button>
-                        <button
-                          type="button"
-                          onClick={handleAddIngredient}
-                          className="text-white bg-gray-800 hover:bg-gray-900 font-medium text-sm px-3 py-2.5 w-40 mt-3 rounded-lg"
-                        >
-                          Add Ingredient
-                        </button>
-                      </div>
+                    {ingredientList.length > 1 && (
+                      <button
+                        type="button"
+                        onClick={() =>
+                          handleRemoveField(
+                            setIngredientList,
+                            ingredientList,
+                            index
+                          )
+                        }
+                        className="text-white bg-red-500 hover:bg-red-800 font-medium text-sm px-3 py-2.5 rounded-lg"
+                      >
+                        Remove
+                      </button>
                     )}
                   </div>
                 ))}
+                <button
+                  type="button"
+                  onClick={() =>
+                    handleAddField(setIngredientList, ingredientList)
+                  }
+                  className="text-white bg-gray-800 hover:bg-gray-900 font-medium text-sm px-3 py-2.5 mt-3 rounded-lg"
+                >
+                  Add Ingredient
+                </button>
+              </div> */}
+
+              {/* INGREDIENTS */}
+              <div className="flex flex-col">
+                <label
+                  htmlFor="ingredients"
+                  className="block text-xl mb-1 font-bold text-cyan-950"
+                >
+                  Ingredients
+                </label>
+                {ingredientList.map((ingredient, index) => (
+                  <div key={index} className="flex mb-2">
+                    <input
+                      name="ingredient"
+                      placeholder={`Ingredient ${index + 1}`}
+                      value={ingredient}
+                      onChange={(e) =>
+                        handleIngredientChange(index, e.target.value)
+                      }
+                      className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-base rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 mr-2"
+                    />
+                    {ingredientList.length > 1 && (
+                      <button
+                        type="button"
+                        onClick={() =>
+                          handleRemoveField(
+                            setIngredientList,
+                            ingredientList,
+                            index
+                          )
+                        }
+                        className="text-white bg-red-500 hover:bg-red-800 font-medium text-sm px-3 py-2.5 rounded-lg"
+                      >
+                        Remove
+                      </button>
+                    )}
+                  </div>
+                ))}
+                <button
+                  type="button"
+                  onClick={() =>
+                    handleAddField(setIngredientList, ingredientList)
+                  }
+                  className="text-white bg-gray-800 hover:bg-gray-900 font-medium text-sm px-3 py-2.5 mt-3 rounded-lg"
+                >
+                  Add Ingredient
+                </button>
               </div>
 
               {/* INSTRUCTIONS */}
@@ -308,17 +555,45 @@ const UpdateRecipe = (params) => {
                   htmlFor="instructions"
                   className="block text-xl mb-1 font-bold text-cyan-950"
                 >
-                  Instructions:
+                  Instructions
                 </label>
-                <textarea
-                  name="instructions"
-                  id="instructions"
-                  placeholder="Seperate each step with a semicolon (;)"
-                  value={instructions}
-                  onChange={(e) => setInstructions(e.target.value)}
-                  rows={3} // Adjust this number to increase height
-                  className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-base rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-                />
+                {instructionList.map((instruction, index) => (
+                  <div key={index} className="flex mb-2">
+                    <input
+                      name="instruction"
+                      placeholder={`Step ${index + 1}`}
+                      value={instruction}
+                      onChange={(e) =>
+                        handleInstructionChange(index, e.target.value)
+                      }
+                      className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-base rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 mr-2"
+                    />
+                    {instructionList.length > 1 && (
+                      <button
+                        type="button"
+                        onClick={() =>
+                          handleRemoveField(
+                            setInstructionList,
+                            instructionList,
+                            index
+                          )
+                        }
+                        className="text-white bg-red-500 hover:bg-red-800 font-medium text-sm px-3 py-2.5 rounded-lg"
+                      >
+                        Remove
+                      </button>
+                    )}
+                  </div>
+                ))}
+                <button
+                  type="button"
+                  onClick={() =>
+                    handleAddField(setInstructionList, instructionList)
+                  }
+                  className="text-white bg-gray-800 hover:bg-gray-900 font-medium text-sm px-3 py-2.5 mt-3 rounded-lg"
+                >
+                  Add Step
+                </button>
               </div>
 
               {/* NUTRITIONAL INFORMATION */}
@@ -327,7 +602,7 @@ const UpdateRecipe = (params) => {
                   htmlFor="nutritionalInformation"
                   className="block text-xl mb-1 font-bold text-cyan-950"
                 >
-                  Nutritional Information:
+                  Nutritional Information
                 </label>
 
                 <div className="grid grid-cols-2 gap-6 mt-3">
@@ -337,12 +612,12 @@ const UpdateRecipe = (params) => {
                       Total Calories:
                     </label>
                     <input
-                      tyoe="text"
+                      type="number"
                       name="totalCalories"
                       id="totalCalories"
                       placeholder="Total Calories"
                       value={totalCalories}
-                      onChange={(e) => setTotalCalories(e.target.value)}
+                      onChange={clearErrorOnChange(setTotalCalories)}
                       className="border px-4 py-2 rounded-lg bg-gray-50 border-gray-300 text-gray-900 sm:text-sm block w-full p-2.5"
                     ></input>
                   </div>
@@ -353,12 +628,12 @@ const UpdateRecipe = (params) => {
                       Carbohydrates:
                     </label>
                     <input
-                      type="text"
+                      type="number"
                       name="carbohydrates"
                       id="carbohydrates"
                       placeholder="Enter carbs in grams"
                       value={carbohydrates}
-                      onChange={(e) => setCarbohydrates(e.target.value)}
+                      onChange={clearErrorOnChange(setCarbohydrates)}
                       className="border px-4 py-2 rounded-lg bg-gray-50 border-gray-300 text-gray-900 sm:text-sm block w-full p-2.5"
                     />
                   </div>
@@ -369,12 +644,12 @@ const UpdateRecipe = (params) => {
                       Protein:
                     </label>
                     <input
-                      type="text"
+                      type="number"
                       name="protein"
                       id="protein"
                       placeholder="Enter protein in grams"
                       value={protein}
-                      onChange={(e) => setProtein(e.target.value)}
+                      onChange={clearErrorOnChange(setProtein)}
                       className="border px-4 py-2 rounded-lg bg-gray-50 border-gray-300 text-gray-900 sm:text-sm block w-full p-2.5"
                     />
                   </div>
@@ -385,12 +660,12 @@ const UpdateRecipe = (params) => {
                       Fat:
                     </label>
                     <input
-                      type="text"
+                      type="number"
                       name="fat"
                       id="fat"
                       placeholder="Enter fat in grams"
                       value={fat}
-                      onChange={(e) => setFat(e.target.value)}
+                      onChange={clearErrorOnChange(setFat)}
                       className="border px-4 py-2 rounded-lg bg-gray-50 border-gray-300 text-gray-900 sm:text-sm block w-full p-2.5"
                     />
                   </div>
@@ -401,12 +676,12 @@ const UpdateRecipe = (params) => {
                       Fibre:
                     </label>
                     <input
-                      type="text"
+                      type="number"
                       name="fibre"
                       id="fibre"
                       placeholder="Enter fibre in grams"
                       value={fibre}
-                      onChange={(e) => setFibre(e.target.value)}
+                      onChange={clearErrorOnChange(setFibre)}
                       className="border px-4 py-2 rounded-lg bg-gray-50 border-gray-300 text-gray-900 sm:text-sm block w-full p-2.5"
                     />
                   </div>
@@ -417,12 +692,12 @@ const UpdateRecipe = (params) => {
                       Sodium:
                     </label>
                     <input
-                      type="text"
+                      type="number"
                       name="sodium"
                       id="sodium"
                       placeholder="Enter sodium in mg"
                       value={sodium}
-                      onChange={(e) => setSodium(e.target.value)}
+                      onChange={clearErrorOnChange(setSodium)}
                       className="border px-4 py-2 rounded-lg bg-gray-50 border-gray-300 text-gray-900 sm:text-sm block w-full p-2.5"
                     />
                   </div>
@@ -435,7 +710,7 @@ const UpdateRecipe = (params) => {
                   htmlFor="imageUrl"
                   className="block text-xl mb-1 font-bold text-cyan-950"
                 >
-                  Image URL:
+                  Image URL
                 </label>
                 <input
                   type="text"
@@ -443,30 +718,18 @@ const UpdateRecipe = (params) => {
                   name="imageUrl"
                   placeholder="Image URL"
                   value={imageUrl}
-                  onChange={(e) => setImageUrl(e.target.value)}
+                  onChange={clearErrorOnChange(setImageUrl)}
                   className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-base rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
                 />
               </div>
-              {/* IMAGE TITLE */}
-              <div className="flex flex-col">
-                <label
-                  htmlFor="imageTitle"
-                  className="block text-xl mb-1 font-bold text-cyan-950"
-                >
-                  Image Title:
-                </label>
-                <input
-                  type="text"
-                  id="imageTitle"
-                  name="imageTitle"
-                  placeholder="Image Title"
-                  value={imageTitle}
-                  onChange={(e) => setImageTitle(e.target.value)}
-                  className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-base rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-                />
-              </div>
-              {/* ERROR MESSAGE */}
-              {error && <p className="text-red-500">{error}</p>}
+
+              {/* Display error or success message */}
+              {error && (
+                <p className="text-red-500 font-bold text-2xl">{error}</p>
+              )}
+              {success && (
+                <p className="text-green-500 font-bold text-2xl">{success}</p>
+              )}
               {/* SUBMIT BUTTON */}
               <div className="flex flex-row space-x-5">
                 <button className="bg-red-500 hover:bg-red-800 text-white font-bold py-2 px-4 rounded-lg">
@@ -474,7 +737,7 @@ const UpdateRecipe = (params) => {
                 </button>
                 <button
                   type="submit"
-                  //onClick={handleCreateRecipe}
+                  onClick={handleUpdateRecipe}
                   className="bg-cyan-500 hover:bg-sky-700 text-white font-bold py-2 px-4 rounded-lg"
                 >
                   Update
@@ -488,4 +751,4 @@ const UpdateRecipe = (params) => {
   );
 };
 
-export default UpdateRecipe;
+export default UpdateRecipePage;

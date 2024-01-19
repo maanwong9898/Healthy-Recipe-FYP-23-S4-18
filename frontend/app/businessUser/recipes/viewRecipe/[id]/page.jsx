@@ -22,22 +22,6 @@ const renderSteps = (stepsString) => {
   ));
 };
 
-// should have a list of reviews and ratings for each recipe
-const mockRecipe_RatingAndReviews = [
-  {
-    username: "Jason",
-    ratings: 4,
-    reviews: "This is a good recipe",
-    date_published: "2021-10-01",
-  },
-  {
-    username: "Jessica",
-    ratings: 5,
-    reviews: "Highly recommended!",
-    date_published: "2023-11-15",
-  },
-];
-
 const fetchRecipesById = async (recipeID) => {
   try {
     // Ensure recipeID is a string if the IDs in your URL need to be strings
@@ -65,29 +49,10 @@ const fetchRecipesById = async (recipeID) => {
   }
 };
 
-const fetchRecipesRatingsAndReviews = async (recipeId) => {
-  try {
-    // Include the recipeId in the URL as a query parameter
-    const response = await axiosInterceptorInstance.get(
-      `/blog/rating/getBlog?recipeId=${recipeId}`
-    );
-    console.log("All ratings response data:", response.data);
-
-    // Assuming response.data is the array of reviews for the given recipeId
-    setReviewsAndRatings(response.data);
-
-    // Optionally, log each review to the console
-    response.data.forEach((reviewData, index) => {
-      console.log(`Review ${index + 1}:`, reviewData.review);
-    });
-  } catch (error) {
-    console.error("Failed to fetch ratings and reviews:", error);
-  }
-};
-
 const BusinessViewRecipe = ({ params }) => {
   const [recipe, setRecipe] = useState(null);
   const [reviewsAndRatings, setReviewsAndRatings] = useState([]);
+  const router = useRouter();
 
   useEffect(() => {
     const recipeId = decodeURIComponent(params.id); // Make sure to decode the ID
@@ -95,12 +60,42 @@ const BusinessViewRecipe = ({ params }) => {
       .then((data) => {
         setRecipe(data);
         // Assuming the blog ID is needed to fetch the reviews
-        // fetchRecipesRatingsAndReviews(data.id);
+        fetchRecipesRatingsAndReviews(data.id);
       })
       .catch((error) => {
         console.error("Error fetching recipe in use effect:", error);
       });
   }, [params.id]);
+
+  const fetchRecipesRatingsAndReviews = async (recipeId) => {
+    try {
+      // Include the recipeId in the URL as a query parameter
+      const response = await axiosInterceptorInstance.get(
+        `/recipe/rating/getRecipe?recipeId=${recipeId}`
+      );
+      console.log("All recipe ratings response data:", response.data);
+
+      // Assuming response.data is the array of reviews for the given recipeId
+      setReviewsAndRatings(response.data);
+
+      // Optionally, log each review to the console
+      response.data.forEach((reviewData, index) => {
+        console.log(`Review ${index + 1}:`, reviewData.review);
+      });
+    } catch (error) {
+      console.error("Failed to fetch ratings and reviews:", error);
+    }
+  };
+
+  // this function is to update particular blog post
+  const handleUpdateRecipe = (id) => {
+    console.log("Updating recipe with id:", id);
+
+    // Redirect to the correct route
+    let routePath = `/businessUser/recipes/updateRecipe/${id}`;
+
+    router.push(routePath);
+  };
 
   const renderStars = (rating) => {
     let stars = [];
@@ -161,10 +156,12 @@ const BusinessViewRecipe = ({ params }) => {
             </span>
           </p>
           <p>
-            Posted on:{" "}
+            Published on:{" "}
             <span className="text-cyan-600">
               {recipe
-                ? new Date(recipe.createdDT).toLocaleDateString("en-GB", {
+                ? new Date(
+                    recipe.createdDT || recipe.lastUpdatedDT
+                  ).toLocaleDateString("en-GB", {
                     day: "2-digit",
                     month: "short",
                     year: "numeric",
@@ -296,38 +293,52 @@ const BusinessViewRecipe = ({ params }) => {
       </div>
 
       {/* reviews and ratings */}
-      <footer className="recipes-reviews mt-10 mx-auto max-w-screen-xl text-left">
-        <p className="font-mono font-bold text-2xl text-cyan-600">
+      <footer className="blog-post-reviews mt-15 mx-auto max-w-screen-xl text-left">
+        <p className="font-mono font-bold text-2xl text-gray-900">
           Rating and Reviews
         </p>
-
-        {reviewsAndRatings.map((review, index) => (
-          <div key={index} className="my-4 p-4 border-b border-gray-200">
-            <div className="flex items-center mb-2">
-              <span className="font-bold mr-2">{review.username}</span>
-              <div className="flex">{renderStars(review.ratings)}</div>
-              <span className="text-sm text-gray-500 ml-2">
-                {recipe
-                  ? new Date(recipe.date_published).toLocaleDateString()
-                  : "Not specified"}
-              </span>
+        {/* Check if reviews exist */}
+        {reviewsAndRatings.length > 0 ? (
+          reviewsAndRatings.map((review, index) => (
+            <div key={index} className="my-4 p-4 border-b border-gray-200">
+              <div className="flex items-center mb-2">
+                <span className="font-bold mr-2">
+                  {review?.userDTO?.username || "Anonymous"}
+                </span>
+                <div className="flex">{renderStars(review.rating)}</div>
+                <span className="text-sm text-gray-500 ml-2">
+                  {new Date(review?.createdDateTime).toLocaleDateString(
+                    "en-GB",
+                    {
+                      day: "2-digit",
+                      month: "short",
+                      year: "numeric",
+                    }
+                  )}
+                </span>
+              </div>
+              <p>{review.review}</p>
             </div>
-            <p>{review.reviews}</p>
-          </div>
-        ))}
+          ))
+        ) : (
+          <p className="text-center text-gray-600">
+            No ratings and reviews yet.
+          </p>
+        )}
       </footer>
       <div className="flex flex-row space-x-5 justify-end mr-10">
-        <button className="bg-cyan-500 hover:bg-sky-700 text-white font-bold py-2 px-4 rounded-lg">
-          <Link href="/businessUser/recipes/updateRecipe/${recipeTitle}">
-            Edit
-          </Link>
-        </button>
         <button
+          onClick={() => handleUpdateRecipe(recipe.id)}
+          className="bg-blue-600 hover:bg-blue-700 text-white w-24 font-bold py-2 px-4 rounded-lg"
+        >
+          Edit
+        </button>
+        {/* <button
           type="submit"
           className="bg-red-500 hover:bg-red-800 text-white font-bold py-2 px-4 rounded-lg"
         >
           Delete
-        </button>
+        </button> */}
       </div>
     </div>
   );

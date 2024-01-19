@@ -8,22 +8,31 @@ import axiosInterceptorInstance from "../../../axiosInterceptorInstance.js";
 // this is the page to create a recipe
 
 const CreateRecipePage = () => {
+  // State for recipe information
   const [title, setTitle] = useState("");
-  const [publisher, setPublisher] = useState("");
+  const [titleCharCount, setTitleCharCount] = useState(0); // To display the number of characters in the title
   const [category, setCategory] = useState("");
   const [cookingTime, setCookingTime] = useState("");
   const [servingSize, setServingSize] = useState("");
   const [description, setDescription] = useState("");
+  const [descriptionCharCount, setDescriptionCharCount] = useState(0); // To display the number of characters in the description
   const [dietaryInformation, setDietaryInformation] = useState("");
+  const [dietaryInformationCharCount, setDietaryInformationCharCount] =
+    useState(0); // To display the number of characters in the dietary information
   const [ingredients, setIngredients] = useState("");
   const [instructions, setInstructions] = useState("");
+
+  // State for nutritional information
   const [totalCalories, setTotalCalories] = useState("");
   const [carbohydrates, setCarbohydrates] = useState("");
   const [protein, setProtein] = useState("");
   const [fat, setFat] = useState("");
   const [fibre, setFibre] = useState("");
   const [sodium, setSodium] = useState("");
+
+  // State for image URL
   const [imageUrl, setImageUrl] = useState("");
+  const [imageUrlCharCount, setImageUrlCharCount] = useState(0); // To display the number of characters in the image URL
   const [imageTitle, setImageTitle] = useState("");
 
   // Display success or error message after submission
@@ -48,12 +57,15 @@ const CreateRecipePage = () => {
   useEffect(() => {
     // Fetch all dietary preferences categories from backend
     const fetchDietaryPreferences = async () => {
-      console.log("Fetching dietary preferences...");
+      console.log("Fetching dietary preferences categories...");
       try {
         const response = await axiosInterceptorInstance.get(
           "/category/getAllDietaryPreferences"
         );
-        console.log("Dietary Preferences Categories Fetched", response.data);
+        console.log(
+          "Dietary Preferences Categories Successfully Fetched :  ",
+          response.data
+        );
         setDietaryPreferencesCategory(response.data);
       } catch (error) {
         console.log(error);
@@ -62,12 +74,15 @@ const CreateRecipePage = () => {
 
     // Fetch all allergies categories from backend
     const fetchAllergies = async () => {
-      console.log("Fetching allergies...");
+      console.log("Fetching allergies categories...");
       try {
         const response = await axiosInterceptorInstance.get(
           "/category/getAllAllergies"
         );
-        console.log("Allergies Categories Fetched", response.data);
+        console.log(
+          "Allergies Categories Successfully Fetched :  ",
+          response.data
+        );
         setAllergyCategory(response.data);
       } catch (error) {
         console.log(error);
@@ -77,6 +92,27 @@ const CreateRecipePage = () => {
     fetchDietaryPreferences();
     fetchAllergies();
   }, []);
+
+  // Function to handle title change
+  const handleTitleChange = (e) => {
+    setTitle(e.target.value);
+    setTitleCharCount(e.target.value.length);
+    setError("");
+  };
+
+  // Function to handle description change
+  const handleDescriptionChange = (e) => {
+    setDescription(e.target.value);
+    setDescriptionCharCount(e.target.value.length);
+    setError("");
+  };
+
+  // Function to handle dietary information change
+  const handleDietaryInformationChange = (e) => {
+    setDietaryInformation(e.target.value);
+    setDietaryInformationCharCount(e.target.value.length);
+    setError("");
+  };
 
   // Function to handle dietary preference category change
   const handleDietaryPreferenceCategoryChange = (e) => {
@@ -98,14 +134,14 @@ const CreateRecipePage = () => {
     }
   };
 
-  useEffect(() => {
-    // Access localStorage after component mounts and is on the client-side
-    const storedUsername = localStorage.getItem("username");
-    if (storedUsername) {
-      setPublisher(storedUsername);
-    }
-  }, []);
+  // Function to handle image URL change
+  const handleImageUrlChange = (e) => {
+    setImageUrl(e.target.value);
+    setImageUrlCharCount(e.target.value.length);
+    setError("");
+  };
 
+  // Function to validate the form before submission
   const validateForm = () => {
     // Checking only essential fields
     if (
@@ -129,7 +165,6 @@ const CreateRecipePage = () => {
 
     // Ensure integer fields are integers and greater than or equal to 0
     const integerFields = [
-      { field: servingSize, name: "Serving Size" },
       { field: totalCalories, name: "Total Calories" },
       { field: carbohydrates, name: "Carbohydrates" },
       { field: protein, name: "Protein" },
@@ -142,15 +177,29 @@ const CreateRecipePage = () => {
       const value = parseInt(integerFields[i].field);
       if (!Number.isInteger(value) || value < 0) {
         setError(
-          `Please enter a valid integer (0 or above) for ${integerFields[i].name}.`
+          `Please enter a valid integer (0 and above) for ${integerFields[i].name}.`
         );
         return false;
       }
     }
 
+    // Additional check for cooking time and serving size to be greater than 0
+    const cookingTimeValue = parseInt(cookingTime);
+    if (!Number.isInteger(cookingTimeValue) || cookingTimeValue < 1) {
+      setError("Cooking Time must be 1 minute or more.");
+      return false;
+    }
+
+    const servingSizeValue = parseInt(servingSize);
+    if (!Number.isInteger(servingSizeValue) || servingSizeValue < 1) {
+      setError("Serving Size must be 1 or more.");
+      return false;
+    }
+
     return true;
   };
 
+  // Create recipe(calling controller)
   const handleCreateRecipe = async (event) => {
     event.preventDefault();
 
@@ -168,7 +217,7 @@ const CreateRecipePage = () => {
       title,
       description,
       info: dietaryInformation,
-      userID: { id: "3" }, // Replace with actual user ID or fetch dynamically
+      userID: { id: localStorage.getItem("userId") }, // Replace with actual user ID or fetch dynamically
       calories: parseInt(totalCalories),
       protein: parseInt(protein),
       fat: parseInt(fat),
@@ -183,7 +232,7 @@ const CreateRecipePage = () => {
       img: imageUrl,
     };
 
-    console.log("Recipe Data filled up by user", recipeData);
+    console.log("The recipe data from the form : ", recipeData);
 
     try {
       // Send POST request
@@ -201,6 +250,32 @@ const CreateRecipePage = () => {
       setTimeout(() => {
         setSuccess("");
       }, 6000);
+
+      // Clear the form
+      setTitle("");
+      setTitleCharCount(0);
+      setCategory("");
+      setCookingTime("");
+      setServingSize("");
+      setDescription("");
+      setDescriptionCharCount(0);
+      setDietaryInformation("");
+      setDietaryInformationCharCount(0);
+      setIngredients("");
+      setInstructions("");
+      setTotalCalories("");
+      setCarbohydrates("");
+      setProtein("");
+      setFat("");
+      setFibre("");
+      setSodium("");
+      setImageUrl("");
+      setImageUrlCharCount(0);
+      setImageTitle("");
+      setIngredientList([""]);
+      setInstructionList([""]);
+      setDietaryPreference("");
+      setAllergyRestriction([]);
     } catch (error) {
       console.error("Error creating recipe", error);
       setError("Failed to create recipe. " + error.message);
@@ -258,17 +333,22 @@ const CreateRecipePage = () => {
                   htmlFor="title"
                   className="block text-xl mb-1 font-bold text-cyan-950"
                 >
-                  Title:
+                  Title
+                  <span className="text-red-500">*</span>
                 </label>
                 <input
                   type="text"
                   id="title"
                   name="title"
-                  placeholder="Title"
+                  placeholder="Title of Recipe (Max 80 characters)"
+                  maxLength={80}
                   value={title}
-                  onChange={clearErrorOnChange(setTitle)}
+                  onChange={handleTitleChange}
                   className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-base rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
                 />
+                <p className="text-gray-500 text-sm">
+                  {titleCharCount}/80 characters
+                </p>
               </div>
               {/* DIETARY PREFERENCE */}
               <div className="flex flex-col">
@@ -300,7 +380,7 @@ const CreateRecipePage = () => {
                   htmlFor="allergyRestriction"
                   className="block text-xl mb-1 font-bold text-cyan-950"
                 >
-                  Allergens Contained
+                  Allergens contained in recipe:
                 </label>
                 <div className="grid grid-cols-4 gap-1">
                   {allergyCategory.map((cat, index) => (
@@ -325,7 +405,8 @@ const CreateRecipePage = () => {
                   htmlFor="cookingTime"
                   className="block text-xl mb-1 font-bold text-cyan-950"
                 >
-                  Cooking Time: (in minutes)
+                  Cooking Time (in mins)
+                  <span className="text-red-500">*</span>
                 </label>
                 <input
                   name="cookingTime"
@@ -344,7 +425,7 @@ const CreateRecipePage = () => {
                   htmlFor="servingSize"
                   className="block text-xl mb-1 font-bold text-cyan-950"
                 >
-                  Serving Size:
+                  Serving Size<span className="text-red-500">*</span>
                 </label>
                 <input
                   name="servingSize"
@@ -364,17 +445,21 @@ const CreateRecipePage = () => {
                   htmlFor="description"
                   className="block text-xl mb-1 font-bold text-cyan-950"
                 >
-                  Description:
+                  Description<span className="text-red-500">*</span>
                 </label>
                 <textarea
                   name="description"
                   id="description"
-                  placeholder="Write a short description about your recipe"
+                  placeholder="Write a detailed description about the recipe (Max 1000 characters)"
+                  maxLength={1000}
                   value={description}
-                  onChange={clearErrorOnChange(setDescription)}
+                  onChange={handleDescriptionChange}
                   rows={7} // Adjust this number to increase height
                   className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-base rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
                 />
+                <p className="text-gray-500 text-sm">
+                  {descriptionCharCount}/1000 characters
+                </p>
               </div>
 
               {/* Dietary Information for user to input */}
@@ -383,17 +468,21 @@ const CreateRecipePage = () => {
                   htmlFor="dietaryInformation"
                   className="block text-xl mb-1 font-bold text-cyan-950"
                 >
-                  Dietary Information:
+                  Dietary Information<span className="text-red-500">*</span>
                 </label>
                 <textarea
                   name="dietaryInformation"
                   id="dietaryInformation"
-                  placeholder="Write a short description about your recipe"
+                  placeholder="Write a short description about the dietary information (Max 230 characters)"
+                  maxLength={230}
                   value={dietaryInformation}
-                  onChange={clearErrorOnChange(setDietaryInformation)}
-                  rows={7} // Adjust this number to increase height
+                  onChange={handleDietaryInformationChange}
+                  rows={4} // Adjust this number to increase height
                   className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-base rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
                 />
+                <p className="text-gray-500 text-sm">
+                  {dietaryInformationCharCount}/230 characters
+                </p>
               </div>
 
               {/* INGREDIENTS */}
@@ -402,7 +491,7 @@ const CreateRecipePage = () => {
                   htmlFor="ingredients"
                   className="block text-xl mb-1 font-bold text-cyan-950"
                 >
-                  Ingredients:
+                  Ingredients<span className="text-red-500">*</span>
                 </label>
                 {ingredientList.map((ingredient, index) => (
                   <div key={index} className="flex mb-2">
@@ -449,7 +538,7 @@ const CreateRecipePage = () => {
                   htmlFor="instructions"
                   className="block text-xl mb-1 font-bold text-cyan-950"
                 >
-                  Instructions:
+                  Instructions<span className="text-red-500">*</span>
                 </label>
                 {instructionList.map((instruction, index) => (
                   <div key={index} className="flex mb-2">
@@ -496,7 +585,8 @@ const CreateRecipePage = () => {
                   htmlFor="nutritionalInformation"
                   className="block text-xl mb-1 font-bold text-cyan-950"
                 >
-                  Nutritional Information:
+                  Nutritional Information (per serving)
+                  <span className="text-red-500">*</span>
                 </label>
 
                 <div className="grid grid-cols-2 gap-6 mt-3">
@@ -604,25 +694,31 @@ const CreateRecipePage = () => {
                   htmlFor="imageUrl"
                   className="block text-xl mb-1 font-bold text-cyan-950"
                 >
-                  Image URL:
+                  Image URL<span className="text-red-500">*</span>
                 </label>
                 <input
                   type="text"
                   id="imageUrl"
                   name="imageUrl"
-                  placeholder="Image URL"
+                  placeholder="Image URL (Max 255 characters)"
+                  maxLength={255}
                   value={imageUrl}
-                  onChange={clearErrorOnChange(setImageUrl)}
+                  onChange={handleImageUrlChange}
                   className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-base rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
                 />
+                <p className="text-gray-500 text-sm">
+                  {imageUrlCharCount}/255 characters
+                </p>
               </div>
 
               {/* Display error or success message */}
               {error && (
-                <p className="text-red-500 font-bold text-2xl">{error}</p>
+                <p className="text-red-500 font-semibold text-2xl">{error}</p>
               )}
               {success && (
-                <p className="text-green-500 font-bold text-2xl">{success}</p>
+                <p className="text-green-500 font-semibold text-2xl">
+                  {success}
+                </p>
               )}
               {/* SUBMIT BUTTON */}
               <div className="flex flex-row space-x-5">

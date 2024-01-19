@@ -194,7 +194,7 @@ const CreateBusinessBlogPostPage = () => {
                   htmlFor="title"
                   className="block text-lg mb-1 font-semibold text-gray-900"
                 >
-                  Title:
+                  Title<span className="text-red-500">*</span>
                 </label>
                 <input
                   type="text"
@@ -217,7 +217,7 @@ const CreateBusinessBlogPostPage = () => {
                   htmlFor="category"
                   className="block text-lg mb-1 font-semibold text-gray-900"
                 >
-                  Category:
+                  Category<span className="text-red-500">*</span>
                 </label>
 
                 <select
@@ -242,7 +242,7 @@ const CreateBusinessBlogPostPage = () => {
                   htmlFor="info"
                   className="block text-lg mb-1 font-semibold text-gray-900"
                 >
-                  Info:
+                  Info<span className="text-red-500">*</span>
                 </label>
                 <textarea
                   id="info"
@@ -265,7 +265,7 @@ const CreateBusinessBlogPostPage = () => {
                   htmlFor="imageUrl"
                   className="block text-lg mb-1 font-semibold text-gray-900 mt-4"
                 >
-                  Image URL:
+                  Image URL<span className="text-red-500">*</span>
                 </label>
                 <input
                   type="text"

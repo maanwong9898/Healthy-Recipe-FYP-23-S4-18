@@ -78,6 +78,11 @@ public class BlogService {
         Optional<BlogPostCategory> blogType = blogTypeRepo.findById(blog.getBlogTypeId());
   
         blog.setBlogTypeId((blogType.isPresent() ? blogType.get().getId(): null));
+
+        if(blog.getPublisher() == null)
+        {  
+            blog.setPublisher(userRepo.findById(blog.getUserID().getId()).get().getFullName());
+        }
         
      
         blog.setLastUpdatedDateTime(LocalDateTime.now());

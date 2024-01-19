@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.FYP18.HealthyRecipe.DTO.RecipeDTO;
+import com.FYP18.HealthyRecipe.DTO.ReviewRatingDTO;
+import com.FYP18.HealthyRecipe.Entity.BlogReviewRating;
 import com.FYP18.HealthyRecipe.Entity.Recipe;
 import com.FYP18.HealthyRecipe.Entity.RecipeReviewRating;
 import com.FYP18.HealthyRecipe.Entity.RecipeReviewRatingId; 
@@ -48,6 +50,21 @@ public class RecipeController {
     public ResponseEntity<Recipe> getRecipeById(@PathVariable long id)
     { 
         Recipe toReturn = recipeService.getRecipeById(id);
+        return new ResponseEntity<>(toReturn, HttpStatus.OK);
+    }
+
+
+    @GetMapping("/getAverage/{recipeId}")
+    public ReviewRatingDTO getAvgAndTotalNum(@PathVariable Long recipeId)
+    {
+        return recipeService.findAvgByRecipeId(recipeId);
+    }
+
+    @GetMapping("/rating/getRecipe")
+    public ResponseEntity<List<RecipeReviewRating>> getAllRecipeReviewRatingOfUserId
+                (@RequestParam Long recipeId)  
+    { 
+       List<RecipeReviewRating> toReturn =   recipeService.getAllRatingsOfRecipeId(recipeId);
         return new ResponseEntity<>(toReturn, HttpStatus.OK);
     }
 

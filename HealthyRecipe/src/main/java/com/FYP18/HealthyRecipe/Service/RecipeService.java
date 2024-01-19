@@ -11,11 +11,15 @@ import org.springframework.cglib.core.Local;
 import org.springframework.stereotype.Service;
 
 import com.FYP18.HealthyRecipe.DTO.RecipeDTO;
+import com.FYP18.HealthyRecipe.DTO.ReviewRatingDTO;
+import com.FYP18.HealthyRecipe.DTO.UserInfoDTO;
+import com.FYP18.HealthyRecipe.Entity.BlogReviewRating;
 import com.FYP18.HealthyRecipe.Entity.Recipe;
 import com.FYP18.HealthyRecipe.Entity.RecipeReviewRating;
 import com.FYP18.HealthyRecipe.Entity.RecipeReviewRatingId;
 import com.FYP18.HealthyRecipe.Repository.RecipeRepository;
 import com.FYP18.HealthyRecipe.Repository.RecipeReviewRatingRepository;
+import com.FYP18.HealthyRecipe.Repository.UserRepository;
 
 @Service  
 public class RecipeService {
@@ -108,7 +112,45 @@ public class RecipeService {
     {   
         return recipeReviewRatingRepository.findByUserID(userId);
     }
+
+    // public List<BlogReviewRating> getAllRatingsOfBlogId(Long blogId)
+    // {
+    //     List<BlogReviewRating> toReturn = blogReviewRatingRepository.findByBlogId(blogId);
+    //    for(BlogReviewRating b: toReturn)
+    //    {
+        
+    //     UserInfoDTO dto = userRepo.getUserInfoDTO(b.getBlogReviewRatingId().UserID);
+    //     b.setUserDTO(dto);
+    //    }
+    //     return toReturn;
+    // }
     
+     @Autowired
+    private UserRepository userRepo;
+
+    public List<RecipeReviewRating> getAllRatingsOfRecipeId(Long recipeId)
+    {   
+        List<RecipeReviewRating> toReturn = recipeReviewRatingRepository.findByRecipeId(recipeId);
+        for(RecipeReviewRating r: toReturn)
+        {
+
+            UserInfoDTO dto = userRepo.getUserInfoDTO(r.getRecipeReviewRatingId().UserID);
+            r.setUserDTO(dto);
+        }
+        return toReturn;
+    }
+
+    // public ReviewRatingDTO findAvgByBlogId(Long blogId)
+    // {
+    //     return blogReviewRatingRepository.findAverageDTOByBlogId(blogId);
+    // }
+
+    public ReviewRatingDTO findAvgByRecipeId(Long recipeId)
+    {
+        return recipeReviewRatingRepository.findAverageDTOByRecipeId(recipeId);
+    }
+
+
     public List<RecipeReviewRating> getAllRecipeReviewRating()
     {   
         return recipeReviewRatingRepository.findAll();

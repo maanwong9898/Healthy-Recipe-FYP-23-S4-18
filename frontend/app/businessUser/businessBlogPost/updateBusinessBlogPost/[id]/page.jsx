@@ -4,19 +4,6 @@ import React from "react";
 import Link from "next/link";
 import { useState, useEffect } from "react";
 import axiosInterceptorInstance from "../../../../axiosInterceptorInstance.js";
-import dynamic from "next/dynamic";
-import "react-quill/dist/quill.snow.css";
-
-// this is to update particular blog post under business user
-// router path: /businessUser/businessBlogPost/updateBusinessBlogPost/[id]
-
-// need to change user id to the current user id
-
-// Import the Quill editor only on the client-side
-const QuillNoSSRWrapper = dynamic(() => import("react-quill"), {
-  ssr: false,
-  loading: () => <p>Loading editor...</p>,
-});
 
 const fetchBlogPostById = async (postId) => {
   try {
@@ -44,13 +31,19 @@ const fetchBlogPostById = async (postId) => {
 
 const UpdateBusinessBlogPostPage = ({ params }) => {
   const [businessBlogPost, setBusinessBlogPost] = useState("");
+  // title states
   const [title, setTitle] = useState("");
-  const [publisher, setPublisher] = useState("");
+  const [titleCharCount, setTitleCharCount] = useState(0);
+  // category states
   const [category, setCategory] = useState("");
   const [categories, setCategories] = useState([]);
+  // info states
   const [info, setInfo] = useState("");
+  const [infoCharCount, setInfoCharCount] = useState(0);
+  // image states
   const [imageUrl, setImageUrl] = useState("");
-  const [imageTitle, setImageTitle] = useState("");
+  const [imageUrlCharCount, setImageUrlCharCount] = useState(0);
+  // error and success states
   const [error, setError] = useState("");
   const [success, setSuccess] = useState(false);
 
@@ -68,11 +61,13 @@ const UpdateBusinessBlogPostPage = ({ params }) => {
         console.log("The displayed particular blog is:", data);
 
         // Set each piece of state with the corresponding data
-        setTitle(data.title || "No Title");
-        setPublisher(data.publisher || "No Publisher");
+        setTitle(data.title || "Not Specified");
+        setTitleCharCount(data.title ? data.title.length : 0); // Set title character count
         setCategory(data.blogType.id || "");
-        setInfo(data.info || "No Info");
-        setImageUrl(data.img || "No Image");
+        setInfo(data.info || "Not Specified");
+        setInfoCharCount(data.info ? data.info.length : 0); // Set info character count
+        setImageUrl(data.img || "Not Specified");
+        setImageUrlCharCount(data.img ? data.img.length : 0); // Set image URL character count
       })
       .catch((error) => {
         console.error("Error fetching blog post:", error);
@@ -95,6 +90,7 @@ const UpdateBusinessBlogPostPage = ({ params }) => {
     fetchCategories();
   }, [params.id]);
 
+  // Update blog post (calling controller)
   const updateBlogPost = async (updatedPost) => {
     console.log("Sending the following data to update:", updatedPost);
     try {
@@ -115,27 +111,83 @@ const UpdateBusinessBlogPostPage = ({ params }) => {
   };
 
   const handleTitleChange = (e) => {
-    setTitle(e.target.value); // Updating the title state
-    setSuccess(false); // Reset success state on change
-    console.log("New title:", e.target.value); // Log to check the updated value
+    setTitle(e.target.value);
+    setSuccess(false);
+    setTitleCharCount(e.target.value.length);
+    setError(""); // Clear error message
+    console.log("New title:", e.target.value);
+  };
+
+  const handleCategoryChange = (e) => {
+    setCategory(e.target.value);
+    // Clear category related error when a new category is selected
+    if (e.target.value) {
+      setError("");
+    }
   };
 
   const handleInfoChange = (e) => {
-    setInfo(e.target.value); // Correctly setting the main content state
-    setSuccess(false); // Reset success state on change
-    console.log("New info:", e.target.value); // Log to check the updated value
+    setInfo(e.target.value);
+    setSuccess(false);
+    setInfoCharCount(e.target.value.length);
+    setError(""); // Clear error message
+    console.log("New info:", e.target.value);
   };
 
+  // handle image url change
+  const handleImageUrlChange = (e) => {
+    setImageUrl(e.target.value);
+    setSuccess(false);
+    setImageUrlCharCount(e.target.value.length);
+    setError(""); // Clear error message
+    console.log("New image url:", e.target.value);
+  };
+
+  // Validate the form before submitting
+  const validateForm = () => {
+    console.log("Type of category:", typeof category);
+    console.log("Value of category:", category);
+
+    if (!title.trim()) {
+      setError("Title cannot be empty.");
+      return false;
+    }
+
+    // Check if category is a number and is greater than 0
+    if (typeof category !== "number" || category <= 0) {
+      setError("Category must be selected.");
+      return false;
+    }
+
+    if (!info.trim()) {
+      setError("Info cannot be empty.");
+      return false;
+    }
+    if (!imageUrl.trim()) {
+      setError("Image URL cannot be empty.");
+      return false;
+    }
+    // Clear any existing errors if all validations pass
+    setError("");
+    return true;
+  };
+
+  // Form to update blog post
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const userId = localStorage.getItem("id");
+    if (!validateForm()) {
+      // Stop the form submission if validation fails
+      return;
+    }
+
+    const userId = localStorage.getItem("userId");
+    console.log("The user id in updated form is:", userId);
     try {
       console.log("Updated category is:", category.id);
       const updatedPost = {
         id: businessBlogPost.id, // Assuming businessBlogPost.id is the right ID
-        active: true, // Assuming you always want this to be true
-        publisher: publisher,
+        active: true,
         title: title,
         info: info,
         img: imageUrl,
@@ -152,9 +204,6 @@ const UpdateBusinessBlogPostPage = ({ params }) => {
       setError(updateError.message || "Failed to update blog post");
     }
   };
-
-  // Quill editor wrapper should have an id that matches the label's for attribute
-  const quillEditorId = "info";
 
   return (
     <div className="min-h-screen flex flex-col justify-center px-6 lg:px-8">
@@ -183,11 +232,15 @@ const UpdateBusinessBlogPostPage = ({ params }) => {
                   type="text"
                   name="title"
                   id="title"
-                  placeholder="Title"
+                  placeholder="Title (Max 80 characters)"
+                  maxLength="80"
                   value={title}
                   onChange={handleTitleChange}
                   className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-base rounded-lg block w-full p-2.5"
                 />
+                <span className="text-sm text-gray-600">
+                  {titleCharCount}/80 characters
+                </span>
               </div>
               {/* CATEGORY DROPDOWN */}
               <div className="flex flex-col">
@@ -201,7 +254,8 @@ const UpdateBusinessBlogPostPage = ({ params }) => {
                   id="category"
                   name="category"
                   value={category}
-                  onChange={(e) => setCategory(e.target.value)}
+                  // onChange={(e) => setCategory(e.target.value)}
+                  onChange={(e) => setCategory(Number(e.target.value))}
                   className="bg-gray-50 border border-gray-300 text-black sm:text-base rounded-lg block w-full p-2.5"
                 >
                   <option value="">Select a category</option>
@@ -212,24 +266,29 @@ const UpdateBusinessBlogPostPage = ({ params }) => {
                   ))}
                 </select>
               </div>
-              {/* info */}
+              {/* Info*/}
               <div className="flex flex-col">
                 <label
-                  htmlFor={quillEditorId}
+                  htmlFor="info"
                   className="block text-lg mb-1 font-semibold text-gray-900"
                 >
-                  Info:
+                  Info
                 </label>
-                <QuillNoSSRWrapper
-                  theme="snow"
+                <textarea
+                  name="info"
+                  id="info"
+                  placeholder="Info"
                   value={info}
-                  onChange={setInfo}
-                  modules={UpdateBusinessBlogPostPage.modules}
-                  formats={UpdateBusinessBlogPostPage.formats}
-                  className="h-44 pb-7"
-                  id={quillEditorId} // Make sure this id is unique and matches the htmlFor attribute of the label
+                  rows={10}
+                  maxLength="1000"
+                  onChange={handleInfoChange}
+                  className="bg-gray-50 border border-gray-300 text-black sm:text-base rounded-lg block w-full p-2.5"
                 />
               </div>
+              <span className="text-sm text-gray-600">
+                {infoCharCount}/1000 characters
+              </span>
+
               {/* IMAGE URL */}
               <div className="flex flex-col">
                 <label
@@ -243,15 +302,21 @@ const UpdateBusinessBlogPostPage = ({ params }) => {
                   name="imageUrl"
                   id="imageUrl"
                   placeholder="Image URL"
+                  maxLength="255"
                   value={imageUrl}
-                  onChange={(e) => setImageUrl(e.target.value)}
+                  onChange={handleImageUrlChange}
                   className="bg-gray-50 border border-gray-300 text-black sm:text-base rounded-lg block w-full p-2.5"
                 />
+                <span className="text-sm text-gray-600">
+                  {imageUrlCharCount}/255 characters
+                </span>
               </div>
               {/* ERROR MESSAGE */}
-              {error && <p className="text-red-500">{error}</p>}
+              {error && (
+                <p className="text-red-500 font-semibold text-2xl">{error}</p>
+              )}
               {success && (
-                <p className="text-green-500">
+                <p className="text-green-500 font-semibold text-2xl">
                   Blog post updated successfully!
                 </p>
               )}

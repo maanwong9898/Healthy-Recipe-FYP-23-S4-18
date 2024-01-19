@@ -195,7 +195,7 @@ const BusinessBlogPostsPageForRegisteredUser = () => {
         </div>
         <button
           onClick={() => handleViewBlogPost(post.id)}
-          className="text-white font-bold bg-gradient-to-br from-cyan-400 to-cyan-800 hover:bg-blue-950 border-2 border-black focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 rounded-lg text-sm mt-3 px-4 py-2 text-center"
+          className="text-white font-bold bg-gradient-to-br from-cyan-400 to-cyan-800 hover:bg-blue-950 border-2 border-black focus:ring-4 focus:outline-none focus:ring-blue-300 rounded-lg text-sm mt-3 px-4 py-2 text-center"
         >
           Read more
         </button>
@@ -234,7 +234,7 @@ const BusinessBlogPostsPageForRegisteredUser = () => {
                 height: "50px",
                 boxSizing: "border-box",
               }} // Ensure box-sizing is border-box
-              className="text-white p-2 border-2 border-black bg-gradient-to-br from-cyan-400 to-cyan-800 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 rounded-lg text-base font-bold px-5 py-2.5 mr-7 mb-3 text-center"
+              className="text-white p-2 border-2 border-black bg-gradient-to-br from-cyan-400 to-cyan-800 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-blue-300 rounded-lg text-base font-bold px-5 py-2.5 mr-7 mb-3 text-center"
             >
               Search
             </button>

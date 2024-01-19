@@ -163,9 +163,9 @@ const ViewBusinessBlogPost = ({ params }) => {
   };
 
   return (
-    <div className="pt-8 pb-16 lg:pt-16 lg:pb-24 bg-white dark:bg-gray-900 ">
+    <div className="pt-8 pb-16 lg:pt-16 lg:pb-24 bg-white">
       <div className="text-center font-semibold font-mono">
-        <h1 className="mb-4 text-2xl font-extrabold leading-tight text-cyan-900 lg:mb-6 lg:text-4xl dark:text-white">
+        <h1 className="mb-4 text-2xl font-extrabold leading-tight text-cyan-900 lg:mb-6 lg:text-4xl">
           {businessBlogPost.title}
         </h1>
         <div className="flex justify-center text-base lg:text-xl text-black space-x-6 mx-auto max-w-screen-xl">
@@ -203,14 +203,11 @@ const ViewBusinessBlogPost = ({ params }) => {
           alt="Designed by Freepik"
           className="max-w-xl mx-auto mt-8 mb-8 rounded-lg shadow-xl sm:mt-16 sm:mb-16"
         />
-
-        {/* Main Content */}
+        {/* Info*/}
         <section className="main-content mt-10 pl-9 pr-9 mx-auto max-w-screen-xl md:text-base text-left">
-          <div
-            dangerouslySetInnerHTML={{
-              __html: businessBlogPost.info,
-            }}
-          />
+          <div className="w-full p-2 rounded-lg whitespace-pre-line">
+            {businessBlogPost.info}
+          </div>
         </section>
       </article>
       <footer className="blog-post-reviews mt-10 px-9 mx-auto max-w-screen-xl text-left">

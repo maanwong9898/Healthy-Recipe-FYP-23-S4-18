@@ -4,6 +4,7 @@ import { useState } from "react";
 import Link from "next/link";
 import HomeNavbar from "@/app/components/navigation/homeNavBar";
 import axiosInterceptorInstance from "../../axiosInterceptorInstance.js";
+import Footer from "../../components/footer";
 
 const NutritionistRegistration = () => {
   const [fullName, setFullName] = useState("");
@@ -352,6 +353,7 @@ const NutritionistRegistration = () => {
           </div>
         </div>
       </div>
+      <Footer />
     </div>
   );
 };

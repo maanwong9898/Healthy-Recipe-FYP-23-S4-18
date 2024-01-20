@@ -3,6 +3,7 @@ import { useRouter } from "next/navigation";
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import HomeNavbar from "@/app/components/navigation/homeNavBar";
+import Footer from "../components/footer";
 
 const RegistrationSelection = () => {
   return (
@@ -73,6 +74,7 @@ const RegistrationSelection = () => {
           </div>
         </div>
       </div>
+      <Footer />
     </div>
   );
 };

@@ -5,6 +5,7 @@ import Link from "next/link";
 import Image from "next/image";
 import HomeNavbar from "@/app/components/navigation/homeNavBar";
 import axiosInterceptorInstance from "../../axiosInterceptorInstance.js";
+import Footer from "../../components/footer";
 
 const businessRegistration = () => {
   const [fullName, setFullName] = useState("");
@@ -343,6 +344,7 @@ const businessRegistration = () => {
           </div>
         </div>
       </div>
+      <Footer />
     </div>
   );
 };

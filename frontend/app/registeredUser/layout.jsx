@@ -4,6 +4,7 @@ import { Inter } from "next/font/google";
 const inter = Inter({ subsets: ["latin"] });
 import UserNavigation from "../components/navigation/registeredUserNavBar";
 import React from "react";
+import Footer from "../components/footer";
 
 function RegisteredUserLayout({ children }) {
   return (
@@ -20,6 +21,7 @@ function RegisteredUserLayout({ children }) {
       </Head>
       <UserNavigation />
       <div className="w-full overflow-x-hidden">{children}</div>
+      <Footer />
     </>
   );
 }

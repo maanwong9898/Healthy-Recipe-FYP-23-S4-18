@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 import HomeNavbar from "@/app/components/navigation/homeNavBar";
 import axiosInterceptorInstance from "../../axiosInterceptorInstance.js";
+import Footer from "../../components/footer";
 
 const userRegistration = () => {
   // state for personal information
@@ -469,6 +470,7 @@ const userRegistration = () => {
           </div>
         </div>
       </div>
+      <Footer />
     </div>
   );
 };

@@ -4,6 +4,7 @@ import { Inter } from "next/font/google";
 const inter = Inter({ subsets: ["latin"] });
 import UserNavigation from "../components/navigation/sysAdminNavBar";
 import React from "react";
+import Footer from "../components/footer";
 
 function SysAdminLayout({ children }) {
   return (
@@ -19,6 +20,7 @@ function SysAdminLayout({ children }) {
       </Head>
       <UserNavigation />
       <div className="w-full overflow-x-hidden">{children}</div>
+      <Footer />
     </>
   );
 }

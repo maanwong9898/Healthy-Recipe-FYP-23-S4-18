@@ -8,6 +8,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
 import axiosInterceptorInstance from "../../axiosInterceptorInstance.js";
 import { jwtDecode } from "jwt-decode";
+import Footer from "../../components/footer";
 
 // router path: /userLogin
 
@@ -273,6 +274,7 @@ const userLogin = () => {
           </div>
         </div>
       </div>
+      <Footer />
     </div>
   );
 };

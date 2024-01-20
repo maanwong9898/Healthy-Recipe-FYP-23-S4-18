@@ -231,12 +231,12 @@ const MyRecipes = () => {
   };
 
   return (
-    <div className="px-2 sm:px-5 bg-cyan-800 min-h-screen flex flex-col py-5">
-      <h1 className="text-2xl text-white p-3 mb-4 font-bold text-center sm:text-left">
+    <div className="px-2 sm:px-5 min-h-screen flex flex-col py-5">
+      <h1 className="text-6xl text-gray-900 p-3 mb-4 font-bold text-center sm:text-center">
         My Recipes
       </h1>
       <div>
-        <button className="text-white border-2 border-black bg-gradient-to-br from-cyan-400 to-cyan-800 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 rounded-lg text-base font-bold px-5 py-2.5 mr-7 mb-4 text-center">
+        <button className="text-white bg-blue-600 hover:bg-blue-700 rounded-lg text-base font-semibold px-5 py-2.5 mr-7 mb-4 text-center">
           <Link href="/businessUser/recipes/createRecipe">Create Recipe</Link>
         </button>
       </div>
@@ -250,8 +250,8 @@ const MyRecipes = () => {
             name="blogSearch" // Adding a name attribute here
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
-            placeholder="Search blog posts"
-            className="mr-2 p-2 rounded-lg borde w-full md:w-auto"
+            placeholder="Search recipes"
+            className="mr-2 p-2 rounded-lg border w-full md:w-auto"
           />
 
           <button
@@ -320,9 +320,9 @@ const MyRecipes = () => {
 
       {/* Table of recipes */}
       <div className="overflow-x-auto">
-        <table className="min-w-full rounded-lg border-black border-2">
-          <thead className="bg-cyan-600 font-semibold text-cyan-950 border-black border-2">
-            <tr className="text-center text-xl">
+        <table className="min-w-full rounded-lg border-zinc-200 border-2">
+          <thead className="bg-zinc-700 font-normal tracking-normal text-white border-gray-800 border-2">
+            <tr className="text-center text-lg">
               <th className="px-3 py-2">Recipe Title</th>
               <th className="px-3 py-2">Date Published</th>
               <th className="px-3 py-2">Status</th>
@@ -335,10 +335,7 @@ const MyRecipes = () => {
           </thead>
           <tbody>
             {displayedRecipes.map((recipe, index) => (
-              <tr
-                key={index}
-                className="bg-white border-b border-blue dark:border-blue-600"
-              >
+              <tr key={index} className="bg-white border-b">
                 <td className="px-3 py-2 text-base text-center">
                   {recipe.title}
                 </td>
@@ -356,8 +353,8 @@ const MyRecipes = () => {
                   <span
                     className={`rounded-full px-3 py-1 text-base font-semibold ${
                       recipe.active
-                        ? "text-white bg-gradient-to-br from-cyan-400 to-cyan-600"
-                        : "text-white bg-gradient-to-br from-orange-600 to-red-700"
+                        ? "text-white bg-green-500"
+                        : "text-white bg-red-500"
                     }`}
                   >
                     {recipe.active ? "Active" : "Inactive"}
@@ -365,7 +362,7 @@ const MyRecipes = () => {
                 </td>
                 <td className="px-3 py-2 text-base text-center">
                   <div
-                    className="rating-container"
+                    className="rating-container flex flex-col"
                     style={{ minWidth: "100px" }}
                   >
                     {recipe.average !== null &&
@@ -391,52 +388,43 @@ const MyRecipes = () => {
                     )}
                   </div>
                 </td>
-                <td className="px-3 py-2 justify-center sm:justify-start">
+                <td className="px-3 py-2 text-base text-center">
                   <button
                     onClick={() => handleViewRecipe(recipe.id)}
-                    className="text-white font-bold bg-gradient-to-br from-cyan-400 to-cyan-800 hover:bg-blue-950 border-2 border-black
-                    focus:ring-4 focus:outline-none focus:ring-blue-300
-                    dark:focus:ring-blue-800 rounded-lg text-base px-5 py-2.5 ml-2
-                    mr-2 text-center"
+                    className="text-white font-bold bg-blue-600 hover:bg-blue-700 rounded-lg text-base px-5 py-2 ml-2 mr-2 text-center"
                   >
                     {" "}
                     View
                   </button>
                 </td>
-                <td className="px-3 py-2 justify-center sm:justify-start">
+                <td className="px-3 py-2 text-base text-center">
                   <button
                     onClick={() => handleUpdateRecipe(recipe.id)}
-                    className="text-white font-bold bg-gradient-to-br from-cyan-400 to-cyan-800 hover:bg-blue-950 border-2 border-black
-                    focus:ring-4 focus:outline-none focus:ring-blue-300
-                    dark:focus:ring-blue-800 rounded-lg text-base px-5 py-2.5 ml-2
-                    mr-2 text-center"
+                    className="text-white font-bold bg-slate-700 hover:bg-slate-800 rounded-lg text-base px-5 py-2 ml-2 mr-2 text-center"
                   >
                     {" "}
                     Edit
                   </button>
                 </td>
-                <td className="px-3 py-2 justify-center sm:justify-start">
+                <td className="px-3 py-2 text-base text-center">
                   <button
                     onClick={() =>
                       handleToggleRecipeStatus(recipe.id, recipe.active)
                     }
-                    className={`text-white font-bold bg-gradient-to-br border-black border-2 ${
+                    className={`text-white font-bold  ${
                       recipe.active
-                        ? "from-orange-600 to-red-700 hover:bg-gradient-to-bl"
-                        : "from-blue-400 to-purple-600 hover:bg-gradient-to-bl"
+                        ? "bg-red-600 hover:bg-red-700"
+                        : "bg-stone-400 hover:bg-stone-500"
                     } focus:ring-4 focus:outline-none focus:ring-blue-300
     dark:focus:ring-blue-800 rounded-lg text-base px-5 py-2.5 text-center`}
                   >
                     {recipe.active ? "Suspend" : "Unsuspend"}
                   </button>
                 </td>
-                <td className="px-3 py-2 justify-center sm:justify-start">
+                <td className="px-3 py-2 text-base text-center">
                   <button
                     onClick={() => handleDeleteRecipe(recipe.id)}
-                    className="text-white font-bold bg-gradient-to-br from-orange-600 to-red-700 hover:bg-gradient-to-bl border-2 border-black
-                    focus:ring-4 focus:outline-none focus:ring-blue-300
-                    dark:focus:ring-blue-800 rounded-lg text-base px-5 py-2.5 ml-7
-                    mr-7 text-center"
+                    className="text-white font-bold bg-red-600 hover:bg-red-700 rounded-lg text-base px-5 py-2 ml-2 mr-2 text-center"
                   >
                     {" "}
                     Delete

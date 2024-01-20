@@ -313,10 +313,10 @@ const CreateRecipePage = () => {
   };
 
   return (
-    <div className="bg-cyan-900 min-h-screen flex flex-col justify-center px-6 lg:px-8">
+    <div className="min-h-screen flex flex-col justify-center px-6 lg:px-8">
       {/* Adjust the max-width and width in the inline style */}
       <div
-        className="mt-16 mb-16 mx-auto bg-slate-100 rounded-lg shadow"
+        className="mt-16 mb-16 mx-auto bg-zinc-100 rounded-lg shadow"
         style={{ maxWidth: "600px", width: "100%" }} // Increase maxWidth and set width to 100%
       >
         {" "}
@@ -728,7 +728,7 @@ const CreateRecipePage = () => {
                 <button
                   type="submit"
                   onClick={handleCreateRecipe}
-                  className="bg-cyan-500 hover:bg-sky-700 text-white font-bold py-2 px-4 rounded-lg"
+                  className="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg"
                 >
                   Create
                 </button>

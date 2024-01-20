@@ -5,8 +5,8 @@ import Link from "next/link";
 import { useState, useEffect } from "react";
 import axiosInterceptorInstance from "../../../../axiosInterceptorInstance.js";
 
-// this is to view particular blog post from landing page
-// router path: /businessBlogPost
+// this is to view particular blog post from blog page
+// router path: /registeredUser/businessBlogPost/viewBusinessBlogPost/[id]
 
 // Slugify utility function
 const slugify = (text) =>
@@ -54,6 +54,14 @@ const ViewBusinessBlogPost = ({ params }) => {
   const [validationMessage, setValidationMessage] = useState("");
 
   useEffect(() => {
+    console.log(" first useEffect");
+    const userId = localStorage.getItem("userId");
+    if (userId) {
+      console.log("Registered user id is: ", userId);
+    } else {
+      console.log("User ID not found in local storage");
+    }
+
     const postId = decodeURIComponent(params.id); // Make sure to decode the ID
     fetchBlogPostById(postId)
       .then((data) => {
@@ -83,7 +91,7 @@ const ViewBusinessBlogPost = ({ params }) => {
       });
 
       // Get the ID of the current user
-      const currentUserId = "8"; // Replace with your own logic
+      const currentUserId = localStorage.getItem("userId");
 
       // Check if current user has already submitted a review
       const userReview = response.data.find(
@@ -110,7 +118,7 @@ const ViewBusinessBlogPost = ({ params }) => {
     // Construct the payload according to your API requirements
     const payload = {
       blogReviewRatingId: {
-        UserID: "8", // This should be the ID of the user making the review
+        UserID: localStorage.getItem("userId"), // The ID of the user submitting the review
         blogID: businessBlogPost.id, // The ID of the blog post being reviewed
       },
       rating: newRating,

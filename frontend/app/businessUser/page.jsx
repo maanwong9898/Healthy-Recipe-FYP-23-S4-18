@@ -1,12 +1,83 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faHospitalUser,
+  faKitchenSet,
+  faPenToSquare,
+  faUtensils,
+} from "@fortawesome/free-solid-svg-icons";
+import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
+import { Pie } from "react-chartjs-2";
+import axiosInterceptorInstance from "../axiosInterceptorInstance";
+
+ChartJS.register(ArcElement, Tooltip, Legend);
 
 // home page for business user
 // router path: /businessUser
 
+// Fetch all blog posts from the backend - backend controller is BlogController
+const fetchBlogPosts = async () => {
+  const userID = localStorage.getItem("userId");
+  console.log("Current id", userID);
+  try {
+    const response = await axiosInterceptorInstance.get(
+      "/blog/findByUserId/" + userID
+    );
+
+    console.log("All business blog posts belongs to this user:", response.data);
+
+    return response.data;
+  } catch (error) {
+    console.error("Failed to fetch blog posts:", error);
+    throw error;
+  }
+};
+
+const fetchRecipes = async () => {
+  const userID = localStorage.getItem("userId");
+  try {
+    const response = await axiosInterceptorInstance.get(
+      "/recipe/findByUserId/" + userID
+    );
+
+    console.log("All recipes created belongs to this user:", response.data);
+
+    return response.data;
+  } catch (error) {
+    console.error("Failed to fetch recipes:", error);
+    throw error;
+  }
+};
+
+const fetchEducationcalContent = async () => {
+  const userID = localStorage.getItem("userId");
+  try {
+    const response = await axiosInterceptorInstance.get(
+      "/educationalContent/findByUserId/" + userID
+    );
+
+    console.log(
+      "All educational content created belongs to this user:",
+      response.data
+    );
+
+    return response.data;
+  } catch (error) {
+    console.error("Failed to fetch educational content:", error);
+    throw error;
+  }
+};
+
 const BusinessUserHomePage = () => {
   const [username, setUsername] = useState("");
+  const [businessBlogPost, setBusinessBlogPost] = useState([]);
+  const [recipes, setRecipes] = useState([]);
+  const [educationalContent, setEducationalContent] = useState([]);
+  const [userDietaryPreferences, setUserDietaryPreferences] = useState([]);
+
   const router = useRouter();
 
   useEffect(() => {
@@ -15,7 +86,85 @@ const BusinessUserHomePage = () => {
     if (storedUsername) {
       setUsername(storedUsername);
     }
+
+    const fetchBlogPostsData = async () => {
+      try {
+        const posts = await fetchBlogPosts();
+        setBusinessBlogPost(posts); // Set the retrieved blog posts in the state
+      } catch (error) {
+        console.error("Failed to fetch blog posts:", error);
+      }
+    };
+
+    const fetchRecipesData = async () => {
+      try {
+        const getRecipes = await fetchRecipes();
+        setRecipes(getRecipes); // Set the retrieved recipes in the state
+      } catch (error) {
+        console.error("Failed to fetch recipes:", error);
+      }
+    };
+
+    const fetchEducationcalContentData = async () => {
+      try {
+        const getEducationalContents = await fetchEducationcalContent();
+        setEducationalContent(getEducationalContents); // Set the retrieved recipes in the state
+      } catch (error) {
+        console.error("Failed to fetch educational content:", error);
+      }
+    };
+
+    // fetch user dietary preferences from registered users
+    const fetchUserDietaryPreferencesData = async () => {
+      try {
+        const response = await axiosInterceptorInstance.get(
+          "/registeredUsers/get"
+        );
+        const userPreferences = response.data.map(
+          (user) => user.dietaryPreferences.subcategoryName
+        );
+        setUserDietaryPreferences(userPreferences);
+      } catch (error) {
+        console.error("Failed to fetch user dietary preferences:", error);
+      }
+    };
+
+    fetchUserDietaryPreferencesData();
+    fetchRecipesData();
+    fetchBlogPostsData();
+    fetchEducationcalContentData();
   }, []); // Empty dependency array ensures this runs once after component mounts
+
+  const countDietaryPreferences = () => {
+    const counts = userDietaryPreferences.reduce((acc, preference) => {
+      acc[preference] = (acc[preference] || 0) + 1;
+      return acc;
+    }, {});
+
+    const labels = Object.keys(counts);
+    const data = Object.values(counts);
+
+    return { labels, data };
+  };
+
+  // Pie chart data
+  const userDietaryPieData = {
+    labels: countDietaryPreferences().labels,
+    datasets: [
+      {
+        data: countDietaryPreferences().data,
+        backgroundColor: [
+          "#f97316",
+          "#34d399",
+          "#38bdf8",
+          "#f87171",
+          "#fbbf24",
+          "#818cf8",
+          "#f472b6",
+        ],
+      },
+    ],
+  };
 
   // The button under business blog post will redirect to corresponding page
   const handleCreateBlogPost = () => {
@@ -45,63 +194,213 @@ const BusinessUserHomePage = () => {
   };
 
   return (
-    <div className="bg-cyan-800 min-h-screen w-full overflow-x-hidden">
-      <div className="p-6 text-white">
-        <p className=" text-4xl p-6">
-          Welcome Back, {username}! Ready to grow your audience?
-        </p>
-        <div className=" text-2xl font-bold pt-6 pl-6 pb-4">
-          Ready to create business blog posts to promote your business?
+    <div className="min-h-screen w-full overflow-x-hidden">
+      <h2 className="text-5xl font-bold text-center text-gray-800 p-4">
+        Dashboard
+      </h2>
+      {/* Start of Card -- number of recipes, blogs, educational content created */}
+      <div className="p-6 mb-7 grid gap-y-10 gap-x-6 md:grid-cols-2 xl:grid-cols-3">
+        {/* Total recipe card */}
+        <div className="grid grid-cols-2">
+          <div className="relative rounded-l-xl bg-gradient-to-tr from-gray-900 to-gray-800 shadow-sm flex justify-center items-center">
+            <FontAwesomeIcon
+              icon={faUtensils}
+              size="2xl"
+              style={{ color: "#ffffff" }}
+            />
+          </div>
+          <div className="relative rounded-r-xl bg-white text-gray-700 shadow-sm hover:bg-gray-100 flex justify-center items-center">
+            <div className="p-4 text-center">
+              <p className="block tracking-normal text-xl font-normal text-gray-600">
+                Total Recipes
+              </p>
+              <h4 className="mt-3 block tracking-normal font-sans text-2xl font-semibold text-gray-900">
+                {recipes ? recipes.length : 0}
+              </h4>
+            </div>
+          </div>
         </div>
-        <div className="flex flex-wrap pl-6 pb-4">
-          <button
-            className="bg-gradient-to-br from-cyan-400 to-cyan-800 hover:bg-blue-950 border-2 border-black  rounded-md font-bold py-2 px-4 mr-10 mb-4"
-            onClick={handleCreateBlogPost}
-          >
-            Create Blog Post
-          </button>
-          <button
-            className="bg-gradient-to-br from-cyan-400 to-cyan-800 hover:bg-blue-950 border-2 border-black  rounded-md font-bold py-2 px-4 mr-10 mb-4"
-            onClick={handleViewBlogPost}
-          >
-            View My Blog Posts
-          </button>
+        {/* Total blogs card */}
+        <div className="grid grid-cols-2">
+          <div className="relative rounded-l-xl bg-gradient-to-tr from-gray-900 to-gray-800 shadow-sm flex justify-center items-center">
+            <FontAwesomeIcon
+              icon={faPenToSquare}
+              size="2xl"
+              style={{ color: "#ffffff" }}
+            />
+          </div>
+          <div className="relative rounded-r-xl bg-white text-gray-700 shadow-sm hover:bg-gray-100 flex justify-center items-center">
+            <div className="p-4 text-center">
+              <p className="block tracking-normal text-xl font-normal text-gray-600">
+                Total Blogs
+              </p>
+              <h4 className="mt-3 block tracking-normal font-sans text-2xl font-semibold text-gray-900">
+                {businessBlogPost ? businessBlogPost.length : 0}
+              </h4>
+            </div>
+          </div>
         </div>
-        <div className=" text-2xl pt-6 pl-6 pb-6">
-          Ready to publish your recipes?
-        </div>
-        <div className="flex flex-wrap pl-6 pb-4">
-          <button
-            className="bg-gradient-to-br from-cyan-400 to-cyan-800 hover:bg-blue-950 border-2 border-black  rounded-md font-bold py-2 px-4 mr-10 mb-4"
-            onClick={handleCreateRecipe}
-          >
-            Create Recipe
-          </button>
-          <button
-            className="bg-gradient-to-br from-cyan-400 to-cyan-800 hover:bg-blue-950 border-2 border-black  rounded-md font-bold py-2 px-4 mr-10 mb-4"
-            onClick={handleViewRecipes}
-          >
-            View My Recipes
-          </button>
-        </div>
-        <div className=" text-2xl pt-6 pl-6 pb-6">
-          Ready to publish new educational content to the public?
-        </div>
-        <div className="flex flex-wrap pl-6 pb-4">
-          <button
-            className="bg-gradient-to-br from-cyan-400 to-cyan-800 hover:bg-blue-950 border-2 border-black  rounded-md font-bold py-2 px-4 mr-10 mb-4"
-            onClick={handleCreateEducationalContent}
-          >
-            Create Educational Content
-          </button>
-          <button
-            className="bg-gradient-to-br from-cyan-400 to-cyan-800 hover:bg-blue-950 border-2 border-black  rounded-md font-bold py-2 px-4 mr-10 mb-4"
-            onClick={handleViewEducationalContent}
-          >
-            View My Educational Content
-          </button>
+        {/* Total educational content card */}
+        <div className="grid grid-cols-2">
+          <div className="relative rounded-l-xl bg-gradient-to-tr from-gray-900 to-gray-800 shadow-sm flex justify-center items-center">
+            <FontAwesomeIcon
+              icon={faHospitalUser}
+              size="2xl"
+              style={{ color: "#ffffff" }}
+            />
+          </div>
+          <div className="relative rounded-r-xl bg-white text-gray-700 shadow-sm hover:bg-gray-100 flex justify-center items-center">
+            <div className="p-4 text-center">
+              <p className="block tracking-normal text-xl font-normal text-gray-600">
+                Total Educational Contents
+              </p>
+              <h4 className="mt-3 block tracking-normal font-sans text-2xl font-semibold text-gray-900">
+                {educationalContent ? educationalContent.length : 0}
+              </h4>
+            </div>
+          </div>
         </div>
       </div>
+      {/* End of Card -- number of recipes, blogs, educational content created */}
+
+      {/* Quick link card */}
+      <div className="p-6 mb-4 grid grid-cols-1 gap-6 xl:grid-cols-3">
+        <div className="p-6 relative rounded-xl bg-white text-gray-700 overflow-hidden xl:col-span-2 border border-gray-100 shadow-sm">
+          <div className="relative rounded-xl overflow-hidden bg-transparent text-gray-700 shadow-none m-0 flex items-center justify-between p-6">
+            <div>
+              <h1 className="text-4xl font-bold">Welcome back, {username}</h1>
+              <p className="mt-4 stext-lg font-normal text-gray-400">
+                What would you like to do today?
+              </p>
+            </div>
+          </div>
+          <div className="mb-6 grid grid-cols-1 gap-y-12 gap-x-6 md:grid-cols-2 xl:grid-cols-3">
+            {/* Recipe management */}
+            <div className="relative flex flex-col rounded-xl bg-slate-200 p-8">
+              <h4 className="text-2xl text-center font-semibold text-gray-900 mb-4">
+                Recipe Management
+              </h4>
+              <div className="grid grid-rows-2 gap-10 place-content-center mt-14 content-center">
+                <div className="flex items-center justify-center">
+                  <button
+                    className="px-6 py-2 font-medium bg-indigo-500 text-white w-full transition-all shadow-[3px_3px_0px_black] hover:shadow-none hover:translate-x-[3px] hover:translate-y-[3px]"
+                    onClick={handleCreateRecipe}
+                  >
+                    Create Recipe
+                  </button>
+                </div>
+                <div className="flex items-center justify-center">
+                  <button
+                    className="px-6 py-2 mb-8 font-medium bg-indigo-500 text-white w-full transition-all shadow-[3px_3px_0px_black] hover:shadow-none hover:translate-x-[3px] hover:translate-y-[3px]"
+                    onClick={handleViewRecipes}
+                  >
+                    View All Recipes
+                  </button>
+                </div>
+              </div>
+            </div>
+            {/* Blog management */}
+            <div className="relative flex flex-col rounded-xl h-96 bg-slate-200 p-8">
+              <h4 className="text-2xl text-center font-semibold text-gray-900 mb-4">
+                Blogs Management
+              </h4>
+              <div className="grid grid-rows-2 gap-10 place-content-center mt-14 content-center">
+                <div className="flex items-center justify-center">
+                  <button
+                    className="px-6 py-2 font-medium bg-indigo-500 text-white w-full transition-all shadow-[3px_3px_0px_black] hover:shadow-none hover:translate-x-[3px] hover:translate-y-[3px]"
+                    onClick={handleCreateBlogPost}
+                  >
+                    Create Blog Post
+                  </button>
+                </div>
+                <div className="flex items-center justify-center">
+                  <button
+                    className="px-6 py-2 mb-8 font-medium bg-indigo-500 text-white w-full transition-all shadow-[3px_3px_0px_black] hover:shadow-none hover:translate-x-[3px] hover:translate-y-[3px]"
+                    onClick={handleViewBlogPost}
+                  >
+                    View All Blog Posts
+                  </button>
+                </div>
+              </div>
+            </div>
+            {/* Educational Content management */}
+            <div className="relative flex flex-col rounded-xl h-96 bg-slate-200 p-8">
+              <h4 className="text-2xl text-center font-semibold text-gray-900 mb-4">
+                Educational Content Management
+              </h4>
+              <div className="grid grid-rows-2 gap-10 place-content-center mt-14 content-center">
+                <div className="flex items-center justify-center">
+                  <button
+                    className="px-6 py-2 font-medium bg-indigo-500 text-white w-full transition-all shadow-[3px_3px_0px_black] hover:shadow-none hover:translate-x-[3px] hover:translate-y-[3px]"
+                    onClick={handleCreateEducationalContent}
+                  >
+                    Create Educational Content
+                  </button>
+                </div>
+                <div className="flex items-center justify-center">
+                  <button
+                    className="px-6 py-2 font-medium bg-indigo-500 text-white w-full transition-all shadow-[3px_3px_0px_black] hover:shadow-none hover:translate-x-[3px] hover:translate-y-[3px]"
+                    onClick={handleViewEducationalContent}
+                  >
+                    View All Educational Contents
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        {/* User dietary information pie chart */}
+        <div className="relative rounded-xl bg-white text-gray-900 border border-gray-100 shadow-sm items-center">
+          <h4 className="p-4 text-center font-semibold tracking-normal text-2xl">
+            User Dietary Information
+          </h4>
+          <div className="p-3 flex justify-center" style={{ height: "500px" }}>
+            <Pie data={userDietaryPieData} />
+          </div>
+        </div>
+      </div>
+      {/* End of quick link table/card */}
+
+      {/* Start of latest blogs created */}
+      {/* <div className="p-6 mb-4 grid grid-cols-1 xl:grid-cols-1">
+        <div className="p-6 relative rounded-xl bg-white text-gray-700 overflow-hidden xl:col-span-2 border border-gray-100 shadow-sm">
+          <div className="relative bg-clip-border rounded-xl overflow-hidden bg-transparent text-gray-700 shadow-none m-0 flex items-center justify-between p-6">
+            <div>
+              <h1 className="text-4xl font-bold">Blogs</h1>
+              <table className="w-full min-w-[640px] table-auto">
+                <thead>
+                  <tr>
+                    <th className="border-b border-gray-200 py-3 px-6 text-left">
+                      <p class="mt-6 block antialiased font-sans text-[11px] font-medium uppercase text-gray-900">
+                        Blog Post Title
+                      </p>
+                    </th>
+                    <th className="border-b border-gray-200 py-3 px-6 text-left">
+                      <p class="mt-6 block antialiased font-sans text-[11px] font-medium uppercase text-gray-900">
+                        Date Published
+                      </p>
+                    </th>
+                    <th className="border-b border-gray-200 py-3 px-6 text-left">
+                      <p class="mt-6 block antialiased font-sans text-[11px] font-medium uppercase text-gray-900">
+                        Category
+                      </p>
+                    </th>
+                  </tr>
+                </thead>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div> */}
+      {/* insert a table in a card */}
+
+      {/* End of latest blogs created */}
+
+      {/* Start of latest recipes created */}
+      {/* End of latest recipes created */}
+
+      {/* Start of latest educational content created */}
+      {/* End of latest educational content created */}
     </div>
   );
 };

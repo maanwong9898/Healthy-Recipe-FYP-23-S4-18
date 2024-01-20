@@ -78,6 +78,19 @@ const BusinessUserNavBar = () => {
     }, 300);
   };
 
+  const handleMouseEnterRecipes = () => {
+    if (hideTimer.current) {
+      clearTimeout(hideTimer.current);
+    }
+    setRecipesDropdownOpen(true);
+  };
+
+  const handleMouseLeaveRecipes = () => {
+    hideTimer.current = setTimeout(() => {
+      setRecipesDropdownOpen(false);
+    }, 300);
+  };
+
   const confirmAndLogout = () => {
     console.log("logout");
     // Clear user data from local storage
@@ -142,7 +155,9 @@ const BusinessUserNavBar = () => {
             </Link>
             <div className="relative group">
               <button
-                onClick={toggleRecipesDropdown}
+                //onClick={toggleRecipesDropdown}
+                onMouseEnter={handleMouseEnterRecipes}
+                onMouseLeave={handleMouseLeaveRecipes}
                 className="text-black hover:text-orange-500 rounded-md px-3 py-2 font-bold"
               >
                 <span className="mr-2">Recipes</span>

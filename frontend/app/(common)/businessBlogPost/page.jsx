@@ -14,7 +14,6 @@ const fetchBlogPosts = async () => {
     const response = await axiosInterceptorInstance.get("/blog/get");
     console.log("All blogs:", response.data);
     const filteredData = response.data.filter((post) => post.active === true);
-    console.log("Filtered data(educationContent == false) is:", filteredData);
     return filteredData;
   } catch (error) {
     console.error("Failed to fetch blog posts:", error);

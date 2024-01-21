@@ -161,7 +161,7 @@ const ViewBusinessBlogPost = ({ params }) => {
       stars.push(
         <span
           key={i}
-          className={i < rating ? "text-yellow-500" : "text-gray-300"}
+          className={i < rating ? "text-yellow-400" : "text-gray-300"}
         >
           ★
         </span>
@@ -172,18 +172,20 @@ const ViewBusinessBlogPost = ({ params }) => {
 
   return (
     <div className="pt-8 pb-16 lg:pt-16 lg:pb-24 bg-white">
-      <div className="text-center font-semibold font-mono">
-        <h1 className="mb-4 text-2xl font-extrabold leading-tight text-cyan-900 lg:mb-6 lg:text-4xl">
+      <div className="text-center font-semibold font-sans">
+        <h1 className="flex flex-wrap justify-center mb-4 text-2xl font-extrabold text-gray-900 lg:mb-6 lg:text-5xl">
           {businessBlogPost.title}
         </h1>
-        <div className="flex justify-center text-base lg:text-xl text-black space-x-6 mx-auto max-w-screen-xl">
+        <div className="flex justify-center text-sm font-serif font-semibold lg:text-base text-gray-900 space-x-6 mx-auto max-w-screen-xl">
           <p>
             Published by:{" "}
-            <span className="text-cyan-600">{businessBlogPost.publisher}</span>
+            <span className="text-orange-600 font-bold tracking-tight">
+              {businessBlogPost.publisher || "Not specified"}
+            </span>
           </p>
           <p>
-            Posted on:{" "}
-            <span className="text-cyan-600">
+            Published on:{" "}
+            <span className="text-orange-600 font-bold tracking-tight">
               {new Date(businessBlogPost.createdDateTime).toLocaleDateString(
                 "en-GB",
                 {
@@ -197,7 +199,7 @@ const ViewBusinessBlogPost = ({ params }) => {
 
           <p>
             Category:{" "}
-            <span className="text-cyan-600">
+            <span className="text-orange-600 font-bold tracking-tight">
               {businessBlogPost.blogType
                 ? businessBlogPost.blogType.subcategoryName
                 : "Not specified"}
@@ -218,8 +220,10 @@ const ViewBusinessBlogPost = ({ params }) => {
           </div>
         </section>
       </article>
-      <footer className="blog-post-reviews mt-10 px-9 mx-auto max-w-screen-xl text-left">
-        <p className="font-mono font-bold text-2xl text-cyan-600">
+
+      {/* Ratings and Reviews */}
+      <div className="blog-post-reviews mt-16 mx-auto max-w-screen-xl text-left border-t-2 border-gray-50">
+        <p className="font-sans font-bold text-2xl md:text-4xl text-gray-900 mb-4 md:mt-8 ml-4 lg:ml-0">
           Rating and Reviews
         </p>
         {/*Check if reviews exist*/}
@@ -227,11 +231,11 @@ const ViewBusinessBlogPost = ({ params }) => {
           reviewsAndRatings.map((review, index) => (
             <div key={index} className="my-4 p-4 border-b border-gray-200">
               <div className="flex items-center mb-2">
-                <span className="font-bold mr-2">
+                <span className="font-bold text-sm md:text-base mr-2">
                   {review?.userDTO?.username || "Anonymous"}
                 </span>
                 <div className="flex">{renderStars(review.rating)}</div>
-                <span className="text-sm text-gray-500 ml-2">
+                <span className="text-xs md:text-sm text-gray-500 ml-2">
                   {new Date(review?.createdDateTime).toLocaleDateString(
                     "en-GB",
                     {
@@ -253,15 +257,15 @@ const ViewBusinessBlogPost = ({ params }) => {
         {/* Ask to write reviews */}
         {!hasAlreadyReviewed ? (
           <footer className="blog-post-reviews mt-10 px-9 mx-auto max-w-screen-xl text-left">
-            <p className="font-mono font-bold text-2xl text-cyan-600">
+            <p className="font-sans font-bold text-2xl text-gray-900">
               Write a Review
             </p>
-            <div className="my-4 p-4">
+            <div className="my-4">
               <textarea
                 value={newReview}
                 onChange={(e) => setNewReview(e.target.value)}
                 placeholder="Write your review here"
-                className="w-full p-2 border-2 border-black rounded"
+                className="w-full p-2.5 border border-gray-300 bg-gray-50 rounded-lg"
               />
               <div className="flex my-2">
                 {[...Array(5)].map((_, index) => {
@@ -279,7 +283,7 @@ const ViewBusinessBlogPost = ({ params }) => {
                       <span
                         className={
                           ratingValue <= newRating
-                            ? "text-yellow-500 cursor-pointer"
+                            ? "text-yellow-400 cursor-pointer"
                             : "text-gray-400 cursor-pointer"
                         }
                       >
@@ -289,11 +293,11 @@ const ViewBusinessBlogPost = ({ params }) => {
                   );
                 })}
               </div>
-              <p className="text-red-600">{validationMessage}</p>
+              <p className="text-red-500">{validationMessage}</p>
               <button
                 onClick={submitReview}
                 disabled={submitting}
-                className="bg-cyan-600 hover:bg-cyan-700 text-white font-bold py-2 px-4 rounded"
+                className="mt-3 bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg"
               >
                 {submitting ? "Submitting..." : "Submit Review"}
               </button>
@@ -302,7 +306,7 @@ const ViewBusinessBlogPost = ({ params }) => {
         ) : (
           <p>You have already submitted a review for this blog post.</p>
         )}
-      </footer>
+      </div>
     </div>
   );
 };

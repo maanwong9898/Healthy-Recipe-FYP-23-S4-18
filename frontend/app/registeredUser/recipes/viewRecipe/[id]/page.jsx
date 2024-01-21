@@ -402,8 +402,8 @@ const ViewRecipe = ({ params }) => {
 
         {/* Ask to write reviews */}
         {!hasAlreadyReviewed ? (
-          <footer className="blog-post-reviews mt-10 px-9 mx-auto max-w-screen-xl text-left">
-            <p className="font-sans font-bold text-2xl text-gray-9000">
+          <div className="blog-post-reviews mt-10 px-9 mx-auto max-w-screen-xl text-left">
+            <p className="font-sans font-bold text-2xl text-gray-900">
               Write a Review
             </p>
             <div className="my-4">
@@ -450,7 +450,7 @@ const ViewRecipe = ({ params }) => {
                 {submitting ? "Submitting..." : "Submit Review"}
               </button>
             </div>
-          </footer>
+          </div>
         ) : (
           <p>You have already submitted a review for this recipe.</p>
         )}

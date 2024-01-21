@@ -103,7 +103,7 @@ const BusinessViewRecipe = ({ params }) => {
       stars.push(
         <span
           key={i}
-          className={i < rating ? "text-yellow-500" : "text-gray-300"}
+          className={i < rating ? "text-yellow-400" : "text-gray-300"}
         >
           ★
         </span>
@@ -112,36 +112,28 @@ const BusinessViewRecipe = ({ params }) => {
     return stars;
   };
 
-  const renderAllergens = (allergies) => {
-    if (!allergies || allergies.length === 0) {
-      return <span className="text-orange-600 font-bold">None</span>;
-    }
-    return (
-      <div className="flex flex-wrap justify-center items-center">
-        {allergies.map((allergy, index) => (
-          <span
-            key={index}
-            className="bg-red-200 text-red-700 px-4 py-1 rounded-full text-center m-2"
-          >
-            {allergy.subcategoryName}
-          </span>
-        ))}
-      </div>
-    );
-  };
+  {
+    /* Combined Allergens and Dietary Preferences section */
+  }
+  <div className="mt-14 flex justify-center space-x-4">
+    {/* Allergens section */}
+    <div className="flex-1 p-3" role="alert">
+      <p className="font-bold text-base lg:text-xl text-gray-900 mb-1">
+        Allergens Information:
+      </p>
+      {recipe ? renderAllergens(recipe.allergies) : "Not specified"}
+    </div>
 
-  const renderDietaryPreferences = (dietaryPreferences) => {
-    if (!dietaryPreferences) {
-      return <span className="text-orange-600 font-bold">Not specified</span>;
-    }
-    return (
-      <div className="flex justify-center items-center">
-        <span className="bg-green-200 text-green-700 px-4 py-1 rounded-full text-center m-2">
-          {dietaryPreferences.subcategoryName}
-        </span>
-      </div>
-    );
-  };
+    {/* Dietary Preferences section */}
+    <div className="flex-1 p-3" role="alert">
+      <p className="font-bold text-base lg:text-xl text-gray-900 mb-1">
+        Dietary Preferences:
+      </p>
+      {recipe
+        ? renderDietaryPreferences(recipe.dietaryPreferences)
+        : "Not specified"}
+    </div>
+  </div>;
 
   return (
     <div className="pt-8 pb-16 lg:pt-16 lg:pb-24 bg-white">
@@ -247,37 +239,37 @@ const BusinessViewRecipe = ({ params }) => {
             <div className="rounded-full bg-orange-100 w-20 h-20 flex flex-col items-center text-center justify-center">
               <p className="text-sm">Calories</p>
               <p className="text-orange-600 font-semibold">
-                {recipe?.calories || "N/A"}
+                {recipe?.calories ? `${recipe.calories} kcal` : "N/A"}
               </p>
             </div>
             <div className="rounded-full bg-orange-100 w-20 h-20 flex flex-col items-center text-center justify-center">
               <p className="text-sm">Carbs</p>
               <p className="text-orange-600 font-semibold">
-                {recipe?.carbs ? `${recipe.carbs}g` : "N/A"}
+                {recipe?.carbs ? `${recipe.carbs} g` : "N/A"}
               </p>
             </div>
             <div className="rounded-full bg-orange-100 w-20 h-20 flex flex-col items-center text-center justify-center">
               <p className="text-sm">Protein</p>
               <p className="text-orange-600 font-semibold">
-                {recipe?.protein ? `${recipe.protein}g` : "N/A"}
+                {recipe?.protein ? `${recipe.protein} g` : "N/A"}
               </p>
             </div>
             <div className="rounded-full bg-orange-100 w-20 h-20 flex flex-col items-center text-center justify-center">
               <p className="text-sm">Fat</p>
               <p className="text-orange-600 font-semibold">
-                {recipe?.fat ? `${recipe.fat}g` : "N/A"}{" "}
+                {recipe?.fat ? `${recipe.fat} g` : "N/A"}{" "}
               </p>
             </div>
             <div className="rounded-full bg-orange-100 w-20 h-20 flex flex-col items-center text-center justify-center">
               <p className="text-sm">Fibre</p>
               <p className="text-orange-600 font-semibold">
-                {recipe?.fibre ? `${recipe.fibre}g` : "N/A"}
+                {recipe?.fibre ? `${recipe.fibre} g` : "N/A"}
               </p>
             </div>
             <div className="rounded-full bg-orange-100 w-20 h-20 flex flex-col items-center text-center justify-center">
               <p className="text-sm">Sodium</p>
               <p className="text-orange-600 font-semibold">
-                {recipe?.fibre ? `${recipe.fibre}mg` : "N/A"}
+                {recipe?.fibre ? `${recipe.fibre} mg` : "N/A"}
               </p>
             </div>
           </div>

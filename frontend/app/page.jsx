@@ -5,16 +5,15 @@ import { useRouter } from "next/navigation";
 import { useState, useEffect } from "react";
 import HomeNavBar from "./components/navigation/homeNavBar";
 import Link from "next/link";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faChevronRight,
+  faChevronLeft,
+} from "@fortawesome/free-solid-svg-icons";
+import Image from "next/image";
+import axiosInterceptorInstance from "./axiosInterceptorInstance";
+import Footer from "./components/footer";
 
-// Mock data for frontend to test the layout
-// need to fetch data from backend (database) in the future
-// const images = [
-//   "https://pngimg.com/d/pasta_PNG88.png",
-//   "https://static.vecteezy.com/system/resources/previews/017/745/762/original/hainanese-chicken-rice-served-on-a-plate-with-soup-free-png.png",
-//   "https://img.freepik.com/free-photo/salmon-avocado-salad-isolated-white-background_123827-20214.jpg?size=626&ext=jpg&ga=GA1.1.2082370165.1699920000&semt=ais",
-// ];
-
-// RECIPE CONTENT
 const AllRecipesContent = [
   {
     id: "1234567890",
@@ -124,198 +123,172 @@ const AllRecipesContent = [
   },
 ];
 
-// MEAL PLAN CONTENT
-const AllMealPLan = [
-  {
-    id: "1234567890",
-    mealPlanTitle:
-      "Wholesome Slimming: Balanced Vegetarian Meals for Weight Loss",
-    date_published: "2021-10-01",
-    image_url:
-      "https://img.freepik.com/free-photo/meal-planning-notepad-food-composition_23-2149099820.jpg?w=826&t=st=1702872342~exp=1702872942~hmac=6ae3572ab02e9eec7aaf4e50c601c93cae848e494ac5b951cce2e39baba488af",
-    image_title: "Meal Plan",
-    introduction:
-      "Welcome to 'Wholesome Slimming', your ultimate companion for weight loss! This meal plan is crafted with love, featuring a medley of recipes that celebrate the unique flavors and ingredients each season has to offer. From the fresh blossoms of spring to the hearty harvest of autumn, we invite you to embark on a gastronomic journey through the year. Get ready to explore dishes that will not only nourish the body but also delight the senses.",
-    ratings: 4,
-    reviews: 10,
-    isActive: true,
-  },
-  {
-    id: "2163969761",
-    mealPlanTitle: "3-Day Vegan Kickstart: Energizing Meal Plan",
-    date_published: "2022-05-20",
-    image_url:
-      "https://img.freepik.com/free-photo/vegetarian-buddha-bowl-with-fresh-vegetable-salad-chickpea_1150-42359.jpg?w=826&t=st=1702872465~exp=1702873065~hmac=b3d188c7e7cf055d98e23a233a61e67f0498ca9d2f9111d16d37f8f949bbe598",
-    image_title: "Meal Plan",
-    introduction:
-      "Welcome to '3-Day Vegan Kickstart', your ultimate companion for weight loss! This meal plan is crafted with love, featuring a medley of recipes that celebrate the unique flavors and ingredients each season has to offer. From the fresh blossoms of spring to the hearty harvest of autumn, we invite you to embark on a gastronomic journey through the year. Get ready to explore dishes that will not only nourish the body but also delight the senses.",
-    ratings: 4,
-    reviews: 14,
-    isActive: true,
-  },
-  {
-    id: "2217913265",
-    mealPlanTitle: "Plant-Based Cleanse for Weight Loss",
-    date_published: "2022-07-11",
-    image_url:
-      "https://img.freepik.com/free-photo/delicious-salmon-bowls-table-arrangement_23-2150427654.jpg?w=826&t=st=1702873329~exp=1702873929~hmac=9f1ab4442187d579f9b67a3528bafd2a289418b59c1580bbec10b96d8b3497e1",
-    image_title: "Meal Plan",
-    introduction:
-      "Welcome to 'Plant-Based Cleanse', your ultimate companion for weight loss! This meal plan is crafted with love, featuring a medley of recipes that celebrate the unique flavors and ingredients each season has to offer. From the fresh blossoms of spring to the hearty harvest of autumn, we invite you to embark on a gastronomic journey through the year. Get ready to explore dishes that will not only nourish the body but also delight the senses.",
-    ratings: 4,
-    reviews: 22,
-    isActive: true,
-  },
-];
-
-// BLOG POST CONTENT
-const AllBusinessBlogPosts = [
-  {
-    id: "1234567890",
-    blogTitle: "Seasonal Savors: A Cookbook for Every Time of the Year",
-    publisher: "Michael Lim",
-    category: "Cookbook",
-    introduction:
-      "Welcome to 'Seasonal Savors', your ultimate companion for year-round culinary adventures! This cookbook is crafted with love, featuring a medley of recipes that celebrate the unique flavors and ingredients each season has to offer. From the fresh blossoms of spring to the hearty harvest of autumn, we invite you to embark on a gastronomic journey through the year. Get ready to explore dishes that will not only nourish the body but also delight the senses.",
-    main_content:
-      "Our journey begins with the rejuvenating tastes of spring, introducing dishes like 'Spring Pea Risotto' and 'Lemon Herb Chicken'. As we bask in the summer sun, we'll dive into refreshing 'Watermelon Gazpacho' and 'Grilled Peach Salad'. The crisp air of fall calls for 'Pumpkin Spice Soup' and 'Roasted Root Vegetables', while winter comforts with 'Hearty Beef Stew' and 'Decadent Chocolate Peppermint Cake'. Each recipe is accompanied by tips on sourcing the best seasonal produce and pairing your meals with appropriate wines and beverages.",
-    conclusion:
-      "As the year closes, we hope 'Seasonal Savors' has inspired you to embrace the beauty of seasonal cooking. The recipes provided are more than just instructions; they are a canvas for creativity and a chance to forge memorable moments with loved ones. So, cherish the flavors each season brings and let your kitchen be a place of discovery all year long.",
-
-    image_url:
-      "https://cdn.pixabay.com/photo/2015/04/29/19/33/cookbook-746005_1280.jpg",
-    image_title: "Recipe Book",
-    date_published: "2021-10-01",
-    ratings: 4,
-    reviews: 10,
-    isActive: true,
-  },
-  {
-    id: "2163969761",
-    blogTitle: "Savor the Flavor: A Guide to World Cuisines",
-    publisher: "Michael Lim",
-    category: "Cookbook",
-    introduction:
-      "Explore the rich tapestry of global flavors with our latest cookbook release.",
-    main_content:
-      "Our cookbook offers a journey through the world's kitchens, with easy-to-follow recipes.",
-    conclusion:
-      "Bring the world to your table with dishes curated by renowned chefs.",
-    image_url:
-      "https://img.freepik.com/free-photo/special-dessert-cookbook-recipe-valentine-rsquo-s-edition_53876-97350.jpg?w=826&t=st=1702618495~exp=1702619095~hmac=aa4f3570b7822dcc93aa132ff6ba09298167def3a905fb3bca9119c16a6c379b",
-    image_title: "Cookbook",
-    date_published: "2023-03-25",
-    ratings: 5,
-    reviews: 89,
-    isActive: true,
-  },
-  {
-    id: "2217913265",
-    blogTitle: "The Chef's Choice: Top Utensils for Your Kitchen",
-    publisher: "Emily Clarke",
-    category: "Kitchenware",
-    introduction:
-      "Discover the essential utensils that every aspiring chef needs in their kitchen.",
-    main_content:
-      "From versatile knives to ergonomic pans, find out what tools are worth the investment.",
-    conclusion:
-      "Upgrade your cooking game with our selection of top-rated kitchen utensils.",
-    image_url:
-      "https://img.freepik.com/free-photo/top-view-wooden-sapoons-empty-plastic-coffee-pot-dark-surface_140725-94278.jpg?w=826&t=st=1702618440~exp=1702619040~hmac=765026606e4839d19a27e3edc0d34f9884e3d0bef24d8de1e5a5cc2e33888bb0",
-    image_title: "Kitchen Utensils",
-    date_published: "2023-05-16",
-    ratings: 4,
-    reviews: 78,
-    isActive: true,
-  },
-];
-
-// EDUCATIONAL CONTENT
-const AllEducationalContent = [
-  {
-    id: "3456789012",
-    blogTitle: "Living Well: Daily Practices for a Vibrant Life",
-    publisher: "Jordan Smith",
-    category: "Healthy Lifestyle",
-    introduction:
-      "Welcome to 'Living Well: Daily Practices for a Vibrant Life', a comprehensive guide to enhancing your daily routine for optimal health and happiness. This book is your ally in building a lifestyle that fosters physical, mental, and emotional well-being.",
-    main_content:
-      "Explore chapters like 'Morning Yoga Routines', 'Mindful Meditation Techniques', 'Balanced Diet Plans', and 'Effective Exercise Regimens'. Each section provides practical advice, easy-to-follow activities, and motivational insights to help you create a balanced and enriching lifestyle.",
-    conclusion:
-      "'Living Well' is more than a guide; it's a companion in your journey towards holistic well-being. By integrating these practices into your daily life, you'll discover a deeper sense of vitality, clarity, and joy. Embrace the path to a vibrant life, one day at a time.",
-    image_url:
-      "https://img.freepik.com/free-photo/close-up-kid-meditating-mat_23-2149101612.jpg?w=826&t=st=1702698008~exp=1702698608~hmac=3493459a84121109aad5dd0837dbd50ad85e685e28eb107942118ebb3c13189f",
-    image_title: "Healthy Lifestyle",
-    date_published: "2023-03-22",
-    ratings: 4.7,
-    reviews: 45,
-    isActive: true,
-  },
-  {
-    id: "1234567890",
-    blogTitle: "Eating Right: A Journey Through Nutritious Foods",
-    publisher: "Emily Robinson",
-    category: "Healthy Eating",
-    introduction:
-      "Welcome to 'Eating Right: A Journey Through Nutritious Foods', where we delve into the world of healthy eating. This guide is designed to help you understand the importance of nutrition and make informed food choices.",
-    main_content:
-      "Covers topics like 'Understanding Food Labels', 'Benefits of Organic Produce', 'Plant-Based Diet Essentials', and 'Hydration and Health'. Filled with informative content, simple recipes, and healthy eating habits tips.",
-    conclusion:
-      "'Eating Right' is your guide to transforming your diet and embracing a healthier way of eating. It’s a tool for nourishing your body and mind with the right foods.",
-    image_url:
-      "https://img.freepik.com/free-photo/buddha-bowl-dish-with-vegetables-legumes-top-view_1150-42589.jpg?w=826&t=st=1702787109~exp=1702787709~hmac=73a45a1e35f274ca836fc803f6aa7a47776024868c99c455d67649ef44e4d9ef",
-    image_title: "Healthy Eating",
-    date_published: "2023-05-15",
-    ratings: 4.8,
-    reviews: 68,
-    isActive: true,
-  },
-  {
-    id: "2345678901",
-    blogTitle: "The Art of Mindful Eating",
-    publisher: "Lucas Nguyen",
-    category: "Healthy Lifestyle",
-    introduction:
-      "Welcome to 'The Art of Mindful Eating', a guide to transforming your relationship with food through mindfulness and understanding of your body’s needs.",
-    main_content:
-      "Topics include 'Mindfulness Techniques for Eating', 'Understanding Hunger and Fullness Cues', 'Managing Emotional Eating', and 'Creating a Balanced Meal Plan'.",
-    conclusion:
-      "More than a dietary guide, it's a pathway to developing a deeper connection with food and yourself, encouraging a harmonious relationship with eating.",
-    image_url:
-      "https://img.freepik.com/free-photo/flat-lay-batch-cooking-composition_23-2148765597.jpg?w=826&t=st=1702787315~exp=1702787915~hmac=e63a3ab97681618a6ab4413af72a46ee7be44e6fe202b6bf636e471ec0faa50d",
-    image_title: "Mindful Eating",
-    date_published: "2023-06-10",
-    ratings: 4.9,
-    reviews: 52,
-    isActive: true,
-  },
-];
-
-// BANNER IMGS
-const BannerImages = [
-  "https://www.southernliving.com/thmb/HSEUOjJVCl4kIRJRMAZ1eblQlWE=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/Millionaire_Spaghetti_019-34e9c04b1ae8405088f53450a048e413.jpg",
-  "https://hips.hearstapps.com/hmg-prod/images/220907-delish-seo-chicken-tikka-masala-0212-eb-1675093094.jpg",
-];
-
 const Home = () => {
   const router = useRouter();
-  const [educationContent, setEducationContent] = useState(
-    AllEducationalContent
+  const [currentCarouselContentIndex, setCarouselContentIndex] = useState(0);
+  const [AllBusinessBlogPosts, setAllBusinessBlogPosts] = useState([]);
+  const [reviewsAndRatings, setReviewsAndRatings] = useState([]);
+  //const [AllRecipesContent, setAllRecipesContent] = useState([]);
+  const [userAccounts, setUserAccounts] = useState([]);
+  const [userCounts, setUserCounts] = useState({
+    REGISTERED_USER: 0,
+    BUSINESS_USER: 0,
+    NUTRITIONIST: 0,
+  });
+
+  // Fetch user account to count the number of each user type
+  const fetchUserAccounts = async () => {
+    console.log("Fetching user accounts...");
+    try {
+      const response = await axiosInterceptorInstance.get(
+        "/systemAdmin/getAllUsers"
+      );
+      console.log("User Accounts: ", response.data);
+      setUserAccounts(response.data);
+      countUserRoles(response.data);
+    } catch (error) {
+      console.log("Failed to fetch user accounts: ", error);
+    }
+  };
+
+  // Filter and count the number of users for each role
+  const countUserRoles = (users) => {
+    const counts = {
+      REGISTERED_USER: users.filter((user) => user.role === "REGISTERED_USER")
+        .length,
+      BUSINESS_USER: users.filter((user) => user.role === "BUSINESS_USER")
+        .length,
+      NUTRITIONIST: users.filter((user) => user.role === "NUTRITIONIST").length,
+    };
+    setUserCounts(counts);
+  };
+
+  useEffect(() => {
+    fetchUserAccounts();
+  }, []);
+
+  // Fetch all blog posts
+  const fetchBlogPosts = async () => {
+    try {
+      console.log("Fetching blog posts...");
+      const response = await axiosInterceptorInstance.get("/blog/get");
+      console.log("All blogs:", response.data);
+
+      // Filter to get only business blog posts
+      const filteredData = response.data.filter((post) => post.active === true);
+
+      console.log("filtered data(educationContent == false) is:", filteredData);
+      return filteredData;
+      // return response.data;
+    } catch (error) {
+      console.error("Failed to fetch blog posts:", error);
+      throw error;
+    }
+  };
+
+  // Fetch all ratings and reviews for a given blogId
+  const fetchBlogRatingsAndReviews = async () => {
+    try {
+      // Include the blogId in the URL as a query parameter
+      const response = await axiosInterceptorInstance.get(`/blog/rating/get`);
+      console.log("All ratings response data:", response.data);
+
+      // Assuming response.data is the array of reviews for the given blogId
+      setReviewsAndRatings(response.data);
+    } catch (error) {
+      console.error("Failed to fetch ratings and reviews:", error);
+    }
+  };
+
+  useEffect(() => {
+    const getData = async () => {
+      try {
+        console.log("use effect is calling");
+        const fetchedBlog = await fetchBlogPosts();
+        console.log("Fetched blog posts:", fetchedBlog);
+
+        // Set the fetched data in businessBlogs state
+        setAllBusinessBlogPosts(fetchedBlog);
+      } catch (error) {
+        console.error("Error while fetching data:", error);
+      }
+    };
+    getData();
+  }, []);
+
+  const latestPosts = [...AllBusinessBlogPosts]
+    .sort((a, b) => new Date(b.createdDateTime) - new Date(a.createdDateTime))
+    .slice(0, 3);
+
+  // this function is to view particular blog post
+  const handleViewBlogPost = (id) => {
+    // Make sure the blogPostTitle
+    console.log(`Blog Title: ${id}`);
+
+    // Redirect to the correct route
+    let routePath = `/businessBlogPost/viewBusinessBlogPost/${id}`;
+
+    router.push(routePath);
+  };
+
+  // Function to render blogs
+  const renderTrendingBlogs = (post) => (
+    <div
+      key={post.id}
+      className="flex items-center mb-4"
+      onClick={() => handleViewBlogPost(post.id)}
+    >
+      <img
+        src={post.img}
+        alt="Designed by Freepik"
+        className="w-36 h-36 mr-2 ml-4 rounded cursor-pointer"
+      />
+
+      <div>
+        <p className="text-lg font-medium">{post.title}</p>
+        <p className="text-sm text-gray-500 line-clamp-3">
+          <div dangerouslySetInnerHTML={{ __html: post.info }} />
+        </p>
+      </div>
+    </div>
   );
 
+  // Fetch recipes from backend
+  const fetchRecipes = async () => {
+    try {
+      console.log("Fetching recipes...");
+      const response = await axiosInterceptorInstance.get("/recipes/get");
+      console.log("Most Popular Recipes: ", response.data);
+
+      const activeRecipes = response.data.filter(
+        (post) => post.isActive === true
+      );
+      return activeRecipes;
+    } catch (error) {
+      console.log("Failed to fetch recipes: ", error);
+    }
+  };
+
+  useEffect(() => {
+    const getRecipes = async () => {
+      try {
+        console.log("use effect getRecipes is calling");
+        const fetchedRecipes = await fetchRecipes();
+        console.log("Fetched recipes:", fetchedRecipes);
+
+        // Set the fetched data in recipes state
+        setAllRecipesContent(fetchedRecipes);
+      } catch (error) {
+        console.error("Error while fetching data:", error);
+      }
+    };
+    getRecipes();
+  }, []);
+
+  console.log("AllRecipesContent:", AllRecipesContent);
+
   const latestRecipes = [...AllRecipesContent]
-    .filter((post) => post.isActive)
-    .sort((a, b) => b.ratings - a.ratings || b.reviews - a.reviews)
-    .slice(0, 3);
-
-  const latestMealPlans = [...AllMealPLan]
-    .filter((post) => post.isActive)
-    .sort((a, b) => new Date(b.date_published) - new Date(a.date_published))
-    .slice(0, 3);
-
-  const latestBlogPosts = [...AllBusinessBlogPosts]
-    .filter((post) => post.isActive)
-    .sort((a, b) => new Date(b.date_published) - new Date(a.date_published))
+    .sort((a, b) => new Date(b.createdDT) - new Date(a.createdDT))
     .slice(0, 3);
 
   // this function is to view particular recipe under registered user
@@ -329,71 +302,38 @@ const Home = () => {
     router.push(routePath);
   };
 
-  // this function is to view particular Meal plan
-  const handleViewMealPlan = (blogPostTitle) => {
-    // Make sure the blogPostTitle
-    console.log(`Blog Title: ${blogPostTitle}`);
-
-    // Redirect to the correct route
-    let routePath = `/mealPlan/viewMealPlan/${blogPostTitle}`;
-
-    router.push(routePath);
-  };
-
-  // View particular educational content
-  const handleViewEducationalContent = (blogPostTitle) => {
-    // Make sure the blogPostTitle
-    console.log(`Blog Title: ${blogPostTitle}`);
-
-    // Redirect to the correct route
-    let routePath = `/educationalContent/viewEducationalContent/${blogPostTitle}`;
-
-    router.push(routePath);
-  };
-
-  // this function is to view particular blog post
-  const handleViewBlogPost = (blogPostTitle) => {
-    // Make sure the blogPostTitle
-    console.log(`Blog Title: ${blogPostTitle}`);
-
-    // Redirect to the correct route
-    let routePath = `/businessBlogPost/viewBusinessBlogPost/${blogPostTitle}`;
-
-    router.push(routePath);
-  };
-
+  // NEED TO CONNECT TO BACKEND STILL
   // Function to render Recipe a single post card
   const renderRecipePostCard = (post) => (
     <div
       key={post.id}
-      className="rounded shadow-lg overflow-hidden flex flex-col"
-      style={{
-        border: "0.5px solid transparent",
-        background:
-          "linear-gradient(to right, #22d3ee 0%, #8b5cf6 100%), white",
-        backgroundOrigin: "border-box",
-        backgroundClip: "content-box, border-box",
-      }}
+      className="max-w-xl bg-white border border-gray-200 rounded-lg shadow-md overflow-hidden flex flex-col"
     >
+      {/* Image */}
       <img
-        src={post.image_url}
-        alt={post.image_title}
-        className="w-full object-cover rounded-sm"
+        src={post.imgl}
+        alt="recipe alt"
+        className="w-full h-48 rounded-t-lg object-cover"
         style={{ height: "192px" }}
       />
-      <div className="flex-grow flex flex-col justify-between p-4 bg-white">
+      <div className="flex flex-grow flex-col justify-between p-5">
         <div>
-          <h2 className="text-2xl font-extrabold mb-2">{post.recipeTitle}</h2>
+          {/* Title */}
+          <h2 className="mb-3 text-2xl font-bold text-gray-900">
+            {post.title}
+          </h2>
+          {/* Description */}
           <p
-            className="text-gray-700 text-base mb-4 line-clamp-3"
+            className="mb-3 text-base text-gray-700 line-clamp-3"
             style={{ height: "4.5rem" }}
           >
             {post.description}
           </p>
         </div>
+        {/* Read more button */}
         <button
           onClick={() => handleViewRecipes(post.recipeTitle)}
-          className="text-white font-bold bg-gradient-to-br from-cyan-400 to-cyan-800 hover:bg-blue-950 border-2 border-black focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 rounded-lg text-sm mt-3 px-4 py-2 text-center"
+          className="inline-block px-3 py-2 text-sm font-medium text-center text-white bg-blue-600 hover:bg-blue-700 rounded-xl"
         >
           Read more
         </button>
@@ -401,237 +341,240 @@ const Home = () => {
     </div>
   );
 
-  // Render Meal Plan a single post card
-  const renderMealPlanPostCard = (mealPlan) => (
-    <div
-      key={mealPlan.id}
-      className="rounded shadow-lg overflow-hidden flex flex-col"
-      style={{
-        border: "0.5px solid transparent",
-        background:
-          "linear-gradient(to right, #22d3ee 0%, #8b5cf6 100%), white",
-        backgroundOrigin: "border-box",
-        backgroundClip: "content-box, border-box",
-      }}
-    >
-      <img
-        src={mealPlan.image_url}
-        alt={mealPlan.image_title}
-        className="w-full object-cover rounded-sm"
-        style={{ height: "192px" }}
-      />
-      <div className="flex-grow flex flex-col justify-between p-4 bg-white">
-        <div>
-          <h2 className="text-2xl font-extrabold mb-2">
-            {mealPlan.mealPlanTitle}
-          </h2>
-          <p
-            className="text-gray-700 text-base mb-4 line-clamp-3"
-            style={{ height: "4.5rem" }}
-          >
-            {mealPlan.introduction}
-          </p>
-        </div>
-        <button
-          onClick={() => handleViewMealPlan(mealPlan.mealPlanTitle)}
-          className="text-white font-bold bg-gradient-to-br from-cyan-400 to-cyan-800 hover:bg-blue-950 border-2 border-black focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 rounded-lg text-sm mt-3 px-4 py-2 text-center"
-        >
-          Read more
-        </button>
-      </div>
-    </div>
-  );
+  // Carousel banner contents
+  const carouselContents = [
+    {
+      url: "https://images.unsplash.com/photo-1493770348161-369560ae357d?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    },
+    {
+      url: "/banner2.jpg",
+      content: {
+        title: "Sign up with us",
+        text: "Transform your health journey at My Healthy Recipe! Register for personalized access to a variety of healthy recipes, meal plans, and expert content tailored to your goals. Businesses and Nutritionist, elevate your brand and reach a health-conscious audience on our platform. Showcase expertise, share recipes, and grow your influence. Join now for a healthier, thriving community!",
+        button: "Join Us Now",
+      },
+    },
+    {
+      url: "https://images.unsplash.com/photo-1555243896-c709bfa0b564?q=80&w=1770&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    },
+  ];
 
-  //RENDER BLOG POSTS
-  const renderBlogPostCard = (blogPost) => (
-    <div
-      key={blogPost.id}
-      className="rounded shadow-lg overflow-hidden flex flex-col"
-      style={{
-        border: "0.5px solid transparent",
-        background:
-          "linear-gradient(to right, #22d3ee 0%, #8b5cf6 100%), white",
-        backgroundOrigin: "border-box",
-        backgroundClip: "content-box, border-box",
-      }}
-    >
-      <img
-        src={blogPost.image_url}
-        alt={blogPost.image_title}
-        className="w-full object-cover rounded-sm"
-        style={{ height: "192px" }}
-      />
-      <div className="flex-grow flex flex-col justify-between p-4 bg-white">
-        <div>
-          <h2 className="text-2xl font-extrabold mb-2">{blogPost.blogTitle}</h2>
-          <p
-            className="text-gray-700 text-base mb-4 line-clamp-3"
-            style={{ height: "4.5rem" }}
-          >
-            {blogPost.introduction}
-          </p>
-        </div>
-        <button
-          onClick={() => handleViewBlogPost(blogPost.blogTitle)}
-          className="text-white font-bold bg-gradient-to-br from-cyan-400 to-cyan-800 hover:bg-blue-950 border-2 border-black focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 rounded-lg text-sm mt-3 px-4 py-2 text-center"
-        >
-          Read more
-        </button>
-      </div>
-    </div>
-  );
+  // Carousel slider
+  const prevSlide = () => {
+    const firstSlide = currentCarouselContentIndex === 0;
+    const newIndex = firstSlide
+      ? carouselContents.length - 1
+      : currentCarouselContentIndex - 1;
+    setCarouselContentIndex(newIndex);
+  };
 
-  //RENDER EDUCATIONAL CONTENT
-  const renderEducationalPostCard = (educationalPost) => (
-    <div
-      key={educationalPost.id}
-      className="rounded shadow-lg overflow-hidden flex flex-col"
-      style={{
-        border: "0.5px solid transparent",
-        background:
-          "linear-gradient(to right, #22d3ee 0%, #8b5cf6 100%), white",
-        backgroundOrigin: "border-box",
-        backgroundClip: "content-box, border-box",
-      }}
-    >
-      <img
-        src={educationalPost.image_url}
-        alt={educationalPost.image_title}
-        className="w-full object-cover rounded-sm"
-        style={{ height: "192px" }}
-      />
-      <div className="flex-grow flex flex-col justify-between p-4 bg-white">
-        <div>
-          <h2 className="text-2xl font-extrabold mb-2">
-            {educationalPost.blogTitle}
-          </h2>
-          <p
-            className="text-gray-700 text-base mb-4 line-clamp-3"
-            style={{ height: "4.5rem" }}
-          >
-            {educationalPost.introduction}
-          </p>
-        </div>
-        <button
-          onClick={() =>
-            handleViewEducationalContent(educationalPost.blogTitle)
-          }
-          className="text-white font-bold bg-gradient-to-br from-cyan-400 to-cyan-800 hover:bg-blue-950 border-2 border-black focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 rounded-lg text-sm mt-3 px-4 py-2 text-center"
-        >
-          Read more
-        </button>
-      </div>
-    </div>
-  );
+  const nextSlide = () => {
+    const lastSlide =
+      currentCarouselContentIndex === carouselContents.length - 1;
+    const newIndex = lastSlide ? 0 : currentCarouselContentIndex + 1;
+    setCarouselContentIndex(newIndex);
+  };
+
+  const handleSignupBtnClick = () => {
+    router.push("/registration");
+  };
+
+  useEffect(() => {
+    const intervalId = setInterval(() => {
+      setCarouselContentIndex(
+        (prevSlide) => (prevSlide + 1) % carouselContents.length
+      );
+    }, 10000);
+
+    return () => clearInterval(intervalId); // Clear interval on component unmount
+  }, []);
 
   return (
-    <div className="bg-white">
+    <div>
       <HomeNavBar />
-      <div className="relative w-full overflow-hidden">
-        <div className="block w-full h-32 md:h-48 lg:h-64">
-          <img
-            src="https://img.freepik.com/free-photo/buddha-bowl-dish-with-vegetables-legumes-top-view_1150-42589.jpg?w=1800&t=st=1702841715~exp=1702842315~hmac=f65c008b38122d291fa3a84592213ea4eb201d756dd7ef3048e77cae0cb2672f"
-            alt="Banner Image"
-            className="w-full h-full object-cover"
-          />
-          {/* <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-center">
-            <p className="text-2xl font-bold text-black">
-              Welcome to My Healthy Recipe, your number one source for healthy
-              and delicious recipes.
-            </p>
-          </div> */}
-        </div>
-      </div>
-      {/* Display Recipes */}
-      <div>
-        <div className="mt-8 p-5">
-          <h2 className="text-4xl font-extrabold mb-4 mt-4 text-cyan-800">
-            Most Popular Recipes
-          </h2>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
-            {latestRecipes.map((post) => renderRecipePostCard(post))}
+      <div className="min-h-screen">
+        {/* Carousel Banner */}
+        <div className="max-w-[1400px] h-[480px] w-full m-auto py-6 px-2 relative group">
+          {carouselContents[currentCarouselContentIndex].content ? (
+            // 2-Column Layout for Images with Content
+            <div className="grid grid-cols-2 w-full h-full rounded-2xl bg-center bg-contain">
+              <div
+                style={{
+                  backgroundImage: `url(${carouselContents[currentCarouselContentIndex].url})`,
+                }}
+                className="w-full h-full rounded-tl-2xl rounded-bl-2xl bg-center bg-cover"
+              />
+              <div className="w-full h-full bg-slate-100 rounded-tr-2xl rounded-br-2xl p-6">
+                <h1 className="text-4xl font-bold text-black pt-3 mb-4">
+                  {carouselContents[currentCarouselContentIndex].content.title}
+                </h1>
+                <p className="text-black text-lg pt-4">
+                  {carouselContents[currentCarouselContentIndex].content.text}
+                </p>
+                <button
+                  className="mt-4 bg-blue-500 text-white px-4 py-2 rounded-full hover:bg-blue-600 transition"
+                  onClick={handleSignupBtnClick}
+                >
+                  {carouselContents[currentCarouselContentIndex].content.button}
+                </button>
+              </div>
+            </div>
+          ) : (
+            // Default Layout for Images without Content
+            <div
+              style={{
+                backgroundImage: `url(${carouselContents[currentCarouselContentIndex].url})`,
+              }}
+              className="w-full h-full rounded-2xl bg-center bg-cover"
+            ></div>
+          )}
+
+          {/* Left Arrow */}
+          <div className="hidden group-hover:block absolute top-[50%] -translate-x-0 translate-y-[-50%] left-5 text-2xl rounded-full p-2 bg-black/20 text-white cursor-pointer">
+            <FontAwesomeIcon icon={faChevronLeft} onClick={prevSlide} />
+          </div>
+
+          {/* Right Arrow */}
+          <div className="hidden group-hover:block absolute top-[50%] -translate-x-0 translate-y-[-50%] right-5 text-2xl rounded-full p-2 bg-black/20 text-white cursor-pointer">
+            <FontAwesomeIcon icon={faChevronRight} onClick={nextSlide} />
           </div>
         </div>
-      </div>
-      {/* end of displaying recipe */}
+        {/* End of carousel banner */}
 
-      {/* Latest Meal Plans Section */}
-      <div className="mt-5 p-5">
-        <h2 className="text-4xl font-extrabold mb-4 mt-4 text-cyan-800">
-          Latest Meal Plans
-        </h2>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
-          {latestMealPlans.map((mealPlan) => renderMealPlanPostCard(mealPlan))}
-        </div>
-      </div>
-      {/* end of meal plan */}
-
-      {/* ADDITIONAL BANNER TO GIVE MORE INTRO ABOUT THE WEB */}
-      <div className="relative w-full bg-cyan-600">
-        <div className="py-10 mx-auto flex flex-row">
-          <section className="text-center justify-center p-14 mb-4 ml-10 bg-white ">
-            <h2 className="font-bold text-4xl mb-4">Our Mission</h2>
-            <p className="max-w-2xl">
-              Welcome to My Healthy Recipe, your number-one source for healthy
-              and delicious recipes. We're dedicated to providing nutritional,
-              delicious, and easy-to-make recipes. Committed to your well-being,
-              we follow HPB's guidelines for daily sodium intake to ensure that
-              every recipe aligns with the highest nutritional standards. More
-              than just a collection of recipes, our commitment to health is
-              ingrained in every dish we create.
-            </p>
-          </section>
-          <div className="flex flex-col p-6 ml-16">
-            <h2 className="text-center items-center font-bold text-2xl text-black">
-              With Over 100+ Recipes to Browse!
+        {/* Most popular recipe card */}
+        <div>
+          <div className="p-5">
+            <h2 className="text-4xl font-extrabold font-serif mb-4 mt-4 text-black">
+              Most Popular Recipes
             </h2>
-            <div className="flex grid-rows-4 mt-8 space-x-5">
-              <div className="bg-white p-4 rounded-full w-32 h-32 flex flex-col justify-center items-center">
-                <p className="text-cyan-600 text-lg md:text-xl font-bold text-center">
-                  76
-                </p>
-                <p className="text-black text-center">Active Users</p>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
+              {latestRecipes.map((post) => renderRecipePostCard(post))}
+            </div>
+          </div>
+        </div>
+        {/* End of most popular recipe cards */}
+
+        {/* Featured Recipe - single feature*/}
+        <div className="p-5 relative group">
+          <div className="grid grid-cols-2">
+            <div className="relative">
+              <h2 className="text-4xl font-bold text-gray-800 text-center p-4">
+                #1 Most Featured Recipe
+              </h2>
+              <div className="overlay-container relative overflow-hidden rounded-lg">
+                <img
+                  src="https://images.unsplash.com/photo-1604908176997-125f25cc6f3d?q=80&w=1426&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+                  alt="image description"
+                  className="h-auto max-w-full rounded-lg mb-4 sm:mb-0 bg-blend"
+                />
+                <div className="overlay absolute top-0 left-0 right-0 bottom-0 flex items-center justify-center opacity-0 transition-opacity duration-300 hover:opacity-100">
+                  <div className="rounded-lg text-overlay bg-white bg-opacity-70 p-20 text-center text-gray-900">
+                    <Link href="" className="hover:underline">
+                      <h3 className="text-2xl font-bold">
+                        *INSERT RECIPE TITLE HERE*
+                      </h3>
+                    </Link>
+                    <p>*Enter description of recipe here</p>
+                    {/* Add your links here */}
+                  </div>
+                </div>
               </div>
-              <div className="bg-white p-4 rounded-full w-32 h-32 flex flex-col justify-center items-center">
-                <p className="text-cyan-600 text-lg md:text-xl font-bold text-center">
-                  15
-                </p>
-                <p className="text-black text-center">Business Partners</p>
-              </div>
-              <div className="bg-white p-4 rounded-full w-32 h-32 flex flex-col justify-center items-center">
-                <p className="text-cyan-600 text-lg md:text-xl font-bold text-center">
-                  8
-                </p>
-                <p className="text-black text-center">Dietitians</p>
+            </div>
+
+            <div className="ml-7">
+              {/* Trending Box */}
+              <div className="bg-slate-100 p-4 rounded-lg">
+                <h2 className="font-semibold text-4xl text-left p-4 mb-5">
+                  Trending Blogs
+                </h2>
+                {latestPosts.map((post) => renderTrendingBlogs(post))}
               </div>
             </div>
           </div>
         </div>
-      </div>
-      {/* end of banner */}
+        {/* End of featured and trending box */}
 
-      {/* Business Blog Post Section */}
-      <div className="mt-5 p-5">
-        <h2 className="text-4xl font-extrabold mb-4 mt-4 text-cyan-800">
-          Business Blog Post
-        </h2>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
-          {latestBlogPosts.map((blogPost) => renderBlogPostCard(blogPost))}
+        {/* Latest meal plan card*/}
+        <div>
+          <div className="p-5">
+            <h2 className="text-4xl font-extrabold font-serif mb-4 mt-4 text-black">
+              Latest Meal Plans
+            </h2>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
+              {latestRecipes.map((post) => renderRecipePostCard(post))}
+            </div>
+          </div>
         </div>
-      </div>
-      {/* end of blog post */}
-      {/* Educational Content Section */}
-      <div className="mt-5 p-5">
-        <h2 className="text-4xl font-extrabold mb-4 mt-4 text-cyan-800">
-          Educational Content
-        </h2>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
-          {educationContent.map((educationalPost) =>
-            renderEducationalPostCard(educationalPost)
-          )}
+        {/* End of latest meal plans cards */}
+        {/* Dynamic banner on active users */}
+        <div className="mt-9">
+          <div className="bg-zinc-50 h-[400px] rounded-lg overflow-hidden">
+            <div className="grid grid-cols-2 gap-8 p-5 mt-10">
+              {/* Left Column */}
+              <div className="flex flex-col justify-center items-center">
+                <h2 className="font-bold text-4xl mb-4 text-center">
+                  Our Mission
+                </h2>
+                <p className="text-gray-700 text-center text-xl">
+                  Welcome to My Healthy Recipe, your number-one source for
+                  healthy and delicious recipes. We're dedicated to providing
+                  nutritional, delicious, and easy-to-make recipes. Committed to
+                  your well-being, we follow HPB's guidelines for daily sodium
+                  intake to ensure that every recipe aligns with the highest
+                  nutritional standards. More than just a collection of recipes,
+                  our commitment to health is ingrained in every dish we create.
+                </p>
+              </div>
+
+              {/* Right Column */}
+              <div className="hidden md:flex flex-col items-center">
+                {/* Dynamic user profiles */}
+                <div className="flex flex-col p-6 ml-16">
+                  <h2 className="text-center items-center font-bold text-2xl text-black">
+                    With Over 100+ Recipes to Browse!
+                  </h2>
+                  <div className="flex grid-rows-4 mt-8 space-x-5 gap-4">
+                    <div className="bg-white p-4 rounded-full w-32 h-32 flex flex-col justify-center items-center">
+                      <p className="text-orange-600 text-lg md:text-xl font-bold text-center">
+                        {userCounts.REGISTERED_USER}
+                      </p>
+                      <p className="text-black text-center">Active Users</p>
+                    </div>
+                    <div className="bg-white p-4 rounded-full w-32 h-32 flex flex-col justify-center items-center">
+                      <p className="text-orange-600 text-lg md:text-xl font-bold text-center">
+                        {userCounts.BUSINESS_USER}
+                      </p>
+                      <p className="text-black text-center">
+                        Business Partners
+                      </p>
+                    </div>
+                    <div className="bg-white p-4 rounded-full w-32 h-32 flex flex-col justify-center items-center">
+                      <p className="text-orange-600 text-lg md:text-xl font-bold text-center">
+                        {userCounts.NUTRITIONIST}
+                      </p>
+                      <p className="text-black text-center">Nutritionist</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
+        {/* End of Dynamic banner on active users */}
+        {/* Educational Contents card*/}
+        <div>
+          <div className="p-5">
+            <h2 className="text-4xl font-extrabold font-serif mb-4 mt-4 text-black">
+              Educational Contents
+            </h2>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
+              {latestRecipes.map((post) => renderRecipePostCard(post))}
+            </div>
+          </div>
+        </div>
+        {/* End of Educational Contents cards */}
       </div>
-      {/* end of education content*/}
+      <Footer />
     </div>
   );
 };

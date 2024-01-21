@@ -195,7 +195,7 @@ VALUES
 ("Healthy Lifestyle");
 
 
--- Blog (Business blog and Educational content)
+-- Blog
 INSERT INTO Blog
 (id, CreatedDT, Publisher, Title, Info, UserID, img, blog_type_id)
 VALUES
@@ -293,20 +293,73 @@ VALUE
     ('I love this blog post!',                                    4.0, '12', 3);
 
 
+-- Educational content
+INSERT INTO educational_content
+(id, CreatedDT, Publisher, Title, Info, UserID, img, educational_content_type_id)
+VALUES
+    (
+        '1',
+        '2023-01-20 15:30:00',  -- CreatedDT
+        'healthGuru1',  -- Publisher
+        'The Green Smoothie Revolution',  -- Title
+        'Join the Green Smoothie Revolution and embrace a healthier lifestyle! Our latest post features a variety of delicious and nutritious green smoothie recipes. Each recipe is crafted to boost energy, aid in detoxification, and provide essential vitamins and minerals. From kale and spinach to exotic fruits, we cover a range of ingredients that cater to all taste preferences. Perfect for busy individuals seeking a quick and healthy meal option.\nLearn how to blend the perfect green smoothie, understand the health benefits of each ingredient, and start your day with a burst of energy!',
+        3,
+        'https://img.freepik.com/free-photo/healthy-drink-vegetable-smoothie_1150-26221.jpg?w=360&t=st=1705800697~exp=1705801297~hmac=9b7d0b1aaaed533ee5244a56a4676a270c76de872b2582203d5fb9da0157242a',
+        1 -- educational_content_type_id
+    ),
+    (
+        '2',
+        '2024-01-15 09:00:00',
+        'healthGuru1',
+        'Mindful Eating: A Guide to Conscious Consumption',
+        'Discover the art of Mindful Eating with our comprehensive guide. This post explores the concept of conscious consumption, focusing on how to enjoy meals more fully, understand hunger cues, and make healthier food choices. We provide practical tips for slowing down mealtime, appreciating the flavors and textures of food, and reducing overeating. Mindful Eating is not just a diet—it is a lifestyle change that can lead to improved digestion, better mental clarity, and a more harmonious relationship with food.',
+        3,
+        'https://img.freepik.com/free-vector/healthy-unhealthy-food_23-2148560005.jpg?w=826&t=st=1705800246~exp=1705800846~hmac=1c1105f17457c12ee220947334d58201393909595b2d062d09efeb1eedde1b26',
+        2 -- educational_content_type_id
+    ),
+    (
+        '3',
+        '2024-01-05 12:00:00',
+        'fitChef2',
+        'Plant-Based Power: Easy Vegan Recipes',
+        'Explore the world of plant-based cuisine with our "Plant-Based Power: Easy Vegan Recipes" blog post. This collection of recipes is designed for anyone looking to incorporate more plant-based meals into their diet. Whether you are a full-time vegan or just curious about plant-based eating, these recipes are easy, delicious, and nutritious. Each dish is packed with flavors and nutrients, showcasing how versatile and satisfying vegan cooking can be. From hearty soups to vibrant salads and delectable desserts, these recipes are perfect for anyone seeking a healthier and more sustainable lifestyle.',
+        4,
+        'https://img.freepik.com/free-photo/top-view-assortment-vegetables-paper-bag_23-2148853335.jpg?w=826&t=st=1705800274~exp=1705800874~hmac=0f2bda18276ed93d77da727a3025ffb9746b81739a32548a0b0504972d274033',  -- Image URL
+        2 -- educational_content_type_id
+    ),
+    (
+        '4',
+        '2024-02-01 10:00:00',
+        'nutritionNinja4',
+        'Superfoods 101: Nature Powerhouses',
+        'Dive into the world of Superfoods with our "Superfoods 101: Nature Powerhouses" guide. This educational post provides insights into foods that are densely packed with nutrients, including antioxidants, vitamins, and minerals. Discover how incorporating foods like berries, nuts, seeds, and leafy greens into your diet can boost your health. Learn about the unique benefits of each superfood, how to include them in your daily meals, and the science behind their health-boosting properties. Ideal for anyone aiming to enhance their diet with nutrient-rich choices.',
+        3,
+        'https://img.freepik.com/free-photo/different-vegetables-nuts-table-flat-lay-top-view_1150-42329.jpg?w=826&t=st=1705800521~exp=1705801121~hmac=1787013a4c2045b3f7706099eccf3ff31694f9793283af940fe7aaf359356789',
+        1
+    ),
+    (
+        '5',
+        '2024-02-10 16:45:00',
+        'wellnessWarrior5',
+        'Hydration for Health: The Importance of Water',
+        'Our latest post, "Hydration for Health: The Importance of Water," emphasizes the crucial role of hydration in maintaining overall health. This guide covers the benefits of staying hydrated, how much water you should drink daily, and the signs of dehydration. It also debunks common myths about hydration and provides creative ideas for infusing water with fruits and herbs for added flavor. This post is essential reading for anyone looking to improve their daily water intake and understand the vital role water plays in our well-being.',
+        3,
+        'https://img.freepik.com/free-photo/water-glass-outdoor_1203-6642.jpg?w=826&t=st=1705800570~exp=1705801170~hmac=8269658da4381f7537511cc6bd9d151342c072e40b322141d0f5a03a9d1740d0',
+        2
+    ),
+    (
+        '6',
+        '2024-02-20 14:30:00',
+        'healthyHabits6',
+        'Balancing Your Diet: A Beginner’s Guide',
+        'Introducing "Balancing Your Diet: A Beginner’s Guide," a comprehensive post for those starting their journey towards a balanced diet. This piece breaks down the basics of nutrition, explaining macronutrients and micronutrients, and their importance in daily intake. It offers simple strategies for creating balanced meals, understanding portion sizes, and making healthier food choices. This guide is a great resource for anyone who wants to learn the fundamentals of nutrition and start implementing a more balanced and health-conscious diet in their life.',
+        4,
+        'https://img.freepik.com/free-vector/nutrition-label-collection-design_23-2149520992.jpg?w=740&t=st=1705800614~exp=1705801214~hmac=353c17672983e62bc96f24ca84070dde2831767b10a078b4f08e5bc5f6b2bf31',
+        1
+    );
+
+
 -- Recipe
-
--- cooking time
--- serving size
--- createddt
--- last_updateddt
--- publisher
-
--- Calories(kcal), Carbs(g), Protein(g), Fat(g), Fibre(g), Sodium(mg),
--- SAMPLE -- 
--- INSERT INTO RECIPE (Title, Info, Calories, Protein, Fat, Fibre, Sodium, ServingSize, Steps, Description, Ingredients, UserID, Active) 
--- VALUES ('New Recipe Title', 'New Food Item', 123.45, 23.45, 34.56, 45.67, 56.78, 4, 'New Recipe Steps', 'New Recipe Description', 'New Recipe Ingredients', [UserID], TRUE);
-
--- even though steps is stored in this way(1. 2. 3.), but in future numberings of steps should be done in frontend and removed from the string stored into database
 INSERT INTO recipe 
  (id, title, info, calories, carbs, protein, fat, fibre, sodium, serving_size, description, steps, ingredients, UserID, Active, createddt, img) 
 VALUES
@@ -382,21 +435,36 @@ VALUES
     "https://img.freepik.com/free-photo/meatballs-salad-tomatoes-buckwheat-porridge-white-wooden-table-healthy-food-diet-meal-buddha-bowl_2829-6110.jpg?size=626&ext=jpg&ga=GA1.1.1875319134.1702524039&semt=ais"
 );
 
+-- Educational content review rating
+INSERT INTO educational_content_review_rating
+(Review, Rating, UserID, educational_contentid)
+VALUES
+    ('This is very awesome',                            3.2, '7', 1),
+    ('The recipe nice.'    ,                            5.0, '8', 1),
+    ('I love this recipe!' ,                            4.0, '9', 1),
+    ('I love this recipe!' ,                            4.0, '12', 1),
+    ('This is very awesome',                            3.2, '7', 2),
+    ('The recipe is very d',                            5.0, '8', 2),
+    ('I love this recipe!' ,                            4.0, '9', 2),
+    ('This is very awesome',                            3.2, '12', 2),
+    ('The recipe is very d',                            5.0, '111', 2),
+    ('I love this recipe!'  ,                           4.0, '1', 2);
+
 
 
 
 
 -- Recipe review rating
-INSERT INTO RECIPE_REVIEW_RATING 
- (Review, Rating, UserID, RecipeID)
+INSERT INTO RECIPE_REVIEW_RATING
+(Review, Rating, UserID, RecipeID)
 VALUES
-    ("This is very awesome", 3.2, "7", 1),
-    ("The recipe is very descriptive and informative.", 5.0, "8", 1),
-    ("I love this recipe!", 4.0, "9", 1),
-    ("I love this recipe!", 4.0, "12", 1),
-    ("This is very awesome", 3.2, "7", 2),
-    ("The recipe is very descriptive and informative.", 5.0, "8", 2),
-    ("I love this recipe!", 4.0, "9", 2),
-    ("This is very awesome", 3.2, "10", 2),
-    ("The recipe is very descriptive.", 5.0, "11", 2),
-    ("I love this recipe!", 4.0, "12", 2);
+    ('This is very awesome',                            3.2, '7', 1),
+    ('The recipe nice.'    ,                            5.0, '8', 1),
+    ('I love this recipe!' ,                            4.0, '9', 1),
+    ('I love this recipe!' ,                            4.0, '12', 1),
+    ('This is very awesome',                            3.2, '7', 2),
+    ('The recipe is very d',                            5.0, '8', 2),
+    ('I love this recipe!' ,                            4.0, '9', 2),
+    ('This is very awesome',                            3.2, '12', 2),
+    ('The recipe is very d',                            5.0, '111', 2),
+    ('I love this recipe!'  ,                           4.0, '1', 2);

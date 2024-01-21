@@ -256,11 +256,11 @@ const ViewDietaryPreference = () => {
         config
       );
 
-      console.log("Account updated:", response.data);
-      setSuccess("Account updated successfully!");
+      console.log("preferences updated:", response.data);
+      setSuccess("Preferences updated successfully!");
     } catch (error) {
-      console.error("Error updating account", error);
-      setError("Failed to update account.");
+      console.error("Error updating preferences", error);
+      setError("Failed to update preferences.");
     }
   };
 
@@ -333,6 +333,18 @@ const ViewDietaryPreference = () => {
                 ))}
               </select>
             </div>
+
+            {/* ERROR MESSAGE */}
+            {error && (
+              <div className="text-red-500 text-sm font-bold mt-2">{error}</div>
+            )}
+
+            {/* SUCCESS MESSAGE */}
+            {success && (
+              <div className="text-green-500 text-sm font-bold mt-2">
+                {success}
+              </div>
+            )}
 
             {/* BUTTON */}
             <div className="flex justify-center mt-3">

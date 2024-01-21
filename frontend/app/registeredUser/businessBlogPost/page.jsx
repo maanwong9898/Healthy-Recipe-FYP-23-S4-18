@@ -5,7 +5,7 @@ import { useState, useEffect } from "react";
 import HomeNavbar from "@/app/components/navigation/homeNavBar";
 import axiosInterceptorInstance from "../../axiosInterceptorInstance.js";
 
-// rouuter path: /businessBlogPost
+// rouuter path: /registeredUser/businessBlogPost
 
 // Fetch all blog posts
 const fetchBlogPosts = async () => {

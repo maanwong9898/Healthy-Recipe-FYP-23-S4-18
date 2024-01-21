@@ -293,7 +293,7 @@ const ViewRecipe = ({ params }) => {
       </div>
 
       {/* reviews and ratings */}
-      <footer className="blog-post-reviews mt-15 mx-auto max-w-screen-xl text-left">
+      <footer className="blog-post-reviews mt-20 mx-auto max-w-screen-xl text-left">
         <p className="font-mono font-bold text-2xl text-gray-900">
           Rating and Reviews
         </p>

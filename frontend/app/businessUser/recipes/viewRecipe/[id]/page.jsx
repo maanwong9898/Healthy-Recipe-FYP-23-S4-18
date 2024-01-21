@@ -112,28 +112,36 @@ const BusinessViewRecipe = ({ params }) => {
     return stars;
   };
 
-  {
-    /* Combined Allergens and Dietary Preferences section */
-  }
-  <div className="mt-14 flex justify-center space-x-4">
-    {/* Allergens section */}
-    <div className="flex-1 p-3" role="alert">
-      <p className="font-bold text-base lg:text-xl text-gray-900 mb-1">
-        Allergens Information:
-      </p>
-      {recipe ? renderAllergens(recipe.allergies) : "Not specified"}
-    </div>
+  const renderAllergens = (allergies) => {
+    if (!allergies || allergies.length === 0) {
+      return <span className="text-orange-600 font-bold">None</span>;
+    }
+    return (
+      <div className="flex flex-wrap justify-center items-center">
+        {allergies.map((allergy, index) => (
+          <span
+            key={index}
+            className="bg-red-200 text-red-700 px-4 py-1 rounded-full text-center m-2"
+          >
+            {allergy.subcategoryName}
+          </span>
+        ))}
+      </div>
+    );
+  };
 
-    {/* Dietary Preferences section */}
-    <div className="flex-1 p-3" role="alert">
-      <p className="font-bold text-base lg:text-xl text-gray-900 mb-1">
-        Dietary Preferences:
-      </p>
-      {recipe
-        ? renderDietaryPreferences(recipe.dietaryPreferences)
-        : "Not specified"}
-    </div>
-  </div>;
+  const renderDietaryPreferences = (dietaryPreferences) => {
+    if (!dietaryPreferences) {
+      return <span className="text-orange-600 font-bold">Not specified</span>;
+    }
+    return (
+      <div className="flex justify-center items-center">
+        <span className="bg-green-200 text-green-700 px-4 py-1 rounded-full text-center m-2">
+          {dietaryPreferences.subcategoryName}
+        </span>
+      </div>
+    );
+  };
 
   return (
     <div className="pt-8 pb-16 lg:pt-16 lg:pb-24 bg-white">
@@ -171,7 +179,7 @@ const BusinessViewRecipe = ({ params }) => {
         <div className="mt-14 flex justify-center space-x-4">
           {/* Allergens section */}
           <div className="flex-1 p-3" role="alert">
-            <p className="font-bold text-base lg:text-xl text-gray-900 mb-3">
+            <p className="font-bold text-base lg:text-xl text-gray-900 mb-1">
               Allergens Information:
             </p>
             {recipe ? renderAllergens(recipe.allergies) : "Not specified"}
@@ -179,7 +187,7 @@ const BusinessViewRecipe = ({ params }) => {
 
           {/* Dietary Preferences section */}
           <div className="flex-1 p-3" role="alert">
-            <p className="font-bold text-base lg:text-xl text-gray-900 mb-3">
+            <p className="font-bold text-base lg:text-xl text-gray-900 mb-1">
               Dietary Preferences:
             </p>
             {recipe
@@ -208,22 +216,24 @@ const BusinessViewRecipe = ({ params }) => {
         />
         <div className="flex flex-col ml-0 lg:ml-4 mt-4">
           <div className="flex flex-row font-bold">
-            <p className="mr-4">
+            <p className="mr-4 text-bold text-lg tracking-tight">
               Cooking Time:{" "}
-              <span className="text-orange-600 font-bold">
+              <span className="text-orange-600 font-semibold text-base">
                 {recipe?.cookingTime
                   ? `Approx. ${recipe.cookingTime} mins`
                   : "Not specified"}
               </span>
             </p>
-            <p className="mr-4 text-bold">
+            <p className="mr-4 text-bold text-lg tracking-tight">
               Total Serving:{" "}
-              <span className="text-orange-600 font-bold">
+              <span className="text-orange-600 font-semibold text-base">
                 {recipe?.servingSize || "Not specified"} pax
               </span>
             </p>
           </div>
-          <p className="font-bold mt-4 lg:mt-8">Description:</p>
+          <p className="font-bold mt-4 lg:mt-8 text-2xl tracking-tight">
+            Description:
+          </p>
           <p className="mt-2 items-center">
             {recipe?.description || "Not specified"}
           </p>
@@ -233,7 +243,10 @@ const BusinessViewRecipe = ({ params }) => {
           {/* I need to display the info divided by serving size in future  */}
 
           <div className="mt-4 lg:mt-28 mb-4">
-            <p className="font-bold">Nutritional Information Per Serving:</p>
+            <p className="font-bold text-2xl tracking-tight">
+              Nutrition Information:{" "}
+              <span className="font-medium text-sm ">(per serving)</span>
+            </p>
           </div>
           <div className="grid grid-cols-3 lg:grid-cols-3 xl:grid-cols-6 gap-6">
             <div className="rounded-full bg-orange-100 w-20 h-20 flex flex-col items-center text-center justify-center">
@@ -280,7 +293,9 @@ const BusinessViewRecipe = ({ params }) => {
       {/* Ingredients and Instructions */}
       <div className="flex flex-col md:flex-row mt-8 mx-4 md:mx-20">
         <ul className="flex flex-col mt-4 md:w-1/2 md:mt-5 whitespace-pre-line leading-8 lg:ml-24">
-          <li className="font-bold text-xl mb-2 text-gray-900">Ingredients</li>
+          <li className="font-bold text-2xl tracking-tight mb-2 text-gray-900">
+            Ingredients
+          </li>
           {recipe?.ingredients.split("\n").map((ingredient, index) => (
             <li key={index} className="list-disc ml-4">
               {ingredient}
@@ -289,7 +304,9 @@ const BusinessViewRecipe = ({ params }) => {
         </ul>
 
         <ul className="flex flex-col mt-8 md:w-1/2 md:ml-0 md:mt-4 whitespace-pre-line leading-6">
-          <ol className="font-bold text-xl mb-2 text-gray-900">Instructions</ol>
+          <ol className="font-bold text-2xl tracking-tight mb-2 text-gray-900">
+            Instructions
+          </ol>
           <ol>{recipe ? renderSteps(recipe.steps) : <li>Not specified</li>}</ol>
         </ul>
       </div>

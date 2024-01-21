@@ -4,7 +4,8 @@ import React, { use } from "react";
 import Link from "next/link";
 import { useState, useEffect } from "react";
 import axiosInterceptorInstance from "../../../../axiosInterceptorInstance.js";
-import HomeNavbar from "@/app/components/navigation/homeNavBar/index.jsx";
+import HomeNavbar from "../../../../components/navigation/homeNavBar";
+import Footer from "../../../../components/footer";
 
 // router path: /recipes/viewRecipe/[id]
 
@@ -143,7 +144,7 @@ const ViewRecipe = ({ params }) => {
       </div>
     );
   };
-  
+
   return (
     <div>
       <HomeNavbar />
@@ -219,22 +220,24 @@ const ViewRecipe = ({ params }) => {
           />
           <div className="flex flex-col ml-0 lg:ml-4 mt-4">
             <div className="flex flex-row font-bold">
-              <p className="mr-4">
+              <p className="mr-4 text-bold text-lg tracking-tight">
                 Cooking Time:{" "}
-                <span className="text-orange-600 font-bold">
+                <span className="text-orange-600 font-semibold text-base">
                   {recipe?.cookingTime
                     ? `Approx. ${recipe.cookingTime} mins`
                     : "Not specified"}
                 </span>
               </p>
-              <p className="mr-4 text-bold">
+              <p className="mr-4 text-bold text-lg tracking-tight">
                 Total Serving:{" "}
-                <span className="text-orange-600 font-bold">
+                <span className="text-orange-600 font-semibold text-base">
                   {recipe?.servingSize || "Not specified"} pax
                 </span>
               </p>
             </div>
-            <p className="font-bold mt-4 lg:mt-8">Description:</p>
+            <p className="font-bold mt-4 lg:mt-8 text-2xl tracking-tight">
+              Description:
+            </p>
             <p className="mt-2 items-center">
               {recipe?.description || "Not specified"}
             </p>
@@ -244,7 +247,10 @@ const ViewRecipe = ({ params }) => {
             {/* I need to display the info divided by serving size in future  */}
 
             <div className="mt-4 lg:mt-28 mb-4">
-              <p className="font-bold">Nutritional Information Per Serving:</p>
+              <p className="font-bold text-2xl tracking-tight">
+                Nutrition Information:{" "}
+                <span className="font-medium text-sm ">(per serving)</span>
+              </p>
             </div>
             <div className="grid grid-cols-3 lg:grid-cols-3 xl:grid-cols-6 gap-6">
               <div className="rounded-full bg-orange-100 w-20 h-20 flex flex-col items-center text-center justify-center">
@@ -291,7 +297,7 @@ const ViewRecipe = ({ params }) => {
         {/* Ingredients and Instructions */}
         <div className="flex flex-col md:flex-row mt-8 mx-4 md:mx-20">
           <ul className="flex flex-col mt-4 md:w-1/2 md:mt-5 whitespace-pre-line leading-8 lg:ml-24">
-            <li className="font-bold text-xl mb-2 text-gray-900">
+            <li className="font-bold text-2xl tracking-tight mb-2 text-gray-900">
               Ingredients
             </li>
             {recipe?.ingredients.split("\n").map((ingredient, index) => (
@@ -302,7 +308,7 @@ const ViewRecipe = ({ params }) => {
           </ul>
 
           <ul className="flex flex-col mt-8 md:w-1/2 md:ml-0 md:mt-4 whitespace-pre-line leading-6">
-            <ol className="font-bold text-xl mb-2 text-gray-900">
+            <ol className="font-bold text-2xl tracking-tight mb-2 text-gray-900">
               Instructions
             </ol>
             <ol>
@@ -311,7 +317,6 @@ const ViewRecipe = ({ params }) => {
           </ul>
         </div>
 
-        {/* reviews and ratings */}
         {/* reviews and ratings */}
         <div className="blog-post-reviews mt-16 mx-auto max-w-screen-xl text-left border-t-2 border-gray-50">
           <p className="font-sans font-bold text-2xl md:text-4xl text-gray-900 mb-4 md:mt-8 ml-4 lg:ml-0">
@@ -361,6 +366,7 @@ const ViewRecipe = ({ params }) => {
         </button>
       </div> */}
       </div>
+      <Footer />
     </div>
   );
 };

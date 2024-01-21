@@ -317,13 +317,13 @@ const CreateRecipePage = () => {
       {/* Adjust the max-width and width in the inline style */}
       <div
         className="mt-16 mb-16 mx-auto bg-zinc-100 rounded-lg shadow"
-        style={{ maxWidth: "600px", width: "100%" }} // Increase maxWidth and set width to 100%
+        style={{ maxWidth: "700px", width: "100%" }} // Increase maxWidth and set width to 100%
       >
         {" "}
         {/* Smaller maxWidth */}
-        <div className="p-4 space-y-4 md:space-y-12 ">
+        <div className="p-4 space-y-4 md:space-y-12">
           <div className="p-6 space-y-4 md:space-y-2 sm:p-4">
-            <h1 className="text-xl font-bold mb-6 leading-tight tracking-tight text-black md:text-2xl">
+            <h1 class="text-5xl font-bold leading-tight tracking-tight text-center text-gray-900 mb-8">
               Create Recipe
             </h1>
             <form className="space-y-3">
@@ -331,7 +331,7 @@ const CreateRecipePage = () => {
               <div className="flex flex-col">
                 <label
                   htmlFor="title"
-                  className="block text-xl mb-1 font-bold text-cyan-950"
+                  className="block text-xl mb-1 font-bold text-gray-900"
                 >
                   Title
                   <span className="text-red-500">*</span>
@@ -354,7 +354,7 @@ const CreateRecipePage = () => {
               <div className="flex flex-col">
                 <label
                   htmlFor="dietaryPreference"
-                  className="block text-xl mb-1 font-bold text-cyan-950"
+                  className="block text-xl mb-1 font-bold text-gray-900"
                 >
                   Dietary Preference
                 </label>
@@ -378,9 +378,9 @@ const CreateRecipePage = () => {
               <div className="flex flex-col">
                 <label
                   htmlFor="allergyRestriction"
-                  className="block text-xl mb-1 font-bold text-cyan-950"
+                  className="block text-xl mb-1 font-bold text-gray-900"
                 >
-                  Allergens contained in recipe:
+                  Allergens Contained In Recipe:
                 </label>
                 <div className="grid grid-cols-4 gap-1">
                   {allergyCategory.map((cat, index) => (
@@ -403,7 +403,7 @@ const CreateRecipePage = () => {
               <div className="flex flex-col">
                 <label
                   htmlFor="cookingTime"
-                  className="block text-xl mb-1 font-bold text-cyan-950"
+                  className="block text-xl mb-1 font-bold text-gray-900"
                 >
                   Cooking Time (in mins)
                   <span className="text-red-500">*</span>
@@ -423,7 +423,7 @@ const CreateRecipePage = () => {
               <div className="flex flex-col">
                 <label
                   htmlFor="servingSize"
-                  className="block text-xl mb-1 font-bold text-cyan-950"
+                  className="block text-xl mb-1 font-bold text-gray-900"
                 >
                   Serving Size<span className="text-red-500">*</span>
                 </label>
@@ -443,7 +443,7 @@ const CreateRecipePage = () => {
               <div className="flex flex-col">
                 <label
                   htmlFor="description"
-                  className="block text-xl mb-1 font-bold text-cyan-950"
+                  className="block text-xl mb-1 font-bold text-gray-900"
                 >
                   Description<span className="text-red-500">*</span>
                 </label>
@@ -466,7 +466,7 @@ const CreateRecipePage = () => {
               <div className="flex flex-col">
                 <label
                   htmlFor="dietaryInformation"
-                  className="block text-xl mb-1 font-bold text-cyan-950"
+                  className="block text-xl mb-1 font-bold text-gray-900"
                 >
                   Dietary Information<span className="text-red-500">*</span>
                 </label>
@@ -489,7 +489,7 @@ const CreateRecipePage = () => {
               <div className="flex flex-col">
                 <label
                   htmlFor="ingredients"
-                  className="block text-xl mb-1 font-bold text-cyan-950"
+                  className="block text-xl mb-1 font-bold text-gray-900"
                 >
                   Ingredients<span className="text-red-500">*</span>
                 </label>
@@ -536,7 +536,7 @@ const CreateRecipePage = () => {
               <div className="flex flex-col">
                 <label
                   htmlFor="instructions"
-                  className="block text-xl mb-1 font-bold text-cyan-950"
+                  className="block text-xl mb-1 font-bold text-gray-900"
                 >
                   Instructions<span className="text-red-500">*</span>
                 </label>
@@ -583,7 +583,7 @@ const CreateRecipePage = () => {
               <div className="flex flex-col">
                 <label
                   htmlFor="nutritionalInformation"
-                  className="block text-xl mb-1 font-bold text-cyan-950"
+                  className="block text-xl mb-1 font-bold text-gray-900"
                 >
                   Nutritional Information (per serving)
                   <span className="text-red-500">*</span>
@@ -599,7 +599,7 @@ const CreateRecipePage = () => {
                       type="number"
                       name="totalCalories"
                       id="totalCalories"
-                      placeholder="Total Calories"
+                      placeholder="Enter calories in kcal"
                       value={totalCalories}
                       onChange={clearErrorOnChange(setTotalCalories)}
                       className="border px-4 py-2 rounded-lg bg-gray-50 border-gray-300 text-gray-900 sm:text-sm block w-full p-2.5"
@@ -692,7 +692,7 @@ const CreateRecipePage = () => {
               <div className="flex flex-col">
                 <label
                   htmlFor="imageUrl"
-                  className="block text-xl mb-1 font-bold text-cyan-950"
+                  className="block text-xl mb-1 font-bold text-gray-900"
                 >
                   Image URL<span className="text-red-500">*</span>
                 </label>
@@ -713,22 +713,22 @@ const CreateRecipePage = () => {
 
               {/* Display error or success message */}
               {error && (
-                <p className="text-red-500 font-semibold text-2xl">{error}</p>
+                <p className="text-red-500 font-semibold text-sm">{error}</p>
               )}
               {success && (
-                <p className="text-green-500 font-semibold text-2xl">
+                <p className="text-green-500 font-semibold text-sm">
                   {success}
                 </p>
               )}
               {/* SUBMIT BUTTON */}
               <div className="flex flex-row space-x-5">
-                <button className="bg-red-500 hover:bg-red-800 text-white font-bold py-2 px-4 rounded-lg">
+                <button className="mt-3 bg-red-500 hover:bg-red-600 text-white w-24 font-bold py-2 px-4 rounded-lg">
                   <Link href="/businessUser/recipes">Cancel</Link>
                 </button>
                 <button
                   type="submit"
                   onClick={handleCreateRecipe}
-                  className="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg"
+                  className="mt-3 bg-blue-600 hover:bg-blue-700 text-white w-24 font-bold py-2 px-4 rounded-lg"
                 >
                   Create
                 </button>

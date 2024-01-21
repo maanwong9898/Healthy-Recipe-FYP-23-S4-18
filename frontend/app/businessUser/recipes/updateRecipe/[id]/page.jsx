@@ -306,7 +306,7 @@ const UpdateRecipePage = ({ params }) => {
         {/* Smaller maxWidth */}
         <div className="p-4 space-y-4 md:space-y-12 ">
           <div className="p-6 space-y-4 md:space-y-2 sm:p-4">
-            <h1 className="text-xl font-bold mb-6 leading-tight tracking-tight text-black md:text-2xl">
+            <h1 class="text-5xl font-bold leading-tight tracking-tight text-center text-gray-900 mb-8">
               Update Recipe
             </h1>
             <form className="space-y-3">
@@ -314,7 +314,7 @@ const UpdateRecipePage = ({ params }) => {
               <div className="flex flex-col">
                 <label
                   htmlFor="title"
-                  className="block text-xl mb-1 font-bold text-cyan-950"
+                  className="block text-xl mb-1 font-bold text-gray-900"
                 >
                   Title
                 </label>
@@ -325,14 +325,14 @@ const UpdateRecipePage = ({ params }) => {
                   placeholder="Title"
                   value={title}
                   onChange={clearErrorOnChange(setTitle)}
-                  className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-base rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                  className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-base rounded-lg block w-full p-2.5"
                 />
               </div>
               {/* DIETARY PREFERENCE */}
               <div className="flex flex-col">
                 <label
                   htmlFor="dietaryPreference"
-                  className="block text-xl mb-1 font-bold text-cyan-950"
+                  className="block text-xl mb-1 font-bold text-gray-900"
                 >
                   Dietary Preference
                 </label>
@@ -356,7 +356,7 @@ const UpdateRecipePage = ({ params }) => {
               <div className="flex flex-col">
                 <label
                   htmlFor="allergyRestriction"
-                  className="block text-xl mb-1 font-bold text-cyan-950"
+                  className="block text-xl mb-1 font-bold text-gray-900"
                 >
                   Allergens Contained
                 </label>
@@ -381,7 +381,7 @@ const UpdateRecipePage = ({ params }) => {
               <div className="flex flex-col">
                 <label
                   htmlFor="cookingTime"
-                  className="block text-xl mb-1 font-bold text-cyan-950"
+                  className="block text-xl mb-1 font-bold text-gray-900"
                 >
                   Cooking Time: (in minutes)
                 </label>
@@ -393,7 +393,7 @@ const UpdateRecipePage = ({ params }) => {
                   value={cookingTime}
                   onChange={clearErrorOnChange(setCookingTime)}
                   rows={4} // Adjust this number to increase height
-                  className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-base rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                  className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-base rounded-lg block w-full p-2.5"
                 />
               </div>
 
@@ -401,7 +401,7 @@ const UpdateRecipePage = ({ params }) => {
               <div className="flex flex-col">
                 <label
                   htmlFor="servingSize"
-                  className="block text-xl mb-1 font-bold text-cyan-950"
+                  className="block text-xl mb-1 font-bold text-gray-900"
                 >
                   Serving Size
                 </label>
@@ -413,7 +413,7 @@ const UpdateRecipePage = ({ params }) => {
                   value={servingSize}
                   onChange={clearErrorOnChange(setServingSize)}
                   rows={4} // Adjust this number to increase height
-                  className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-base rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                  className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-base rounded-lg block w-full p-2.5"
                 />
               </div>
 
@@ -421,7 +421,7 @@ const UpdateRecipePage = ({ params }) => {
               <div className="flex flex-col">
                 <label
                   htmlFor="description"
-                  className="block text-xl mb-1 font-bold text-cyan-950"
+                  className="block text-xl mb-1 font-bold text-gray-900"
                 >
                   Description
                 </label>
@@ -432,7 +432,7 @@ const UpdateRecipePage = ({ params }) => {
                   value={description}
                   onChange={clearErrorOnChange(setDescription)}
                   rows={7} // Adjust this number to increase height
-                  className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-base rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                  className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-base rounded-lg block w-full p-2.5"
                 />
               </div>
 
@@ -440,7 +440,7 @@ const UpdateRecipePage = ({ params }) => {
               <div className="flex flex-col">
                 <label
                   htmlFor="dietaryInformation"
-                  className="block text-xl mb-1 font-bold text-cyan-950"
+                  className="block text-xl mb-1 font-bold text-gray-900"
                 >
                   Dietary Information
                 </label>
@@ -451,7 +451,7 @@ const UpdateRecipePage = ({ params }) => {
                   value={dietaryInformation}
                   onChange={clearErrorOnChange(setDietaryInformation)}
                   rows={7} // Adjust this number to increase height
-                  className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-base rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                  className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-base rounded-lg block w-full p-2.5"
                 />
               </div>
 
@@ -459,7 +459,7 @@ const UpdateRecipePage = ({ params }) => {
               {/* <div className="flex flex-col">
                 <label
                   htmlFor="ingredients"
-                  className="block text-xl mb-1 font-bold text-cyan-950"
+                  className="block text-xl mb-1 font-bold text-gray-900"
                 >
                   Ingredients:
                 </label>
@@ -472,7 +472,7 @@ const UpdateRecipePage = ({ params }) => {
                       onChange={(e) =>
                         handleIngredientChange(index, e.target.value)
                       }
-                      className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-base rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 mr-2"
+                      className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-base rounded-lg block w-full p-2.5 mr-2"
                     />
                     {ingredientList.length > 1 && (
                       <button
@@ -506,7 +506,7 @@ const UpdateRecipePage = ({ params }) => {
               <div className="flex flex-col">
                 <label
                   htmlFor="ingredients"
-                  className="block text-xl mb-1 font-bold text-cyan-950"
+                  className="block text-xl mb-1 font-bold text-gray-900"
                 >
                   Ingredients
                 </label>
@@ -519,7 +519,7 @@ const UpdateRecipePage = ({ params }) => {
                       onChange={(e) =>
                         handleIngredientChange(index, e.target.value)
                       }
-                      className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-base rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 mr-2"
+                      className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-base rounded-lg block w-full p-2.5 mr-2"
                     />
                     {ingredientList.length > 1 && (
                       <button
@@ -531,7 +531,7 @@ const UpdateRecipePage = ({ params }) => {
                             index
                           )
                         }
-                        className="text-white bg-red-500 hover:bg-red-800 font-medium text-sm px-3 py-2.5 rounded-lg"
+                        className="text-white bg-red-500 hover:bg-red-600 font-medium text-sm px-3 py-2.5 rounded-lg"
                       >
                         Remove
                       </button>
@@ -553,7 +553,7 @@ const UpdateRecipePage = ({ params }) => {
               <div className="flex flex-col">
                 <label
                   htmlFor="instructions"
-                  className="block text-xl mb-1 font-bold text-cyan-950"
+                  className="block text-xl mb-1 font-bold text-gray-900"
                 >
                   Instructions
                 </label>
@@ -566,7 +566,7 @@ const UpdateRecipePage = ({ params }) => {
                       onChange={(e) =>
                         handleInstructionChange(index, e.target.value)
                       }
-                      className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-base rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 mr-2"
+                      className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-base rounded-lg block w-full p-2.5 mr-2"
                     />
                     {instructionList.length > 1 && (
                       <button
@@ -578,7 +578,7 @@ const UpdateRecipePage = ({ params }) => {
                             index
                           )
                         }
-                        className="text-white bg-red-500 hover:bg-red-800 font-medium text-sm px-3 py-2.5 rounded-lg"
+                        className="text-white bg-red-500 hover:bg-red-600 font-medium text-sm px-3 py-2.5 rounded-lg"
                       >
                         Remove
                       </button>
@@ -600,7 +600,7 @@ const UpdateRecipePage = ({ params }) => {
               <div className="flex flex-col">
                 <label
                   htmlFor="nutritionalInformation"
-                  className="block text-xl mb-1 font-bold text-cyan-950"
+                  className="block text-xl mb-1 font-bold text-gray-900"
                 >
                   Nutritional Information
                 </label>
@@ -708,7 +708,7 @@ const UpdateRecipePage = ({ params }) => {
               <div className="flex flex-col">
                 <label
                   htmlFor="imageUrl"
-                  className="block text-xl mb-1 font-bold text-cyan-950"
+                  className="block text-xl mb-1 font-bold text-gray-900"
                 >
                   Image URL
                 </label>
@@ -719,26 +719,28 @@ const UpdateRecipePage = ({ params }) => {
                   placeholder="Image URL"
                   value={imageUrl}
                   onChange={clearErrorOnChange(setImageUrl)}
-                  className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-base rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                  className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-base rounded-lg block w-full p-2.5"
                 />
               </div>
 
               {/* Display error or success message */}
               {error && (
-                <p className="text-red-500 font-bold text-2xl">{error}</p>
+                <p className="text-red-500 font-semibold text-sm">{error}</p>
               )}
               {success && (
-                <p className="text-green-500 font-bold text-2xl">{success}</p>
+                <p className="text-green-500 font-semibold text-sm">
+                  {success}
+                </p>
               )}
               {/* SUBMIT BUTTON */}
-              <div className="flex flex-row space-x-5">
-                <button className="bg-red-500 hover:bg-red-800 text-white font-bold py-2 px-4 rounded-lg">
+              <div className="flex flex-row space-x-5 justify-left">
+                <button className="mt-3 bg-red-500 hover:bg-red-600 text-white w-24 font-bold py-2 px-4 rounded-lg">
                   <Link href="/businessUser/recipes">Cancel</Link>
                 </button>
                 <button
                   type="submit"
                   onClick={handleUpdateRecipe}
-                  className="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg"
+                  className="mt-3 bg-blue-600 hover:bg-blue-700 text-white w-24 font-bold py-2 px-4 rounded-lg"
                 >
                   Update
                 </button>

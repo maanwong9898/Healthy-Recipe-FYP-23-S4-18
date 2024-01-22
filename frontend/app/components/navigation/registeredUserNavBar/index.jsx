@@ -2,6 +2,9 @@
 import React, { useState, useRef } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
+import Image from "next/image";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCircleUser } from "@fortawesome/free-solid-svg-icons";
 
 const AccountDropdownMenu = () => {
   return (
@@ -33,6 +36,7 @@ const AccountDropdownMenu = () => {
 
 const RegisteredUserNavBar = () => {
   const router = useRouter();
+  const [username, setUsername] = useState("");
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isDropdownVisible, setDropdownVisible] = useState(false);
 
@@ -78,102 +82,114 @@ const RegisteredUserNavBar = () => {
   };
 
   return (
-    <nav className="bg-cyan-600">
-      <div className="flex flex-wrap items-center p-3">
-        {/* Logo and mobile menu button (small screen) */}
-        <div className="flex items-center justify-between w-full md:w-auto md:mr-4">
-          <div className="flex items-center text-white rounded-md px-3 py-2 text-lg font-extrabold">
-            My Healthy Recipe
-          </div>
-          <button
-            className="text-white p-2 rounded-md hover:text-white hover:bg-blue-900 md:hidden"
-            onClick={() => setIsMenuOpen(!isMenuOpen)}
-          >
-            {isMenuOpen ? "✖" : "☰"}
-          </button>
-          <button
-            className="text-white p-2 rounded-md hover:text-white hover:bg-blue-900 md:hidden"
-            onClick={() => setIsAccountMenuOpen(!isAccountMenuOpen)}
-          >
-            Account Settings
-          </button>
-        </div>
+    <nav
+      className="bg-orange-50"
+      style={{ position: "sticky", top: 0, zIndex: 1000 }}
+    >
+      <div className="flex flex-wrap items-center justify-between mx-auto p-3">
+        <Image
+          src="/logo.png"
+          alt="My Healthy Recipe"
+          width={100}
+          height={100}
+          className="items-center justify-center"
+        />
 
-        {/* Links for large screens */}
+        {/* For small screen */}
+        <button
+          className="text-gray-900 p-2 rounded-md hover:text-orange-600 md:hidden"
+          onClick={() => setIsMenuOpen(!isMenuOpen)}
+        >
+          {isMenuOpen ? "✖" : "☰"}
+        </button>
+        <button
+          className="p-2 md:hidden"
+          onClick={() => setIsAccountMenuOpen(!isAccountMenuOpen)}
+        >
+          <FontAwesomeIcon icon={faCircleUser} size="xl" />
+          <span className="text-base tracking-normal font-medium ml-2 hover:text-orange-600">
+            {/* need to change to the actual username of logged in user */}
+            {username || "My Account"}
+          </span>
+        </button>
+
         <div
           className={`w-full md:flex md:w-auto ${
             isMenuOpen ? "block" : "hidden"
           }`}
         >
-          <div className="flex flex-col md:flex-row md:space-x-4 md:mt-0 md:text-sm md:font-medium">
+          <div className="flex flex-col md:flex-row md:space-x-8 md:mt-0 md:text-lg md:font-medium">
             <Link
               href="/registeredUser"
-              className="text-white hover:bg-sky-200 hover:text-black rounded-md px-3 py-2 text-sm font-bold"
+              className="text-gray-900 hover:text-orange-600 rounded-md px-3 py-2 font-bold"
             >
               Home
             </Link>
-
             <Link
               href="/registeredUser/aboutUs"
-              className="text-white hover:bg-sky-200 hover:text-black rounded-md px-3 py-2 text-sm font-bold"
+              className="text-gray-900 hover:text-orange-600 rounded-md px-3 py-2 font-bold"
             >
               About Us
             </Link>
-
             <Link
               href="/registeredUser/recipes"
-              className="text-white hover:bg-sky-200 hover:text-black rounded-md px-3 py-2 text-sm font-bold"
+              className="text-gray-900 hover:text-orange-600 rounded-md px-3 py-2 font-bold"
             >
               Recipes
             </Link>
             <Link
               href="/registeredUser/mealPlan"
-              className="text-white hover:bg-sky-200 hover:text-black rounded-md px-3 py-2 text-sm font-bold"
+              className="text-gray-900 hover:text-orange-600 rounded-md px-3 py-2 font-bold"
             >
               Meal Plans
             </Link>
             <Link
               href="/registeredUser/educationalContent"
-              className="text-white hover:bg-sky-200 hover:text-black rounded-md px-3 py-2 text-sm font-bold"
+              className="text-gray-900 hover:text-orange-600 rounded-md px-3 py-2 font-bold"
             >
-              Educational Content
+              Educational Contents
             </Link>
             <Link
               href="/registeredUser/businessBlogPost"
-              className="text-white hover:bg-sky-200 hover:text-black rounded-md px-3 py-2 text-sm font-bold"
+              className="text-gray-900 hover:text-orange-600 rounded-md px-3 py-2 font-bold"
             >
-              Business Blog Posts
+              Blogs
             </Link>
-            {/* <button
-              onClick={confirmAndLogout}
-              className="block md:hidden py-2 pr-4 pl-3 text-blue-800 rounded md:bg-transparent md:ml-auto md:p-0"
-            >
-              Logout
-            </button> */}
           </div>
         </div>
 
         {/* Links for large screens for Acccounts*/}
         <div
-          className={`w-full md:flex md:w-auto md:ml-auto mr-20 ${
+          className={`w-full md:flex md:w-auto mr-5 ${
             isAccountMenuOpen ? "block" : "hidden"
           }`}
         >
-          <div className="flex flex-col md:flex-row md:space-x-8 md:mt-0 md:text-sm md:font-medium">
+          <div className="flex flex-col md:flex-row items-start md:space-x-8 md:mt-0 md:text-sm md:font-medium">
             <div
               className="relative flex items-center"
               onMouseEnter={handleMouseEnterAccount}
               onMouseLeave={handleMouseLeaveAccount}
             >
-              <span className="hidden md:block text-white hover:bg-sky-200 hover:text-black rounded-md px-3 py-2 text-sm font-bold cursor-pointer">
-                Account Settings
+              <span className="hidden md:block rounded font-bold  text-base cursor-pointer">
+                <FontAwesomeIcon icon={faCircleUser} size="xl" />
+                <span className="text-base tracking-normal font-bold ml-2 hover:text-orange-600">
+                  {/* need to change to the actual username of logged in user */}
+                  {username || "My Account"}
+                </span>
               </span>
               {isAccountDropdownVisible && <AccountDropdownMenu />}
             </div>
-            <button
-              onClick={confirmAndLogout}
-              className="block md:hidden py-2 pr-4 pl-3 text-blue-800 rounded md:bg-transparent md:ml-auto md:p-0"
-            >
+
+            {/* For small screens */}
+            <Link href="/registeredUser/myAccount/viewAccount">
+              <button
+                onClick={confirmAndLogout}
+                className="block md:hidden py-2 pr-4 pl-3 rounded-lg md:ml-auto md:p-0 text-base font-bold hover:text-orange-600"
+              >
+                My Account
+              </button>
+            </Link>
+            <button className="block md:hidden py-2 pr-4 pl-3 rounded-lg md:ml-auto md:p-0 text-base font-bold hover:text-orange-600">
               Logout
             </button>
           </div>

@@ -466,7 +466,7 @@ const RegisteredUserHomepage = () => {
   );
 
   return (
-    <div className="bg-white">
+    <div>
       {/* Display Recipes */}
       <div>
         <div className="mt-8 p-5">

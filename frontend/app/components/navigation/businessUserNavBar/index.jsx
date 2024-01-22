@@ -5,11 +5,10 @@ import Link from "next/link";
 import Image from "next/image";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircleUser } from "@fortawesome/free-solid-svg-icons";
-import { faChevronDown } from "@fortawesome/free-solid-svg-icons";
 
 const AccountDropdownMenu = () => {
   return (
-    <div className="absolute left-8 top-14 w-32 rounded-md shadow-lg bg-white">
+    <div className="absolute left-0 top-8 w-44 rounded-md shadow-lg bg-white z-10">
       <ul>
         <li className="px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
           <Link href="/businessUser/myAccount/viewAccount">My Account</Link>
@@ -24,7 +23,7 @@ const AccountDropdownMenu = () => {
 
 const RecipesDropdownMenu = () => {
   return (
-    <div className="absolute z-10 mt-2 w-48 bg-white rounded-md shadow-lg text-sm">
+    <div className="absolute left-0 top-10 w-40 rounded-md shadow-lg bg-white z-1 text-sm">
       <ul>
         <li className="px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
           <Link href="/businessUser/recipes/createRecipe">Create Recipe</Link>
@@ -37,34 +36,67 @@ const RecipesDropdownMenu = () => {
   );
 };
 
+const BlogPostDropdownMenu = () => {
+  return (
+    <div className="absolute left-0 top-10 w-44 rounded-md shadow-lg bg-white z-10 text-sm">
+      <ul>
+        <li className="px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
+          <Link href="/businessUser/businessBlogPost/createBusinessBlogPost">
+            Create Blog Post
+          </Link>
+        </li>
+        <li className="px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
+          <Link href="/businessUser/businessBlogPost">View My Blog Posts</Link>
+        </li>
+      </ul>
+    </div>
+  );
+};
+
+const EducationalContentDropdownMenu = () => {
+  return (
+    <div className="absolute left-0 top-10 w-56 rounded-md shadow-lg bg-white z-10 text-sm">
+      <ul>
+        <li className="px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
+          <Link href="/businessUser/educationalContent/createEducationalContent">
+            Create Educational Content
+          </Link>
+        </li>
+        <li className="px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
+          <Link href="/businessUser/educationalContent">
+            View My Educational Content
+          </Link>
+        </li>
+      </ul>
+    </div>
+  );
+};
+
 const BusinessUserNavBar = () => {
   const router = useRouter();
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [isDropdownVisible, setDropdownVisible] = useState(false);
+  const [username, setUsername] = useState("");
 
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+  //Account Menu
   const [isAccountMenuOpen, setIsAccountMenuOpen] = useState(false);
   const [isAccountDropdownVisible, setAccountDropdownVisible] = useState(false);
 
-  const [isRecipesDropdownOpen, setRecipesDropdownOpen] = useState(false);
+  // Recipes Menu
+  const [isRecipesDropdownVisible, setRecipesDropdownVisible] = useState(false);
 
-  const [isBlogDropdownOpen, seBlogDropdownOpen] = useState(false);
-  const [isEducationalContentDropdownOpen, setEducationalContentDropdownOpen] =
-    useState(false);
+  //Blog Posts Menu
+  const [isBlogDropdownVisible, seBlogDropdownVisible] = useState(false);
 
-  const toggleRecipesDropdown = () => {
-    setRecipesDropdownOpen(!isRecipesDropdownOpen);
-  };
-
-  const toggleBlogDropdown = () => {
-    seBlogDropdownOpen(!isBlogDropdownOpen);
-  };
-
-  const toggleEducationalContentDropdown = () => {
-    setEducationalContentDropdownOpen(!isEducationalContentDropdownOpen);
-  };
+  //Educational Content Menu
+  const [
+    isEducationalContentDropdownVisible,
+    setEducationalContentDropdownVisible,
+  ] = useState(false);
 
   const hideTimer = useRef(null);
 
+  // Account Dropdown Menu handler
   const handleMouseEnterAccount = () => {
     if (hideTimer.current) {
       clearTimeout(hideTimer.current);
@@ -78,19 +110,40 @@ const BusinessUserNavBar = () => {
     }, 300);
   };
 
+  // Recipes Dropdown Menu handler
   const handleMouseEnterRecipes = () => {
-    if (hideTimer.current) {
-      clearTimeout(hideTimer.current);
-    }
-    setRecipesDropdownOpen(true);
+    setRecipesDropdownVisible(true);
   };
 
   const handleMouseLeaveRecipes = () => {
     hideTimer.current = setTimeout(() => {
-      setRecipesDropdownOpen(false);
+      setRecipesDropdownVisible(false);
     }, 300);
   };
 
+  // Blog Posts Dropdown Menu handler
+  const handleMouseEnterBlogPosts = () => {
+    seBlogDropdownVisible(true);
+  };
+
+  const handleMouseLeaveBlogPosts = () => {
+    hideTimer.current = setTimeout(() => {
+      seBlogDropdownVisible(false);
+    }, 300);
+  };
+
+  // Educational Content Dropdown Menu handler
+  const handleMouseEnterEducationalContent = () => {
+    setEducationalContentDropdownVisible(true);
+  };
+
+  const handleMouseLeaveEducationalContent = () => {
+    hideTimer.current = setTimeout(() => {
+      setEducationalContentDropdownVisible(false);
+    }, 300);
+  };
+
+  //Logout handler
   const confirmAndLogout = () => {
     console.log("logout");
     // Clear user data from local storage
@@ -103,125 +156,123 @@ const BusinessUserNavBar = () => {
 
   return (
     <nav
-      className="bg-orange-50 border-gray-200"
+      className="bg-orange-50"
       style={{ position: "sticky", top: 0, zIndex: 1000 }}
     >
-      <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
+      <div className="flex flex-wrap items-center justify-between mx-auto p-3">
         <Image
           src="/logo.png"
+          alt="My Healthy Recipe"
           width={100}
           height={100}
           className="items-center justify-center"
         />
-        <div className="flex md:order-2 space-x-3 md:space-x-0">
-          <div className="flex items-center space-x-7">
-            <div
-              className="flex items-center relative"
-              onMouseEnter={handleMouseEnterAccount}
-              onMouseLeave={handleMouseLeaveAccount}
-            >
-              <button
-                type="button"
-                className="text-base z-10 list-none divide-y divide-gray-100 rounded my-4 w-44"
-              >
-                <FontAwesomeIcon icon={faCircleUser} size="2xl" />
-                <span className="text-base tracking-normal font-normal ml-2">
-                  {/* need to change to the actual username of logged in user */}
-                  Username
-                </span>
-              </button>
-              {isAccountDropdownVisible && <AccountDropdownMenu />}
-            </div>
-          </div>
-          <button
-            type="button"
-            onClick={() => setIsMenuOpen(!isMenuOpen)}
-            className="inline-flex items -center p-2 w-10 h-10 justify-center text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 "
-          >
-            {isMenuOpen ? "✖" : "☰"}
-          </button>
-        </div>
+
+        {/* For small screen */}
+        <button
+          className="text-gray-900 p-2 rounded-md hover:text-orange-600 md:hidden"
+          onClick={() => setIsMenuOpen(!isMenuOpen)}
+        >
+          {isMenuOpen ? "✖" : "☰"}
+        </button>
+        <button
+          className="p-2 md:hidden"
+          onClick={() => setIsAccountMenuOpen(!isAccountMenuOpen)}
+        >
+          <FontAwesomeIcon icon={faCircleUser} size="xl" />
+          <span className="text-base tracking-normal font-medium ml-2 hover:text-orange-600">
+            {/* need to change to the actual username of logged in user */}
+            {username || "My Account"}
+          </span>
+        </button>
+
+        {/* Links - Dahsboard, Recipes, Blogs, Educational Content */}
         <div
           className={`w-full md:flex md:w-auto ${
             isMenuOpen ? "block" : "hidden"
           }`}
         >
           <div className="flex flex-col md:flex-row md:space-x-8 md:mt-0 md:text-lg md:font-medium">
+            {/* Dashboard */}
             <Link
               href="/businessUser"
-              className="text-black hover:text-orange-500 rounded-md px-3 py-2 font-bold"
+              className="text-gray-900 hover:text-orange-600 rounded-md px-3 py-2 font-bold"
             >
               Dashboard
             </Link>
-            <div className="relative group">
-              <button
-                //onClick={toggleRecipesDropdown}
-                onMouseEnter={handleMouseEnterRecipes}
-                onMouseLeave={handleMouseLeaveRecipes}
-                className="text-black hover:text-orange-500 rounded-md px-3 py-2 font-bold"
-              >
-                <span className="mr-2">Recipes</span>
 
-                <FontAwesomeIcon icon={faChevronDown} size="sm" />
-              </button>
-              {isRecipesDropdownOpen && <RecipesDropdownMenu />}
-            </div>
-            <div className="relative group">
-              <button
-                onClick={toggleBlogDropdown}
-                className="text-black hover:text-orange-500 rounded-md px-3 py-2 font-bold"
-              >
-                <span className="mr-2">Blogs</span>
-
-                <FontAwesomeIcon icon={faChevronDown} size="sm" />
-              </button>
-              {isBlogDropdownOpen && (
-                <div className="absolute z-10 mt-2 w-48 bg-white border rounded-md shadow-lg text-sm">
-                  <Link
-                    href="/businessUser/businessBlogPost/createBusinessBlogPost"
-                    className="block px-4 py-2 text-gray-900 hover:bg-gray-200"
-                  >
-                    Create Blog Post
-                  </Link>
-                  <Link
-                    href="/businessUser/businessBlogPost"
-                    className="block px-4 py-2 text-gray-900 hover:bg-gray-200"
-                  >
-                    View My Blog Posts
-                  </Link>
-                </div>
-              )}
-            </div>
-            <div className="relative group">
-              <button
-                onClick={toggleEducationalContentDropdown}
-                className="text-black hover:text-orange-500 rounded-md px-3 py-2 font-bold"
-              >
-                <span className="mr-2">Educational Contents</span>
-
-                <FontAwesomeIcon icon={faChevronDown} size="sm" />
-              </button>
-              {isEducationalContentDropdownOpen && (
-                <div className="absolute z-10 ml-2 mt-2 w-56 bg-white border rounded-md shadow-lg text-sm">
-                  <Link
-                    href="/businessUser/educationalContent/createEducationalContent"
-                    className="block px-4 py-2 text-gray-900 hover:bg-gray-200"
-                  >
-                    Create Educational Content
-                  </Link>
-                  <Link
-                    href="/businessUser/educationalContent"
-                    className="block px-4 py-2 text-gray-900 hover:bg-gray-200"
-                  >
-                    View My Educational Contents
-                  </Link>
-                </div>
-              )}
-            </div>
-            <button
-              onClick={confirmAndLogout}
-              className="block font-bold md:hidden py-2 pr-4 pl-3 rounded-md hover:bg-orange-400 md:bg-orange-500 md:ml-auto md:p-0"
+            {/* Recipes */}
+            <div
+              className="relative flex items-center"
+              onMouseEnter={handleMouseEnterRecipes}
+              onMouseLeave={handleMouseLeaveRecipes}
             >
+              <span className="text-gray-900 hover:text-orange-600 rounded-md px-3 py-2 font-bold">
+                Recipes
+              </span>
+              {isRecipesDropdownVisible && <RecipesDropdownMenu />}
+            </div>
+
+            {/* Blog Post */}
+            <div
+              className="relative flex items-center"
+              onMouseEnter={handleMouseEnterBlogPosts}
+              onMouseLeave={handleMouseLeaveBlogPosts}
+            >
+              <span className="text-gray-900 hover:text-orange-600 rounded-md px-3 py-2 font-bold">
+                Blogs
+              </span>
+              {isBlogDropdownVisible && <BlogPostDropdownMenu />}
+            </div>
+
+            {/* Educational Content */}
+            <div
+              className="relative flex items-center"
+              onMouseEnter={handleMouseEnterEducationalContent}
+              onMouseLeave={handleMouseLeaveEducationalContent}
+            >
+              <span className="text-gray-900 hover:text-orange-600 rounded-md px-3 py-2 font-bold">
+                Educational Contents
+              </span>
+              {isEducationalContentDropdownVisible && (
+                <EducationalContentDropdownMenu />
+              )}
+            </div>
+          </div>
+        </div>
+
+        {/* Links for large screens for Acccounts*/}
+        <div
+          className={`w-full md:flex md:w-auto mr-5 ${
+            isAccountMenuOpen ? "block" : "hidden"
+          }`}
+        >
+          <div className="flex flex-col md:flex-row items-start md:space-x-8 md:mt-0 md:text-sm md:font-medium">
+            <div
+              className="relative flex items-center"
+              onMouseEnter={handleMouseEnterAccount}
+              onMouseLeave={handleMouseLeaveAccount}
+            >
+              <span className="hidden md:block rounded font-bold  text-base cursor-pointer">
+                <FontAwesomeIcon icon={faCircleUser} size="xl" />
+                <span className="text-base tracking-normal font-bold ml-2 hover:text-orange-600">
+                  {/* need to change to the actual username of logged in user */}
+                  {username || "My Account"}
+                </span>
+              </span>
+              {isAccountDropdownVisible && <AccountDropdownMenu />}
+            </div>
+
+            {/* For small screens */}
+            <Link href="/businessUser/myAccount/viewAccount">
+              <button
+                onClick={confirmAndLogout}
+                className="block md:hidden py-2 pr-4 pl-3 rounded-lg md:ml-auto md:p-0 text-base font-bold hover:text-orange-600"
+              >
+                My Account
+              </button>
+            </Link>
+            <button className="block md:hidden py-2 pr-4 pl-3 rounded-lg md:ml-auto md:p-0 text-base font-bold hover:text-orange-600">
               Logout
             </button>
           </div>

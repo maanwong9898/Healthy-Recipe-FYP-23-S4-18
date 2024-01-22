@@ -2,33 +2,13 @@
 import React, { useState, useRef } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
-import AccountCircleIcon from "@mui/icons-material/AccountCircle";
-
-const DropdownMenuForUserAccountRelated = () => {
-  return (
-    <div className="absolute left-0 top-10 w-48 rounded-md shadow-lg bg-white z-10">
-      <ul>
-        <li className="px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
-          <Link href="/sysAdmin/userAccount/createUserAccount">
-            Create User Account
-          </Link>
-        </li>
-        <li className="px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
-          <Link href="/sysAdmin/userAccount">View User Account</Link>
-        </li>
-        <li className="px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
-          <Link href="/sysAdmin/businessAccountPendingList">
-            Verify Business Acccount
-          </Link>
-        </li>
-      </ul>
-    </div>
-  );
-};
+import Image from "next/image";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCircleUser } from "@fortawesome/free-solid-svg-icons";
 
 const AccountDropdownMenu = () => {
   return (
-    <div className="absolute left-0 top-10 w-48 rounded-md shadow-lg bg-white z-10">
+    <div className="absolute left-0 top-8 w-44 rounded-md shadow-lg bg-white z-10">
       <ul>
         <li className="px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
           <Link href="/sysAdmin/myAccount/viewAccount">My Account</Link>
@@ -41,30 +21,64 @@ const AccountDropdownMenu = () => {
   );
 };
 
+const UserAccountDropdownMenu = () => {
+  return (
+    <div className="absolute left-0 top-10 w-44 rounded-md shadow-lg bg-white z-1 text-sm">
+      <ul>
+        <li className="px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
+          <Link href="/sysAdmin/userAccount/createUserAccount">
+            Create User Account
+          </Link>
+        </li>
+        <li className="px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
+          <Link href="/sysAdmin/userAccount">View User Accounts</Link>
+        </li>
+        <li className="px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
+          <Link href="/sysAdmin/businessAccountPendingList">
+            Verify Business Acccounts
+          </Link>
+        </li>
+      </ul>
+    </div>
+  );
+};
+
+const SuspendContentsDropdownMenu = () => {
+  return (
+    <div className="absolute left-0 top-10 w-44 rounded-md shadow-lg bg-white z-1 text-sm">
+      <ul>
+        <li className="px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
+          <Link href="/sysAdmin/suspendBlogPost">Suspend Blog Posts</Link>
+        </li>
+        <li className="px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
+          <Link href="/sysAdmin/suspendRecipe">Suspend Recipes</Link>
+        </li>
+      </ul>
+    </div>
+  );
+};
+
 const SysAdminNavBar = () => {
   const router = useRouter();
   const [username, setUsername] = useState("");
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [isDropdownVisible, setDropdownVisible] = useState(false);
 
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+  //Account Menu
   const [isAccountMenuOpen, setIsAccountMenuOpen] = useState(false);
   const [isAccountDropdownVisible, setAccountDropdownVisible] = useState(false);
 
+  //User Account Menu
+  const [isUserAccountDropdownVisible, setUserAccountDropdownVisible] =
+    useState(false);
+
+  //Suspend Contents Menu
+  const [isSuspendContentsDropdownVisible, setSuspendContentsDropdownVisible] =
+    useState(false);
+
   const hideTimer = useRef(null);
 
-  const handleMouseEnter = () => {
-    if (hideTimer.current) {
-      clearTimeout(hideTimer.current);
-    }
-    setDropdownVisible(true);
-  };
-
-  const handleMouseLeave = () => {
-    hideTimer.current = setTimeout(() => {
-      setDropdownVisible(false);
-    }, 300);
-  };
-
+  // Account Dropdown Menu handler
   const handleMouseEnterAccount = () => {
     if (hideTimer.current) {
       clearTimeout(hideTimer.current);
@@ -78,6 +92,29 @@ const SysAdminNavBar = () => {
     }, 300);
   };
 
+  // User Account Dropdown Menu handler
+  const handleMouseEnterUserAccount = () => {
+    setUserAccountDropdownVisible(true);
+  };
+
+  const handleMouseLeaveUserAccount = () => {
+    hideTimer.current = setTimeout(() => {
+      setUserAccountDropdownVisible(false);
+    }, 300);
+  };
+
+  // Suspend Contents Dropdown Menu handler
+  const handleMouseEnterSuspendContents = () => {
+    setSuspendContentsDropdownVisible(true);
+  };
+
+  const handleMouseLeaveSuspendContents = () => {
+    hideTimer.current = setTimeout(() => {
+      setSuspendContentsDropdownVisible(false);
+    }, 300);
+  };
+
+  //Logout handler
   const confirmAndLogout = () => {
     console.log("logout");
     // Clear user data from local storage
@@ -90,118 +127,119 @@ const SysAdminNavBar = () => {
 
   return (
     <nav
+      className="bg-orange-50"
       style={{ position: "sticky", top: 0, zIndex: 1000 }}
-      className="bg-cyan-600"
     >
-      <div className="flex flex-wrap items-center p-3">
-        {/* Logo and mobile menu button (small screen) */}
-        <div className="flex items-center justify-between w-full md:w-auto md:mr-4">
-          <div className="flex items-center text-white rounded-md px-3 py-2 text-lg font-extrabold">
-            My Healthy Recipe
-          </div>
-          <button
-            className="p-2 rounded-md hover:text-white hover:bg-blue-900 md:hidden"
-            onClick={() => setIsMenuOpen(!isMenuOpen)}
-          >
-            {isMenuOpen ? "✖" : "☰"}
-          </button>
-          {/* <button
-            className=" p-2 rounded-md hover:text-white hover:bg-blue-900 md:hidden"
-            onClick={() => setIsAccountMenuOpen(!isAccountMenuOpen)}
-          >
-            Account Settings
-          </button> */}
-          <button
-            className=" p-2 rounded-md hover:text-white md:hidden"
-            onClick={() => setIsAccountMenuOpen(!isAccountMenuOpen)}
-          >
-            <AccountCircleIcon /> {username || "My Account"}
-          </button>
-        </div>
+      <div className="flex flex-wrap items-center justify-between mx-auto p-3">
+        <Image
+          src="/logo.png"
+          alt="My Healthy Recipe"
+          width={100}
+          height={100}
+          className="items-center justify-center"
+        />
+        {/* For small screen */}
+        <button
+          className="text-gray-900 p-2 rounded-md hover:text-orange-600 md:hidden"
+          onClick={() => setIsMenuOpen(!isMenuOpen)}
+        >
+          {isMenuOpen ? "✖" : "☰"}
+        </button>
+        <button
+          className="p-2 md:hidden"
+          onClick={() => setIsAccountMenuOpen(!isAccountMenuOpen)}
+        >
+          <FontAwesomeIcon icon={faCircleUser} size="xl" />
+          <span className="text-base tracking-normal font-medium ml-2 hover:text-orange-600">
+            {/* need to change to the actual username of logged in user */}
+            {username || "My Account"}
+          </span>
+        </button>
 
-        {/* Links for large screens */}
+        {/* Links - Dahsboard, Recipes, Blogs, Educational Content */}
         <div
           className={`w-full md:flex md:w-auto ${
             isMenuOpen ? "block" : "hidden"
           }`}
         >
-          <div className="flex flex-col md:flex-row md:space-x-4 md:mt-0 md:text-sm md:font-medium">
+          <div className="flex flex-col md:flex-row md:space-x-8 md:mt-0 md:text-lg md:font-medium">
+            {/* Dashboard */}
             <Link
               href="/sysAdmin"
-              className="text-white hover:bg-sky-200 hover:text-black rounded-md px-3 py-2 text-sm font-bold"
+              className="text-gray-900 hover:text-orange-600 rounded-md px-3 py-2 font-bold"
             >
-              Home
+              Dashboard
             </Link>
+
+            {/* User Accounts */}
             <div
               className="relative flex items-center"
-              onMouseEnter={handleMouseEnter}
-              onMouseLeave={handleMouseLeave}
+              onMouseEnter={handleMouseEnterUserAccount}
+              onMouseLeave={handleMouseLeaveUserAccount}
             >
-              <span className="text-white hover:bg-sky-200 hover:text-black rounded-md px-3 py-2 text-sm font-bold cursor-pointer">
+              <span className="text-gray-900 hover:text-orange-600 rounded-md px-3 py-2 font-bold">
                 User Account
               </span>
-              {isDropdownVisible && <DropdownMenuForUserAccountRelated />}
+              {isUserAccountDropdownVisible && <UserAccountDropdownMenu />}
             </div>
+
+            {/* Create Category */}
             <Link
-              href="/sysAdmin/userProfile"
-              className="text-white hover:bg-sky-200 hover:text-black rounded-md px-3 py-2 text-sm font-bold"
-            >
-              User Profile
-            </Link>
-            <Link
-              href="/sysAdmin/allCategory"
-              className="text-white hover:bg-sky-200 hover:text-black rounded-md px-3 py-2 text-sm font-bold"
+              href="/sysAdmin/createCategory"
+              className="text-gray-900 hover:text-orange-600 rounded-md px-3 py-2 font-bold"
             >
               Create Category
             </Link>
-            <Link
-              href="/sysAdmin/suspendRecipe"
-              className="text-white hover:bg-sky-200 hover:text-black rounded-md px-3 py-2 text-sm font-bold"
+
+            {/* Suspend Contents */}
+            <div
+              className="relative flex items-center"
+              onMouseEnter={handleMouseEnterSuspendContents}
+              onMouseLeave={handleMouseLeaveSuspendContents}
             >
-              Suspend Recipes
-            </Link>
-            <Link
-              href="/sysAdmin/suspendBlogPost"
-              className="text-white hover:bg-sky-200 hover:text-black rounded-md px-3 py-2 text-sm font-bold"
-            >
-              Suspend Business Blog Posts
-            </Link>
-            <button
-              onClick={confirmAndLogout}
-              className="block md:hidden py-2 pl-3  rounded md:bg-transparent md:ml-auto md:p-0"
-            >
-              Logout
-            </button>
+              <span className="text-gray-900 hover:text-orange-600 rounded-md px-3 py-2 font-bold">
+                Suspend Contents
+              </span>
+              {isSuspendContentsDropdownVisible && (
+                <SuspendContentsDropdownMenu />
+              )}
+            </div>
           </div>
         </div>
+        {/* End of Links */}
 
         {/* Links for large screens for Acccounts*/}
         <div
-          className={`w-full md:flex md:w-auto md:ml-auto mr-5 ${
+          className={`w-full md:flex md:w-auto mr-5 ${
             isAccountMenuOpen ? "block" : "hidden"
           }`}
         >
-          <div className="flex flex-col md:flex-row md:space-x-8 md:mt-0 md:text-sm md:font-medium">
-            <Link
-              href="/sysAdmin/myAccount/viewAccount"
-              className=" sm:hidden hover:bg-blue-900 hover:text-white rounded-md px-3 py-2 text-sm font-bold"
-            >
-              My Account
-            </Link>
+          <div className="flex flex-col md:flex-row items-start md:space-x-8 md:mt-0 md:text-sm md:font-medium">
             <div
               className="relative flex items-center"
               onMouseEnter={handleMouseEnterAccount}
               onMouseLeave={handleMouseLeaveAccount}
             >
-              <span className="hidden md:block rounded font-bold hover:text-white text-base cursor-pointer">
-                <AccountCircleIcon /> {username || "My Account"}
+              <span className="hidden md:block rounded font-bold  text-base cursor-pointer">
+                <FontAwesomeIcon icon={faCircleUser} size="xl" />
+                <span className="text-base tracking-normal font-bold ml-2 hover:text-orange-600">
+                  {/* need to change to the actual username of logged in user */}
+                  {username || "My Account"}
+                </span>
               </span>
               {isAccountDropdownVisible && <AccountDropdownMenu />}
             </div>
-            <button
-              onClick={confirmAndLogout}
-              className="block md:hidden py-2 pr-4 pl-3  rounded md:bg-transparent md:ml-auto md:p-0"
-            >
+
+            {/* For small screens */}
+            <Link href="/sysAdmin/myAccount/viewAccount">
+              <button
+                onClick={confirmAndLogout}
+                className="block md:hidden py-2 pr-4 pl-3 rounded-lg md:ml-auto md:p-0 text-base font-bold hover:text-orange-600"
+              >
+                My Account
+              </button>
+            </Link>
+            <button className="block md:hidden py-2 pr-4 pl-3 rounded-lg md:ml-auto md:p-0 text-base font-bold hover:text-orange-600">
               Logout
             </button>
           </div>

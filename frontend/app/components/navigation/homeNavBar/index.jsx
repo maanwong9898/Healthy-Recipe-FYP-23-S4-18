@@ -14,59 +14,39 @@ const HomeNavbar = () => {
     router.push("/userLogin");
   };
 
-  const hideTimer = useRef(null);
-
-  const handleMouseEnterMenu = () => {
-    if (hideTimer.current) {
-      clearTimeout(hideTimer.current);
-    }
-    setDropdownVisible(true);
-  };
-
-  const handleMouseLeaveMenu = () => {
-    hideTimer.current = setTimeout(() => {
-      setDropdownVisible(false);
-    }, 300);
-  };
-
-  const confirmAndLogout = () => {
-    console.log("logout");
-    // Clear user data from local storage
-    localStorage.removeItem("username");
-    localStorage.removeItem("profile");
-
-    // Redirect to the homepage
-    router.push("/");
-  };
-
   return (
     <nav
-      className="bg-orange-50 border-gray-200"
+      className="bg-orange-50"
       style={{ position: "sticky", top: 0, zIndex: 1000 }}
     >
-      <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
+      <div className="flex flex-wrap items-center justify-between mx-auto p-3 ">
         <Image
           src="/logo.png"
+          alt="My Healthy Recipe"
           width={100}
           height={100}
           className="items-center justify-center"
         />
+
+        {/* For small screen */}
+        <button
+          className="text-black p-2 rounded-md hover:text-orange-600 md:hidden"
+          onClick={() => setIsMenuOpen(!isMenuOpen)}
+        >
+          {isMenuOpen ? "✖" : "☰"}
+        </button>
+
+        {/* Login button */}
         <div className="flex md:order-2 space-x-3 md:space-x-0 rtl:space-x-reverse">
           <button
-            type="button"
             onClick={handleLogin}
-            className="text-white bg-orange-500 hover:bg-orange-600 font-semibold rounded-lg text-base px-4 py-2 text-center"
+            className="text-white bg-orange-500 hover:bg-orange-600 font-semibold rounded-full text-base px-6 py-2 text-center md:mr-12"
           >
             Login
           </button>
-          <button
-            type="button"
-            onClick={() => setIsMenuOpen(!isMenuOpen)}
-            className="inline-flex items -center p-2 w-10 h-10 justify-center text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 "
-          >
-            {isMenuOpen ? "✖" : "☰"}
-          </button>
         </div>
+
+        {/* Links */}
         <div
           className={`w-full md:flex md:w-auto ${
             isMenuOpen ? "block" : "hidden"
@@ -75,42 +55,54 @@ const HomeNavbar = () => {
           <div className="flex flex-col md:flex-row md:space-x-8 md:mt-0 md:text-lg md:font-medium">
             <Link
               href="/"
-              className="text-black hover:bg-orange-400 rounded-md px-3 py-2 font-bold"
+              className="text-gray-900 hover:text-orange-600 rounded-md px-3 py-2 font-bold"
             >
               Home
             </Link>
             <Link
               href="/aboutUs"
-              className="text-black hover:bg-orange-400 rounded-md px-3 py-2 font-bold"
+              className="text-gray-900 hover:text-orange-600 rounded-md px-3 py-2 font-bold"
             >
               About Us
             </Link>
             <Link
               href="/recipes"
-              className="text-black hover:bg-orange-400 rounded-md px-3 py-2 font-bold"
+              className="text-gray-900 hover:text-orange-600 rounded-md px-3 py-2 font-bold"
             >
               Recipes
             </Link>
             <Link
               href="/mealPlan"
-              className="text-black hover:bg-orange-400 rounded-md px-3 py-2 font-bold"
+              className="text-gray-900 hover:text-orange-600 rounded-md px-3 py-2 font-bold"
             >
               Meal Plans
             </Link>
             <Link
               href="/educationalContent"
-              className="text-black hover:bg-orange-400 rounded-md px-3 py-2 font-bold"
+              className="text-gray-900 hover:text-orange-600 rounded-md px-3 py-2 font-bold"
             >
               Educational Contents
             </Link>
             <Link
               href="/businessBlogPost"
-              className="text-black hover:bg-orange-400 rounded-md px-3 py-2 font-bold"
+              className="text-gray-900 hover:text-orange-600 rounded-md px-3 py-2 font-bold"
             >
               Blogs
             </Link>
           </div>
         </div>
+        {/* Links for large screens*/}
+        {/* <div className="w-full md:flex md:w-auto mr-5">
+          <div className="flex flex-col md:flex-row items-start md:space-x-8 md:mt-0 md:text-sm md:font-medium">
+            <button
+              type="button"
+              onClick={handleLogin}
+              className="text-white bg-orange-500 hover:bg-orange-600 font-bold rounded-full text-base px-6 py-2 text-center"
+            >
+              Login
+            </button>
+          </div>
+        </div> */}
       </div>
     </nav>
   );

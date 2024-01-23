@@ -17,6 +17,6 @@ public interface NutritionistRepository extends JpaRepository<Nutritionist, Stri
 
     // List<Nutritionist> findById(String id);
      @Transactional
-    @Query("SELECT b FROM Nutritionist b WHERE b.enabled = false")
+    @Query("SELECT b FROM Nutritionist b WHERE b.verified = false")
     List<Nutritionist> findUnverifiedUsers(); 
 }

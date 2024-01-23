@@ -43,6 +43,9 @@ public class Nutritionist extends User {
 
     @Column
     private String contactNumber;
+    
+    @Column(columnDefinition="bit(1) default b'0'")
+    private Boolean verified = false;
 
     @PrePersist
     public void prePersist() {

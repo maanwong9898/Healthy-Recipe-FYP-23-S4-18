@@ -3,6 +3,7 @@ package com.FYP18.HealthyRecipe.Service;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.List;
+import java.util.Optional;
 import java.util.regex.Pattern;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import com.FYP18.HealthyRecipe.DTO.DashboardDTO;
 import com.FYP18.HealthyRecipe.DTO.DeleteUserRequest;
+import com.FYP18.HealthyRecipe.DTO.PasswordChangeRequest;
 import com.FYP18.HealthyRecipe.Entity.BusinessUser;
 import com.FYP18.HealthyRecipe.Entity.Nutritionist;
 import com.FYP18.HealthyRecipe.Entity.RegisteredUser;
@@ -76,6 +78,22 @@ public class LoginService {
         } 
     }
 
+    public String updatePassword(PasswordChangeRequest dto)
+    {
+        Optional<User> user = userRepository.findById(dto.getId());
+        if(!user.isPresent())
+        {
+            return "User not found!";
+        }
+        if(!user.get().getPassword().equals(dto.getOldPassword()))
+        {
+            return "Password doesn't match!";
+        } 
+        user.get().setPassword(dto.getNewPassword());
+        userRepository.save(user.get());     
+
+        return "Password Updated!";
+    }
     public BusinessUser CreateNewBusinessUser(BusinessUser user) throws Exception
     {
         CheckForUsername(user.getUsername());
@@ -242,7 +260,19 @@ public class LoginService {
         User user = userRepository.findById(userId).get();
         user.setEnabled(true);
         userRepository.save(user);
-        // return "Verified";
+
+        if(user.getRole().equals(Role.BUSINESS_USER))
+        {
+            BusinessUser bUser = businessUserRepository.findById(userId).get();
+            bUser.setVerified(true);
+            businessUserRepository.save(bUser); 
+        }
+        else
+        { 
+            Nutritionist nut = nutritionistRepository.findById(userId).get();
+            nut.setVerified(true);
+            nutritionistRepository.save(nut); 
+        } 
     }
     public void deleteUser(DeleteUserRequest request )
     {

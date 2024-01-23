@@ -2,71 +2,170 @@
 import { useRouter } from "next/navigation";
 import { useState, useEffect } from "react";
 import Link from "next/link";
+import axiosInterceptorInstance from "../../../axiosInterceptorInstance.js";
+
+// https://uiwjs.github.io/react-md-editor/
 
 // router path: /businessUser/educationalContent/createEducationalContent
-// this is the page to create educational content according to user story
+// this is the page to create educational content
 
-const mockEducationalContentCategory = [
-  {
-    category: "Healthy Eating",
-  },
-  {
-    category: "Healthy Lifestyle",
-  },
-];
-const CreateEducationalContentPage = () => {
+const CreateEducationalContent = () => {
+  // title state
   const [title, setTitle] = useState("");
-  const [publisher, setPublisher] = useState("");
-  const [category, setCategory] = useState("");
-  const [introduction, setIntroduction] = useState("");
-  const [mainContent, setMainContent] = useState("");
-  const [conclusion, setConclusion] = useState("");
+  const [titleCharCount, setTitleCharCount] = useState(0);
+  // category state
+  const [category, setCategory] = useState(""); // State to store selected category
+  const [categories, setCategories] = useState([]); // State to store categories
+  // info state
+  const [info, setInfo] = useState("");
+  const [infoCharCount, setInfoCharCount] = useState(0);
+  // image url state
   const [imageUrl, setImageUrl] = useState("");
-  const [imageTitle, setImageTitle] = useState("");
+  const [imageUrlCharCount, setImageUrlCharCount] = useState(0);
+  // success and error state
   const [error, setError] = useState("");
+  const [success, setSuccess] = useState(false);
+  const [userId, setUserId] = useState("");
 
-  useEffect(() => {
-    // Access localStorage after component mounts and is on the client-side
-    const storedUsername = localStorage.getItem("username");
-    if (storedUsername) {
-      setPublisher(storedUsername);
-    }
-  }, []);
-
-  // Function to handle category change
-  const handleCategoryChange = (e) => {
-    setCategory(e.target.value);
+  const handleTitleChange = (e) => {
+    setTitle(e.target.value);
+    setTitleCharCount(e.target.value.length);
+    setError("");
   };
 
-  const handleCreateEducationalContent = (event) => {
+  const handleCategoryChange = (e) => {
+    setCategory(e.target.value);
+    // Clear category related error when a new category is selected
+    if (e.target.value) {
+      setError("");
+    }
+  };
+
+  const handleInfoChange = (e) => {
+    setInfo(e.target.value);
+    setInfoCharCount(e.target.value.length);
+    setError("");
+  };
+
+  const handleImageUrlChange = (e) => {
+    setImageUrl(e.target.value);
+    setImageUrlCharCount(e.target.value.length);
+    setError("");
+  };
+
+  useEffect(() => {
+    const storedUserId = localStorage.getItem("userId"); // Retrieve user ID from localStorage
+    console.log("Current id", storedUserId);
+    if (storedUserId) {
+      setUserId(storedUserId);
+    }
+
+    // Fetch all business blog categories from backend
+    const fetchCategories = async () => {
+      console.log("Fetching categories...");
+      try {
+        const response = await axiosInterceptorInstance.get(
+          "category/getAllEducationalContentCategories"
+        );
+        console.log("Categories fetched:", response.data);
+        setCategories(response.data);
+      } catch (error) {
+        console.error("Error fetching categories:", error);
+      }
+    };
+
+    fetchCategories();
+  }, []);
+
+  // Validate the form before submitting
+  const validateForm = () => {
+    console.log("Type of category:", typeof category);
+    console.log("Value of category:", category);
+
+    if (!title.trim()) {
+      setError("Title cannot be empty.");
+      return false;
+    }
+
+    // Check if category is a number and is greater than 0
+    if (typeof category !== "number" || category <= 0) {
+      setError("Category must be selected.");
+      return false;
+    }
+
+    if (!info.trim()) {
+      setError("Info cannot be empty.");
+      return false;
+    }
+    if (!imageUrl.trim()) {
+      setError("Image URL cannot be empty.");
+      return false;
+    }
+    // Clear any existing errors if all validations pass
+    setError("");
+    return true;
+  };
+
+  // create educational content (calling controller)
+  const handleCreateEduContent = async (event) => {
     event.preventDefault();
 
-    console.log("Check the publisher details");
-    console.log(localStorage.getItem("username"));
-    console.log(localStorage.getItem("profile"));
+    if (!validateForm()) {
+      // Stop the form submission if validation fails
+      return;
+    }
 
-    // Validation and submission logic here
-    console.log("Educational Content Details:", {
-      title,
-      publisher,
-      category,
-      introduction,
-      mainContent,
-      conclusion,
-      imageUrl,
-      imageTitle,
-    });
+    console.log("Create method called.");
+    // Check if any of the required fields are empty
+    if (!title.trim() || !info.trim()) {
+      setError("Please fill in all the required fields.");
+      return;
+    }
 
-    // Reset fields and error after submission
-    setTitle("");
-    // setPublisher("");
-    setCategory("");
-    setIntroduction("");
-    setMainContent("");
-    setConclusion("");
-    setImageUrl("");
-    setImageTitle("");
-    setError("");
+    console.log("category id:", category);
+
+    // Construct the payload according to the required format
+    const eduContentData = {
+      title: title, // Retrieved from state
+      info: info, // Retrieved from state
+      img: imageUrl, // Retrieved from state
+      educationalContentTypeId: category, // Pass the entire selected category id
+      userID: { id: userId }, // replace above
+    };
+
+    console.log("Educational Content data for creation:", eduContentData);
+
+    try {
+      const response = await axiosInterceptorInstance.post(
+        "/educationalContent/add",
+        eduContentData
+      );
+      console.log("Edu content created successfully:", response.data);
+
+      // Consider navigation or success message here
+      setSuccess(true); // Set success to true on successful update
+
+      // Automatically clear the success message after 5 seconds
+      setTimeout(() => {
+        setSuccess(false);
+      }, 5000);
+
+      // Reset fields after successful submission
+      setTitle("");
+      setCategory("");
+      setInfo("");
+      setImageUrl("");
+      setError("");
+
+      // Reset character counters
+      setTitleCharCount(0);
+      setInfoCharCount(0);
+      setImageUrlCharCount(0);
+    } catch (error) {
+      setSuccess(false); // Ensure success is false on error
+      console.error("Error creating educational content", error);
+      setError(error.message || "Failed to create educational content.");
+    }
   };
 
   const clearErrorOnChange = (setter) => (e) => {
@@ -75,182 +174,133 @@ const CreateEducationalContentPage = () => {
   };
 
   return (
-    <div className="bg-cyan-900 min-h-screen flex flex-col justify-center px-6 lg:px-8">
+    <div className="min-h-screen flex flex-col justify-center px-6 lg:px-8">
       {/* Adjust the max-width and width in the inline style */}
       <div
-        className="mt-16 mb-16 mx-auto bg-slate-100 rounded-lg shadow"
+        className="mt-16 mb-16 mx-auto bg-zinc-100 rounded-lg shadow-lg p-4 md:p-8 lg:p-12"
         style={{ maxWidth: "600px", width: "100%" }} // Increase maxWidth and set width to 100%
       >
         {" "}
         {/* Smaller maxWidth */}
         <div className="p-4 space-y-4 md:space-y-12 ">
           <div className="p-6 space-y-4 md:space-y-2 sm:p-4">
-            <h1 className="text-xl font-bold mb-6 leading-tight tracking-tight text-black md:text-2xl">
+            <h1 className="text-xl md:text-2xl lg:text-3xl font-bold mb-6 leading-tight tracking-tight text-gray-900">
               Create Educational Content
             </h1>
-            <form className="space-y-3">
+            <form className="space-y-6 md:space-y-5 lg:space-y-3">
               {/* TITLE */}
-              <label
-                htmlFor="title"
-                className="block text-xl mb-1 font-bold text-cyan-950"
-              >
-                Title:
-              </label>
               <div className="flex flex-col">
+                <label
+                  htmlFor="title"
+                  className="block text-lg mb-1 font-semibold text-gray-900"
+                >
+                  Title<span className="text-red-500">*</span>
+                </label>
                 <input
                   type="text"
                   id="title"
                   name="title"
-                  placeholder="Enter title here"
+                  placeholder="Title (Max 80 characters)"
+                  maxLength="80"
                   value={title}
-                  onChange={clearErrorOnChange(setTitle)}
-                  className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-base rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                  onChange={handleTitleChange}
+                  className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-base rounded-lg block w-full p-2.5"
                 />
+                <span className="text-sm text-gray-600">
+                  {titleCharCount}/80 characters
+                </span>
               </div>
-              {/* PUBLISHER */}
-              {/* <label
-                htmlFor="publisher"
-                className="block text-xl mb-1 font-bold text-cyan-950"
-              >
-                Publisher:
-              </label>
-              <div className="flex flex-col">
-                <input
-                  type="text"
-                  name="publisher"
-                  id="publisher"
-                  placeholder="Publisher"
-                  value={publisher}
-                  readOnly
-                  onChange={clearErrorOnChange(setPublisher)}
-                  className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-base rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-                />
-              </div> */}
               {/* CATEGORY */}
               {/* CATEGORY DROPDOWN */}
               <div className="flex flex-col">
                 <label
                   htmlFor="category"
-                  className="block text-xl mb-1 font-bold text-cyan-950"
+                  className="block text-lg mb-1 font-semibold text-gray-900"
                 >
-                  Category
+                  Category<span className="text-red-500">*</span>
                 </label>
+
                 <select
                   id="category"
                   name="category"
                   value={category}
-                  onChange={handleCategoryChange}
-                  className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-base rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                  // onChange={(e) => setCategory(e.target.value)}
+                  onChange={(e) => setCategory(Number(e.target.value))}
+                  className="bg-gray-50 border border-gray-300 text-black sm:text-base rounded-lg block w-full p-2.5"
                 >
                   <option value="">Select a category</option>
-                  {mockEducationalContentCategory.map((cat, index) => (
-                    <option key={index} value={cat.category}>
-                      {cat.category}
+                  {categories.map((cat, index) => (
+                    <option key={index} value={cat.id}>
+                      {cat.subcategoryName}
                     </option>
                   ))}
                 </select>
               </div>
-              {/* INTRODUCTION */}
+              {/*Info*/}
               <div className="flex flex-col">
                 <label
-                  htmlFor="introduction"
-                  className="block text-xl mb-1 font-bold text-cyan-950"
+                  htmlFor="info"
+                  className="block text-lg mb-1 font-semibold text-gray-900"
                 >
-                  Introduction:
+                  Info<span className="text-red-500">*</span>
                 </label>
                 <textarea
-                  name="introduction"
-                  id="introduction"
-                  placeholder="Introduction"
-                  value={introduction}
-                  onChange={clearErrorOnChange(setIntroduction)}
-                  rows={4} // Adjust this number to increase height
-                  className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-base rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                  id="info"
+                  name="info"
+                  placeholder="Describe your blog post here (Max 1000 characters)"
+                  value={info}
+                  rows={10}
+                  maxLength="1000"
+                  onChange={handleInfoChange}
+                  className="bg-gray-50 border border-gray-300 text-black sm:text-base rounded-lg block w-full p-2.5"
                 />
+                <span className="text-sm text-gray-600">
+                  {infoCharCount}/1000 characters
+                </span>
               </div>
-              {/* MAIN CONTENT */}
-              <div className="flex flex-col">
-                <label
-                  htmlFor="mainContent"
-                  className="block text-xl mb-1 font-bold text-cyan-950"
-                >
-                  Main Content:
-                </label>
-                <textarea
-                  name="mainContent"
-                  id="mainContent"
-                  placeholder="Main Content"
-                  value={mainContent}
-                  onChange={clearErrorOnChange(setMainContent)}
-                  rows={7} // Adjust this number to increase height
-                  className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-base rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-                />
-              </div>
-              {/* CONCLUSION */}
-              <div className="flex flex-col">
-                <label
-                  htmlFor="conclusion"
-                  className="block text-xl mb-1 font-bold text-cyan-950"
-                >
-                  Conclusion:
-                </label>
-                <textarea
-                  name="conclusion"
-                  id="conclusion"
-                  placeholder="Conclusion"
-                  value={conclusion}
-                  onChange={clearErrorOnChange(setConclusion)}
-                  rows={4} // Adjust this number to increase height
-                  className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-base rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-                />
-              </div>
+
               {/* IMAGE URL */}
               <div className="flex flex-col">
                 <label
                   htmlFor="imageUrl"
-                  className="block text-xl mb-1 font-bold text-cyan-950"
+                  className="block text-lg mb-1 font-semibold text-gray-900 mt-4"
                 >
-                  Image URL:
+                  Image URL<span className="text-red-500">*</span>
                 </label>
                 <input
                   type="text"
                   id="imageUrl"
                   name="imageUrl"
-                  placeholder="Image URL"
+                  placeholder="Image URL (Max 255 characters)"
+                  maxLength="255"
                   value={imageUrl}
-                  onChange={clearErrorOnChange(setImageUrl)}
-                  className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-base rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                  onChange={handleImageUrlChange}
+                  className="bg-gray-50 border border-gray-300 text-black sm:text-base rounded-lg block w-full p-2.5"
                 />
-              </div>
-              {/* IMAGE TITLE */}
-              <div className="flex flex-col">
-                <label
-                  htmlFor="imageTitle"
-                  className="block text-xl mb-1 font-bold text-cyan-950"
-                >
-                  Image Title:
-                </label>
-                <input
-                  type="text"
-                  id="imageTitle"
-                  name="imageTitle"
-                  placeholder="Image Title"
-                  value={imageTitle}
-                  onChange={clearErrorOnChange(setImageTitle)}
-                  className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-base rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-                />
+                <span className="text-sm text-gray-600">
+                  {imageUrlCharCount}/255 characters
+                </span>
               </div>
               {/* ERROR MESSAGE */}
-              {error && <p className="text-red-500">{error}</p>}
+              {error && (
+                <p className="text-red-500 font-semibold text-2xl">
+                  Error creating educational content: {error}
+                </p>
+              )}
+              {success && (
+                <p className="text-green-500 font-semibold text-2xl">
+                  Educational content was created successfully!
+                </p>
+              )}
               {/* SUBMIT BUTTON */}
               <div className="flex flex-row space-x-5">
-                <button className="bg-red-500 hover:bg-red-800 text-white font-bold py-2 px-4 rounded-lg">
-                  <Link href="/businessUser/educationalContent">Cancel</Link>
+                <button className="bg-red-600 hover:bg-red-700 text-white font-semibold py-2 px-4 rounded-lg">
+                  <Link href="/businessUser/businessBlogPost">Cancel</Link>
                 </button>
                 <button
                   type="submit"
-                  onClick={handleCreateEducationalContent}
-                  className="bg-cyan-500 hover:bg-sky-700 text-white font-bold py-2 px-4 rounded-lg"
+                  onClick={handleCreateEduContent}
+                  className="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded-lg"
                 >
                   Create
                 </button>
@@ -263,4 +313,4 @@ const CreateEducationalContentPage = () => {
   );
 };
 
-export default CreateEducationalContentPage;
+export default CreateEducationalContent;

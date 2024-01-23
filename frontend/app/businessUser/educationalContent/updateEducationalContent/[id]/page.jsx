@@ -5,33 +5,34 @@ import Link from "next/link";
 import { useState, useEffect } from "react";
 import axiosInterceptorInstance from "../../../../axiosInterceptorInstance.js";
 
-const fetchBlogPostById = async (postId) => {
+const fetchEduContentById = async (eduContentId) => {
   try {
-    // Ensure postId is a string if the IDs in your URL need to be strings
-    postId = postId;
+    // Ensure eduContentId is a string if the IDs in your URL need to be strings
+    eduContentId = eduContentId;
 
-    const response = await axiosInterceptorInstance.get(`/blog/get/${postId}`);
-    console.log("Fetched blog post data is:", response.data);
+    const response = await axiosInterceptorInstance.get(
+      `/educationalContent/get/${eduContentId}`
+    );
+    console.log("Fetched educational content data is:", response.data);
 
     if (!response.data) {
-      console.error(`Blog post with ID ${postId} not found`);
-      throw new Error(`Blog post with ID ${postId} not found`);
+      console.error(`Educational content with ID ${eduContentId} not found`);
+      throw new Error(`Educational content with ID ${eduContentId} not found`);
     }
 
-    console.log("try update blog post");
-    // Assuming the response contains the blog post directly
-    const blogPost = response.data;
+    // Assuming the response contains the educational content directly
+    const educationalContent = response.data;
 
-    return blogPost;
+    return educationalContent;
   } catch (error) {
-    console.error("Failed to fetch blog post:", error);
+    console.error("Failed to fetch educational content:", error);
     throw error;
   }
 };
 
-const UpdateBusinessBlogPostPage = ({ params }) => {
+const UpdateEducationalContent = ({ params }) => {
   const router = useRouter();
-  const [businessBlogPost, setBusinessBlogPost] = useState("");
+  const [educationalContent, setEducationalContent] = useState("");
   // title states
   const [title, setTitle] = useState("");
   const [titleCharCount, setTitleCharCount] = useState(0);
@@ -48,38 +49,38 @@ const UpdateBusinessBlogPostPage = ({ params }) => {
   const [error, setError] = useState("");
   const [success, setSuccess] = useState(false);
 
-  useEffect(() => {
-    console.log("The success state is being called");
-    // Reset success state when component mounts or postId changes
-    setSuccess(false);
-  }, [params.id]);
+  // useEffect(() => {
+  //   console.log("The success state is being called");
+  //   // Reset success state when component mounts or eduContentId changes
+  //   setSuccess(false);
+  // }, [params.id]);
 
   useEffect(() => {
-    const postId = decodeURIComponent(params.id); // Make sure to decode the ID
-    fetchBlogPostById(postId)
+    const eduContentId = decodeURIComponent(params.id); // Make sure to decode the ID
+    fetchEduContentById(eduContentId)
       .then((data) => {
-        setBusinessBlogPost(data);
-        console.log("The displayed particular blog is:", data);
+        setEducationalContent(data);
+        console.log("The displayed particular educational content is:", data);
 
         // Set each piece of state with the corresponding data
         setTitle(data.title || "Not Specified");
         setTitleCharCount(data.title ? data.title.length : 0); // Set title character count
-        setCategory(data.blogType.id || "");
+        setCategory(data.educationalContentType.id || "");
         setInfo(data.info || "Not Specified");
         setInfoCharCount(data.info ? data.info.length : 0); // Set info character count
         setImageUrl(data.img || "Not Specified");
         setImageUrlCharCount(data.img ? data.img.length : 0); // Set image URL character count
       })
       .catch((error) => {
-        console.error("Error fetching blog post:", error);
+        console.error("Error fetching educational content:", error);
       });
 
-    // Fetch all business blog categories from backend
+    // Fetch all education content categories from backend
     const fetchCategories = async () => {
       console.log("Fetching categories...");
       try {
         const response = await axiosInterceptorInstance.get(
-          "category/getAllBlogPostCategories"
+          "category/getAllEducationalContentCategories"
         );
         console.log("Categories fetched:", response.data);
         setCategories(response.data);
@@ -89,24 +90,26 @@ const UpdateBusinessBlogPostPage = ({ params }) => {
     };
 
     fetchCategories();
+    console.log("the successful state is:", success);
   }, [params.id]);
 
-  // Update blog post (calling controller)
-  const updateBlogPost = async (updatedPost) => {
-    console.log("Sending the following data to update:", updatedPost);
+  // Update educational content (calling controller)
+  const handleUpdateEduContent = async (updatedEduContent) => {
+    console.log("Update edu is called");
+    console.log("Sending the following data to update:", updatedEduContent);
     try {
       // Ensure all values are simple data types
       const response = await axiosInterceptorInstance.put(
-        "/blog/edit",
-        updatedPost
+        "/educationalContent/edit",
+        updatedEduContent
       );
-      console.log("Blog post updated successfully:", response.data);
+      console.log("Educational content updated successfully:", response.data);
       setSuccess(true);
       setError(""); // Now 'setError' is available
 
       // Handle successful update (e.g., redirect or show a message)
     } catch (error) {
-      setError("Failed to update the blog post.");
+      setError("Failed to update the educational content.");
       setSuccess(false);
     }
   };
@@ -175,11 +178,14 @@ const UpdateBusinessBlogPostPage = ({ params }) => {
 
   // const handleBackClick = () => {
   //   setSuccess(false); // Reset the success state
-  //   router.push("/businessUser/businessBlogPost"); // Navigate back
+  //   console.log("Back button is clicked");
+
+  //   router.push("/businessUser/educationalContent"); // Navigate back
   // };
 
-  // Form to update blog post
+  // Form to update educational content
   const handleUpdateClick = async (e) => {
+    console.log("Submit is called");
     e.preventDefault();
     setSuccess(false); // Reset success state here
 
@@ -192,23 +198,23 @@ const UpdateBusinessBlogPostPage = ({ params }) => {
     console.log("The user id in updated form is:", userId);
     try {
       console.log("Updated category is:", category.id);
-      const updatedPost = {
-        id: businessBlogPost.id, // Assuming businessBlogPost.id is the right ID
+      const updatedEduContent = {
+        id: educationalContent.id, // Assuming educationalContent.id is the right ID
         active: true,
         title: title,
         info: info,
         img: imageUrl,
-        blogTypeId: category,
+        educationalContentTypeId: category,
         userID: { id: userId }, // Need to change to the current user ID
       };
 
-      await updateBlogPost(updatedPost);
+      await handleUpdateEduContent(updatedEduContent);
       // Consider navigation or success message here
       // setSuccess(true); // Set success to true on successful update
       setError(""); // Clear any previous errors
     } catch (updateError) {
       setSuccess(false); // Ensure success is false on error
-      setError(updateError.message || "Failed to update blog post");
+      setError(updateError.message || "Failed to update educational content");
     }
   };
 
@@ -221,7 +227,7 @@ const UpdateBusinessBlogPostPage = ({ params }) => {
         <div className="p-4 space-y-4 md:space-y-12">
           <div className="p-6 space-y-4 md:space-y-2 sm:p-4">
             <h1 className="text-xl md:text-2xl lg:text-3xl font-bold mb-6 leading-tight tracking-tight text-gray-900">
-              Update Blog Post
+              Update Educational Content
             </h1>
             <form
               className="space-y-6 md:space-y-5 lg:space-y-3"
@@ -324,12 +330,12 @@ const UpdateBusinessBlogPostPage = ({ params }) => {
               )}
               {success && (
                 <p className="text-green-500 font-semibold text-2xl">
-                  Blog post updated successfully!
+                  Educational content updated successfully!
                 </p>
               )}
               {/* SUBMIT BUTTON */}
               <div className="flex flex-row space-x-5">
-                <Link href="/businessUser/businessBlogPost">
+                <Link href="/businessUser/educationalContent">
                   <button
                     className="bg-red-600 hover:bg-red-700 text-white font-semibold py-2 px-4 rounded-lg"
                     // onClick={handleBackClick}
@@ -353,4 +359,4 @@ const UpdateBusinessBlogPostPage = ({ params }) => {
   );
 };
 
-export default UpdateBusinessBlogPostPage;
+export default UpdateEducationalContent;

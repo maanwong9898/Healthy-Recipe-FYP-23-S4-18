@@ -26,6 +26,7 @@ const UpdateAccount = () => {
   const [allergies, setAllergies] = useState([]);
   const [dietaryPreferences, setDietaryPreferences] = useState("");
   const [healthGoal, setHealthGoal] = useState("");
+  const [postalCode, setPostalCode] = useState("");
 
   const viewUserDashboard = async () => {
     try {
@@ -73,6 +74,7 @@ const UpdateAccount = () => {
     setAllergies(userAccount ? userAccount.allergies : "");
     setDietaryPreferences(userAccount ? userAccount.dietaryPreferences : "");
     setHealthGoal(userAccount ? userAccount.healthGoal : "");
+    setPostalCode(userAccount ? userAccount.postalCode : "");
   }, [userAccount]);
 
   const handleAccountUpdate = async (event) => {

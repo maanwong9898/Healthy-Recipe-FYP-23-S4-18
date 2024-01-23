@@ -9,7 +9,7 @@ import axiosInterceptorInstance from "../../../../axiosInterceptorInstance.js";
 
 // router path: /registeredUser/dietaryPreference/updatePreference
 
-const ViewDietaryPreference = () => {
+const UpdateDietaryPreference = () => {
   // Dashboard state
   const [userAccount, setUserAccount] = useState("");
   const [fullName, setFullName] = useState("");
@@ -77,18 +77,12 @@ const ViewDietaryPreference = () => {
     setCompanyName(userAccount ? userAccount.companyName : "");
     setCompanyAddress(userAccount ? userAccount.companyAddress : "");
     setUen(userAccount ? userAccount.uen : "");
-    // setAllergies(userAccount ? userAccount.allergies : "");
-    // setDietaryPreferences(userAccount ? userAccount.dietaryPreferences : "");
-    // setHealthGoal(userAccount ? userAccount.healthGoal : "");
     // Set dietary preferences if available
     if (userAccount.dietaryPreferences && userAccount.dietaryPreferences.id) {
       setDietaryPreference(userAccount.dietaryPreferences.id);
     }
 
     // Set allergies if available
-    // if (userAccount.allergies && userAccount.allergies.length > 0) {
-    //   setAllergyRestriction(userAccount.allergies.map((allergy) => allergy.id));
-    // }
     if (userAccount.allergies && userAccount.allergies.length > 0) {
       setAllergyRestriction(userAccount.allergies.map((allergy) => allergy.id));
     }
@@ -100,22 +94,7 @@ const ViewDietaryPreference = () => {
     }
   }, [userAccount]);
 
-  // const handleUpdate = () => {
-  //   router.push("/registeredUser/myAccount/dietaryPreference");
-  // };
-
   useEffect(() => {
-    // Access localStorage after component mounts and is on the client-side
-    // const storedUsername = localStorage.getItem("username");
-    const storedUserId = localStorage.getItem("userId"); // Retrieve user ID from localStorage
-    console.log("Current id", storedUserId);
-    // if (storedUsername) {
-    //   setPublisher(storedUsername);
-    // }
-    // if (storedUserId) {
-    //   setUserId(storedUserId);
-    // }
-
     const fetchHealthGoals = async () => {
       console.log("Fetching health goals...");
       try {
@@ -165,16 +144,6 @@ const ViewDietaryPreference = () => {
   // Function to handle health goals category change
   const handleHealthCategoryChange = (e) => {
     setHealthGoals(e.target.value);
-    console.log("Health goal being selected from user:", healthGoal);
-  };
-
-  // Function to handle dietary preference category change
-  const handleDietaryPreferenceCategoryChange = (e) => {
-    setDietaryPreference(e.target.value);
-    console.log(
-      "Dietary preference being selected from user:",
-      dietaryPreference
-    );
   };
 
   // Function to handle allergy category change
@@ -190,14 +159,28 @@ const ViewDietaryPreference = () => {
         prevAllergies.filter((id) => id !== allergyId)
       );
     }
-
-    console.log("Allergies being selected from user:", allergyRestriction);
   };
 
+  // Function to handle dietary preference category change
+  const handleDietaryPreferenceCategoryChange = (e) => {
+    setDietaryPreference(e.target.value);
+  };
+
+  // To check the state of dietary preference immediately after the state is updated(because of async nature of setState)
+  useEffect(() => {
+    console.log(
+      "Dietary preference being selected from user:",
+      dietaryPreference
+    );
+
+    console.log("Allergies being selected from user:", allergyRestriction);
+
+    console.log("Health goal being selected from user:", healthGoals);
+  }, [dietaryPreference, allergyRestriction, healthGoals]);
+
+  // Function to handle update
   const handlePreferencesUpdate = async (event) => {
     event.preventDefault();
-
-    // ... existing validation code
 
     // Check if fields are not empty
     if (fullName === "" || email === "" || dob === "") {
@@ -235,17 +218,13 @@ const ViewDietaryPreference = () => {
         companyName,
         companyAddress,
         uen,
-        // allergies:
-        //   allergyRestriction.length > 0
-        //     ? allergyRestriction.map((id) => ({ id }))
-        //     : userAccount.allergies,
         allergies: allergiesLoaded
           ? allergyRestriction.map((id) => ({ id }))
           : userAccount.allergies,
         dietaryPreferences: dietaryPreference
           ? { id: dietaryPreference }
-          : userAccount.dietaryPreferences,
-        healthGoal: healthGoals ? { id: healthGoals } : userAccount.healthGoal,
+          : { id: null },
+        healthGoal: healthGoals ? { id: healthGoals } : { id: null },
       };
 
       console.log("Updated data:", updatedData);
@@ -368,4 +347,4 @@ const ViewDietaryPreference = () => {
   );
 };
 
-export default ViewDietaryPreference;
+export default UpdateDietaryPreference;

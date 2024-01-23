@@ -9,8 +9,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.FYP18.HealthyRecipe.DTO.AgeGroupRequest;
 import com.FYP18.HealthyRecipe.DTO.WeightDTO;
 import com.FYP18.HealthyRecipe.Entity.UserInfoOverTime;
+import com.FYP18.HealthyRecipe.Repository.RegisteredUserRepository;
 import com.FYP18.HealthyRecipe.Repository.UserInfoRepository;
 import com.FYP18.HealthyRecipe.Repository.UserRepository;
 
@@ -21,6 +23,9 @@ public class RegisteredUserService {
     
     @Autowired
     private UserInfoRepository userInfoRepository;
+
+    @Autowired
+    private RegisteredUserRepository repo;
      
     public List<WeightDTO> getWeights(String id)
     { 
@@ -39,5 +44,10 @@ public class RegisteredUserService {
     {
         UserInfoOverTime _info = userInfoRepository.findById(info.getId()).get();
         userInfoRepository.delete(_info);
+    }
+
+    public List<AgeGroupRequest> getAgeGroup()
+    {
+        return repo.getAgeGroup();
     }
 }

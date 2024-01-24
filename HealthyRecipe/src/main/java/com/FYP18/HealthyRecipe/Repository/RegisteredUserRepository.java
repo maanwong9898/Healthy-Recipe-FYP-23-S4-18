@@ -23,19 +23,5 @@ public interface RegisteredUserRepository extends JpaRepository<RegisteredUser, 
  
     @Query("SELECT dp.subcategoryName AS name, COUNT(ua.dietaryPreferencesId) AS count FROM DietaryPreferences dp LEFT JOIN RegisteredUser ua ON dp.id = ua.dietaryPreferencesId GROUP BY dp.subcategoryName")
     List<DietaryPreferenceDemographic> getDemo();
-    // @Query("SELECT ")
-
-// SELECT  
-// Age,
-// COUNT(*) AS AgeCount
-// FROM (
-// SELECT  
-// IFNULL(TIMESTAMPDIFF(YEAR, DOB, CURDATE()), 'Age not provided') AS Age
-// FROM
-// Registered_User
-// ) AS Subquery
-// GROUP BY
-// Age
-// ORDER BY
-// AgeCount DESC;
+ 
 }

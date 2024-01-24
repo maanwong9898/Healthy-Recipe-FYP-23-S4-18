@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.FYP18.HealthyRecipe.DTO.AgeGroupRequest;
+import com.FYP18.HealthyRecipe.DTO.DietaryPreferenceDemographic;
 import com.FYP18.HealthyRecipe.DTO.WeightDTO;
 import com.FYP18.HealthyRecipe.Entity.RegisteredUser;
 import com.FYP18.HealthyRecipe.Entity.UserInfoOverTime;
@@ -75,5 +76,11 @@ public class RegisteredUserController {
     public List<AgeGroupRequest> GetAgeGroup()
     { 
         return service.getAgeGroup();
+    }
+
+    @GetMapping ("/getDemo")
+    public List<DietaryPreferenceDemographic> GetDemo()
+    { 
+        return service.getDemo();
     }
 }

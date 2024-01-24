@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.FYP18.HealthyRecipe.DTO.AgeGroupRequest;
+import com.FYP18.HealthyRecipe.DTO.DietaryPreferenceDemographic;
 import com.FYP18.HealthyRecipe.DTO.WeightDTO;
 import com.FYP18.HealthyRecipe.Entity.UserInfoOverTime;
 import com.FYP18.HealthyRecipe.Repository.RegisteredUserRepository;
@@ -49,5 +50,10 @@ public class RegisteredUserService {
     public List<AgeGroupRequest> getAgeGroup()
     {
         return repo.getAgeGroup();
+    }
+
+    public List<DietaryPreferenceDemographic> getDemo()
+    {
+        return repo.getDemo();
     }
 }

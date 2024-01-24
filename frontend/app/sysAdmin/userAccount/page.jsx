@@ -67,16 +67,6 @@ const UserAccount = () => {
     // Make sure the username
     console.log(`ID IS : ${viewId}`);
 
-    // {user.role === "ADMIN"
-    //                 ? "System Admin"
-    //                 : user.role === "REGISTERED_USER"
-    //                 ? "Registered User"
-    //                 : user.role === "BUSINESS_USER"
-    //                 ? "Business User"
-    //                 : user.role === "NUTRITIONIST"
-    //                 ? "Nutrionist"
-    //                 : "Unknown"}
-
     // Redirect to the correct route based on the profile type
     let thePath = "";
     switch (profileType) {

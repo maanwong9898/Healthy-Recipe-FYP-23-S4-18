@@ -89,16 +89,6 @@ const ViewRecipe = ({ params }) => {
     }
   };
 
-  // this function is to update particular blog post
-  const handleUpdateRecipe = (id) => {
-    console.log("Updating recipe with id:", id);
-
-    // Redirect to the correct route
-    let routePath = `/businessUser/recipes/updateRecipe/${id}`;
-
-    router.push(routePath);
-  };
-
   const renderStars = (rating) => {
     let stars = [];
     for (let i = 0; i < 5; i++) {
@@ -235,16 +225,16 @@ const ViewRecipe = ({ params }) => {
                 </span>
               </p>
             </div>
-            <p className="font-bold mt-4 lg:mt-8 text-2xl tracking-tight">
+            <p className="font-bold mt-4 lg:mt-8 text-2xl tracking-tight whitespace-pre-line">
               Description:
             </p>
             <p className="mt-2 items-center">
               {recipe?.description || "Not specified"}
             </p>
-            {/* <p className="font-bold mt-4">Dietary Information:</p>
-          <p className="mt-2">{recipe?.info || "Not specified"}</p> */}
-
-            {/* I need to display the info divided by serving size in future  */}
+            <p className="font-bold mt-4 lg:mt-8 text-2xl tracking-tight whitespace-pre-line">
+              Dietary Information:
+            </p>
+            <p className="mt-2">{recipe?.info || "Not specified"}</p>
 
             <div className="mt-4 lg:mt-28 mb-4">
               <p className="font-bold text-2xl tracking-tight">

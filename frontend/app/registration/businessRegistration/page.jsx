@@ -102,6 +102,7 @@ const businessRegistration = () => {
     } catch (error) {
       setSuccess(false); // Ensure success is false on error
       console.error("Error creating business user account:", error);
+      setError("Failed to create account.");
       //setError(error.message || "Failed to create account.");
     }
   };

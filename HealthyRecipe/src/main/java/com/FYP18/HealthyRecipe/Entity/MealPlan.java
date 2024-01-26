@@ -39,7 +39,8 @@ import lombok.Setter;
 public class MealPlan {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "ID", updatable = false)
     private Long id;
  
     private String title;

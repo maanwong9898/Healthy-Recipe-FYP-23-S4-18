@@ -2,14 +2,40 @@
 import { useRouter } from "next/navigation";
 import { useState, useEffect } from "react";
 import Link from "next/link";
-import axiosInterceptorInstance from "../../../axiosInterceptorInstance.js";
+import axiosInterceptorInstance from "../../../../axiosInterceptorInstance.js";
 
 // https://uiwjs.github.io/react-md-editor/
 
-// router path: /nutritionist/mealPlan/createMealPlan
-// this is the page to create a meal plan
+// router path: /nutritionist/mealPlan/updateMealPlan/[id]
+// this is the page to update a meal plan
 
-const CreateMealPlan = () => {
+const fetchMealPlanById = async (mealPlanId) => {
+  try {
+    // Ensure mealPlanId is a string if the IDs in your URL need to be strings
+    mealPlanId = mealPlanId;
+
+    const response = await axiosInterceptorInstance.get(
+      `/mealPlan/get/${mealPlanId}`
+    );
+    console.log("Fetched meal plan data is:", response.data);
+
+    if (!response.data) {
+      console.error(`Meal plan with ID ${mealPlanId} not found`);
+      throw new Error(`Meal plan with ID ${mealPlanId} not found`);
+    }
+
+    // Assuming the response contains the meal plan directly
+    const mealPlan = response.data;
+
+    return mealPlan;
+  } catch (error) {
+    console.error("Failed to fetch meal plan:", error);
+    throw error;
+  }
+};
+
+const UpdateMealPlan = ({ params }) => {
+  const [mealPlan, setMealPlan] = useState("");
   // title state
   const [title, setTitle] = useState("");
   const [titleCharCount, setTitleCharCount] = useState(0);
@@ -44,6 +70,76 @@ const CreateMealPlan = () => {
   // Additional state to map recipe IDs to their names
   const [recipeIdToNameMap, setRecipeIdToNameMap] = useState({});
   const [searchAttempted, setSearchAttempted] = useState(false);
+
+  useEffect(() => {
+    const mealPlanId = decodeURIComponent(params.id); // Make sure to decode the ID
+    fetchMealPlanById(mealPlanId)
+      .then((data) => {
+        setMealPlan(data);
+        console.log("The displayed particular meal plan is:", data);
+
+        // Set each piece of state with the corresponding data
+        setTitle(data.title || "Not Specified");
+        setTitleCharCount(data.title ? data.title.length : 0); // Set title character count
+        setCategory(data.healthGoal.id || "");
+        setIntro(data.introduction || "Not Specified");
+        setIntroCharCount(data.introduction ? data.introduction.length : 0); // Set intro character count
+        setMainContent(data.mainContent || "Not Specified");
+        setMainContentCharCount(data.mainContent ? data.mainContent.length : 0); // Set main content character count
+        setConclusion(data.conclusion || "Not Specified");
+        setConclusionCharCount(data.conclusion ? data.conclusion.length : 0); // Set conclusion character count
+        setImgTitle(data.imgTitle || "Not Specified");
+        setImgTitleCharCount(data.imgTitle ? data.imgTitle.length : 0); // Set image title character count
+        setImageUrl(data.img || "Not Specified");
+        setImageUrlCharCount(data.img ? data.img.length : 0); // Set image URL character count
+
+        console.log("the displayed recipes are:", data.recipes);
+        // Inside the fetchMealPlanById function after receiving response
+        if (data.recipes) {
+          console.log("Recipes found:", data.recipes);
+          setSelectedRecipes(data.recipes); // assuming response.data.recipes is an array of recipe objects
+        }
+      })
+      .catch((error) => {
+        console.error("Error fetching meal plan:", error);
+      });
+
+    // Fetch all business blog categories from backend
+    const fetchCategories = async () => {
+      console.log("Fetching categories...");
+      try {
+        const response = await axiosInterceptorInstance.get(
+          "category/getAllHealthGoals"
+        );
+        console.log("Categories fetched:", response.data);
+        setCategories(response.data);
+      } catch (error) {
+        console.error("Error fetching categories:", error);
+      }
+    };
+
+    fetchCategories();
+  }, [params.id]);
+
+  // Update meal plan (calling controller)
+  const updateMealPlan = async (updatedMealPlan) => {
+    console.log("Sending the following data to update:", updatedMealPlan);
+    try {
+      // Ensure all values are simple data types
+      const response = await axiosInterceptorInstance.put(
+        "/mealPlan/update",
+        updatedMealPlan
+      );
+      console.log("Meal plan updated successfully:", response.data);
+      setSuccess(true);
+      setError(""); // Now 'setError' is available
+
+      // Handle successful update (e.g., redirect or show a message)
+    } catch (error) {
+      setError("Failed to update the meal plan.");
+      setSuccess(false);
+    }
+  };
 
   const handleTitleChange = (e) => {
     setTitle(e.target.value);
@@ -131,14 +227,16 @@ const CreateMealPlan = () => {
   };
 
   // Add the whole recipe object to the selected recipes
-  const addRecipeToMealPlan = (recipe) => {
+  const addRecipeToMealPlan = (recipe, event) => {
+    event.preventDefault();
     if (!selectedRecipes.find((r) => r.id === recipe.id)) {
       setSelectedRecipes([...selectedRecipes, recipe]);
     }
   };
 
   // Update to use the whole recipe object to remove by ID
-  const removeRecipeFromMealPlan = (recipeId) => {
+  const removeRecipeFromMealPlan = (recipeId, event) => {
+    event.preventDefault();
     setSelectedRecipes(
       selectedRecipes.filter((recipe) => recipe.id !== recipeId)
     );
@@ -219,72 +317,41 @@ const CreateMealPlan = () => {
     return true;
   };
 
-  // create meal plan (calling controller)
-  const handleCreateMealPlan = async (event) => {
-    event.preventDefault();
+  // Form to update blog post
+  const handleUpdateClick = async (e) => {
+    e.preventDefault();
+    setSuccess(false); // Reset success state here
 
     if (!validateForm()) {
       // Stop the form submission if validation fails
       return;
     }
 
-    console.log("Create method called.");
-
-    console.log("category id:", category);
-
-    // Construct the payload according to the required format
-    const mealPlanData = {
-      title: title, // Retrieved from state
-      introduction: intro, // Retrieved from state
-      mainContent: mainContent, // Retrieved from state
-      conclusion: conclusion, // Retrieved from state
-      img: imageUrl, // Retrieved from state
-      imgTitle: imgTitle, // Retrieved from state
-      healthGoalCategoryId: category, // Pass the entire selected category id
-      recipes: selectedRecipes.map((recipe) => ({ id: recipe.id })), // Transform to match expected structure
-      userID: { id: userId }, // replace above
-    };
-
-    console.log("Meal plan data for creation:", mealPlanData);
-
+    const userId = localStorage.getItem("userId");
+    console.log("The user id in updated form is:", userId);
     try {
-      const response = await axiosInterceptorInstance.post(
-        "/mealPlan/add",
-        mealPlanData
-      );
-      console.log("Meal plan created successfully:", response.data);
+      console.log("Updated category is:", category.id);
+      const updatedMealPlan = {
+        id: mealPlan.id, // Assuming mealPlan.id is the right ID
+        active: true,
+        title: title,
+        introduction: intro,
+        mainContent: mainContent,
+        conclusion: conclusion,
+        imgTitle: imgTitle,
+        img: imageUrl,
+        healthGoalCategoryId: category, // Pass the entire selected category id
+        recipes: selectedRecipes.map((recipe) => ({ id: recipe.id })),
+        userID: { id: userId }, // Need to change to the current user ID
+      };
 
+      await updateMealPlan(updatedMealPlan);
       // Consider navigation or success message here
-      setSuccess(true); // Set success to true on successful update
-
-      // Automatically clear the success message after 5 seconds
-      setTimeout(() => {
-        setSuccess(false);
-      }, 5000);
-
-      // Reset fields after successful submission
-      setTitle("");
-      setCategory("");
-      setIntro("");
-      setMainContent("");
-      setConclusion("");
-      setImageUrl("");
-      setImgTitle("");
-      setSelectedRecipes([]);
-      setSearchTerm("");
-      setSearchResults([]);
-      setSearchAttempted(false);
-      setRecipeIdToNameMap({});
-      setError("");
-
-      // Reset character counters
-      setTitleCharCount(0);
-      setMainContentCharCount(0);
-      setImageUrlCharCount(0);
-    } catch (error) {
+      // setSuccess(true); // Set success to true on successful update
+      setError(""); // Clear any previous errors
+    } catch (updateError) {
       setSuccess(false); // Ensure success is false on error
-      console.error("Error creating meal plan:", error);
-      setError(error.message || "Failed to create meal plan");
+      setError(updateError.message || "Failed to update blog post");
     }
   };
 
@@ -305,7 +372,7 @@ const CreateMealPlan = () => {
         <div className="p-4 space-y-4 md:space-y-12 ">
           <div className="p-6 space-y-4 md:space-y-2 sm:p-4">
             <h1 className="text-xl md:text-2xl lg:text-3xl font-bold mb-6 leading-tight tracking-tight text-gray-900">
-              Create Meal Plan
+              Update Meal Plan
             </h1>
             <form className="space-y-6 md:space-y-5 lg:space-y-3">
               {/* TITLE */}
@@ -450,15 +517,22 @@ const CreateMealPlan = () => {
                 <div>
                   {searchResults.length > 0 ? (
                     <div>
-                      <p className="font-bold">Results found:</p>
+                      <p className="font-bold text-lg">Results found:</p>
                       <ul>
                         {searchResults.map((recipe) => (
                           <li
                             key={recipe.id}
-                            onClick={() => addRecipeToMealPlan(recipe)}
-                            className="text-black hover:text-blue-600 cursor-pointer"
+                            className="flex justify-between items-center my-1"
                           >
-                            {recipe.title} {" + "}
+                            <span className="mr-2 text-lg">{recipe.title}</span>
+                            <button
+                              onClick={(event) =>
+                                addRecipeToMealPlan(recipe, event)
+                              }
+                              className="bg-orange-600 hover:bg-orange-700 text-white font-semibold mt-2 p-2 px-4 rounded-lg"
+                            >
+                              Add
+                            </button>
                           </li>
                         ))}
                       </ul>
@@ -471,15 +545,19 @@ const CreateMealPlan = () => {
 
                 {/* Selected Recipes */}
                 <div>
-                  <h3 className="font-bold">Selected Recipes</h3>
+                  <h3 className="font-bold text-lg">Selected Recipes</h3>
                   <ul>
                     {selectedRecipes.map((recipe) => (
-                      <li key={recipe.id}>
-                        {recipe.title}{" "}
-                        {/* Use the title from the recipe object */}
+                      <li
+                        key={recipe.id}
+                        className="flex justify-between items-center my-1"
+                      >
+                        <span className="mr-2 text-lg">{recipe.title}</span>
                         <button
-                          onClick={() => removeRecipeFromMealPlan(recipe.id)}
-                          className="bg-red-600 hover:bg-red-700 text-white font-semibold mt-2 px-2 rounded-lg"
+                          onClick={(event) =>
+                            removeRecipeFromMealPlan(recipe.id, event)
+                          }
+                          className="bg-red-600 hover:bg-red-700 text-white font-semibold mt-2 p-2 px-4 rounded-lg"
                         >
                           Remove
                         </button>
@@ -537,12 +615,12 @@ const CreateMealPlan = () => {
               {/* ERROR MESSAGE */}
               {error && (
                 <p className="text-red-500 font-semibold text-2xl">
-                  Failed to create meal plan: {error}
+                  Failed to update meal plan: {error}
                 </p>
               )}
               {success && (
                 <p className="text-green-500 font-semibold text-2xl">
-                  Meal plan was created successfully!
+                  Meal plan was updated successfully!
                 </p>
               )}
               {/* SUBMIT BUTTON */}
@@ -552,10 +630,10 @@ const CreateMealPlan = () => {
                 </button>
                 <button
                   type="submit"
-                  onClick={handleCreateMealPlan}
+                  onClick={handleUpdateClick}
                   className="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded-lg"
                 >
-                  Create
+                  Update
                 </button>
               </div>
             </form>
@@ -566,4 +644,4 @@ const CreateMealPlan = () => {
   );
 };
 
-export default CreateMealPlan;
+export default UpdateMealPlan;

@@ -141,7 +141,7 @@ const MealPlanPage = () => {
     router.push(routePath);
   };
 
-  // Render each blog post card
+  // Render each meal plan card
   const renderPostCard = (post) => (
     <div
       key={post.id}
@@ -167,17 +167,17 @@ const MealPlanPage = () => {
             className="text-gray-700 text-base mb-4 line-clamp-3"
             style={{ height: "4.5rem" }}
           >
-            <div className="whitespace-pre-line">{post.info}</div>
+            <div className="whitespace-pre-line">{post.introduction}</div>
           </div>
         </div>
         {/*to debug*/}
-        <div className="flex flex-wrap">
+        {/* <div className="flex flex-wrap">
           <div className="flex-grow">
             <p className="text-sm text-gray-500">
               {post.healthGoal.subcategoryName}
             </p>
           </div>
-        </div>
+        </div> */}
         <button
           onClick={() => handleViewMealPlan(post.id)}
           className="text-white font-bold bg-gradient-to-br from-cyan-400 to-cyan-800 hover:bg-blue-950 border-2 border-black focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 rounded-lg text-sm mt-3 px-4 py-2 text-center"

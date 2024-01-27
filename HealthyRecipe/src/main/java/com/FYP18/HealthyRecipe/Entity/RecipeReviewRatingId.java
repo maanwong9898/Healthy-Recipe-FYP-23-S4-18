@@ -2,7 +2,7 @@ package com.FYP18.HealthyRecipe.Entity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;
-
+ 
 @Embeddable
 public class RecipeReviewRatingId {
      @Column(name= "UserID", nullable = false, updatable = false)

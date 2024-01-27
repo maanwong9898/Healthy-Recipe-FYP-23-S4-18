@@ -18,7 +18,12 @@ import org.springframework.web.bind.annotation.RestController;
 import com.FYP18.HealthyRecipe.DTO.MealPlanDTO;
 import com.FYP18.HealthyRecipe.DTO.ReviewRatingDTO;
 import com.FYP18.HealthyRecipe.Entity.MealPlan;
+import com.FYP18.HealthyRecipe.Entity.RecipeReviewRating;
+import com.FYP18.HealthyRecipe.Entity.RecipeReviewRatingId;
 import com.FYP18.HealthyRecipe.Service.MealPlanService;
+import com.FYP18.HealthyRecipe.Entity.MealPlanReviewRating;
+import com.FYP18.HealthyRecipe.Entity.MealPlanReviewRatingId;
+
 
 @RestController
 @CrossOrigin()
@@ -101,6 +106,53 @@ public class MealPlanController {
     public ResponseEntity<?> deleteBlog(@PathVariable("id") long id )
     {  
         mealPlanService.deleteMealPlanById(id);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+
+
+    @GetMapping("/getAverage/{mealPlanId}")
+    public ReviewRatingDTO getAvgAndTotalNum(@PathVariable Long mealPlanId)
+    {
+        return mealPlanService.findAvgByMealPlanId(mealPlanId);
+    }
+
+    @GetMapping("/rating/getMealPlan")
+    public ResponseEntity<List<MealPlanReviewRating>> getAllMealPlanReviewRatingOfUserId
+                (@RequestParam Long mealPlanId)  
+    { 
+       List<MealPlanReviewRating> toReturn =   mealPlanService.getAllRatingsOfMealPlanId(mealPlanId);
+        return new ResponseEntity<>(toReturn, HttpStatus.OK);
+    }
+
+
+    @GetMapping("/rating/get")
+    public ResponseEntity<List<MealPlanReviewRating>> getAllMealPlanReviewRatingOfUserId
+                (@RequestParam(required = false) String userId)  
+    { 
+       List<MealPlanReviewRating> toReturn = userId ==null ? mealPlanService.getAllMealPlanReviewRating():
+                                                                mealPlanService.getAllMealPlanReviewRatingOfUserId(userId);
+        return new ResponseEntity<>(toReturn, HttpStatus.OK);
+    }
+
+    @PostMapping("/rating/add")
+    public ResponseEntity<MealPlanReviewRating> addMealPlanReviewRating(@RequestBody MealPlanReviewRating mealPlan)  
+    { 
+       MealPlanReviewRating toReturn = mealPlanService.createRating(mealPlan); 
+        return new ResponseEntity<>(toReturn, HttpStatus.CREATED);
+    }
+
+    @PutMapping("/rating/edit")
+    public ResponseEntity<MealPlanReviewRating> editMealPlanReviewRating(@RequestBody MealPlanReviewRating mealPlan)  
+    { 
+       MealPlanReviewRating toReturn = mealPlanService.updateRating(mealPlan); 
+        return new ResponseEntity<>(toReturn, HttpStatus.OK);
+    }
+
+    @DeleteMapping("/rating/delete")
+    public ResponseEntity<?> deleteMealPlanReviewRating(@RequestBody MealPlanReviewRatingId id )
+    {  
+        mealPlanService.deleteReviewById(id);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 

@@ -8,7 +8,7 @@ import ArrowRightIcon from "@mui/icons-material/ArrowRight";
 import ArrowLeftIcon from "@mui/icons-material/ArrowLeft";
 
 // this is to view particular meal plan
-// router path: /nutritionist/mealPlan/viewMealPlan/[id]
+// router path: /registeredUser/mealPlan/viewMealPlan/[id]
 
 const fetchMealPlanById = async (mealPlanId) => {
   try {
@@ -95,6 +95,11 @@ const ViewMealPlan = ({ params }) => {
   // Add additional state for carousel index
   const [currentRecipeIndex, setCurrentRecipeIndex] = useState(0);
   const [currentRecipeSetIndex, setCurrentRecipeSetIndex] = useState(0);
+  const [newRating, setNewRating] = useState(0);
+  const [newReview, setNewReview] = useState("");
+  const [submitting, setSubmitting] = useState(false);
+  const [hasAlreadyReviewed, setHasAlreadyReviewed] = useState(false);
+  const [validationMessage, setValidationMessage] = useState("");
 
   useEffect(() => {
     const mealPlanId = decodeURIComponent(params.id); // Make sure to decode the ID
@@ -124,26 +129,72 @@ const ViewMealPlan = ({ params }) => {
       response.data.forEach((reviewData, index) => {
         console.log(`Review ${index + 1}:`, reviewData.review);
       });
+
+      // Get the ID of the current user
+      const currentUserId = localStorage.getItem("userId");
+
+      // Check if current user has already submitted a review
+      const userReview = response.data.find(
+        (review) => review.userDTO.id === currentUserId
+      );
+      setHasAlreadyReviewed(!!userReview);
     } catch (error) {
       console.error("Failed to fetch ratings and reviews:", error);
     }
   };
 
-  // this function is to update particular meal plan
-  const handleUpdateMealPlan = (id) => {
-    console.log("Updating meal plan with id:", id);
+  const submitReview = async () => {
+    if (newRating === 0) {
+      // Assuming 0 means no rating is selected
+      setValidationMessage(
+        "Please select a rating before submitting your review."
+      );
+      return; // Prevent the rest of the function from running
+    }
 
-    // Redirect to the correct route
-    let routePath = `/nutritionist/mealPlan/updateMealPlan/${id}`;
+    setSubmitting(true);
+    setValidationMessage(""); // Clear any previous validation messages
 
-    router.push(routePath);
+    // Construct the payload according to your API requirements
+    const payload = {
+      mealPlanReviewRatingId: {
+        UserID: localStorage.getItem("userId"), // The ID of the user submitting the review
+        MealPlanID: mealPlan.id, // The ID of the meal plan being reviewed
+      },
+      rating: newRating,
+      review: newReview,
+    };
+
+    try {
+      const response = await axiosInterceptorInstance.post(
+        "/mealPlan/rating/add",
+        payload
+      );
+      console.log("Review submitted: ", response.data);
+
+      // Clear the form fields on successful submission
+      setNewRating(0);
+      setNewReview("");
+
+      // Optionally, refresh the reviews to include the new one
+      fetchMealPlanRatingsAndReviews(mealPlan.id);
+    } catch (error) {
+      console.error("Failed to submit review: ", error);
+      // Handle error (e.g., show error message to the user)
+    } finally {
+      setSubmitting(false); // End the submission process
+    }
+  };
+
+  const handleRatingChange = (ratingValue) => {
+    setNewRating(ratingValue);
   };
 
   const handleViewRecipe = (id) => {
     console.log("Viewing recipe with id:", id);
 
     // Redirect to the correct route
-    let routePath = `/recipes/viewRecipe/${id}`;
+    let routePath = `/registeredUser/recipes/viewRecipe/${id}`;
 
     router.push(routePath);
   };
@@ -320,7 +371,7 @@ const ViewMealPlan = ({ params }) => {
         <p className="font-sans font-bold text-2xl md:text-4xl text-gray-900 mb-4 md:mt-8 ml-4 lg:ml-0">
           Rating and Reviews
         </p>
-        {/* Check if reviews exist */}
+        {/*Check if reviews exist*/}
         {reviewsAndRatings.length > 0 ? (
           reviewsAndRatings.map((review, index) => (
             <div key={index} className="my-4 p-4 border-b border-gray-200">
@@ -348,20 +399,58 @@ const ViewMealPlan = ({ params }) => {
             No ratings and reviews yet.
           </p>
         )}
-      </div>
-      <div className="flex flex-row space-x-5 justify-end mr-10 mt-16">
-        <button
-          onClick={() => handleUpdateMealPlan(mealPlan.id)}
-          className="bg-blue-600 hover:bg-blue-700 text-white w-24 font-bold py-2 px-4 rounded-lg"
-        >
-          Edit
-        </button>
-        {/* <button
-          type="submit"
-          className="bg-red-600 hover:bg-red-700 text-white w-24 font-bold py-2 px-4 rounded-lg"
-        >
-          Delete
-        </button> */}
+        {/* Ask to write reviews */}
+        {!hasAlreadyReviewed ? (
+          <footer className="mt-10 px-9 mx-auto max-w-screen-xl text-left">
+            <p className="font-sans font-bold text-2xl text-gray-900">
+              Write a Review
+            </p>
+            <div className="my-4">
+              <textarea
+                value={newReview}
+                onChange={(e) => setNewReview(e.target.value)}
+                placeholder="Write your review here"
+                className="w-full p-2.5 border border-gray-300 bg-gray-50 rounded-lg"
+              />
+              <div className="flex my-2">
+                {[...Array(5)].map((_, index) => {
+                  const ratingValue = index + 1;
+                  return (
+                    <label key={ratingValue}>
+                      <input
+                        type="radio"
+                        name="rating"
+                        value={ratingValue}
+                        checked={newRating === ratingValue}
+                        onChange={() => handleRatingChange(ratingValue)}
+                        className="hidden"
+                      />
+                      <span
+                        className={
+                          ratingValue <= newRating
+                            ? "text-yellow-400 cursor-pointer"
+                            : "text-gray-400 cursor-pointer"
+                        }
+                      >
+                        ★
+                      </span>
+                    </label>
+                  );
+                })}
+              </div>
+              <p className="text-red-500">{validationMessage}</p>
+              <button
+                onClick={submitReview}
+                disabled={submitting}
+                className="mt-3 bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg"
+              >
+                {submitting ? "Submitting..." : "Submit Review"}
+              </button>
+            </div>
+          </footer>
+        ) : (
+          <p>You have already submitted a review for this meal plan.</p>
+        )}
       </div>
     </div>
   );

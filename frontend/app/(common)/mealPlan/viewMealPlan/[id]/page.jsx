@@ -8,7 +8,7 @@ import ArrowRightIcon from "@mui/icons-material/ArrowRight";
 import ArrowLeftIcon from "@mui/icons-material/ArrowLeft";
 
 // this is to view particular meal plan
-// router path: /nutritionist/mealPlan/viewMealPlan/[id]
+// router path: /mealPlan/viewMealPlan/[id]
 
 const fetchMealPlanById = async (mealPlanId) => {
   try {
@@ -127,16 +127,6 @@ const ViewMealPlan = ({ params }) => {
     } catch (error) {
       console.error("Failed to fetch ratings and reviews:", error);
     }
-  };
-
-  // this function is to update particular meal plan
-  const handleUpdateMealPlan = (id) => {
-    console.log("Updating meal plan with id:", id);
-
-    // Redirect to the correct route
-    let routePath = `/nutritionist/mealPlan/updateMealPlan/${id}`;
-
-    router.push(routePath);
   };
 
   const handleViewRecipe = (id) => {
@@ -348,20 +338,6 @@ const ViewMealPlan = ({ params }) => {
             No ratings and reviews yet.
           </p>
         )}
-      </div>
-      <div className="flex flex-row space-x-5 justify-end mr-10 mt-16">
-        <button
-          onClick={() => handleUpdateMealPlan(mealPlan.id)}
-          className="bg-blue-600 hover:bg-blue-700 text-white w-24 font-bold py-2 px-4 rounded-lg"
-        >
-          Edit
-        </button>
-        {/* <button
-          type="submit"
-          className="bg-red-600 hover:bg-red-700 text-white w-24 font-bold py-2 px-4 rounded-lg"
-        >
-          Delete
-        </button> */}
       </div>
     </div>
   );

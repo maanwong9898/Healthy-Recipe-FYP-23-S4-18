@@ -7,6 +7,16 @@ import axiosInterceptorInstance from "../../axiosInterceptorInstance.js";
 
 // rouuter path: /registeredUser/businessBlogPost
 
+// Sorting options
+const sortOptions = {
+  LATEST: { key: "LATEST", label: "By Latest" },
+  OLDEST: { key: "OLDEST", label: "By Oldest" },
+  HIGHEST_RATINGS: { key: "HIGHEST_RATINGS", label: "Highest Ratings" },
+  // LOWEST_RATINGS: { key: "LOWEST_RATINGS", label: "Lowest Ratings" },
+  ALPHABETICAL_AZ: { key: "ALPHABETICAL_AZ", label: "Alphabetically (A to Z)" },
+  ALPHABETICAL_ZA: { key: "ALPHABETICAL_ZA", label: "Alphabetically (Z to A)" },
+};
+
 // Fetch all blog posts
 const fetchBlogPosts = async () => {
   try {
@@ -22,11 +32,25 @@ const fetchBlogPosts = async () => {
   }
 };
 
+const fetchBlogAverage = async (blogId) => {
+  try {
+    const response = await axiosInterceptorInstance.get(
+      `/blog/getAverage/${blogId}`
+    );
+    console.log("Average rating for blog post", blogId, "is:", response.data);
+    return response.data; // Assuming this returns the average data for the blog
+  } catch (error) {
+    console.error(`Failed to fetch average for blog post ${blogId}:`, error);
+    return null; // or handle the error as you see fit
+  }
+};
+
 const BusinessBlogPostsPageForUser = () => {
   const router = useRouter();
   const [categoryFilter, setCategoryFilter] = useState("");
   const [AllBusinessBlogPosts, setAllBusinessBlogPosts] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
+  const [sortOption, setSortOption] = useState("");
   const [isSearchEmpty, setIsSearchEmpty] = useState(false);
   const [searchPerformed, setSearchPerformed] = useState(false);
   const [categories, setCategories] = useState([]);
@@ -39,8 +63,15 @@ const BusinessBlogPostsPageForUser = () => {
   useEffect(() => {
     const getData = async () => {
       const fetchedBlog = await fetchBlogPosts();
-      setAllBusinessBlogPosts(fetchedBlog);
-      setDisplayedBlogPosts(fetchedBlog);
+      const blogsWithAverage = await Promise.all(
+        fetchedBlog.map(async (blog) => {
+          const average = await fetchBlogAverage(blog.id);
+          return { ...blog, average }; // Augment each blog post with its average
+        })
+      );
+      console.log("Blog with average:", blogsWithAverage);
+      setAllBusinessBlogPosts(blogsWithAverage);
+      setDisplayedBlogPosts(blogsWithAverage);
     };
     getData();
 
@@ -59,29 +90,71 @@ const BusinessBlogPostsPageForUser = () => {
 
   // Filter blog posts based on search term and category filter
   useEffect(() => {
-    const filterPosts = () => {
-      let filteredPosts = AllBusinessBlogPosts;
+    let filteredPosts = AllBusinessBlogPosts;
 
-      if (categoryFilter) {
-        filteredPosts = filteredPosts.filter(
-          (post) => post.blogType.subcategoryName === categoryFilter
+    if (categoryFilter) {
+      filteredPosts = filteredPosts.filter(
+        (post) => post.blogType.subcategoryName === categoryFilter
+      );
+    }
+
+    if (searchTerm.trim()) {
+    } else {
+      setSearchPerformed(false);
+    }
+
+    let sortedPosts = [...filteredPosts];
+    // Sorting
+    switch (sortOption) {
+      case "LATEST":
+        sortedPosts.sort(
+          (a, b) => new Date(b.createdDateTime) - new Date(a.createdDateTime)
         );
-      }
+        break;
+      case "OLDEST":
+        sortedPosts.sort(
+          (a, b) => new Date(a.createdDateTime) - new Date(b.createdDateTime)
+        );
+        break;
+      case "ALPHABETICAL_AZ":
+        sortedPosts.sort((a, b) => a.title.localeCompare(b.title));
+        break;
+      case "ALPHABETICAL_ZA":
+        sortedPosts.sort((a, b) => b.title.localeCompare(a.title));
+        break;
+      case "HIGHEST_RATINGS":
+        sortedPosts.sort((a, b) => {
+          const ratingDiff =
+            (b.average?.averageRatings || 0) - (a.average?.averageRatings || 0);
+          if (ratingDiff !== 0) return ratingDiff;
+          return new Date(b.createdDateTime) - new Date(a.createdDateTime); // Latest date first if tie
+        });
+        break;
+      // case "LOWEST_RATINGS":
+      //   sortedPosts.sort((a, b) => {
+      //     const ratingDiff =
+      //       (a.average?.averageRatings || 0) - (b.average?.averageRatings || 0);
+      //     if (ratingDiff !== 0) return ratingDiff;
+      //     return new Date(b.createdDateTime) - new Date(a.createdDateTime); // Latest date first if tie
+      //   });
+      //   break;
+      // ... other sorting cases
+    }
 
-      if (searchTerm.trim()) {
-      } else {
-        setSearchPerformed(false);
-      }
+    console.log("Filtered posts:", filteredPosts);
 
-      setDisplayedBlogPosts(filteredPosts);
-      // setResultsCount(filteredPosts.length);  /// This is causing the issue
-      setIsSearchEmpty(filteredPosts.length === 0);
-    };
+    // setDisplayedBlogPosts(filteredPosts);
+    // setResultsCount(filteredPosts.length);  /// This is causing the issue
+    // setIsSearchEmpty(filteredPosts.length === 0);
+    setDisplayedBlogPosts(sortedPosts);
+    setIsSearchEmpty(sortedPosts.length === 0);
 
-    filterPosts();
+    // filterPosts();
     // Reset searchButtonClicked when searchTerm changes
     setSearchButtonClicked(false);
-  }, [searchTerm, categoryFilter, AllBusinessBlogPosts]);
+
+    console.log("Displayed blog posts:", displayedBlogPosts);
+  }, [searchTerm, categoryFilter, AllBusinessBlogPosts, sortOption]);
 
   const handleSearchClick = async () => {
     setSearchButtonClicked(true); // Set flag when search is performed
@@ -95,10 +168,54 @@ const BusinessBlogPostsPageForUser = () => {
           )
         : AllBusinessBlogPosts;
 
-      setDisplayedBlogPosts(filteredPosts);
-      setResultsCount(filteredPosts.length);
+      // Sort the results
+      let sortedResults = [...filteredPosts];
+      switch (sortOption) {
+        case "LATEST":
+          sortedResults.sort(
+            (a, b) => new Date(b.createdDateTime) - new Date(a.createdDateTime)
+          );
+          break;
+        case "OLDEST":
+          sortedResults.sort(
+            (a, b) => new Date(a.createdDateTime) - new Date(b.createdDateTime)
+          );
+          break;
+        case "ALPHABETICAL_AZ":
+          sortedResults.sort((a, b) => a.title.localeCompare(b.title));
+          break;
+        case "ALPHABETICAL_ZA":
+          sortedResults.sort((a, b) => b.title.localeCompare(a.title));
+          break;
+        case "HIGHEST_RATINGS":
+          sortedResults.sort((a, b) => {
+            const ratingDiff =
+              (b.average?.averageRatings || 0) -
+              (a.average?.averageRatings || 0);
+            if (ratingDiff !== 0) return ratingDiff;
+            return new Date(b.createdDateTime) - new Date(a.createdDateTime); // Latest date first if tie
+          });
+          break;
+        // case "LOWEST_RATINGS":
+        //   sortedResults.sort((a, b) => {
+        //     const ratingDiff =
+        //       (a.average?.averageRatings || 0) -
+        //       (b.average?.averageRatings || 0);
+        //     if (ratingDiff !== 0) return ratingDiff;
+        //     return (
+        //       new Date(b.createdDateTime) - new Date(a.createdDateTime)
+        //     ); // Latest date first if tie
+        //   });
+        //   break;
+        // ... other sorting cases
+      }
+
+      setDisplayedBlogPosts(sortedResults);
+      setResultsCount(sortedResults.length);
       setIsSearchEmpty(false);
       setSearchPerformed(false);
+
+      console.log("Displayed blog posts after click:", displayedBlogPosts);
     } else {
       // Search for blog posts
       try {
@@ -110,15 +227,69 @@ const BusinessBlogPostsPageForUser = () => {
           (post) => post.active === true
         );
 
+        // Fetch average ratings for each blog post
+        let filteredResultsWithAverage = await Promise.all(
+          filteredResults.map(async (post) => {
+            const average = await fetchBlogAverage(post.id);
+            return { ...post, average }; // Augment each blog post with its average
+          })
+        );
+
         if (categoryFilter) {
-          filteredResults = filteredResults.filter(
+          filteredResultsWithAverage = filteredResultsWithAverage.filter(
             (post) => post.blogType.subcategoryName === categoryFilter
           );
         }
 
-        if (filteredResults.length > 0) {
-          setDisplayedBlogPosts(filteredResults);
-          setResultsCount(filteredResults.length);
+        // Sort the results
+        let sortedResults = [...filteredResultsWithAverage];
+        switch (sortOption) {
+          case "LATEST":
+            sortedResults.sort(
+              (a, b) =>
+                new Date(b.createdDateTime) - new Date(a.createdDateTime)
+            );
+            break;
+          case "OLDEST":
+            sortedResults.sort(
+              (a, b) =>
+                new Date(a.createdDateTime) - new Date(b.createdDateTime)
+            );
+            break;
+          case "ALPHABETICAL_AZ":
+            sortedResults.sort((a, b) => a.title.localeCompare(b.title));
+            break;
+          case "ALPHABETICAL_ZA":
+            sortedResults.sort((a, b) => b.title.localeCompare(a.title));
+            break;
+          case "HIGHEST_RATINGS":
+            sortedResults.sort((a, b) => {
+              const ratingDiff =
+                (b.average?.averageRatings || 0) -
+                (a.average?.averageRatings || 0);
+              if (ratingDiff !== 0) return ratingDiff;
+              return new Date(b.createdDateTime) - new Date(a.createdDateTime); // Latest date first if tie
+            });
+            break;
+          // case "LOWEST_RATINGS":
+          //   sortedResults.sort((a, b) => {
+          //     const ratingDiff =
+          //       (a.average?.averageRatings || 0) -
+          //       (b.average?.averageRatings || 0);
+          //     if (ratingDiff !== 0) return ratingDiff;
+          //     return (
+          //       new Date(b.createdDateTime) - new Date(a.createdDateTime)
+          //     ); // Latest date first if tie
+          //   });
+          //   break;
+          // ... other sorting cases
+        }
+
+        console.log("Sorted results:", sortedResults);
+
+        if (sortedResults.length > 0) {
+          setDisplayedBlogPosts(sortedResults);
+          setResultsCount(sortedResults.length);
           setIsSearchEmpty(false);
         } else {
           setIsSearchEmpty(true);
@@ -232,6 +403,29 @@ const BusinessBlogPostsPageForUser = () => {
             )}
           </div>
 
+          {/* Sort dropdown */}
+          <div className="mb-2 md:mb-0 md:mr-6">
+            <label
+              htmlFor="sort"
+              className="text-xl text-black mb-2 sm:mb-0 sm:mr-2"
+            >
+              Sort By:
+            </label>
+            <select
+              id="sort"
+              value={sortOption}
+              onChange={(e) => setSortOption(e.target.value)}
+              className="p-2 rounded border-2 border-black text-black"
+              style={{ maxWidth: "300px" }}
+            >
+              {Object.values(sortOptions).map((option) => (
+                <option key={option.key} value={option.key}>
+                  {option.label}
+                </option>
+              ))}
+            </select>
+          </div>
+
           {/* Filter Section - Adjusted to align to the right */}
           <div className="flex flex-col sm:flex-row sm:items-center">
             <label
@@ -259,7 +453,7 @@ const BusinessBlogPostsPageForUser = () => {
           </div>
         </div>
         {/* Display the blog posts */}
-        {!searchPerformed && !categoryFilter ? (
+        {!searchPerformed && !categoryFilter && !sortOption ? (
           <>
             <div className="mb-5">
               <h2 className="text-2xl font-bold mb-4 mt-4">

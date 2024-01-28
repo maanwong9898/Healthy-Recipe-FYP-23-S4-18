@@ -1,11 +1,10 @@
 "use client";
-// import axios from "axios";
 import axiosInterceptorInstance from "../../axiosInterceptorInstance.js";
 import { useRouter } from "next/navigation";
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
 
-// router path is /businessUser/recipes
+// router path is /sysAdmin/suspendMealPlan
 
 // Sorting options
 const sortOptions = {
@@ -17,59 +16,69 @@ const sortOptions = {
   ALPHABETICAL_ZA: { key: "ALPHABETICAL_ZA", label: "Alphabetically (Z to A)" },
 };
 
-// Fetch all recipes from the backend - backend controller is Recipe Controller
-const fetchRecipes = async () => {
+// Fetch all meal plan from the backend - backend controller is MealPlanController
+const fetchMealPlans = async () => {
   const userID = localStorage.getItem("userId");
   console.log("Current id", userID);
   try {
-    const response = await axiosInterceptorInstance.get(
-      "/recipe/findByUserId/" + userID
-    );
-    console.log("All recipes belongs to this user:", response.data);
+    const response = await axiosInterceptorInstance.get("/mealPlan/get");
+
+    console.log("All meal plans:", response.data);
 
     return response.data;
   } catch (error) {
-    console.error("Failed to fetch recipes:", error);
+    console.error("Failed to fetch meal plans:", error);
     throw error;
   }
 };
 
-const fetchRecipeAverage = async (recipeId) => {
+// Fetch the average rating for each single meal plan
+const fetchMealPlanAverage = async (mealPlanId) => {
   try {
     const response = await axiosInterceptorInstance.get(
-      `/recipe/getAverage/${recipeId}`
+      `/mealPlan/getAverage/${mealPlanId}`
     );
-    console.log("Average rating for recipe", recipeId, "is:", response.data);
-    return response.data; // Assuming this returns the average data for the recipe
+    console.log(
+      "Average rating for meal plan",
+      mealPlanId,
+      "is:",
+      response.data
+    );
+    return response.data; // Assuming this returns the average data for the meal plan
   } catch (error) {
-    console.error(`Failed to fetch average for recipe ${recipeId}:`, error);
+    console.error(
+      `Failed to fetch average for meal plan ${mealPlanId}:`,
+      error
+    );
     return null; // or handle the error as you see fit
   }
 };
 
-const MyRecipes = () => {
+const SuspendMealPlan = () => {
   const router = useRouter();
-  const [recipes, setRecipes] = useState([]);
-  const [displayedRecipes, setDisplayedRecipes] = useState([]);
+  const [mealPlans, setMealPlans] = useState([]);
+  const [displayedMealPlans, setDisplayedMealPlans] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [sortOption, setSortOption] = useState("LATEST");
   const [isSearchEmpty, setIsSearchEmpty] = useState(false);
   const [searchPerformed, setSearchPerformed] = useState(false);
   const [searchResultsCount, setSearchResultsCount] = useState(0);
+  const [categories, setCategories] = useState([]);
+  const [categoryFilter, setCategoryFilter] = useState("ALL");
 
-  // fetch all recipes from backend
+  // fetch all meal plans and categories from backend
   useEffect(() => {
     const getData = async () => {
       try {
-        const fetchedRecipe = await fetchRecipes();
-        const recipesWithAverage = await Promise.all(
-          fetchedRecipe.map(async (recipe) => {
-            const average = await fetchRecipeAverage(recipe.id);
-            return { ...recipe, average }; // Augment each recipe with its average
+        const fetchedMealPlan = await fetchMealPlans();
+        const mealPlansWithAverage = await Promise.all(
+          fetchedMealPlan.map(async (mealPlan) => {
+            const average = await fetchMealPlanAverage(mealPlan.id);
+            return { ...mealPlan, average }; // Augment each meal plan with its average
           })
         );
-        console.log("Recipe with average:", recipesWithAverage);
-        setRecipes(recipesWithAverage);
+        console.log("mealPlan with average:", mealPlansWithAverage);
+        setMealPlans(mealPlansWithAverage);
         // ... [sorting and other logic]
       } catch (error) {
         console.error("Error while fetching data:", error);
@@ -77,52 +86,68 @@ const MyRecipes = () => {
     };
 
     getData();
+
+    // Fetch all meal plan categories from backend
+    const fetchCategories = async () => {
+      console.log("Fetching meal plan categories...");
+      try {
+        const response = await axiosInterceptorInstance.get(
+          "category/getAllHealthGoals"
+        );
+        console.log("Categories fetched:", response.data);
+        setCategories(response.data);
+      } catch (error) {
+        console.error("Error fetching categories:", error);
+      }
+    };
+
+    fetchCategories();
   }, []);
 
-  // All in 1 -- sort, search
+  // All in 1 -- sort, filter, search
   useEffect(() => {
-    // Start with the full list of blogs
-    let processedRecipes = [...recipes];
+    // Start with the full list of meal plans
+    let processedMealPlans = [...mealPlans];
 
     // Search filter
     if (searchTerm) {
-      processedRecipes = processedRecipes.filter((recipe) =>
-        recipe.title.toLowerCase().includes(searchTerm.toLowerCase())
+      processedMealPlans = processedMealPlans.filter((mealPlan) =>
+        mealPlan.title.toLowerCase().includes(searchTerm.toLowerCase())
       );
     }
 
     // Category filter
-    // if (categoryFilter !== "ALL") {
-    //   processedBlogs = processedBlogs.filter(
-    //     (recipe) => recipe.blogTypeId === Number(categoryFilter)
-    //   );
-    // }
+    if (categoryFilter !== "ALL") {
+      processedMealPlans = processedMealPlans.filter(
+        (mealPlan) => mealPlan.healthGoalCategoryId === Number(categoryFilter)
+      );
+    }
 
     // Utility function to get the date, preferring createdDT and falling back to lastUpdatedDT
-    function getDateOrFallback(recipe) {
-      return new Date(recipe.createdDT || recipe.lastUpdatedDT);
+    function getDateOrFallback(mealPlan) {
+      return new Date(mealPlan.createdDT || mealPlan.lastUpdatedDT);
     }
 
     // Sorting
     switch (sortOption) {
       case "LATEST":
-        processedRecipes.sort(
+        processedMealPlans.sort(
           (a, b) => getDateOrFallback(b) - getDateOrFallback(a)
         );
         break;
       case "OLDEST":
-        processedRecipes.sort(
+        processedMealPlans.sort(
           (a, b) => getDateOrFallback(a) - getDateOrFallback(b)
         );
         break;
       case "ALPHABETICAL_AZ":
-        processedRecipes.sort((a, b) => a.title.localeCompare(b.title));
+        processedMealPlans.sort((a, b) => a.title.localeCompare(b.title));
         break;
       case "ALPHABETICAL_ZA":
-        processedRecipes.sort((a, b) => b.title.localeCompare(a.title));
+        processedMealPlans.sort((a, b) => b.title.localeCompare(a.title));
         break;
       case "HIGHEST_RATINGS":
-        processedRecipes.sort((a, b) => {
+        processedMealPlans.sort((a, b) => {
           const ratingDiff =
             (b.average?.averageRatings || 0) - (a.average?.averageRatings || 0);
           if (ratingDiff !== 0) return ratingDiff;
@@ -130,7 +155,7 @@ const MyRecipes = () => {
         });
         break;
       case "LOWEST_RATINGS":
-        processedRecipes.sort((a, b) => {
+        processedMealPlans.sort((a, b) => {
           const ratingDiff =
             (a.average?.averageRatings || 0) - (b.average?.averageRatings || 0);
           if (ratingDiff !== 0) return ratingDiff;
@@ -140,74 +165,37 @@ const MyRecipes = () => {
       // ... other sorting cases
     }
 
-    // Update the displayed blogs
-    setDisplayedRecipes(processedRecipes);
-  }, [recipes, searchTerm, sortOption]);
+    // Update the displayed meal plans
+    setDisplayedMealPlans(processedMealPlans);
+  }, [mealPlans, searchTerm, categoryFilter, sortOption]);
 
-  // Implement handleViewRecipe and handleUpdateRecipe as needed
-  // this function is to view particular recipe
-  const handleViewRecipe = (id) => {
-    console.log("Viewing recipe with id:", id);
-
-    //Redirect to the correct route
-    let routePath = `/businessUser/recipes/viewRecipe/${id}`;
-
-    router.push(routePath);
-  };
-
-  // this function is to update particular recipe
-  const handleUpdateRecipe = (id) => {
-    console.log("Updating recipe with id:", id);
-
-    // Redirect to the correct route
-    let routePath = `/businessUser/recipes/updateRecipe/${id}`;
-
-    router.push(routePath);
-  };
-
-  // To suspend or unsuspend a recipe
-  const handleToggleRecipeStatus = async (recipeID, isActive) => {
+  // Combined Function to toggle a meal plan active status
+  const handleToggleMealPlanStatus = async (mealPlanId, isActive) => {
     const newStatus = !isActive;
 
     try {
       const response = await axiosInterceptorInstance.put(
-        "/recipe/updateActivity",
+        "/mealPlan/updateActivity",
         {
-          id: recipeID,
+          id: mealPlanId,
           active: newStatus,
         }
       );
 
       // Check if the response is successful before updating the state
       if (response.status === 200) {
-        const updatedRecipes = recipes.map((recipe) => {
-          if (recipe.id === recipeID) {
-            return { ...recipe, active: newStatus };
+        const updatedMealPlans = mealPlans.map((mealPlan) => {
+          if (mealPlan.id === mealPlanId) {
+            return { ...mealPlan, active: newStatus };
           }
-          return recipe;
+          return mealPlan;
         });
-        setRecipes(updatedRecipes);
+        setMealPlans(updatedMealPlans);
       } else {
-        console.error("Failed to update the recipe status:", response);
+        console.error("Failed to update the meal plan status:", response);
       }
     } catch (error) {
-      console.error("Error updating recipe status", error);
-    }
-  };
-
-  // Function to delete a recipe
-  const handleDeleteRecipe = async (id) => {
-    try {
-      const response = await axiosInterceptorInstance.delete(
-        `/recipe/delete/${id}`
-      );
-      console.log("Recipe deleted:", response.data);
-
-      // Update UI after delete
-      setRecipes(recipes.filter((post) => post.id !== id));
-    } catch (error) {
-      console.error("Error deleting recipe:", error);
-      // Handle error, maybe show a message to the user
+      console.error("Error updating meal plan status", error);
     }
   };
 
@@ -228,25 +216,20 @@ const MyRecipes = () => {
   return (
     <div className="px-2 sm:px-5 min-h-screen flex flex-col py-5">
       <h1 className="text-6xl text-gray-900 p-3 mb-4 font-bold text-center sm:text-center">
-        My Recipes
+        All Meal Plans
       </h1>
-      <div>
-        <button className="text-white bg-blue-600 hover:bg-blue-700 rounded-lg text-base font-semibold px-5 py-2.5 mr-7 mb-4 text-center">
-          <Link href="/businessUser/recipes/createRecipe">Create Recipe</Link>
-        </button>
-      </div>
       {/* Search and Sort Section */}
       <div className="flex flex-col md:flex-row justify-between items-center mb-4">
         {/* Search bar */}
         <div className="mb-4 md:mb-0 md:mr-2">
           <input
             type="text"
-            id="blogSearch" // Adding an id attribute here
-            name="blogSearch" // Adding a name attribute here
+            id="mealPlanSearch" // Adding an id attribute here
+            name="mealPlanSearch" // Adding a name attribute here
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
-            placeholder="Search recipes"
-            className="mr-2 p-2 rounded-lg border w-full md:w-auto"
+            placeholder="Search by title"
+            className="mr-2 p-2 rounded-lg borde w-full md:w-auto"
           />
 
           <button
@@ -255,18 +238,6 @@ const MyRecipes = () => {
           >
             Search
           </button>
-          {/* "Results found" message */}
-          {/* {searchPerformed && !isSearchEmpty && (
-            <p className="text-left text-white font-bold text-xl">
-              {searchResultsCount} results found.
-            </p>
-          )} */}
-          {/* "No results found" message */}
-          {/* {searchPerformed && isSearchEmpty && (
-            <p className="text-left text-white font-bold text-xl">
-              No results found.
-            </p>
-          )} */}
         </div>
 
         {/* Sort dropdown and filter dropdown */}
@@ -290,7 +261,7 @@ const MyRecipes = () => {
             </select>
           </div>
           {/* Filter dropdown */}
-          {/* <div className="mb-2 md:mb-0 md:mr-6">
+          <div className="mb-2 md:mb-0 md:mr-6">
             <label
               htmlFor="categoryFilter"
               className="ml-2 mr-2 font-2xl text-gray-900"
@@ -309,120 +280,101 @@ const MyRecipes = () => {
                 </option>
               ))}
             </select>
-          </div> */}
+          </div>
         </div>
       </div>
 
-      {/* Table of recipes */}
+      {/* Table of meal plans */}
       <div className="overflow-x-auto">
         <table className="min-w-full rounded-lg border-zinc-200 border-2">
-          <thead className="bg-zinc-700 font-normal tracking-normal text-white border-gray-800 border-2">
+          <thead className="bg-zinc-700 font-normal text-white border-gray-800 border-2">
             <tr className="text-center text-lg">
-              <th className="px-3 py-2">Recipe Title</th>
+              <th className="px-3 py-2">Meal Plan Title</th>
+              <th className="px-3 py-2">Publisher</th>
+              <th className="px-3 py-2">Company</th>
               <th className="px-3 py-2">Date Published</th>
+              <th className="px-3 py-2">Category</th>
               <th className="px-3 py-2">Status</th>
               <th className="px-3 py-2">Ratings</th>
-              <th className="px-3 py-2"></th>
-              <th className="px-3 py-2"></th>
               <th className="px-3 py-2"></th>
               <th className="px-3 py-2"></th>
             </tr>
           </thead>
           <tbody>
-            {displayedRecipes.map((recipe, index) => (
+            {displayedMealPlans.map((mealPlan, index) => (
               <tr key={index} className="bg-white border-b">
                 <td className="px-3 py-2 text-base text-center">
-                  {recipe.title}
+                  {mealPlan.title}
+                </td>
+                <td className="px-3 py-2 text-base text-center">
+                  {mealPlan.userID?.fullName || "nil"}
+                </td>
+                <td className="px-3 py-2 text-base text-center">
+                  {mealPlan.userID?.companyName || "nil"}
                 </td>
                 <td className="px-3 py-2 text-base text-center">
                   {new Date(
-                    recipe?.createdDT || recipe.lastUpdatedDT
+                    mealPlan?.createdDT || mealPlan.lastUpdatedDT
                   ).toLocaleDateString("en-GB")}
                 </td>
-                {/* <td className="px-3 py-2 text-base text-center">
-                  {recipe.blogType
-                    ? recipe.blogType.subcategoryName
+                <td className="px-3 py-2 text-base text-center">
+                  {mealPlan.healthGoal
+                    ? mealPlan.healthGoal.subcategoryName
                     : "Not specified"}
-                </td> */}
+                </td>
+
                 <td className="px-3 py-2 text-base text-center">
                   <span
                     className={`rounded-full px-3 py-1 text-base font-semibold ${
-                      recipe.active
+                      mealPlan.active
                         ? "text-white bg-green-500"
                         : "text-white bg-red-500"
                     }`}
                   >
-                    {recipe.active ? "Active" : "Inactive"}
+                    {mealPlan.active ? "Active" : "Inactive"}
                   </span>
                 </td>
                 <td className="px-3 py-2 text-base text-center">
                   <div
-                    className="rating-container flex flex-col"
+                    className="rating-container"
                     style={{ minWidth: "100px" }}
                   >
-                    {recipe.average !== null &&
-                    typeof recipe.average.averageRatings === "number" &&
-                    typeof recipe.average.totalNumber === "number" ? (
+                    {mealPlan.average !== null &&
+                    typeof mealPlan.average.averageRatings === "number" &&
+                    typeof mealPlan.average.totalNumber === "number" ? (
                       <span
                         className="rating-text"
                         style={{ fontWeight: "bold", color: "#0a0a0a" }}
                       >
-                        {recipe.average.averageRatings.toFixed(1)}
+                        {mealPlan.average.averageRatings.toFixed(1)}
                       </span>
                     ) : (
                       "No ratings yet"
                     )}
-                    {recipe.average && recipe.average.totalNumber > 0 && (
+                    {mealPlan.average && mealPlan.average.totalNumber > 0 && (
                       <span
                         className="rating-count"
                         style={{ fontSize: "0.8rem", color: "#666" }}
                       >
-                        ({recipe.average.totalNumber} rating
-                        {recipe.average.totalNumber !== 1 ? "s" : ""})
+                        ({mealPlan.average.totalNumber} rating
+                        {mealPlan.average.totalNumber !== 1 ? "s" : ""})
                       </span>
                     )}
                   </div>
                 </td>
-                <td className="px-3 py-2 text-base text-center">
-                  <button
-                    onClick={() => handleViewRecipe(recipe.id)}
-                    className="text-white font-bold bg-blue-600 hover:bg-blue-700 rounded-lg text-base px-5 py-2 ml-2 mr-2 text-center"
-                  >
-                    {" "}
-                    View
-                  </button>
-                </td>
-                <td className="px-3 py-2 text-base text-center">
-                  <button
-                    onClick={() => handleUpdateRecipe(recipe.id)}
-                    className="text-white font-bold bg-slate-700 hover:bg-slate-800 rounded-lg text-base px-5 py-2 ml-2 mr-2 text-center"
-                  >
-                    {" "}
-                    Edit
-                  </button>
-                </td>
-                <td className="px-3 py-2 text-base text-center">
+                <td className="px-3 py-2 text-base text-center"></td>
+                <td className="px-3 py-2 justify-center sm:justify-start">
                   <button
                     onClick={() =>
-                      handleToggleRecipeStatus(recipe.id, recipe.active)
+                      handleToggleMealPlanStatus(mealPlan.id, mealPlan.active)
                     }
-                    className={`text-white font-bold  ${
-                      recipe.active
+                    className={`text-white font-bold ${
+                      mealPlan.active
                         ? "bg-red-600 hover:bg-red-700"
                         : "bg-stone-400 hover:bg-stone-500"
-                    } focus:ring-4 focus:outline-none focus:ring-blue-300
-    dark:focus:ring-blue-800 rounded-lg text-base px-5 py-2.5 text-center`}
+                    } rounded-lg text-base px-5 py-2 text-center`}
                   >
-                    {recipe.active ? "Suspend" : "Unsuspend"}
-                  </button>
-                </td>
-                <td className="px-3 py-2 text-base text-center">
-                  <button
-                    onClick={() => handleDeleteRecipe(recipe.id)}
-                    className="text-white font-bold bg-red-600 hover:bg-red-700 rounded-lg text-base px-5 py-2 ml-2 mr-2 text-center"
-                  >
-                    {" "}
-                    Delete
+                    {mealPlan.active ? "Suspend" : "Unsuspend"}
                   </button>
                 </td>
               </tr>
@@ -434,4 +386,4 @@ const MyRecipes = () => {
   );
 };
 
-export default MyRecipes;
+export default SuspendMealPlan;

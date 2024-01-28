@@ -53,6 +53,14 @@ const SuspendContentsDropdownMenu = () => {
         <li className="px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
           <Link href="/sysAdmin/suspendRecipe">Suspend Recipes</Link>
         </li>
+        <li className="px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
+          <Link href="/sysAdmin/suspendEducationalContent">
+            Suspend Educational Contents
+          </Link>
+        </li>
+        <li className="px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
+          <Link href="/sysAdmin/suspendMealPlan">Suspend Meal Plans</Link>
+        </li>
       </ul>
     </div>
   );

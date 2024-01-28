@@ -23,7 +23,7 @@ const fetchEducationalContent = async () => {
   }
 };
 
-const EducationalContentPageForUser = () => {
+const EducationalContentPage = () => {
   const router = useRouter();
   const [categoryFilter, setCategoryFilter] = useState("");
   const [AllEduContent, setAllEduContent] = useState([]);
@@ -290,4 +290,4 @@ const EducationalContentPageForUser = () => {
   );
 };
 
-export default EducationalContentPageForUser;
+export default EducationalContentPage;

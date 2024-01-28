@@ -1,11 +1,10 @@
 "use client";
-// import axios from "axios";
 import axiosInterceptorInstance from "../../axiosInterceptorInstance.js";
 import { useRouter } from "next/navigation";
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
 
-// router path is /sysAdmin/suspendRecipe
+// router path is /sysAdmin/suspendEducationalContent
 
 // Sorting options
 const sortOptions = {
@@ -17,57 +16,74 @@ const sortOptions = {
   ALPHABETICAL_ZA: { key: "ALPHABETICAL_ZA", label: "Alphabetically (Z to A)" },
 };
 
-// Fetch all recipes from the backend - backend controller is Recipe Controller
-const fetchRecipes = async () => {
+// Fetch all educational contents from the backend - backend controller is EducationalContentController
+const fetchEducationalContent = async () => {
   const userID = localStorage.getItem("userId");
   console.log("Current id", userID);
   try {
-    const response = await axiosInterceptorInstance.get("/recipe/get");
-    console.log("All recipes :", response.data);
+    const response = await axiosInterceptorInstance.get(
+      "/educationalContent/get"
+    );
+
+    console.log("All edu content:", response.data);
 
     return response.data;
   } catch (error) {
-    console.error("Failed to fetch recipes:", error);
+    console.error("Failed to fetch edu contents:", error);
     throw error;
   }
 };
 
-const fetchRecipeAverage = async (recipeId) => {
+// Fetch the average rating for each single educational content
+const fetchEduContentAverage = async (eduContentId) => {
   try {
     const response = await axiosInterceptorInstance.get(
-      `/recipe/getAverage/${recipeId}`
+      `/educationalContent/getAverage/${eduContentId}`
     );
-    console.log("Average rating for recipe", recipeId, "is:", response.data);
-    return response.data; // Assuming this returns the average data for the recipe
+    console.log(
+      "Average rating for educationalContent",
+      eduContentId,
+      "is:",
+      response.data
+    );
+    return response.data; // Assuming this returns the average data for the educational content
   } catch (error) {
-    console.error(`Failed to fetch average for recipe ${recipeId}:`, error);
+    console.error(
+      `Failed to fetch average for educationalContent ${eduContentId}:`,
+      error
+    );
     return null; // or handle the error as you see fit
   }
 };
 
-const SuspendRecipe = () => {
+const SuspendEducationalContent = () => {
   const router = useRouter();
-  const [recipes, setRecipes] = useState([]);
-  const [displayedRecipes, setDisplayedRecipes] = useState([]);
+  const [educationalContent, setEducationalContent] = useState([]);
+  const [displayedEduContent, setDisplayedEduContent] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [sortOption, setSortOption] = useState("LATEST");
   const [isSearchEmpty, setIsSearchEmpty] = useState(false);
   const [searchPerformed, setSearchPerformed] = useState(false);
   const [searchResultsCount, setSearchResultsCount] = useState(0);
+  const [categories, setCategories] = useState([]);
+  const [categoryFilter, setCategoryFilter] = useState("ALL");
 
-  // fetch all recipes from backend
+  // fetch all educational content and categories from backend
   useEffect(() => {
     const getData = async () => {
       try {
-        const fetchedRecipe = await fetchRecipes();
-        const recipesWithAverage = await Promise.all(
-          fetchedRecipe.map(async (recipe) => {
-            const average = await fetchRecipeAverage(recipe.id);
-            return { ...recipe, average }; // Augment each recipe with its average
+        const fetchedEduContent = await fetchEducationalContent();
+        const eudContentWithAverage = await Promise.all(
+          fetchedEduContent.map(async (eduContent) => {
+            const average = await fetchEduContentAverage(eduContent.id);
+            return { ...eduContent, average }; // Augment each educational content with its average
           })
         );
-        console.log("Recipe with average:", recipesWithAverage);
-        setRecipes(recipesWithAverage);
+        console.log(
+          "Educational contents with average:",
+          eudContentWithAverage
+        );
+        setEducationalContent(eudContentWithAverage);
         // ... [sorting and other logic]
       } catch (error) {
         console.error("Error while fetching data:", error);
@@ -75,100 +91,115 @@ const SuspendRecipe = () => {
     };
 
     getData();
+
+    // Fetch all educational content categories from backend
+    const fetchCategories = async () => {
+      console.log("Fetching edu content categories...");
+      try {
+        const response = await axiosInterceptorInstance.get(
+          "category/getAllEducationalContentCategories"
+        );
+        console.log("Categories fetched:", response.data);
+        setCategories(response.data);
+      } catch (error) {
+        console.error("Error fetching categories:", error);
+      }
+    };
+
+    fetchCategories();
   }, []);
 
-  // All in 1 -- sort, search
+  // All in 1 -- sort, filter, search
   useEffect(() => {
-    // Start with the full list of blogs
-    let processedRecipes = [...recipes];
+    // Start with the full list of educational content
+    let processedEduContent = [...educationalContent];
 
     // Search filter
     if (searchTerm) {
-      processedRecipes = processedRecipes.filter((recipe) =>
-        recipe.title.toLowerCase().includes(searchTerm.toLowerCase())
+      processedEduContent = processedEduContent.filter((eduContent) =>
+        eduContent.title.toLowerCase().includes(searchTerm.toLowerCase())
       );
     }
 
     // Category filter
-    // if (categoryFilter !== "ALL") {
-    //   processedBlogs = processedBlogs.filter(
-    //     (recipe) => recipe.blogTypeId === Number(categoryFilter)
-    //   );
-    // }
-
-    // Utility function to get the date, preferring createdDT and falling back to lastUpdatedDT
-    function getDateOrFallback(recipe) {
-      return new Date(recipe.createdDT || recipe.lastUpdatedDT);
+    if (categoryFilter !== "ALL") {
+      processedEduContent = processedEduContent.filter(
+        (eduContent) =>
+          eduContent.educationalContentTypeId === Number(categoryFilter)
+      );
     }
 
     // Sorting
     switch (sortOption) {
       case "LATEST":
-        processedRecipes.sort(
-          (a, b) => getDateOrFallback(b) - getDateOrFallback(a)
+        processedEduContent.sort(
+          (a, b) => new Date(b.createdDateTime) - new Date(a.createdDateTime)
         );
         break;
       case "OLDEST":
-        processedRecipes.sort(
-          (a, b) => getDateOrFallback(a) - getDateOrFallback(b)
+        processedEduContent.sort(
+          (a, b) => new Date(a.createdDateTime) - new Date(b.createdDateTime)
         );
         break;
       case "ALPHABETICAL_AZ":
-        processedRecipes.sort((a, b) => a.title.localeCompare(b.title));
+        processedEduContent.sort((a, b) => a.title.localeCompare(b.title));
         break;
       case "ALPHABETICAL_ZA":
-        processedRecipes.sort((a, b) => b.title.localeCompare(a.title));
+        processedEduContent.sort((a, b) => b.title.localeCompare(a.title));
         break;
       case "HIGHEST_RATINGS":
-        processedRecipes.sort((a, b) => {
+        processedEduContent.sort((a, b) => {
           const ratingDiff =
             (b.average?.averageRatings || 0) - (a.average?.averageRatings || 0);
           if (ratingDiff !== 0) return ratingDiff;
-          return getDateOrFallback(b) - getDateOrFallback(a); // Latest date first if tie
+          return new Date(b.createdDateTime) - new Date(a.createdDateTime); // Latest date first if tie
         });
         break;
       case "LOWEST_RATINGS":
-        processedRecipes.sort((a, b) => {
+        processedEduContent.sort((a, b) => {
           const ratingDiff =
             (a.average?.averageRatings || 0) - (b.average?.averageRatings || 0);
           if (ratingDiff !== 0) return ratingDiff;
-          return getDateOrFallback(b) - getDateOrFallback(a); // Latest date first if tie
+          return new Date(b.createdDateTime) - new Date(a.createdDateTime); // Latest date first if tie
         });
         break;
       // ... other sorting cases
     }
 
-    // Update the displayed recipes
-    setDisplayedRecipes(processedRecipes);
-  }, [recipes, searchTerm, sortOption]);
+    // Update the displayed educational content
+    setDisplayedEduContent(processedEduContent);
+  }, [educationalContent, searchTerm, categoryFilter, sortOption]);
 
-  // To suspend or unsuspend a recipe
-  const handleToggleRecipeStatus = async (recipeID, isActive) => {
+  // Combined Function to toggle a educational contnet active status
+  const handleToggleEduContentStatus = async (eduContentId, isActive) => {
     const newStatus = !isActive;
 
     try {
       const response = await axiosInterceptorInstance.put(
-        "/recipe/updateActivity",
+        "/educationalContent/suspend",
         {
-          id: recipeID,
+          id: eduContentId,
           active: newStatus,
         }
       );
 
       // Check if the response is successful before updating the state
       if (response.status === 200) {
-        const updatedRecipes = recipes.map((recipe) => {
-          if (recipe.id === recipeID) {
-            return { ...recipe, active: newStatus };
+        const updatedEduContent = educationalContent.map((eduContent) => {
+          if (eduContent.id === eduContentId) {
+            return { ...eduContent, active: newStatus };
           }
-          return recipe;
+          return eduContent;
         });
-        setRecipes(updatedRecipes);
+        setEducationalContent(updatedEduContent);
       } else {
-        console.error("Failed to update the recipe status:", response);
+        console.error(
+          "Failed to update the educational content status:",
+          response
+        );
       }
     } catch (error) {
-      console.error("Error updating recipe status", error);
+      console.error("Error updating educational content status", error);
     }
   };
 
@@ -189,21 +220,20 @@ const SuspendRecipe = () => {
   return (
     <div className="px-2 sm:px-5 min-h-screen flex flex-col py-5">
       <h1 className="text-6xl text-gray-900 p-3 mb-4 font-bold text-center sm:text-center">
-        All Recipes
+        All Educational Content
       </h1>
-
       {/* Search and Sort Section */}
       <div className="flex flex-col md:flex-row justify-between items-center mb-4">
         {/* Search bar */}
         <div className="mb-4 md:mb-0 md:mr-2">
           <input
             type="text"
-            id="blogSearch" // Adding an id attribute here
-            name="blogSearch" // Adding a name attribute here
+            id="eduContentSearch" // Adding an id attribute here
+            name="eduContentSearch" // Adding a name attribute here
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
-            placeholder="Search recipes"
-            className="mr-2 p-2 rounded-lg border w-full md:w-auto"
+            placeholder="Search by title"
+            className="mr-2 p-2 rounded-lg borde w-full md:w-auto"
           />
 
           <button
@@ -247,7 +277,7 @@ const SuspendRecipe = () => {
             </select>
           </div>
           {/* Filter dropdown */}
-          {/* <div className="mb-2 md:mb-0 md:mr-6">
+          <div className="mb-2 md:mb-0 md:mr-6">
             <label
               htmlFor="categoryFilter"
               className="ml-2 mr-2 font-2xl text-gray-900"
@@ -266,99 +296,105 @@ const SuspendRecipe = () => {
                 </option>
               ))}
             </select>
-          </div> */}
+          </div>
         </div>
       </div>
 
-      {/* Table of recipes */}
+      {/* Table of educational content */}
       <div className="overflow-x-auto">
         <table className="min-w-full rounded-lg border-zinc-200 border-2">
-          <thead className="bg-zinc-700 font-normal tracking-normal text-white border-gray-800 border-2">
+          <thead className="bg-zinc-700 font-normal text-white border-gray-800 border-2">
             <tr className="text-center text-lg">
-              <th className="px-3 py-2">Recipe Title</th>
+              <th className="px-3 py-2">Educational Content Title</th>
               <th className="px-3 py-2">Publisher</th>
               <th className="px-3 py-2">Company</th>
               <th className="px-3 py-2">Date Published</th>
+              <th className="px-3 py-2">Category</th>
               <th className="px-3 py-2">Status</th>
               <th className="px-3 py-2">Ratings</th>
+              <th className="px-3 py-2"></th>
               <th className="px-3 py-2"></th>
             </tr>
           </thead>
           <tbody>
-            {displayedRecipes.map((recipe, index) => (
+            {displayedEduContent.map((eduContent, index) => (
               <tr key={index} className="bg-white border-b">
                 <td className="px-3 py-2 text-base text-center">
-                  {recipe.title}
+                  {eduContent.title}
                 </td>
                 <td className="px-3 py-2 text-base text-center">
-                  {recipe.userID?.fullName || "nil"}
+                  {eduContent.userID?.fullName || "nil"}
                 </td>
                 <td className="px-3 py-2 text-base text-center">
-                  {recipe.userID?.companyName || "nil"}
+                  {eduContent.userID?.companyName || "nil"}
                 </td>
                 <td className="px-3 py-2 text-base text-center">
-                  {new Date(
-                    recipe?.createdDT || recipe.lastUpdatedDT
-                  ).toLocaleDateString("en-GB")}
+                  {new Date(eduContent.createdDateTime).toLocaleDateString(
+                    "en-GB"
+                  )}
                 </td>
-                {/* <td className="px-3 py-2 text-base text-center">
-                  {recipe.blogType
-                    ? recipe.blogType.subcategoryName
+                <td className="px-3 py-2 text-base text-center">
+                  {eduContent.educationalContentType
+                    ? eduContent.educationalContentType.subcategoryName
                     : "Not specified"}
-                </td> */}
+                </td>
+
                 <td className="px-3 py-2 text-base text-center">
                   <span
                     className={`rounded-full px-3 py-1 text-base font-semibold ${
-                      recipe.active
+                      eduContent.active
                         ? "text-white bg-green-500"
                         : "text-white bg-red-500"
                     }`}
                   >
-                    {recipe.active ? "Active" : "Inactive"}
+                    {eduContent.active ? "Active" : "Inactive"}
                   </span>
                 </td>
                 <td className="px-3 py-2 text-base text-center">
                   <div
-                    className="rating-container flex flex-col"
+                    className="rating-container"
                     style={{ minWidth: "100px" }}
                   >
-                    {recipe.average !== null &&
-                    typeof recipe.average.averageRatings === "number" &&
-                    typeof recipe.average.totalNumber === "number" ? (
+                    {eduContent.average !== null &&
+                    typeof eduContent.average.averageRatings === "number" &&
+                    typeof eduContent.average.totalNumber === "number" ? (
                       <span
                         className="rating-text"
                         style={{ fontWeight: "bold", color: "#0a0a0a" }}
                       >
-                        {recipe.average.averageRatings.toFixed(1)}
+                        {eduContent.average.averageRatings.toFixed(1)}
                       </span>
                     ) : (
                       "No ratings yet"
                     )}
-                    {recipe.average && recipe.average.totalNumber > 0 && (
-                      <span
-                        className="rating-count"
-                        style={{ fontSize: "0.8rem", color: "#666" }}
-                      >
-                        ({recipe.average.totalNumber} rating
-                        {recipe.average.totalNumber !== 1 ? "s" : ""})
-                      </span>
-                    )}
+                    {eduContent.average &&
+                      eduContent.average.totalNumber > 0 && (
+                        <span
+                          className="rating-count"
+                          style={{ fontSize: "0.8rem", color: "#666" }}
+                        >
+                          ({eduContent.average.totalNumber} rating
+                          {eduContent.average.totalNumber !== 1 ? "s" : ""})
+                        </span>
+                      )}
                   </div>
                 </td>
-
-                <td className="px-3 py-2 text-base text-center">
+                <td className="px-3 py-2 text-base text-center"></td>
+                <td className="px-3 py-2 justify-center sm:justify-start">
                   <button
                     onClick={() =>
-                      handleToggleRecipeStatus(recipe.id, recipe.active)
+                      handleToggleEduContentStatus(
+                        eduContent.id,
+                        eduContent.active
+                      )
                     }
-                    className={`text-white font-bold  ${
-                      recipe.active
+                    className={`text-white font-bold ${
+                      eduContent.active
                         ? "bg-red-600 hover:bg-red-700"
                         : "bg-stone-400 hover:bg-stone-500"
-                    } focus:ring-4 focus:outline-none focus:ring-blue-300
-    dark:focus:ring-blue-800 rounded-lg text-base px-5 py-2.5 text-center`}
+                    } rounded-lg text-base px-5 py-2 text-center`}
                   >
-                    {recipe.active ? "Suspend" : "Unsuspend"}
+                    {eduContent.active ? "Suspend" : "Unsuspend"}
                   </button>
                 </td>
               </tr>
@@ -370,4 +406,4 @@ const SuspendRecipe = () => {
   );
 };
 
-export default SuspendRecipe;
+export default SuspendEducationalContent;

@@ -229,6 +229,10 @@ const AdminHomePage = () => {
     router.push("/sysAdmin/suspendEducationalContent");
   };
 
+  const handleViewMealPlans = () => {
+    router.push("/sysAdmin/suspendMealPlan");
+  };
+
   // The button under user account will redirect to corresponding page
   const handleViewMyAccount = () => {
     router.push("/sysAdmin/myAccount/viewAccount");
@@ -410,7 +414,7 @@ const AdminHomePage = () => {
               </div>
             </div>
             {/* Suspend Contents management */}
-            <div className="relative flex flex-col rounded-xl h-96 bg-slate-200 p-8">
+            <div className="relative flex flex-col rounded-xl max-h-screen bg-slate-200 p-8">
               <h4 className="text-2xl text-center font-semibold text-gray-900 mb-4">
                 Suspend Content Management
               </h4>
@@ -433,16 +437,24 @@ const AdminHomePage = () => {
                 </div>
                 <div className="flex items-center justify-center">
                   <button
-                    className="px-6 py-2 mb-8 font-medium bg-indigo-500 text-white w-full transition-all shadow-[3px_3px_0px_black] hover:shadow-none hover:translate-x-[3px] hover:translate-y-[3px]"
+                    className="px-6 py-2 font-medium bg-indigo-500 text-white w-full transition-all shadow-[3px_3px_0px_black] hover:shadow-none hover:translate-x-[3px] hover:translate-y-[3px]"
                     onClick={handleViewEducationalContent}
                   >
                     View Educational Contents
                   </button>
                 </div>
+                <div className="flex items-center justify-center">
+                  <button
+                    className="px-6 py-2 mb-8 font-medium bg-indigo-500 text-white w-full transition-all shadow-[3px_3px_0px_black] hover:shadow-none hover:translate-x-[3px] hover:translate-y-[3px]"
+                    onClick={handleViewMealPlans}
+                  >
+                    View Meal Plans
+                  </button>
+                </div>
               </div>
             </div>
             {/* User Account management */}
-            <div className="relative flex flex-col rounded-xl h-96 bg-slate-200 p-8">
+            <div className="relative flex flex-col rounded-xl max-h-screen bg-slate-200 p-8">
               <h4 className="text-2xl text-center font-semibold text-gray-900 mb-4">
                 User Account Management
               </h4>

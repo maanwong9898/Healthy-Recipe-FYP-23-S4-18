@@ -3,18 +3,19 @@ import { useRouter } from "next/navigation";
 import React from "react";
 import Link from "next/link";
 import { useState, useEffect } from "react";
-import SideBarLayout from "../../sidebarLayout.jsx";
 import axiosInterceptorInstance from "../../../axiosInterceptorInstance.js";
 
 //router path for this page: /sysAdmin/myAccount/changePwd
 
 const changeUserPwd = () => {
+  const router = useRouter();
   const [userOldPwd, setUserOldPwd] = useState("");
   const [oldPwd, setOldPwd] = useState("");
   const [newPwd, setNewPwd] = useState("");
   const [repeatPwd, setRepeatPwd] = useState("");
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
+  const [isTabSelected, setIsTabSelected] = useState("changePwd");
 
   const handlePwdChange = async (event) => {
     event.preventDefault();
@@ -73,80 +74,144 @@ const changeUserPwd = () => {
     setError("");
   };
 
+  // Redirect to my account page
+  const handleViewMyAccount = () => {
+    router.push("/sysAdmin/myAccount/viewAccount");
+  };
+
+  // Redirect to change password page
+  const handleViewChangePwd = () => {
+    router.push("/sysAdmin/myAccount/changePwd");
+  };
+
+  // Handle tab selection
+  const handleSelectTab = (tab) => {
+    setIsTabSelected(tab);
+    if (tab === "myAccount") {
+      handleViewMyAccount();
+    } else if (tab === "changePwd") {
+      handleViewChangePwd();
+    }
+  };
+
   return (
-    <div className="flex">
-      <SideBarLayout>
-        <div className="w-3/4 p-4 max-w-sm">
-          <h1 className="text-lg font-semibold mb-4">Change Password</h1>
+    <div className="flex flex-col min-h-screen">
+      <div className="flex justify-center">
+        <div className="p-5 max-w-3xl w-full mx-5 items-center ">
+          <div className="bg-white border border-gray-100 rounded-lg shadow">
+            <ul className="flex flex-wrap text-sm font-medium text-center text-gray-500 border-b border-gray-200 rounded-t-lg bg-gray-50">
+              <li className="me-2">
+                <button
+                  type="button"
+                  className={`inline-block p-4 rounded-ss-lg hover:bg-gray-100 ${
+                    isTabSelected === "myAccount"
+                      ? "text-blue-600"
+                      : "text-gray-500"
+                  }`}
+                  onClick={() => handleSelectTab("myAccount")}
+                >
+                  My Account
+                </button>
+              </li>
+              <li className="me-2">
+                <button
+                  type="button"
+                  className={`inline-block p-4 rounded-ss-lg hover:bg-gray-100 ${
+                    isTabSelected === "changePwd"
+                      ? "text-blue-600"
+                      : "text-gray-500"
+                  }`}
+                  onClick={() => handleSelectTab("changePwd")}
+                >
+                  Change Password
+                </button>
+              </li>
+            </ul>
+            <div className="p-8">
+              <h1 className="text-lg font-semibold mb-4">Change Password</h1>
 
-          {/* Form Start */}
-          <form onSubmit={handlePwdChange}>
-            {/* OLD PWD */}
-            <div className="flex flex-col mb-3.5">
-              <label className="mb-1">Old Password:</label>
-              <input
-                type="password"
-                id="oldPwd"
-                name="oldPwd"
-                placeholder="Enter old password"
-                value={oldPwd}
-                onChange={clearErrorOnChange(setOldPwd)}
-                className="border px-4 py-2 rounded-lg w-full bg-white border-gray-300 text-gray-900 sm:text-sm"
-              />
+              {/* Form Start */}
+              <form onSubmit={handlePwdChange}>
+                {/* OLD PWD */}
+                <div className="flex flex-col mb-3.5">
+                  <label className="flex items-center text-base mb-1">
+                    Old Password:
+                    <span className=" text-red-500">*</span>
+                  </label>
+
+                  <input
+                    type="password"
+                    id="oldPwd"
+                    name="oldPwd"
+                    placeholder="Enter old password"
+                    value={oldPwd}
+                    onChange={clearErrorOnChange(setOldPwd)}
+                    className="border px-4 py-2 rounded-lg w-full bg-white border-gray-300 text-gray-900 sm:text-sm"
+                  />
+                </div>
+
+                {/* NEW PWD */}
+                <div className="flex flex-col mb-3.5">
+                  <label className="mb-1">
+                    New Password:
+                    <span className=" text-red-500">*</span>
+                  </label>
+                  <input
+                    type="password"
+                    id="newPwd"
+                    name="newPwd"
+                    placeholder="Enter new password"
+                    value={newPwd}
+                    onChange={clearErrorOnChange(setNewPwd)}
+                    className="border px-4 py-2 rounded-lg w-full bg-white border-gray-300 text-gray-900 sm:text-sm"
+                  />
+                </div>
+
+                {/* REPEAT PWD */}
+                <div className="flex flex-col mb-3.5">
+                  <label className="mb-1">
+                    Repeat Password:
+                    <span className=" text-red-500">*</span>
+                  </label>
+                  <input
+                    type="password"
+                    id="repeatPwd"
+                    name="repeatPwd"
+                    placeholder="Repeat new password"
+                    value={repeatPwd}
+                    onChange={clearErrorOnChange(setRepeatPwd)}
+                    className="border px-4 py-2 rounded-lg w-full bg-white border-gray-300 text-gray-900 sm:text-sm"
+                  />
+                </div>
+                {/* ERROR MESSAGE */}
+                {error && (
+                  <div className="text-red-500 text-sm font-bold mt-2">
+                    {error}
+                  </div>
+                )}
+
+                {/* SUCCESS MESSAGE */}
+                {success && (
+                  <div className="text-green-500 text-sm font-bold mt-2">
+                    {success}
+                  </div>
+                )}
+
+                {/* UPDATE BTN */}
+                <div className="flex flex-row justify-end">
+                  <button
+                    type="submit"
+                    onClick={handlePwdChange}
+                    className="bg-blue-600 hover:bg-blue-700 text-white w-24 rounded-lg font-bold py-2 px-4 ml-auto"
+                  >
+                    Update
+                  </button>
+                </div>
+              </form>
             </div>
-
-            {/* NEW PWD */}
-            <div className="flex flex-col mb-3.5">
-              <label className="mb-1">New Password:</label>
-              <input
-                type="password"
-                id="newPwd"
-                name="newPwd"
-                placeholder="Enter new password"
-                value={newPwd}
-                onChange={clearErrorOnChange(setNewPwd)}
-                className="border px-4 py-2 rounded-lg w-full bg-white border-gray-300 text-gray-900 sm:text-sm"
-              />
-            </div>
-
-            {/* REPEAT PWD */}
-            <div className="flex flex-col mb-3.5">
-              <label className="mb-1">Repeat Password:</label>
-              <input
-                type="password"
-                id="repeatPwd"
-                name="repeatPwd"
-                placeholder="Repeat new password"
-                value={repeatPwd}
-                onChange={clearErrorOnChange(setRepeatPwd)}
-                className="border px-4 py-2 rounded-lg w-full bg-white border-gray-300 text-gray-900 sm:text-sm"
-              />
-            </div>
-            {/* ERROR MESSAGE */}
-            {error && (
-              <div className="text-red-500 text-sm font-bold mt-2">{error}</div>
-            )}
-
-            {/* SUCCESS MESSAGE */}
-            {success && (
-              <div className="text-green-500 text-sm font-bold mt-2">
-                {success}
-              </div>
-            )}
-
-            {/* SAVE BTN */}
-            <div className="flex flex-row justify-end">
-              <button
-                type="submit"
-                onClick={handlePwdChange}
-                className="bg-blue-500 hover:bg-blue-700 text-white rounded-md font-bold py-2 px-4 ml-auto"
-              >
-                Save
-              </button>
-            </div>
-          </form>
+          </div>
         </div>
-      </SideBarLayout>
+      </div>
     </div>
   );
 };

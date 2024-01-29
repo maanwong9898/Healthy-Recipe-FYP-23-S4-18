@@ -83,7 +83,7 @@ const ViewEduContent = ({ params }) => {
       );
       console.log("All ratings response data:", response.data);
 
-      // Assuming response.data is the array of reviews for the given educationalContentId
+      // Assuming response.data is the array of reviews for the given blogId
       setReviewsAndRatings(response.data);
 
       // Optionally, log each review to the console
@@ -98,6 +98,8 @@ const ViewEduContent = ({ params }) => {
       const userReview = response.data.find(
         (review) => review.userDTO.id === currentUserId
       );
+
+      console.log("User review:", userReview);
       setHasAlreadyReviewed(!!userReview);
     } catch (error) {
       console.error("Failed to fetch ratings and reviews:", error);
@@ -254,15 +256,15 @@ const ViewEduContent = ({ params }) => {
         {/* Ask to write reviews */}
         {!hasAlreadyReviewed ? (
           <footer className="blog-post-reviews mt-10 px-9 mx-auto max-w-screen-xl text-left">
-            <p className="font-mono font-bold text-2xl text-cyan-600">
+            <p className="font-sans font-bold text-2xl text-gray-900">
               Write a Review
             </p>
-            <div className="my-4 p-4">
+            <div className="my-4">
               <textarea
                 value={newReview}
                 onChange={(e) => setNewReview(e.target.value)}
                 placeholder="Write your review here"
-                className="w-full p-2 border-2 border-black rounded"
+                className="w-full p-2.5 border border-gray-300 bg-gray-50 rounded-lg"
               />
               <div className="flex my-2">
                 {[...Array(5)].map((_, index) => {
@@ -280,7 +282,7 @@ const ViewEduContent = ({ params }) => {
                       <span
                         className={
                           ratingValue <= newRating
-                            ? "text-yellow-500 cursor-pointer"
+                            ? "text-yellow-400 cursor-pointer"
                             : "text-gray-400 cursor-pointer"
                         }
                       >
@@ -290,11 +292,11 @@ const ViewEduContent = ({ params }) => {
                   );
                 })}
               </div>
-              <p className="text-red-600">{validationMessage}</p>
+              <p className="text-red-500">{validationMessage}</p>
               <button
                 onClick={submitReview}
                 disabled={submitting}
-                className="bg-cyan-600 hover:bg-cyan-700 text-white font-bold py-2 px-4 rounded"
+                className="mt-3 bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg"
               >
                 {submitting ? "Submitting..." : "Submit Review"}
               </button>

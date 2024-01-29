@@ -338,11 +338,11 @@ const BusinessBlogPostsPageForUser = () => {
           >
             <div className="whitespace-pre-line">{post.info}</div>
           </div>
-          <div className="flex justify-between items-center">
+          {/* <div className="flex justify-between items-center">
             <div className="flex items-center text-red-700 font-semibold text-xl">
               {post.createdDateTime}
             </div>
-          </div>
+          </div> */}
         </div>
         {/* <div className="flex justify-between items-center">
           <div className="flex items-center text-red-700 font-semibold text-xl">

@@ -90,7 +90,6 @@ VALUES
 ("11", "user11", 1, "pw1", "11@gmail.com", "Ben",     "REGISTERED_USER", DATE_ADD(NOW(), INTERVAL -FLOOR(RAND() * DATEDIFF(NOW(), '2022-01-20')) DAY)),
 ("12", "user12", 1, "pw1", "12@gmail.com", "Sam",     "REGISTERED_USER", DATE_ADD(NOW(), INTERVAL -FLOOR(RAND() * DATEDIFF(NOW(), '2022-01-20')) DAY));
 
-
 -- System admin
 INSERT INTO System_Admin
  (ID, DOB) 
@@ -148,6 +147,38 @@ VALUES
     ("12", 100.50, "2024-12-08" );
 
 
+-- To test verfied user
+-- User Account
+INSERT INTO USERACCOUNT 
+(ID, Username, enabled, Password, Email, Full_Name, role, created_date) 
+VALUES
+("20",  "user2",  1, "pw1", "20@gmail.com" , "John",    "BUSINESS_USER",           DATE_ADD(NOW(), INTERVAL -FLOOR(RAND() * DATEDIFF(NOW(), '2022-01-20')) DAY)),
+("21",  "user21",  1, "pw1", "21@gmail.com" , "John",    "BUSINESS_USER",           DATE_ADD(NOW(), INTERVAL -FLOOR(RAND() * DATEDIFF(NOW(), '2022-01-20')) DAY)),
+("22",  "user22",  1, "pw1", "22@gmail.com" , "William", "BUSINESS_USER",           DATE_ADD(NOW(), INTERVAL -FLOOR(RAND() * DATEDIFF(NOW(), '2022-01-20')) DAY)),
+("23",  "user23",  1, "pw1", "23@gmail.com" , "Patricia","BUSINESS_USER",   DATE_ADD(NOW(), INTERVAL -FLOOR(RAND() * DATEDIFF(NOW(), '2022-01-20')) DAY)),
+("24",  "user24",  0, "pw1", "24@gmail.com" , "Mike",    "BUSINESS_USER",   DATE_ADD(NOW(), INTERVAL -FLOOR(RAND() * DATEDIFF(NOW(), '2022-01-20')) DAY)),
+("25",  "user25",  1, "pw1", "25@gmail.com" , "Ben",     "NUTRITIONIST",    DATE_ADD(NOW(), INTERVAL -FLOOR(RAND() * DATEDIFF(NOW(), '2022-01-20')) DAY)),
+("26",  "user26",  1, "pw1", "26@gmail.com" , "Sam",     "NUTRITIONIST",    DATE_ADD(NOW(), INTERVAL -FLOOR(RAND() * DATEDIFF(NOW(), '2022-01-20')) DAY)),
+("27",  "user27",  1, "pw1", "27@gmail.com" , "John",    "NUTRITIONIST", DATE_ADD(NOW(), INTERVAL -FLOOR(RAND() * DATEDIFF(NOW(), '2022-01-20')) DAY));
+
+
+INSERT INTO Business_User
+ (ID, Company_Name, UEN,contact_number, company_address) 
+VALUES
+    ("20", "Trump Enterprise", "4799-577594-29890", "92345678", "123, Jurong Street, Singapore 123456"),
+    ("21", "Trump Enterprise", "4799-577594-29000", "92345678", "123, Jurong Street, Singapore 123456"),
+    ("22", "Star Enterprise", "4799-577594-29111", "82345678", "123, Tampines Street, Singapore 123456"),
+    ("23", "Trump Enterprise", "4799-577594-29222", "92345678", "123, Jurong Street, Singapore 123456"),
+    ("24", "Trump Enterprise", "4799-577594-29333", "92345678", "123, Jurong Street, Singapore 123456");
+
+-- Nutritionist
+INSERT INTO Nutritionist
+ (ID, Company_Name, company_address, contact_number) 
+VALUES
+    ("25", "Wellness Limited", "123, Bedok Street, Singapore 123456", "98345678") ,
+    ("26", "Shine Company", "23, Hougang, Singapore 123456", "88345678"),
+    ("27", "Shine Company", "23, Hougang, Singapore 123456", "88345678");
+
 -- Category
 -- 1. Allergies
 Insert into allergies 
@@ -196,8 +227,11 @@ VALUES
 
 
 -- Blog
+ -- publisher should be author of the blog
+    -- blog_type_id should be the category of the blog (refer to blog_post_category)
+    -- img_title should be the author of the image and the source of the image (follow their code of conduct)
 INSERT INTO Blog
-(id, CreatedDT, Publisher, Title, Info, UserID, img, blog_type_id)
+(id, CreatedDT, Publisher, Title, Info, UserID, img, img_title, blog_type_id)
 VALUES
     (
         '1',
@@ -207,6 +241,7 @@ VALUES
         'Welcome to the future of cooking with the SmartChef Pro, the all-in-one kitchen appliance that promises to make cooking a breeze. From amateur cooks to professional chefs, the SmartChef Pro is designed to enhance your culinary skills. Featuring a suite of smart functions, including automated temperature control, self-stirring pots, and a built-in digital cookbook, this revolutionary device ensures every meal is cooked to perfection. \nWith its sleek design, intuitive touch interface, and Wi-Fi connectivity, the SmartChef Pro syncs seamlessly with your smart home ecosystem. Receive real-time updates on your meal’s progress directly to your smartphone or virtual assistant. Say goodbye to the guesswork and hello to precision with the SmartChef Pro advanced sensors, which guarantee the exact cooking duration and temperature for all your dishes. Whether you are simmering, sautéing, baking, or grilling, the SmartChef Pro adapts to your cooking style.',
         3,
         'https://img.freepik.com/free-photo/electric-blender-mixer-juicer-set_140725-7263.jpg?w=740&t=st=1705070791~exp=1705071391~hmac=b015f8ab2fb6e4f2b74c8f01a42dd579d7f7fa0db8c82eb8890a57767dd21722',
+        'Author : KamranAydinov, Designed by Freepik',  -- img_title
         2 -- blog_type_id
     ),
     (
@@ -216,7 +251,8 @@ VALUES
         'Gourmet Flavors: A Culinary Adventure',
         'Embark on a culinary adventure with Gourmet Flavors: A Culinary Adventure. This cookbook is a treasure trove of exotic recipes from around the globe, meticulously compiled by world-renowned chefs. Dive into a world of unique tastes and aromas that will transport your senses to distant lands. Each recipe is presented with easy-to-follow instructions and tips for perfect execution, even for home cooks.\nPriced at $35, this cookbook is an excellent addition to any kitchen library, offering inspiration for both everyday meals and special occasions. Elevate your cooking game with the diverse flavors and creative dishes in Gourmet Flavors.',
         3,
-        'https://img.freepik.com/free-photo/raw-chicken-legs-white-platter-with-recipe-book-aside_114579-19690.jpg?w=826&t=st=1705070868~exp=1705071468~hmac=e1a88cb50eb2b5f76e1fc8fc11f4982d0f0a6d0e8c292861f36827032d7a8e0a',
+        'https://img.freepik.com/free-photo/piece-salad-fork-close-up_23-2148537206.jpg?w=360&t=st=1706579798~exp=1706580398~hmac=c4fdd8cc3d1cb5b1471de0b4223d82e322c9ab95bcfa747da69301a40a93bb8d',
+        'Designed by Freepik',  -- img_title
         1
     ),
     (
@@ -227,6 +263,7 @@ VALUES
         'Introducing our <strong>Eco-Friendly Cookware Set, the ultimate solution for sustainable cooking. Crafted from 100% recycled materials, this cookware set is designed for environmentally conscious cooks. The non-stick surface ensures healthy cooking with minimal oil, while the even heat distribution guarantees perfect results every time. \nFor just $120, this set includes two frying pans, a saucepan, and a casserole dish, all compatible with induction cooktops. Make a positive impact on the environment while enjoying the art of cooking with our Eco-Friendly Cookware Set.',
         1,
         'https://img.freepik.com/free-photo/elegant-kitchen-utensils-set-harmonious-fusion-practicality-style-meet-your-culinary-requirements_157027-2322.jpg?t=st=1705070931~exp=1705074531~hmac=ee69b9c114083966eda13104cd33630154605f972460e21046122399baef97b0&w=996',
+        'Author : Vecstock, Designed by Freepik',  -- img_title
         1
     ),
     (
@@ -237,6 +274,7 @@ VALUES
         'Discover the joy of homemade bread with our Artisan Bread Baking Kit. Ideal for beginners and seasoned bakers alike, this kit includes everything needed to create delicious, crusty loaves. The kit comes with a high-quality Dutch oven, a proofing basket, a dough scraper, and a recipe booklet with step-by-step instructions for various bread types. \nPriced at $50, the Artisan Bread Baking Kit is perfect for anyone looking to delve into the world of bread making. Impress your family and friends with fresh, artisanal bread right from your kitchen!',
         3,
         'https://img.freepik.com/free-photo/homemade-dough-rustic-wood-table-generated-by-ai_188544-36317.jpg?t=st=1705070996~exp=1705074596~hmac=fbd8047e298800cb08dae2f699d5fca9355aaef5af3c70624aa5955be5d151b9&w=996',
+        'Designed by Freepik',  -- img_title
         3
     ),
     (
@@ -247,6 +285,7 @@ VALUES
         'Introducing the 30-Minute Meals Cookbook, a must-have for busy food enthusiasts. This comprehensive cookbook is filled with delicious recipes that can be prepared in 30 minutes or less. From quick family dinners to last-minute gatherings, these meals are designed to save time without compromising on taste. Each recipe includes simple instructions and tips to make cooking a breeze.\nAvailable for $35, the 30-Minute Meals Cookbook is perfect for anyone looking to create mouth-watering dishes in a short amount of time.',
         3,
         'https://img.freepik.com/free-photo/snack-board-with-crackers-vegetables-with-cookbook-aside_114579-13047.jpg?w=826&t=st=1705109775~exp=1705110375~hmac=ad70ec1e69dc46054199343d82b58482d5e241d05fe14b4f9e8d11d41e4d5e74',
+        'Designed by Freepik',  -- img_title
         1
     ),
     (
@@ -257,6 +296,7 @@ VALUES
         'Upgrade your cooking experience with our Ultimate Kitchen Gadget Collection. This exclusive collection features the latest in kitchen technology, including a smart blender, a digital food scale, and a multi-purpose air fryer. Designed for both novice cooks and culinary experts, these gadgets will revolutionize the way you prepare meals, making cooking more efficient and enjoyable.\nPriced at $150, the Ultimate Kitchen Gadget Collection is an excellent investment for anyone who loves to cook and wants to enhance their kitchen with modern tools.',
         3,
         'https://img.freepik.com/free-photo/flat-lay-kitchen-utensils-arrangement_23-2149491471.jpg?w=826&t=st=1705109971~exp=1705110571~hmac=d645b7cd8e2be87479127706275046fe036edf765c03c47c8841955cb7ce25e2',
+        'Designed by Freepik',  -- img_title
         2
     ),
     (
@@ -267,6 +307,7 @@ VALUES
         'Join us on a delicious journey with <strong>Exploring World Cuisines: A Culinary Adventure. This blog series dives into the diverse and rich culinary traditions of various countries. Each post features traditional recipes, cooking techniques, and the cultural significance of different dishes. Whether it’s the spicy flavors of Indian cuisine or the refined tastes of French cooking, this series offers a window into the world’s kitchens.\nDive into culinary exploration and discover new flavors and cooking styles from around the globe.',
         3,
         'https://img.freepik.com/free-photo/special-dessert-cookbook-recipe-valentine-rsquo-s-edition_53876-97350.jpg?w=826&t=st=1705110085~exp=1705110685~hmac=f565c5dea8726b878afbbc4027db165577462fccd12a5323e7f5a5d6173796de',
+        'Designed by Freepik',  -- img_title
         1
     );
 
@@ -294,8 +335,11 @@ VALUE
 
 
 -- Educational content
+    -- publisher should be author of the educational content
+        -- educational_content_type_id should be the category of the blog (refer to educational_content_category)
+        -- img_title should be the author of the image and the source of the image (follow their code of conduct)
 INSERT INTO educational_content
-(id, CreatedDT, Publisher, Title, Info, UserID, img, educational_content_type_id)
+(id, CreatedDT, Publisher, Title, Info, UserID, img, img_title,educational_content_type_id)
 VALUES
     (
         '1',
@@ -304,7 +348,8 @@ VALUES
         'The Green Smoothie Revolution',  -- Title
         'Join the Green Smoothie Revolution and embrace a healthier lifestyle! Our latest post features a variety of delicious and nutritious green smoothie recipes. Each recipe is crafted to boost energy, aid in detoxification, and provide essential vitamins and minerals. From kale and spinach to exotic fruits, we cover a range of ingredients that cater to all taste preferences. Perfect for busy individuals seeking a quick and healthy meal option.\nLearn how to blend the perfect green smoothie, understand the health benefits of each ingredient, and start your day with a burst of energy!',
         3,
-        'https://img.freepik.com/free-photo/healthy-drink-vegetable-smoothie_1150-26221.jpg?w=360&t=st=1705800697~exp=1705801297~hmac=9b7d0b1aaaed533ee5244a56a4676a270c76de872b2582203d5fb9da0157242a',
+        'https://img.freepik.com/free-photo/glass-jar-mugs-with-green-health-smoothie-ai-generated-image_511042-1709.jpg?t=st=1706580475~exp=1706584075~hmac=f8dcad8f3e1334c5d6523dc87c14ca4a48422939956491b107865be36d1aa4cf&w=996',
+        'Author : ojosujono96, Designed by Freepik',  -- img_title
         1 -- educational_content_type_id
     ),
     (
@@ -315,6 +360,7 @@ VALUES
         'Discover the art of Mindful Eating with our comprehensive guide. This post explores the concept of conscious consumption, focusing on how to enjoy meals more fully, understand hunger cues, and make healthier food choices. We provide practical tips for slowing down mealtime, appreciating the flavors and textures of food, and reducing overeating. Mindful Eating is not just a diet—it is a lifestyle change that can lead to improved digestion, better mental clarity, and a more harmonious relationship with food.',
         3,
         'https://img.freepik.com/free-vector/healthy-unhealthy-food_23-2148560005.jpg?w=826&t=st=1705800246~exp=1705800846~hmac=1c1105f17457c12ee220947334d58201393909595b2d062d09efeb1eedde1b26',
+        'Author : ojosujono96, Designed by Freepik',  -- img_title
         2 -- educational_content_type_id
     ),
     (
@@ -324,7 +370,8 @@ VALUES
         'Plant-Based Power: Easy Vegan Recipes',
         'Explore the world of plant-based cuisine with our "Plant-Based Power: Easy Vegan Recipes" blog post. This collection of recipes is designed for anyone looking to incorporate more plant-based meals into their diet. Whether you are a full-time vegan or just curious about plant-based eating, these recipes are easy, delicious, and nutritious. Each dish is packed with flavors and nutrients, showcasing how versatile and satisfying vegan cooking can be. From hearty soups to vibrant salads and delectable desserts, these recipes are perfect for anyone seeking a healthier and more sustainable lifestyle.',
         4,
-        'https://img.freepik.com/free-photo/top-view-assortment-vegetables-paper-bag_23-2148853335.jpg?w=826&t=st=1705800274~exp=1705800874~hmac=0f2bda18276ed93d77da727a3025ffb9746b81739a32548a0b0504972d274033',  -- Image URL
+        'https://img.freepik.com/free-photo/healthy-salad-bowl-with-fresh-vegetables-fruit-generated-by-ai_24640-80840.jpg?t=st=1706580671~exp=1706584271~hmac=072a607508798f15eb093a0b4edb8d51a0bb561b75716c336f28ab2fdfad1b4e&w=996',
+        'Author : stockgiu, Designed by Freepik',  -- img_title
         2 -- educational_content_type_id
     ),
     (
@@ -335,6 +382,7 @@ VALUES
         'Dive into the world of Superfoods with our "Superfoods 101: Nature Powerhouses" guide. This educational post provides insights into foods that are densely packed with nutrients, including antioxidants, vitamins, and minerals. Discover how incorporating foods like berries, nuts, seeds, and leafy greens into your diet can boost your health. Learn about the unique benefits of each superfood, how to include them in your daily meals, and the science behind their health-boosting properties. Ideal for anyone aiming to enhance their diet with nutrient-rich choices.',
         3,
         'https://img.freepik.com/free-photo/different-vegetables-nuts-table-flat-lay-top-view_1150-42329.jpg?w=826&t=st=1705800521~exp=1705801121~hmac=1787013a4c2045b3f7706099eccf3ff31694f9793283af940fe7aaf359356789',
+        'Designed by Freepik',  -- img_title
         1
     ),
     (
@@ -345,6 +393,7 @@ VALUES
         'Our latest post, "Hydration for Health: The Importance of Water," emphasizes the crucial role of hydration in maintaining overall health. This guide covers the benefits of staying hydrated, how much water you should drink daily, and the signs of dehydration. It also debunks common myths about hydration and provides creative ideas for infusing water with fruits and herbs for added flavor. This post is essential reading for anyone looking to improve their daily water intake and understand the vital role water plays in our well-being.',
         3,
         'https://img.freepik.com/free-photo/water-glass-outdoor_1203-6642.jpg?w=826&t=st=1705800570~exp=1705801170~hmac=8269658da4381f7537511cc6bd9d151342c072e40b322141d0f5a03a9d1740d0',
+        'Designed by Freepik',  -- img_title
         2
     ),
     (
@@ -355,85 +404,10 @@ VALUES
         'Introducing "Balancing Your Diet: A Beginner’s Guide," a comprehensive post for those starting their journey towards a balanced diet. This piece breaks down the basics of nutrition, explaining macronutrients and micronutrients, and their importance in daily intake. It offers simple strategies for creating balanced meals, understanding portion sizes, and making healthier food choices. This guide is a great resource for anyone who wants to learn the fundamentals of nutrition and start implementing a more balanced and health-conscious diet in their life.',
         4,
         'https://img.freepik.com/free-vector/nutrition-label-collection-design_23-2149520992.jpg?w=740&t=st=1705800614~exp=1705801214~hmac=353c17672983e62bc96f24ca84070dde2831767b10a078b4f08e5bc5f6b2bf31',
+        'Designed by Freepik',  -- img_title
         1
     );
 
-
--- Recipe
-INSERT INTO recipe 
- (id, title, info, calories, carbs, protein, fat, fibre, sodium, serving_size, description, steps, ingredients, UserID, Active, createddt, img) 
-VALUES
-(   
-    1,
-    "Easy Grilled Salmon",
-    "INFO",
-    129, 1, 20, 8, 0, 8, -- calories, carbs, protein, fat, fibre, sodium
-    4,
-    "Indulge in the simplicity and exquisite flavors of our Easy Grilled Salmon recipe. Perfect for a quick and healthy meal, this dish showcases succulent salmon fillets seasoned to perfection and grilled to a mouthwatering, golden perfection. The straightforward preparation ensures a delicious, light, and satisfying dish, making it an ideal choice for both novice and seasoned cooks alike. Elevate your dining experience with this effortlessly impressive grilled salmon, offering a delightful blend of simplicity and gourmet taste.",
-    "Heat grill up to 400 degrees.\nIn a bowl, mix together, garlic, dill and lemon rind.\nPlace salmon on a flat dish and coat liberally with olive oil and season with a generous pinch of both salt and pepper.\nCover salmon with the garlic, dill and lemon rind mixture and put on grill, skin side down.\nGrill for 5 minutes and turn salmon over for another 3-4 minutes and cook until fish is still moist but flaky.",
-    "8onces salmon filet \n2 garlic cloves \n1 lemon rind \n2 tsp fresh dill \nsalt and pepper \nolive oil",
-    "3", -- UserID
-    TRUE,
-    '2023-04-26 14:30:00',
-    "https://img.freepik.com/free-photo/top-view-delicious-meal-black-tray-dark-wooden-background-with-decorations_176474-3955.jpg?w=740&t=st=1705276190~exp=1705276790~hmac=8f67bc712f9598c9195f66b411ab4e634296e824207650189d8dbba510bab9d4"
-),
-(   
-    2,
-    "Cajun Chicken Pasta",
-    "INFO",
-    324, 14, 8, 6, 6, 6, -- calories, carbs, protein, fat, fibre, sodium
-    4,
-    "Indulge your taste buds with our delectable Cajun Chicken Pasta recipe, a culinary journey that marries the bold and spicy flavors of Cajun seasoning with succulent chicken and perfectly cooked pasta. This dish boasts a harmonious blend of tender, blackened chicken strips, vibrant bell peppers, and onions, all sautéed to perfection. The creamy Alfredo sauce, infused with Cajun spices, adds a velvety richness that ties the entire dish together. Garnished with fresh parsley for a pop of color and flavor, this Cajun Chicken Pasta is a delightful and satisfying meal that brings the spirit of Louisiana to your dinner table. Prepare to savor a symphony of tastes in every bite!",
-    "Prep all your vegetables.\nIn a small blender make a slurry by combining milk, flour and cream cheese. Set aside.\nSeason chicken generously with Cajun seasoning, garlic powder and salt.\nPrepare pasta in salted water according to package directions.\nHeat a large heavy nonstick skillet over medium-high heat; spray with oil and add half of the chicken.\nSauté 5 to 6 minutes or until done, set aside on a plate and repeat with the remaining chicken. Set aside.\nAdd olive oil to the skillet and reduce to medium; add bell peppers, onions, and garlic to skillet, sauté 3-4 minutes.\nAdd mushrooms and tomatoes and sauté 3-4 more minutes or until vegetables are tender.\nSeason with 1/4 tsp salt, garlic powder and fresh cracked pepper to taste.\nReduce heat to medium-low; add chicken broth and pour in slurry stirring about 2 minutes.\nReturn chicken to skillet; adjust salt and Cajun seasoning to taste, cook another minute or two until hot, then add linguine; toss well to coat.\nTop with chopped scallions and enjoy!",
-    "8 ounces uncooked linguine \n1 pound chicken breast, cut into strips \n1-2 tsp Cajun seasoning, or more to taste \n1 tbsp garlic powder \n1/2 tsp kosher salt \n1 tbsp olive oil \n1 medium red bell pepper, thinly sliced \n1 medium yellow bell pepper, thinly sliced \n8 oz fresh mushrooms, sliced \n1/2 red onion, sliced \n3 cloves garlic, minced \n2 medium tomatoes, diced \n1 tbsp fresh parsley, chopped \n1 cup fat free low sodium chicken broth \n2 tbsp light cream cheese \n1/3 cup skim milk \n1 tbsp flour \nolive oil spray",
-    "3", -- UserID
-    TRUE,
-    '2023-04-20 14:30:00',
-    "https://img.freepik.com/free-photo/penne-pasta-with-tomato-sauce-with-sausage-tomatoes-green-basil-decorated-frying-pan-wooden-table_2829-20103.jpg?w=826&t=st=1705276276~exp=1705276876~hmac=3a1289fa0c32ef6b2cc8c661cea96d46e839679df7165310590a89409f17236e"
-),
-(   
-    3, 
-    "Grilled Lemon-Herb Chicken", 
-    "INFO", 
-    150, 0, 26, 4, 0, 70, 
-    2,
-    "Experience the zest and aroma of our Grilled Lemon-Herb Chicken, perfect for a light yet flavorful meal. This dish features tender chicken breasts marinated in a vibrant mix of lemon, herbs, and garlic, grilled to juicy perfection. Ideal for health-conscious diners, this recipe delivers high protein with low fat, making it a nutritious choice for any day.",
-    "Preheat grill to medium heat.\nIn a bowl, combine lemon juice, chopped herbs (basil, thyme), minced garlic, olive oil, salt, and pepper.\nMarinate chicken breasts in the mixture for at least 30 minutes.\nGrill the chicken for 6-7 minutes on each side or until fully cooked.\nLet it rest for a few minutes before serving.",
-    "2 chicken breasts \njuice of 1 lemon \n1 tbsp mixed fresh herbs \n2 garlic cloves \nolive oil \nsalt \npepper", 
-    "3", 
-    TRUE,
-    '2023-10-24 14:30:00',
-    "https://img.freepik.com/free-photo/homemade-food-party_53876-31237.jpg?w=826&t=st=1705276322~exp=1705276922~hmac=ba7ce45ad424c09e8a5a175cc29e0a08096ef974ce55799fe3b212dbd255249b"
-),
-(   
-    4, 
-    "Spicy Grilled Shrimp", 
-    "INFO", 
-    120, 2, 23, 2, 0, 85, 
-    2,
-    "Dive into the bold flavors of our Spicy Grilled Shrimp, a dish that''s both simple and bursting with taste. Succulent shrimp are marinated in a spicy blend of chili, garlic, and lime, then grilled to a sizzling finish. This recipe is a fantastic source of lean protein and is low in both calories and fat, making it a great choice for a healthy and quick meal.",
-    "Preheat grill to high.\nMix together chili powder, minced garlic, lime zest, lime juice, olive oil, salt, and pepper.\nToss the shrimp in the marinade and let sit for 15 minutes.\nThread shrimp onto skewers and grill for 2-3 minutes per side.\nServe with a lime wedge.",
-    "1 pound shrimp (peeled and deveined) \n1 tsp chili powder \n2 garlic cloves \nzest and juice of 1 lime \nolive oil \nsalt \npepper", 
-    "3", 
-    TRUE,
-    '2023-05-05 14:30:00',
-    "https://img.freepik.com/free-photo/shrimp-sauteed-garlic-soy-caramel_2829-19579.jpg?w=826&t=st=1705276562~exp=1705277162~hmac=58b4053f4e10b6fd671636826e9c25c1ad92832d7721d3308b389a616c753291"
-
-),
-(   
-    5,
-    "Mediterranean Quinoa Salad",
-    "INFO",
-    250, 30, 10, 12, 8, 300, -- calories, carbs, protein, fat, fibre, sodium
-    4,
-    "Indulge in the vibrant flavors of our Mediterranean Quinoa Salad. This refreshing and nutritious dish combines fluffy quinoa with a medley of colorful vegetables, including cherry tomatoes, cucumbers, and bell peppers. The tangy lemon dressing adds a zesty kick, while the crumbled feta cheese provides a creamy and salty element. Topped with fresh herbs like parsley and mint, this salad is a perfect choice for a light and satisfying meal. Enjoy the taste of the Mediterranean in every bite!",
-    "Cook quinoa according to package instructions and let it cool.\nIn a large bowl, combine cooked quinoa, cherry tomatoes, cucumbers, bell peppers, red onion, and olives.\nIn a small bowl, whisk together olive oil, lemon juice, garlic, salt, and pepper to make the dressing.\nPour the dressing over the quinoa mixture and toss to combine.\nSprinkle crumbled feta cheese and fresh herbs on top.\nServe chilled and enjoy!",
-    "1 cup quinoa \n1 cup cherry tomatoes, halved \n1 cup cucumber, diced \n1 cup bell peppers, diced \n1/4 cup red onion, thinly sliced \n1/4 cup Kalamata olives, pitted and halved \n2 tbsp olive oil \n2 tbsp lemon juice \n2 cloves garlic, minced \n1/2 tsp salt \n1/4 tsp black pepper \n1/4 cup crumbled feta cheese \n2 tbsp fresh parsley, chopped \n1 tbsp fresh mint, chopped",
-    "3", -- UserID
-    TRUE,
-    '2023-04-26 14:30:00',
-    "https://img.freepik.com/free-photo/meatballs-salad-tomatoes-buckwheat-porridge-white-wooden-table-healthy-food-diet-meal-buddha-bowl_2829-6110.jpg?size=626&ext=jpg&ga=GA1.1.1875319134.1702524039&semt=ais"
-);
 
 -- Educational content review rating
 INSERT INTO educational_content_review_rating
@@ -445,13 +419,129 @@ VALUES
     ('I love this recipe!' ,                            4.0, '12', 1),
     ('This is very awesome',                            3.2, '7', 2),
     ('The recipe is very d',                            5.0, '8', 2),
-    ('I love this recipe!' ,                            4.0, '9', 2),
-    ('This is very awesome',                            3.2, '12', 2),
-    ('The recipe is very d',                            5.0, '111', 2),
-    ('I love this recipe!'  ,                           4.0, '1', 2);
+    ('I love this recipe!' ,                            4.0, '9', 2);
 
 
 
+
+-- Recipe
+  -- publisher should be author of the recipe
+  -- info refers to dietary information
+    -- steps refers to the steps to cook the recipe (separated by \n)
+    -- ingredients refers to the ingredients needed to cook the recipe (separated by \n)
+    -- img_title should be the author of the image and the source of the image (follow their code of conduct)
+    -- dietary_preference refers to the category of the recipe (refer to dietary_preferences)
+
+-- Note that: Some recipes has allergies, insert into recipe_allergies table
+    
+
+INSERT INTO recipe
+(id, publisher, title, info, calories, carbs, protein, fat, fibre, sodium, serving_size, description, steps, ingredients, UserID, Active, createddt, img, img_title, dietary_preference)
+VALUES
+    (
+        1,
+        'fitChef2',
+        'Easy Grilled Salmon',
+        "INFO",
+        129, 1, 20, 8, 0, 8, -- calories, carbs, protein, fat, fibre, sodium
+        4,
+        'Indulge in the simplicity and exquisite flavors of our Easy Grilled Salmon recipe. Perfect for a quick and healthy meal, this dish showcases succulent salmon fillets seasoned to perfection and grilled to a mouthwatering, golden perfection. The straightforward preparation ensures a delicious, light, and satisfying dish, making it an ideal choice for both novice and seasoned cooks alike. Elevate your dining experience with this effortlessly impressive grilled salmon, offering a delightful blend of simplicity and gourmet taste.',
+        'Heat grill up to 400 degrees.\nIn a bowl, mix together, garlic, dill and lemon rind.\nPlace salmon on a flat dish and coat liberally with olive oil and season with a generous pinch of both salt and pepper.\nCover salmon with the garlic, dill and lemon rind mixture and put on grill, skin side down.\nGrill for 5 minutes and turn salmon over for another 3-4 minutes and cook until fish is still moist but flaky.',
+        '8onces salmon filet \n2 garlic cloves \n1 lemon rind \n2 tsp fresh dill \nsalt and pepper \nolive oil',
+        '3', -- UserID
+        TRUE,
+        '2023-04-26 14:30:00',
+        'https://img.freepik.com/free-photo/grilled-salmon-fillet-with-fresh-vegetable-salad-generated-by-ai_188544-21273.jpg?t=st=1706581041~exp=1706584641~hmac=a5192395751401ed16e80a0043e0f94504123f21393174683c63426ba80cba62&w=996',
+        'Author : Vecstock, Designed by Freepik',  -- img_title
+        1 -- dietary_preference
+    ),
+    (
+        2,
+        'fitChef2',
+        'Cajun Chicken Pasta',
+        'INFO',
+        324, 14, 8, 6, 6, 6, -- calories, carbs, protein, fat, fibre, sodium
+        4,
+        'Indulge your taste buds with our delectable Cajun Chicken Pasta recipe, a culinary journey that marries the bold and spicy flavors of Cajun seasoning with succulent chicken and perfectly cooked pasta. This dish boasts a harmonious blend of tender, blackened chicken strips, vibrant bell peppers, and onions, all sautéed to perfection. The creamy Alfredo sauce, infused with Cajun spices, adds a velvety richness that ties the entire dish together. Garnished with fresh parsley for a pop of color and flavor, this Cajun Chicken Pasta is a delightful and satisfying meal that brings the spirit of Louisiana to your dinner table. Prepare to savor a symphony of tastes in every bite!',
+        'Prep all your vegetables.\nIn a small blender make a slurry by combining milk, flour and cream cheese. Set aside.\nSeason chicken generously with Cajun seasoning, garlic powder and salt.\nPrepare pasta in salted water according to package directions.\nHeat a large heavy nonstick skillet over medium-high heat; spray with oil and add half of the chicken.\nSauté 5 to 6 minutes or until done, set aside on a plate and repeat with the remaining chicken. Set aside.\nAdd olive oil to the skillet and reduce to medium; add bell peppers, onions, and garlic to skillet, sauté 3-4 minutes.\nAdd mushrooms and tomatoes and sauté 3-4 more minutes or until vegetables are tender.\nSeason with 1/4 tsp salt, garlic powder and fresh cracked pepper to taste.\nReduce heat to medium-low; add chicken broth and pour in slurry stirring about 2 minutes.\nReturn chicken to skillet; adjust salt and Cajun seasoning to taste, cook another minute or two until hot, then add linguine; toss well to coat.\nTop with chopped scallions and enjoy!',
+        '8 ounces uncooked linguine \n1 pound chicken breast, cut into strips \n1-2 tsp Cajun seasoning, or more to taste \n1 tbsp garlic powder \n1/2 tsp kosher salt \n1 tbsp olive oil \n1 medium red bell pepper, thinly sliced \n1 medium yellow bell pepper, thinly sliced \n8 oz fresh mushrooms, sliced \n1/2 red onion, sliced \n3 cloves garlic, minced \n2 medium tomatoes, diced \n1 tbsp fresh parsley, chopped \n1 cup fat free low sodium chicken broth \n2 tbsp light cream cheese \n1/3 cup skim milk \n1 tbsp flour \nolive oil spray',
+        '3', -- UserID
+        TRUE,
+        '2023-04-20 14:30:00',
+        'https://img.freepik.com/free-photo/bowl-pasta-with-chicken-breast-tomato-sauce_1340-25533.jpg?t=st=1706581185~exp=1706584785~hmac=0f73e15a6734c331bbca59e1e4b01228ff1f6c9b92598a6482e58ac8d5e74f08&w=826',
+        'Author : Sketchepedia, Designed by Freepik',  -- img_title
+        1 -- dietary_preference
+    ),
+    (
+        3,
+        'fitChef2',
+        'Grilled Lemon-Herb Chicken',
+        "INFO",
+        150, 0, 26, 4, 0, 70,
+        2,
+        'Experience the zest and aroma of our Grilled Lemon-Herb Chicken, perfect for a light yet flavorful meal. This dish features tender chicken breasts marinated in a vibrant mix of lemon, herbs, and garlic, grilled to juicy perfection. Ideal for health-conscious diners, this recipe delivers high protein with low fat, making it a nutritious choice for any day.',
+        'Preheat grill to medium heat.\nIn a bowl, combine lemon juice, chopped herbs (basil, thyme), minced garlic, olive oil, salt, and pepper.\nMarinate chicken breasts in the mixture for at least 30 minutes.\nGrill the chicken for 6-7 minutes on each side or until fully cooked.\nLet it rest for a few minutes before serving.',
+        '2 chicken breasts \njuice of 1 lemon \n1 tbsp mixed fresh herbs \n2 garlic cloves \nolive oil \nsalt \npepper',
+        '3',
+        TRUE,
+        '2023-10-24 14:30:00',
+        'https://img.freepik.com/free-photo/homemade-food-party_53876-31237.jpg?w=826&t=st=1705276322~exp=1705276922~hmac=ba7ce45ad424c09e8a5a175cc29e0a08096ef974ce55799fe3b212dbd255249b',
+        'Designed by Freepik',  -- img_title
+        3
+    ),
+    (
+        4,
+        'fitChef2',
+        'Spicy Grilled Shrimp',
+        "INFO",
+        120, 2, 23, 2, 0, 85,
+        2,
+        'Dive into the bold flavors of our Spicy Grilled Shrimp, a dish that''s both simple and bursting with taste. Succulent shrimp are marinated in a spicy blend of chili, garlic, and lime, then grilled to a sizzling finish. This recipe is a fantastic source of lean protein and is low in both calories and fat, making it a great choice for a healthy and quick meal.',
+        'Preheat grill to high.\nMix together chili powder, minced garlic, lime zest, lime juice, olive oil, salt, and pepper.\nToss the shrimp in the marinade and let sit for 15 minutes.\nThread shrimp onto skewers and grill for 2-3 minutes per side.\nServe with a lime wedge.',
+        '1 pound shrimp (peeled and deveined) \n1 tsp chili powder \n2 garlic cloves \nzest and juice of 1 lime \nolive oil \nsalt \npepper',
+        '3',
+        TRUE,
+        '2023-05-05 14:30:00',
+        'https://img.freepik.com/free-photo/shrimp-sauteed-garlic-soy-caramel_2829-19579.jpg?w=826&t=st=1705276562~exp=1705277162~hmac=58b4053f4e10b6fd671636826e9c25c1ad92832d7721d3308b389a616c753291',
+        'Designed by Freepik',  -- img_title
+        3
+
+    ),
+    (
+        5,
+        'fitChef2',
+        'Mediterranean Quinoa Salad',
+        "INFO",
+        250, 30, 10, 12, 8, 300, -- calories, carbs, protein, fat, fibre, sodium
+        4,
+        'Indulge in the vibrant flavors of our Mediterranean Quinoa Salad. This refreshing and nutritious dish combines fluffy quinoa with a medley of colorful vegetables, including cherry tomatoes, cucumbers, and bell peppers. The tangy lemon dressing adds a zesty kick, while the crumbled feta cheese provides a creamy and salty element. Topped with fresh herbs like parsley and mint, this salad is a perfect choice for a light and satisfying meal. Enjoy the taste of the Mediterranean in every bite!',
+        'Cook quinoa according to package instructions and let it cool.\nIn a large bowl, combine cooked quinoa, cherry tomatoes, cucumbers, bell peppers, red onion, and olives.\nIn a small bowl, whisk together olive oil, lemon juice, garlic, salt, and pepper to make the dressing.\nPour the dressing over the quinoa mixture and toss to combine.\nSprinkle crumbled feta cheese and fresh herbs on top.\nServe chilled and enjoy!',
+        '1 cup quinoa \n1 cup cherry tomatoes, halved \n1 cup cucumber, diced \n1 cup bell peppers, diced \n1/4 cup red onion, thinly sliced \n1/4 cup Kalamata olives, pitted and halved \n2 tbsp olive oil \n2 tbsp lemon juice \n2 cloves garlic, minced \n1/2 tsp salt \n1/4 tsp black pepper \n1/4 cup crumbled feta cheese \n2 tbsp fresh parsley, chopped \n1 tbsp fresh mint, chopped',
+        '3', -- UserID
+        TRUE,
+        '2023-04-26 14:30:00',
+        'https://img.freepik.com/free-photo/meatballs-salad-tomatoes-buckwheat-porridge-white-wooden-table-healthy-food-diet-meal-buddha-bowl_2829-6110.jpg?size=626&ext=jpg&ga=GA1.1.1875319134.1702524039&semt=ais',
+        'Designed by Freepik',  -- img_title
+        1 -- dietary_preference
+    );
+
+
+
+
+-- Recipe allergies
+  -- id refers to recipe id (refer to recipe table)
+    -- allergy_id refers to allergy id (refer to allergies table)
+Insert Into recipe_allergies (id, allergy_id) VALUES (1, 1);
+Insert Into recipe_allergies (id, allergy_id) VALUES (1, 2);
+Insert Into recipe_allergies (id, allergy_id) VALUES (1, 3);
+
+Insert Into recipe_allergies (id, allergy_id) VALUES (2, 2);
+Insert Into recipe_allergies (id, allergy_id) VALUES (2, 7);
+
+Insert Into recipe_allergies (id, allergy_id) VALUES (3, 2);
+
+Insert Into recipe_allergies (id, allergy_id) VALUES (4, 3);
+Insert Into recipe_allergies (id, allergy_id) VALUES (4, 6);
 
 
 -- Recipe review rating
@@ -465,6 +555,69 @@ VALUES
     ('This is very awesome',                            3.2, '7', 2),
     ('The recipe is very d',                            5.0, '8', 2),
     ('I love this recipe!' ,                            4.0, '9', 2),
-    ('This is very awesome',                            3.2, '12', 2),
-    ('The recipe is very d',                            5.0, '111', 2),
-    ('I love this recipe!'  ,                           4.0, '1', 2);
+    ('This is very awesome',                            3.2, '12', 2);
+
+
+-- Meal Plan
+  -- publisher should be author of the meal plan
+  -- health_goal_category refers to the category of the meal plan (refer to health_goal_category)
+    -- img_title should be the author of the image and the source of the image (follow their code of conduct)
+
+-- Note that: meal plan has some suggested recipes, insert into mealplan_recipe table
+INSERT INTO meal_plan
+    (id, publisher, title, active, introduction,  main_content, conclusion, createddt, health_goal_category, img, img_title, userid)
+VALUES
+    (
+        1, 
+        'james',
+        'High-Calorie Nutrient-Dense Meal Plan',
+        TRUE, 
+        'Designed to support healthy weight gain, this plan emphasizes high-calorie, nutrient-rich foods. It is perfect for individuals looking to build muscle mass or increase body weight for health reasons. The key is focusing on quality calories that provide vitamins, minerals, and good fats.', 
+        'Each meal includes a balance of protein, healthy fats, and carbohydrates. Emphasis is on lean proteins, whole grains, and nutrient-dense snacks. This plan also encourages frequent, smaller meals throughout the day to increase calorie intake without feeling overly full.',
+        'Monitoring progress is vital. Adjust your calorie intake as needed based on your weight gain goals and physical activity level. Remember, gaining weight healthily takes time, so be patient and consistent with your meal plan.',
+        '2023-06-15', 
+        1, -- weight gain
+        'https://img.freepik.com/free-photo/fresh-salad-bowl-with-organic-vegetables-quinoa-generated-by-ai_24640-80537.jpg?t=st=1706582425~exp=1706586025~hmac=af46fdb8394f9a443c3b41676997a4f4bf3507d8093beceada2106152febda9c&w=996',
+        'Author : stockgiu, Designed by Freepik',  -- img_title
+        '3' -- userid
+    ),
+    (
+        2, 
+        'Sophia',
+        'Balanced Maintenance Meal Plan',
+        TRUE, 
+        'This meal plan is carefully designed to maintain your current health status, focusing on a balanced diet that fulfills all your nutritional needs. It is ideal for those who are satisfied with their current weight and health and wish to maintain it.', 
+        'The plan includes a variety of foods from all food groups, ensuring a wide range of nutrients. Meals are structured to provide a good balance of carbohydrates, proteins, and fats, along with essential vitamins and minerals. Regular physical activity is also encouraged as part of a healthy lifestyle.',
+        'Review your eating habits regularly and make adjustments to the meal plan based on your health monitoring. Balance and moderation are key, as is ensuring that you enjoy your meals while maintaining your health goals.',
+        '2023-07-20', 
+        2, -- maintain health
+        'https://img.freepik.com/free-photo/meal-prep-container-with-different-foods-including-broccoli-broccoli-blueberries-mango_188544-36516.jpg?t=st=1706582575~exp=1706586175~hmac=0a80a0256fcc6089d35cde04a280bb2817d28491719c03f3c3a5ca5f68e26b31&w=996',
+        'Author : vecstock, Designed by Freepik',  -- img_title
+        '3' -- userid
+    ),
+    (
+        3, 
+        'alex',
+        'Low-Calorie Weight Loss Meal Plan',
+        TRUE, 
+        'This meal plan is designed for those aiming to lose weight in a healthy, sustainable manner. It focuses on low-calorie foods that are high in fiber and nutrients to promote satiety and avoid overeating.', 
+        'The meals are structured to reduce calorie intake while still providing essential nutrients. It includes plenty of fruits, vegetables, lean proteins, and whole grains. Small, frequent meals are encouraged to keep the metabolism active and avoid hunger pangs.',
+        'Regularly assess your progress and adjust the meal plan as necessary. Remember, weight loss should be gradual to ensure it is sustainable and healthy. Stay hydrated and combine this diet with regular exercise for the best results.',
+        '2023-08-25', 
+        3, -- weight loss
+        'https://img.freepik.com/free-photo/healthy-lifestyle-fresh-fruit-bowl-organic-berries-vegetable-preparation-generated-by-ai_188544-55966.jpg?t=st=1706582734~exp=1706586334~hmac=3b1bf25894158e15cde16322fb6bdc017ed04ecac1bbc3e6d70f3e55aa710a75&w=996',
+        'Author : vecstock, Designed by Freepik',  -- img_title
+        '3' -- userid
+    );
+
+
+-- mealplan_recipe
+  -- id refers to meal plan id (refer to meal_plan table)
+    -- recipe_id refers to recipe id (refer to recipe table)
+insert into mealplan_recipe (id, recipe_id) values (1, 1); -- recipe is Easy Grilled Salmon
+insert into mealplan_recipe (id, recipe_id) values (1, 2); -- recipe is Cajun Chicken Pasta
+insert into mealplan_recipe (id, recipe_id) values (1, 3); -- recipe is Grilled Lemon-Herb Chicken
+insert into mealplan_recipe (id, recipe_id) values (2, 4);
+
+
+

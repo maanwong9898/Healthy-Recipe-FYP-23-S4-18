@@ -149,6 +149,8 @@ VALUES
         1 -- dietary_preference
     );
 
+
+
 -- Recipe allergies
   -- id refers to recipe id (refer to recipe table)
     -- allergy_id refers to allergy id (refer to allergies table)
@@ -176,5 +178,38 @@ VALUES
     ('The recipe is very d',                            5.0, '8', 2),
     ('I love this recipe!' ,                            4.0, '9', 2),
     ('This is very awesome',                            3.2, '12', 2);
+
+
+
+
+
+
+
+
+
+
+
+INSERT INTO recipe
+(id, publisher, title, info, calories, carbs, protein, fat, fibre, sodium, serving_size, description, steps, ingredients, UserID, Active, createddt, img, img_title, dietary_preference, cooking_time)
+VALUES
+    (
+        1,
+        'test publisher',
+        'test recipe',
+        "Not Specified",
+        286, 44, 11, 9, 6, 880, -- calories, carbs, protein, fat, fibre, sodium
+        4,
+        'testing',
+        'testing',
+        'testing',
+        '3', -- UserID
+        TRUE,
+        '2023-04-26 14:30:00',
+        'https://img.freepik.com/free-photo/grilled-salmon-fillet-with-fresh-vegetable-salad-generated-by-ai_188544-21273.jpg?t=st=1706581041~exp=1706584641~hmac=a5192395751401ed16e80a0043e0f94504123f21393174683c63426ba80cba62&w=996',
+        'Author : Vecstock, Designed by Freepik',  -- img_title
+        1, -- dietary_preference
+        30 -- cooking_time
+    );
+
 
 

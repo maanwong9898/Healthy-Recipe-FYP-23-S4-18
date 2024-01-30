@@ -239,10 +239,10 @@ VALUES
         'businessUser3',  -- Publisher
         'Revolutionize Your Kitchen with the SmartChef Pro',  -- Title
         'Welcome to the future of cooking with the SmartChef Pro, the all-in-one kitchen appliance that promises to make cooking a breeze. From amateur cooks to professional chefs, the SmartChef Pro is designed to enhance your culinary skills. Featuring a suite of smart functions, including automated temperature control, self-stirring pots, and a built-in digital cookbook, this revolutionary device ensures every meal is cooked to perfection. \nWith its sleek design, intuitive touch interface, and Wi-Fi connectivity, the SmartChef Pro syncs seamlessly with your smart home ecosystem. Receive real-time updates on your meal’s progress directly to your smartphone or virtual assistant. Say goodbye to the guesswork and hello to precision with the SmartChef Pro advanced sensors, which guarantee the exact cooking duration and temperature for all your dishes. Whether you are simmering, sautéing, baking, or grilling, the SmartChef Pro adapts to your cooking style.',
-        3,
+        3, -- userId
         'https://img.freepik.com/free-photo/electric-blender-mixer-juicer-set_140725-7263.jpg?w=740&t=st=1705070791~exp=1705071391~hmac=b015f8ab2fb6e4f2b74c8f01a42dd579d7f7fa0db8c82eb8890a57767dd21722',
         'Author : KamranAydinov, Designed by Freepik',  -- img_title
-        2 -- blog_type_id
+        2 -- blog_type_id kitchenware
     ),
     (
         '2',
@@ -426,23 +426,27 @@ VALUES
 
 -- Recipe
   -- publisher should be author of the recipe
-  -- info refers to dietary information
+  -- info refers to dietary information or Not specified
     -- steps refers to the steps to cook the recipe (separated by \n)
     -- ingredients refers to the ingredients needed to cook the recipe (separated by \n)
     -- img_title should be the author of the image and the source of the image (follow their code of conduct)
     -- dietary_preference refers to the category of the recipe (refer to dietary_preferences)
+    -- cooking time refers to the time needed to cook the recipe (in minutes)
+    -- nutrient info details calories is kcal
+    -- nutrient info details sodium is mg
+    -- nutrient info details carbs, protein, fat, fibre is g
 
 -- Note that: Some recipes has allergies, insert into recipe_allergies table
     
 
 INSERT INTO recipe
-(id, publisher, title, info, calories, carbs, protein, fat, fibre, sodium, serving_size, description, steps, ingredients, UserID, Active, createddt, img, img_title, dietary_preference)
+(id, publisher, title, info, calories, carbs, protein, fat, fibre, sodium, serving_size, description, steps, ingredients, UserID, Active, createddt, img, img_title, dietary_preference, cooking_time)
 VALUES
     (
         1,
         'fitChef2',
         'Easy Grilled Salmon',
-        "INFO",
+        "Not specified",
         129, 1, 20, 8, 0, 8, -- calories, carbs, protein, fat, fibre, sodium
         4,
         'Indulge in the simplicity and exquisite flavors of our Easy Grilled Salmon recipe. Perfect for a quick and healthy meal, this dish showcases succulent salmon fillets seasoned to perfection and grilled to a mouthwatering, golden perfection. The straightforward preparation ensures a delicious, light, and satisfying dish, making it an ideal choice for both novice and seasoned cooks alike. Elevate your dining experience with this effortlessly impressive grilled salmon, offering a delightful blend of simplicity and gourmet taste.',
@@ -453,7 +457,8 @@ VALUES
         '2023-04-26 14:30:00',
         'https://img.freepik.com/free-photo/grilled-salmon-fillet-with-fresh-vegetable-salad-generated-by-ai_188544-21273.jpg?t=st=1706581041~exp=1706584641~hmac=a5192395751401ed16e80a0043e0f94504123f21393174683c63426ba80cba62&w=996',
         'Author : Vecstock, Designed by Freepik',  -- img_title
-        1 -- dietary_preference
+        1, -- dietary_preference vegan,
+        90
     ),
     (
         2,
@@ -470,7 +475,8 @@ VALUES
         '2023-04-20 14:30:00',
         'https://img.freepik.com/free-photo/bowl-pasta-with-chicken-breast-tomato-sauce_1340-25533.jpg?t=st=1706581185~exp=1706584785~hmac=0f73e15a6734c331bbca59e1e4b01228ff1f6c9b92598a6482e58ac8d5e74f08&w=826',
         'Author : Sketchepedia, Designed by Freepik',  -- img_title
-        1 -- dietary_preference
+        1, -- dietary_preference
+        30
     ),
     (
         3,
@@ -487,7 +493,8 @@ VALUES
         '2023-10-24 14:30:00',
         'https://img.freepik.com/free-photo/homemade-food-party_53876-31237.jpg?w=826&t=st=1705276322~exp=1705276922~hmac=ba7ce45ad424c09e8a5a175cc29e0a08096ef974ce55799fe3b212dbd255249b',
         'Designed by Freepik',  -- img_title
-        3
+        3,
+        20
     ),
     (
         4,
@@ -504,7 +511,8 @@ VALUES
         '2023-05-05 14:30:00',
         'https://img.freepik.com/free-photo/shrimp-sauteed-garlic-soy-caramel_2829-19579.jpg?w=826&t=st=1705276562~exp=1705277162~hmac=58b4053f4e10b6fd671636826e9c25c1ad92832d7721d3308b389a616c753291',
         'Designed by Freepik',  -- img_title
-        3
+        3,
+        10
 
     ),
     (
@@ -522,7 +530,8 @@ VALUES
         '2023-04-26 14:30:00',
         'https://img.freepik.com/free-photo/meatballs-salad-tomatoes-buckwheat-porridge-white-wooden-table-healthy-food-diet-meal-buddha-bowl_2829-6110.jpg?size=626&ext=jpg&ga=GA1.1.1875319134.1702524039&semt=ais',
         'Designed by Freepik',  -- img_title
-        1 -- dietary_preference
+        1, -- dietary_preference
+        40
     );
 
 

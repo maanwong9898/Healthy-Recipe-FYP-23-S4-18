@@ -44,6 +44,9 @@ public class MealPlan {
     private Long id;
  
     private String title;
+
+    @Column(name = "Publisher")
+    private String publisher;
     
     @Column(nullable = false, columnDefinition="TEXT")
     @Lob

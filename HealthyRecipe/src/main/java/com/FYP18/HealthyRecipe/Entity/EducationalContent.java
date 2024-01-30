@@ -32,7 +32,7 @@ import jakarta.persistence.Table;
 @Entity
 @Table(name = "EducationalContent")
 public class EducationalContent {
-
+ 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ID", updatable = false)
@@ -66,6 +66,8 @@ public class EducationalContent {
     private String info;
 
     private String img;
+
+    private String imgTitle;
 
     // yes the userId can be null, credit may land on existing business
     // users or saved inside info column

@@ -47,6 +47,9 @@ public class Recipe {
     @Column(name = "Active", nullable = false,columnDefinition="bit(1) default b'1'")
     private Boolean active;
 
+    @Column(name = "Publisher")
+    private String publisher;
+
     @Column(name = "Title", nullable = false)
     private String title;
 
@@ -56,7 +59,7 @@ public class Recipe {
 
     @Column(name = "Info", nullable = false)
     private String info;
-
+ 
     @Column 
     private Float calories;
 
@@ -105,6 +108,8 @@ public class Recipe {
     private String ingredients;
 
     private String img;
+
+    private String imgTitle;
     // yes the userId can be null, credit may land on existing business 
     // users or saved inside info column
     @ManyToOne

@@ -51,7 +51,7 @@ VALUES
         'https://img.freepik.com/premium-photo/tortellini-soup-dinner-recipe_198067-6671.jpg?w=1060',
         'Author : Vecstock, Designed by Freepik',  -- img_title
         2, -- dietary_preference
-        30 -- cooking_time
+        25 -- cooking_time
     ),
     (
         2,
@@ -68,9 +68,25 @@ VALUES
         'https://www.freepik.com/premium-photo/high-angle-view-soup-bowls_110336592.htm#query=spiced%20carrot%20and%20lentil%20soup&position=14&from_view=search&track=ais&uuid=18164050-817b-4251-a7ef-50ed4436d721',
         'Author : EyeEm, Designed by Freepik',  -- img_title
         2, -- dietary_preference
+        15 -- cooking_time  
+    ),
+    (
+        3,
+        'Sheela Prakash',
+        'Roasted Sweet Potato Salad',
+        'Not Specified',
+        402, 58, 14, 14, 16, 940, -- calories, carbs, protein, fat, fibre, sodium
+        4-6,
+        'A delicious, spicy blend packed full of iron and low in fat to boot. It is ready in under half an hour, or can be made in a slow cooker',
+        '2 pounds sweet potatoes \n4 tbsp olive oil \n1 tbsp chili powder \n3/4 tsp kosher salt \n1/2 medium red onion \n1 large lime \n2 cans black beans, drained and rinsed \n1 to 2 packed cups baby spinach \n1/4 tsp freshly ground black pepper \n4 ounces feta cheese, crumbled',
+        '2', -- UserID
+        TRUE,
+        '2023-01-11 15:30:00',
+        'https://www.freepik.com/free-photo/warm-winter-quinoa-salad-with-pumpkin-chorizo-mozzarella-arugula-leaves-pomegranate_34738413.htm#query=roasted%20sweet%20potato%20salad%20recipe&position=43&from_view=search&track=ais&uuid=46b3221c-38e4-4e4d-a2ea-1e748f23e6b0',
+        'Author : EyeEm, Designed by Freepik',  -- img_title
+        2, -- dietary_preference
         30 -- cooking_time  
     );
-
 
 
 -- Recipe allergies

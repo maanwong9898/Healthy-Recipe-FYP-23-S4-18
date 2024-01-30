@@ -61,7 +61,7 @@ VALUES
 -- Note that: Some recipes has allergies, insert into recipe_allergies table
     
 INSERT INTO recipe
-(id, publisher, title, info, calories, carbs, protein, fat, fibre, sodium, serving_size, description, steps, ingredients, UserID, Active, createddt, img, img_title, dietary_preference)
+(id, publisher, title, info, calories, carbs, protein, fat, fibre, sodium, serving_size, description, steps, ingredients, UserID, Active, createddt, img, img_title, dietary_preference, cooking_time)
 VALUES
     (
         1,

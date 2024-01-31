@@ -15,7 +15,6 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 @SpringBootApplication
 // @ComponentScan(basePackages = "com.FYP18.HealthyRecipe")
 public class HealthyRecipeApplication {
-
 	public static void main(String[] args) {
 		SpringApplication.run(HealthyRecipeApplication.class, args);
 	}
@@ -24,7 +23,7 @@ public class HealthyRecipeApplication {
 	public CorsFilter corsFilter() {
 		CorsConfiguration corsConfiguration = new CorsConfiguration();
 		corsConfiguration.setAllowCredentials(true);
-		corsConfiguration.setAllowedOrigins(Arrays.asList("http://localhost:3000"));
+		corsConfiguration.setAllowedOrigins(Arrays.asList("https://fyp-23-s4-18.vercel.app", "http://localhost:3000"));
 		corsConfiguration.setAllowedHeaders(Arrays.asList("Origin", "Access-Control-Allow-Origin", "Content-Type",
 				"Accept", "Authorization", "Origin, Accept", "X-Requested-With",
 				"Access-Control-Request-Method", "Access-Control-Request-Headers"));

@@ -1,9 +1,12 @@
 package com.FYP18.HealthyRecipe.Service;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
+import java.util.concurrent.TimeUnit;
 import java.util.regex.Pattern;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +26,9 @@ import com.FYP18.HealthyRecipe.Repository.NutritionistRepository;
 import com.FYP18.HealthyRecipe.Repository.RegisteredUserRepository;
 import com.FYP18.HealthyRecipe.Repository.SystemAdminRepository;
 import com.FYP18.HealthyRecipe.Repository.UserRepository;
+import com.FYP18.HealthyRecipe.Service.Email.EmailService;
+import com.FYP18.HealthyRecipe.Service.VerificationService.VerificationService;
+import com.FYP18.HealthyRecipe.Service.VerificationService.VerificationToken;
 
 @Service
 public class LoginService {
@@ -43,6 +49,9 @@ public class LoginService {
 
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired 
+    private EmailService emailService;
  
     public List<User> GetAllUsers()
     {
@@ -122,12 +131,29 @@ public class LoginService {
         user.setCreatedDate(LocalDate.now()); 
         return systemAdminRepository.save(user); 
     }
-
+    @Autowired
+    private VerificationService verificationService;
+ 
     public RegisteredUser CreateNewRegisterUser(RegisteredUser user)throws Exception
     {
         CheckForUsername(user.getUsername());
         CheckForEmail(user.getEmail());
         user.setCreatedDate(LocalDate.now());
+        user.setVerified(false);
+
+
+        VerificationToken token = new VerificationToken();
+        token.setEmail(user.getEmail());
+        token.setToken(UUID.randomUUID().toString());
+        token.setExpiration(LocalDateTime.now().plusMinutes(15));
+        
+        verificationService.saveToken(token);
+        
+        // TODO: this should eventually become the frontend's link that calls specifically this controller
+        String link = "http://localhost:8080/verify/confirm?token=" + token.getToken();
+        emailService.sendVerificationEmail(user.getEmail(), link);
+
+        // send email
         return registeredUserRepository.save(user);
     }
 

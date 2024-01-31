@@ -48,10 +48,12 @@ const CreateRecipePage = () => {
     []
   );
   const [allergyCategory, setAllergyCategory] = useState([]); // Store category of allergies
+  const [mealTypeCategory, setMealTypeCategory] = useState([]);
 
   // selected category
   const [allergyRestriction, setAllergyRestriction] = useState([]); // Store selected allergies
   const [dietaryPreference, setDietaryPreference] = useState("");
+  const [mealType, setMealType] = useState("");
 
   // useEffect to fetch all the categories needed for user registration
   useEffect(() => {
@@ -89,8 +91,26 @@ const CreateRecipePage = () => {
       }
     };
 
+    // Fetch all meal type categories from backend
+    const fetchMealTypes = async () => {
+      console.log("Fetching meal type categories...");
+      try {
+        const response = await axiosInterceptorInstance.get(
+          "/category/getAllMealTypes"
+        );
+        console.log(
+          "Meal Type Categories Successfully Fetched :  ",
+          response.data
+        );
+        setMealTypeCategory(response.data);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
     fetchDietaryPreferences();
     fetchAllergies();
+    fetchMealTypes();
   }, []);
 
   // Function to handle title change
@@ -117,6 +137,11 @@ const CreateRecipePage = () => {
   // Function to handle dietary preference category change
   const handleDietaryPreferenceCategoryChange = (e) => {
     setDietaryPreference(e.target.value);
+  };
+
+  // Function to handle meal type category change
+  const handleMealTypeCategoryChange = (e) => {
+    setMealType(e.target.value);
   };
 
   // Function to handle allergy category change
@@ -228,6 +253,7 @@ const CreateRecipePage = () => {
       servingSize: parseInt(servingSize),
       cookingTime: parseInt(cookingTime),
       dietaryPreferencesId: parseInt(dietaryPreference),
+      mealTypeId: parseInt(mealType),
       allergies: allergyRestriction.map((id) => ({ id })),
       img: imageUrl,
     };
@@ -237,7 +263,7 @@ const CreateRecipePage = () => {
     try {
       // Send POST request
       const response = await axiosInterceptorInstance.post(
-        "http://localhost:8080/recipe/add",
+        "/recipe/add",
         recipeData
       );
       console.log("Recipe Created", response.data);
@@ -275,6 +301,7 @@ const CreateRecipePage = () => {
       setIngredientList([""]);
       setInstructionList([""]);
       setDietaryPreference("");
+      setMealType("");
       setAllergyRestriction([]);
     } catch (error) {
       console.error("Error creating recipe", error);
@@ -367,6 +394,29 @@ const CreateRecipePage = () => {
                 >
                   <option value="">Select Dietary Preference</option>
                   {dietaryPreferencesCategory.map((cat, index) => (
+                    <option key={index} value={cat.id}>
+                      {cat.subcategoryName}
+                    </option>
+                  ))}
+                </select>
+              </div>
+              {/* MEAL TYPE */}
+              <div className="flex flex-col">
+                <label
+                  htmlFor="mealType"
+                  className="block text-xl mb-1 font-bold text-gray-900"
+                >
+                  Meal Type
+                </label>
+                <select
+                  id="mealType"
+                  name="mealType"
+                  value={mealType}
+                  onChange={handleMealTypeCategoryChange}
+                  className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg w-full p-2.5"
+                >
+                  <option value="">Select Meal Type</option>
+                  {mealTypeCategory.map((cat, index) => (
                     <option key={index} value={cat.id}>
                       {cat.subcategoryName}
                     </option>

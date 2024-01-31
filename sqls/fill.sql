@@ -1,235 +1,161 @@
 
- 
--- nutrition value, we only care about
--- Calories, Carbs, Fat, Protein, Carbs, Satur
-
--- recipe's STEPS just store as a whole chunk of string, but when its read or display, split via newline
-
--- INGREDIENTS should have information including quantifiers 
--- for example: 3 tbsp of sugar, 2 ounces of meat, 5 pound of whatever, 
--- if not its hard to break those informations into smaller chunks
-
--- INFO should hold onto strings of information, in format of KVP 
--- so whatever info i want, would be thrown inside it, for example
--- "serving" : "for 4 people"
--- "nutrtional value" : "2000 kcal"
--- "time taken" : "45 minutes"
--- "credit" : "gordon ramsay" 
--- "credit url": "gordon ramsay wikipedia link"
-
--- then backend can jump 
-
--- worry about the UUID when i dont have to run a fill.sql
--- INSERT INTO USERACCOUNT (ID, Username, Password, Email, Full_Name) VALUES
---     ("1", "useraccount1", "1", "randomEmail@gmail.com"  , "Trump kun"  ),
---     ("2", "useraccount2", "1", "admin@gmail.com"        , "Admin kun"  ),
---     ("3", "useraccount3", "1", "business@gmail.com"     , "Business kun"  ),
---     ("4", "useraccount4", "1", "randomEmail@gmail.com"  , "Dietitian kun"  );
-
-
--- INSERT INTO BLOG(PUBLISHER, TITLE, INFO, Educational_Content, UserID) VALUES
---     ("Mark1", "Mark1's favourite dish", "Mark-ed", b'1', "3"),
---     ("Mark2", "Mark2's favourite dish", "Mark-ed", b'1', "3"), 
---     ("Mark3", "Mark3's favourite dish", "Mark-ed", b'1', "3"); 
-
--- INSERT INTO RECIPE (TITLE, STEPS, INGREDIENTS, DESCRIPTION, INFO, UserID) VALUES
---     ("BAKED CHICKEN", "1. You Bake Chicken.\n2.Done\n3.End", "200 pounds of chicken","You also need a oven", "'calories':'2000g'\n'carbs':'200g'\n'fat':'150g'\n'protein':'20g'",  "3");
- 
-
--- INSERT INTO RECIPE_REVIEW_RATING (Rating, Review, UserID, RecipeID) VALUES
---     (3.2, "REVIEW-ed", "1", 1);
- 
--- INSERT INTO BLOG_REVIEW_RATING (Rating, UserID, BlogID) VALUES
---     (3.2, "1", 1),
---     (3.2, "1", 2),
---     (3.2, "1", 3);
-  
--- -- INSERT INTO REVIEW_RATING (RATING, USERID, RecipeID) VALUES
--- -- (3.2, "4", 1);
--- -- associated ID can be either Blog post or recipe
--- -- rating can be nothing
-
--- --	ID VARCHAR(255) NOT NULL DEFAULT (UUID()),
---  INSERT INTO Registered_User (ID, DOB) VALUES
---     ("1",  "1969-09-11" );
-
--- INSERT INTO User_Info_Over_Time (UserID, Weight, Info) VALUES
---     ("1", b'1', 150.50);
-   
--- INSERT INTO User_Info_Over_Time (UserID, Weight, Info, Saved_Date) VALUES
---     ("1", b'1', 150.50, "2022-12-08" );
-
--- INSERT INTO System_Admin(ID, DOB) VALUES
---     ("2", "2022-01-20");
- 
-
--- INSERT INTO Business_User(ID, Company_Name, UEN, Dietitan_Account) VALUES
---     ("3", "Trump Corporate", "4799-577594-29584",  b'0') ;
--- -- lock & enabled & expired is something that comes with
--- -- UserDetails interface of Spring Security
-  
-
--- INSERT INTO RECIPE (TITLE, STEPS, INGREDIENTS, DESCRIPTION, INFO) VALUES
--- ("BAKED CHICKEN", "1. You Bake Chicken.\n2.Done\n3.End", "200 pounds of chicken","You also need a oven", "'calories':'2000g'\n'carbs':'200g'\n'fat':'150g'\n'protein':'20g'");
- 
-
 -- User Account
-INSERT INTO USERACCOUNT 
-(ID, Username, enabled, Password, Email, Full_Name, role, created_date) 
+INSERT INTO USERACCOUNT
+(ID, Username, enabled, Password, Email, Full_Name, role, created_date)
 VALUES
-("1",  "user1",  1, "pw1", "1@gmail.com" , "John",    "ADMIN",           DATE_ADD(NOW(), INTERVAL -FLOOR(RAND() * DATEDIFF(NOW(), '2022-01-20')) DAY)),
-("2",  "user2",  1, "pw1", "2@gmail.com" , "William", "ADMIN",           DATE_ADD(NOW(), INTERVAL -FLOOR(RAND() * DATEDIFF(NOW(), '2022-01-20')) DAY)),
-("3",  "user3",  1, "pw1", "3@gmail.com" , "Patricia","BUSINESS_USER",   DATE_ADD(NOW(), INTERVAL -FLOOR(RAND() * DATEDIFF(NOW(), '2022-01-20')) DAY)),
-("4",  "user4",  0, "pw1", "4@gmail.com" , "Mike",    "BUSINESS_USER",   DATE_ADD(NOW(), INTERVAL -FLOOR(RAND() * DATEDIFF(NOW(), '2022-01-20')) DAY)),
-("5",  "user5",  1, "pw1", "5@gmail.com" , "Ben",     "NUTRITIONIST",    DATE_ADD(NOW(), INTERVAL -FLOOR(RAND() * DATEDIFF(NOW(), '2022-01-20')) DAY)),
-("6",  "user6",  1, "pw1", "6@gmail.com" , "Sam",     "NUTRITIONIST",    DATE_ADD(NOW(), INTERVAL -FLOOR(RAND() * DATEDIFF(NOW(), '2022-01-20')) DAY)),
-("7",  "user7",  1, "pw1", "7@gmail.com" , "John",    "REGISTERED_USER", DATE_ADD(NOW(), INTERVAL -FLOOR(RAND() * DATEDIFF(NOW(), '2022-01-20')) DAY)),
-("8",  "user8",  1, "pw1", "8@gmail.com" , "William", "REGISTERED_USER", DATE_ADD(NOW(), INTERVAL -FLOOR(RAND() * DATEDIFF(NOW(), '2022-01-20')) DAY)),
-("9",  "user9",  1, "pw1", "9@gmail.com" , "Patricia","REGISTERED_USER", DATE_ADD(NOW(), INTERVAL -FLOOR(RAND() * DATEDIFF(NOW(), '2022-01-20')) DAY)),
-("10", "user10", 1, "pw1", "10@gmail.com", "Mike",    "REGISTERED_USER", DATE_ADD(NOW(), INTERVAL -FLOOR(RAND() * DATEDIFF(NOW(), '2022-01-20')) DAY)),
-("11", "user11", 1, "pw1", "11@gmail.com", "Ben",     "REGISTERED_USER", DATE_ADD(NOW(), INTERVAL -FLOOR(RAND() * DATEDIFF(NOW(), '2022-01-20')) DAY)),
-("12", "user12", 1, "pw1", "12@gmail.com", "Sam",     "REGISTERED_USER", DATE_ADD(NOW(), INTERVAL -FLOOR(RAND() * DATEDIFF(NOW(), '2022-01-20')) DAY));
+    ('1',  'user1',  1, 'pw1', '1@gmail.com', 'John',    'ADMIN',           DATE_ADD(NOW(), INTERVAL -FLOOR(RAND() * DATEDIFF(NOW(), '2022-01-20')) DAY)),
+    ('2',  'user2',  1, 'pw1', '2@gmail.com', 'William', 'ADMIN',           DATE_ADD(NOW(), INTERVAL -FLOOR(RAND() * DATEDIFF(NOW(), '2022-01-20')) DAY)),
+    ('3',  'user3',  1, 'pw1', '3@gmail.com', 'Patricia','BUSINESS_USER',   DATE_ADD(NOW(), INTERVAL -FLOOR(RAND() * DATEDIFF(NOW(), '2022-01-20')) DAY)),
+    ('4',  'user4',  0, 'pw1', '4@gmail.com', 'Mike',    'BUSINESS_USER',   DATE_ADD(NOW(), INTERVAL -FLOOR(RAND() * DATEDIFF(NOW(), '2022-01-20')) DAY)),
+    ('5',  'user5',  1, 'pw1', '5@gmail.com', 'Ben',     'NUTRITIONIST',    DATE_ADD(NOW(), INTERVAL -FLOOR(RAND() * DATEDIFF(NOW(), '2022-01-20')) DAY)),
+    ('6',  'user6',  1, 'pw1', '6@gmail.com', 'Sam',     'NUTRITIONIST',    DATE_ADD(NOW(), INTERVAL -FLOOR(RAND() * DATEDIFF(NOW(), '2022-01-20')) DAY)),
+    ('7',  'user7',  1, 'pw1', '7@gmail.com', 'John',    'REGISTERED_USER', DATE_ADD(NOW(), INTERVAL -FLOOR(RAND() * DATEDIFF(NOW(), '2022-01-20')) DAY)),
+    ('8',  'user8',  1, 'pw1', '8@gmail.com', 'William', 'REGISTERED_USER', DATE_ADD(NOW(), INTERVAL -FLOOR(RAND() * DATEDIFF(NOW(), '2022-01-20')) DAY)),
+    ('9',  'user9',  1, 'pw1', '9@gmail.com', 'Patricia','REGISTERED_USER', DATE_ADD(NOW(), INTERVAL -FLOOR(RAND() * DATEDIFF(NOW(), '2022-01-20')) DAY)),
+    ('10', 'user10', 1, 'pw1', '10@gmail.com', 'Mike',   'REGISTERED_USER', DATE_ADD(NOW(), INTERVAL -FLOOR(RAND() * DATEDIFF(NOW(), '2022-01-20')) DAY)),
+    ('11', 'user11', 1, 'pw1', '11@gmail.com', 'Ben',    'REGISTERED_USER', DATE_ADD(NOW(), INTERVAL -FLOOR(RAND() * DATEDIFF(NOW(), '2022-01-20')) DAY)),
+    ('12', 'user12', 1, 'pw1', '12@gmail.com', 'Sam',    'REGISTERED_USER', DATE_ADD(NOW(), INTERVAL -FLOOR(RAND() * DATEDIFF(NOW(), '2022-01-20')) DAY));
 
 -- System admin
 INSERT INTO System_Admin
- (ID, DOB) 
+(ID, DOB)
 VALUES
-    ("1", "1997-01-20"),
-    ("2", "1990-02-10");
+    ('1', '1997-01-20'),
+    ('2', '1990-02-10');
 
 
 -- Business user
 INSERT INTO Business_User
- (ID, Company_Name, UEN,contact_number, company_address) 
+(ID, Company_Name, UEN,contact_number, company_address)
 VALUES
-    ("3", "Trump Enterprise", "4799-577594-29584", "92345678", "123, Jurong Street, Singapore 123456"),
-    ("4", "Star Enterprise", "4799-577594-29777", "82345678", "123, Tampines Street, Singapore 123456");
+    ('3', 'Trump Enterprise', '4799775584', '92345678', '123, Jurong Street, Singapore 523456'),
+    ('4', 'Star Enterprise', '4799775777', '82345678', '123, Tampines Street, Singapore 514234');
 
 -- Nutritionist
 INSERT INTO Nutritionist
- (ID, Company_Name, company_address, contact_number) 
+(ID, Company_Name, company_address, contact_number)
 VALUES
-    ("5", "Wellness Limited", "123, Bedok Street, Singapore 123456", "98345678") ,
-    ("6", "Shine Company", "23, Hougang, Singapore 123456", "88345678") ;
+    ('5', 'Wellness Limited', '123, Bedok Street, Singapore 123456', '98345678') ,
+    ('6', 'Shine Company', '23, Hougang, Singapore 123456', '88345678') ;
 
 -- Registered user
- INSERT INTO Registered_User 
- (ID, DOB) 
+INSERT INTO Registered_User
+(ID, DOB)
 VALUES
-    ("7",  "1999-09-23" ),
-    ("8",  "1954-09-14" ),
-    ("9",  "1999-09-15" ),
-    ("10", "1995-09-16" ),
-    ("11", "1993-09-16" ),
-    ("12", "1995-09-12" );
+    ('7',  '1999-09-23' ),
+    ('8',  '1954-09-14' ),
+    ('9',  '1999-09-15' ),
+    ('10', '1995-09-16' ),
+    ('11', '1993-09-16' ),
+    ('12', '1995-09-12' );
 
 -- User info over time (for registered user)
-INSERT INTO User_Info_Over_Time 
- (User_ID, weight, date)
+INSERT INTO User_Info_Over_Time
+(User_ID, weight, date)
 VALUES
-    ("7", 70.50,  "2022-12-08" ),
-    ("7", 60.50,  "2023-10-08" ),
-    ("7", 50.50,  "2024-12-08" ),
-    ("8", 80.50,  "2022-12-08" ),
-    ("8", 70.50,  "2023-10-08" ),
-    ("8", 60.50,  "2024-12-08" ),
-    ("9", 90.50,  "2022-12-08" ),
-    ("9", 80.50,  "2023-10-08" ),
-    ("9", 70.50,  "2024-12-08" ),
-    ("10", 100.50, "2022-12-08" ),
-    ("10", 90.50,  "2023-10-08" ),
-    ("10", 80.50,  "2024-12-08" ),
-    ("11", 110.50, "2022-12-08" ),
-    ("11", 100.50, "2023-10-08" ),
-    ("11", 90.50,  "2024-12-08" ),
-    ("12", 120.50, "2022-12-08" ),
-    ("12", 110.50, "2023-10-08" ),
-    ("12", 100.50, "2024-12-08" );
+    ('7',  70.50,  '2022-12-08' ),
+    ('7',  60.50,  '2023-10-08' ),
+    ('7',  50.50,  '2023-12-08' ),
+    ('8',  80.50,  '2022-12-08' ),
+    ('8',  70.50,  '2023-10-08' ),
+    ('8',  60.50,  '2023-12-08' ),
+    ('9',  90.50,  '2022-12-08' ),
+    ('9',  80.50,  '2023-10-08' ),
+    ('9',  70.50,  '2023-12-08' ),
+    ('10', 100.50, '2022-12-08' ),
+    ('10', 90.50,  '2023-10-08' ),
+    ('10', 80.50,  '2023-12-08' ),
+    ('11', 110.50, '2022-12-08' ),
+    ('11', 100.50, '2023-10-08' ),
+    ('11', 90.50,  '2023-12-08' ),
+    ('12', 120.50, '2022-12-08' ),
+    ('12', 110.50, '2023-10-08' ),
+    ('12', 100.50, '2023-12-08' );
 
 
 -- To test verfied user
 -- User Account
-INSERT INTO USERACCOUNT 
-(ID, Username, enabled, Password, Email, Full_Name, role, created_date) 
+INSERT INTO USERACCOUNT
+(ID, Username, enabled, Password, Email, Full_Name, role, created_date)
 VALUES
-("20",  "user2",  1, "pw1", "20@gmail.com" , "John",    "BUSINESS_USER",           DATE_ADD(NOW(), INTERVAL -FLOOR(RAND() * DATEDIFF(NOW(), '2022-01-20')) DAY)),
-("21",  "user21",  1, "pw1", "21@gmail.com" , "John",    "BUSINESS_USER",           DATE_ADD(NOW(), INTERVAL -FLOOR(RAND() * DATEDIFF(NOW(), '2022-01-20')) DAY)),
-("22",  "user22",  1, "pw1", "22@gmail.com" , "William", "BUSINESS_USER",           DATE_ADD(NOW(), INTERVAL -FLOOR(RAND() * DATEDIFF(NOW(), '2022-01-20')) DAY)),
-("23",  "user23",  1, "pw1", "23@gmail.com" , "Patricia","BUSINESS_USER",   DATE_ADD(NOW(), INTERVAL -FLOOR(RAND() * DATEDIFF(NOW(), '2022-01-20')) DAY)),
-("24",  "user24",  0, "pw1", "24@gmail.com" , "Mike",    "BUSINESS_USER",   DATE_ADD(NOW(), INTERVAL -FLOOR(RAND() * DATEDIFF(NOW(), '2022-01-20')) DAY)),
-("25",  "user25",  1, "pw1", "25@gmail.com" , "Ben",     "NUTRITIONIST",    DATE_ADD(NOW(), INTERVAL -FLOOR(RAND() * DATEDIFF(NOW(), '2022-01-20')) DAY)),
-("26",  "user26",  1, "pw1", "26@gmail.com" , "Sam",     "NUTRITIONIST",    DATE_ADD(NOW(), INTERVAL -FLOOR(RAND() * DATEDIFF(NOW(), '2022-01-20')) DAY)),
-("27",  "user27",  1, "pw1", "27@gmail.com" , "John",    "NUTRITIONIST", DATE_ADD(NOW(), INTERVAL -FLOOR(RAND() * DATEDIFF(NOW(), '2022-01-20')) DAY));
+    ('20',  'user2' ,  1, 'pw1', '20@gmail.com' , 'John',    'BUSINESS_USER',    DATE_ADD(NOW(), INTERVAL -FLOOR(RAND() * DATEDIFF(NOW(), '2022-01-20')) DAY)),
+    ('21',  'user21',  1, 'pw1', '21@gmail.com' , 'John',    'BUSINESS_USER',    DATE_ADD(NOW(), INTERVAL -FLOOR(RAND() * DATEDIFF(NOW(), '2022-01-20')) DAY)),
+    ('22',  'user22',  1, 'pw1', '22@gmail.com' , 'Will',    'BUSINESS_USER',    DATE_ADD(NOW(), INTERVAL -FLOOR(RAND() * DATEDIFF(NOW(), '2022-01-20')) DAY)),
+    ('23',  'user23',  1, 'pw1', '23@gmail.com' , 'Patr',    'BUSINESS_USER',    DATE_ADD(NOW(), INTERVAL -FLOOR(RAND() * DATEDIFF(NOW(), '2022-01-20')) DAY)),
+    ('24',  'user24',  0, 'pw1', '24@gmail.com' , 'Mike',    'BUSINESS_USER',    DATE_ADD(NOW(), INTERVAL -FLOOR(RAND() * DATEDIFF(NOW(), '2022-01-20')) DAY)),
+    ('25',  'user25',  1, 'pw1', '25@gmail.com' , 'Ben' ,    'NUTRITIONIST' ,    DATE_ADD(NOW(), INTERVAL -FLOOR(RAND() * DATEDIFF(NOW(), '2022-01-20')) DAY)),
+    ('26',  'user26',  1, 'pw1', '26@gmail.com' , 'Sam' ,    'NUTRITIONIST' ,    DATE_ADD(NOW(), INTERVAL -FLOOR(RAND() * DATEDIFF(NOW(), '2022-01-20')) DAY)),
+    ('27',  'user27',  1, 'pw1', '27@gmail.com' , 'John',    'NUTRITIONIST' ,    DATE_ADD(NOW(), INTERVAL -FLOOR(RAND() * DATEDIFF(NOW(), '2022-01-20')) DAY));
 
 
 INSERT INTO Business_User
- (ID, Company_Name, UEN,contact_number, company_address) 
+(ID, Company_Name, UEN,contact_number, company_address)
 VALUES
-    ("20", "Trump Enterprise", "4799-577594-29890", "92345678", "123, Jurong Street, Singapore 123456"),
-    ("21", "Trump Enterprise", "4799-577594-29000", "92345678", "123, Jurong Street, Singapore 123456"),
-    ("22", "Star Enterprise", "4799-577594-29111", "82345678", "123, Tampines Street, Singapore 123456"),
-    ("23", "Trump Enterprise", "4799-577594-29222", "92345678", "123, Jurong Street, Singapore 123456"),
-    ("24", "Trump Enterprise", "4799-577594-29333", "92345678", "123, Jurong Street, Singapore 123456");
+    ('20', 'Will Enterprise' , '4757752980', '92345678', '23, Kallang Avenue 6, Singapore 538928'   ),
+    ('21', 'ENC Enterprise'  , '4757752900', '92345678', '13, Jurong Street, Singapore 538212'      ),
+    ('22', 'Star Enterprise' , '4757752911', '82345678', '3, Tampines Street, Singapore 517727'     ),
+    ('23', 'Trump Enterprise', '4757752922', '92345678', '10, Jurong Street, Singapore 592012'      ),
+    ('24', 'SMU Enterprise'  , '4757752933', '92345678', '23, Tampines Avenue 1, Singapore 503020'  );
 
 -- Nutritionist
 INSERT INTO Nutritionist
- (ID, Company_Name, company_address, contact_number) 
+(ID, Company_Name, company_address, contact_number)
 VALUES
-    ("25", "Wellness Limited", "123, Bedok Street, Singapore 123456", "98345678") ,
-    ("26", "Shine Company", "23, Hougang, Singapore 123456", "88345678"),
-    ("27", "Shine Company", "23, Hougang, Singapore 123456", "88345678");
+    ('25', 'Wellness Limited' , '45, Bedok Street, Singapore 555712', '98345678') ,
+    ('26', 'Shine Company'    , '23, Hougang, Singapore 532134',      '88345678'),
+    ('27', 'Shine Company'    , '23, Sengkang, Singapore 537212',     '88945678');
 
 -- Category
 -- 1. Allergies
-Insert into allergies 
-(subcategory_name) 
+Insert into allergies
+(subcategory_name)
 VALUES
-("Milk"),
-("Egg"),
-("Soy"),
-("Shellfish"),
-("Fish"),
-("Peanut"),
-("Tree Nuts"),
-("Gluten");
+    ('Milk'       ),
+    ('Egg'        ),
+    ('Soy'        ),
+    ('Shellfish'  ),
+    ('Fish'       ),
+    ('Peanut'     ),
+    ('Tree Nuts'  ),
+    ('Gluten'     );
 
 -- 2. Dietary preferences
-Insert into dietary_preferences 
- (subcategory_name) 
+Insert into dietary_preferences
+(subcategory_name)
 VALUES
-("Vegan"),
-("Vegetarian"),
-("Pescatarian");
+    ('Vegan'      ),
+    ('Vegetarian' ),
+    ('Pescatarian');
 
 -- 3. Health goals
-Insert into health_goal 
- (subcategory_name) 
+Insert into health_goal
+(subcategory_name)
 VALUES
-("Weight Gain"),
-("Maintain Heatlth"),
-("Weight Loss");
+    ('Weight Gain'),
+    ('Maintain Heatlth'),
+    ('Weight Loss');
 
 
 -- 4. Blog post category
-Insert into blog_post_category 
- (subcategory_name) 
+Insert into blog_post_category
+(subcategory_name)
 VALUES
-("Cookbook"),
-("Kitchenware"),
-("Miscellaneous");
+    ('Cookbook'),
+    ('Kitchenware'),
+    ('Miscellaneous');
 
 -- 5. Educational content category
-Insert into educational_content_category 
- (subcategory_name) 
+Insert into educational_content_category
+(subcategory_name)
 VALUES
-("Healthy Eating"),
-("Healthy Lifestyle");
+    ('Healthy Eating'),
+    ('Healthy Lifestyle');
 
 
 -- Blog
- -- publisher should be author of the blog
-    -- blog_type_id should be the category of the blog (refer to blog_post_category)
-    -- img_title should be the author of the image and the source of the image (follow their code of conduct)
+-- publisher should be author of the blog
+-- blog_type_id should be the category of the blog (refer to blog_post_category)
+-- img_title should be the author of the image and the source of the image (follow their code of conduct)
 INSERT INTO Blog
 (id, CreatedDT, Publisher, Title, Info, UserID, img, img_title, blog_type_id)
 VALUES
@@ -312,9 +238,9 @@ VALUES
     );
 
 --  Blog review rating
-INSERT INTO BLOG_REVIEW_RATING 
- (Review, Rating, UserID, BlogID) 
-VALUE  
+INSERT INTO BLOG_REVIEW_RATING
+(Review, Rating, UserID, BlogID)
+    VALUE
     ('This is very awesome',                                      5.0, '7', 1),
     ('The blog post is very descriptive and informative.',        5.0, '8', 1),
     ('I love this blog post!',                                    4.0, '9', 1),
@@ -335,9 +261,9 @@ VALUE
 
 
 -- Educational content
-    -- publisher should be author of the educational content
-        -- educational_content_type_id should be the category of the blog (refer to educational_content_category)
-        -- img_title should be the author of the image and the source of the image (follow their code of conduct)
+-- publisher should be author of the educational content
+-- educational_content_type_id should be the category of the blog (refer to educational_content_category)
+-- img_title should be the author of the image and the source of the image (follow their code of conduct)
 INSERT INTO educational_content
 (id, CreatedDT, Publisher, Title, Info, UserID, img, img_title,educational_content_type_id)
 VALUES
@@ -425,19 +351,19 @@ VALUES
 
 
 -- Recipe
-  -- publisher should be author of the recipe
-  -- info refers to dietary information or Not specified
-    -- steps refers to the steps to cook the recipe (separated by \n)
-    -- ingredients refers to the ingredients needed to cook the recipe (separated by \n)
-    -- img_title should be the author of the image and the source of the image (follow their code of conduct)
-    -- dietary_preference refers to the category of the recipe (refer to dietary_preferences)
-    -- cooking time refers to the time needed to cook the recipe (in minutes)
-    -- nutrient info details calories is kcal
-    -- nutrient info details sodium is mg
-    -- nutrient info details carbs, protein, fat, fibre is g
+-- publisher should be author of the recipe
+-- info refers to dietary information or Not specified
+-- steps refers to the steps to cook the recipe (separated by \n)
+-- ingredients refers to the ingredients needed to cook the recipe (separated by \n)
+-- img_title should be the author of the image and the source of the image (follow their code of conduct)
+-- dietary_preference refers to the category of the recipe (refer to dietary_preferences)
+-- cooking time refers to the time needed to cook the recipe (in minutes)
+-- nutrient info details calories is kcal
+-- nutrient info details sodium is mg
+-- nutrient info details carbs, protein, fat, fibre is g
 
 -- Note that: Some recipes has allergies, insert into recipe_allergies table
-    
+
 
 INSERT INTO recipe
 (id, publisher, title, info, calories, carbs, protein, fat, fibre, sodium, serving_size, description, steps, ingredients, UserID, Active, createddt, img, img_title, dietary_preference, cooking_time)
@@ -446,7 +372,7 @@ VALUES
         1,
         'fitChef2',
         'Easy Grilled Salmon',
-        "Not specified",
+        'Not specified',
         129, 1, 20, 8, 0, 8, -- calories, carbs, protein, fat, fibre, sodium
         4,
         'Indulge in the simplicity and exquisite flavors of our Easy Grilled Salmon recipe. Perfect for a quick and healthy meal, this dish showcases succulent salmon fillets seasoned to perfection and grilled to a mouthwatering, golden perfection. The straightforward preparation ensures a delicious, light, and satisfying dish, making it an ideal choice for both novice and seasoned cooks alike. Elevate your dining experience with this effortlessly impressive grilled salmon, offering a delightful blend of simplicity and gourmet taste.',
@@ -458,13 +384,13 @@ VALUES
         'https://img.freepik.com/free-photo/grilled-salmon-fillet-with-fresh-vegetable-salad-generated-by-ai_188544-21273.jpg?t=st=1706581041~exp=1706584641~hmac=a5192395751401ed16e80a0043e0f94504123f21393174683c63426ba80cba62&w=996',
         'Author : Vecstock, Designed by Freepik',  -- img_title
         1, -- dietary_preference vegan,
-        90
+        25
     ),
     (
         2,
         'fitChef2',
         'Cajun Chicken Pasta',
-        'INFO',
+        'Not specified',
         324, 14, 8, 6, 6, 6, -- calories, carbs, protein, fat, fibre, sodium
         4,
         'Indulge your taste buds with our delectable Cajun Chicken Pasta recipe, a culinary journey that marries the bold and spicy flavors of Cajun seasoning with succulent chicken and perfectly cooked pasta. This dish boasts a harmonious blend of tender, blackened chicken strips, vibrant bell peppers, and onions, all sautéed to perfection. The creamy Alfredo sauce, infused with Cajun spices, adds a velvety richness that ties the entire dish together. Garnished with fresh parsley for a pop of color and flavor, this Cajun Chicken Pasta is a delightful and satisfying meal that brings the spirit of Louisiana to your dinner table. Prepare to savor a symphony of tastes in every bite!',
@@ -476,13 +402,13 @@ VALUES
         'https://img.freepik.com/free-photo/bowl-pasta-with-chicken-breast-tomato-sauce_1340-25533.jpg?t=st=1706581185~exp=1706584785~hmac=0f73e15a6734c331bbca59e1e4b01228ff1f6c9b92598a6482e58ac8d5e74f08&w=826',
         'Author : Sketchepedia, Designed by Freepik',  -- img_title
         1, -- dietary_preference
-        30
+        20
     ),
     (
         3,
         'fitChef2',
         'Grilled Lemon-Herb Chicken',
-        "INFO",
+        'Not specified',
         150, 0, 26, 4, 0, 70,
         2,
         'Experience the zest and aroma of our Grilled Lemon-Herb Chicken, perfect for a light yet flavorful meal. This dish features tender chicken breasts marinated in a vibrant mix of lemon, herbs, and garlic, grilled to juicy perfection. Ideal for health-conscious diners, this recipe delivers high protein with low fat, making it a nutritious choice for any day.',
@@ -494,13 +420,13 @@ VALUES
         'https://img.freepik.com/free-photo/homemade-food-party_53876-31237.jpg?w=826&t=st=1705276322~exp=1705276922~hmac=ba7ce45ad424c09e8a5a175cc29e0a08096ef974ce55799fe3b212dbd255249b',
         'Designed by Freepik',  -- img_title
         3,
-        20
+        25
     ),
     (
         4,
         'fitChef2',
         'Spicy Grilled Shrimp',
-        "INFO",
+        'Not specified',
         120, 2, 23, 2, 0, 85,
         2,
         'Dive into the bold flavors of our Spicy Grilled Shrimp, a dish that''s both simple and bursting with taste. Succulent shrimp are marinated in a spicy blend of chili, garlic, and lime, then grilled to a sizzling finish. This recipe is a fantastic source of lean protein and is low in both calories and fat, making it a great choice for a healthy and quick meal.',
@@ -512,14 +438,14 @@ VALUES
         'https://img.freepik.com/free-photo/shrimp-sauteed-garlic-soy-caramel_2829-19579.jpg?w=826&t=st=1705276562~exp=1705277162~hmac=58b4053f4e10b6fd671636826e9c25c1ad92832d7721d3308b389a616c753291',
         'Designed by Freepik',  -- img_title
         3,
-        10
+        50
 
     ),
     (
         5,
         'fitChef2',
         'Mediterranean Quinoa Salad',
-        "INFO",
+        'Not specified',
         250, 30, 10, 12, 8, 300, -- calories, carbs, protein, fat, fibre, sodium
         4,
         'Indulge in the vibrant flavors of our Mediterranean Quinoa Salad. This refreshing and nutritious dish combines fluffy quinoa with a medley of colorful vegetables, including cherry tomatoes, cucumbers, and bell peppers. The tangy lemon dressing adds a zesty kick, while the crumbled feta cheese provides a creamy and salty element. Topped with fresh herbs like parsley and mint, this salad is a perfect choice for a light and satisfying meal. Enjoy the taste of the Mediterranean in every bite!',
@@ -532,14 +458,141 @@ VALUES
         'Designed by Freepik',  -- img_title
         1, -- dietary_preference
         40
+    ),
+    (
+        6,
+        'fitChef2',
+        'Hearty Vegetable Soup',
+        'Not specified',
+        90, 14, 3, 2, 4, 12, -- calories, carbs, protein, fat, fibre, sodium
+        6,
+        'Dive into the rich and comforting flavors of our Hearty Vegetable Soup. This nourishing recipe brings together a medley of fresh vegetables simmered in a savory broth, creating a warm and inviting dish. Ideal for health-conscious individuals, it''s packed with nutrients and is wonderfully filling. Whether you''re a beginner or a seasoned chef, this soup is a breeze to prepare and is perfect for cozy nights in.',
+        'In a large pot, heat olive oil over medium heat\nAdd chopped onions, carrots, and celery.\nsauté until softened.\nStir in minced garlic, diced tomatoes, chopped potatoes, green beans, and vegetable broth.\nBring to a boil, then reduce heat to simmer for 20 minutes\nAdd corn, peas, and season with salt, pepper, and herbs.\nCook for an additional 10 minutes.',
+        '1 onion\n2 carrots\n2 celery stalks\n2 garlic cloves\n1 can diced tomatoes\n2 potatoes\n1 cup green beans\n4 cups vegetable broth\n1 cup corn\n1 cup peas\nsalt\npepper\nmixed herbs',
+        '3',
+        TRUE,
+        '2023-05-10 10:00:00',
+        'https://img.freepik.com/free-photo/chicken-broth-vegetable-soup-disposable-cup-bowl-served-with-green-vegetables_114579-905.jpg?w=740&t=st=1706620151~exp=1706620751~hmac=7bcc40a9e782bfa356f11ff36c92e5510f1aac7517e35c6b7bdbdc05eb298316',
+        'Author : azerbaijan_stockers, Designed by Freepik',  -- img_title
+        2, -- dietary_preference
+        30
+
+    ),
+    (
+        7,
+        'fitChef2',
+        'Classic Margherita Pizza',
+        'Not specified',
+        250, 30, 12, 10, 2, 500, -- calories, carbs, protein, fat, fibre, sodium
+        8,
+        'Experience the authentic taste of Italy with our Classic Margherita Pizza. This timeless recipe features a crispy, homemade crust topped with tangy tomato sauce, fresh mozzarella, and basil leaves. A drizzle of olive oil adds the perfect finishing touch. Simple yet flavorful, this pizza is a testament to the beauty of classic Italian cooking and is sure to delight all pizza enthusiasts.',
+        'Preheat oven to 475 degrees.\nRoll out pizza dough on a floured surface.\nSpread tomato sauce, then add slices of mozzarella cheese and fresh basil leaves.\nDrizzle with olive oil.\nBake for 12-15 minutes until crust is golden and cheese is bubbly.',
+        'Pizza dough\ntomato sauce\nfresh mozzarella cheese, fresh basil leaves, olive oil',
+        '3',
+        TRUE,
+        '2023-06-15 18:00:00',
+        'https://img.freepik.com/free-photo/delicious-traditional-pizza-assortment_23-2148921314.jpg?w=360&t=st=1706620453~exp=1706621053~hmac=6b54331cfb9ea30aeb79c8a4921a28f61bc02d8f0d1502e25c85184169d73e61',
+        'Designed by Freepik',  -- img_title
+        1, -- dietary_preference
+        70
+    ),
+    (
+        8,
+        'fitChef2',
+        'Spicy Thai Green Curry',
+        'Not specified',
+        310, 15, 14, 20, 3, 700, -- calories, carbs, protein, fat, fibre, sodium
+        4,
+        'Embark on a culinary journey to Southeast Asia with our Spicy Thai Green Curry. This dish features tender chicken pieces and assorted vegetables, all simmered in a fragrant green curry sauce made with coconut milk, green curry paste, and traditional Thai herbs. The result is a harmonious blend of spicy, savory, and slightly sweet flavors that will transport your taste buds to the streets of Bangkok.',
+        'In a pot, heat oil and fry green curry paste for 2 minutes.\nAdd coconut milk, chicken, eggplant, bell peppers, and bamboo shoots.\nSimmer until chicken is cooked. Season with fish sauce, sugar, and lime leaves.\nServe with steamed rice.',
+        '2 tbsp green curry paste\n1 can coconut milk\n500g chicken\n1 eggplant\n2 bell peppers\n1 cup bamboo shoots, fish sauce, sugar, lime leaves, oil',
+        '3',
+        TRUE,
+        '2023-07-05 19:30:00',
+        'https://img.freepik.com/free-photo/green-curry-bowl-spices-wooden-table_1150-21354.jpg?w=826&t=st=1706620599~exp=1706621199~hmac=de78438dda610d574840558b199d06a05724d2c628c43621d5ffed967fd0ee00',
+        'Author : jcomp, Designed by Freepik',  -- img_title
+        1, -- dietary_preference
+        40
+    ),
+    (
+        9,
+        'fitChef2',
+        'Berry Almond Pancakes',
+        'Not specified',
+        180, 28, 6, 4, 5, 200, -- calories, carbs, protein, fat, fibre, sodium
+        4,
+        'Start your morning with our delightful Berry Almond Pancakes. These fluffy pancakes are made with whole wheat flour and almond meal, giving them a nutty flavor and a boost of protein. Topped with a colorful mix of fresh berries and a drizzle of honey, they are as nutritious as they are delicious.',
+        'In a bowl, mix whole wheat flour, almond meal, baking powder, and a pinch of salt.\nAdd milk and an egg, mix until smooth.\nCook on a hot griddle, adding berries to each pancake before flipping.\nServe with honey.',
+        '1 cup whole wheat flour\n1/2 cup almond meal\n2 tsp baking powder, salt\n1 cup milk\n1 egg, mixed berries, honey',
+        '3',
+        TRUE,
+        '2023-08-12 07:30:00',
+        'https://img.freepik.com/free-photo/delicious-sweet-waffles-coffee-wooden-board_23-2148654490.jpg?size=626&ext=jpg&ga=GA1.2.1875319134.1702524039&semt=ais',
+        'Author : KamranAydinov, Designed by Freepik',  -- img_title
+        1, -- dietary_preference
+        50
+    ),
+    (
+        10,
+        'fitChef2',
+        'Caesar Salad',
+        'Not specified',
+        220, 39, 8, 6, 7, 30, -- calories, carbs, protein, fat, fibre, sodium
+        5,
+        'Our Caesar Salad is a refreshing and healthy choice, packed with protein-rich quinoa, crisp cucumbers, juicy tomatoes, and tangy feta cheese. Dressed in a zesty lemon vinaigrette, this salad is perfect for a light lunch or a side dish.',
+        'Cook quinoa as directed.\nIn a large bowl, combine cooled quinoa, diced cucumbers, cherry tomatoes, sliced olives, crumbled feta, and chopped parsley.\nWhisk together olive oil, lemon juice, salt, and pepper for the dressing.\nToss salad with dressing.',
+        '1 cup quinoa\n1 cucumber\n1 cup cherry tomatoes\n1/2 cup sliced olives\n1/2 cup feta cheese, parsley\n3 tbsp olive oil\n2 tbsp lemon juice, salt, pepper',
+        '3',
+        TRUE,
+        '2023-09-20 12:00:00',
+        'https://img.freepik.com/free-photo/salad-with-mozzarella-avocado_1220-7101.jpg?w=826&t=st=1706631737~exp=1706632337~hmac=691556ba70cbeaf313c5af09f8f50e0eaae65adea716e8f7372b25e24d1f5353',
+        'Author : valeria_aksakova, Designed by Freepik',  -- img_title
+        3, -- dietary_preference
+        10
+    ),
+    (
+        11,
+        'fitChef2',
+        'Classic Beef Stew',
+        'Not specified',
+        350, 20, 25, 15, 4, 600, -- calories, carbs, protein, fat, fibre, sodium
+        6,
+        'Savor the rich, hearty flavors of our Classic Beef Stew. Tender chunks of beef, potatoes, carrots, and onions are slow-cooked to perfection in a savory broth, making it a comforting meal for any day.',
+        'Brown beef chunks in a pot.\nAdd diced onions, sliced carrots, chopped potatoes, beef broth, a can of diced tomatoes, and seasonings.\nSimmer for 2 hours until beef is tender.',
+        '1 lb beef chunks\n2 onions\n3 carrots\n2 potatoes\n4 cups beef broth\n1 can diced tomatoes, salt, pepper, thyme',
+        '3',
+        TRUE,
+        '2023-10-05 18:45:00',
+        'https://img.freepik.com/free-photo/delicious-goulash-ready-dinner_23-2149370851.jpg?w=360&t=st=1706623995~exp=1706624595~hmac=a2928b18365439db54279f8d1c7b63c651d188d5ad18a4f87a52cf2f28b0cca0',
+        'Designed by Freepik',  -- img_title
+        3, -- dietary_preference
+        120
+    ),
+    (
+        12,
+        'fitChef2',
+        'Spicy Black Bean Tacos',
+        'Not specified',
+        210, 35, 9, 6, 8, 470, -- calories, carbs, protein, fat, fibre, sodium
+        4,
+        'Enjoy a fiesta of flavors with our Spicy Black Bean Tacos. These tacos are filled with seasoned black beans, crisp lettuce, fresh tomatoes, and a dollop of sour cream, wrapped in warm, soft tortillas. A quick and tasty meal that is perfect for a busy weeknight.',
+        'Sauté chopped onions and minced garlic.\nAdd cooked black beans, cumin, paprika, and chili powder.\nCook for 5 minutes.\nServe in tortillas with lettuce, tomatoes, and sour cream.',
+        '1 can black beans\n1 onion\n2 garlic cloves\n1 tsp cumin\n1 tsp paprika\n1 tsp chili powder, tortillas, lettuce, tomatoes, sour cream',
+        '3',
+        TRUE,
+        '2023-11-17 19:30:00',
+        'https://img.freepik.com/free-photo/fresh-taco_144627-38301.jpg?w=826&t=st=1706104298~exp=1706104898~hmac=b2c1b91f623e17583a7937923dcc6a2683ffa77c3817b606f6fad10357c56465',
+        'Designed by Freepik',  -- img_title
+        3, -- dietary_preference
+        30
     );
 
 
 
 
 -- Recipe allergies
-  -- id refers to recipe id (refer to recipe table)
-    -- allergy_id refers to allergy id (refer to allergies table)
+-- id refers to recipe id (refer to recipe table)
+-- allergy_id refers to allergy id (refer to allergies table)
 Insert Into recipe_allergies (id, allergy_id) VALUES (1, 1);
 Insert Into recipe_allergies (id, allergy_id) VALUES (1, 2);
 Insert Into recipe_allergies (id, allergy_id) VALUES (1, 3);
@@ -568,61 +621,105 @@ VALUES
 
 
 -- Meal Plan
-  -- publisher should be author of the meal plan
-  -- health_goal_category refers to the category of the meal plan (refer to health_goal_category)
-    -- img_title should be the author of the image and the source of the image (follow their code of conduct)
+-- publisher should be author of the meal plan
+-- health_goal_category refers to the category of the meal plan (refer to health_goal_category)
+-- img_title should be the author of the image and the source of the image (follow their code of conduct)
 
 -- Note that: meal plan has some suggested recipes, insert into mealplan_recipe table
 INSERT INTO meal_plan
-    (id, publisher, title, active, introduction,  main_content, conclusion, createddt, health_goal_category, img, img_title, userid)
+(id, publisher, title, active, introduction,  main_content, conclusion, createddt, health_goal_category, img, img_title, userid)
 VALUES
     (
-        1, 
+        1,
         'james',
         'High-Calorie Nutrient-Dense Meal Plan',
-        TRUE, 
-        'Designed to support healthy weight gain, this plan emphasizes high-calorie, nutrient-rich foods. It is perfect for individuals looking to build muscle mass or increase body weight for health reasons. The key is focusing on quality calories that provide vitamins, minerals, and good fats.', 
+        TRUE,
+        'Designed to support healthy weight gain, this plan emphasizes high-calorie, nutrient-rich foods. It is perfect for individuals looking to build muscle mass or increase body weight for health reasons. The key is focusing on quality calories that provide vitamins, minerals, and good fats.',
         'Each meal includes a balance of protein, healthy fats, and carbohydrates. Emphasis is on lean proteins, whole grains, and nutrient-dense snacks. This plan also encourages frequent, smaller meals throughout the day to increase calorie intake without feeling overly full.',
         'Monitoring progress is vital. Adjust your calorie intake as needed based on your weight gain goals and physical activity level. Remember, gaining weight healthily takes time, so be patient and consistent with your meal plan.',
-        '2023-06-15', 
+        '2023-06-15',
         1, -- weight gain
-        'https://img.freepik.com/free-photo/fresh-salad-bowl-with-organic-vegetables-quinoa-generated-by-ai_24640-80537.jpg?t=st=1706582425~exp=1706586025~hmac=af46fdb8394f9a443c3b41676997a4f4bf3507d8093beceada2106152febda9c&w=996',
-        'Author : stockgiu, Designed by Freepik',  -- img_title
+        'https://img.freepik.com/free-photo/view-allergens-commonly-found-grains_23-2150170292.jpg?w=826&t=st=1706632336~exp=1706632936~hmac=b61507e8efe548ff6ea8b584a55fa5ac7c97835faec1cc67af28f7dd05876478',
+        'Designed by Freepik',  -- img_title
         '3' -- userid
     ),
     (
-        2, 
+        2,
         'Sophia',
         'Balanced Maintenance Meal Plan',
-        TRUE, 
-        'This meal plan is carefully designed to maintain your current health status, focusing on a balanced diet that fulfills all your nutritional needs. It is ideal for those who are satisfied with their current weight and health and wish to maintain it.', 
+        TRUE,
+        'This meal plan is carefully designed to maintain your current health status, focusing on a balanced diet that fulfills all your nutritional needs. It is ideal for those who are satisfied with their current weight and health and wish to maintain it.',
         'The plan includes a variety of foods from all food groups, ensuring a wide range of nutrients. Meals are structured to provide a good balance of carbohydrates, proteins, and fats, along with essential vitamins and minerals. Regular physical activity is also encouraged as part of a healthy lifestyle.',
         'Review your eating habits regularly and make adjustments to the meal plan based on your health monitoring. Balance and moderation are key, as is ensuring that you enjoy your meals while maintaining your health goals.',
-        '2023-07-20', 
+        '2023-07-20',
         2, -- maintain health
-        'https://img.freepik.com/free-photo/meal-prep-container-with-different-foods-including-broccoli-broccoli-blueberries-mango_188544-36516.jpg?t=st=1706582575~exp=1706586175~hmac=0a80a0256fcc6089d35cde04a280bb2817d28491719c03f3c3a5ca5f68e26b31&w=996',
-        'Author : vecstock, Designed by Freepik',  -- img_title
+        'https://img.freepik.com/free-photo/healthy-unhealthy-food-with-various-text-isolated-white-background_23-2148193120.jpg?size=626&ext=jpg&ga=GA1.2.1875319134.1702524039&semt=ais',
+        'Designed by Freepik',  -- img_title
         '3' -- userid
     ),
     (
-        3, 
+        3,
         'alex',
         'Low-Calorie Weight Loss Meal Plan',
-        TRUE, 
-        'This meal plan is designed for those aiming to lose weight in a healthy, sustainable manner. It focuses on low-calorie foods that are high in fiber and nutrients to promote satiety and avoid overeating.', 
+        TRUE,
+        'This meal plan is designed for those aiming to lose weight in a healthy, sustainable manner. It focuses on low-calorie foods that are high in fiber and nutrients to promote satiety and avoid overeating.',
         'The meals are structured to reduce calorie intake while still providing essential nutrients. It includes plenty of fruits, vegetables, lean proteins, and whole grains. Small, frequent meals are encouraged to keep the metabolism active and avoid hunger pangs.',
         'Regularly assess your progress and adjust the meal plan as necessary. Remember, weight loss should be gradual to ensure it is sustainable and healthy. Stay hydrated and combine this diet with regular exercise for the best results.',
-        '2023-08-25', 
+        '2023-08-25',
         3, -- weight loss
-        'https://img.freepik.com/free-photo/healthy-lifestyle-fresh-fruit-bowl-organic-berries-vegetable-preparation-generated-by-ai_188544-55966.jpg?t=st=1706582734~exp=1706586334~hmac=3b1bf25894158e15cde16322fb6bdc017ed04ecac1bbc3e6d70f3e55aa710a75&w=996',
-        'Author : vecstock, Designed by Freepik',  -- img_title
+        'https://img.freepik.com/free-photo/front-view-vegetable_140725-103355.jpg?w=826&t=st=1706632162~exp=1706632762~hmac=488b3428d05108209f34fe672188a78bc9dd4abfadc8e7e43a3e1385bf7e134d',
+        'Author : KamranAydinov, Designed by Freepik',  -- img_title
+        '3' -- userid
+    ),
+    (
+        4,
+        'sophia',
+        'Low-Carb, High-Protein Weight Loss Meal Plan',
+        TRUE,
+        'This weight loss meal plan is designed for individuals looking to shed pounds through a low-carb, high-protein diet. It is ideal for those who want to lose weight without sacrificing muscle mass. The plan focuses on reducing carbohydrate intake while increasing protein sources to keep you full and satisfied.',
+        'Breakfasts are rich in protein with eggs or Greek yogurt. Lunches and dinners feature lean meats like chicken or fish, paired with a variety of vegetables. Snacks include nuts, seeds, and low-carb fruits like berries. This plan limits processed foods and sugars, focusing on whole, natural ingredients.',
+        'Stay hydrated and listen to your body’s hunger and fullness cues. Weight loss should be gradual and sustainable. Regular exercise in conjunction with this meal plan will enhance results.',
+        '2023-08-10',
+        3, -- weight loss
+        'https://img.freepik.com/free-photo/plates-filled-with-blueberries-nuts_23-2148650204.jpg?w=826&t=st=1706619604~exp=1706620204~hmac=8beb76f97ad635ee2f5318ba01615cfcf7e8f63c8548bfa2d7de630ab7db1524',
+        'Designed by Freepik',
+        '4' -- userid
+    ),
+    (
+        5,
+        'michael',
+        'Balanced Meal Plan for Healthy Weight Maintenance',
+        TRUE,
+        'This balanced meal plan is tailored for individuals aiming to maintain their current weight with a focus on nutritional balance. It offers a diverse range of foods to ensure you receive all essential nutrients while enjoying delicious meals.',
+        'Each meal includes a harmony of carbohydrates, proteins, and fats. Breakfasts might feature oatmeal with fruits and nuts. Lunches and dinners include a variety of proteins like tofu, lean meats, and fish, combined with whole grains and vegetables. Healthy fats come from sources like avocados and olive oil.',
+        'Remember, maintaining weight is about balance and consistency. Pay attention to portion sizes and how your body feels. This meal plan can be adjusted to suit individual caloric needs and dietary preferences.',
+        '2023-09-20',
+        2, -- maintain health
+        'https://img.freepik.com/free-photo/oil-ripe-fresh-avocado-rustic-wooden-table_123827-21380.jpg?w=826&t=st=1706619716~exp=1706620316~hmac=5c439907263988420faa7825910d62a6a439acba2a16ea3ae9054b90a06d9f2a',
+        'Author : chandlervid85, Designed by Freepik',
+        '4' -- userid
+    ),
+    (
+        6,
+        'alex',
+        'Mediterranean Diet Plan for Heart Health',
+        TRUE,
+        'Focused on heart health, this Mediterranean diet plan incorporates a variety of nutrient-rich foods known for their benefits to cardiovascular health. It is ideal for those looking to improve heart function and overall well-being.',
+        'The plan emphasizes fruits, vegetables, whole grains, and healthy fats. Olive oil is a primary fat source. Protein sources include fish, poultry, beans, and legumes. Red meat is limited, and meals are often seasoned with herbs and spices instead of salt. Wine in moderation is also a feature of this diet.',
+        'Adapting to a Mediterranean lifestyle means not only changing what you eat but also how you eat. Enjoy meals with family or friends and stay active. Regular check-ups with your healthcare provider are recommended to monitor heart health progress.',
+        '2023-10-05',
+        2, -- maintain health
+        'https://img.freepik.com/free-photo/some-delicious-meal-with-salad-pickles-bowls-pot-wooden-surface_176474-6470.jpg?w=826&t=st=1706619889~exp=1706620489~hmac=a44c4406c082879c8d2b0da85c96402a80de1d5ab27dc97ac720b9c3f5179118',
+        'Author : 8photo, Designed by Freepik',
         '3' -- userid
     );
 
 
+
+
 -- mealplan_recipe
-  -- id refers to meal plan id (refer to meal_plan table)
-    -- recipe_id refers to recipe id (refer to recipe table)
+-- id refers to meal plan id (refer to meal_plan table)
+-- recipe_id refers to recipe id (refer to recipe table)
 insert into mealplan_recipe (id, recipe_id) values (1, 1); -- recipe is Easy Grilled Salmon
 insert into mealplan_recipe (id, recipe_id) values (1, 2); -- recipe is Cajun Chicken Pasta
 insert into mealplan_recipe (id, recipe_id) values (1, 3); -- recipe is Grilled Lemon-Herb Chicken

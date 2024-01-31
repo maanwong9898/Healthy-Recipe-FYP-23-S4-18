@@ -75,6 +75,12 @@ public class CategoryController {
         return new ResponseEntity<>(allergy, HttpStatus.CREATED);
     }
  
+    @PostMapping("/mealType")
+    private ResponseEntity<MealType> addMealType(@RequestBody MealType mealType) throws Exception
+    { 
+        MealType mt = categoryService.createNewMealType(mealType);
+        return new ResponseEntity<>(mt, HttpStatus.CREATED);
+    }
     // all these are for 
     @GetMapping("/getAllAllergies")
     private ResponseEntity<List<Allergies>> getAllAllergies()
@@ -100,6 +106,11 @@ public class CategoryController {
     private ResponseEntity<List<HealthGoal>> getAllHealthGoals()
     {
         return new ResponseEntity<>(categoryService.getAllHealthGoals(), HttpStatus.OK);
+    }   
+    @GetMapping("/getAllMealTypes")
+    private ResponseEntity<List<MealType>> getAllMealTypes()
+    {
+        return new ResponseEntity<>(categoryService.getAllMealTypes(), HttpStatus.OK);
     }   
  
     @DeleteMapping("/deleteAllergy/{id}")
@@ -134,6 +145,14 @@ public class CategoryController {
         return new ResponseEntity<>(HttpStatus.OK);
     } 
 
+    @DeleteMapping("/deleteMealType/{id}")
+    public ResponseEntity<?> deleteMealType(@PathVariable("id") long id )
+    {  
+        categoryService.deleteMealType(id);
+        return new ResponseEntity<>(HttpStatus.OK);
+    } 
+
+
     // editting: 
     @PutMapping("/allergy/edit")
     public ResponseEntity<Allergies> editAllergy(@RequestBody Allergies allergy)  throws Exception
@@ -164,6 +183,13 @@ public class CategoryController {
     public ResponseEntity<HealthGoal> editHealthGoal(@RequestBody HealthGoal allergy)  throws Exception
     { 
         HealthGoal toReturn = categoryService.updateHealthGoal(allergy);
+        return new ResponseEntity<>(toReturn, HttpStatus.OK);
+    }
+
+    @PutMapping("/mealType/edit")
+    public ResponseEntity<MealType> editMealType(@RequestBody MealType allergy)  throws Exception
+    { 
+        MealType toReturn = categoryService.updateMealType(allergy);
         return new ResponseEntity<>(toReturn, HttpStatus.OK);
     }
 }

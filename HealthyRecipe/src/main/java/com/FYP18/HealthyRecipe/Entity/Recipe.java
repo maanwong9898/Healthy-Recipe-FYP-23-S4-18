@@ -10,6 +10,7 @@ import org.hibernate.Length;
 
 import com.FYP18.HealthyRecipe.Entity.Categories.Allergies;
 import com.FYP18.HealthyRecipe.Entity.Categories.DietaryPreferences;
+import com.FYP18.HealthyRecipe.Entity.Categories.MealType;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -90,6 +91,14 @@ public class Recipe {
     @ManyToOne(fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH})
     @JoinColumn(name="dietaryPreference", insertable = false, updatable = false)  
     private DietaryPreferences dietaryPreferences;
+
+    @Column(name = "mealType", nullable = true)
+    private Long mealTypeId;
+    
+    @ManyToOne(fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH})
+    @JoinColumn(name="mealType", insertable = false, updatable = false)  
+    private MealType mealType;
+
 
     @ManyToMany
     @JoinTable(

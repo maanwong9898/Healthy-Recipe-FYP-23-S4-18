@@ -29,7 +29,9 @@ public class CategoryService {
  
     @Autowired
     private HealthGoalRepo healthGoalRepo;
-
+ 
+    @Autowired
+    private MealTypeRepo mealTypeRepo;
     
     //Only System admin can edit, add, remove
 
@@ -60,6 +62,10 @@ public class CategoryService {
         return healthGoalRepo.save(allergy);
     }
  
+    public MealType createNewMealType(MealType mealType)
+    {
+        return mealTypeRepo.save(mealType);
+    }
     
 
     public void deleteAllergy(long id)
@@ -108,6 +114,10 @@ public class CategoryService {
         healthGoalRepo.deleteById(id);  
     }
     
+    public void deleteMealType(long id)
+    {
+        mealTypeRepo.deleteById(id);
+    }
 
     public Allergies updateNewAllergy(Allergies allergy) throws Exception
     {     
@@ -155,6 +165,14 @@ public class CategoryService {
         return healthGoalRepo.save(al);
     }
 
+    public MealType updateMealType(MealType _mealType) throws Exception
+    {
+        MealType mealType = mealTypeRepo.findById(_mealType.getId())
+                            .orElseThrow(()-> new Exception("Can't find Meal Type: " + _mealType.getSubcategoryName()));
+
+        mealType.setSubcategoryName(_mealType.getSubcategoryName());
+        return mealTypeRepo.save(mealType);
+    }
 
     
     // the rest can only read 
@@ -181,6 +199,10 @@ public class CategoryService {
     public List<HealthGoal> getAllHealthGoals()
     {
         return healthGoalRepo.findAll();
+    }
+    public List<MealType> getAllMealTypes()
+    {
+        return mealTypeRepo.findAll();
     }
 
 }

@@ -67,11 +67,16 @@ public class RecipeService {
         return recipeRepository.findAll();
     }
     // in title nia, i might needa 
-    public List<Recipe> getKeywordsOfRecipe(String keyword)
+    public List<Recipe> findRecipesByTitle(String keyword)
     {
-        return recipeRepository.findByKeyword(keyword);
+        return recipeRepository.findRecipesByTitle(keyword);
     }
    
+    public List<Recipe> findRecipesByIngredients(String keyword)
+    {
+        return recipeRepository.findRecipesByIngredients(keyword);
+    }
+
     public List<Recipe> getRecipesByUserId(String userId)
     {   
         return recipeRepository.findByUserID(userId);

@@ -30,7 +30,12 @@ public interface RecipeRepository extends JpaRepository<Recipe, Long>{
     @Modifying
     @Transactional 
     @Query("SELECT r FROM Recipe r WHERE r.title LIKE %:keyword%")
-    List<Recipe> findByKeyword(@Param("keyword") String keyword);
+    List<Recipe> findRecipesByTitle(@Param("keyword") String keyword);
+
+    @Modifying
+    @Transactional 
+    @Query("SELECT r FROM Recipe r WHERE r.ingredients LIKE %:keyword%")
+    List<Recipe> findRecipesByIngredients(@Param("keyword") String keyword);
 
  
     @Transactional

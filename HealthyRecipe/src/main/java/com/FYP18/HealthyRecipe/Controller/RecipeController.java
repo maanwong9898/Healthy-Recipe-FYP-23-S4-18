@@ -78,10 +78,17 @@ public class RecipeController {
     }
 
 
-   @GetMapping ("/find")
+    @GetMapping ("/find")
     public ResponseEntity<List<Recipe>> findByKeyword(@RequestParam String keyword)
     { 
-        List<Recipe> toReturn = recipeService.getKeywordsOfRecipe(keyword);
+        List<Recipe> toReturn = recipeService.findRecipesByTitle(keyword);
+        return new ResponseEntity<>(toReturn, HttpStatus.OK);
+    }
+
+    @GetMapping ("/findByIngredients")
+    public ResponseEntity<List<Recipe>> findByIngredients(@RequestParam String keyword)
+    { 
+        List<Recipe> toReturn = recipeService.findRecipesByIngredients(keyword);
         return new ResponseEntity<>(toReturn, HttpStatus.OK);
     }
 

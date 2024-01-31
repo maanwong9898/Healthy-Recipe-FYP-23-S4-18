@@ -329,7 +329,7 @@ const UpdateRecipePage = ({ params }) => {
     <div className="min-h-screen flex flex-col justify-center px-6 lg:px-8">
       {/* Adjust the max-width and width in the inline style */}
       <div
-        className="mt-16 mb-16 mx-auto bg-zinc-100 rounded-lg shadow"
+        className="mt-16 mb-16 mx-auto bg-white rounded-lg shadow"
         style={{ maxWidth: "600px", width: "100%" }} // Increase maxWidth and set width to 100%
       >
         {" "}
@@ -414,7 +414,7 @@ const UpdateRecipePage = ({ params }) => {
                 >
                   Allergens Contained
                 </label>
-                <div className="grid grid-cols-4 gap-1">
+                <div className="grid grid-cols-2 md:grid-cols-4 gap-1">
                   {allergyCategory.map((cat, index) => (
                     <label key={index} className="mr-2 items-center">
                       <input
@@ -423,7 +423,7 @@ const UpdateRecipePage = ({ params }) => {
                         value={cat.id}
                         checked={allergyRestriction.includes(cat.id)}
                         onChange={(e) => handleAllergyCategoryChange(e, cat.id)}
-                        className="mr-2"
+                        className="w-4 h-4 bg-gray-100 border-gray-300 rounded mr-2"
                       />
                       {cat.subcategoryName}
                     </label>

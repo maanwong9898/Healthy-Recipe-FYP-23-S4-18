@@ -52,6 +52,7 @@ VALUES
         'Author : Vecstock, Designed by Freepik',  -- img_title
         2, -- dietary_preference
         25 -- cooking_time
+           -- meal type (cuisines)
     ),
     (
         2,
@@ -69,6 +70,7 @@ VALUES
         'Author : EyeEm, Designed by Freepik',  -- img_title
         2, -- dietary_preference
         15 -- cooking_time  
+           -- meal type (cuisines)
     ),
     (
         3,
@@ -78,7 +80,7 @@ VALUES
         402, 58, 14, 14, 16, 940, -- calories, carbs, protein, fat, fibre, sodium
         4-6,
         'A delicious, spicy blend packed full of iron and low in fat to boot. It is ready in under half an hour, or can be made in a slow cooker',
-        '2 pounds sweet potatoes \n4 tbsp olive oil \n1 tbsp chili powder \n3/4 tsp kosher salt \n1/2 medium red onion \n1 large lime \n2 cans black beans, drained and rinsed \n1 to 2 packed cups baby spinach \n1/4 tsp freshly ground black pepper \n4 ounces feta cheese, crumbled',
+        '2 pounds sweet potatoes \n4 tbsp olive oil \n1 tbsp chili powder \n4 tsp kosher salt \n1/2 medium red onion \n1 large lime \n2 cans black beans, drained and rinsed \n1 to 2 packed cups baby spinach \n1/4 tsp freshly ground black pepper \n4 ounces feta cheese, crumbled',
         '2', -- UserID
         TRUE,
         '2023-01-11 15:30:00',
@@ -86,6 +88,61 @@ VALUES
         'Author : EyeEm, Designed by Freepik',  -- img_title
         2, -- dietary_preference
         30 -- cooking_time  
+           -- meal type (cuisines)
+    ),
+    (
+        4,
+        'Cassie Best',
+        'Fish Tangine with saffron & almonds',
+        'Not Specified',
+        299, 10, 41, 11, 2, 200, -- calories, carbs, protein, fat, fibre, sodium
+        4,
+        'A low calorie Moroccan fish stew flavoured with saffron, almonds, cinnamon, ginger and more. It is ideal for entertaining- make a batch ahead and freeze',
+        '1 tbsp olive oil \n1 onion chopped \npinch saffron \n600ml hot fish or chicken stock \n2 garlic cloves crushed \nthumb-sized piece ginger, peeled and grated \n1/2 green chili \n2 tsp ground cumin \n1 tsp ground coriander \n1 tsp cinnamon \n1 tbsp tomato purée \n10 cherry tomatoes, halved \n2 tbsp ground almond \nzest 1 orange \n1 tbsp honey \n700g white fish \nsmall bunch coriander chopped \nhanful flaked almond, toasted \n1/2 green chili \ncouscous and natural yogurt, to serve (optional)',
+        '2', -- UserID
+        TRUE,
+        '2023-01-11 17:30:00',
+        'https://images.immediate.co.uk/production/volatile/sites/30/2020/08/tagine-5f2d3f6.jpg?quality=90&webp=true&resize=440,400',
+        'Author : Cassie Best, Designed by bbcgoodfood',  -- img_title
+        3, -- dietary_preference
+        25 -- cooking_time  
+           -- meal type (cuisines)
+    ),
+    (
+        5,
+        'James Martin',
+        'Hot & sour fish soup',
+        'Not Specified',
+        322, 39, 29, 7, 1, 3460, -- calories, carbs, protein, fat, fibre, sodium
+        4,
+        'A low calorie Moroccan fish stew flavoured with saffron, almonds, cinnamon, ginger and more. It is ideal for entertaining- make a batch ahead and freeze',
+        '1 tbsp olive oil \n1 onion chopped \npinch saffron \n600ml hot fish or chicken stock \n2 garlic cloves crushed \nthumb-sized piece ginger, peeled and grated \n1/2 green chili \n2 tsp ground cumin \n1 tsp ground coriander \n1 tsp cinnamon \n1 tbsp tomato purée \n10 cherry tomatoes, halved \n2 tbsp ground almond \nzest 1 orange \n1 tbsp honey \n700g white fish \nsmall bunch coriander chopped \nhanful flaked almond, toasted \n1/2 green chili \ncouscous and natural yogurt, to serve (optional)',
+        '2', -- UserID
+        TRUE,
+        '2023-01-11 17:30:00',
+        'https://images.immediate.co.uk/production/volatile/sites/30/2020/08/tagine-5f2d3f6.jpg?quality=90&webp=true&resize=440,400',
+        'Author : Cassie Best, Designed by bbcgoodfood',  -- img_title
+        3, -- dietary_preference
+        30 -- cooking_time  
+           -- meal type (cuisines)
+    ),
+    (
+        6,
+        'Roopa Gulati',
+        'Baked fish with mint & mango relish',
+        'Not Specified',
+        249, 22, 30, 5, 2, 640, -- calories, carbs, protein, fat, fibre, sodium
+        4,
+        'This new idea for white fish with a crunchy, spicy topping is bound to become a favourite, and it is low-fat too',
+        '4 x 150g skinless cod fillets \n1 green chili \n1 small ripe mango, finely diced \n1 tsp ground cumin \n1/2 finger-length piece fresh root ginger, grated \nthumb-sized piece ginger, peeled and grated \n1/2 green chili \n2 tsp ground cumin \n1 tsp ground coriander \n1 tsp cinnamon \n1 tbsp tomato purée \n10 cherry tomatoes, halved \n2 tbsp ground almond \nzest 1 orange \n1 tbsp honey \n700g white fish \nsmall bunch coriander chopped \nhanful flaked almond, toasted \n1/2 green chili \ncouscous and natural yogurt, to serve (optional)',
+        '2', -- UserID
+        TRUE,
+        '2023-01-11 17:30:00',
+        'https://images.immediate.co.uk/production/volatile/sites/30/2020/08/tagine-5f2d3f6.jpg?quality=90&webp=true&resize=440,400',
+        'Author : Cassie Best, Designed by bbcgoodfood',  -- img_title
+        3, -- dietary_preference
+        15 -- cooking_time  
+           -- meal type (cuisines)
     );
 
 

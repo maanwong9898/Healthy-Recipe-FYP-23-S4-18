@@ -8,17 +8,6 @@ import axiosInterceptorInstance from "../../../../axiosInterceptorInstance.js";
 // this is to view particular educational content
 // router path: /registeredUser/educationalContent/viewEducationalContent/[id]
 
-// Slugify utility function
-const slugify = (text) =>
-  text
-    .toString()
-    .toLowerCase()
-    .replace(/\s+/g, "-") // Replace spaces with -
-    .replace(/[^\w\-]+/g, "") // Remove all non-word chars
-    .replace(/\-\-+/g, "-") // Replace multiple - with single -
-    .replace(/^-+/, "") // Trim - from start of text
-    .replace(/-+$/, ""); // Trim - from end of text
-
 const fetchEduContentById = async (postId) => {
   try {
     // Ensure postId is a string if the IDs in your URL need to be strings
@@ -44,7 +33,7 @@ const fetchEduContentById = async (postId) => {
   }
 };
 
-const ViewEduContent = ({ params }) => {
+const ViewEducationalContent = ({ params }) => {
   const [eduContent, setEduContent] = useState(null);
   const [reviewsAndRatings, setReviewsAndRatings] = useState([]);
   const router = useRouter();
@@ -53,9 +42,10 @@ const ViewEduContent = ({ params }) => {
   const [submitting, setSubmitting] = useState(false);
   const [hasAlreadyReviewed, setHasAlreadyReviewed] = useState(false);
   const [validationMessage, setValidationMessage] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
-    console.log(" first useEffect");
+    setIsLoading(true); // Set loading state to true
     const userId = localStorage.getItem("userId");
     if (userId) {
       console.log("Registered user id is: ", userId);
@@ -72,6 +62,9 @@ const ViewEduContent = ({ params }) => {
       })
       .catch((error) => {
         console.error("Error fetching educational content:", error);
+      })
+      .finally(() => {
+        setIsLoading(false); // Set loading to false when operation is complete
       });
   }, [params.id]);
 
@@ -153,10 +146,6 @@ const ViewEduContent = ({ params }) => {
     setNewRating(ratingValue);
   };
 
-  if (!eduContent) {
-    return <div>Loading...</div>;
-  }
-
   // Function to render stars based on rating
   const renderStars = (rating) => {
     let stars = [];
@@ -173,69 +162,35 @@ const ViewEduContent = ({ params }) => {
     return stars;
   };
 
+  // Check if the educational content has been fetched yet
+  if (!eduContent) {
+    return <div className="text-xl">Please wait. It'll just take a moment</div>;
+  }
+
   return (
     <div className="pt-8 pb-16 lg:pt-16 lg:pb-24 bg-white">
-      <div className="text-center font-semibold font-mono">
-        <h1 className="mb-4 text-2xl font-extrabold leading-tight text-cyan-900 lg:mb-6 lg:text-4xl">
-          {eduContent.title}
-        </h1>
-        <div className="flex justify-center text-base lg:text-xl text-black space-x-6 mx-auto max-w-screen-xl">
-          <p>
-            Published by:{" "}
-            <span className="text-cyan-600">{eduContent.publisher}</span>
-          </p>
-          <p>
-            Posted on:{" "}
-            <span className="text-cyan-600">
-              {new Date(eduContent.createdDateTime).toLocaleDateString(
-                "en-GB",
-                {
-                  day: "2-digit",
-                  month: "short",
-                  year: "numeric",
-                }
-              )}
-            </span>
-          </p>
-
-          <p>
-            Category:{" "}
-            <span className="text-cyan-600">
-              {eduContent.educationalContentType
-                ? eduContent.educationalContentType.subcategoryName
-                : "Not specified"}
-            </span>
-          </p>
+      {/* Conditional rendering based on isLoading state */}
+      {isLoading ? (
+        <div className="loading-indicator text-center">
+          <p>Loading educational content...</p>
         </div>
-      </div>
-      <article>
-        <img
-          src={eduContent.img}
-          alt="Designed by Freepik"
-          className="max-w-xl mx-auto mt-8 mb-8 rounded-lg shadow-xl sm:mt-16 sm:mb-16"
-        />
-        {/* Info*/}
-        <section className="main-content mt-10 pl-9 pr-9 mx-auto max-w-screen-xl md:text-base text-left">
-          <div className="w-full p-2 rounded-lg whitespace-pre-line">
-            {eduContent.info}
-          </div>
-        </section>
-      </article>
-      <footer className="blog-post-reviews mt-10 px-9 mx-auto max-w-screen-xl text-left">
-        <p className="font-mono font-bold text-2xl text-cyan-600">
-          Rating and Reviews
-        </p>
-        {/*Check if reviews exist*/}
-        {reviewsAndRatings.length > 0 ? (
-          reviewsAndRatings.map((review, index) => (
-            <div key={index} className="my-4 p-4 border-b border-gray-200">
-              <div className="flex items-center mb-2">
-                <span className="font-bold mr-2">
-                  {review?.userDTO?.username || "Anonymous"}
+      ) : (
+        <>
+          <div className="text-center font-semibold font-mono">
+            <h1 className="mb-4 text-2xl font-extrabold leading-tight text-cyan-900 lg:mb-6 lg:text-4xl">
+              {eduContent?.title || "No title"}
+            </h1>
+            <div className="flex justify-center text-base lg:text-xl text-black space-x-6 mx-auto max-w-screen-xl">
+              <p>
+                Published by:
+                <span className="text-cyan-600">
+                  {eduContent?.publisher || "No publisher"}
                 </span>
-                <div className="flex">{renderStars(review.rating)}</div>
-                <span className="text-sm text-gray-500 ml-2">
-                  {new Date(review?.createdDateTime).toLocaleDateString(
+              </p>
+              <p>
+                Posted on:{" "}
+                <span className="text-cyan-600">
+                  {new Date(eduContent?.createdDateTime).toLocaleDateString(
                     "en-GB",
                     {
                       day: "2-digit",
@@ -244,70 +199,120 @@ const ViewEduContent = ({ params }) => {
                     }
                   )}
                 </span>
-              </div>
-              <p>{review.review}</p>
+              </p>
+
+              <p>
+                Category:{" "}
+                <span className="text-cyan-600">
+                  {eduContent?.educationalContentType
+                    ? eduContent.educationalContentType.subcategoryName
+                    : "Not specified"}
+                </span>
+              </p>
             </div>
-          ))
-        ) : (
-          <p className="text-center text-gray-600">
-            No ratings and reviews yet.
-          </p>
-        )}
-        {/* Ask to write reviews */}
-        {!hasAlreadyReviewed ? (
+          </div>
+          <article>
+            <img
+              src={eduContent?.img || "No image"}
+              alt="Credit to the source"
+              className="max-w-xl mx-auto mt-8 mb-8 rounded-lg shadow-xl sm:mt-16 sm:mb-16"
+            />
+            {/* Info*/}
+            <section className="main-content mt-10 pl-9 pr-9 mx-auto max-w-screen-xl md:text-base text-left">
+              <div className="w-full p-2 rounded-lg whitespace-pre-line">
+                {eduContent?.info || "No info"}
+              </div>
+            </section>
+          </article>
           <footer className="blog-post-reviews mt-10 px-9 mx-auto max-w-screen-xl text-left">
-            <p className="font-sans font-bold text-2xl text-gray-900">
-              Write a Review
+            <p className="font-mono font-bold text-2xl text-cyan-600">
+              Rating and Reviews
             </p>
-            <div className="my-4">
-              <textarea
-                value={newReview}
-                onChange={(e) => setNewReview(e.target.value)}
-                placeholder="Write your review here"
-                className="w-full p-2.5 border border-gray-300 bg-gray-50 rounded-lg"
-              />
-              <div className="flex my-2">
-                {[...Array(5)].map((_, index) => {
-                  const ratingValue = index + 1;
-                  return (
-                    <label key={ratingValue}>
-                      <input
-                        type="radio"
-                        name="rating"
-                        value={ratingValue}
-                        checked={newRating === ratingValue}
-                        onChange={() => handleRatingChange(ratingValue)}
-                        className="hidden"
-                      />
-                      <span
-                        className={
-                          ratingValue <= newRating
-                            ? "text-yellow-400 cursor-pointer"
-                            : "text-gray-400 cursor-pointer"
+            {/*Check if reviews exist*/}
+            {reviewsAndRatings.length > 0 ? (
+              reviewsAndRatings.map((review, index) => (
+                <div key={index} className="my-4 p-4 border-b border-gray-200">
+                  <div className="flex items-center mb-2">
+                    <span className="font-bold mr-2">
+                      {review?.userDTO?.username || "Anonymous"}
+                    </span>
+                    <div className="flex">{renderStars(review.rating)}</div>
+                    <span className="text-sm text-gray-500 ml-2">
+                      {new Date(review?.createdDateTime).toLocaleDateString(
+                        "en-GB",
+                        {
+                          day: "2-digit",
+                          month: "short",
+                          year: "numeric",
                         }
-                      >
-                        ★
-                      </span>
-                    </label>
-                  );
-                })}
-              </div>
-              <p className="text-red-500">{validationMessage}</p>
-              <button
-                onClick={submitReview}
-                disabled={submitting}
-                className="mt-3 bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg"
-              >
-                {submitting ? "Submitting..." : "Submit Review"}
-              </button>
-            </div>
+                      )}
+                    </span>
+                  </div>
+                  <p>{review.review}</p>
+                </div>
+              ))
+            ) : (
+              <p className="text-center text-gray-600">
+                No ratings and reviews yet.
+              </p>
+            )}
+            {/* Ask to write reviews */}
+            {!hasAlreadyReviewed ? (
+              <footer className="blog-post-reviews mt-10 px-9 mx-auto max-w-screen-xl text-left">
+                <p className="font-sans font-bold text-2xl text-gray-900">
+                  Write a Review
+                </p>
+                <div className="my-4">
+                  <textarea
+                    value={newReview}
+                    onChange={(e) => setNewReview(e.target.value)}
+                    placeholder="Write your review here"
+                    className="w-full p-2.5 border border-gray-300 bg-gray-50 rounded-lg"
+                  />
+                  <div className="flex my-2">
+                    {[...Array(5)].map((_, index) => {
+                      const ratingValue = index + 1;
+                      return (
+                        <label key={ratingValue}>
+                          <input
+                            type="radio"
+                            name="rating"
+                            value={ratingValue}
+                            checked={newRating === ratingValue}
+                            onChange={() => handleRatingChange(ratingValue)}
+                            className="hidden"
+                          />
+                          <span
+                            className={
+                              ratingValue <= newRating
+                                ? "text-yellow-400 cursor-pointer"
+                                : "text-gray-400 cursor-pointer"
+                            }
+                          >
+                            ★
+                          </span>
+                        </label>
+                      );
+                    })}
+                  </div>
+                  <p className="text-red-500">{validationMessage}</p>
+                  <button
+                    onClick={submitReview}
+                    disabled={submitting}
+                    className="mt-3 bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg"
+                  >
+                    {submitting ? "Submitting..." : "Submit Review"}
+                  </button>
+                </div>
+              </footer>
+            ) : (
+              <p>You have already submitted a review for this blog post.</p>
+            )}
           </footer>
-        ) : (
-          <p>You have already submitted a review for this blog post.</p>
-        )}
-      </footer>
+        </>
+      )}
     </div>
   );
 };
 
-export default ViewEduContent;
+export default ViewEducationalContent;

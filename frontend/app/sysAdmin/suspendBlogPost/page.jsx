@@ -157,7 +157,6 @@ const SuspendBusinessBlogs = () => {
           return new Date(b.createdDateTime) - new Date(a.createdDateTime); // Latest date first if tie
         });
         break;
-      // ... other sorting cases
     }
 
     // Update the displayed blogs
@@ -210,7 +209,6 @@ const SuspendBusinessBlogs = () => {
       <h1 className="text-6xl text-gray-900 p-3 mb-4 font-bold text-center sm:text-center">
         All Blog Posts
       </h1>
-
       {/* Search and Sort Section */}
       <div className="flex flex-col md:flex-row justify-between items-center mb-4">
         {/* Search bar */}
@@ -290,112 +288,123 @@ const SuspendBusinessBlogs = () => {
       </div>
 
       {/* Table of blog posts */}
-      <div className="overflow-x-auto">
-        <table className="min-w-full rounded-lg border-zinc-200 border-2">
-          <thead className="bg-zinc-700 font-normal text-white border-gray-800 border-2">
-            <tr className="text-center text-lg">
-              <th className="px-3 py-2">Blog Post Title</th>
-              <th className="px-3 py-2">Publisher</th>
-              <th className="px-3 py-2">Company</th>
-              <th className="px-3 py-2">Date Published</th>
-              <th className="px-3 py-2">Category</th>
-              <th className="px-3 py-2">Status</th>
-              <th className="px-3 py-2">Ratings</th>
-              <th className="px-3 py-2"></th>
-              <th className="px-3 py-2"></th>
-            </tr>
-          </thead>
-          <tbody>
-            {displayedBlogs.map((businessBlogPost, index) => (
-              <tr key={index} className="bg-white border-b">
-                <td className="px-3 py-2 text-base text-center">
-                  {businessBlogPost.title}
-                </td>
-                <td className="px-3 py-2 text-base text-center">
-                  {businessBlogPost.userID?.fullName || "nil"}
-                </td>
-                <td className="px-3 py-2 text-base text-center">
-                  {businessBlogPost.userID?.companyName || "nil"}
-                </td>
-                <td className="px-3 py-2 text-base text-center">
-                  {new Date(
-                    businessBlogPost.createdDateTime
-                  ).toLocaleDateString("en-GB")}
-                </td>
-                <td className="px-3 py-2 text-base text-center">
-                  {businessBlogPost.blogType
-                    ? businessBlogPost.blogType.subcategoryName
-                    : "Not specified"}
-                </td>
+      {/* Conditional rendering based on isLoading state */}
+      {isLoading ? (
+        <div className="loading-indicator text-center">
+          <p>Loading blog post...</p>
+          {/* You can replace this with a spinner or any other visual indicator */}
+        </div>
+      ) : (
+        <>
+          <div className="overflow-x-auto">
+            <table className="min-w-full rounded-lg border-zinc-200 border-2">
+              <thead className="bg-zinc-700 font-normal text-white border-gray-800 border-2">
+                <tr className="text-center text-lg">
+                  <th className="px-3 py-2">Blog Post Title</th>
+                  <th className="px-3 py-2">Publisher</th>
+                  <th className="px-3 py-2">Company</th>
+                  <th className="px-3 py-2">Date Published</th>
+                  <th className="px-3 py-2">Category</th>
+                  <th className="px-3 py-2">Status</th>
+                  <th className="px-3 py-2">Ratings</th>
+                  <th className="px-3 py-2"></th>
+                  <th className="px-3 py-2"></th>
+                </tr>
+              </thead>
+              <tbody>
+                {displayedBlogs.map((businessBlogPost, index) => (
+                  <tr key={index} className="bg-white border-b">
+                    <td className="px-3 py-2 text-base text-center">
+                      {businessBlogPost.title}
+                    </td>
+                    <td className="px-3 py-2 text-base text-center">
+                      {businessBlogPost.userID?.fullName || "nil"}
+                    </td>
+                    <td className="px-3 py-2 text-base text-center">
+                      {businessBlogPost.userID?.companyName || "nil"}
+                    </td>
+                    <td className="px-3 py-2 text-base text-center">
+                      {new Date(
+                        businessBlogPost.createdDateTime
+                      ).toLocaleDateString("en-GB")}
+                    </td>
+                    <td className="px-3 py-2 text-base text-center">
+                      {businessBlogPost.blogType
+                        ? businessBlogPost.blogType.subcategoryName
+                        : "Not specified"}
+                    </td>
 
-                <td className="px-3 py-2 text-base text-center">
-                  <span
-                    className={`rounded-full px-3 py-1 text-base font-semibold ${
-                      businessBlogPost.active
-                        ? "text-white bg-green-500"
-                        : "text-white bg-red-500"
-                    }`}
-                  >
-                    {businessBlogPost.active ? "Active" : "Inactive"}
-                  </span>
-                </td>
-                <td className="px-3 py-2 text-base text-center">
-                  <div
-                    className="rating-container"
-                    style={{ minWidth: "100px" }}
-                  >
-                    {businessBlogPost.average !== null &&
-                    typeof businessBlogPost.average.averageRatings ===
-                      "number" &&
-                    typeof businessBlogPost.average.totalNumber === "number" ? (
+                    <td className="px-3 py-2 text-base text-center">
                       <span
-                        className="rating-text"
-                        style={{ fontWeight: "bold", color: "#0a0a0a" }}
+                        className={`rounded-full px-3 py-1 text-base font-semibold ${
+                          businessBlogPost.active
+                            ? "text-white bg-green-500"
+                            : "text-white bg-red-500"
+                        }`}
                       >
-                        {businessBlogPost.average.averageRatings.toFixed(1)}
+                        {businessBlogPost.active ? "Active" : "Inactive"}
                       </span>
-                    ) : (
-                      "No ratings yet"
-                    )}
-                    {businessBlogPost.average &&
-                      businessBlogPost.average.totalNumber > 0 && (
-                        <span
-                          className="rating-count"
-                          style={{ fontSize: "0.8rem", color: "#666" }}
-                        >
-                          ({businessBlogPost.average.totalNumber} rating
-                          {businessBlogPost.average.totalNumber !== 1
-                            ? "s"
-                            : ""}
-                          )
-                        </span>
-                      )}
-                  </div>
-                </td>
-                <td className="px-3 py-2 text-base text-center"></td>
+                    </td>
+                    <td className="px-3 py-2 text-base text-center">
+                      <div
+                        className="rating-container"
+                        style={{ minWidth: "100px" }}
+                      >
+                        {businessBlogPost.average !== null &&
+                        typeof businessBlogPost.average.averageRatings ===
+                          "number" &&
+                        typeof businessBlogPost.average.totalNumber ===
+                          "number" ? (
+                          <span
+                            className="rating-text"
+                            style={{ fontWeight: "bold", color: "#0a0a0a" }}
+                          >
+                            {businessBlogPost.average.averageRatings.toFixed(1)}
+                          </span>
+                        ) : (
+                          "No ratings yet"
+                        )}
+                        {businessBlogPost.average &&
+                          businessBlogPost.average.totalNumber > 0 && (
+                            <span
+                              className="rating-count"
+                              style={{ fontSize: "0.8rem", color: "#666" }}
+                            >
+                              ({businessBlogPost.average.totalNumber} rating
+                              {businessBlogPost.average.totalNumber !== 1
+                                ? "s"
+                                : ""}
+                              )
+                            </span>
+                          )}
+                      </div>
+                    </td>
+                    <td className="px-3 py-2 text-base text-center"></td>
 
-                <td className="px-3 py-2 justify-center sm:justify-start">
-                  <button
-                    onClick={() =>
-                      handleToggleBlogPostStatus(
-                        businessBlogPost.id,
-                        businessBlogPost.active
-                      )
-                    }
-                    className={`text-white font-bold ${
-                      businessBlogPost.active
-                        ? "bg-red-600 hover:bg-red-700"
-                        : "bg-stone-400 hover:bg-stone-500"
-                    } rounded-lg text-base px-5 py-2 text-center`}
-                  >
-                    {businessBlogPost.active ? "Suspend" : "Unsuspend"}
-                  </button>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
+                    <td className="px-3 py-2 justify-center sm:justify-start">
+                      <button
+                        onClick={() =>
+                          handleToggleBlogPostStatus(
+                            businessBlogPost.id,
+                            businessBlogPost.active
+                          )
+                        }
+                        className={`text-white font-bold ${
+                          businessBlogPost.active
+                            ? "bg-red-600 hover:bg-red-700"
+                            : "bg-stone-400 hover:bg-stone-500"
+                        } rounded-lg text-base px-5 py-2 text-center`}
+                      >
+                        {businessBlogPost.active ? "Suspend" : "Unsuspend"}
+                      </button>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </>
+      )}
     </div>
   );
 };

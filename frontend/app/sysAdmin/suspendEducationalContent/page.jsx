@@ -67,9 +67,11 @@ const SuspendEducationalContent = () => {
   const [searchResultsCount, setSearchResultsCount] = useState(0);
   const [categories, setCategories] = useState([]);
   const [categoryFilter, setCategoryFilter] = useState("ALL");
+  const [isLoading, setIsLoading] = useState(false);
 
   // fetch all educational content and categories from backend
   useEffect(() => {
+    setIsLoading(true); // Set loading to true
     const getData = async () => {
       try {
         const fetchedEduContent = await fetchEducationalContent();
@@ -90,8 +92,6 @@ const SuspendEducationalContent = () => {
       }
     };
 
-    getData();
-
     // Fetch all educational content categories from backend
     const fetchCategories = async () => {
       console.log("Fetching edu content categories...");
@@ -106,7 +106,14 @@ const SuspendEducationalContent = () => {
       }
     };
 
-    fetchCategories();
+    Promise.all([getData(), fetchCategories()])
+      .then(() => {
+        setIsLoading(false); // Set loading state to false
+      })
+      .catch((error) => {
+        console.error("Error fetching data:", error);
+        setIsLoading(false); // Set loading state to false
+      });
   }, []);
 
   // All in 1 -- sort, filter, search
@@ -301,107 +308,117 @@ const SuspendEducationalContent = () => {
       </div>
 
       {/* Table of educational content */}
-      <div className="overflow-x-auto">
-        <table className="min-w-full rounded-lg border-zinc-200 border-2">
-          <thead className="bg-zinc-700 font-normal text-white border-gray-800 border-2">
-            <tr className="text-center text-lg">
-              <th className="px-3 py-2">Educational Content Title</th>
-              <th className="px-3 py-2">Publisher</th>
-              <th className="px-3 py-2">Company</th>
-              <th className="px-3 py-2">Date Published</th>
-              <th className="px-3 py-2">Category</th>
-              <th className="px-3 py-2">Status</th>
-              <th className="px-3 py-2">Ratings</th>
-              <th className="px-3 py-2"></th>
-              <th className="px-3 py-2"></th>
-            </tr>
-          </thead>
-          <tbody>
-            {displayedEduContent.map((eduContent, index) => (
-              <tr key={index} className="bg-white border-b">
-                <td className="px-3 py-2 text-base text-center">
-                  {eduContent.title}
-                </td>
-                <td className="px-3 py-2 text-base text-center">
-                  {eduContent.userID?.fullName || "nil"}
-                </td>
-                <td className="px-3 py-2 text-base text-center">
-                  {eduContent.userID?.companyName || "nil"}
-                </td>
-                <td className="px-3 py-2 text-base text-center">
-                  {new Date(eduContent.createdDateTime).toLocaleDateString(
-                    "en-GB"
-                  )}
-                </td>
-                <td className="px-3 py-2 text-base text-center">
-                  {eduContent.educationalContentType
-                    ? eduContent.educationalContentType.subcategoryName
-                    : "Not specified"}
-                </td>
-
-                <td className="px-3 py-2 text-base text-center">
-                  <span
-                    className={`rounded-full px-3 py-1 text-base font-semibold ${
-                      eduContent.active
-                        ? "text-white bg-green-500"
-                        : "text-white bg-red-500"
-                    }`}
-                  >
-                    {eduContent.active ? "Active" : "Inactive"}
-                  </span>
-                </td>
-                <td className="px-3 py-2 text-base text-center">
-                  <div
-                    className="rating-container"
-                    style={{ minWidth: "100px" }}
-                  >
-                    {eduContent.average !== null &&
-                    typeof eduContent.average.averageRatings === "number" &&
-                    typeof eduContent.average.totalNumber === "number" ? (
-                      <span
-                        className="rating-text"
-                        style={{ fontWeight: "bold", color: "#0a0a0a" }}
-                      >
-                        {eduContent.average.averageRatings.toFixed(1)}
-                      </span>
-                    ) : (
-                      "No ratings yet"
-                    )}
-                    {eduContent.average &&
-                      eduContent.average.totalNumber > 0 && (
-                        <span
-                          className="rating-count"
-                          style={{ fontSize: "0.8rem", color: "#666" }}
-                        >
-                          ({eduContent.average.totalNumber} rating
-                          {eduContent.average.totalNumber !== 1 ? "s" : ""})
-                        </span>
+      {/* Conditional rendering based on isLoading state */}
+      {isLoading ? (
+        <div className="loading-indicator text-center">
+          <p>Loading educational content...</p>
+          {/* You can replace this with a spinner or any other visual indicator */}
+        </div>
+      ) : (
+        <>
+          <div className="overflow-x-auto">
+            <table className="min-w-full rounded-lg border-zinc-200 border-2">
+              <thead className="bg-zinc-700 font-normal text-white border-gray-800 border-2">
+                <tr className="text-center text-lg">
+                  <th className="px-3 py-2">Educational Content Title</th>
+                  <th className="px-3 py-2">Publisher</th>
+                  <th className="px-3 py-2">Company</th>
+                  <th className="px-3 py-2">Date Published</th>
+                  <th className="px-3 py-2">Category</th>
+                  <th className="px-3 py-2">Status</th>
+                  <th className="px-3 py-2">Ratings</th>
+                  <th className="px-3 py-2"></th>
+                  <th className="px-3 py-2"></th>
+                </tr>
+              </thead>
+              <tbody>
+                {displayedEduContent.map((eduContent, index) => (
+                  <tr key={index} className="bg-white border-b">
+                    <td className="px-3 py-2 text-base text-center">
+                      {eduContent.title}
+                    </td>
+                    <td className="px-3 py-2 text-base text-center">
+                      {eduContent.userID?.fullName || "nil"}
+                    </td>
+                    <td className="px-3 py-2 text-base text-center">
+                      {eduContent.userID?.companyName || "nil"}
+                    </td>
+                    <td className="px-3 py-2 text-base text-center">
+                      {new Date(eduContent.createdDateTime).toLocaleDateString(
+                        "en-GB"
                       )}
-                  </div>
-                </td>
-                <td className="px-3 py-2 text-base text-center"></td>
-                <td className="px-3 py-2 justify-center sm:justify-start">
-                  <button
-                    onClick={() =>
-                      handleToggleEduContentStatus(
-                        eduContent.id,
-                        eduContent.active
-                      )
-                    }
-                    className={`text-white font-bold ${
-                      eduContent.active
-                        ? "bg-red-600 hover:bg-red-700"
-                        : "bg-stone-400 hover:bg-stone-500"
-                    } rounded-lg text-base px-5 py-2 text-center`}
-                  >
-                    {eduContent.active ? "Suspend" : "Unsuspend"}
-                  </button>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
+                    </td>
+                    <td className="px-3 py-2 text-base text-center">
+                      {eduContent.educationalContentType
+                        ? eduContent.educationalContentType.subcategoryName
+                        : "Not specified"}
+                    </td>
+
+                    <td className="px-3 py-2 text-base text-center">
+                      <span
+                        className={`rounded-full px-3 py-1 text-base font-semibold ${
+                          eduContent.active
+                            ? "text-white bg-green-500"
+                            : "text-white bg-red-500"
+                        }`}
+                      >
+                        {eduContent.active ? "Active" : "Inactive"}
+                      </span>
+                    </td>
+                    <td className="px-3 py-2 text-base text-center">
+                      <div
+                        className="rating-container"
+                        style={{ minWidth: "100px" }}
+                      >
+                        {eduContent.average !== null &&
+                        typeof eduContent.average.averageRatings === "number" &&
+                        typeof eduContent.average.totalNumber === "number" ? (
+                          <span
+                            className="rating-text"
+                            style={{ fontWeight: "bold", color: "#0a0a0a" }}
+                          >
+                            {eduContent.average.averageRatings.toFixed(1)}
+                          </span>
+                        ) : (
+                          "No ratings yet"
+                        )}
+                        {eduContent.average &&
+                          eduContent.average.totalNumber > 0 && (
+                            <span
+                              className="rating-count"
+                              style={{ fontSize: "0.8rem", color: "#666" }}
+                            >
+                              ({eduContent.average.totalNumber} rating
+                              {eduContent.average.totalNumber !== 1 ? "s" : ""})
+                            </span>
+                          )}
+                      </div>
+                    </td>
+                    <td className="px-3 py-2 text-base text-center"></td>
+                    <td className="px-3 py-2 justify-center sm:justify-start">
+                      <button
+                        onClick={() =>
+                          handleToggleEduContentStatus(
+                            eduContent.id,
+                            eduContent.active
+                          )
+                        }
+                        className={`text-white font-bold ${
+                          eduContent.active
+                            ? "bg-red-600 hover:bg-red-700"
+                            : "bg-stone-400 hover:bg-stone-500"
+                        } rounded-lg text-base px-5 py-2 text-center`}
+                      >
+                        {eduContent.active ? "Suspend" : "Unsuspend"}
+                      </button>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </>
+      )}
     </div>
   );
 };

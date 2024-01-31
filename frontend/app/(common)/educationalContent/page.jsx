@@ -12,7 +12,6 @@ const sortOptions = {
   LATEST: { key: "LATEST", label: "By Latest" },
   OLDEST: { key: "OLDEST", label: "By Oldest" },
   HIGHEST_RATINGS: { key: "HIGHEST_RATINGS", label: "Highest Ratings" },
-  // LOWEST_RATINGS: { key: "LOWEST_RATINGS", label: "Lowest Ratings" },
   ALPHABETICAL_AZ: { key: "ALPHABETICAL_AZ", label: "Alphabetically (A to Z)" },
   ALPHABETICAL_ZA: { key: "ALPHABETICAL_ZA", label: "Alphabetically (Z to A)" },
 };
@@ -67,9 +66,11 @@ const EducationalContentPageForUser = () => {
   const [resultsCount, setResultsCount] = useState(0);
   // Additional state to track if search button has been clicked
   const [searchButtonClicked, setSearchButtonClicked] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   // Fetch all educational content on page load
   useEffect(() => {
+    setIsLoading(true); // Set loading state to true
     const getData = async () => {
       const fetchedEduContent = await fetchEducationalContent();
       const eduContentsWithAverage = await Promise.all(
@@ -82,7 +83,6 @@ const EducationalContentPageForUser = () => {
       setAllEduContent(eduContentsWithAverage);
       setDisplayedEduContent(eduContentsWithAverage);
     };
-    getData();
 
     const fetchCategories = async () => {
       try {
@@ -94,7 +94,14 @@ const EducationalContentPageForUser = () => {
         console.error("Error fetching categories:", error);
       }
     };
-    fetchCategories();
+
+    Promise.all([getData(), fetchCategories()])
+      .catch((error) => {
+        console.error("Error in fetchData or fetchCategories:", error);
+      })
+      .finally(() => {
+        setIsLoading(false); // End loading after both operations are complete
+      });
   }, []);
 
   // Filter blog posts based on search term and category filter
@@ -139,26 +146,13 @@ const EducationalContentPageForUser = () => {
           return new Date(b.createdDateTime) - new Date(a.createdDateTime); // Latest date first if tie
         });
         break;
-      // case "LOWEST_RATINGS":
-      //   sortedPosts.sort((a, b) => {
-      //     const ratingDiff =
-      //       (a.average?.averageRatings || 0) - (b.average?.averageRatings || 0);
-      //     if (ratingDiff !== 0) return ratingDiff;
-      //     return new Date(b.createdDateTime) - new Date(a.createdDateTime); // Latest date first if tie
-      //   });
-      //   break;
-      // ... other sorting cases
     }
 
     console.log("Filtered posts:", filteredPosts);
 
-    // setDisplayedBlogPosts(filteredPosts);
-    // setResultsCount(filteredPosts.length);  /// This is causing the issue
-    // setIsSearchEmpty(filteredPosts.length === 0);
     setDisplayedEduContent(sortedPosts);
     setIsSearchEmpty(sortedPosts.length === 0);
 
-    // filterPosts();
     // Reset searchButtonClicked when searchTerm changes
     setSearchButtonClicked(false);
   }, [searchTerm, categoryFilter, AllEduContent, sortOption]);
@@ -205,18 +199,6 @@ const EducationalContentPageForUser = () => {
             return new Date(b.createdDateTime) - new Date(a.createdDateTime); // Latest date first if tie
           });
           break;
-        // case "LOWEST_RATINGS":
-        //   sortedResults.sort((a, b) => {
-        //     const ratingDiff =
-        //       (a.average?.averageRatings || 0) -
-        //       (b.average?.averageRatings || 0);
-        //     if (ratingDiff !== 0) return ratingDiff;
-        //     return (
-        //       new Date(b.createdDateTime) - new Date(a.createdDateTime)
-        //     ); // Latest date first if tie
-        //   });
-        //   break;
-        // ... other sorting cases
       }
 
       setDisplayedEduContent(sortedResults);
@@ -279,18 +261,6 @@ const EducationalContentPageForUser = () => {
               return new Date(b.createdDateTime) - new Date(a.createdDateTime); // Latest date first if tie
             });
             break;
-          // case "LOWEST_RATINGS":
-          //   sortedResults.sort((a, b) => {
-          //     const ratingDiff =
-          //       (a.average?.averageRatings || 0) -
-          //       (b.average?.averageRatings || 0);
-          //     if (ratingDiff !== 0) return ratingDiff;
-          //     return (
-          //       new Date(b.createdDateTime) - new Date(a.createdDateTime)
-          //     ); // Latest date first if tie
-          //   });
-          //   break;
-          // ... other sorting cases
         }
 
         console.log("Sorted results:", sortedResults);
@@ -460,27 +430,36 @@ const EducationalContentPageForUser = () => {
           </div>
         </div>
         {/* Display the education content */}
-        {!searchPerformed && !categoryFilter && !sortOption ? (
-          <>
-            <div className="mb-5">
-              <h2 className="text-2xl font-bold mb-4 mt-4">
-                Latest Educational Content
-              </h2>
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
-                {latestEduContent.map((post) => renderPostCard(post))}
-              </div>
-            </div>
-            <h2 className="text-2xl font-bold mb-4 mt-4">
-              Other Educational Content
-            </h2>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-              {otherEduContent.map((post) => renderPostCard(post))}
-            </div>
-          </>
-        ) : (
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-            {displayedEduContent.map((post) => renderPostCard(post))}
+        {/* Display message while fetching data ftom backend */}
+        {isLoading ? (
+          <div className="text-xl text-center p-4">
+            <p>Please wait. It'll just take a moment.</p>
           </div>
+        ) : (
+          <>
+            {!searchPerformed && !categoryFilter && !sortOption ? (
+              <>
+                <div className="mb-5">
+                  <h2 className="text-2xl font-bold mb-4 mt-4">
+                    Latest Educational Content
+                  </h2>
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
+                    {latestEduContent.map((post) => renderPostCard(post))}
+                  </div>
+                </div>
+                <h2 className="text-2xl font-bold mb-4 mt-4">
+                  Other Educational Content
+                </h2>
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                  {otherEduContent.map((post) => renderPostCard(post))}
+                </div>
+              </>
+            ) : (
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                {displayedEduContent.map((post) => renderPostCard(post))}
+              </div>
+            )}
+          </>
         )}
       </div>
     </div>

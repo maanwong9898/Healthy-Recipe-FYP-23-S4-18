@@ -30,7 +30,7 @@ import com.FYP18.HealthyRecipe.Entity.SystemAdmin;
 import com.FYP18.HealthyRecipe.Entity.User;
 import com.FYP18.HealthyRecipe.SecuringWeb.JwtUtil;
 import com.FYP18.HealthyRecipe.Service.CustomUserDetailService;
-import com.FYP18.HealthyRecipe.Service.FirebaseStorageService;
+// import com.FYP18.HealthyRecipe.Service.FirebaseStorageService; 
 import com.FYP18.HealthyRecipe.Service.LoginService; 
  
 @RestController
@@ -84,20 +84,22 @@ public class RegisterController {
     // private CustomUserDetailService userDetailService;
 
     @PostMapping("/login")
-    public JWTResponseDTO authenticateAndGetToken(@RequestBody LoginRequestDTO loginRequestDTO)
-    {
-        System.out.println("IN");
+    public JWTResponseDTO authenticateAndGetToken(@RequestBody LoginRequestDTO loginRequestDTO) throws UsernameNotFoundException
+    { 
         Authentication auth = authenticationManager.authenticate(
             new UsernamePasswordAuthenticationToken(loginRequestDTO.getEmail(), loginRequestDTO.getPassword()));
-
-        // System.out.println("AUTH :" +auth.getPrincipal()); 
+        
+            System.out.println("AUTHE: " +auth.isAuthenticated());
          if(auth.isAuthenticated())
         {   
             User user = (User) auth.getPrincipal();
+ 
+
             System.out.println(user.toString());
-            String token = jwtUtil.createToken(loginRequestDTO.getEmail(),//,
-            user.getRole().toString(), user.getId());
-            System.out.println("token: " + token);
+            String token = 
+            
+            jwtUtil.createToken(loginRequestDTO.getEmail(),
+                user.getRole().toString(), user.getId()); 
             // RefreshToken refreshToken = refreshTokenService.createRefreshToken(authRequestDTO.getUsername());
            return JWTResponseDTO.builder() 
                 .token(token).build(); 
@@ -125,19 +127,19 @@ public class RegisterController {
         System.out.println(file.getOriginalFilename());
     }
 
-     @Autowired
-    private FirebaseStorageService service;
-    @PostMapping("/upload") 
-	public String handleFileUpload(@RequestParam("nutriCert") MultipartFile file
-			// RedirectAttributes redirectAttributes
-            ) throws IOException {
+    //  @Autowired
+    // private FirebaseStorageService service;
+    // @PostMapping("/upload") 
+	// public String handleFileUpload(@RequestParam("nutriCert") MultipartFile file
+	// 		// RedirectAttributes redirectAttributes
+    //         ) throws IOException {
  
 
-        if(file.isEmpty()) return "EMPTY";
-        String uploaded = service.uploadFile(file);
-		// redirectAttributes.addFlashAttribute("message",
-		// 		"You successfully uploaded " + file.getOriginalFilename() + "!");
+    //     if(file.isEmpty()) return "EMPTY";
+    //     String uploaded = service.uploadFile(file);
+	// 	// redirectAttributes.addFlashAttribute("message",
+	// 	// 		"You successfully uploaded " + file.getOriginalFilename() + "!");
 
-		return uploaded;
-	}
+	// 	return uploaded;
+	// }
 }

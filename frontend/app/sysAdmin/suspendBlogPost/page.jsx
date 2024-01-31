@@ -47,8 +47,6 @@ const fetchBlogAverage = async (blogId) => {
   }
 };
 
-//http://localhost:8080/blog/getAverage/1
-
 const SuspendBusinessBlogs = () => {
   const router = useRouter();
   const [businessBlogs, setBusinessBlogs] = useState([]);
@@ -60,10 +58,11 @@ const SuspendBusinessBlogs = () => {
   const [searchResultsCount, setSearchResultsCount] = useState(0);
   const [categories, setCategories] = useState([]);
   const [categoryFilter, setCategoryFilter] = useState("ALL");
-  const [blogAverageRating, setBlogAverageRating] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
 
   // fetch all business blog posts and categories from backend
   useEffect(() => {
+    setIsLoading(true); // Set loading state to true
     const getData = async () => {
       try {
         const fetchedBlog = await fetchBlogPosts();
@@ -81,8 +80,6 @@ const SuspendBusinessBlogs = () => {
       }
     };
 
-    getData();
-
     // Fetch all business blog categories from backend
     const fetchCategories = async () => {
       console.log("Fetching blog categories...");
@@ -97,7 +94,14 @@ const SuspendBusinessBlogs = () => {
       }
     };
 
-    fetchCategories();
+    Promise.all([getData(), fetchCategories()])
+      .then(() => {
+        setIsLoading(false); // Set loading state to false
+      })
+      .catch((error) => {
+        console.error("Error fetching data:", error);
+        setIsLoading(false); // Set loading state to false
+      });
   }, []);
 
   // All in 1 -- sort, filter, search
@@ -160,27 +164,6 @@ const SuspendBusinessBlogs = () => {
     setDisplayedBlogs(processedBlogs);
   }, [businessBlogs, searchTerm, categoryFilter, sortOption]);
 
-  // Implement handleViewBlogPost and handleUpdateBlogPost as needed
-  // this function is to view particular blog post
-  const handleViewBlogPost = (id) => {
-    console.log("Viewing blog post with id:", id);
-
-    //Redirect to the correct route
-    let routePath = `/businessUser/businessBlogPost/viewBusinessBlogPost/${id}`;
-
-    router.push(routePath);
-  };
-
-  // this function is to update particular blog post
-  const handleUpdateBlogPost = (id) => {
-    console.log("Updating blog post with id:", id);
-
-    // Redirect to the correct route
-    let routePath = `/businessUser/businessBlogPost/updateBusinessBlogPost/${id}`;
-
-    router.push(routePath);
-  };
-
   // Combined Function to toggle a business blog post active status
   const handleToggleBlogPostStatus = async (blogPostId, isActive) => {
     const newStatus = !isActive;
@@ -205,22 +188,6 @@ const SuspendBusinessBlogs = () => {
       }
     } catch (error) {
       console.error("Error updating blog post status", error);
-    }
-  };
-
-  // Function to delete a blog post
-  const handleDeleteBlogPost = async (id) => {
-    try {
-      const response = await axiosInterceptorInstance.delete(
-        `/blog/delete/${id}`
-      );
-      console.log("Blog post deleted:", response.data);
-
-      // Update UI after delete
-      setBusinessBlogs(businessBlogs.filter((post) => post.id !== id));
-    } catch (error) {
-      console.error("Error deleting blog post:", error);
-      // Handle error, maybe show a message to the user
     }
   };
 
@@ -323,12 +290,6 @@ const SuspendBusinessBlogs = () => {
       </div>
 
       {/* Table of blog posts */}
-
-      {/* <th className="px-3 py-2 text-xl text-left">Blog Post Title</th>
-//               <th className="px-3 py-2 text-xl text-left">Publisher</th>
-//               <th className="px-3 py-2 text-xl text-left">Company</th>
-//               <th className="px-3 py-2 text-xl text-left">Date Published</th>
-//               <th className="px-3 py-2 text-xl text-left">Status</th> */}
       <div className="overflow-x-auto">
         <table className="min-w-full rounded-lg border-zinc-200 border-2">
           <thead className="bg-zinc-700 font-normal text-white border-gray-800 border-2">

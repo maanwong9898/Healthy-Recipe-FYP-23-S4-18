@@ -45,7 +45,7 @@ const fetchBlogAverage = async (blogId) => {
   }
 };
 
-const BusinessBlogPostsPageForUser = () => {
+const BusinessBlogPostsPage = () => {
   const router = useRouter();
   const [categoryFilter, setCategoryFilter] = useState("");
   const [AllBusinessBlogPosts, setAllBusinessBlogPosts] = useState([]);
@@ -58,22 +58,23 @@ const BusinessBlogPostsPageForUser = () => {
   const [resultsCount, setResultsCount] = useState(0);
   // Additional state to track if search button has been clicked
   const [searchButtonClicked, setSearchButtonClicked] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
-  // Fetch all blog posts and blog categories
   useEffect(() => {
+    setIsLoading(true); // Start loading
+
     const getData = async () => {
       const fetchedBlog = await fetchBlogPosts();
       const blogsWithAverage = await Promise.all(
         fetchedBlog.map(async (blog) => {
           const average = await fetchBlogAverage(blog.id);
-          return { ...blog, average }; // Augment each blog post with its average
+          return { ...blog, average };
         })
       );
       console.log("Blog with average:", blogsWithAverage);
       setAllBusinessBlogPosts(blogsWithAverage);
       setDisplayedBlogPosts(blogsWithAverage);
     };
-    getData();
 
     const fetchCategories = async () => {
       try {
@@ -85,7 +86,14 @@ const BusinessBlogPostsPageForUser = () => {
         console.error("Error fetching categories:", error);
       }
     };
-    fetchCategories();
+
+    Promise.all([getData(), fetchCategories()])
+      .catch((error) => {
+        console.error("Error in fetchData or fetchCategories:", error);
+      })
+      .finally(() => {
+        setIsLoading(false); // End loading after both operations are complete
+      });
   }, []);
 
   // Filter blog posts based on search term and category filter
@@ -130,15 +138,6 @@ const BusinessBlogPostsPageForUser = () => {
           return new Date(b.createdDateTime) - new Date(a.createdDateTime); // Latest date first if tie
         });
         break;
-      // case "LOWEST_RATINGS":
-      //   sortedPosts.sort((a, b) => {
-      //     const ratingDiff =
-      //       (a.average?.averageRatings || 0) - (b.average?.averageRatings || 0);
-      //     if (ratingDiff !== 0) return ratingDiff;
-      //     return new Date(b.createdDateTime) - new Date(a.createdDateTime); // Latest date first if tie
-      //   });
-      //   break;
-      // ... other sorting cases
     }
 
     console.log("Filtered posts:", filteredPosts);
@@ -196,18 +195,6 @@ const BusinessBlogPostsPageForUser = () => {
             return new Date(b.createdDateTime) - new Date(a.createdDateTime); // Latest date first if tie
           });
           break;
-        // case "LOWEST_RATINGS":
-        //   sortedResults.sort((a, b) => {
-        //     const ratingDiff =
-        //       (a.average?.averageRatings || 0) -
-        //       (b.average?.averageRatings || 0);
-        //     if (ratingDiff !== 0) return ratingDiff;
-        //     return (
-        //       new Date(b.createdDateTime) - new Date(a.createdDateTime)
-        //     ); // Latest date first if tie
-        //   });
-        //   break;
-        // ... other sorting cases
       }
 
       setDisplayedBlogPosts(sortedResults);
@@ -271,18 +258,6 @@ const BusinessBlogPostsPageForUser = () => {
               return new Date(b.createdDateTime) - new Date(a.createdDateTime); // Latest date first if tie
             });
             break;
-          // case "LOWEST_RATINGS":
-          //   sortedResults.sort((a, b) => {
-          //     const ratingDiff =
-          //       (a.average?.averageRatings || 0) -
-          //       (b.average?.averageRatings || 0);
-          //     if (ratingDiff !== 0) return ratingDiff;
-          //     return (
-          //       new Date(b.createdDateTime) - new Date(a.createdDateTime)
-          //     ); // Latest date first if tie
-          //   });
-          //   break;
-          // ... other sorting cases
         }
 
         console.log("Sorted results:", sortedResults);
@@ -453,31 +428,40 @@ const BusinessBlogPostsPageForUser = () => {
           </div>
         </div>
         {/* Display the blog posts */}
-        {!searchPerformed && !categoryFilter && !sortOption ? (
-          <>
-            <div className="mb-5">
-              <h2 className="text-2xl font-bold mb-4 mt-4">
-                Latest Business Blog Post
-              </h2>
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
-                {latestPosts.map((post) => renderPostCard(post))}
-              </div>
-            </div>
-            <h2 className="text-2xl font-bold mb-4 mt-4">
-              Other Business Blog Post
-            </h2>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-              {otherBusinessBlogPosts.map((post) => renderPostCard(post))}
-            </div>
-          </>
-        ) : (
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-            {displayedBlogPosts.map((post) => renderPostCard(post))}
+        {/* Display message while fetching data ftom backend */}
+        {isLoading ? (
+          <div className="text-xl text-center p-4">
+            <p>Please wait. It'll just take a moment.</p>
           </div>
+        ) : (
+          <>
+            {!searchPerformed && !categoryFilter && !sortOption ? (
+              <>
+                <div className="mb-5">
+                  <h2 className="text-2xl font-bold mb-4 mt-4">
+                    Latest Business Blog Post
+                  </h2>
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
+                    {latestPosts.map((post) => renderPostCard(post))}
+                  </div>
+                </div>
+                <h2 className="text-2xl font-bold mb-4 mt-4">
+                  Other Business Blog Post
+                </h2>
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                  {otherBusinessBlogPosts.map((post) => renderPostCard(post))}
+                </div>
+              </>
+            ) : (
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                {displayedBlogPosts.map((post) => renderPostCard(post))}
+              </div>
+            )}
+          </>
         )}
       </div>
     </div>
   );
 };
 
-export default BusinessBlogPostsPageForUser;
+export default BusinessBlogPostsPage;

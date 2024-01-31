@@ -7,8 +7,6 @@ import axiosInterceptorInstance from "../../../../axiosInterceptorInstance.js";
 
 // router path: /businessUser/recipes/viewRecipe/[id]
 
-// rating and reviews not done yet
-
 // To render the steps as a list
 const renderSteps = (stepsString) => {
   // Split the steps string into an array, one element per step
@@ -143,6 +141,20 @@ const BusinessViewRecipe = ({ params }) => {
     );
   };
 
+  // render meal type
+  const renderMealType = (mealType) => {
+    if (!mealType) {
+      return <span className="text-orange-600 font-bold">Not specified</span>;
+    }
+    return (
+      <div className="flex justify-center items-center">
+        <span className="bg-blue-200 text-blue-700 px-4 py-1 rounded-full text-center m-2">
+          {mealType.subcategoryName}
+        </span>
+      </div>
+    );
+  };
+
   return (
     <div className="pt-8 pb-16 lg:pt-16 lg:pb-24 bg-white">
       <div className="px-10 text-center font-semibold font-sans">
@@ -193,6 +205,14 @@ const BusinessViewRecipe = ({ params }) => {
             {recipe
               ? renderDietaryPreferences(recipe.dietaryPreferences)
               : "Not specified"}
+          </div>
+
+          {/* Meal Type section */}
+          <div className="flex-1 p-3" role="alert">
+            <p className="font-bold text-base lg:text-xl text-gray-900 mb-1">
+              Meal Type:
+            </p>
+            {recipe ? renderMealType(recipe.mealType) : "Not specified"}
           </div>
         </div>
 

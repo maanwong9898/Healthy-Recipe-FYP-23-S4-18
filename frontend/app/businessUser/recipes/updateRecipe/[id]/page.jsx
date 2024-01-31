@@ -39,10 +39,12 @@ const UpdateRecipePage = ({ params }) => {
     []
   );
   const [allergyCategory, setAllergyCategory] = useState([]); // Store category of allergies
+  const [mealTypeCategory, setMealTypeCategory] = useState([]); // Store category of meal types
 
   // selected category
   const [allergyRestriction, setAllergyRestriction] = useState([]); // Store selected allergies
   const [dietaryPreference, setDietaryPreference] = useState("");
+  const [mealType, setMealType] = useState("");
 
   // useEffect to fetch all the categories needed for user registration
   useEffect(() => {
@@ -69,6 +71,20 @@ const UpdateRecipePage = ({ params }) => {
         );
         console.log("Allergies Categories Fetched", response.data);
         setAllergyCategory(response.data);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    // Fetch all meal types categories from backend
+    const fetchMealTypes = async () => {
+      console.log("Fetching meal types...");
+      try {
+        const response = await axiosInterceptorInstance.get(
+          "/category/getAllMealTypes"
+        );
+        console.log("Meal Types Categories Fetched", response.data);
+        setMealTypeCategory(response.data);
       } catch (error) {
         console.log(error);
       }
@@ -127,6 +143,12 @@ const UpdateRecipePage = ({ params }) => {
         } else {
           setDietaryPreference("");
         }
+
+        if (recipe.mealTypeId) {
+          setMealType(recipe.mealTypeId.toString());
+        } else {
+          setMealType("");
+        }
       } catch (error) {
         console.error("Failed to fetch recipe:", error);
         throw error;
@@ -134,6 +156,7 @@ const UpdateRecipePage = ({ params }) => {
     };
 
     fetchDietaryPreferences();
+    fetchMealTypes();
     fetchAllergies();
     fetchRecipesById(params.id);
   }, []);
@@ -141,6 +164,11 @@ const UpdateRecipePage = ({ params }) => {
   // Function to handle dietary preference category change
   const handleDietaryPreferenceCategoryChange = (e) => {
     setDietaryPreference(e.target.value);
+  };
+
+  // Function to handle meal type category change
+  const handleMealTypeCategoryChange = (e) => {
+    setMealType(e.target.value);
   };
 
   // Function to handle allergy category change
@@ -239,6 +267,7 @@ const UpdateRecipePage = ({ params }) => {
       img: imageUrl,
       userID: { id: userId }, // Replace with actual user ID or fetch dynamically
       dietaryPreferencesId: parseInt(dietaryPreference),
+      mealTypeId: parseInt(mealType),
       allergies: allergyRestriction.map((id) => ({ id })),
     };
 
@@ -247,7 +276,7 @@ const UpdateRecipePage = ({ params }) => {
     try {
       // Send PUT request
       const response = await axiosInterceptorInstance.put(
-        "http://localhost:8080/recipe/update",
+        "/recipe/update",
         recipeData
       );
       console.log("Recipe Updated", response.data);
@@ -346,6 +375,30 @@ const UpdateRecipePage = ({ params }) => {
                 >
                   <option value="">Select Dietary Preference</option>
                   {dietaryPreferencesCategory.map((cat, index) => (
+                    <option key={index} value={cat.id}>
+                      {cat.subcategoryName}
+                    </option>
+                  ))}
+                </select>
+              </div>
+
+              {/* MEAL TYPE */}
+              <div className="flex flex-col">
+                <label
+                  htmlFor="mealType"
+                  className="block text-xl mb-1 font-bold text-gray-900"
+                >
+                  Meal Type
+                </label>
+                <select
+                  id="mealType"
+                  name="mealType"
+                  value={mealType}
+                  onChange={handleMealTypeCategoryChange}
+                  className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg w-full p-2.5"
+                >
+                  <option value="">Select Meal Type</option>
+                  {mealTypeCategory.map((cat, index) => (
                     <option key={index} value={cat.id}>
                       {cat.subcategoryName}
                     </option>

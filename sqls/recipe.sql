@@ -124,8 +124,8 @@ VALUES
         '2', -- UserID
         TRUE,
         '2023-01-11 17:30:00',
-        'https://images.immediate.co.uk/production/volatile/sites/30/2020/08/tagine-5f2d3f6.jpg?quality=90&webp=true&resize=440,400',
-        'Author : Cassie Best, Designed by bbcgoodfood',  -- img_title
+        'https://images.immediate.co.uk/production/volatile/sites/30/2020/08/recipe-image-legacy-id-815477_11-c677a93.jpg?quality=90&webp=true&resize=440,400',
+        'Author : James Martin, Designed by bbcgoodfood',  -- img_title
         3, -- dietary_preference
         30 -- cooking_time  
            -- meal type (cuisines)
@@ -143,8 +143,8 @@ VALUES
         '2', -- UserID
         TRUE,
         '2023-01-20 17:30:00',
-        'https://images.immediate.co.uk/production/volatile/sites/30/2020/08/tagine-5f2d3f6.jpg?quality=90&webp=true&resize=440,400',
-        'Author : Cassie Best, Designed by bbcgoodfood',  -- img_title
+        'https://images.immediate.co.uk/production/volatile/sites/30/2020/08/recipe-image-legacy-id-1079512_10-faac687.jpg?quality=90&webp=true&resize=440,400',
+        'Author : Roopa Gulati, Designed by bbcgoodfood',  -- img_title
         3, -- dietary_preference
         15 -- cooking_time  
            -- meal type (cuisines)
@@ -162,8 +162,8 @@ VALUES
         '1', -- UserID
         TRUE,
         '2023-02-10 17:30:00',
-        'https://images.immediate.co.uk/production/volatile/sites/30/2020/08/tagine-5f2d3f6.jpg?quality=90&webp=true&resize=440,400',
-        'Author : Cassie Best, Designed by bbcgoodfood',  -- img_title
+        'https://images.immediate.co.uk/production/volatile/sites/30/2020/08/noodles-99a7139.jpg?quality=90&webp=true&resize=440,400',
+        'Author : Elena Silcock, Designed by bbcgoodfood',  -- img_title
         1, -- dietary_preference
         10 -- cooking_time  
            -- meal type (cuisines)
@@ -181,8 +181,8 @@ VALUES
         '1', -- UserID
         TRUE,
         '2023-02-24 17:30:00',
-        'https://images.immediate.co.uk/production/volatile/sites/30/2020/08/tagine-5f2d3f6.jpg?quality=90&webp=true&resize=440,400',
-        'Author : Cassie Best, Designed by bbcgoodfood',  -- img_title
+        'https://images.immediate.co.uk/production/volatile/sites/30/2020/08/beetroot-star-anise-red-onion-tart-tatin-6617a3f.jpg?quality=90&webp=true&resize=440,400',
+        'Author : Elena Silcock, Designed by bbcgoodfood',  -- img_title
         1, -- dietary_preference
         80 -- cooking_time  
            -- meal type (cuisines)
@@ -200,8 +200,8 @@ VALUES
         '1', -- UserID
         TRUE,
         '2023-02-27 17:30:00',
-        'https://images.immediate.co.uk/production/volatile/sites/30/2020/08/tagine-5f2d3f6.jpg?quality=90&webp=true&resize=440,400',
-        'Author : Cassie Best, Designed by bbcgoodfood',  -- img_title
+        'https://images.immediate.co.uk/production/volatile/sites/30/2022/06/Courgette-curry-c295fa0.jpg?quality=90&webp=true&resize=375,341',
+        'Author : Samuel Goldsmith, Designed by bbcgoodfood',  -- img_title
         1, -- dietary_preference
         40 -- cooking_time  
            -- meal type (cuisines)
@@ -219,8 +219,8 @@ VALUES
         '1', -- UserID
         TRUE,
         '2023-03-09 12:30:00',
-        'https://images.immediate.co.uk/production/volatile/sites/30/2020/08/tagine-5f2d3f6.jpg?quality=90&webp=true&resize=440,400',
-        'Author : Cassie Best, Designed by bbcgoodfood',  -- img_title
+        'https://images.immediate.co.uk/production/volatile/sites/30/2020/08/recipe-image-legacy-id-871504_10-a91e5e1.jpg?quality=90&webp=true&resize=440,400',
+        'Author : Roopa Gulati, Designed by bbcgoodfood',  -- img_title
         1, -- dietary_preference
         25 -- cooking_time  
            -- meal type (cuisines)
@@ -238,8 +238,8 @@ VALUES
         '1', -- UserID
         TRUE,
         '2023-03-07 17:00:00',
-        'https://images.immediate.co.uk/production/volatile/sites/30/2020/08/tagine-5f2d3f6.jpg?quality=90&webp=true&resize=440,400',
-        'Author : Cassie Best, Designed by bbcgoodfood',  -- img_title
+        'https://images.immediate.co.uk/production/volatile/sites/30/2020/08/yaki-udon-19d4efb.jpg?quality=90&webp=true&resize=440,400',
+        'Author : Esther Clark, Designed by bbcgoodfood',  -- img_title
         1, -- dietary_preference
         15 -- cooking_time  
            -- meal type (cuisines)
@@ -257,8 +257,8 @@ VALUES
         '1', -- UserID
         TRUE,
         '2023-03-18 10:00:00',
-        'https://images.immediate.co.uk/production/volatile/sites/30/2020/08/tagine-5f2d3f6.jpg?quality=90&webp=true&resize=440,400',
-        'Author : Cassie Best, Designed by bbcgoodfood',  -- img_title
+        'https://images.immediate.co.uk/production/volatile/sites/30/2020/08/bruschetta-recipe-1-2448fad.jpg?quality=90&webp=true&resize=440,400',
+        'Author : Chiwong, Designed by bbcgoodfood',  -- img_title
         1, -- dietary_preference
         15 -- cooking_time  
            -- meal type (cuisines)
@@ -276,10 +276,48 @@ VALUES
         '1', -- UserID
         TRUE,
         '2023-03-25 11:00:00',
-        'https://images.immediate.co.uk/production/volatile/sites/30/2020/08/tagine-5f2d3f6.jpg?quality=90&webp=true&resize=440,400',
-        'Author : Cassie Best, Designed by bbcgoodfood',  -- img_title
+        'https://images.immediate.co.uk/production/volatile/sites/30/2020/08/easy-vegan-pho-0eaa94e.jpg?quality=90&webp=true&resize=440,400',
+        'Author : Miriam Nice, Designed by bbcgoodfood',  -- img_title
         1, -- dietary_preference
         20 -- cooking_time  
+           -- meal type (cuisines)
+    ),
+    (
+        14,
+        'Lucy Netherton',
+        'Mushroom stroganoff',
+        'Not Specified',
+        329, 50, 11, 9, 4, 280, -- calories, carbs, protein, fat, fibre, sodium
+        2,
+        'With a few clever modifications, this traditional creamy dish may be reduced in fat and calories.',
+        'Heat the olive oil in a large non-stick frying pan and soften the onion for about 5 mins.\nAdd the paprika and garlic, then cook for 1 min more. Add the mushrooms and cook on a high heat, stirring often, for about 5 mins.\nPour in the stock and Worcestershire sauce. Bring to the boil, bubble for 5 mins until the sauce thickens, then turn off the heat and stir through the soured cream and most of the parsley. Make sure the pan is not on the heat or the sauce may split.\nHeat the wild rice following pack instructions, then stir through the remaining chopped parsley and serve with the stroganoff.',
+        '2 tsp olive oil \n1 onion, finely chopped \n1 tbsp sweet paprika \n2 garlic cloves, crushed \n300g mixed mushrooms, chopped \n150ml low-sodium beef or vegetable stock \n1 tbsp Worcestershire sauce, or vegetarian alternative \n3 tbsp half-fat soured cream \nsmall bunch of parsley, roughly chopped \n250g pouch cooked wild rice',
+        '3', -- UserID
+        TRUE,
+        '2023-03-29 09:00:00',
+        'https://images.immediate.co.uk/production/volatile/sites/30/2020/08/recipe-image-legacy-id-871464_11-1ff1fe2.jpg?quality=90&webp=true&resize=500,454',
+        'Author : Lucy Netherton, Designed by bbcgoodfood',  -- img_title
+        3, -- dietary_preference
+        20 -- cooking_time  
+           -- meal type (cuisines)
+    ),
+    (
+        15,
+        'Sara Buenfeld',
+        'Smoked salmon pasta',
+        'Not Specified',
+        433, 69, 22, 7, 4, 760, -- calories, carbs, protein, fat, fibre, sodium
+        3,
+        'This simple smoked salmon spaghetti meal takes about 20 minutes to prepare and uses low-cost ingredients. It is spiced with fresh citrus, herbs, and a blast of chili.',
+        'Cook the spaghetti for 10 mins or following pack instructions until al dente.\nMeanwhile, heat the oil in a wok or large frying pan and briefly fry the chilli to soften it.\nDrain the spaghetti, reserving a little of the water, then tip into the wok and, using 2 wooden spoons, toss in the chilli oil until well mixed. Add the salmon, lemon zest and chives or onions, then toss again. Season and add lemon juice to taste.',
+        '300g spaghetti \n1 tbsp olive oil \n1 red chilli, deseeded and finely chopped \n120g pack smoked salmon trimmings \nzest 1 lemon and juice to taste \ngood handful snipped chives or finely chopped spring onions',
+        '3', -- UserID
+        TRUE,
+        '2023-01-20 12:00:00',
+        'https://images.immediate.co.uk/production/volatile/sites/30/2020/08/recipe-image-legacy-id-1233472_8-2834502.jpg?quality=90&webp=true&resize=440,400',
+        'Author : Sara Buenfeld, Designed by bbcgoodfood',  -- img_title
+        3, -- dietary_preference
+        15 -- cooking_time  
            -- meal type (cuisines)
     );
 

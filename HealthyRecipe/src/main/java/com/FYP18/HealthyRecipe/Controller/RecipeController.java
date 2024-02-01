@@ -1,7 +1,9 @@
 package com.FYP18.HealthyRecipe.Controller;
  
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -113,6 +115,16 @@ public class RecipeController {
         return new ResponseEntity<>(toReturn, HttpStatus.CREATED);
     }
 
+    // this is how i test at least it works
+    @GetMapping("/{recipeId}/image")
+    public ResponseEntity<byte[]> getRecipeImage(@PathVariable Long recipeId) {
+        byte[] imageData = recipeService.getRecipeById(recipeId).getImgBlob();
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.IMAGE_JPEG); // Set the appropriate content type
+
+        return new ResponseEntity<>(imageData, headers, HttpStatus.OK);
+    }
     // @PutMapping("/edit")
     // public ResponseEntity<Recipe> editBlog(@RequestBody Recipe blog)  
     // { 

@@ -302,7 +302,7 @@ const BusinessViewRecipe = ({ params }) => {
             <div className="rounded-full bg-orange-100 w-20 h-20 flex flex-col items-center text-center justify-center">
               <p className="text-sm">Sodium</p>
               <p className="text-orange-600 font-semibold">
-                {recipe?.fibre ? `${recipe.fibre} mg` : "N/A"}
+                {recipe?.sodium ? `${recipe.sodium} mg` : "N/A"}
               </p>
             </div>
           </div>

@@ -300,11 +300,11 @@ const MyRecipes = () => {
         </button>
       </div>
       {/* Search and Sort Section */}
-      <div className="relative mb-4 md:mb-10 md:mr-2">
+      <div className="relative mb-4 md:mb-8 md:mr-2">
         <input
           type="text"
-          id="mealPlanSearch"
-          name="mealPlanSearch"
+          id="recipeSearch"
+          name="recipeSearch"
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
           placeholder="Search by title"

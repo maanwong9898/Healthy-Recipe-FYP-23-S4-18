@@ -177,14 +177,14 @@ const CreateBusinessBlogPostPage = () => {
     <div className="min-h-screen flex flex-col justify-center px-6 lg:px-8">
       {/* Adjust the max-width and width in the inline style */}
       <div
-        className="mt-16 mb-16 mx-auto bg-zinc-100 rounded-lg shadow-lg p-4 md:p-8 lg:p-12"
+        className="mt-16 mb-16 mx-auto bg-white rounded-lg shadow-lg p-4 md:p-8 lg:p-12"
         style={{ maxWidth: "600px", width: "100%" }} // Increase maxWidth and set width to 100%
       >
         {" "}
         {/* Smaller maxWidth */}
         <div className="p-4 space-y-4 md:space-y-12 ">
           <div className="p-6 space-y-4 md:space-y-2 sm:p-4">
-            <h1 className="text-xl md:text-2xl lg:text-3xl font-bold mb-6 leading-tight tracking-tight text-gray-900">
+            <h1 className="text-3xl md:text-2xl lg:text-3xl font-bold mb-6 leading-tight tracking-tight text-gray-900">
               Create Business Blog Post
             </h1>
             <form className="space-y-6 md:space-y-5 lg:space-y-3">
@@ -283,12 +283,12 @@ const CreateBusinessBlogPostPage = () => {
               </div>
               {/* ERROR MESSAGE */}
               {error && (
-                <p className="text-red-500 font-semibold text-2xl">
+                <p className="text-red-500 font-semibold text-sm">
                   Error creating blog post: {error}
                 </p>
               )}
               {success && (
-                <p className="text-green-500 font-semibold text-2xl">
+                <p className="text-green-500 font-semibold text-sm">
                   Blog post was created successfully!
                 </p>
               )}

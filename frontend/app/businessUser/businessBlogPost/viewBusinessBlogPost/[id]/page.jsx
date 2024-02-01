@@ -102,7 +102,7 @@ const ViewBusinessBlogPost = ({ params }) => {
       stars.push(
         <span
           key={i}
-          className={i < rating ? "text-yellow-400" : "text-gray-300"}
+          className={i < rating ? "text-yellow-300" : "text-gray-300"}
         >
           ★
         </span>
@@ -155,7 +155,7 @@ const ViewBusinessBlogPost = ({ params }) => {
         <img
           src={businessBlogPost.img}
           alt="Designed by Freepik"
-          className="m ax-w-full mx-auto mt-8 mb-8 sm:max-w-xl sm:mt-16 sm:mb-16 rounded-lg shadow-xl"
+          className="max-w-full mx-auto mt-8 mb-8 sm:max-w-xl sm:mt-16 sm:mb-16 rounded-lg shadow-xl"
         />
         {/* Info*/}
         <section className="main-content mt-10 pl-9 pr-9 mx-auto max-w-screen-xl md:text-base text-left">

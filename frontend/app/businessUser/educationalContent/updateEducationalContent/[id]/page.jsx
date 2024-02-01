@@ -330,7 +330,9 @@ const UpdateEducationalContent = ({ params }) => {
               </div>
               {/* ERROR MESSAGE */}
               {error && (
-                <p className="text-red-500 font-semibold text-sm">{error}</p>
+                <p className="text-red-500 font-semibold text-sm">
+                  Error updating educational content: {error}
+                </p>
               )}
               {success && (
                 <p className="text-green-500 font-semibold text-sm">
@@ -341,7 +343,7 @@ const UpdateEducationalContent = ({ params }) => {
               <div className="flex flex-row space-x-5">
                 <Link href="/businessUser/educationalContent">
                   <button className="bg-red-600 hover:bg-red-700 text-white font-semibold py-2 px-4 rounded-lg">
-                    Cancel
+                    Back
                   </button>
                 </Link>
                 <button

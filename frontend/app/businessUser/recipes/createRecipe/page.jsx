@@ -430,7 +430,7 @@ const CreateRecipePage = () => {
                   htmlFor="allergyRestriction"
                   className="block text-xl mb-1 font-bold text-gray-900"
                 >
-                  Allergens Contained In Recipe:
+                  Allergens Contained
                 </label>
                 <div className="grid grid-cols-2 md:grid-cols-4 gap-1">
                   {allergyCategory.map((cat, index) => (
@@ -763,7 +763,9 @@ const CreateRecipePage = () => {
 
               {/* Display error or success message */}
               {error && (
-                <p className="text-red-500 font-semibold text-sm">{error}</p>
+                <p className="text-red-500 font-semibold text-sm">
+                  Error creating recipe: {error}
+                </p>
               )}
               {success && (
                 <p className="text-green-500 font-semibold text-sm">
@@ -772,8 +774,8 @@ const CreateRecipePage = () => {
               )}
               {/* SUBMIT BUTTON */}
               <div className="flex flex-row space-x-5">
-                <button className="mt-3 bg-red-500 hover:bg-red-600 text-white w-24 font-bold py-2 px-4 rounded-lg">
-                  <Link href="/businessUser/recipes">Cancel</Link>
+                <button className="mt-3 bg-red-600 hover:bg-red-700 text-white w-24 font-bold py-2 px-4 rounded-lg">
+                  <Link href="/businessUser/recipes">Back</Link>
                 </button>
                 <button
                   type="submit"

@@ -184,7 +184,7 @@ const CreateBusinessBlogPostPage = () => {
         {/* Smaller maxWidth */}
         <div className="p-4 space-y-4 md:space-y-12 ">
           <div className="p-6 space-y-4 md:space-y-2 sm:p-4">
-            <h1 className="text-3xl md:text-2xl lg:text-3xl font-bold mb-6 leading-tight tracking-tight text-gray-900">
+            <h1 className="text-3xl lg:text-4xl font-bold leading-tight tracking-tight text-center text-gray-900 mb-8">
               Create Business Blog Post
             </h1>
             <form className="space-y-6 md:space-y-5 lg:space-y-3">
@@ -242,7 +242,7 @@ const CreateBusinessBlogPostPage = () => {
                   htmlFor="info"
                   className="block text-lg mb-1 font-semibold text-gray-900"
                 >
-                  Info<span className="text-red-500">*</span>
+                  Main Content<span className="text-red-500">*</span>
                 </label>
                 <textarea
                   id="info"
@@ -263,7 +263,7 @@ const CreateBusinessBlogPostPage = () => {
               <div className="flex flex-col">
                 <label
                   htmlFor="imageUrl"
-                  className="block text-lg mb-1 font-semibold text-gray-900 mt-4"
+                  className="block text-lg mb-1 font-semibold text-gray-900"
                 >
                   Image URL<span className="text-red-500">*</span>
                 </label>
@@ -289,13 +289,13 @@ const CreateBusinessBlogPostPage = () => {
               )}
               {success && (
                 <p className="text-green-500 font-semibold text-sm">
-                  Blog post was created successfully!
+                  Blog post created successfully!
                 </p>
               )}
               {/* SUBMIT BUTTON */}
               <div className="flex flex-row space-x-5">
                 <button className="bg-red-600 hover:bg-red-700 text-white font-semibold py-2 px-4 rounded-lg">
-                  <Link href="/businessUser/businessBlogPost">Cancel</Link>
+                  <Link href="/businessUser/businessBlogPost">Back</Link>
                 </button>
                 <button
                   type="submit"

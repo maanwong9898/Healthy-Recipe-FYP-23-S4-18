@@ -289,13 +289,13 @@ const CreateEducationalContent = () => {
               )}
               {success && (
                 <p className="text-green-500 font-semibold text-sm">
-                  Educational content was created successfully!
+                  Educational content created successfully!
                 </p>
               )}
               {/* SUBMIT BUTTON */}
               <div className="flex flex-row space-x-5">
                 <button className="bg-red-600 hover:bg-red-700 text-white font-semibold py-2 px-4 rounded-lg">
-                  <Link href="/businessUser/educationalContent">Cancel</Link>
+                  <Link href="/businessUser/educationalContent">Back</Link>
                 </button>
                 <button
                   type="submit"

@@ -346,7 +346,7 @@ const UpdateRecipePage = ({ params }) => {
                   htmlFor="title"
                   className="block text-xl mb-1 font-bold text-gray-900"
                 >
-                  Title
+                  Title<span className="text-red-500">*</span>
                 </label>
                 <input
                   type="text"
@@ -364,7 +364,7 @@ const UpdateRecipePage = ({ params }) => {
                   htmlFor="dietaryPreference"
                   className="block text-xl mb-1 font-bold text-gray-900"
                 >
-                  Dietary Preference
+                  Dietary Preference<span className="text-red-500">*</span>
                 </label>
                 <select
                   id="dietaryPreference"
@@ -388,7 +388,7 @@ const UpdateRecipePage = ({ params }) => {
                   htmlFor="mealType"
                   className="block text-xl mb-1 font-bold text-gray-900"
                 >
-                  Meal Type
+                  Meal Type<span className="text-red-500">*</span>
                 </label>
                 <select
                   id="mealType"
@@ -438,6 +438,7 @@ const UpdateRecipePage = ({ params }) => {
                   className="block text-xl mb-1 font-bold text-gray-900"
                 >
                   Cooking Time: (in minutes)
+                  <span className="text-red-500">*</span>
                 </label>
                 <input
                   name="cookingTime"
@@ -457,7 +458,7 @@ const UpdateRecipePage = ({ params }) => {
                   htmlFor="servingSize"
                   className="block text-xl mb-1 font-bold text-gray-900"
                 >
-                  Serving Size
+                  Serving Size<span className="text-red-500">*</span>
                 </label>
                 <input
                   name="servingSize"
@@ -477,7 +478,7 @@ const UpdateRecipePage = ({ params }) => {
                   htmlFor="description"
                   className="block text-xl mb-1 font-bold text-gray-900"
                 >
-                  Description
+                  Description<span className="text-red-500">*</span>
                 </label>
                 <textarea
                   name="description"
@@ -496,7 +497,7 @@ const UpdateRecipePage = ({ params }) => {
                   htmlFor="dietaryInformation"
                   className="block text-xl mb-1 font-bold text-gray-900"
                 >
-                  Dietary Information
+                  Dietary Information<span className="text-red-500">*</span>
                 </label>
                 <textarea
                   name="dietaryInformation"
@@ -562,7 +563,7 @@ const UpdateRecipePage = ({ params }) => {
                   htmlFor="ingredients"
                   className="block text-xl mb-1 font-bold text-gray-900"
                 >
-                  Ingredients
+                  Ingredients<span className="text-red-500">*</span>
                 </label>
                 {ingredientList.map((ingredient, index) => (
                   <div key={index} className="flex mb-2">
@@ -609,7 +610,7 @@ const UpdateRecipePage = ({ params }) => {
                   htmlFor="instructions"
                   className="block text-xl mb-1 font-bold text-gray-900"
                 >
-                  Instructions
+                  Instructions<span className="text-red-500">*</span>
                 </label>
                 {instructionList.map((instruction, index) => (
                   <div key={index} className="flex mb-2">
@@ -656,7 +657,8 @@ const UpdateRecipePage = ({ params }) => {
                   htmlFor="nutritionalInformation"
                   className="block text-xl mb-1 font-bold text-gray-900"
                 >
-                  Nutritional Information
+                  Nutritional Information (per serving)
+                  <span className="text-red-500">*</span>
                 </label>
 
                 <div className="grid grid-cols-2 gap-6 mt-3">
@@ -764,7 +766,7 @@ const UpdateRecipePage = ({ params }) => {
                   htmlFor="imageUrl"
                   className="block text-xl mb-1 font-bold text-gray-900"
                 >
-                  Image URL
+                  Image URL<span className="text-red-500">*</span>
                 </label>
                 <input
                   type="text"
@@ -779,7 +781,9 @@ const UpdateRecipePage = ({ params }) => {
 
               {/* Display error or success message */}
               {error && (
-                <p className="text-red-500 font-semibold text-sm">{error}</p>
+                <p className="text-red-500 font-semibold text-sm">
+                  Error updating recipe: {error}
+                </p>
               )}
               {success && (
                 <p className="text-green-500 font-semibold text-sm">
@@ -788,8 +792,8 @@ const UpdateRecipePage = ({ params }) => {
               )}
               {/* SUBMIT BUTTON */}
               <div className="flex flex-row space-x-5 justify-left">
-                <button className="mt-3 bg-red-500 hover:bg-red-600 text-white w-24 font-bold py-2 px-4 rounded-lg">
-                  <Link href="/businessUser/recipes">Cancel</Link>
+                <button className="mt-3 bg-red-600 hover:bg-red-700 text-white w-24 font-bold py-2 px-4 rounded-lg">
+                  <Link href="/businessUser/recipes">Back</Link>
                 </button>
                 <button
                   type="submit"

@@ -643,7 +643,7 @@ const MyBusinessBlogPosts = () => {
                     </button>
                     <button
                       onClick={() =>
-                        handleToggleRecipeStatus(
+                        handleToggleBlogPostStatus(
                           businessBlogPost.id,
                           businessBlogPost.active
                         )

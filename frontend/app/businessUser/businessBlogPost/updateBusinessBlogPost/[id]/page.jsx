@@ -220,7 +220,7 @@ const UpdateBusinessBlogPostPage = ({ params }) => {
       >
         <div className="p-4 space-y-4 md:space-y-12">
           <div className="p-6 space-y-4 md:space-y-2 sm:p-4">
-            <h1 className="text-xl md:text-2xl lg:text-3xl font-bold mb-6 leading-tight tracking-tight text-gray-900">
+            <h1 className="text-3xl lg:text-4xl font-bold leading-tight tracking-tight text-center text-gray-900 mb-8">
               Update Blog Post
             </h1>
             <form
@@ -233,7 +233,7 @@ const UpdateBusinessBlogPostPage = ({ params }) => {
                   htmlFor="title"
                   className="block text-lg mb-1 font-semibold text-gray-900"
                 >
-                  Title
+                  Title<span className="text-red-500">*</span>
                 </label>
                 <input
                   type="text"
@@ -255,7 +255,7 @@ const UpdateBusinessBlogPostPage = ({ params }) => {
                   htmlFor="category"
                   className="block text-lg mb-1 font-semibold text-gray-900"
                 >
-                  Category
+                  Category<span className="text-red-500">*</span>
                 </label>
                 <select
                   id="category"
@@ -279,7 +279,7 @@ const UpdateBusinessBlogPostPage = ({ params }) => {
                   htmlFor="info"
                   className="block text-lg mb-1 font-semibold text-gray-900"
                 >
-                  Info
+                  Main Content<span className="text-red-500">*</span>
                 </label>
                 <textarea
                   name="info"
@@ -300,9 +300,9 @@ const UpdateBusinessBlogPostPage = ({ params }) => {
               <div className="flex flex-col">
                 <label
                   htmlFor="imageUrl"
-                  className="block text-lg mb-1 font-semibold text-gray-900 mt-4"
+                  className="block text-lg mb-1 font-semibold text-gray-900"
                 >
-                  Image URL
+                  Image URL<span className="text-red-500">*</span>
                 </label>
                 <input
                   type="text"
@@ -320,10 +320,12 @@ const UpdateBusinessBlogPostPage = ({ params }) => {
               </div>
               {/* ERROR MESSAGE */}
               {error && (
-                <p className="text-red-500 font-semibold text-2xl">{error}</p>
+                <p className="text-red-500 font-semibold text-sm">
+                  Error updating blog post: {error}
+                </p>
               )}
               {success && (
-                <p className="text-green-500 font-semibold text-2xl">
+                <p className="text-green-500 font-semibold text-sm">
                   Blog post updated successfully!
                 </p>
               )}

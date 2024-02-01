@@ -11,4 +11,5 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class JWTResponseDTO {
     private String token; 
+    private String error;
 }

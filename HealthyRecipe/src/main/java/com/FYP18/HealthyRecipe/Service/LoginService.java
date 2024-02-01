@@ -112,6 +112,7 @@ public class LoginService {
         {
             throw new Exception("UEN IS EMPTY"); 
         }
+        user.setEnabled(true);
         user.setCreatedDate(LocalDate.now());
         BusinessUser businessUser = businessUserRepository.findByUEN(user.getUEN());
  
@@ -129,6 +130,7 @@ public class LoginService {
         CheckForEmail(user.getEmail());
         user.setRole(Role.ADMIN);
         user.setCreatedDate(LocalDate.now()); 
+        user.setEnabled(true);
         return systemAdminRepository.save(user); 
     }
     @Autowired
@@ -140,27 +142,50 @@ public class LoginService {
         CheckForEmail(user.getEmail());
         user.setCreatedDate(LocalDate.now());
         user.setVerified(false);
+        user.setEnabled(true);
 
+ 
+        // TODO: hash the password
+        RegisteredUser userSaved = registeredUserRepository.save(user); 
 
-        VerificationToken token = new VerificationToken();
-        token.setEmail(user.getEmail());
-        token.setToken(UUID.randomUUID().toString());
-        token.setExpiration(LocalDateTime.now().plusMinutes(15));
-        
-        verificationService.saveToken(token);
-        
-        // TODO: this should eventually become the frontend's link that calls specifically this controller
-        String link = "http://localhost:8080/verify/confirm?token=" + token.getToken();
-        emailService.sendVerificationEmail(user.getEmail(), link);
-
-        // send email
-        return registeredUserRepository.save(user);
+        VerificationToken token = verificationService.createAndSaveToken(user.getEmail());
+ 
+        sendEmail(token);
+ 
+        return userSaved;
     }
 
+    public void sendEmail(VerificationToken token)
+    {
+        try{
+            // TODO: this should eventually become the frontend's link that calls specifically this controller
+            String link = "http://localhost:8080/verify/confirm?token=" + token.getToken();
+            emailService.sendVerificationEmail(token.getEmail(), link);
+        }
+        catch(Exception e) 
+        {
+            e.printStackTrace();
+        }
+    }
+    public RegisteredUser getRegisteredUser(String email)
+    {
+        return registeredUserRepository.findByEmail(email);
+    }
+
+    public BusinessUser getBusinessUser(String email)
+    {
+        return businessUserRepository.findByEmail(email);
+    }
+    public Nutritionist getNutritionist(String email)
+    {
+        return nutritionistRepository.findByEmail(email);
+    }
     public Nutritionist CreateNewNutritionist(Nutritionist user)throws Exception
     {
         CheckForUsername(user.getUsername());
         CheckForEmail(user.getEmail());
+        
+        user.setEnabled(true);
         user.setCreatedDate(LocalDate.now());
         return nutritionistRepository.save(user);
     }

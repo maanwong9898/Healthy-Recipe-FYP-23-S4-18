@@ -1,6 +1,7 @@
 package com.FYP18.HealthyRecipe.Service.VerificationService;
 
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -21,7 +22,21 @@ public class VerificationService {
     @Autowired
     private RegisteredUserRepository userRepo;
 
-
+    public Boolean tokenExist(String email)
+    {
+        VerificationToken vToken = repo.findByEmail(email);
+        if(vToken == null)
+        {
+            return false;
+        }
+        // if it alrd expired
+        if(vToken.getExpiration().isBefore(LocalDateTime.now()))
+        {   
+            repo.delete(vToken);
+            return false;
+        }
+        return true;
+    }
     public String confirmToken(String token)
     {
         VerificationToken vToken = repo.findByToken(token);
@@ -42,8 +57,15 @@ public class VerificationService {
         repo.delete(vToken);
         return "User " + user.getUsername() + " is now verified! You may proceed to login.";
     }
-    public VerificationToken saveToken(VerificationToken token)
-    {
+ 
+
+    public VerificationToken createAndSaveToken(String email)
+    { 
+        VerificationToken token = new VerificationToken();
+        token.setEmail(email);
+        token.setToken(UUID.randomUUID().toString());
+        token.setExpiration(LocalDateTime.now().plusMinutes(15));
+ 
         return repo.save(token);
     }
      

@@ -1,6 +1,8 @@
 package com.FYP18.HealthyRecipe.Controller;
 
 import java.io.IOException;
+import java.time.LocalDateTime;
+import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -28,26 +30,33 @@ import com.FYP18.HealthyRecipe.Entity.Nutritionist;
 import com.FYP18.HealthyRecipe.Entity.RegisteredUser;
 import com.FYP18.HealthyRecipe.Entity.SystemAdmin;
 import com.FYP18.HealthyRecipe.Entity.User;
+import com.FYP18.HealthyRecipe.Entity.User.Role;
 import com.FYP18.HealthyRecipe.SecuringWeb.JwtUtil;
 import com.FYP18.HealthyRecipe.Service.CustomUserDetailService;
 // import com.FYP18.HealthyRecipe.Service.FirebaseStorageService; 
-import com.FYP18.HealthyRecipe.Service.LoginService; 
+import com.FYP18.HealthyRecipe.Service.LoginService;
+import com.FYP18.HealthyRecipe.Service.VerificationService.VerificationService;
+import com.FYP18.HealthyRecipe.Service.VerificationService.VerificationToken; 
  
 @RestController
 @CrossOrigin()
 @RequestMapping(value = "/register")
 public class RegisterController { 
 
-    public RegisterController(LoginService loginService)
-    {
-        this.loginService = loginService;
-    }
+    // public RegisterController(LoginService loginService)
+    // {
+    //     this.loginService = loginService;
+    // }
     @Autowired
     private JwtUtil jwtUtil;
     @Autowired
     private  AuthenticationManager authenticationManager;
-    // @Autowired
-    private final LoginService loginService;
+    
+    @Autowired
+    private  LoginService loginService;
+
+    @Autowired
+    private  VerificationService verificationService;
  
     @PostMapping("/admin")
     private ResponseEntity<SystemAdmin> registerSystemAdmin(@RequestBody SystemAdmin user) throws Exception
@@ -86,27 +95,70 @@ public class RegisterController {
     @PostMapping("/login")
     public JWTResponseDTO authenticateAndGetToken(@RequestBody LoginRequestDTO loginRequestDTO) throws UsernameNotFoundException
     { 
-        Authentication auth = authenticationManager.authenticate(
-            new UsernamePasswordAuthenticationToken(loginRequestDTO.getEmail(), loginRequestDTO.getPassword()));
-        
-            System.out.println("AUTHE: " +auth.isAuthenticated());
-         if(auth.isAuthenticated())
-        {   
-            User user = (User) auth.getPrincipal();
- 
+        try{
+            Authentication auth = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken
+                                                (loginRequestDTO.getEmail(), loginRequestDTO.getPassword()));
+         
+            if(auth.isAuthenticated())
+            {   
+                User user = (User) auth.getPrincipal(); 
+                Role role = user.getRole(); 
 
-            System.out.println(user.toString());
-            String token = 
-            
-            jwtUtil.createToken(loginRequestDTO.getEmail(),
-                user.getRole().toString(), user.getId()); 
-            // RefreshToken refreshToken = refreshTokenService.createRefreshToken(authRequestDTO.getUsername());
-           return JWTResponseDTO.builder() 
-                .token(token).build(); 
+                if (role != Role.ADMIN)
+                {
+                    switch (role)
+                    { 
+                        case REGISTERED_USER:
+                            RegisteredUser rUser = loginService.getRegisteredUser(user.getEmail());
 
-        } else {
-            throw new UsernameNotFoundException("invalid user request..!!");
-        }  
+                            if(!rUser.getVerified())
+                            { 
+                                if(!verificationService.tokenExist(rUser.getEmail()))
+                                {    
+                                    // if token doesnt exist, create and save 1, and send the email again.
+                                    VerificationToken token =  verificationService.createAndSaveToken(rUser.getEmail());
+                                    loginService.sendEmail(token); 
+                                }  
+                                return JWTResponseDTO.builder()
+                                        .error("User is not verified yet, please check your email").build();
+                            }
+                            else if(!rUser.getEnabled())
+                            {
+                                return JWTResponseDTO.builder()
+                                        .error("User is currently suspended. ").build();
+                            }
+                            break;
+                        case BUSINESS_USER:
+                            BusinessUser bUser = loginService.getBusinessUser(user.getEmail());
+
+                            if(!bUser.getVerified())
+                            {
+                                return JWTResponseDTO.builder()
+                                        .error("User is not verified yet, please wait for 3-5 business days.").build();
+                            }
+                            break;
+                        case NUTRITIONIST:
+                            Nutritionist nUser = loginService.getNutritionist(user.getEmail());
+                            if(!nUser.getVerified())
+                            {
+                                return JWTResponseDTO.builder()
+                                        .error("User is not verified yet, please wait for 3-5 business days.").build();
+                            }  
+                            break;
+                    }
+                }
+                    String token =  jwtUtil.createToken(loginRequestDTO.getEmail(),
+                                    user.getRole().toString(), user.getId()); 
+
+                    return JWTResponseDTO.builder().token(token).build();  
+                }
+        }
+        catch(Exception e)
+        {
+            e.printStackTrace();
+        }
+        return JWTResponseDTO.builder()
+                            .error("User credentials are invalid.").build();
     }
     
     @GetMapping("/dashboard/{id}")

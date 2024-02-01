@@ -10,4 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 public interface VerificationTokenRepo extends JpaRepository<VerificationToken, Long> {
     @Query("SELECT x FROM VerificationToken x WHERE x.token = :token")
     VerificationToken findByToken(String token); 
+ 
+    @Query("SELECT x FROM VerificationToken x WHERE x.email = :email")
+    VerificationToken findByEmail(String email); 
 }

@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.FYP18.HealthyRecipe.DTO.RecipeDTO;
 import com.FYP18.HealthyRecipe.DTO.ReviewRatingDTO;
@@ -105,7 +106,12 @@ public class RecipeController {
        Recipe toReturn = recipeService.createRecipe(recipe); 
         return new ResponseEntity<>(toReturn, HttpStatus.CREATED);
     }
-    
+    @PostMapping("/addImage")
+    public ResponseEntity<Recipe> addRecipeImage(@RequestParam("file") MultipartFile file, @RequestParam("id") Long id)
+    { 
+       Recipe toReturn = recipeService.updateWithFile(id, file);
+        return new ResponseEntity<>(toReturn, HttpStatus.CREATED);
+    }
 
     // @PutMapping("/edit")
     // public ResponseEntity<Recipe> editBlog(@RequestBody Recipe blog)  

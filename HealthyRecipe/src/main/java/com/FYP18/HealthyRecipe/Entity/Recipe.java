@@ -106,8 +106,7 @@ public class Recipe {
         joinColumns = @JoinColumn(name = "id"),
         inverseJoinColumns = @JoinColumn(name = "allergy_id"))
     private Set<Allergies> allergies = new HashSet<>();
-  
-
+   
     private LocalDate createdDT;
 
     private LocalDate lastUpdatedDT;
@@ -116,6 +115,7 @@ public class Recipe {
     @Lob
     private String ingredients;
 
+    // this is an image path
     private String img;
 
     private String imgTitle;
@@ -124,6 +124,11 @@ public class Recipe {
     @ManyToOne
     @JoinColumn(name = "UserID", referencedColumnName = "id")
     private User userID;
+
+
+    @Lob
+    @Column(name = "imgBlob", columnDefinition="MEDIUMBLOB")
+    private byte[] imgBlob;
  
 }
 

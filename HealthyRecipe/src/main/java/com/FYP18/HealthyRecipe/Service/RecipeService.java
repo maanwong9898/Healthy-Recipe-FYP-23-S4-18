@@ -9,6 +9,7 @@ import javax.management.RuntimeErrorException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cglib.core.Local;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.FYP18.HealthyRecipe.DTO.RecipeDTO;
 import com.FYP18.HealthyRecipe.DTO.ReviewRatingDTO;
@@ -46,6 +47,18 @@ public class RecipeService {
         return recipeRepository.save(recipe);
     }
 
+    public Recipe updateWithFile(Long id, MultipartFile file)
+    {
+       Recipe recipe = recipeRepository.findById(id).get();
+       try{
+            recipe.setImgBlob(file.getBytes());
+       }
+       catch(Exception e)
+       {
+            e.printStackTrace();
+       }
+       return recipeRepository.save(recipe);
+    }
 
     // this is limited to system admin and also the owner of the recipe
     public Recipe updateRecipeActivity(Recipe recipe)

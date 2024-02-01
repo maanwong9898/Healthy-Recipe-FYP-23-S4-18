@@ -177,14 +177,14 @@ const CreateEducationalContent = () => {
     <div className="min-h-screen flex flex-col justify-center px-6 lg:px-8">
       {/* Adjust the max-width and width in the inline style */}
       <div
-        className="mt-16 mb-16 mx-auto bg-zinc-100 rounded-lg shadow-lg p-4 md:p-8 lg:p-12"
+        className="mt-16 mb-16 mx-auto bg-white rounded-lg shadow-lg p-4 md:p-8 lg:p-12"
         style={{ maxWidth: "600px", width: "100%" }} // Increase maxWidth and set width to 100%
       >
         {" "}
         {/* Smaller maxWidth */}
         <div className="p-4 space-y-4 md:space-y-12 ">
           <div className="p-6 space-y-4 md:space-y-2 sm:p-4">
-            <h1 className="text-xl md:text-2xl lg:text-3xl font-bold mb-6 leading-tight tracking-tight text-gray-900">
+            <h1 className="text-3xl lg:text-4xl font-bold leading-tight tracking-tight text-center text-gray-900 mb-8">
               Create Educational Content
             </h1>
             <form className="space-y-6 md:space-y-5 lg:space-y-3">
@@ -242,7 +242,7 @@ const CreateEducationalContent = () => {
                   htmlFor="info"
                   className="block text-lg mb-1 font-semibold text-gray-900"
                 >
-                  Info<span className="text-red-500">*</span>
+                  Main Content<span className="text-red-500">*</span>
                 </label>
                 <textarea
                   id="info"
@@ -263,7 +263,7 @@ const CreateEducationalContent = () => {
               <div className="flex flex-col">
                 <label
                   htmlFor="imageUrl"
-                  className="block text-lg mb-1 font-semibold text-gray-900 mt-4"
+                  className="block text-lg mb-1 font-semibold text-gray-900"
                 >
                   Image URL<span className="text-red-500">*</span>
                 </label>
@@ -283,19 +283,19 @@ const CreateEducationalContent = () => {
               </div>
               {/* ERROR MESSAGE */}
               {error && (
-                <p className="text-red-500 font-semibold text-2xl">
+                <p className="text-red-500 font-semibold text-sm">
                   Error creating educational content: {error}
                 </p>
               )}
               {success && (
-                <p className="text-green-500 font-semibold text-2xl">
+                <p className="text-green-500 font-semibold text-sm">
                   Educational content was created successfully!
                 </p>
               )}
               {/* SUBMIT BUTTON */}
               <div className="flex flex-row space-x-5">
                 <button className="bg-red-600 hover:bg-red-700 text-white font-semibold py-2 px-4 rounded-lg">
-                  <Link href="/businessUser/businessBlogPost">Cancel</Link>
+                  <Link href="/businessUser/educationalContent">Cancel</Link>
                 </button>
                 <button
                   type="submit"

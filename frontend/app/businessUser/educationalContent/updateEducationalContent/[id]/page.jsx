@@ -221,12 +221,12 @@ const UpdateEducationalContent = ({ params }) => {
   return (
     <div className="min-h-screen flex flex-col justify-center px-6 lg:px-8">
       <div
-        className="mt-16 mb-16 mx-auto bg-zinc-100 rounded-lg shadow-lg p-4 md:p-8 lg:p-12"
+        className="mt-16 mb-16 mx-auto bg-white rounded-lg shadow-lg p-4 md:p-8 lg:p-12"
         style={{ maxWidth: "600px", width: "100%" }}
       >
         <div className="p-4 space-y-4 md:space-y-12">
           <div className="p-6 space-y-4 md:space-y-2 sm:p-4">
-            <h1 className="text-xl md:text-2xl lg:text-3xl font-bold mb-6 leading-tight tracking-tight text-gray-900">
+            <h1 className="text-3xl lg:text-4xl font-bold leading-tight tracking-tight text-center text-gray-900 mb-8">
               Update Educational Content
             </h1>
             <form
@@ -240,6 +240,7 @@ const UpdateEducationalContent = ({ params }) => {
                   className="block text-lg mb-1 font-semibold text-gray-900"
                 >
                   Title
+                  <span className="text-red-500">*</span>
                 </label>
                 <input
                   type="text"
@@ -262,6 +263,7 @@ const UpdateEducationalContent = ({ params }) => {
                   className="block text-lg mb-1 font-semibold text-gray-900"
                 >
                   Category
+                  <span className="text-red-500">*</span>
                 </label>
                 <select
                   id="category"
@@ -285,7 +287,8 @@ const UpdateEducationalContent = ({ params }) => {
                   htmlFor="info"
                   className="block text-lg mb-1 font-semibold text-gray-900"
                 >
-                  Info
+                  Main Content
+                  <span className="text-red-500">*</span>
                 </label>
                 <textarea
                   name="info"
@@ -306,9 +309,10 @@ const UpdateEducationalContent = ({ params }) => {
               <div className="flex flex-col">
                 <label
                   htmlFor="imageUrl"
-                  className="block text-lg mb-1 font-semibold text-gray-900 mt-4"
+                  className="block text-lg mb-1 font-semibold text-gray-900"
                 >
                   Image URL
+                  <span className="text-red-500">*</span>
                 </label>
                 <input
                   type="text"
@@ -326,21 +330,18 @@ const UpdateEducationalContent = ({ params }) => {
               </div>
               {/* ERROR MESSAGE */}
               {error && (
-                <p className="text-red-500 font-semibold text-2xl">{error}</p>
+                <p className="text-red-500 font-semibold text-sm">{error}</p>
               )}
               {success && (
-                <p className="text-green-500 font-semibold text-2xl">
+                <p className="text-green-500 font-semibold text-sm">
                   Educational content updated successfully!
                 </p>
               )}
               {/* SUBMIT BUTTON */}
               <div className="flex flex-row space-x-5">
                 <Link href="/businessUser/educationalContent">
-                  <button
-                    className="bg-red-600 hover:bg-red-700 text-white font-semibold py-2 px-4 rounded-lg"
-                    // onClick={handleBackClick}
-                  >
-                    Back
+                  <button className="bg-red-600 hover:bg-red-700 text-white font-semibold py-2 px-4 rounded-lg">
+                    Cancel
                   </button>
                 </Link>
                 <button

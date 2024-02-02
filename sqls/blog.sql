@@ -46,7 +46,7 @@ VALUES
         'Author : drakensang, Designed by Freepik',  -- img_title
         1 -- blog_type_id cookbook
     ),
-        (
+    (
         '4',
         '2023-05-13 10:30:00',
         'PenguinRandomHouse',
@@ -57,6 +57,41 @@ VALUES
         'Author : 8icons, Designed by Freepik',  -- img_title
         1 -- blog_type_id cookbook
     ),
+    (
+        '5',
+        '2023-07-10 11:30:00', 
+        'CulinaryCrafts',
+        'Essential Kitchen Gadgets: Must-Haves for Every Chef',
+        'Explore the world of culinary craftsmanship with essential kitchen gadgets. CulinaryCrafts brings you a curated list of must-have tools to elevate your cooking experience. From high-quality knives to innovative cooking utensils, discover the key elements that every chef needs in their kitchen.'
+        1, -- userId 
+        'https://img.freepik.com/free-photo/healthy-cooking-modern-domestic-kitchen-indoors-generated-by-ai_24640-87927.jpg?t=st=1706874662~exp=1706878262~hmac=8bc6946595b31303b9031a48030ff431d83b5db801ad0126230508bc676cb619&w=1060'
+        'Author : stockgiu, Designed by Freepik',  -- img_title
+        2 -- blog_type_id kitchenware
+    ),
+    (
+        '6',
+        '2023-12-15 14:00:00', 
+        'FlavorsOfWorld',
+        'Culinary Journey Through International Cookbooks',
+        'Embark on a flavorful journey with international cookbooks. FlavorsOfWorld presents a collection of cookbooks that transport you to different corners of the globe. From Italian pasta to Japanese sushi, explore diverse cuisines and bring culinary richness to your kitchen.'
+        1, -- userId 
+        'https://img.freepik.com/free-photo/full-table-italian-meals-ai-generated-image_511042-1707.jpg?t=st=1706875875~exp=1706879475~hmac=3b95110865e269353dee112227db0726c19ee2d31e98f0788d22dcdcfc24aa6f&w=1380'
+        'Author : ojosujono, Designed by Freepik',  -- img_title
+        1 -- blog_type_id cookbook
+    ),
+    (
+        '7',
+        '2023-12-17 16:00:00', 
+        'HomeDecorInspire',
+        'Spruce Up Your Kitchen: Creative Decor Ideas',
+        'Transform your kitchen into a stylish haven with creative decor ideas. HomeDecorInspire brings you tips on enhancing the aesthetics of your kitchen space. From vibrant wall art to functional storage solutions, discover ways to infuse personality and charm into your culinary haven.'
+        1, -- userId 
+        'https://img.freepik.com/free-photo/modern-kitchen-interior-design_23-2150772047.jpg?t=st=1706876107~exp=1706879707~hmac=0793fa78f9321f260c6b56b8dedd55f366471dedf860b4207e41ec203250ea5b&w=996'
+        'Designed by Freepik',  -- img_title
+        3 -- blog_type_id Miscellaneous
+    ),
+    
+    
 
     --  Blog review rating
 INSERT INTO BLOG_REVIEW_RATING 
@@ -76,6 +111,8 @@ VALUE
     ('This is very informative',                                  3.2, '7', 3),
     ('The blog post is very descriptive and informative.',        5.0, '8', 3),
     ('I love this blog post!',                                    4.0, '9', 3),
-    ('Highly recommended',                                        2.0, '10', 3),
-    ('The blog post is very descriptive and informative.',        5.0, '11', 3),
-    ('I love this blog post!',                                    4.0, '12', 3);
+    ('Highly recommended',                                        2.0, '10', 4),
+    ('The blog post is very descriptive and informative.',        5.0, '11', 5),
+    ('I love this blog post!',                                    4.0, '12', 6);
+    ('The blog post is very descriptive and informative.',        5.0, '11', 7),
+    ('I love this blog post!',                                    4.0, '12', 7);

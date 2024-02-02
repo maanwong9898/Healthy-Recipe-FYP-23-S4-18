@@ -113,6 +113,37 @@ VALUES
         'Designed by Freepik',  -- img_title
         2 -- educational_content_type_id
     ),
+    (
+        '7',
+        '2024-02-02 15:30:00',  -- CreatedDT
+        'healthhub',  -- Publisher
+        'Healthy Eating Tips to Feast Without Guilt',  -- Title
+        'We love a good feast. Mindful eating and switching out sinful foods for healthier options are some ways you can feast without guilt. \nOnce we sit down and help ourselves generously to some pen cai or pineapple tarts during Chinese New Year, the primal mind takes over, and we are gripped by the impulse to eat as much as possible.
+         \nHealthy Eating Tip 1: Practice Mindful Eating \nDo not give in and always practice mindful eating. You can control your intake using smaller plates when dining so that you do not overload a bigger plate with excessive food. \nDrink plenty of water during the day and practice mindful eating. Pause during your meal to monitor your hunger. Easier said than done? Maybe. But before you start feasting this festive season, stop and take a moment to remember that those calories gained are not as easily shed. 
+         \nHealthy Eating Tip 2: Avoid Food high in fat \nAvoid dishes high in fat, especially saturated fat. This can come from fatty meat or poultry skin or from deep frying or coconut milk in sauces. \nBraised pork belly, or just about any dish made with meat that is high in fat, should be replaced with leaner cuts.
+         \nHealthy Eating Tip 3: Go for Good, Healthy Food \nBoiled, grilled or steamed dishes such as fish are healthier options. Vegetables are a must — chap chai is a good choice. Traditional yu sheng can be a healthy dish, but only if you limit the oil, sugary sauces and fried crackers.​'
+        3,
+        'https://img.freepik.com/free-photo/chinese-new-year-lantern_778687-2294.jpg?t=st=1706877341~exp=1706880941~hmac=45ab9e093fcf2ae5b28b7cc27919e86262ceb7dac421ff0a9d2ed75c5bd91d7f&w=1380'
+        'Author: verazinha, Designed by Freepik',  -- img_title
+        1 -- educational_content_type_id
+    ),
+    (
+        '8',
+        '2024-01-09 15:30:00',  -- CreatedDT
+        'healthhub',  -- Publisher
+        'Healthy Cooking with Sauces',  -- Title
+        'Sauces! They are delicious and also sources of sugar and salt. Learn how to cut down on sugar and how to reduce salt intake when cooking with sauces with these healthy cooking methods. 
+         \nHealthy Cooking with Fish Sauce \nThis high-in-sodium sauce adds that salty oomph to Thai food and Vietnamese spring rolls. Cut back on this sauce if you have high blood pressure or hypertension. So, how to reduce your salt intake? For a slightly lower-in-sodium dipping sauce, try light soy sauce with chopped chili padi and a squeeze of lime.
+         \nHealthy Alternatives to Oyster Sauce \nOyster sauce, used to stir-fry veggies like kai lan and bok choy, is high in sodium. Use this sauce sparingly if you are watching your sodium intake or actively cutting back on the amount of sodium consumed at every meal - stir-fry your greens with spices like ginger, garlic, and peppercorns instead!
+         \nLess Salt with Sambal Belacan \nThis spicy, shrimpy sauce is high in sodium and calories, so eat less if you have high blood pressure or are watching your calories. When frying sambal belacan at home, taste before adding salt as belacan is already salty.
+         \nLower Sodium Light Soy Sauce \nSavoury soy sauce is light in calories but high in sodium. Remember to taste your food before seasoning: ask yourself if you really need extra soy sauce in your dry mee pok. Also, check out lower-sodium versions of soy sauces.
+         \nSubstitute Garlic Chilli Sauce with Spices \nThis sauce isnt especially high in calories, salt, or sugar, but the numbers do add up, so eat moderately if you are watching your calorie and sodium intake! Perhaps cut down from two packets of sauce to one when you are eating fries or chicken wings. Here is a healthy cooking tip: Try substituting with spices like paprika and garlic powder.
+         \nSwitch up your sauces to enjoy a healthier and equally delicious meal! '
+        3,
+        'https://img.freepik.com/premium-photo/earthenware-pottery-jar-collection-with-rustic-decoration-ornate-pattern-generated-by-artificial-intelligence_24640-117438.jpg?w=1060'
+        'Author: stockgiu, Designed by Freepik',  -- img_title
+        1 -- educational_content_type_id
+    ),
 
 
 -- Educational content review rating
@@ -129,3 +160,5 @@ VALUES
     ('The content is very informative!',                5.0, '8', 4),
     ('I love this content!' ,                           4.0, '9', 5);
     ('This is really helpful!' ,                        5.0, '9', 6);
+    ('The content is very informative!',                5.0, '8', 7),
+    ('The content is very detailed',                    5.0, '8', 8),

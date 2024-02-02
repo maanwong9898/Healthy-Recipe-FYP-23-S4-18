@@ -10,6 +10,8 @@ import ArrowLeftIcon from "@mui/icons-material/ArrowLeft";
 // this is to view particular meal plan
 // router path: /nutritionist/mealPlan/viewMealPlan/[id]
 
+// TO DO: RESPONSIVENESS OF RECIPE CARD
+
 const fetchMealPlanById = async (mealPlanId) => {
   try {
     // Ensure mealPlanId is a string if the IDs in your URL need to be strings
@@ -202,7 +204,7 @@ const ViewMealPlan = ({ params }) => {
     <div className="pt-8 pb-16 lg:pt-16 lg:pb-24 bg-white">
       <div className="text-center font-semibold font-sans">
         <h1 className="flex flex-wrap justify-center mb-4 text-2xl font-extrabold text-gray-900 lg:mb-6 lg:text-5xl">
-          {mealPlan.title || "No title"}
+          {mealPlan.title || "Untitled Meal Plan"}
         </h1>
         {/* Publisher and published date section */}
         <div className="flex justify-center text-sm font-serif font-semibold lg:text-base text-gray-900 space-x-6 mx-auto max-w-screen-xl">
@@ -248,7 +250,7 @@ const ViewMealPlan = ({ params }) => {
         <img
           src={mealPlan.img}
           alt="Credit to the source of the image"
-          className="max-w-xl mx-auto mt-8 mb-8 rounded-lg shadow-xl sm:mt-16 sm:mb-16"
+          className="max-w-full mx-auto mt-8 mb-8 sm:max-w-xl sm:mt-16 sm:mb-16 rounded-lg shadow-xl"
         />
         {/* Main content */}
         <section className="main-content mt-10 pl-9 pr-9 mx-auto max-w-screen-xl md:text-base text-left">
@@ -256,7 +258,7 @@ const ViewMealPlan = ({ params }) => {
             {mealPlan.mainContent}
           </div>
         </section>
-        {/* Recipes */}
+        {/* Recipes - LARGE SCREEN VIEW */}
         <div className="mt-16 mx-auto max-w-screen-xl text-left border-t-2 border-gray-50">
           <p className="font-sans font-bold text-2xl md:text-4xl text-gray-900 mb-4 md:mt-8 ml-4 lg:ml-0">
             Suggested Recipes
@@ -264,7 +266,7 @@ const ViewMealPlan = ({ params }) => {
           {/* Recipes Carousel Section */}
           {mealPlan?.recipes && mealPlan.recipes.length > 0 ? (
             <div className="relative">
-              <div className="grid md:grid-cols-3 gap-4 justify-center">
+              <div className="grid md:grid-cols-3 grid-cols-1 gap-4 justify-center">
                 {displayedRecipes.map((recipe) => (
                   <RecipeCard
                     key={recipe.id}
@@ -307,6 +309,7 @@ const ViewMealPlan = ({ params }) => {
             <p className="text-center">No suggested recipes.</p>
           )}
         </div>
+
         {/* Conclusion */}
         <section className="main-content mt-10 pl-9 pr-9 mx-auto max-w-screen-xl md:text-base text-left">
           <div className="w-full p-2 rounded-lg whitespace-pre-line">
@@ -356,12 +359,6 @@ const ViewMealPlan = ({ params }) => {
         >
           Edit
         </button>
-        {/* <button
-          type="submit"
-          className="bg-red-600 hover:bg-red-700 text-white w-24 font-bold py-2 px-4 rounded-lg"
-        >
-          Delete
-        </button> */}
       </div>
     </div>
   );

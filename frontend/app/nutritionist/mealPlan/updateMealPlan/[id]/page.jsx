@@ -3,6 +3,9 @@ import { useRouter } from "next/navigation";
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import axiosInterceptorInstance from "../../../../axiosInterceptorInstance.js";
+import SearchIcon from "@mui/icons-material/Search";
+import AddCircleIcon from "@mui/icons-material/AddCircle";
+import RemoveCircleIcon from "@mui/icons-material/RemoveCircle";
 
 // https://uiwjs.github.io/react-md-editor/
 
@@ -364,14 +367,14 @@ const UpdateMealPlan = ({ params }) => {
     <div className="min-h-screen flex flex-col justify-center px-6 lg:px-8">
       {/* Adjust the max-width and width in the inline style */}
       <div
-        className="mt-16 mb-16 mx-auto bg-zinc-100 rounded-lg shadow-lg p-4 md:p-8 lg:p-12"
+        className="mt-16 mb-16 mx-auto bg-white rounded-lg shadow-lg p-4 md:p-8 lg:p-12"
         style={{ maxWidth: "600px", width: "100%" }} // Increase maxWidth and set width to 100%
       >
         {" "}
         {/* Smaller maxWidth */}
         <div className="p-4 space-y-4 md:space-y-12 ">
           <div className="p-6 space-y-4 md:space-y-2 sm:p-4">
-            <h1 className="text-xl md:text-2xl lg:text-3xl font-bold mb-6 leading-tight tracking-tight text-gray-900">
+            <h1 className="text-3xl lg:text-4xl font-bold leading-tight tracking-tight text-center text-gray-900 mb-8">
               Update Meal Plan
             </h1>
             <form className="space-y-6 md:space-y-5 lg:space-y-3">
@@ -496,20 +499,49 @@ const UpdateMealPlan = ({ params }) => {
                 <p className="block text-lg mb-1 font-semibold text-gray-900">
                   Suggested recipes:{" "}
                 </p>
-                <div className="flex flex-row space-x-5">
+                {/* SEARCH FOR LARGE SCREEN */}
+                <div className="relative flex-row gap-5 hidden lg:flex">
                   {/* Search bar for recipes */}
                   <input
                     type="text"
                     value={searchTerm}
                     onChange={handleSearchChange}
                     placeholder="Search recipes by title..."
-                    className="bg-gray-50 border border-gray-300 text-black sm:text-base rounded-lg block w-full p-2.5"
+                    className="bg-gray-50 border border-gray-300 text-black sm:text-base rounded-lg block w-full mr-auto p-2.5 pl-10"
                   />
+                  {/* Search Icon */}
+                  <span className="absolute inset-y-0 left-2 flex items-center">
+                    <SearchIcon />
+                  </span>
                   <button
                     onClick={handleSearch}
-                    className="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded-lg"
+                    className="bg-blue-600 hover:bg-blue-700 text-white font-semibold px-4 py-2.5 rounded-full"
                   >
                     Search
+                  </button>
+                </div>
+
+                {/* SEARCH - MOBILE VIEW */}
+                <div className="flex flex-row gap-2 justify-between lg:hidden">
+                  <div className="relative">
+                    <input
+                      type="text"
+                      value={searchTerm}
+                      onChange={handleSearchChange}
+                      placeholder="Search recipes by title..."
+                      className="bg-gray-50 border border-gray-300 text-black sm:text-base rounded-lg block w-full ml-auto p-2.5"
+                      style={{ width: "100%" }}
+                    />
+                    {/* Search Icon
+                    <span className="absolute inset-y-0 left-2 flex items-center">
+                      <SearchIcon />
+                    </span> */}
+                  </div>
+                  <button
+                    onClick={handleSearch}
+                    className=" text-black font-semibold rounded-full"
+                  >
+                    <SearchIcon />
                   </button>
                 </div>
 
@@ -517,21 +549,35 @@ const UpdateMealPlan = ({ params }) => {
                 <div>
                   {searchResults.length > 0 ? (
                     <div>
-                      <p className="font-bold text-lg">Results found:</p>
+                      <p className="font-semibold text-lg mt-2">
+                        Results found:
+                      </p>
                       <ul>
                         {searchResults.map((recipe) => (
                           <li
                             key={recipe.id}
-                            className="flex justify-between items-center my-1"
+                            className="flex justify-between items-center my-1 border-b border-gray-100 pb-1"
                           >
-                            <span className="mr-2 text-lg">{recipe.title}</span>
+                            <span className="mr-2 text-base">
+                              {recipe.title}
+                            </span>
                             <button
                               onClick={(event) =>
                                 addRecipeToMealPlan(recipe, event)
                               }
-                              className="bg-orange-600 hover:bg-orange-700 text-white font-semibold mt-2 p-2 px-4 rounded-lg"
+                              className="bg-emerald-500 hover:bg-emerald-600 text-white font-semibold text-xs mt-2 p-2 px-7 rounded-full hidden lg:block"
                             >
                               Add
+                            </button>
+
+                            {/* MOBILE VIEW */}
+                            <button
+                              onClick={(event) =>
+                                addRecipeToMealPlan(recipe, event)
+                              }
+                              className="lg:hidden"
+                            >
+                              <AddCircleIcon />
                             </button>
                           </li>
                         ))}
@@ -539,27 +585,43 @@ const UpdateMealPlan = ({ params }) => {
                     </div>
                   ) : (
                     searchAttempted &&
-                    searchTerm.trim() !== "" && <p>No results found.</p>
+                    searchTerm.trim() !== "" && (
+                      <p className="mt-2 font-medium text-red-500">
+                        No results found.
+                      </p>
+                    )
                   )}
                 </div>
 
                 {/* Selected Recipes */}
                 <div>
-                  <h3 className="font-bold text-lg">Selected Recipes</h3>
+                  <h3 className="font-semibold text-lg mt-2">
+                    Selected Recipes
+                  </h3>
                   <ul>
                     {selectedRecipes.map((recipe) => (
                       <li
                         key={recipe.id}
-                        className="flex justify-between items-center my-1"
+                        className="flex justify-between items-center my-1 border-b border-gray-100 pb-1"
                       >
-                        <span className="mr-2 text-lg">{recipe.title}</span>
+                        <span className="mr-2 text-base">{recipe.title}</span>
                         <button
                           onClick={(event) =>
                             removeRecipeFromMealPlan(recipe.id, event)
                           }
-                          className="bg-red-600 hover:bg-red-700 text-white font-semibold mt-2 p-2 px-4 rounded-lg"
+                          className="bg-red-600 hover:bg-red-700 text-white font-semibold text-xs mt-2 p-2 px-4 rounded-full hidden lg:block"
                         >
                           Remove
+                        </button>
+
+                        {/* MOBILE VIEW */}
+                        <button
+                          onClick={(event) =>
+                            removeRecipeFromMealPlan(recipe.id, event)
+                          }
+                          className="lg:hidden"
+                        >
+                          <RemoveCircleIcon />
                         </button>
                       </li>
                     ))}
@@ -571,7 +633,7 @@ const UpdateMealPlan = ({ params }) => {
               <div className="flex flex-col">
                 <label
                   htmlFor="imageUrl"
-                  className="block text-lg mb-1 font-semibold text-gray-900 mt-4"
+                  className="block text-lg mb-1 font-semibold text-gray-900"
                 >
                   Image URL<span className="text-red-500">*</span>
                 </label>
@@ -614,19 +676,19 @@ const UpdateMealPlan = ({ params }) => {
 
               {/* ERROR MESSAGE */}
               {error && (
-                <p className="text-red-500 font-semibold text-2xl">
+                <p className="text-red-500 font-semibold text-base">
                   Failed to update meal plan: {error}
                 </p>
               )}
               {success && (
-                <p className="text-green-500 font-semibold text-2xl">
+                <p className="text-green-500 font-semibold text-base">
                   Meal plan was updated successfully!
                 </p>
               )}
               {/* SUBMIT BUTTON */}
               <div className="flex flex-row space-x-5">
                 <button className="bg-red-600 hover:bg-red-700 text-white font-semibold py-2 px-4 rounded-lg">
-                  <Link href="/nutritionist/mealPlan">Cancel</Link>
+                  <Link href="/nutritionist/mealPlan">Back</Link>
                 </button>
                 <button
                   type="submit"

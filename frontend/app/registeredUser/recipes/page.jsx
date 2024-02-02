@@ -666,6 +666,15 @@ const RecipesPageForUser = () => {
             </p>
           )}
         </div>
+        {/* <div className="mb-2 md:mb-0 md:mr-6">
+          <button
+            onClick={handlePersonalisedRecipe}
+            className="mr-2 p-2 rounded-lg border w-full md:w-auto bg-orange-400 hover:bg-orange-500 text-white py-1.5 px-5"
+            style={{ maxWidth: "300px" }}
+          >
+            Personalised Recipe
+          </button>
+        </div> */}
       </div>
       {/* Button to open filter option */}
       <div className="mb-5 mr-3">

@@ -90,7 +90,7 @@ const ViewPersonalRecipe = ({ params }) => {
   const renderPostCard = (post) => (
     <div
       key={post.id}
-      className="rounded shadow-lg overflow-hidden flex flex-col"
+      className="rounded-lg shadow-lg overflow-hidden flex flex-col"
       style={{
         border: "0.5px solid transparent",
         background:
@@ -101,13 +101,18 @@ const ViewPersonalRecipe = ({ params }) => {
     >
       <img
         src={post.img}
-        alt="Credit to the source"
+        alt={post.img_title}
         className="w-full object-cover rounded-sm"
         style={{ height: "192px" }}
       />
       <div className="flex-grow flex flex-col justify-between p-4 bg-white">
         <div>
-          <h2 className="text-2xl font-extrabold mb-2">{post.title}</h2>
+          <h2
+            className="text-2xl font-extrabold mb-2 hover:text-orange-600 cursor-pointer"
+            onClick={() => handleViewRecipe(post.id)}
+          >
+            {post.title}
+          </h2>
           <div
             className="text-gray-700 text-base mb-4 line-clamp-3"
             style={{ height: "4.5rem" }}
@@ -120,12 +125,6 @@ const ViewPersonalRecipe = ({ params }) => {
             {post.blogType.subcategoryName}
           </div>
         </div> */}
-        <button
-          onClick={() => handleViewRecipe(post.id)}
-          className="text-white font-bold bg-gradient-to-br from-cyan-400 to-cyan-800 hover:bg-blue-950 border-2 border-black focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 rounded-lg text-sm mt-3 px-4 py-2 text-center"
-        >
-          Read more
-        </button>
       </div>
     </div>
   );
@@ -137,11 +136,11 @@ const ViewPersonalRecipe = ({ params }) => {
   };
 
   return (
-    <div>
-      <div className="mb-5 ml-5">
-        <h2 className="text-2xl font-bold mb-4 mt-4">
+    <div className="flex flex-col min-h-screen">
+      <div className="mb-5 ml-5 mt-10">
+        <h1 className="text-2xl text-center md:text-5xl font-extrabold font-sans text-gray-900 mb-4 md:mb-8">
           Your Personal Recipe Recommendation
-        </h2>
+        </h1>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
           {recipes.map((post) => renderPostCard(post))}
         </div>

@@ -1,34 +1,55 @@
 "use client";
-import { useRouter } from "next/navigation";
-import React, { useEffect, useState } from "react";
-import axios from "axios";
+import React, { useEffect, useState, useRef } from "react";
+import HomeNavbar from "@/app/components/navigation/homeNavBar";
+import axiosInterceptorInstance from "../../../axiosInterceptorInstance.js";
 
 const VerifyEmail = () => {
-  const router = useRouter();
   const [token, setToken] = useState("");
+  const [message, setMessage] = useState("");
+  const [loadingMessage, setLoadingMessage] = useState(
+    "Verification is being processed..."
+  );
+  const [showMessage, setShowMessage] = useState(false);
+  const hasRun = useRef(false);
 
   useEffect(() => {
-    // When the component mounts and the URL is available
+    if (hasRun.current) return;
+    hasRun.current = true;
+
     if (typeof window !== "undefined") {
       const urlParams = new URLSearchParams(window.location.search);
       const tokenFromUrl = urlParams.get("token");
       setToken(tokenFromUrl);
 
-      // You can then use the token to make a verification request to your backend
-      // axios.get(`http://localhost:8080/verify/confirm?token=${tokenFromUrl}`)
-      //   .then(response => {
-      //     // Handle the response from the backend
-      //   })
-      //   .catch(error => {
-      //     // Handle any errors that occur during verification
-      //   });
+      setTimeout(() => {
+        setLoadingMessage("Thank you for waiting");
+        setShowMessage(true); // Set showMessage to true after 3 seconds
+      }, 3000); // Wait for 3 seconds before changing the message
+
+      const verifyToken = async (tokenFromUrl) => {
+        try {
+          const response = await axiosInterceptorInstance.get(
+            `/verify/confirm?token=${tokenFromUrl}`
+          );
+          setMessage(response.data);
+        } catch (error) {
+          console.error(`Error verify token: ${tokenFromUrl}`, error);
+          setMessage("Error verifying token");
+        }
+      };
+
+      verifyToken(tokenFromUrl);
     }
   }, []);
 
   return (
     <div>
-      <h1>Verify Email</h1>
-      <p>Token: {token}</p>
+      <HomeNavbar />
+      <p className="font-bold text-2xl m-3">{loadingMessage}</p>
+      {showMessage && (
+        <p className="font-medium text-base m-3">{message}</p>
+      )}{" "}
+      {/* Conditionally render the message */}
     </div>
   );
 };

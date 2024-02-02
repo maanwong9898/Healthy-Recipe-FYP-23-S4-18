@@ -302,13 +302,18 @@ const EducationalContentPageForUser = () => {
     >
       <img
         src={post.img}
-        alt="Designed by Freepik"
+        alt={post.img_title}
         className="w-full object-cover rounded-sm"
         style={{ height: "192px" }}
       />
       <div className="flex-grow flex flex-col justify-between p-4 bg-white">
         <div>
-          <h2 className="text-2xl font-extrabold mb-2">{post.title}</h2>
+          <h2
+            className="text-2xl font-extrabold mb-2 hover:text-orange-600 cursor-pointer"
+            onClick={() => handleViewEduContent(post.id)}
+          >
+            {post.title}
+          </h2>
           <div
             className="text-gray-700 text-base mb-4 line-clamp-3"
             style={{ height: "4.5rem" }}
@@ -321,12 +326,6 @@ const EducationalContentPageForUser = () => {
             {post.educationalContentType.subcategoryName}
           </div>
         </div> */}
-        <button
-          onClick={() => handleViewEduContent(post.id)}
-          className="text-white font-bold bg-gradient-to-br from-cyan-400 to-cyan-800 hover:bg-blue-950 border-2 border-black focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 rounded-lg text-sm mt-3 px-4 py-2 text-center"
-        >
-          Read more
-        </button>
       </div>
     </div>
   );
@@ -344,8 +343,8 @@ const EducationalContentPageForUser = () => {
   return (
     <div>
       <HomeNavbar />
-      <div className="bg-white p-4 md:p-10">
-        <h1 className="text-2xl md:text-4xl font-extrabold font-mono text-cyan-800 mb-4 md:mb-8">
+      <div className="p-4 md:p-10">
+        <h1 className="text-3xl text-center md:text-7xl font-extrabold font-sans text-gray-900 mb-4 md:mb-8">
           Educational Content
         </h1>
         <div className="flex sm:justify-between sm:items-center mb-4">
@@ -353,8 +352,8 @@ const EducationalContentPageForUser = () => {
           <div className="flex-grow">
             <input
               type="text"
-              id="eduContentSearch"
-              name="eduContentSearch"
+              id="mealPlanSearch"
+              name="mealPlanSearch"
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
               onKeyDown={(e) => {
@@ -362,20 +361,20 @@ const EducationalContentPageForUser = () => {
                   handleSearchClick();
                 }
               }}
-              placeholder="Search Educational Content Title..."
-              className="mr-2 p-2 rounded border-2 border-black mb-2 sm:mb-0"
+              placeholder="Search by title..."
+              className="mr-2 p-2 rounded-lg border w-full md:w-auto"
               style={{ flex: 1 }}
             />
             <button
               onClick={handleSearchClick}
-              className="text-white p-2 border-2 border-black bg-gradient-to-br from-cyan-400 to-cyan-800 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 rounded-lg text-base font-bold px-5 py-2.5 text-center"
+              className="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-1.5 px-5 rounded-full mt-2 w-full lg:w-auto"
               style={{ flexShrink: 0 }}
             >
               Search
             </button>
             {/* Results count */}
             {searchButtonClicked && searchPerformed && (
-              <p className="text-left text-red font-bold text-xl sm:ml-2">
+              <p className="text-left text-red-500 font-bold text-lg sm:ml-2">
                 {resultsCount} results found.
               </p>
             )}
@@ -393,7 +392,7 @@ const EducationalContentPageForUser = () => {
               id="sort"
               value={sortOption}
               onChange={(e) => setSortOption(e.target.value)}
-              className="p-2 rounded border-2 border-black text-black"
+              className="mr-2 p-2 rounded-lg border w-full md:w-auto"
               style={{ maxWidth: "300px" }}
             >
               {Object.values(sortOptions).map((option) => (
@@ -416,7 +415,7 @@ const EducationalContentPageForUser = () => {
                 id="categoryFilter"
                 value={categoryFilter}
                 onChange={(e) => setCategoryFilter(e.target.value)}
-                className="p-2 rounded border-2 border-black text-black"
+                className="mr-2 p-2 rounded-lg border w-full md:w-auto"
                 style={{ maxWidth: "300px" }}
               >
                 <option value="">All Categories</option>
@@ -440,14 +439,14 @@ const EducationalContentPageForUser = () => {
             {!searchPerformed && !categoryFilter && !sortOption ? (
               <>
                 <div className="mb-5">
-                  <h2 className="text-2xl font-bold mb-4 mt-4">
+                  <h2 className="text-3xl font-semibold mb-4 mt-4">
                     Latest Educational Content
                   </h2>
                   <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
                     {latestEduContent.map((post) => renderPostCard(post))}
                   </div>
                 </div>
-                <h2 className="text-2xl font-bold mb-4 mt-4">
+                <h2 className="text-3xl font-semibold mb-4 mt-4">
                   Other Educational Content
                 </h2>
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-4">

@@ -4,6 +4,8 @@ import React from "react";
 import Link from "next/link";
 import { useState, useEffect } from "react";
 import axiosInterceptorInstance from "../../../../axiosInterceptorInstance.js";
+import HomeNavbar from "@/app/components/navigation/homeNavBar/index.jsx";
+import Footer from "@/app/components/footer/index.jsx";
 
 // this is to view particular educational content from landing page
 // router path: /educationalContent/viewEducationalContent/[id]
@@ -84,7 +86,7 @@ const ViewEducationalContent = ({ params }) => {
       stars.push(
         <span
           key={i}
-          className={i < rating ? "text-yellow-500" : "text-gray-300"}
+          className={i < rating ? "text-yellow-300" : "text-gray-300"}
         >
           ★
         </span>
@@ -99,98 +101,110 @@ const ViewEducationalContent = ({ params }) => {
   }
 
   return (
-    <div className="pt-8 pb-16 lg:pt-16 lg:pb-24 bg-white">
-      {/* Conditional rendering based on isLoading state */}
-      {isLoading ? (
-        <div className="loading-indicator text-center">
-          <p>Loading educational content...</p>
-        </div>
-      ) : (
-        <>
-          <div className="text-center font-semibold font-mono">
-            <h1 className="mb-4 text-2xl font-extrabold leading-tight text-cyan-900 lg:mb-6 lg:text-4xl">
-              {eduContent?.title || "No title"}
-            </h1>
-            <div className="flex justify-center text-base lg:text-xl text-black space-x-6 mx-auto max-w-screen-xl">
-              <p>
-                Published by:
-                <span className="text-cyan-600">
-                  {eduContent?.publisher || "No publisher"}
-                </span>
-              </p>
-              <p>
-                Posted on:{" "}
-                <span className="text-cyan-600">
-                  {new Date(eduContent?.createdDateTime).toLocaleDateString(
-                    "en-GB",
-                    {
-                      day: "2-digit",
-                      month: "short",
-                      year: "numeric",
-                    }
-                  )}
-                </span>
-              </p>
-
-              <p>
-                Category:{" "}
-                <span className="text-cyan-600">
-                  {eduContent?.educationalContentType
-                    ? eduContent.educationalContentType.subcategoryName
-                    : "Not specified"}
-                </span>
-              </p>
-            </div>
+    <div>
+      <HomeNavbar />
+      <div className="pt-8 pb-16 lg:pt-16 lg:pb-24 bg-white">
+        {/* Conditional rendering based on isLoading state */}
+        {isLoading ? (
+          <div className="loading-indicator text-center">
+            <p>Loading educational content...</p>
           </div>
-          <article>
-            <img
-              src={eduContent?.img || "No image"}
-              alt="Credit to the source of image"
-              className="max-w-xl mx-auto mt-8 mb-8 rounded-lg shadow-xl sm:mt-16 sm:mb-16"
-            />
+        ) : (
+          <>
+            <div className="text-center font-semibold font-sans">
+              <h1 className="flex flex-wrap justify-center mb-4 text-2xl font-extrabold text-gray-900 lg:mb-6 lg:text-5xl">
+                {eduContent.title || "Untitled Educational Content"}
+              </h1>
+              {/* Publisher and published date section */}
+              <div className="flex justify-center text-sm font-serif font-semibold lg:text-base text-gray-900 space-x-6 mx-auto max-w-screen-xl">
+                <p>
+                  Published by:{" "}
+                  <span className="text-orange-600 font-bold tracking-tight">
+                    {eduContent.publisher || "Not Specified"}
+                  </span>
+                </p>
+                <p>
+                  Posted on:{" "}
+                  <span className="text-orange-600 font-bold tracking-tight">
+                    {new Date(eduContent.createdDateTime).toLocaleDateString(
+                      "en-GB",
+                      {
+                        day: "2-digit",
+                        month: "short",
+                        year: "numeric",
+                      }
+                    )}
+                  </span>
+                </p>
 
-            {/* Info*/}
-            <section className="main-content mt-10 pl-9 pr-9 mx-auto max-w-screen-xl md:text-base text-left">
-              <div className="w-full p-2 rounded-lg whitespace-pre-line">
-                {eduContent?.info || "No info"}
+                <p>
+                  Category:{" "}
+                  <span className="text-orange-600 font-bold tracking-tight">
+                    {eduContent.educationalContentType
+                      ? eduContent.educationalContentType.subcategoryName
+                      : "Not specified"}
+                  </span>
+                </p>
               </div>
-            </section>
-          </article>
-          <footer className="blog-post-reviews mt-10 px-9 mx-auto max-w-screen-xl text-left">
-            <p className="font-mono font-bold text-2xl text-cyan-600">
-              Rating and Reviews
-            </p>
-            {/*Check if reviews exist*/}
-            {reviewsAndRatings.length > 0 ? (
-              reviewsAndRatings.map((review, index) => (
-                <div key={index} className="my-4 p-4 border-b border-gray-200">
-                  <div className="flex items-center mb-2">
-                    <span className="font-bold mr-2">
-                      {review?.userDTO?.username || "Anonymous"}
-                    </span>
-                    <div className="flex">{renderStars(review.rating)}</div>
-                    <span className="text-sm text-gray-500 ml-2">
-                      {new Date(review?.createdDateTime).toLocaleDateString(
-                        "en-GB",
-                        {
-                          day: "2-digit",
-                          month: "short",
-                          year: "numeric",
-                        }
-                      )}
-                    </span>
-                  </div>
-                  <p>{review.review}</p>
+              {/* End of publihsed, published date, category */}
+            </div>
+
+            {/* Image Section */}
+            <article>
+              <img
+                src={eduContent.img}
+                alt="Designed by Freepik"
+                className="max-w-full mx-auto mt-8 mb-8 sm:max-w-xl sm:mt-16 sm:mb-16 rounded-lg shadow-xl"
+              />
+              {/* Info*/}
+              <section className="main-content mt-10 pl-9 pr-9 mx-auto max-w-screen-xl md:text-base text-left">
+                <div className="w-full p-2 rounded-lg whitespace-pre-line">
+                  {eduContent.info}
                 </div>
-              ))
-            ) : (
-              <p className="text-center text-gray-600">
-                No ratings and reviews yet.
+              </section>
+            </article>
+
+            {/* Ratings and Reviews */}
+            <div className="blog-post-reviews mt-16 mx-auto max-w-screen-xl text-left border-t-2 border-gray-50">
+              <p className="font-sans font-bold text-2xl md:text-4xl text-gray-900 mb-4 md:mt-8 ml-4 lg:ml-0">
+                Rating and Reviews
               </p>
-            )}
-          </footer>
-        </>
-      )}
+              {/* Check if reviews exist */}
+              {reviewsAndRatings.length > 0 ? (
+                reviewsAndRatings.map((review, index) => (
+                  <div
+                    key={index}
+                    className="my-4 p-4 border-b border-gray-200"
+                  >
+                    <div className="flex items-center mb-2">
+                      <span className="font-bold text-sm md:text-base mr-2">
+                        {review?.userDTO?.username || "Anonymous"}
+                      </span>
+                      <div className="flex">{renderStars(review.rating)}</div>
+                      <span className="text-xs md:text-sm text-gray-500 ml-2">
+                        {new Date(review?.createdDateTime).toLocaleDateString(
+                          "en-GB",
+                          {
+                            day: "2-digit",
+                            month: "short",
+                            year: "numeric",
+                          }
+                        )}
+                      </span>
+                    </div>
+                    <p>{review.review}</p>
+                  </div>
+                ))
+              ) : (
+                <p className="text-center text-gray-600">
+                  No ratings and reviews yet.
+                </p>
+              )}
+            </div>
+          </>
+        )}
+      </div>
+      <Footer />
     </div>
   );
 };

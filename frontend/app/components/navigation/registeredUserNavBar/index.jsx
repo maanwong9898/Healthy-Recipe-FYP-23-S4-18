@@ -6,7 +6,7 @@ import Image from "next/image";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircleUser } from "@fortawesome/free-solid-svg-icons";
 
-const AccountDropdownMenu = () => {
+const AccountDropdownMenu = ({ onLogout }) => {
   return (
     <div className="absolute left-0 top-10 w-48 rounded-md shadow-lg bg-white z-10">
       <ul>
@@ -27,7 +27,7 @@ const AccountDropdownMenu = () => {
           <Link href="/registeredUser/myAccount/checkBMI">BMI Calculator</Link>
         </li>
         <li className="px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
-          <Link href="/">Logout</Link>
+          <button onClick={onLogout}>Logout</button>
         </li>
       </ul>
     </div>
@@ -71,11 +71,18 @@ const RegisteredUserNavBar = () => {
     }, 300);
   };
 
+  //Logout handler
   const confirmAndLogout = () => {
     console.log("logout");
     // Clear user data from local storage
-    localStorage.removeItem("username");
-    localStorage.removeItem("profile");
+    localStorage.removeItem("token");
+    localStorage.removeItem("role");
+    localStorage.removeItem("userId");
+
+    // check what is the local storage
+    console.log(localStorage.getItem("token"));
+    console.log(localStorage.getItem("role"));
+    console.log(localStorage.getItem("userId"));
 
     // Redirect to the homepage
     router.push("/");
@@ -177,19 +184,23 @@ const RegisteredUserNavBar = () => {
                   {username || "My Account"}
                 </span>
               </span>
-              {isAccountDropdownVisible && <AccountDropdownMenu />}
+              {/* {isAccountDropdownVisible && <AccountDropdownMenu />} */}
+              {isAccountDropdownVisible && (
+                <AccountDropdownMenu onLogout={confirmAndLogout} />
+              )}
             </div>
 
             {/* For small screens */}
             <Link href="/registeredUser/myAccount/viewAccount">
-              <button
-                onClick={confirmAndLogout}
-                className="block md:hidden py-2 pr-4 pl-3 rounded-lg md:ml-auto md:p-0 text-base font-bold hover:text-orange-600"
-              >
+              <button className="block md:hidden py-2 pr-4 pl-3 rounded-lg md:ml-auto md:p-0 text-base font-bold hover:text-orange-600">
                 My Account
               </button>
             </Link>
-            <button className="block md:hidden py-2 pr-4 pl-3 rounded-lg md:ml-auto md:p-0 text-base font-bold hover:text-orange-600">
+            <button
+              onClick={confirmAndLogout}
+              className="block md:hidden py-2 pr-4 pl-3 rounded-lg md:ml-auto md:p-0 text-base font-bold hover:text-orange-600"
+            >
+              {" "}
               Logout
             </button>
           </div>

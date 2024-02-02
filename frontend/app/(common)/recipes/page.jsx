@@ -473,7 +473,7 @@ const RecipesPageForUser = () => {
   const renderPostCard = (post) => (
     <div
       key={post.id}
-      className="rounded shadow-lg overflow-hidden flex flex-col"
+      className="rounded-lg shadow-lg overflow-hidden flex flex-col"
       style={{
         border: "0.5px solid transparent",
         background:
@@ -484,13 +484,18 @@ const RecipesPageForUser = () => {
     >
       <img
         src={post.img}
-        alt="Credit to the source"
+        alt={post.img_title}
         className="w-full object-cover rounded-sm"
         style={{ height: "192px" }}
       />
       <div className="flex-grow flex flex-col justify-between p-4 bg-white">
         <div>
-          <h2 className="text-2xl font-extrabold mb-2">{post.title}</h2>
+          <h2
+            className="text-2xl font-extrabold mb-2 hover:text-orange-600 cursor-pointer"
+            onClick={() => handleViewRecipe(post.id)}
+          >
+            {post.title}
+          </h2>
           <div
             className="text-gray-700 text-base mb-4 line-clamp-3"
             style={{ height: "4.5rem" }}
@@ -503,12 +508,12 @@ const RecipesPageForUser = () => {
             {post.blogType.subcategoryName}
           </div>
         </div> */}
-        <button
+        {/* <button
           onClick={() => handleViewRecipe(post.id)}
           className="text-white font-bold bg-gradient-to-br from-cyan-400 to-cyan-800 hover:bg-blue-950 border-2 border-black focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 rounded-lg text-sm mt-3 px-4 py-2 text-center"
         >
           Read more
-        </button>
+        </button> */}
       </div>
     </div>
   );
@@ -634,9 +639,8 @@ const RecipesPageForUser = () => {
   return (
     <div>
       <HomeNavbar />
-
-      <div className="bg-white p-4 md:p-10">
-        <h1 className="text-2xl md:text-4xl font-extrabold font-mono text-cyan-800 mb-4 md:mb-8">
+      <div className="p-4 md:p-10">
+        <h1 className="text-3xl text-center md:text-7xl font-extrabold font-sans text-gray-900 mb-4 md:mb-8">
           Recipes
         </h1>
         <div className="flex sm:justify-between sm:items-center mb-4">
@@ -654,12 +658,12 @@ const RecipesPageForUser = () => {
                 }
               }}
               placeholder="Search recipe title..."
-              className="mr-2 p-2 rounded border-2 border-black mb-2 sm:mb-0"
+              className="mr-2 p-2 rounded-lg border w-full md:w-auto"
               style={{ flex: 1 }}
             />
             <button
               onClick={handleSearchClick}
-              className="text-white p-2 border-2 border-black bg-gradient-to-br from-cyan-400 to-cyan-800 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 rounded-lg text-base font-bold px-5 py-2.5 text-center"
+              className="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-1.5 px-5 rounded-full mt-2 w-full lg:w-auto"
               style={{ flexShrink: 0 }}
             >
               Search
@@ -676,7 +680,7 @@ const RecipesPageForUser = () => {
         <div className="mb-5 mr-3">
           <button
             onClick={toggleFilterSection}
-            className="text-orange-400 p-2 bg-white hover:text-orange-700 rounded-lg text-xl font-bold px-5 py-2.5 text-center"
+            className="text-gray-900 p-2 hover:text-orange-400 rounded-lg text-xl font-bold px-5 py-2.5 text-center"
             style={{ flexShrink: 0, textDecoration: "underline" }}
           >
             {isFilterSectionOpen ? "Hide Filters" : "Show Filters"}
@@ -692,7 +696,7 @@ const RecipesPageForUser = () => {
             {/* Full width on small screens, 1/4 width on larger screens */}
             {/* Conditional rendering of the filter section */}
             {isFilterSectionOpen && (
-              <div className="flex flex-col gap-4 mb-4 p-4 bg-orange-50 rounded-lg text-xl">
+              <div className="flex flex-col gap-4 mb-4 p-4 bg-gray-50 border rounded-lg text-xl">
                 {/* Dietary Preferences */}
                 <div className="flex-1 min-w-[200px]">
                   <label
@@ -706,7 +710,7 @@ const RecipesPageForUser = () => {
                     onChange={(e) =>
                       setSelectedDietaryPreference(e.target.value)
                     }
-                    className="form-select block"
+                    className="form-select mr-2 p-2 rounded-lg border w-full md:w-auto"
                   >
                     <option value="">All Dietary Preferences</option>
                     {dietaryPreferencesCategory.map((dp) => (
@@ -737,7 +741,7 @@ const RecipesPageForUser = () => {
                           onChange={(e) =>
                             handleAllergyChange(e, allergy.subcategoryName)
                           }
-                          className="mr-2"
+                          className="w-4 h-4 bg-white border-gray-300 rounded mr-2"
                         />
                         <label htmlFor={`allergy-${allergy.id}`}>
                           {allergy.subcategoryName}
@@ -758,7 +762,7 @@ const RecipesPageForUser = () => {
 
                   <div className="flex-col min-w-[200px] mt-3">
                     {/* Calories */}
-                    <p className="text-orange-700 text-xl font-bold mb-2">
+                    <p className="text-orange-600 text-xl font-semibold mb-2">
                       Calories:
                     </p>
                     <div className="flex items-center">
@@ -773,7 +777,7 @@ const RecipesPageForUser = () => {
                         id="caloriesMinFilter"
                         value={caloriesMinFilter}
                         onChange={(e) => setCaloriesMinFilter(e.target.value)}
-                        className="form-control block"
+                        className="form-control block rounded-lg border border-gray-400"
                         style={{ width: "80px", marginRight: "8px" }} // adjust the width as needed
                       />
 
@@ -788,13 +792,13 @@ const RecipesPageForUser = () => {
                         id="caloriesMaxFilter"
                         value={caloriesMaxFilter}
                         onChange={(e) => setCaloriesMaxFilter(e.target.value)}
-                        className="form-control block"
+                        className="form-control block rounded-lg border border-gray-400"
                         style={{ width: "80px" }} // adjust the width as needed
                       />
                     </div>
 
                     {/* Carbs */}
-                    <p className="text-orange-700 text-xl font-bold mb-2 mt-4">
+                    <p className="text-orange-600 text-xl font-semibold mb-2">
                       Carbs:
                     </p>
                     <div className="flex items-center">
@@ -809,7 +813,7 @@ const RecipesPageForUser = () => {
                         id="carbsMinFilter"
                         value={carbsMinFilter}
                         onChange={(e) => setCarbsMinFilter(e.target.value)}
-                        className="form-control block"
+                        className="form-control block rounded-lg border border-gray-400"
                         style={{ width: "80px", marginRight: "8px" }} // adjust the width as needed
                       />
 
@@ -824,13 +828,13 @@ const RecipesPageForUser = () => {
                         id="carbsMaxFilter"
                         value={carbsMaxFilter}
                         onChange={(e) => setCarbsMaxFilter(e.target.value)}
-                        className="form-control block"
+                        className="form-control block rounded-lg border border-gray-400"
                         style={{ width: "80px" }} // adjust the width as needed
                       />
                     </div>
 
                     {/* Protein */}
-                    <p className="text-orange-700 text-xl font-bold mb-2 mt-4">
+                    <p className="text-orange-600 text-xl font-semibold mb-2">
                       Protein:
                     </p>
                     <div className="flex items-center">
@@ -845,7 +849,7 @@ const RecipesPageForUser = () => {
                         id="proteinMinFilter"
                         value={proteinMinFilter}
                         onChange={(e) => setProteinMinFilter(e.target.value)}
-                        className="form-control block"
+                        className="form-control block rounded-lg border border-gray-400"
                         style={{ width: "80px", marginRight: "8px" }} // adjust the width as needed
                       />
 
@@ -860,13 +864,13 @@ const RecipesPageForUser = () => {
                         id="proteinMaxFilter"
                         value={proteinMaxFilter}
                         onChange={(e) => setProteinMaxFilter(e.target.value)}
-                        className="form-control block"
+                        className="form-control block rounded-lg border border-gray-400"
                         style={{ width: "80px" }} // adjust the width as needed
                       />
                     </div>
 
                     {/* Fat */}
-                    <p className="text-orange-700 text-xl font-bold mb-2 mt-4">
+                    <p className="text-orange-600 text-xl font-semibold mb-2">
                       Fat:
                     </p>
                     <div className="flex items-center">
@@ -881,7 +885,7 @@ const RecipesPageForUser = () => {
                         id="fatMinFilter"
                         value={fatMinFilter}
                         onChange={(e) => setFatMinFilter(e.target.value)}
-                        className="form-control block"
+                        className="form-control block rounded-lg border border-gray-400"
                         style={{ width: "80px", marginRight: "8px" }} // adjust the width as needed
                       />
 
@@ -896,13 +900,13 @@ const RecipesPageForUser = () => {
                         id="fatMaxFilter"
                         value={fatMaxFilter}
                         onChange={(e) => setFatMaxFilter(e.target.value)}
-                        className="form-control block"
+                        className="form-control block rounded-lg border border-gray-400"
                         style={{ width: "80px" }} // adjust the width as needed
                       />
                     </div>
 
                     {/* Sodium */}
-                    <p className="text-orange-700 text-xl font-bold mb-2 mt-4">
+                    <p className="text-orange-600 text-xl font-semibold mb-2">
                       Sodium:
                     </p>
                     <div className="flex items-center">
@@ -917,7 +921,7 @@ const RecipesPageForUser = () => {
                         id="sodiumMinFilter"
                         value={sodiumMinFilter}
                         onChange={(e) => setSodiumMinFilter(e.target.value)}
-                        className="form-control block"
+                        className="form-control block rounded-lg border border-gray-400"
                         style={{ width: "80px", marginRight: "8px" }} // adjust the width as needed
                       />
 
@@ -932,13 +936,13 @@ const RecipesPageForUser = () => {
                         id="sodiumMaxFilter"
                         value={sodiumMaxFilter}
                         onChange={(e) => setSodiumMaxFilter(e.target.value)}
-                        className="form-control block"
+                        className="form-control block rounded-lg border border-gray-400"
                         style={{ width: "80px" }} // adjust the width as needed
                       />
                     </div>
 
                     {/* Fibre */}
-                    <p className="text-orange-700 text-xl font-bold mb-2 mt-4">
+                    <p className="text-orange-600 text-xl font-semibold mb-2">
                       Fibre:
                     </p>
                     <div className="flex items-center">
@@ -953,7 +957,7 @@ const RecipesPageForUser = () => {
                         id="fibreMinFilter"
                         value={fibreMinFilter}
                         onChange={(e) => setFibreMinFilter(e.target.value)}
-                        className="form-control block"
+                        className="form-control block rounded-lg border border-gray-400"
                         style={{ width: "80px", marginRight: "8px" }} // adjust the width as needed
                       />
 
@@ -968,7 +972,7 @@ const RecipesPageForUser = () => {
                         id="fibreMaxFilter"
                         value={fibreMaxFilter}
                         onChange={(e) => setFibreMaxFilter(e.target.value)}
-                        className="form-control block"
+                        className="form-control block rounded-lg border border-gray-400"
                         style={{ width: "80px" }} // adjust the width as needed
                       />
                     </div>
@@ -995,7 +999,7 @@ const RecipesPageForUser = () => {
                       id="cookingTimeMinFilter"
                       value={cookingTimeMinFilter}
                       onChange={(e) => setCookingTimeMinFilter(e.target.value)}
-                      className="form-control block"
+                      className="form-control block rounded-lg border border-gray-400"
                       style={{ width: "80px", marginRight: "8px" }} // adjust the width as needed
                     />
 
@@ -1010,7 +1014,7 @@ const RecipesPageForUser = () => {
                       id="cookingTimeMaxFilter"
                       value={cookingTimeMaxFilter}
                       onChange={(e) => setCookingTimeMaxFilter(e.target.value)}
-                      className="form-control block"
+                      className="form-control block rounded-lg border border-gray-400"
                       style={{ width: "80px" }} // adjust the width as needed
                     />
                   </div>
@@ -1034,7 +1038,7 @@ const RecipesPageForUser = () => {
               // If no search/filter has been performed, display latest and other recipes
               <>
                 <div className="mb-5">
-                  <h2 className="text-2xl font-bold mb-4 mt-4">
+                  <h2 className="text-4xl font-bold mb-4 mt-4">
                     Latest Recipes
                   </h2>
                   <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
@@ -1042,7 +1046,7 @@ const RecipesPageForUser = () => {
                   </div>
                 </div>
                 <div className="mb-5">
-                  <h2 className="text-2xl font-bold mb-4 mt-4">
+                  <h2 className="text-4xl font-bold mb-4 mt-4">
                     Other Recipes
                   </h2>
                   <div className="grid grid-cols-1 md:grid-cols-3 gap-4">

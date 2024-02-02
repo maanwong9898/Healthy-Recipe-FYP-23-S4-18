@@ -95,7 +95,7 @@ const ViewRecipe = ({ params }) => {
       stars.push(
         <span
           key={i}
-          className={i < rating ? "text-yellow-400" : "text-gray-300"}
+          className={i < rating ? "text-yellow-300" : "text-gray-300"}
         >
           ★
         </span>
@@ -133,6 +133,25 @@ const ViewRecipe = ({ params }) => {
         </span>
       </div>
     );
+  };
+
+  // render meal type
+  const renderMealType = (mealType) => {
+    if (!mealType) {
+      return <span className="text-orange-600 font-bold">Not specified</span>;
+    }
+    return (
+      <div className="flex justify-center items-center">
+        <span className="bg-blue-200 text-blue-700 px-4 py-1 rounded-full text-center m-2">
+          {mealType.subcategoryName}
+        </span>
+      </div>
+    );
+  };
+
+  const getImageUrlFromBlob = (imgBlob) => {
+    if (!imgBlob) return ""; // Return an empty string or a placeholder image if blob is not available
+    return `data:image/jpeg;base64,${imgBlob}`;
   };
 
   return (
@@ -188,6 +207,14 @@ const ViewRecipe = ({ params }) => {
                 ? renderDietaryPreferences(recipe.dietaryPreferences)
                 : "Not specified"}
             </div>
+
+            {/* Meal Type section */}
+            <div className="flex-1 p-3" role="alert">
+              <p className="font-bold text-base lg:text-xl text-gray-900 mb-1">
+                Meal Type:
+              </p>
+              {recipe ? renderMealType(recipe.mealType) : "Not specified"}
+            </div>
           </div>
 
           {/* Show ratings at the top of the title temporary no need*/}
@@ -208,6 +235,11 @@ const ViewRecipe = ({ params }) => {
             src={recipe?.img || "Not specified"}
             alt="Not found"
           />
+          <img
+            className="h-auto w-full lg:max-w-lg rounded-lg ml-0 lg:ml-5 shadow-md"
+            src={getImageUrlFromBlob(recipe?.imgBlob)}
+            alt={recipe?.title || "Recipe Image"}
+          />
           <div className="flex flex-col ml-0 lg:ml-4 mt-4">
             <div className="flex flex-row font-bold">
               <p className="mr-4 text-bold text-lg tracking-tight">
@@ -225,16 +257,16 @@ const ViewRecipe = ({ params }) => {
                 </span>
               </p>
             </div>
-            <p className="font-bold mt-4 lg:mt-8 text-2xl tracking-tight whitespace-pre-line">
+            <p className="font-bold mt-4 lg:mt-8 text-2xl tracking-tight">
               Description:
             </p>
             <p className="mt-2 items-center">
               {recipe?.description || "Not specified"}
             </p>
-            <p className="font-bold mt-4 lg:mt-8 text-2xl tracking-tight whitespace-pre-line">
-              Dietary Information:
-            </p>
-            <p className="mt-2">{recipe?.info || "Not specified"}</p>
+            {/* <p className="font-bold mt-4">Dietary Information:</p>
+          <p className="mt-2">{recipe?.info || "Not specified"}</p> */}
+
+            {/* I need to display the info divided by serving size in future  */}
 
             <div className="mt-4 lg:mt-28 mb-4">
               <p className="font-bold text-2xl tracking-tight">
@@ -276,7 +308,7 @@ const ViewRecipe = ({ params }) => {
               <div className="rounded-full bg-orange-100 w-20 h-20 flex flex-col items-center text-center justify-center">
                 <p className="text-sm">Sodium</p>
                 <p className="text-orange-600 font-semibold">
-                  {recipe?.fibre ? `${recipe.fibre} mg` : "N/A"}
+                  {recipe?.sodium ? `${recipe.sodium} mg` : "N/A"}
                 </p>
               </div>
             </div>
@@ -308,7 +340,7 @@ const ViewRecipe = ({ params }) => {
         </div>
 
         {/* reviews and ratings */}
-        <div className="blog-post-reviews mt-16 mx-auto max-w-screen-xl text-left border-t-2 border-gray-50">
+        <div className="mt-16 mx-auto max-w-screen-xl text-left border-t-2 border-gray-50">
           <p className="font-sans font-bold text-2xl md:text-4xl text-gray-900 mb-4 md:mt-8 ml-4 lg:ml-0">
             Rating and Reviews
           </p>

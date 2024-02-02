@@ -729,7 +729,7 @@ const BusinessViewRecipe = ({ params }) => {
       </div>
 
       {/* reviews and ratings */}
-      <div className="blog-post-reviews mt-16 mx-auto max-w-screen-xl text-left border-t-2 border-gray-50">
+      <div className="mt-16 mx-auto max-w-screen-xl text-left border-t-2 border-gray-50">
         <p className="font-sans font-bold text-2xl md:text-4xl text-gray-900 mb-4 md:mt-8 ml-4 lg:ml-0">
           Rating and Reviews
         </p>

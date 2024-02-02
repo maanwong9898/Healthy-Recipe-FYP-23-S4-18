@@ -2,7 +2,6 @@
 import { useRouter } from "next/navigation";
 import React from "react";
 import { useState, useEffect } from "react";
-import HomeNavbar from "@/app/components/navigation/homeNavBar";
 import axiosInterceptorInstance from "../../axiosInterceptorInstance.js";
 
 // rouuter path: /registeredUser/businessBlogPost
@@ -340,7 +339,6 @@ const BusinessBlogPostsPage = () => {
 
   return (
     <div>
-      <HomeNavbar />
       <div className="bg-white p-4 md:p-10">
         <h1 className="text-2xl md:text-4xl font-extrabold font-mono text-cyan-800 mb-4 md:mb-8">
           Business Blog Posts

@@ -2,7 +2,6 @@
 import { useRouter } from "next/navigation";
 import React from "react";
 import { useState, useEffect } from "react";
-import HomeNavbar from "@/app/components/navigation/homeNavBar";
 import axiosInterceptorInstance from "../../axiosInterceptorInstance.js";
 
 // rouuter path: /educationalContent
@@ -342,126 +341,123 @@ const EducationalContentPageForUser = () => {
   );
 
   return (
-    <div>
-      <HomeNavbar />
-      <div className="bg-white p-4 md:p-10">
-        <h1 className="text-2xl md:text-4xl font-extrabold font-mono text-cyan-800 mb-4 md:mb-8">
-          Educational Content
-        </h1>
-        <div className="flex sm:justify-between sm:items-center mb-4">
-          {/* Search Section */}
-          <div className="flex-grow">
-            <input
-              type="text"
-              id="eduContentSearch"
-              name="eduContentSearch"
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
-              onKeyDown={(e) => {
-                if (e.key === "Enter") {
-                  handleSearchClick();
-                }
-              }}
-              placeholder="Search Educational Content Title..."
-              className="mr-2 p-2 rounded border-2 border-black mb-2 sm:mb-0"
-              style={{ flex: 1 }}
-            />
-            <button
-              onClick={handleSearchClick}
-              className="text-white p-2 border-2 border-black bg-gradient-to-br from-cyan-400 to-cyan-800 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 rounded-lg text-base font-bold px-5 py-2.5 text-center"
-              style={{ flexShrink: 0 }}
-            >
-              Search
-            </button>
-            {/* Results count */}
-            {searchButtonClicked && searchPerformed && (
-              <p className="text-left text-red font-bold text-xl sm:ml-2">
-                {resultsCount} results found.
-              </p>
-            )}
-          </div>
+    <div className="bg-white p-4 md:p-10">
+      <h1 className="text-2xl md:text-4xl font-extrabold font-mono text-cyan-800 mb-4 md:mb-8">
+        Educational Content
+      </h1>
+      <div className="flex sm:justify-between sm:items-center mb-4">
+        {/* Search Section */}
+        <div className="flex-grow">
+          <input
+            type="text"
+            id="eduContentSearch"
+            name="eduContentSearch"
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+            onKeyDown={(e) => {
+              if (e.key === "Enter") {
+                handleSearchClick();
+              }
+            }}
+            placeholder="Search Educational Content Title..."
+            className="mr-2 p-2 rounded border-2 border-black mb-2 sm:mb-0"
+            style={{ flex: 1 }}
+          />
+          <button
+            onClick={handleSearchClick}
+            className="text-white p-2 border-2 border-black bg-gradient-to-br from-cyan-400 to-cyan-800 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 rounded-lg text-base font-bold px-5 py-2.5 text-center"
+            style={{ flexShrink: 0 }}
+          >
+            Search
+          </button>
+          {/* Results count */}
+          {searchButtonClicked && searchPerformed && (
+            <p className="text-left text-red font-bold text-xl sm:ml-2">
+              {resultsCount} results found.
+            </p>
+          )}
+        </div>
 
-          {/* Sort dropdown */}
-          <div className="mb-2 md:mb-0 md:mr-6">
-            <label
-              htmlFor="sort"
-              className="text-xl text-black mb-2 sm:mb-0 sm:mr-2"
-            >
-              Sort By:
-            </label>
+        {/* Sort dropdown */}
+        <div className="mb-2 md:mb-0 md:mr-6">
+          <label
+            htmlFor="sort"
+            className="text-xl text-black mb-2 sm:mb-0 sm:mr-2"
+          >
+            Sort By:
+          </label>
+          <select
+            id="sort"
+            value={sortOption}
+            onChange={(e) => setSortOption(e.target.value)}
+            className="p-2 rounded border-2 border-black text-black"
+            style={{ maxWidth: "300px" }}
+          >
+            {Object.values(sortOptions).map((option) => (
+              <option key={option.key} value={option.key}>
+                {option.label}
+              </option>
+            ))}
+          </select>
+        </div>
+        {/* Filter Section - Adjusted to align to the right */}
+        <div className="flex flex-col sm:flex-row sm:items-center">
+          <label
+            htmlFor="categoryFilter"
+            className="text-xl text-black mb-2 sm:mb-0 sm:mr-2"
+          >
+            Filter By:
+          </label>
+          <div className="flex-grow-0">
             <select
-              id="sort"
-              value={sortOption}
-              onChange={(e) => setSortOption(e.target.value)}
+              id="categoryFilter"
+              value={categoryFilter}
+              onChange={(e) => setCategoryFilter(e.target.value)}
               className="p-2 rounded border-2 border-black text-black"
               style={{ maxWidth: "300px" }}
             >
-              {Object.values(sortOptions).map((option) => (
-                <option key={option.key} value={option.key}>
-                  {option.label}
+              <option value="">All Categories</option>
+              {categories.map((category) => (
+                <option key={category.id} value={category.subcategoryName}>
+                  {category.subcategoryName}
                 </option>
               ))}
             </select>
           </div>
-          {/* Filter Section - Adjusted to align to the right */}
-          <div className="flex flex-col sm:flex-row sm:items-center">
-            <label
-              htmlFor="categoryFilter"
-              className="text-xl text-black mb-2 sm:mb-0 sm:mr-2"
-            >
-              Filter By:
-            </label>
-            <div className="flex-grow-0">
-              <select
-                id="categoryFilter"
-                value={categoryFilter}
-                onChange={(e) => setCategoryFilter(e.target.value)}
-                className="p-2 rounded border-2 border-black text-black"
-                style={{ maxWidth: "300px" }}
-              >
-                <option value="">All Categories</option>
-                {categories.map((category) => (
-                  <option key={category.id} value={category.subcategoryName}>
-                    {category.subcategoryName}
-                  </option>
-                ))}
-              </select>
-            </div>
-          </div>
         </div>
-        {/* Display the education content */}
-        {/* Display message while fetching data ftom backend */}
-        {isLoading ? (
-          <div className="text-xl text-center p-4">
-            <p>Please wait. It'll just take a moment.</p>
-          </div>
-        ) : (
-          <>
-            {!searchPerformed && !categoryFilter && !sortOption ? (
-              <>
-                <div className="mb-5">
-                  <h2 className="text-2xl font-bold mb-4 mt-4">
-                    Latest Educational Content
-                  </h2>
-                  <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
-                    {latestEduContent.map((post) => renderPostCard(post))}
-                  </div>
-                </div>
-                <h2 className="text-2xl font-bold mb-4 mt-4">
-                  Other Educational Content
-                </h2>
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                  {otherEduContent.map((post) => renderPostCard(post))}
-                </div>
-              </>
-            ) : (
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                {displayedEduContent.map((post) => renderPostCard(post))}
-              </div>
-            )}
-          </>
-        )}
       </div>
+      {/* Display the education content */}
+      {/* Display message while fetching data ftom backend */}
+      {isLoading ? (
+        <div className="text-xl text-center p-4">
+          <p>Please wait. It'll just take a moment.</p>
+        </div>
+      ) : (
+        <>
+          {!searchPerformed && !categoryFilter && !sortOption ? (
+            <>
+              <div className="mb-5">
+                <h2 className="text-2xl font-bold mb-4 mt-4">
+                  Latest Educational Content
+                </h2>
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
+                  {latestEduContent.map((post) => renderPostCard(post))}
+                </div>
+              </div>
+              <h2 className="text-2xl font-bold mb-4 mt-4">
+                Other Educational Content
+              </h2>
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                {otherEduContent.map((post) => renderPostCard(post))}
+              </div>
+            </>
+          ) : (
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+              {displayedEduContent.map((post) => renderPostCard(post))}
+            </div>
+          )}
+        </>
+      )}
     </div>
   );
 };

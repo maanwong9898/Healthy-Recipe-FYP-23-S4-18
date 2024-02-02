@@ -30,10 +30,24 @@ VALUES
     -- dietary_preference refers to the category of the recipe (refer to dietary_preferences)
 
 -- Note that: Some recipes has allergies, insert into recipe_allergies table
+-- 3. Meal type
+INSERT INTO
+    meal_type (subcategory_name)
+VALUES
+    ('Chinese'),
+    ('Western'),
+    ('Japanese'),
+    ('Italian'),
+    ('French'),
+    ('Mexican'),
+    ('Thai'),
+    ('Indian'),
+    ('Mediterranean'),
+    ('Vietnamese');
 
 -- first set of recipes 
 INSERT INTO recipe
-(id, publisher, title, info, calories, carbs, protein, fat, fibre, sodium, serving_size, description, steps, ingredients, UserID, Active, createddt, img, img_title, dietary_preference, cooking_time)
+(id, publisher, title, info, calories, carbs, protein, fat, fibre, sodium, serving_size, description, steps, ingredients, UserID, Active, createddt, img, img_title, dietary_preference, cooking_time, meal_type)
 VALUES
     (
         1,
@@ -52,7 +66,7 @@ VALUES
         'Author : Vecstock, Designed by Freepik',  -- img_title
         2, -- dietary_preference
         25 -- cooking_time
-           -- meal type (cuisines)
+        2   -- meal type (cuisines)
     ),
     (
         2,
@@ -71,7 +85,7 @@ VALUES
         'Author : EyeEm, Designed by Freepik',  -- img_title
         2, -- dietary_preference
         15 -- cooking_time  
-           -- meal type (cuisines)
+        9   -- meal type (cuisines)
     ),
     (
         3,
@@ -90,7 +104,7 @@ VALUES
         'Author : EyeEm, Designed by Freepik',  -- img_title
         2, -- dietary_preference
         30 -- cooking_time  
-           -- meal type (cuisines)
+        9   -- meal type (cuisines)
     ),
     (
         4,
@@ -109,7 +123,7 @@ VALUES
         'Author : Cassie Best, Designed by bbcgoodfood',  -- img_title
         3, -- dietary_preference
         25 -- cooking_time  
-           -- meal type (cuisines)
+        9   -- meal type (cuisines)
     ),
     (
         5,
@@ -128,7 +142,7 @@ VALUES
         'Author : James Martin, Designed by bbcgoodfood',  -- img_title
         3, -- dietary_preference
         30 -- cooking_time  
-           -- meal type (cuisines)
+        6   -- meal type (cuisines)
     ),
     (
         6,
@@ -147,7 +161,7 @@ VALUES
         'Author : Roopa Gulati, Designed by bbcgoodfood',  -- img_title
         3, -- dietary_preference
         15 -- cooking_time  
-           -- meal type (cuisines)
+        7   -- meal type (cuisines)
     ),
     (
         7,
@@ -166,7 +180,7 @@ VALUES
         'Author : Elena Silcock, Designed by bbcgoodfood',  -- img_title
         1, -- dietary_preference
         10 -- cooking_time  
-           -- meal type (cuisines)
+        6   -- meal type (cuisines)
     ),
     (
         8,
@@ -185,7 +199,7 @@ VALUES
         'Author : Elena Silcock, Designed by bbcgoodfood',  -- img_title
         1, -- dietary_preference
         80 -- cooking_time  
-           -- meal type (cuisines)
+        5   -- meal type (cuisines)
     ),
     (
         9,
@@ -204,7 +218,7 @@ VALUES
         'Author : Samuel Goldsmith, Designed by bbcgoodfood',  -- img_title
         1, -- dietary_preference
         40 -- cooking_time  
-           -- meal type (cuisines)
+        8   -- meal type (cuisines)
     ),
     (
         10,
@@ -223,7 +237,7 @@ VALUES
         'Author : Roopa Gulati, Designed by bbcgoodfood',  -- img_title
         1, -- dietary_preference
         25 -- cooking_time  
-           -- meal type (cuisines)
+        8   -- meal type (cuisines)
     ),
     (
         11,
@@ -242,7 +256,7 @@ VALUES
         'Author : Esther Clark, Designed by bbcgoodfood',  -- img_title
         1, -- dietary_preference
         15 -- cooking_time  
-           -- meal type (cuisines)
+        3   -- meal type (cuisines)
     ),
     (
         12,
@@ -261,7 +275,7 @@ VALUES
         'Author : Chiwong, Designed by bbcgoodfood',  -- img_title
         1, -- dietary_preference
         15 -- cooking_time  
-           -- meal type (cuisines)
+        4   -- meal type (cuisines)
     ),
     (
         13,
@@ -280,7 +294,7 @@ VALUES
         'Author : Miriam Nice, Designed by bbcgoodfood',  -- img_title
         1, -- dietary_preference
         20 -- cooking_time  
-           -- meal type (cuisines)
+        10   -- meal type (cuisines)
     ),
     (
         14,
@@ -299,7 +313,7 @@ VALUES
         'Author : Lucy Netherton, Designed by bbcgoodfood',  -- img_title
         3, -- dietary_preference
         20 -- cooking_time  
-           -- meal type (cuisines)
+        2   -- meal type (cuisines)
     ),
     (
         15,
@@ -318,7 +332,140 @@ VALUES
         'Author : Sara Buenfeld, Designed by bbcgoodfood',  -- img_title
         3, -- dietary_preference
         15 -- cooking_time  
-           -- meal type (cuisines)
+        2   -- meal type (cuisines)
+    ),
+    (
+        16,
+        'Elise Bauer',
+        'Sole Piccata',
+        'Not Specified',
+        317, 10, 16, 22, 1, 1118, -- calories, carbs, protein, fat, fibre, sodium
+        4,
+        'Dinner in 20 minutes! Sole piccata will become your go-to piccata recipe. Simple sole fillets, dusted in flour and sauteed in olive oil with white wine and lemon juice, make an irresistible piccata.',
+        'Dredge the fillets in flour.Rinse the fish in cold water and pat them dry. In a small bowl, whisk together the flour, salt, and pepper. Then place the flour mixture in a long shallow bowl or dish. Dredge the fillets in the flour so that both sides are lightly coated.\nHeat the olive oil over medium-high heat in a large stick-free saute pan. When the oil is hot (add a little pinch of flour to the oil, and if it sizzles immediately, you are ready), work in batches and place the fish fillets in the pan in one layer and fry until golden, about 2 minutes per side. Add more oil to the pan if needed.\nOnce browned on both sides, remove the fish fillets from the pan, set them on a paper towel-lined plate (or keep them warm in a 200°F oven).\nAdd the white wine to the pan and use a wooden spoon to scrape up any browned bits from the bottom of the pan.\nLet the wine boil furiously for a minute or two, until greatly reduced, then add the lemon juice and capers. Boil another minute.\nTurn off the heat. Add 1 tablespoon of butter to the pan, swirling it constantly. When it melts, repeat the process with the other tablespoon of butter.\nStir in half of the parsley and pour it over the fish. Sprinkle the fish with the remaining parsley. Serve at once.',
+        '1 pound thin, skinless fish fillets \n1/3 cup all-purpose flour, for dredging \n1 teaspoon kosher salt \n1 teaspoon finely ground black pepper \n4 tablespoons extra virgin olive oil \n1/2 cup dry white wine (such as sauvignon blanc or pinot grigio) \n2 tablespoons lemon juice \n1/4 cup small capers \n2 tablespoons butter \n1/4 cup chopped fresh parsley',
+        '1', -- UserID
+        TRUE,
+        '2023-01-10 14:00:00',
+        'https://www.simplyrecipes.com/thmb/sZ-I3ZBb3qoMUZkij__FvpCCtsI=/750x0/filters:no_upscale():max_bytes(150000):strip_icc():format(webp)/Simply-Recipes-Sole-Piccata-LEAD-18-7fe82170950744bc9d41a75d944fc79b.JPG',
+        'Author : Elise Bauer, Designed by simplyrecipes',  -- img_title
+        3, -- dietary_preference
+        20 -- cooking_time  
+        4   -- meal type (cuisines)
+    ),
+    (
+        17,
+        'Elise Bauer',
+        'Baked Lingcod with Lemon-Garlic Butter Sauce',
+        'Not Specified',
+        465, 3, 46, 28, 0, 1004, -- calories, carbs, protein, fat, fibre, sodium
+        4,
+        'One quick and simple seafood recipe that comes together quickly is baked lingcod. Combine it with our lemon garlic butter sauce for a simple midweek supper! Works great with other fish too.',
+        'Put the clam juice, sherry, whole milk, garlic, shallots, and bay leaf in a pot and bring to a boil. Boil it down by half.\nIn a separate saucepan (1-qt minimum), prepare the roux. Heat one tablespoon of butter in the saucepan on medium heat until it is foamy. Sprinkle in the flour, and stir for a couple of minutes with a metal whisk until well mixed. Cook until the color is tan, but not brown.\nSlowly add the reduced sauce mixture to the roux, stirring quickly to incorporate. When you first add some of the mixture, the roux will bubble up. Just keep pouring and keep whisking to incorporate.\nTurn the heat to low. Slowly whisk in the butter, 2 tablespoons at a time.\nAdd lemon juice, salt, and white pepper. Add some more clam juice or water if the sauce is too thick. Sprinkle with chopped parsley right before serving.\nMove the oven rack so that the baking pan will be 4 to 5 inches from the heat. Preheat the oven to 350°F.\nPrep the fish fillets: Rinse the fish in cold water. Cut into serving pieces if necessary. Remove any bones with fish-bone tweezers or (spotlessly clean) pliers. Lay the fish flat in a foil-lined baking pan. Rub some olive oil over both sides of the lingcod, enough to coat. Sprinkle both sides with a few shakes of salt and pepper.\nBake the fish at 350°F for 10 to 15 minutes, until just done. To test, use the tip of a knife to gently cut into the thickest part of the fillet. The fish is done when the fish has just turned from translucent to opaque at the center. Once you pull the fish out of the oven, it will continue to cook for a few minutes.\nServe the fish with the sauce poured on top. Rice, crusty bread and a simple salad are good accompaniments.',
+        '1/2 cup clam juice, plus more as needed \n1/2 cup dry sherry \n1/2 cup whole milk \n1 tablespoon minced garlic \n1 tablespoon minced shallot \n1 bay leaf \n1 tablespoon unsalted butter \n1 tablespoon all-purpose flour \n1 cup unsalted butter, cut into 2-tablespoon pieces \n1 tablespoon lemon juice \n1/2 teaspoon kosher salt \n1/2 teaspoon ground white pepper \n2 tablespoons chopped fresh parsley \n2 pounds lingcod fillets \n2 teaspoons extra virgin olive oil \nKosher salt \nFreshly ground black pepper',
+        '1', -- UserID
+        TRUE,
+        '2023-01-02 08:00:00',
+        'https://www.simplyrecipes.com/thmb/jpNlWSZk6NuxsHr57MRmB1zPKHI=/750x0/filters:no_upscale():max_bytes(150000):strip_icc():format(webp)/__opt__aboutcom__coeus__resources__content_migration__simply_recipes__uploads__2006__01__baked-lingcod-horiz-a-1200-2e25188b62634d30a991b2b29270a5e5.jpg',
+        'Author : Elise Bauer, Designed by simplyrecipes',  -- img_title
+        3, -- dietary_preference
+        15 -- cooking_time  
+        2   -- meal type (cuisines)
+    ),
+    (
+        18,
+        'Vivian Jao',
+        'Whole Steamed Fish',
+        'Not Specified',
+        121, 4, 16, 3, 0, 714, -- calories, carbs, protein, fat, fibre, sodium
+        6,
+        'Threads of fresh ginger and scallions are laid on top of whole fish, and hot oil is poured over it to release aromatic fragrances and flavors. A lightly sweetened soy-based sauce binds the entire dish together.',
+        'Separate herbs, ginger, and scallions for cooking and garnish. Smash a portion of ginger for cooking and julienne the rest for garnish. Cut scallions into 2-inch pieces; slice two-thirds for cooking, save the rest for garnish.\nSet up a steamer in a wok with water.Trim, scale, rinse, and pat dry the fish. Score the fish on both sides. Season the fish with salt and pepper. Stuff the fish cavity with ginger, scallions, and cilantro. Steam the fish for around 12 minutes until flaky.\nMix soy sauce, Shaoxing wine, and sugar. Heat oil until very hot; set aside.\nRemove fish, transfer to a platter. Garnish with julienned ginger, scallions, and cilantro. Pour hot oil over the fish and herbs. Heat sauce and pour around the fish.',
+        '2 1/2-inch piece fresh ginger, divided \n2 scallions, divided \n20 small sprigs cilantro, divided \n1 (1 1/2 pound) whole black sea bass or red snapper, scaled and gutted \n2 teaspoons kosher salt \n1/16 teaspoon freshly ground black pepper \n1 tablespoon Shaoxing wine or dry sherry \n3 tablespoons soy sauce \n2 tablespoons Shaoxing wine \n2 tablespoons granulated sugar \n2 tablespoons canola or avocado oil \ncooked white rice, to serve',
+        '1', -- UserID
+        TRUE,
+        '2023-03-02 08:30:00',
+        'https://www.simplyrecipes.com/thmb/_Ibx2pOBu4NyMV-Yney9VxuY5k4=/750x0/filters:no_upscale():max_bytes(150000):strip_icc():format(webp)/Simply-Recipes-Steamed-Whole-Fish-LEAD-3-a919bfb94b2d45aeb410dae0b6fbfc66.jpg',
+        'Author : Uyen Luu, Designed by simplyrecipes',  -- img_title
+        3, -- dietary_preference
+        15 -- cooking_time  
+        1   -- meal type (cuisines)
+    ),
+    (
+        19,
+        'Sabrina Modelle',
+        'Grilled Fish Tacos with Strawberry Pineapple Salsa',
+        'Not Specified',
+        281, 32, 22, 8, 5, 268, -- calories, carbs, protein, fat, fibre, sodium
+        4,
+        'Grilled fish tacos served with a sweet and spicy strawberry pineapple salsa! This is the ideal summer meal—light, fresh, and quick. Excellent for a gathering.',
+        'In a bowl, mix together all salsa ingredients, except for the sugar, and refrigerate for at least 30 minutes or up to 2 days. Taste and add sugar or additional seasonings to taste when ready to serve.\nIf you have a gas grill, make sure to preheat it for at least 10 minutes with the lid closed. If you have a charcoal grill, push the coals to one side to make high heat and lower heat zones for cooking.\nRemove fish from the refrigerator and pat dry with paper towels. In a small bowl or jar, mix spices until completely combined. Brush the fish with a little oil, then sprinkle all over with seasoning. Rest the fish at room temperature while the grill heats up.\nWhen your grill is hot, wipe the grates with oil. You can either use a grill brush or a small wad of paper towels dipped in the oil. Wipe the grates 5 to 10 times until they look black and glossy.\nPlace your fish, skin side down, on the grill. If using a charcoal grill, place over indirect heat. On a gas grill, turn the heat down to medium (about 350F) and close the lid. Grill 2 minutes, then check the fish by lifting one corner of the fish to see if it will come up without sticking. The skin should be crisp and brown. If it lifts easily, flip the fish and cook for another 3 to 5 minutes with the lid closed. If the fish doesn’t lift easily, continue cooking and checking every 30 seconds. Grill until the fish is cooked through and flakes easily with an internal temperature of 145F. Transfer the fish to a plate to rest.\nTurn heat to high and brush grates with oil again (or cook over direct heat on a charcoal grill). Cook tortillas for 30 seconds on each side to warm and soften.\nCut the fish into several pieces. Serve on tortillas, topped with salsa and other toppings.',
+        '1 cup strawberries, finely diced \n1 cup pineapple, finely diced \n1/2 cup red onion, finely diced \n1 clove garlic, minced \n1 cup cilantro, roughly chopped, loosely packed \n1 small red chili, diced (optional) \n1 lime, juiced (about 1 1/2 tablespoons juice) \n1/4 teaspoon salt \n1/4 teaspoon black pepper \n1/2 teaspoon sugar (optional if the salsa is tart) \n1 pound firm-fleshed fish (like sea bass, swordfish, halibut, mahi mahi, or salmon) \n1 teaspoon ground cumin \n1 teaspoon sweet paprika \n1 teaspoon smoked paprika \n1/4 teaspoon salt \n1/4 teaspoon black pepper \n1 tablespoon olive oil \nGrapeseed or other high heat oil, for grill \n12 small (4- to 6-inch) corn tortillas \nTo serve: Shredded red cabbage, Sliced radishes, Avocado, Sour Cream, Lime Wedges, Cilantro',
+        '1', -- UserID
+        TRUE,
+        '2023-06-03 09:30:00',
+        'https://www.simplyrecipes.com/thmb/W6vMtxhRYZyKqvdWOG35RnKzmzw=/750x0/filters:no_upscale():max_bytes(150000):strip_icc():format(webp)/__opt__aboutcom__coeus__resources__content_migration__simply_recipes__uploads__2017__06__2017-07-22-FishTacos-5-baa8171933fe40f0b737d448b4c47788.jpg',
+        'Author : Sabrina Modelle, Designed by simplyrecipes',  -- img_title
+        3, -- dietary_preference
+        10 -- cooking_time  
+        6   -- meal type (cuisines)
+    ),
+    (
+        20,
+        'Elise Bauer',
+        'Quick Easy Fish Stew',
+        'Not Specified',
+        389, 7, 33, 23, 2, 782, -- calories, carbs, protein, fat, fibre, sodium
+        4,
+        'Make this delicious fish stew in 30 minutes with only a few simple ingredients.',
+        'Heat olive oil in a large, thick-bottomed pot over medium-high heat. Add onion and sauté 4 minutes. Add the garlic and cook a minute more. Add parsley and stir 2 minutes. Add tomato and tomato paste, and gently cook for 10 more minutes or so.\nAdd clam juice, dry white wine, and fish. Bring to a simmer, and let simmer until the fish is cooked through and easily flakes apart, about 3 to 5 minutes. Add seasoning—salt, pepper, oregano, thyme, and Tabasco. Add more salt and pepper to taste.\nLadle into individual bowls and serve. Great served with crusty bread for dipping in the fish stew broth.',
+        '6 tablespoons extra virgin olive oil \n1 medium onion, chopped (about 1 1/2 cups) \n3 large cloves garlic, minced \n2/3 cup fresh parsley leaves, chopped \n1 1/2 cups fresh chopped tomato OR 1 (14-ounce) can whole or crushed tomatoes with their juices \n2 teaspoons tomato paste, optional \n1 (8-ounce) bottle clam juice (or 1 cup shellfish stock) \n1/2 cup dry white wine (such as Sauvignon blanc) \n1 1/2 pounds firm white fish fillets such as halibut, cod, red snapper, or sea bass, cut into 2-inch pieces \nPinch dried oregano \nPinch dried thyme \n1/8 teaspoon Tabasco sauce , or more to taste \n1/8 teaspoon freshly ground black pepper, plus more to taste \n1 teaspoon salt, plus more to taste',
+        '1', -- UserID
+        TRUE,
+        '2023-06-03 09:30:00',
+        'https://www.simplyrecipes.com/thmb/mx-jiA5vHJwtVVjXaerfCBq4DA0=/750x0/filters:no_upscale():max_bytes(150000):strip_icc():format(webp)/__opt__aboutcom__coeus__resources__content_migration__simply_recipes__uploads__2016__02__dads-fish-stew-horiz-a-1600-8cf962c81e084558a025bf8392e00f32.jpg',
+        'Author : Elise Bauer, Designed by simplyrecipes',  -- img_title
+        3, -- dietary_preference
+        20 -- cooking_time  
+        9   -- meal type (cuisines)
+    ),
+    (
+        21,
+        'Elena Silcock',
+        'Sweet potato & peanut curry',
+        'Not Specified',
+        387, 32, 6, 25, 7, 240, -- calories, carbs, protein, fat, fibre, sodium
+        4,
+        'Make this delicious and inexpensive vegan curry for a simple family meal. With spinach and sweet potato, it boasts two of your five-a-day and it’s under 400 calories.',
+        'Melt 1 tbsp coconut oil in a saucepan over a medium heat and soften 1 chopped onion for 5 mins. Add 2 grated garlic cloves and a grated thumb-sized piece of ginger, and cook for 1 min until fragrant.\nStir in 3 tbsp Thai red curry paste, 1 tbsp smooth peanut butter and 500g sweet potato, peeled and cut into chunks, then add 400ml coconut milk and 200ml water.\nBring to the boil, turn down the heat and simmer, uncovered, for 25-30 mins or until the sweet potato is soft.\nStir through 200g spinach and the juice of 1 lime, and season well. Serve with cooked rice, and if you want some crunch, sprinkle over a few dry roasted peanuts.',
+        '1 tbsp coconut oil \n1 onion, chopped \n2 garlic cloves, grated \nthumb-sized piece ginger, grated \n3 tbsp Thai red curry paste (check the label to make sure it’s vegetarian/ vegan) \n1 tbsp smooth peanut butter \n500g sweet potato, peeled and cut into chunks \n400ml can coconut milk \n200g bag spinach \n1 lime, juiced \ncooked rice, to serve (optional) \ndry roasted peanuts, to serve (optional)',
+        '2', -- UserID
+        TRUE,
+        '2023-06-11 12:30:00',
+        'https://images.immediate.co.uk/production/volatile/sites/30/2020/08/satay-sweet-potato-curry-17cc62d.jpg?quality=90&webp=true&resize=440,400',
+        'Author : Elena Silcock, Designed by bbcgoodfood',  -- img_title
+        2, -- dietary_preference
+        45 -- cooking_time  
+        7   -- meal type (cuisines)
+    ),
+    (
+        22,
+        'Esther Clark',
+        'Veggie okonomiyaki',
+        'Not Specified',
+        312, 29, 15, 15, 5, 280, -- calories, carbs, protein, fat, fibre, sodium
+        2,
+        'This vegetarian okonomiyaki with eggs, cabbage, pak choi, and spring onions will give your diet a major boost. It is a low-calorie, nutritious lunch choice.',
+        'Whisk together the eggs, flour and milk until smooth. Add half the spring onions, the pak choi, cabbage, chilli and soy sauce. Heat the oil in a small frying pan and pour in the batter. Cook, covered, over a medium heat for 7-8 mins. Flip the okonomiyaki into a second frying pan, then return it to the heat and cook for a further 7-8 mins until a skewer inserted into it comes out clean.\nMix the mayonnaise and lime juice together in a small bowl. Transfer the okonomiyaki to a plate, then drizzle over the lime mayo and top with the extra chilli and spring onion and the sushi ginger, if using. Serve with the wasabi on the side, if you like.',
+        '3 large eggs \n50g plain flour \n50ml milk \n4 spring onions, trimmed and sliced \n1 pak choi, sliced \n200g Savoy cabbage, shredded \n1 red chilli, deseeded and finely chopped, plus extra to serve \n1/2 tbsp low-salt soy sauce \n1/2 tbsp rapeseed oil \n1 heaped tbsp low-fat mayonnaise \n1/2 lime, juiced \nsushi ginger, to serve (optional) \nwasabi, to serve (optional)',
+        '2', -- UserID
+        TRUE,
+        '2023-06-20 16:00:00',
+        'https://images.immediate.co.uk/production/volatile/sites/30/2020/08/veggie-okonomiyaki-de8fe85.jpg?quality=90&webp=true&resize=440,400',
+        'Author : Esther Clark, Designed by bbcgoodfood',  -- img_title
+        2, -- dietary_preference
+        10 -- cooking_time  
+        3   -- meal type (cuisines)
     );
 
 

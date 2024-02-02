@@ -29,10 +29,12 @@ VALUES
     ('Western'),
     ('Japanese'),
     ('Italian'),
+    ('French'),
     ('Mexican'),
     ('Thai'),
     ('Indian'),
-    ('Mediterranean');
+    ('Mediterranean'),
+    ('Vietnamese');
 
 -- 4. Health goals
 Insert into health_goal

@@ -99,6 +99,7 @@ const Home = () => {
   });
 
   useEffect(() => {
+    setIsLoading(true);
     const fetchMostPopularRecipesData = async () => {
       try {
         const mostPopularRecipesData = await fetchMostPopularRecipes();
@@ -107,16 +108,6 @@ const Home = () => {
         console.log("Failed to fetch most popular recipes: ", error);
       }
     };
-
-    // const fetchAllRecipes = async () => {
-    //   try {
-    //     const allRecipesData = await fetchRecipes();
-    //     setAllRecipes(allRecipesData);
-    //     console.log("All Recipes: ", allRecipesData);
-    //   } catch (error) {
-    //     console.log("Failed to fetch recipes: ", error);
-    //   }
-    // };
 
     const fetchAllEducationalContents = async () => {
       try {
@@ -144,13 +135,22 @@ const Home = () => {
         console.log("Failed to fetch meal plans: ", error);
       }
     };
-    fetchMostPopularRecipesData();
-    //fetchAllRecipes();
-    fetchAllEducationalContents();
-    fetchAllBlogPosts();
-    fetchAllMealPlans();
+
+    Promise.all([
+      fetchMostPopularRecipesData(),
+      fetchAllEducationalContents(),
+      fetchAllBlogPosts(),
+      fetchAllMealPlans(),
+    ])
+      .catch((error) => {
+        console.error("Error in fetching data: ", error);
+      })
+      .finally(() => {
+        setIsLoading(false);
+      });
   }, []);
 
+  // RECIPE RELATED
   // const latestRecipes = [...AllRecipes]
   //   .sort((a, b) => new Date(b.createdDateTime) - new Date(a.createdDateTime))
   //   .slice(0, 3);
@@ -200,6 +200,8 @@ const Home = () => {
     </div>
   );
 
+  // END OF RECIPE RELATED
+
   // BLOG POSTS RELATED
   const latestBlogs = [...AllBusinessBlogPosts]
     .sort((a, b) => new Date(b.createdDateTime) - new Date(a.createdDateTime))
@@ -231,7 +233,7 @@ const Home = () => {
           {/* Title */}
           <h2
             className="text-2xl font-extrabold mb-2 hover:text-orange-600 cursor-pointer"
-            onClick={() => handleViewRecipes(post.id)}
+            onClick={() => handleViewBlogPost(post.id)}
           >
             {post.title}
           </h2>
@@ -264,8 +266,87 @@ const Home = () => {
   };
 
   // Function to render Meal Plan a single post card
-
+  const renderMealPlanCard = (post) => (
+    <div
+      key={post.id}
+      className="max-w-xl bg-white border border-gray-200 rounded-lg shadow-md overflow-hidden flex flex-col"
+    >
+      {/* Image */}
+      <img
+        src={post.img}
+        alt={post.img_title}
+        className="w-full h-48 rounded-t-lg object-cover"
+        style={{ height: "192px" }}
+      />
+      <div className="flex flex-grow flex-col justify-between p-5">
+        <div>
+          {/* Title */}
+          <h2
+            className="text-2xl font-extrabold mb-2 hover:text-orange-600 cursor-pointer"
+            onClick={() => handleViewMealPlan(post.id)}
+          >
+            {post.title}
+          </h2>
+          {/* Description */}
+          <p
+            className="text-gray-700 text-base mb-4 line-clamp-3"
+            style={{ height: "4.5rem" }}
+          >
+            {post.introduction}
+          </p>
+        </div>
+      </div>
+    </div>
+  );
   // END OF MEAL PLAN RELATED
+
+  // EDUCATIONAL CONTENTS RELATED
+  const latestEducationalContents = [...AllEducationalContents]
+    .sort((a, b) => new Date(b.createdDateTime) - new Date(a.createdDateTime))
+    .slice(0, 3);
+
+  const handleViewEducationalContent = (id) => {
+    // Make sure the Educational Content title
+    console.log(`Educational Content Title: ${id}`);
+    // Redirect to the correct route
+    let routePath = `/educationalContent/viewEducationalContent/${id}`;
+    router.push(routePath);
+  };
+
+  const renderEducationContentCard = (post) => (
+    <div
+      key={post.id}
+      className="max-w-xl bg-white border border-gray-200 rounded-lg shadow-md overflow-hidden flex flex-col"
+    >
+      {/* Image */}
+      <img
+        src={post.img}
+        alt={post.img_title}
+        className="w-full h-48 rounded-t-lg object-cover"
+        style={{ height: "192px" }}
+      />
+      <div className="flex flex-grow flex-col justify-between p-5">
+        <div>
+          {/* Title */}
+          <h2
+            className="text-2xl font-extrabold mb-2 hover:text-orange-600 cursor-pointer"
+            onClick={() => handleViewEducationalContent(post.id)}
+          >
+            {post.title}
+          </h2>
+          {/* Description */}
+          <p
+            className="text-gray-700 text-base mb-4 line-clamp-3"
+            style={{ height: "4.5rem" }}
+          >
+            {post.info}
+          </p>
+        </div>
+      </div>
+    </div>
+  );
+
+  // END OF EDUCATIONAL CONTENTS RELATED
 
   // Get all user accounts
   const fetchUserAccounts = async () => {
@@ -400,90 +481,113 @@ const Home = () => {
 
         {/* Most popular recipe card */}
         <div>
-          <div className="p-5">
-            <h2 className="text-4xl font-extrabold font-serif mb-4 mt-4 text-black">
-              Most Popular Recipes
-            </h2>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
-              {recipeLimit.map((post) => renderRecipePostCard(post))}
+          {isLoading ? (
+            <div className="text-xl text-center p-4">
+              <p>Please wait. It'll just take a moment.</p>
             </div>
-          </div>
+          ) : (
+            <>
+              <div className="p-5">
+                <h2 className="text-4xl font-extrabold font-serif mb-4 mt-4 text-black">
+                  Most Popular Recipes
+                </h2>
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
+                  {recipeLimit.map((post) => renderRecipePostCard(post))}
+                </div>
+              </div>
+            </>
+          )}
         </div>
-        {/* End of most popular recipe cards */}
 
-        {/* Most Popular Blogs*/}
-        <div>
-          <div className="p-5">
-            <h2 className="text-4xl font-extrabold font-serif mb-4 mt-4 text-black">
-              Most Popular Blogs
-            </h2>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
-              {latestBlogs.map((post) => renderBlogPost(post))}
-            </div>
-          </div>
-        </div>
-        {/* Most Popular Blogs*/}
+        {/* End of most popular recipe cards */}
 
         {/* Latest meal plan card*/}
         <div>
-          <div className="p-5">
-            <h2 className="text-4xl font-extrabold font-serif mb-4 mt-4 text-black">
-              Latest Meal Plans
-            </h2>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
-              {/* {latestRecipes.map((post) => renderRecipePostCard(post))} */}
+          {isLoading ? (
+            <div className="text-xl text-center p-4">
+              <p>Please wait. It'll just take a moment.</p>
             </div>
-          </div>
+          ) : (
+            <>
+              <div className="p-5">
+                <h2 className="text-4xl font-extrabold font-serif mb-4 mt-4 text-black">
+                  Latest Meal Plans
+                </h2>
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
+                  {latestMealPlans.map((post) => renderMealPlanCard(post))}
+                </div>
+              </div>
+            </>
+          )}
         </div>
+
         {/* End of latest meal plans cards */}
 
         {/* Dynamic banner on active users */}
-        <div className="mt-9">
-          <div className="bg-zinc-50 h-[400px] rounded-lg overflow-hidden">
-            <div className="grid grid-cols-2 gap-8 p-5 mt-10">
-              {/* Left Column */}
-              <div className="flex flex-col justify-center items-center">
-                <h2 className="font-bold text-4xl mb-4 text-center">
-                  Our Mission
-                </h2>
-                <p className="text-gray-700 text-center text-xl">
-                  Welcome to My Healthy Recipe, your number-one source for
-                  healthy and delicious recipes. We're dedicated to providing
-                  nutritional, delicious, and easy-to-make recipes. Committed to
-                  your well-being, we follow HPB's guidelines for daily sodium
-                  intake to ensure that every recipe aligns with the highest
-                  nutritional standards. More than just a collection of recipes,
-                  our commitment to health is ingrained in every dish we create.
-                </p>
+        <div className="p-5">
+          <div className="grid grid-cols-1 md:grid-cols-2 items-center bg-white border border-gray-200 rounded-lg shadow md:flex-row">
+            <div className="flex flex-col justify-between p-8 leading-normal">
+              <div className="relative">
+                <img
+                  src="/pokeBowl.jpg"
+                  alt="Raw Pixel, Designed by Freepik"
+                  className="relative w-full h-full object-cover rounded-xl transition-all duration-300 hover:grayscale-0 cursor-pointer"
+                />
+                <div className="absolute inset-0 left-0 w-full h-full flex flex-col justify-end items-center">
+                  <div className="bg-zinc-100 p-6 rounded-b-lg opacity-90">
+                    <h2 className="text-3xl font-semibold text-gray-900 text-center">
+                      Our Mission
+                    </h2>
+                    <p className="text-gray-700">
+                      Welcome to My Healthy Recipe, your number-one source for
+                      healthy and delicious recipes. We're dedicated to
+                      providing nutritional, delicious, and easy-to-make
+                      recipes. Committed to your well-being, we follow HPB's
+                      guidelines for daily sodium intake to ensure that every
+                      recipe aligns with the highest nutritional standards. More
+                      than just a collection of recipes, our commitment to
+                      health is ingrained in every dish we create.
+                    </p>
+                  </div>
+                </div>
               </div>
-
-              {/* Right Column */}
-              <div className="hidden md:flex flex-col items-center">
-                {/* Dynamic user profiles */}
-                <div className="flex flex-col p-6 ml-16">
-                  <h2 className="text-center items-center font-bold text-2xl text-black">
-                    With Over 100+ Recipes to Browse!
-                  </h2>
-                  <div className="flex grid-rows-4 mt-8 space-x-5 gap-4">
+            </div>
+            {/* Right Column */}
+            <div className="relative">
+              {/* Dynamic user profiles */}
+              <div className="grid grid-rows-2 p-6">
+                <h2 className="text-center items-center justify-center font-bold font-serif text-5xl text-black">
+                  With Over 100+ Healthy Recipes
+                </h2>
+                <div className="grid grid-cols-3 justify-center mt-8 md:justify-start md:mt-0 bg-orange-300 rounded-xl py-5">
+                  <div className="flex flex-col justify-center items-center">
                     <div className="bg-white p-4 rounded-full w-32 h-32 flex flex-col justify-center items-center">
                       <p className="text-orange-600 text-lg md:text-xl font-bold text-center">
                         {userCounts.REGISTERED_USER}
                       </p>
-                      <p className="text-black text-center">Active Users</p>
+                      <p className="text-gray-900 font-sans font-medium text-center">
+                        Active Users
+                      </p>
                     </div>
+                  </div>
+                  <div className="flex flex-col justify-center items-center">
                     <div className="bg-white p-4 rounded-full w-32 h-32 flex flex-col justify-center items-center">
                       <p className="text-orange-600 text-lg md:text-xl font-bold text-center">
                         {userCounts.BUSINESS_USER}
                       </p>
-                      <p className="text-black text-center">
+                      <p className="text-gray-900 font-sans font-medium text-center">
                         Business Partners
                       </p>
                     </div>
+                  </div>
+                  <div className="flex flex-col justify-center items-center">
                     <div className="bg-white p-4 rounded-full w-32 h-32 flex flex-col justify-center items-center">
                       <p className="text-orange-600 text-lg md:text-xl font-bold text-center">
                         {userCounts.NUTRITIONIST}
                       </p>
-                      <p className="text-black text-center">Nutritionist</p>
+                      <p className="text-gray-900 font-sans font-medium text-center">
+                        Nutritionist
+                      </p>
                     </div>
                   </div>
                 </div>
@@ -492,19 +596,52 @@ const Home = () => {
           </div>
         </div>
         {/* End of Dynamic banner on active users */}
+
+        {/* Most Popular Blogs*/}
+        <div>
+          {isLoading ? (
+            <div className="text-xl text-center p-4">
+              <p>Please wait. It'll just take a moment.</p>
+            </div>
+          ) : (
+            <>
+              <div className="p-5">
+                <h2 className="text-4xl font-extrabold font-serif mb-4 mt-4 text-black">
+                  Blogs
+                </h2>
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
+                  {latestBlogs.map((post) => renderBlogPost(post))}
+                </div>
+              </div>
+            </>
+          )}
+        </div>
+        {/* Most Popular Blogs*/}
+
         {/* Educational Contents card*/}
         <div>
-          <div className="p-5">
-            <h2 className="text-4xl font-extrabold font-serif mb-4 mt-4 text-black">
-              Educational Contents
-            </h2>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
-              {/* {latestRecipes.map((post) => renderRecipePostCard(post))} */}
+          {isLoading ? (
+            <div className="text-xl text-center p-4">
+              <p>Please wait. It'll just take a moment.</p>
             </div>
-          </div>
+          ) : (
+            <>
+              <div className="p-5">
+                <h2 className="text-4xl font-extrabold font-serif mb-4 mt-4 text-black">
+                  Educational Contents
+                </h2>
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
+                  {latestEducationalContents.map((post) =>
+                    renderEducationContentCard(post)
+                  )}
+                </div>
+              </div>
+            </>
+          )}
         </div>
         {/* End of Educational Contents cards */}
       </div>
+
       <Footer />
     </div>
   );

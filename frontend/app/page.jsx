@@ -155,6 +155,8 @@ const Home = () => {
   //   .sort((a, b) => new Date(b.createdDateTime) - new Date(a.createdDateTime))
   //   .slice(0, 3);
 
+  const recipeLimit = [...MostPopularRecipes].slice(0, 3);
+
   // Redirect to the specific recipe page
   const handleViewRecipes = (id) => {
     // Make sure the recipeTitle
@@ -403,7 +405,7 @@ const Home = () => {
               Most Popular Recipes
             </h2>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
-              {MostPopularRecipes.map((post) => renderRecipePostCard(post))}
+              {recipeLimit.map((post) => renderRecipePostCard(post))}
             </div>
           </div>
         </div>

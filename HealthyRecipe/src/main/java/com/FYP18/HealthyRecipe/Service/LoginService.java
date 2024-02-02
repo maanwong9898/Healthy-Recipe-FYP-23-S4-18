@@ -158,8 +158,11 @@ public class LoginService {
     public void sendEmail(VerificationToken token)
     {
         try{
-            // TODO: this should eventually become the frontend's link that calls specifically this controller
-            String link = "http://localhost:8080/verify/confirm?token=" + token.getToken();
+            
+            // TODO: when testing in local, switch to this:
+            // String link = "http://localhost:3000/verifyEmail/confirm?token=" + token.getToken();
+
+            String link = "https://fyp-23-s4-18.vercel.app/verifyEmail/confirm?token=" + token.getToken();
             emailService.sendVerificationEmail(token.getEmail(), link);
         }
         catch(Exception e) 

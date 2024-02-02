@@ -321,7 +321,7 @@ const UpdateBusinessBlogPostPage = ({ params }) => {
               {/* ERROR MESSAGE */}
               {error && (
                 <p className="text-red-500 font-semibold text-sm">
-                  Error updating blog post: {error}
+                  Failed in updating blog post: {error}
                 </p>
               )}
               {success && (

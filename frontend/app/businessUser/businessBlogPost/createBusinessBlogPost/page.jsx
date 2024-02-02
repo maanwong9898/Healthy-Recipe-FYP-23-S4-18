@@ -180,7 +180,6 @@ const CreateBusinessBlogPostPage = () => {
         className="mt-16 mb-16 mx-auto bg-white rounded-lg shadow-lg p-4 md:p-8 lg:p-12"
         style={{ maxWidth: "600px", width: "100%" }} // Increase maxWidth and set width to 100%
       >
-        {" "}
         {/* Smaller maxWidth */}
         <div className="p-4 space-y-4 md:space-y-12 ">
           <div className="p-6 space-y-4 md:space-y-2 sm:p-4">

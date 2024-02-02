@@ -298,13 +298,18 @@ const BusinessBlogPostsPage = () => {
     >
       <img
         src={post.img}
-        alt="Designed by Freepik"
+        alt={post.img_title}
         className="w-full object-cover rounded-sm"
         style={{ height: "192px" }}
       />
       <div className="flex-grow flex flex-col justify-between p-4 bg-white">
         <div>
-          <h2 className="text-2xl font-extrabold mb-2">{post.title}</h2>
+          <h2
+            className="text-2xl font-extrabold mb-2 hover:text-orange-600 cursor-pointer"
+            onClick={() => handleViewBlogPost(post.id)}
+          >
+            {post.title}
+          </h2>
           <div
             className="text-gray-700 text-base mb-4 line-clamp-3"
             style={{ height: "4.5rem" }}
@@ -317,12 +322,6 @@ const BusinessBlogPostsPage = () => {
             {post.blogType.subcategoryName}
           </div>
         </div> */}
-        <button
-          onClick={() => handleViewBlogPost(post.id)}
-          className="text-white font-bold bg-gradient-to-br from-cyan-400 to-cyan-800 hover:bg-blue-950 border-2 border-black focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 rounded-lg text-sm mt-3 px-4 py-2 text-center"
-        >
-          Read more
-        </button>
       </div>
     </div>
   );
@@ -338,126 +337,123 @@ const BusinessBlogPostsPage = () => {
   );
 
   return (
-    <div>
-      <div className="bg-white p-4 md:p-10">
-        <h1 className="text-2xl md:text-4xl font-extrabold font-mono text-cyan-800 mb-4 md:mb-8">
-          Business Blog Posts
-        </h1>
-        <div className="flex sm:justify-between sm:items-center mb-4">
-          {/* Search Section */}
-          <div className="flex-grow">
-            <input
-              type="text"
-              id="blogSearch"
-              name="blogSearch"
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
-              onKeyDown={(e) => {
-                if (e.key === "Enter") {
-                  handleSearchClick();
-                }
-              }}
-              placeholder="Search blog posts title..."
-              className="mr-2 p-2 rounded border-2 border-black mb-2 sm:mb-0"
-              style={{ flex: 1 }}
-            />
-            <button
-              onClick={handleSearchClick}
-              className="text-white p-2 border-2 border-black bg-gradient-to-br from-cyan-400 to-cyan-800 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 rounded-lg text-base font-bold px-5 py-2.5 text-center"
-              style={{ flexShrink: 0 }}
-            >
-              Search
-            </button>
-            {/* Results count */}
-            {searchButtonClicked && searchPerformed && (
-              <p className="text-left text-red font-bold text-xl sm:ml-2">
-                {resultsCount} results found.
-              </p>
-            )}
-          </div>
+    <div className="p-4 md:p-10">
+      <h1 className="text-3xl text-center md:text-7xl font-extrabold font-sans text-gray-900 mb-4 md:mb-8">
+        Blog Posts
+      </h1>
+      <div className="flex sm:justify-between sm:items-center mb-4">
+        {/* Search Section */}
+        <div className="flex-grow">
+          <input
+            type="text"
+            id="mealPlanSearch"
+            name="mealPlanSearch"
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+            onKeyDown={(e) => {
+              if (e.key === "Enter") {
+                handleSearchClick();
+              }
+            }}
+            placeholder="Search by title..."
+            className="mr-2 p-2 rounded-lg border w-full md:w-auto"
+            style={{ flex: 1 }}
+          />
+          <button
+            onClick={handleSearchClick}
+            className="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-1.5 px-5 rounded-full mt-2 w-full lg:w-auto"
+            style={{ flexShrink: 0 }}
+          >
+            Search
+          </button>
+          {/* Results count */}
+          {searchButtonClicked && searchPerformed && (
+            <p className="text-left text-red-500 font-bold text-lg sm:ml-2">
+              {resultsCount} results found.
+            </p>
+          )}
+        </div>
 
-          {/* Sort dropdown */}
-          <div className="mb-2 md:mb-0 md:mr-6">
-            <label
-              htmlFor="sort"
-              className="text-xl text-black mb-2 sm:mb-0 sm:mr-2"
-            >
-              Sort By:
-            </label>
+        {/* Sort dropdown */}
+        <div className="mb-2 md:mb-0 md:mr-6">
+          <label
+            htmlFor="sort"
+            className="text-xl text-black mb-2 sm:mb-0 sm:mr-2"
+          >
+            Sort By:
+          </label>
+          <select
+            id="sort"
+            value={sortOption}
+            onChange={(e) => setSortOption(e.target.value)}
+            className="mr-2 p-2 rounded-lg border w-full md:w-auto"
+            style={{ maxWidth: "300px" }}
+          >
+            {Object.values(sortOptions).map((option) => (
+              <option key={option.key} value={option.key}>
+                {option.label}
+              </option>
+            ))}
+          </select>
+        </div>
+        {/* Filter Section - Adjusted to align to the right */}
+        <div className="flex flex-col sm:flex-row sm:items-center">
+          <label
+            htmlFor="categoryFilter"
+            className="text-xl text-black mb-2 sm:mb-0 sm:mr-2"
+          >
+            Filter By:
+          </label>
+          <div className="flex-grow-0">
             <select
-              id="sort"
-              value={sortOption}
-              onChange={(e) => setSortOption(e.target.value)}
-              className="p-2 rounded border-2 border-black text-black"
+              id="categoryFilter"
+              value={categoryFilter}
+              onChange={(e) => setCategoryFilter(e.target.value)}
+              className="mr-2 p-2 rounded-lg border w-full md:w-auto"
               style={{ maxWidth: "300px" }}
             >
-              {Object.values(sortOptions).map((option) => (
-                <option key={option.key} value={option.key}>
-                  {option.label}
+              <option value="">All Categories</option>
+              {categories.map((category) => (
+                <option key={category.id} value={category.subcategoryName}>
+                  {category.subcategoryName}
                 </option>
               ))}
             </select>
           </div>
-
-          {/* Filter Section - Adjusted to align to the right */}
-          <div className="flex flex-col sm:flex-row sm:items-center">
-            <label
-              htmlFor="categoryFilter"
-              className="text-xl text-black mb-2 sm:mb-0 sm:mr-2"
-            >
-              Filter By:
-            </label>
-            <div className="flex-grow-0">
-              <select
-                id="categoryFilter"
-                value={categoryFilter}
-                onChange={(e) => setCategoryFilter(e.target.value)}
-                className="p-2 rounded border-2 border-black text-black"
-                style={{ maxWidth: "300px" }}
-              >
-                <option value="">All Categories</option>
-                {categories.map((category) => (
-                  <option key={category.id} value={category.subcategoryName}>
-                    {category.subcategoryName}
-                  </option>
-                ))}
-              </select>
-            </div>
-          </div>
         </div>
-        {/* Display the blog posts */}
-        {/* Display message while fetching data ftom backend */}
-        {isLoading ? (
-          <div className="text-xl text-center p-4">
-            <p>Please wait. It'll just take a moment.</p>
-          </div>
-        ) : (
-          <>
-            {!searchPerformed && !categoryFilter && !sortOption ? (
-              <>
-                <div className="mb-5">
-                  <h2 className="text-2xl font-bold mb-4 mt-4">
-                    Latest Business Blog Post
-                  </h2>
-                  <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
-                    {latestPosts.map((post) => renderPostCard(post))}
-                  </div>
-                </div>
-                <h2 className="text-2xl font-bold mb-4 mt-4">
-                  Other Business Blog Post
-                </h2>
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                  {otherBusinessBlogPosts.map((post) => renderPostCard(post))}
-                </div>
-              </>
-            ) : (
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                {displayedBlogPosts.map((post) => renderPostCard(post))}
-              </div>
-            )}
-          </>
-        )}
       </div>
+      {/* Display the blog posts */}
+      {/* Display message while fetching data ftom backend */}
+      {isLoading ? (
+        <div className="text-xl text-center p-4">
+          <p>Please wait. It'll just take a moment.</p>
+        </div>
+      ) : (
+        <>
+          {!searchPerformed && !categoryFilter && !sortOption ? (
+            <>
+              <div className="mb-5">
+                <h2 className="text-2xl font-bold mb-4 mt-4">
+                  Latest Business Blog Post
+                </h2>
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
+                  {latestPosts.map((post) => renderPostCard(post))}
+                </div>
+              </div>
+              <h2 className="text-2xl font-bold mb-4 mt-4">
+                Other Business Blog Post
+              </h2>
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                {otherBusinessBlogPosts.map((post) => renderPostCard(post))}
+              </div>
+            </>
+          ) : (
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+              {displayedBlogPosts.map((post) => renderPostCard(post))}
+            </div>
+          )}
+        </>
+      )}
     </div>
   );
 };

@@ -4,6 +4,7 @@ import React from "react";
 import { useState, useEffect } from "react";
 import HomeNavbar from "@/app/components/navigation/homeNavBar";
 import axiosInterceptorInstance from "../../axiosInterceptorInstance.js";
+import SearchIcon from "@mui/icons-material/Search";
 
 // rouuter path: /businessBlogPost
 
@@ -285,7 +286,7 @@ const BusinessBlogPostsPage = () => {
   const renderPostCard = (post) => (
     <div
       key={post.id}
-      className="rounded shadow-lg overflow-hidden flex flex-col"
+      className="rounded-lg shadow-lg overflow-hidden flex flex-col"
       style={{
         border: "0.5px solid transparent",
         background:
@@ -302,7 +303,12 @@ const BusinessBlogPostsPage = () => {
       />
       <div className="flex-grow flex flex-col justify-between p-4 bg-white">
         <div>
-          <h2 className="text-2xl font-extrabold mb-2">{post.title}</h2>
+          <h2
+            className="text-2xl font-extrabold mb-2 hover:text-orange-600 cursor-pointer"
+            onClick={() => handleViewBlogPost(post.id)}
+          >
+            {post.title}
+          </h2>
           <div
             className="text-gray-700 text-base mb-4 line-clamp-3"
             style={{ height: "4.5rem" }}
@@ -320,12 +326,12 @@ const BusinessBlogPostsPage = () => {
             {post.blogType.subcategoryName}
           </div>
         </div> */}
-        <button
+        {/* <button
           onClick={() => handleViewBlogPost(post.id)}
           className="text-white font-bold bg-gradient-to-br from-cyan-400 to-cyan-800 hover:bg-blue-950 border-2 border-black focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 rounded-lg text-sm mt-3 px-4 py-2 text-center"
         >
           Read more
-        </button>
+        </button> */}
       </div>
     </div>
   );
@@ -343,17 +349,17 @@ const BusinessBlogPostsPage = () => {
   return (
     <div>
       <HomeNavbar />
-      <div className="bg-white p-4 md:p-10">
-        <h1 className="text-2xl md:text-4xl font-extrabold font-mono text-cyan-800 mb-4 md:mb-8">
-          Business Blog Posts
+      <div className="p-4 md:p-10">
+        <h1 className="text-3xl text-center md:text-7xl font-extrabold font-sans text-gray-900 mb-4 md:mb-8">
+          Blog Posts
         </h1>
         <div className="flex sm:justify-between sm:items-center mb-4">
           {/* Search Section */}
           <div className="flex-grow">
             <input
               type="text"
-              id="blogSearch"
-              name="blogSearch"
+              id="mealPlanSearch"
+              name="mealPlanSearch"
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
               onKeyDown={(e) => {
@@ -361,20 +367,20 @@ const BusinessBlogPostsPage = () => {
                   handleSearchClick();
                 }
               }}
-              placeholder="Search blog posts title..."
-              className="mr-2 p-2 rounded border-2 border-black mb-2 sm:mb-0"
+              placeholder="Search by title..."
+              className="mr-2 p-2 rounded-lg border w-full md:w-auto"
               style={{ flex: 1 }}
             />
             <button
               onClick={handleSearchClick}
-              className="text-white p-2 border-2 border-black bg-gradient-to-br from-cyan-400 to-cyan-800 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 rounded-lg text-base font-bold px-5 py-2.5 text-center"
+              className="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-1.5 px-5 rounded-full mt-2 w-full lg:w-auto"
               style={{ flexShrink: 0 }}
             >
               Search
             </button>
             {/* Results count */}
             {searchButtonClicked && searchPerformed && (
-              <p className="text-left text-red font-bold text-xl sm:ml-2">
+              <p className="text-left text-red-500 font-bold text-lg sm:ml-2">
                 {resultsCount} results found.
               </p>
             )}
@@ -392,7 +398,7 @@ const BusinessBlogPostsPage = () => {
               id="sort"
               value={sortOption}
               onChange={(e) => setSortOption(e.target.value)}
-              className="p-2 rounded border-2 border-black text-black"
+              className="mr-2 p-2 rounded-lg border w-full md:w-auto"
               style={{ maxWidth: "300px" }}
             >
               {Object.values(sortOptions).map((option) => (
@@ -415,7 +421,7 @@ const BusinessBlogPostsPage = () => {
                 id="categoryFilter"
                 value={categoryFilter}
                 onChange={(e) => setCategoryFilter(e.target.value)}
-                className="p-2 rounded border-2 border-black text-black"
+                className="mr-2 p-2 rounded-lg border w-full md:w-auto"
                 style={{ maxWidth: "300px" }}
               >
                 <option value="">All Categories</option>

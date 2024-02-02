@@ -75,6 +75,10 @@ public class MealPlan {
     @JoinColumn(name = "healthGoalCategory", insertable = false, updatable = false)
     private HealthGoal healthGoal;   
 
+    @Lob
+    @Column(name = "imgBlob", columnDefinition="MEDIUMBLOB")
+    private byte[] imgBlob;
+
     @ManyToMany
     @JoinTable(
         name = "mealplan_recipe",

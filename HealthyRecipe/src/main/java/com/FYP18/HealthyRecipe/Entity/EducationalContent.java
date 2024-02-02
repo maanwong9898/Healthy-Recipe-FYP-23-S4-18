@@ -53,6 +53,10 @@ public class EducationalContent {
     @Column(name = "Title")
     private String title;
 
+    @Lob
+    @Column(name = "imgBlob", columnDefinition="MEDIUMBLOB")
+    private byte[] imgBlob;
+
     @Column(name = "educationalContent_type_id", nullable = true)
     private Long educationalContentTypeId;
 

@@ -53,6 +53,10 @@ public class Blog {
     @Column(name = "Title")
     private String title;
 
+    @Lob
+    @Column(name = "imgBlob", columnDefinition="MEDIUMBLOB")
+    private byte[] imgBlob;
+
     @Column(name = "blog_type_id", nullable = true)
     private Long blogTypeId;
 

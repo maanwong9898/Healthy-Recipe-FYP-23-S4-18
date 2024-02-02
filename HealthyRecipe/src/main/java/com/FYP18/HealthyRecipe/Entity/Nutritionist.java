@@ -10,6 +10,7 @@ import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.Lob;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -46,6 +47,10 @@ public class Nutritionist extends User {
     
     @Column(columnDefinition="bit(1) default b'0'")
     private Boolean verified = false;
+
+    @Lob
+    @Column(name = "imgBlob", columnDefinition="MEDIUMBLOB")
+    private byte[] imgBlob;
 
     @PrePersist
     public void prePersist() {

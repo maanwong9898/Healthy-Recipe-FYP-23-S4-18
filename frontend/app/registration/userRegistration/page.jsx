@@ -208,7 +208,8 @@ const userRegistration = () => {
       setDOB("");
       setEmail("");
       setDietaryPreference("");
-      setAllergyRestriction("");
+      // setAllergyRestriction("");
+      setAllergyRestriction([]);
       setHealthGoals("");
       setWeight("");
       setError("");

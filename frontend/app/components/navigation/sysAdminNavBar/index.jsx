@@ -194,18 +194,15 @@ const SysAdminNavBar = () => {
               <span className="text-gray-900 hover:text-orange-600 rounded-md px-3 py-2 font-bold">
                 User Account
               </span>
-              {/* {isUserAccountDropdownVisible && <UserAccountDropdownMenu />} */}
-              {isAccountDropdownVisible && (
-                <AccountDropdownMenu onLogout={confirmAndLogout} />
-              )}
+              {isUserAccountDropdownVisible && <UserAccountDropdownMenu />}
             </div>
 
-            {/* Create Category */}
+            {/* Manage Category */}
             <Link
-              href="/sysAdmin/createCategory"
+              href="/sysAdmin/allCategory"
               className="text-gray-900 hover:text-orange-600 rounded-md px-3 py-2 font-bold"
             >
-              Create Category
+              Manage Category
             </Link>
 
             {/* Suspend Contents */}

@@ -3,6 +3,8 @@ import axiosInterceptorInstance from "../../axiosInterceptorInstance.js";
 import { useRouter } from "next/navigation";
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
+import SearchIcon from "@mui/icons-material/Search";
+import SwapVertIcon from "@mui/icons-material/SwapVert";
 
 // router path is /sysAdmin/suspendMealPlan
 
@@ -65,9 +67,16 @@ const SuspendMealPlan = () => {
   const [searchResultsCount, setSearchResultsCount] = useState(0);
   const [categories, setCategories] = useState([]);
   const [categoryFilter, setCategoryFilter] = useState("ALL");
+  const [alphabeticalOrder, setAlphabeticalOrder] = useState("AZ");
+  const [datePublishedOrder, setDatePublishedOrder] = useState("LATEST");
+  const [ratingsOrder, setRatingsOrder] = useState("HIGHEST");
+  const [statusOrder, setStatusOrder] = useState("ACTIVE");
+  const [isLoading, setIsLoading] = useState(false);
 
   // fetch all meal plans and categories from backend
   useEffect(() => {
+    setIsLoading(true); // Set loading state to true
+
     const getData = async () => {
       try {
         const fetchedMealPlan = await fetchMealPlans();
@@ -85,7 +94,7 @@ const SuspendMealPlan = () => {
       }
     };
 
-    getData();
+    // getData();
 
     // Fetch all meal plan categories from backend
     const fetchCategories = async () => {
@@ -101,7 +110,15 @@ const SuspendMealPlan = () => {
       }
     };
 
-    fetchCategories();
+    // fetchCategories();
+
+    Promise.all([getData(), fetchCategories()])
+      .catch((error) => {
+        console.error("Error in fetchData or fetchCategories:", error);
+      })
+      .finally(() => {
+        setIsLoading(false); // End loading after both operations are complete
+      });
   }, []);
 
   // All in 1 -- sort, filter, search
@@ -162,12 +179,68 @@ const SuspendMealPlan = () => {
           return getDateOrFallback(b) - getDateOrFallback(a); // Latest date first if tie
         });
         break;
-      // ... other sorting cases
+      case "STATUS_ACTIVE":
+        processedMealPlans.sort((a, b) => {
+          const statusDiff = b.active - a.active;
+          if (statusDiff !== 0) return statusDiff;
+        });
+        break;
+
+      case "STATUS_INACTIVE":
+        processedMealPlans.sort((a, b) => {
+          const statusDiff = a.active - b.active;
+          if (statusDiff !== 0) return statusDiff;
+        });
+        break;
     }
 
     // Update the displayed meal plans
     setDisplayedMealPlans(processedMealPlans);
   }, [mealPlans, searchTerm, categoryFilter, sortOption]);
+
+  // Sort by alphabetical order
+  const handleSortAlphabetically = () => {
+    if (alphabeticalOrder === "AZ") {
+      setSortOption("ALPHABETICAL_AZ");
+      setAlphabeticalOrder("ZA");
+    } else {
+      setSortOption("ALPHABETICAL_ZA");
+      setAlphabeticalOrder("AZ");
+    }
+  };
+
+  // Sort by date published order
+  const handleSortByDatePublished = () => {
+    if (datePublishedOrder === "LATEST") {
+      setSortOption("OLDEST");
+      setDatePublishedOrder("OLDEST");
+    } else {
+      setSortOption("LATEST");
+      setDatePublishedOrder("LATEST");
+    }
+  };
+
+  // Sort by ratings order
+  const handleSortByRatings = () => {
+    if (ratingsOrder === "HIGHEST") {
+      setSortOption("LOWEST_RATINGS");
+      setRatingsOrder("LOWEST");
+    } else {
+      setSortOption("HIGHEST_RATINGS");
+      setRatingsOrder("HIGHEST");
+    }
+  };
+
+  // Sort by status order
+  const handleSortByStatus = () => {
+    if (statusOrder === "ACTIVE") {
+      setSortOption("STATUS_INACTIVE");
+      setStatusOrder("INACTIVE");
+    } else {
+      setSortOption("STATUS_ACTIVE");
+      setStatusOrder("ACTIVE");
+    }
+  };
 
   // Combined Function to toggle a meal plan active status
   const handleToggleMealPlanStatus = async (mealPlanId, isActive) => {
@@ -218,170 +291,314 @@ const SuspendMealPlan = () => {
       <h1 className="text-6xl text-gray-900 p-3 mb-4 font-bold text-center sm:text-center">
         All Meal Plans
       </h1>
-      {/* Search and Sort Section */}
-      <div className="flex flex-col md:flex-row justify-between items-center mb-4">
+      {/* Search Section */}
+      <div className="flex flex-col mb-4 md:flex-row md:mr-2">
         {/* Search bar */}
-        <div className="mb-4 md:mb-0 md:mr-2">
+        <div className="relative mb-3 md:mb-8 md:mr-2">
           <input
             type="text"
-            id="mealPlanSearch" // Adding an id attribute here
-            name="mealPlanSearch" // Adding a name attribute here
+            id="mealPlanSearch"
+            name="mealPlanSearch"
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
             placeholder="Search by title"
-            className="mr-2 p-2 rounded-lg borde w-full md:w-auto"
+            className="mr-2 p-2 rounded-lg border w-full md:w-auto pl-10"
           />
-
-          <button
-            onClick={handleSearchClick}
-            className="text-white bg-blue-600 hover:bg-blue-700 rounded-full text-base font-semibold px-5 py-1 w-full md:w-auto mt-3 md:mt-0 md:ml-2"
-          >
-            Search
-          </button>
+          {/* Search icon */}
+          <span className="absolute inset-y-0 left-0 flex items-center pl-2">
+            <SearchIcon />
+          </span>
         </div>
 
-        {/* Sort dropdown and filter dropdown */}
-        <div className="flex flex-col md:flex-row items-center">
-          {/* Sort dropdown */}
-          <div className="mb-2 md:mb-0 md:mr-6">
-            <label htmlFor="sort" className="mr-2 font-2xl text-gray-900">
-              Sort By:
-            </label>
-            <select
-              id="sort"
-              value={sortOption}
-              onChange={(e) => setSortOption(e.target.value)}
-              className="p-2 rounded-lg border mr-6"
-            >
-              {Object.values(sortOptions).map((option) => (
-                <option key={option.key} value={option.key}>
-                  {option.label}
-                </option>
-              ))}
-            </select>
-          </div>
-          {/* Filter dropdown */}
-          <div className="mb-2 md:mb-0 md:mr-6">
-            <label
-              htmlFor="categoryFilter"
-              className="ml-2 mr-2 font-2xl text-gray-900"
-            >
-              Filter By:
-            </label>
-            <select
-              id="categoryFilter"
-              onChange={(e) => setCategoryFilter(e.target.value)}
-              className="p-2 rounded-lg border"
-            >
-              <option value="ALL">All Categories</option>
-              {categories.map((category, index) => (
-                <option key={index} value={category.id} className="text-black">
-                  {category.subcategoryName}
-                </option>
-              ))}
-            </select>
-          </div>
+        {/* Filter dropdown */}
+        <div className="relative md:ml-auto">
+          <label
+            htmlFor="categoryFilter"
+            className="ml-2 mr-2 font-2xl text-gray-900"
+          >
+            Filter By:
+          </label>
+          <select
+            id="categoryFilter"
+            onChange={(e) => setCategoryFilter(e.target.value)}
+            className="p-2 rounded-lg border"
+          >
+            <option value="ALL">All Categories</option>
+            {categories.map((category, index) => (
+              <option key={index} value={category.id} className="text-black">
+                {category.subcategoryName}
+              </option>
+            ))}
+          </select>
         </div>
       </div>
 
       {/* Table of meal plans */}
-      <div className="overflow-x-auto">
-        <table className="min-w-full rounded-lg border-zinc-200 border-2">
-          <thead className="bg-zinc-700 font-normal text-white border-gray-800 border-2">
-            <tr className="text-center text-lg">
-              <th className="px-3 py-2">Meal Plan Title</th>
-              <th className="px-3 py-2">Publisher</th>
-              <th className="px-3 py-2">Company</th>
-              <th className="px-3 py-2">Date Published</th>
-              <th className="px-3 py-2">Category</th>
-              <th className="px-3 py-2">Status</th>
-              <th className="px-3 py-2">Ratings</th>
-              <th className="px-3 py-2"></th>
-              <th className="px-3 py-2"></th>
-            </tr>
-          </thead>
-          <tbody>
-            {displayedMealPlans.map((mealPlan, index) => (
-              <tr key={index} className="bg-white border-b">
-                <td className="px-3 py-2 text-base text-center">
-                  {mealPlan.title}
-                </td>
-                <td className="px-3 py-2 text-base text-center">
-                  {mealPlan.userID?.fullName || "nil"}
-                </td>
-                <td className="px-3 py-2 text-base text-center">
-                  {mealPlan.userID?.companyName || "nil"}
-                </td>
-                <td className="px-3 py-2 text-base text-center">
-                  {new Date(
-                    mealPlan?.createdDT || mealPlan.lastUpdatedDT
-                  ).toLocaleDateString("en-GB")}
-                </td>
-                <td className="px-3 py-2 text-base text-center">
-                  {mealPlan.healthGoal
-                    ? mealPlan.healthGoal.subcategoryName
-                    : "Not specified"}
-                </td>
+      {isLoading ? (
+        <div className="loading-indicator text-center">
+          <p>Loading Meal Plan...</p>
+          {/* You can replace this with a spinner or any other visual indicator */}
+        </div>
+      ) : (
+        <>
+          <div className="overflow-x-auto rounded-lg hidden lg:block">
+            <table className="min-w-full rounded-lg border-zinc-200 border-2">
+              <thead className="bg-zinc-700 font-normal text-white border-gray-800 border-2">
+                <tr className="text-center text-lg">
+                  <th className="px-3 py-2">
+                    Meal Plan Title
+                    <button
+                      className="ml-1 focus:outline-none"
+                      onClick={handleSortAlphabetically}
+                    >
+                      <SwapVertIcon />
+                    </button>
+                  </th>
+                  <th className="px-3 py-2">Publisher</th>
+                  <th className="px-3 py-2">Company</th>
+                  <th className="px-3 py-2">
+                    Date Published
+                    <button
+                      className="ml-1 focus:outline-none"
+                      onClick={handleSortByDatePublished}
+                    >
+                      <SwapVertIcon />
+                    </button>
+                  </th>
+                  <th className="px-3 py-2">Category</th>
+                  <th className="px-3 py-2">
+                    Status
+                    <button
+                      className="ml-1 focus:outline-none"
+                      onClick={handleSortByStatus}
+                    >
+                      <SwapVertIcon />
+                    </button>
+                  </th>
+                  <th className="px-3 py-2">
+                    Ratings
+                    <button
+                      className="ml-1 focus:outline-none"
+                      onClick={handleSortByRatings}
+                    >
+                      <SwapVertIcon />
+                    </button>
+                  </th>
+                  <th className="px-3 py-2"></th>
+                  <th className="px-3 py-2"></th>
+                </tr>
+              </thead>
+              <tbody>
+                {displayedMealPlans.map((mealPlan, index) => (
+                  <tr key={index} className="bg-white border-b">
+                    <td className="px-3 py-2 text-base text-center">
+                      {mealPlan.title}
+                    </td>
+                    <td className="px-3 py-2 text-base text-center">
+                      {mealPlan.userID?.fullName || "nil"}
+                    </td>
+                    <td className="px-3 py-2 text-base text-center">
+                      {mealPlan.userID?.companyName || "nil"}
+                    </td>
+                    <td className="px-3 py-2 text-base text-center">
+                      {new Date(
+                        mealPlan?.createdDT || mealPlan.lastUpdatedDT
+                      ).toLocaleDateString("en-GB")}
+                    </td>
+                    <td className="px-3 py-2 text-base text-center">
+                      {mealPlan.healthGoal
+                        ? mealPlan.healthGoal.subcategoryName
+                        : "Not specified"}
+                    </td>
 
-                <td className="px-3 py-2 text-base text-center">
-                  <span
-                    className={`rounded-full px-3 py-1 text-base font-semibold ${
-                      mealPlan.active
-                        ? "text-white bg-green-500"
-                        : "text-white bg-red-500"
-                    }`}
-                  >
-                    {mealPlan.active ? "Active" : "Inactive"}
-                  </span>
-                </td>
-                <td className="px-3 py-2 text-base text-center">
-                  <div
-                    className="rating-container"
-                    style={{ minWidth: "100px" }}
-                  >
-                    {mealPlan.average !== null &&
-                    typeof mealPlan.average.averageRatings === "number" &&
-                    typeof mealPlan.average.totalNumber === "number" ? (
+                    <td className="px-3 py-2 text-base text-center">
                       <span
-                        className="rating-text"
-                        style={{ fontWeight: "bold", color: "#0a0a0a" }}
+                        className={`rounded-full px-3 py-1 text-base font-semibold ${
+                          mealPlan.active
+                            ? "text-white bg-green-500"
+                            : "text-white bg-red-500"
+                        }`}
                       >
-                        {mealPlan.average.averageRatings.toFixed(1)}
+                        {mealPlan.active ? "Active" : "Inactive"}
                       </span>
-                    ) : (
-                      "No ratings yet"
-                    )}
-                    {mealPlan.average && mealPlan.average.totalNumber > 0 && (
-                      <span
-                        className="rating-count"
-                        style={{ fontSize: "0.8rem", color: "#666" }}
+                    </td>
+                    <td className="px-3 py-2 text-base text-center">
+                      <div
+                        className="rating-container flex flex-col"
+                        style={{ minWidth: "100px" }}
                       >
-                        ({mealPlan.average.totalNumber} rating
-                        {mealPlan.average.totalNumber !== 1 ? "s" : ""})
-                      </span>
-                    )}
+                        {mealPlan.average !== null &&
+                        typeof mealPlan.average.averageRatings === "number" &&
+                        typeof mealPlan.average.totalNumber === "number" ? (
+                          <span
+                            className="rating-text"
+                            style={{ fontWeight: "bold", color: "#0a0a0a" }}
+                          >
+                            {mealPlan.average.averageRatings.toFixed(1)}
+                          </span>
+                        ) : (
+                          "No ratings yet"
+                        )}
+                        {mealPlan.average &&
+                          mealPlan.average.totalNumber > 0 && (
+                            <span
+                              className="rating-count"
+                              style={{ fontSize: "0.8rem", color: "#666" }}
+                            >
+                              ({mealPlan.average.totalNumber} rating
+                              {mealPlan.average.totalNumber !== 1 ? "s" : ""})
+                            </span>
+                          )}
+                      </div>
+                    </td>
+                    <td className="px-3 py-2 text-base text-center"></td>
+                    <td className="px-3 py-2 justify-center sm:justify-start">
+                      <button
+                        onClick={() =>
+                          handleToggleMealPlanStatus(
+                            mealPlan.id,
+                            mealPlan.active
+                          )
+                        }
+                        className={`text-white font-bold ${
+                          mealPlan.active
+                            ? "bg-red-600 hover:bg-red-700"
+                            : "bg-stone-400 hover:bg-stone-500"
+                        } rounded-lg text-base px-5 py-2 text-center`}
+                      >
+                        {mealPlan.active ? "Suspend" : "Unsuspend"}
+                      </button>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+
+          {/* Mobile View for Tables */}
+          <div className="mx-auto items-center lg:hidden">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
+              {displayedMealPlans.map((mealPlan, index) => (
+                <div
+                  key={index}
+                  className="bg-white p-5 h-full flex flex-col border border-gray-300 rounded-2xl shadow"
+                >
+                  {/* Title */}
+                  <p className="px-3 py-2 text-lg">
+                    <span className="font-semibold text-gray-900">Title: </span>
+                    <span className="font-normal text-gray-900">
+                      {mealPlan.title}
+                    </span>
+                  </p>
+
+                  {/* Name */}
+                  <p className="px-3 py-2 text-lg">
+                    <span className="font-semibold text-gray-900">
+                      Publisher:{" "}
+                    </span>
+                    <span className="font-normal text-gray-900">
+                      {mealPlan.userID?.fullName || "nil"}
+                    </span>
+                  </p>
+
+                  {/* Company Name */}
+                  <p className="px-3 py-2 text-lg">
+                    <span className="font-semibold text-gray-900">
+                      Company Name:{" "}
+                    </span>
+                    <span className="font-normal text-gray-900">
+                      {mealPlan.userID?.companyName || "nil"}
+                    </span>
+                  </p>
+                  {/* Date Published */}
+                  <p className="px-3 py-2 text-lg">
+                    <span className="font-semibold text-gray-900">
+                      Date Published:{" "}
+                    </span>
+                    <span className="font-normal text-gray-900">
+                      {new Date(
+                        mealPlan?.createdDT || mealPlan.lastUpdatedDT
+                      ).toLocaleDateString("en-GB")}
+                    </span>
+                  </p>
+                  {/* Category */}
+                  <p className="px-3 py-2 text-lg">
+                    <span className="font-semibold text-gray-900">
+                      Category:{" "}
+                    </span>
+                    <span className="font-normal text-gray-900">
+                      {mealPlan.healthGoal
+                        ? mealPlan.healthGoal.subcategoryName
+                        : "Not specified"}
+                    </span>
+                  </p>
+                  {/* Status */}
+                  <p className="px-3 py-2 text-lg">
+                    <span className="font-semibold text-gray-900 mr-2">
+                      Status:{" "}
+                    </span>
+                    <span
+                      className={`rounded-full px-3 py-1 text-base font-semibold ${
+                        mealPlan.active
+                          ? "text-white bg-green-500"
+                          : "text-white bg-red-500"
+                      }`}
+                    >
+                      {mealPlan.active ? "Active" : "Inactive"}
+                    </span>
+                  </p>
+                  {/* Ratings */}
+                  <div className="px-3 py-2 text-lg">
+                    <div
+                      className="rating-container flex flex-row gap-2"
+                      style={{ minWidth: "100px" }}
+                    >
+                      <p className="font-semibold text-gray-900">Ratings: </p>
+
+                      {mealPlan.average !== null &&
+                      typeof mealPlan.average.averageRatings === "number" &&
+                      typeof mealPlan.average.totalNumber === "number" ? (
+                        <span
+                          className="rating-text"
+                          style={{ fontWeight: "bold", color: "#0a0a0a" }}
+                        >
+                          {mealPlan.average.averageRatings.toFixed(1)}
+                        </span>
+                      ) : (
+                        "No ratings yet"
+                      )}
+                      {mealPlan.average && mealPlan.average.totalNumber > 0 && (
+                        <span
+                          className="rating-count"
+                          style={{ fontSize: "0.8rem", color: "#666" }}
+                        >
+                          ({mealPlan.average.totalNumber} rating
+                          {mealPlan.average.totalNumber !== 1 ? "s" : ""})
+                        </span>
+                      )}
+                    </div>
                   </div>
-                </td>
-                <td className="px-3 py-2 text-base text-center"></td>
-                <td className="px-3 py-2 justify-center sm:justify-start">
-                  <button
-                    onClick={() =>
-                      handleToggleMealPlanStatus(mealPlan.id, mealPlan.active)
-                    }
-                    className={`text-white font-bold ${
-                      mealPlan.active
-                        ? "bg-red-600 hover:bg-red-700"
-                        : "bg-stone-400 hover:bg-stone-500"
-                    } rounded-lg text-base px-5 py-2 text-center`}
-                  >
-                    {mealPlan.active ? "Suspend" : "Unsuspend"}
-                  </button>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
+                  {/* Buttons */}
+                  <div className="mt-2 flex flex-col space-y-3 items-center">
+                    <button
+                      onClick={() =>
+                        handleToggleMealPlanStatus(mealPlan.id, mealPlan.active)
+                      }
+                      className={`text-white font-bold  ${
+                        mealPlan.active
+                          ? "bg-red-600 hover:bg-red-700"
+                          : "bg-stone-400 hover:bg-stone-500"
+                      } focus:ring-4 focus:outline-none focus:ring-blue-300 rounded-lg text-base px-5 py-2.5 w-full ml-2 mr-2 text-center`}
+                    >
+                      {mealPlan.active ? "Suspend" : "Unsuspend"}
+                    </button>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </>
+      )}
     </div>
   );
 };

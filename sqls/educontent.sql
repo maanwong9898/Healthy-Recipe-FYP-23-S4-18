@@ -64,7 +64,56 @@ VALUES
         'Author : denayune, Designed by Freepik',  -- img_title
         2 -- educational_content_type_id
     ),
-    
+     (
+        '4',
+        '2024-01-16 15:30:00',  -- CreatedDT
+        'healthhub',  -- Publisher
+        'Fun Fruity Facts for Health',  -- Title
+        'Fruits are packed with health benefits as they are naturally low in fat, calories and sodium. \nFruit also provides a rich resource of nutrients which can be seen from their bright colours! The colour, smell and taste of a fruit comes from the plant’s phytochemicals. These plant-chemicals are believed to offer a wide range of health benefits, including those with antioxidants properties, carotenoid from orange-coloured fruits, and anthocyanin from red, blue and purple coloured fruit and vegetables.
+         \nIf you want to keep the doctor away, the magic number is two servings of fruits per day.
+         \nHealthy Fruits to Eat \nApples — Besides being a notable source of phytonutrients and antioxidants, apples also work as a natural mouth refresher, cleaning your teeth with each bite, while leaving behind a pleasing aroma in your mouth.
+         \nBananas — Bananas contain one of the highest amounts of potassium found among fruit. A medium-sized banana contains around 422mg of potassium. Potassium is an important nutrient for the functioning of muscles. 
+         \nBerries — Among all the fruits, berries contain the highest amount of antioxidants. The antioxidant properties of these fruit help to fight off diseases and potentially prevent cell deterioration. 
+         \nDurians — Durian lovers will be pleased to know that there are many health benefits of consuming this love-it-or-hate-it fruit. The fruit is full of vitamins and minerals. It is also a good source of dietary fibre as five seeds provide 16% of our dietary fibre requirements. You might be surprised to know that durians actually contain zero cholesterol, since cholesterol is only found in animal products. 
+         \nNow that you know your fruity facts, go ahead and grab some healthy fruits to snack on that is not only delicious but also good for your health.'
+        3,
+        'https://img.freepik.com/free-photo/grapes-strawberries-pineapple-kiwi-apricot-banana-whole-pineapple_23-2147968680.jpg?w=900&t=st=1706872367~exp=1706872967~hmac=3ecd07bc4adca49ee0585aac7f1b06ade28409e30d821ac9258c63b89f718d46'
+        'Designed by Freepik',  -- img_title
+        1 -- educational_content_type_id
+    ),
+       (
+        '5',
+        '2024-01-01 15:30:00',  -- CreatedDT
+        'healthhub',  -- Publisher
+        'Ways to Live Healthy and Stay Healthy',  -- Title
+        'A healthy lifestyle is about having a healthy diet, active lifestyle and caring for your mental wellbeing.
+         \nBeing healthy or leading a healthy lifestyle is more than just keeping yourself from falling sick. Good health or healthy living encompasses many other areas, which include physical health, mental health and health management. Every area is important and cannot be neglected for you to achieve better health. 
+         \nPhysical Activity and An Active Lifestyle \nBoost your physical health with an active lifestyle. Taking care of your body is important for good health, but the problem is that people often neglect their own bodies. If you do not eat a proper diet or do not get enough sleep, you are depriving yourself of good physical health! Keeping yourself physically healthy with an active lifestyle and physical activity will allow you to feel better and more energetic every day.
+         \nActive Lifestyle \nAnother thing you should do to be healthy is to get active! An active lifestyle with adequate physical activity and exercise can really help to improve your health, not only by reducing the risk of cardiovascular (heart and blood vessel) disease but also helps you feel more confident and better about yourself, improves your energy level and concentration, relieves stress and anxiety. Some moderate-intensity activities you can do are brisk walking, swimming, cycling or dancing. 
+         \nMental Wellness and Health \nBesides a healthy body, you also need to have a healthy mind. Diseases not only affect the physical body but the mind as well. Mental health is therefore a very important component of your overall health and well-being. The absence of mental illnesses or disorders such as depression or schizophrenia does not mean that a person is mentally healthy. The WHO defines good mental health as the state of wellbeing in which an individual can cope with the normal stresses of life, work productively and fruitfully, realises his or her own potential, contribute to his or her community.
+         \nBeing healthy does not stop at keeping yourself free from disease and illness. Being healthy requires you to take care of your physical, mental and emotional health. There are no limits to how much health you can achieve. The healthier you are, the better you will be able to enjoy life.'
+        3,
+        'https://img.freepik.com/premium-photo/several-types-fruits-vegetables-healthy-food-yoga-exercise-lifestyle_39755-139.jpg?w=1060'
+        'Author : user5117301, Designed by Freepik',  -- img_title
+        2 -- educational_content_type_id
+    ),
+     (
+        '6',
+        '2023-12-01 15:30:00',  -- CreatedDT
+        'healthhub',  -- Publisher
+        'Benefits of drinking Tea',  -- Title
+        'A hot, healthy drink could be a simple cup of tea. Learn more about the different types of tea and the health benefits of tea.Tea has been known to be a healthy beverage for many centuries. What are the differences between the different types of teas? All teas are made from leaves of the Camellia Sinensis plant. The main difference between these teas lies in the way the tea leaves are processed.
+         \nWhite vs Green Tea \nThe way tea leaves are processed determines the types of tea produced. White tea is made from the buds and young leaves while green tea is made from mature leaves. To prevent oxidation(which causes browning), white and green tea leaves are steamed before drying. This process helps in the retention of the naturally occurring phytochemicals of the tea leaf.
+         \nOolong vs Black Tea \nOolong tea and black tea are healthy, hot beverages.Oolong tea and black tea are made from mature leaves. To enhance the tea’s flavour, oolong and black tea leaves are bruised and broken into bits respectively, before they are left to oxidise. Oolong tea is less oxidised as compared to black tea. The oxidation process also converts catechins into other beneficial phytochemicals. Hence, the content and type of phytochemicals present in oolong and black teas generally differ from those of white and green teas.
+         \nBenefits of Drinking Tea \nPhytochemicals in tea have antioxidant properties. For a refreshing change from drinking plain water, try drinking a cup of tea instead. Teas are rich in beneficial phytochemicals such as those mentioned above. Freshly brewed tea generally contains more phytochemicals as compared to instant preparations and ready-to-drink teas. The phytochemicals present in teas have antioxidant properties that have health-promoting benefits. 
+         \nRemember to add less sugar or omit it completely when preparing tea to experience the original tea’s flavour, or choose ready-to-drink teas that are unsweetened or sweetened with less sugar for a healthier beverage.
+         \nRegular tea consumption has been shown to improve the function of the blood vessels and may also help with weight loss by reducing visceral fat. Regular tea drinking may reduce the risk of cardiovascular disease too.'
+        3,
+        'https://img.freepik.com/free-photo/close-up-delicious-tea-small-bowls_23-2149483936.jpg?w=996&t=st=1706873785~exp=1706874385~hmac=012c093778658e99a78032f5cccaeb47d8f3db477e65fe62f8e9c0e2921e5837'
+        'Designed by Freepik',  -- img_title
+        2 -- educational_content_type_id
+    ),
+
 
 -- Educational content review rating
 INSERT INTO educational_content_review_rating
@@ -75,5 +124,8 @@ VALUES
     ('I love this content!' ,                           4.0, '9', 1),
     ('I love this content!' ,                           4.0, '12', 1),
     ('This is awesome stuff!',                          3.2, '7', 2),
-    ('The recipe is very detailed',                     5.0, '8', 2),
-    ('I love this recipe!' ,                            4.0, '9', 2);
+    ('The content is very detailed',                    5.0, '8', 2),
+    ('I love this content!' ,                           4.0, '9', 3);
+    ('The content is very informative!',                5.0, '8', 4),
+    ('I love this content!' ,                           4.0, '9', 5);
+    ('This is really helpful!' ,                        5.0, '9', 6);

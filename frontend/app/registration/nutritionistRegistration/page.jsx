@@ -19,6 +19,7 @@ const NutritionistRegistration = () => {
   const [nutriCert, setNutriCert] = useState("");
   const [error, setError] = useState("");
   const [success, setSuccess] = useState(false);
+  const [filePreviews, setFilePreviews] = useState([]);
   const emailValidation = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
   const handleCreateNutritionistAccount = async (event) => {
@@ -52,7 +53,7 @@ const NutritionistRegistration = () => {
       return;
     } else {
       setSuccess(
-        "Account created successfully! An email will be sent to you once your account has been approved."
+        "Account created successfully! You will be notified once your account has been verified."
       );
     }
     // else if (postalCode.length !== 6) {
@@ -108,6 +109,24 @@ const NutritionistRegistration = () => {
   const clearErrorOnChange = (setter) => (e) => {
     setter(e.target.value);
     setError("");
+  };
+
+  const handleFileChange = (event) => {
+    const files = Array.from(event.target.files);
+    setNutriCert(files);
+    const previews = files.map((file) => URL.createObjectURL(file));
+    setFilePreviews(previews);
+  };
+
+  const renderFilePreviews = () => {
+    return filePreviews.map((preview, index) => (
+      <img
+        key={index}
+        src={preview}
+        alt={`File Preview ${index + 1}`}
+        className="mt-2 w-32 h-32 object-cover rounded"
+      />
+    ));
   };
 
   return (
@@ -177,7 +196,7 @@ const NutritionistRegistration = () => {
                       id="fullName"
                       name="fullName"
                       placeholder="Your Name"
-                      className=" bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg p-2.5"
+                      className="bg-white border border-gray-300 text-gray-900 sm:text-sm rounded-lg p-2.5"
                       value={fullName}
                       onChange={clearErrorOnChange(setFullName)}
                     />
@@ -187,7 +206,7 @@ const NutritionistRegistration = () => {
                       id="userName"
                       name="userName"
                       placeholder="Your Username"
-                      className=" bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg p-2.5"
+                      className="bg-white border border-gray-300 text-gray-900 sm:text-sm rounded-lg p-2.5"
                       value={userName}
                       onChange={clearErrorOnChange(setUserName)}
                     />
@@ -211,7 +230,7 @@ const NutritionistRegistration = () => {
                       id="password"
                       name="password"
                       placeholder="Password"
-                      className=" bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg p-2.5"
+                      className="bg-white border border-gray-300 text-gray-900 sm:text-sm rounded-lg p-2.5"
                       value={password}
                       onChange={clearErrorOnChange(setPassword)}
                     />
@@ -221,7 +240,7 @@ const NutritionistRegistration = () => {
                       id="repeatPassword"
                       name="repeatPassword"
                       placeholder="Repeat Password"
-                      className=" bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg p-2.5"
+                      className="bg-white border border-gray-300 text-gray-900 sm:text-sm rounded-lg p-2.5"
                       value={confirmPwd}
                       onChange={clearErrorOnChange(setConfirmPwd)}
                     />
@@ -239,7 +258,7 @@ const NutritionistRegistration = () => {
                       id="contactNumber"
                       name="contactNumber"
                       placeholder="+65 1234 5678"
-                      className=" bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg w-full p-2.5"
+                      className="bg-white border border-gray-300 text-gray-900 sm:text-sm rounded-lg w-full p-2.5"
                       value={contactNumber}
                       onChange={clearErrorOnChange(setContactNumber)}
                     />
@@ -254,7 +273,7 @@ const NutritionistRegistration = () => {
                       id="workEmail"
                       name="workEmail"
                       placeholder="Work Email"
-                      className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg w-full p-2.5"
+                      className="bg-white border border-gray-300 text-gray-900 sm:text-sm rounded-lg w-full p-2.5"
                       value={workEmail}
                       onChange={clearErrorOnChange(setWorkEmail)}
                     />
@@ -269,7 +288,7 @@ const NutritionistRegistration = () => {
                       id="companyName"
                       name="companyName"
                       placeholder="Company Name"
-                      className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg w-full p-2.5"
+                      className="bg-white border border-gray-300 text-gray-900 sm:text-sm rounded-lg w-full p-2.5"
                       value={companyName}
                       onChange={clearErrorOnChange(setCompanyName)}
                     />
@@ -287,7 +306,7 @@ const NutritionistRegistration = () => {
                       id="companyAddress"
                       name="companyAddress"
                       placeholder="Company Address"
-                      className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg w-full p-2.5"
+                      className="bg-white border border-gray-300 text-gray-900 sm:text-sm rounded-lg w-full p-2.5"
                       value={companyAddress}
                       onChange={clearErrorOnChange(setCompanyAddress)}
                     />
@@ -302,15 +321,15 @@ const NutritionistRegistration = () => {
                       id="postalCode"
                       name="postalCode"
                       placeholder="Postal Code"
-                      className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg w-full p-2.5"
+                      className="bg-white border border-gray-300 text-gray-900 sm:text-sm rounded-lg w-full p-2.5"
                       value={postalCode}
                       onChange={clearErrorOnChange(setPostalCode)}
                     />
                   </div>
 
                   <div className="mt-3">
-                    <p className="flex items-center">
-                      For verification purposes, please upload any of the
+                    <p className="items-center">
+                      For verification purposes, please upload either of the
                       following
                       <span className="text-red-500">*</span>
                     </p>
@@ -320,23 +339,30 @@ const NutritionistRegistration = () => {
                     <p className="text-xs text-gray-700">
                       A copy of your undergraduate/postgraduate certificate
                     </p>
+
                     <input
                       type="file"
                       id="nutriCert"
                       name="nutriCert"
-                      className="border-solid mt-3"
-                      multiple
+                      className="border-solid mt-3 rounded-lg bg-white border border-gray-400 w-full"
                       accept=".pdf, .jpg, .png .jpeg"
                       value={nutriCert}
-                      onChange={clearErrorOnChange(setNutriCert)}
-                    ></input>
+                      onChange={(e) => {
+                        handleFileChange(e);
+                        clearErrorOnChange(setNutriCert)(e);
+                      }}
+                    />
+                    {/* Display file previews */}
+                    <div className="mt-2 flex flex-row space-x-4">
+                      {renderFilePreviews()}
+                    </div>
                   </div>
 
                   {/* ERROR MSG */}
-                  <p className="text-red-500 text-sm">{error}</p>
+                  <p className="text-red-500 text-base">{error}</p>
 
                   {/* SUCCESS MSG */}
-                  <p className="text-green-600 text-sm">{success}</p>
+                  <p className="text-green-600 text-base">{success}</p>
 
                   <div className="flex flex-row justify-center">
                     <button

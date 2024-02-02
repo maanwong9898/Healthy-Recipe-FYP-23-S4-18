@@ -187,7 +187,7 @@ const userRegistration = () => {
 
           try {
             const weightResponse = await axiosInterceptorInstance.post(
-              "http://localhost:8080/registeredUsers/setWeight",
+              "registeredUsers/setWeight",
               weightData
             );
             console.log("Weight set successfully", weightResponse.data);
@@ -277,7 +277,7 @@ const userRegistration = () => {
                       id="fullName"
                       name="fullName"
                       placeholder="Your Name"
-                      className=" bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg p-2.5"
+                      className="bg-white border border-gray-300 text-gray-900 sm:text-sm rounded-lg p-2.5"
                       value={fullName}
                       onChange={(event) => setFullName(event.target.value)}
                     />
@@ -287,7 +287,7 @@ const userRegistration = () => {
                       id="userName"
                       name="userName"
                       placeholder="Your Username"
-                      className=" bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg p-2.5"
+                      className="bg-white border border-gray-300 text-gray-900 sm:text-sm rounded-lg p-2.5"
                       value={username}
                       onChange={(event) => setUsername(event.target.value)}
                     />
@@ -303,7 +303,7 @@ const userRegistration = () => {
                       id="email"
                       name="email"
                       placeholder="Email Address"
-                      className=" bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg w-full p-2.5"
+                      className="bg-white border border-gray-300 text-gray-900 sm:text-sm rounded-lg w-full p-2.5"
                       value={email}
                       onChange={(event) => setEmail(event.target.value)}
                     />
@@ -328,7 +328,7 @@ const userRegistration = () => {
                       id="password"
                       name="password"
                       placeholder="Password"
-                      className=" bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg p-2.5"
+                      className="bg-white border border-gray-300 text-gray-900 sm:text-sm rounded-lg p-2.5"
                       value={password}
                       onChange={(event) => setPassword(event.target.value)}
                     />
@@ -338,7 +338,7 @@ const userRegistration = () => {
                       id="repeatPassword"
                       name="repeatPassword"
                       placeholder="Repeat Password"
-                      className=" bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg p-2.5"
+                      className="bg-white border border-gray-300 text-gray-900 sm:text-sm rounded-lg p-2.5"
                       value={confirmPwd}
                       onChange={(event) => setConfirmPwd(event.target.value)}
                     />
@@ -351,10 +351,10 @@ const userRegistration = () => {
                     </label>
                     <input
                       type="date"
-                      id="workEmail"
-                      name="workEmail"
-                      placeholder="Work Email"
-                      className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg w-full p-2.5"
+                      id="dob"
+                      name="dob"
+                      max={todayDate}
+                      className="bg-white border border-gray-300 text-gray-900 sm:text-sm rounded-lg w-full p-2.5"
                       value={dob}
                       onChange={(event) => setDOB(event.target.value)}
                     />
@@ -373,7 +373,7 @@ const userRegistration = () => {
                       name="dietaryPreference"
                       value={dietaryPreference}
                       onChange={handleDietaryPreferenceCategoryChange}
-                      className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg w-full p-2.5"
+                      className="bg-white border border-gray-300 text-gray-900 sm:text-sm rounded-lg w-full p-2.5"
                     >
                       <option value="">Select Dietary Preference</option>
                       {dietaryPreferencesCategory.map((cat, index) => (
@@ -403,7 +403,7 @@ const userRegistration = () => {
                             onChange={(e) =>
                               handleAllergyCategoryChange(e, cat.id)
                             }
-                            className="mr-2"
+                            className="w-4 h-4 bg-white border-gray-300 rounded mr-2"
                           />
                           {cat.subcategoryName}
                         </label>
@@ -421,7 +421,7 @@ const userRegistration = () => {
                       name="healthGoals"
                       value={healthGoals}
                       onChange={handleHealthCategoryChange}
-                      className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg w-full p-2.5"
+                      className="bg-white border border-gray-300 text-gray-900 sm:text-sm rounded-lg w-full p-2.5"
                     >
                       <option value="">Select Health Goal</option>
                       {healthGoalsCategory.map((cat, index) => (
@@ -441,17 +441,17 @@ const userRegistration = () => {
                       id="weight"
                       name="weight"
                       placeholder="Your Weight In kg"
-                      className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg w-full p-2.5"
+                      className="bg-white border border-gray-300 text-gray-900 sm:text-sm rounded-lg w-full p-2.5"
                       value={weight}
                       onChange={(event) => setWeight(event.target.value)}
                     />
                   </div>
 
                   {/* ERROR MSG */}
-                  {error && <p className="text-red-500 text-sm">{error}</p>}
+                  {error && <p className="text-red-500 text-base">{error}</p>}
                   {/* SUCCESS MSG */}
                   {success && (
-                    <p className="text-green-500 text-sm">{success}</p>
+                    <p className="text-green-500 text-base">{success}</p>
                   )}
 
                   {/* SUBMIT BUTTON */}

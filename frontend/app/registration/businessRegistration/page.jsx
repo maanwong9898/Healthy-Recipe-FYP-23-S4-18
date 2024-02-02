@@ -57,7 +57,7 @@ const businessRegistration = () => {
       return;
     } else {
       setSuccess(
-        "Account created successfully! An email will be sent to you once your account has been approved."
+        "Account created successfully! You will be notified once your account has been verified."
       );
     }
 
@@ -173,7 +173,7 @@ const businessRegistration = () => {
                       id="fullName"
                       name="fullName"
                       placeholder="Your Name"
-                      className=" bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg p-2.5"
+                      className=" bg-white border border-gray-300 text-gray-900 sm:text-sm rounded-lg p-2.5"
                       value={fullName}
                       onChange={clearErrorOnChange(setFullName)}
                     />
@@ -183,7 +183,7 @@ const businessRegistration = () => {
                       id="userName"
                       name="userName"
                       placeholder="Your Username"
-                      className=" bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg p-2.5"
+                      className=" bg-white border border-gray-300 text-gray-900 sm:text-sm rounded-lg p-2.5"
                       value={username}
                       onChange={clearErrorOnChange(setUsername)}
                     />
@@ -208,7 +208,7 @@ const businessRegistration = () => {
                       id="password"
                       name="password"
                       placeholder="Password"
-                      className=" bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg p-2.5"
+                      className=" bg-white border border-gray-300 text-gray-900 sm:text-sm rounded-lg p-2.5"
                       value={password}
                       onChange={clearErrorOnChange(setPassword)}
                     />
@@ -218,7 +218,7 @@ const businessRegistration = () => {
                       id="repeatPassword"
                       name="repeatPassword"
                       placeholder="Repeat Password"
-                      className=" bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg p-2.5"
+                      className=" bg-white border border-gray-300 text-gray-900 sm:text-sm rounded-lg p-2.5"
                       value={confirmPwd}
                       onChange={clearErrorOnChange(setConfirmPwd)}
                     />
@@ -237,7 +237,7 @@ const businessRegistration = () => {
                       id="contactNumber"
                       name="contactNumber"
                       placeholder="+65 1234 5678"
-                      className=" bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg w-full p-2.5"
+                      className=" bg-white border border-gray-300 text-gray-900 sm:text-sm rounded-lg w-full p-2.5"
                       value={contactNumber}
                       onChange={clearErrorOnChange(setContactNumber)}
                     />
@@ -260,7 +260,7 @@ const businessRegistration = () => {
                       id="workEmail"
                       name="workEmail"
                       placeholder="Work Email"
-                      className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg p-2.5"
+                      className="bg-white border border-gray-300 text-gray-900 sm:text-sm rounded-lg p-2.5"
                       value={workEmail}
                       onChange={clearErrorOnChange(setWorkEmail)}
                     />
@@ -270,7 +270,7 @@ const businessRegistration = () => {
                       id="uen"
                       name="uen"
                       placeholder="UEN"
-                      className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg p-2.5"
+                      className="bg-white border border-gray-300 text-gray-900 sm:text-sm rounded-lg p-2.5"
                       value={uen}
                       onChange={clearErrorOnChange(setUen)}
                     />
@@ -285,7 +285,7 @@ const businessRegistration = () => {
                       id="companyName"
                       name="companyName"
                       placeholder="Company Name"
-                      className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg w-full p-2.5"
+                      className="bg-white border border-gray-300 text-gray-900 sm:text-sm rounded-lg w-full p-2.5"
                       value={companyName}
                       onChange={clearErrorOnChange(setCompanyName)}
                     />
@@ -303,7 +303,7 @@ const businessRegistration = () => {
                       id="companyAddress"
                       name="companyAddress"
                       placeholder="Company Address"
-                      className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg w-full p-2.5"
+                      className="bg-white border border-gray-300 text-gray-900 sm:text-sm rounded-lg w-full p-2.5"
                       value={companyAddress}
                       onChange={clearErrorOnChange(setCompanyAddress)}
                     />
@@ -319,16 +319,16 @@ const businessRegistration = () => {
                       id="postalCode"
                       name="postalCode"
                       placeholder="Postal Code"
-                      className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg w-full p-2.5"
+                      className="bg-white border border-gray-300 text-gray-900 sm:text-sm rounded-lg w-full p-2.5"
                       value={postalCode}
                       onChange={clearErrorOnChange(setPostalCode)}
                     />
                   </div>
                   {/* ERROR MSG */}
-                  <p className="text-red-500 text-sm">{error}</p>
+                  <p className="text-red-500 text-lg">{error}</p>
 
                   {/* SUCCESS MSG */}
-                  <p className="text-green-600 text-sm">{success}</p>
+                  <p className="text-green-600 text-lg">{success}</p>
 
                   <div className="flex flex-row justify-center">
                     <button

@@ -20,8 +20,7 @@ public interface RecipeRepository extends JpaRepository<Recipe, Long>{
     @Transactional
     @Query("SELECT b FROM Recipe b WHERE b.userID.id = :userId")
     List<Recipe> findByUserID(String userId);
-
-
+ 
     @Modifying
     @Transactional
     @Query("DELETE FROM Recipe b WHERE b.ID = :id")
@@ -36,11 +35,15 @@ public interface RecipeRepository extends JpaRepository<Recipe, Long>{
     @Transactional 
     @Query("SELECT r FROM Recipe r WHERE r.ingredients LIKE %:keyword%")
     List<Recipe> findRecipesByIngredients(@Param("keyword") String keyword);
-
  
     @Transactional
     @Query(value ="SELECT r.title AS title, r.description AS description, r.id AS id, r.img AS img, r.calories AS calories, r.protein AS protein, r.fat AS fat, r.fibre AS fibre, r.sodium AS sodium, r.carbs AS carbs FROM Recipe r WHERE r.title LIKE %:keyword%", nativeQuery = false)
     // @Query(value ="SELECT r.title AS title, r.description AS description FROM Recipe r WHERE r.title LIKE %:keyword%", nativeQuery = false)
     List<RecipeDTO> findRecipeDTOsByKeyword(@Param("keyword") String keyword);
+
+
+    @Query(value ="SELECT r.title AS title, r.description AS description, r.id AS id, r.img AS img, r.calories AS calories, r.protein AS protein, r.fat AS fat, r.fibre AS fibre, r.sodium AS sodium, r.carbs AS carbs FROM Recipe r WHERE r.id IN :ids", nativeQuery = false)
+    // @Query(value ="SELECT r.title AS title, r.description AS description FROM Recipe r WHERE r.title LIKE %:keyword%", nativeQuery = false)
+    List<RecipeDTO> findRecipeDTOsByIds(@Param("ids") List<Long> ids);
 
 }

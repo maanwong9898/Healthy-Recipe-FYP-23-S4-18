@@ -8,6 +8,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.FYP18.HealthyRecipe.DTO.PopularReviewRatingDTO;
 import com.FYP18.HealthyRecipe.DTO.ReviewRatingDTO;
 import com.FYP18.HealthyRecipe.Entity.BlogReviewRating;
 import com.FYP18.HealthyRecipe.Entity.RecipeReviewRating;
@@ -36,6 +37,6 @@ public interface RecipeReviewRatingRepository extends JpaRepository<RecipeReview
     @Query("SELECT COUNT(b) as totalNumber, AVG(b.rating) as averageRatings  FROM RecipeReviewRating b WHERE b.recipeReviewRatingId.RecipeID = :recipeId")
     ReviewRatingDTO findAverageDTOByRecipeId (Long recipeId);
     
-    
-
+    @Query("SELECT COUNT(rr) as totalNumber, rr.recipeReviewRatingId.RecipeID as id, AVG(rr.rating) AS averageRatings, AVG(LENGTH(COALESCE(rr.review, ''))) AS averageReviewSize FROM RecipeReviewRating rr GROUP BY id")
+    List<PopularReviewRatingDTO> getMostPopularRecipes(); 
 }

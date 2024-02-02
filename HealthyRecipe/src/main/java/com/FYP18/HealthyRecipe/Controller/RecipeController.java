@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.FYP18.HealthyRecipe.DTO.PopularReviewRatingDTO;
 import com.FYP18.HealthyRecipe.DTO.RecipeDTO;
 import com.FYP18.HealthyRecipe.DTO.ReviewRatingDTO;
 import com.FYP18.HealthyRecipe.Entity.BlogReviewRating;
@@ -55,7 +56,12 @@ public class RecipeController {
         Recipe toReturn = recipeService.getRecipeById(id);
         return new ResponseEntity<>(toReturn, HttpStatus.OK);
     }
-
+    @GetMapping("/getPopularRecipes")
+    public ResponseEntity<List<RecipeDTO>> getPopularRecipes()
+    { 
+        List<RecipeDTO> dto = recipeService.getMostPopularRecipes();
+        return new ResponseEntity<>(dto, HttpStatus.OK);
+    }
 
     @GetMapping("/getAverage/{recipeId}")
     public ReviewRatingDTO getAvgAndTotalNum(@PathVariable Long recipeId)

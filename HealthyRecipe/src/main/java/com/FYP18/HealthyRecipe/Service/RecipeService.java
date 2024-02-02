@@ -2,6 +2,7 @@ package com.FYP18.HealthyRecipe.Service;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.management.RuntimeErrorException;
@@ -11,6 +12,7 @@ import org.springframework.cglib.core.Local;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.FYP18.HealthyRecipe.DTO.PopularReviewRatingDTO;
 import com.FYP18.HealthyRecipe.DTO.RecipeDTO;
 import com.FYP18.HealthyRecipe.DTO.ReviewRatingDTO;
 import com.FYP18.HealthyRecipe.DTO.UserInfoDTO;
@@ -109,6 +111,17 @@ public class RecipeService {
     public void deleteRecipeById(long id)
     {
         recipeRepository.deleteByRecipeId(id);
+    }
+
+    public List<RecipeDTO> getMostPopularRecipes()
+    {
+        List<PopularReviewRatingDTO> dto = recipeReviewRatingRepository.getMostPopularRecipes();
+        List<Long> ids = new ArrayList<>();
+        for(PopularReviewRatingDTO id : dto)
+        {
+            ids.add(id.getId());
+        } 
+        return recipeRepository.findRecipeDTOsByIds(ids);
     }
  
     //- rating's Create, Update, Read, Delete

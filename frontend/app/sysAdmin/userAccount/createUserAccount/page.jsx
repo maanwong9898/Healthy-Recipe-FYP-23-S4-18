@@ -107,24 +107,30 @@ const CreateUserAccountPage = () => {
     setError("");
   };
 
+  const handleBackButton = () => {
+    router.push("/sysAdmin/userAccount");
+  };
+
   return (
-    <div>
-      <div className="bg-cyan-900">
-        <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
-          <div className="w-full bg-slate-100 rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0">
-            <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
-              <h1 className="text-xl font-bold leading-tight tracking-tight text-black md:text-2xl dark:text-white">
-                Create User Account
-              </h1>
-              <div className="flex items-center justify-start space-x-2">
-                <p className="text-lg font-bold">User Profile:</p>
-                <div className="p-2 bg-gray-200 border-black border-2 text-gray-900 rounded-lg">
-                  <h3 className="text-base font-semibold ">System Admin</h3>
-                </div>
-              </div>
-              <form className="space-y-3">
-                <div className="flex space-x-4">
-                  {/* NAME */}
+    <div className="min-h-screen flex flex-col justify-center px-6 lg:px-8">
+      {/* Adjust the max-width and width in the inline style */}
+      <div
+        className="mt-16 mb-16 mx-auto bg-white rounded-lg shadow-lg p-4 md:p-8 lg:p-12"
+        style={{ maxWidth: "600px", width: "100%" }} // Increase maxWidth and set width to 100%
+      >
+        {/* Smaller maxWidth */}
+        <div className="p-4 space-y-4 md:space-y-12 ">
+          <div className="p-6 space-y-4 md:space-y-2 sm:p-4">
+            <h1 className="text-3xl lg:text-4xl font-bold leading-tight tracking-tight text-center text-gray-900 mb-8">
+              Create New Admin Account
+            </h1>
+            <form className="space-y-6 md:space-y-5 lg:space-y-3">
+              <div className="flex flex-col space-y-4 lg:space-y-0 lg:flex-row lg:space-x-4">
+                {/* Full Name */}
+                <div className="flex flex-col w-full">
+                  <label className="block text-lg mb-1 font-medium text-gray-900">
+                    Full Name<span className="text-red-500">*</span>
+                  </label>
                   <input
                     type="text"
                     name="name"
@@ -132,10 +138,14 @@ const CreateUserAccountPage = () => {
                     placeholder="Full Name"
                     value={fullName}
                     onChange={clearErrorOnChange(setFullName)}
-                    className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
-                  ></input>
-
-                  {/* USERNAME */}
+                    className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-base rounded-lg block w-full p-2.5"
+                  />
+                </div>
+                {/* User Name */}
+                <div className="flex flex-col w-full">
+                  <label className="block text-lg mb-1 font-medium text-gray-900">
+                    Username<span className="text-red-500">*</span>
+                  </label>
                   <input
                     type="text"
                     name="username"
@@ -143,39 +153,48 @@ const CreateUserAccountPage = () => {
                     placeholder="Username"
                     value={username}
                     onChange={clearErrorOnChange(setUsername)}
-                    className="border px-4 py-2 rounded-lg bg-gray-50 border-gray-300 text-gray-900 sm:text-sm focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
-                  ></input>
+                    className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-base rounded-lg block w-full p-2.5"
+                  />
                 </div>
+              </div>
+              {/* Work Email */}
+              <div className="flex flex-col">
+                <label className="block text-lg mb-1 font-medium text-gray-900">
+                  Work Email<span className="text-red-500">*</span>
+                </label>
+                <input
+                  type="email"
+                  name="email"
+                  id="email"
+                  placeholder="Email Address"
+                  value={email}
+                  onChange={clearErrorOnChange(setEmail)}
+                  className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-base rounded-lg block w-full p-2.5"
+                />
+              </div>
 
-                {/* WORK EMAIL */}
-                <div>
-                  <input
-                    type="email"
-                    name="email"
-                    id="email"
-                    placeholder="Email Address"
-                    value={email}
-                    onChange={clearErrorOnChange(setEmail)}
-                    className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
-                  ></input>
-                </div>
-
-                {/* DOB */}
-                <div className="flex flex-col">
-                  <label htmlFor="dob">Date of Birth</label>
-                  <input
-                    type="date"
-                    id="dob"
-                    name="dob"
-                    max={todayDate}
-                    value={dob}
-                    onChange={(e) => setDOB(e.target.value)}
-                    className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
-                  ></input>
-                </div>
-
-                {/* PASSWORDS */}
-                <div className="flex space-x-4">
+              {/* DOB */}
+              <div className="flex flex-col">
+                <label className="block text-lg mb-1 font-medium text-gray-900">
+                  Date of Birth<span className="text-red-500">*</span>
+                </label>
+                <input
+                  type="date"
+                  id="dob"
+                  name="dob"
+                  max={todayDate}
+                  value={dob}
+                  onChange={(e) => setDOB(e.target.value)}
+                  className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-base rounded-lg block w-full p-2.5"
+                />
+              </div>
+              {/* Passwords */}
+              <div className="flex flex-col space-y-4 lg:space-y-0 lg:flex-row lg:space-x-4">
+                {/* Password */}
+                <div className="flex flex-col w-full">
+                  <label className="block text-lg mb-1 font-medium text-gray-900">
+                    Password<span className="text-red-500">*</span>
+                  </label>
                   <input
                     type="password"
                     name="pwd"
@@ -183,8 +202,14 @@ const CreateUserAccountPage = () => {
                     placeholder="Password"
                     value={password}
                     onChange={clearErrorOnChange(setPassword)}
-                    className="border px-4 py-2 rounded-lg bg-gray-50 border-gray-300 text-gray-900 sm:text-sm focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                  ></input>
+                    className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-base rounded-lg block w-full p-2.5"
+                  />
+                </div>
+                {/* Repeat Password*/}
+                <div className="flex flex-col w-full">
+                  <label className="block text-lg mb-1 font-medium text-gray-900">
+                    Repeat Password<span className="text-red-500">*</span>
+                  </label>
                   <input
                     type="password"
                     name="confirm-pwd"
@@ -192,25 +217,35 @@ const CreateUserAccountPage = () => {
                     placeholder="Confirm Password"
                     value={confirmPwd}
                     onChange={clearErrorOnChange(setConfirmPwd)}
-                    className="border px-4 py-2 rounded-lg bg-gray-50 border-gray-300 text-gray-900 sm:text-sm focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                  ></input>
+                    className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-base rounded-lg block w-full p-2.5"
+                  />
                 </div>
-                {/* ERROR MSG */}
-                <p className="text-red-500 text-sm">{error}</p>
-
-                {/* SUCCESS MSG */}
-                <p className="text-green-600 text-sm">{success}</p>
-
-                {/* SUBMIT BTN */}
+              </div>
+              {/* ERROR MESSAGE */}
+              {error && (
+                <p className="text-red-500 font-medium text-base">
+                  Error creating account: {error}
+                </p>
+              )}
+              {success && (
+                <p className="text-green-500 font-medium text-base">
+                  Admin account created successfully!
+                </p>
+              )}
+              {/* SUBMIT BUTTON */}
+              <div className="flex flex-row space-x-5">
+                <button className="bg-red-600 hover:bg-red-700 text-white font-semibold py-2 px-4 rounded-lg">
+                  <Link href="/sysAdmin/userAccount">Back</Link>
+                </button>
                 <button
                   type="submit"
                   onClick={handleCreateAdminAccount}
-                  className="bg-cyan-500 hover:bg-sky-700 text-white font-bold py-2 px-4 rounded-lg w-full"
+                  className="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded-lg"
                 >
-                  Create an account
+                  Create
                 </button>
-              </form>
-            </div>
+              </div>
+            </form>
           </div>
         </div>
       </div>

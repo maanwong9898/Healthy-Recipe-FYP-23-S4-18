@@ -1,110 +1,4 @@
 
--- User Account
-INSERT INTO USERACCOUNT
-(ID, Username, enabled, Password, Email, Full_Name, role, created_date)
-VALUES
-    ('1',  'user1',  1, 'pw1', '1@gmail.com', 'John',    'ADMIN',           DATE_ADD(NOW(), INTERVAL -FLOOR(RAND() * DATEDIFF(NOW(), '2022-01-20')) DAY)),
-    ('2',  'user2',  1, 'pw1', '2@gmail.com', 'William', 'ADMIN',           DATE_ADD(NOW(), INTERVAL -FLOOR(RAND() * DATEDIFF(NOW(), '2022-01-20')) DAY)),
-    ('3',  'user3',  1, 'pw1', '3@gmail.com', 'Patricia','BUSINESS_USER',   DATE_ADD(NOW(), INTERVAL -FLOOR(RAND() * DATEDIFF(NOW(), '2022-01-20')) DAY)),
-    ('4',  'user4',  0, 'pw1', '4@gmail.com', 'Mike',    'BUSINESS_USER',   DATE_ADD(NOW(), INTERVAL -FLOOR(RAND() * DATEDIFF(NOW(), '2022-01-20')) DAY)),
-    ('5',  'user5',  1, 'pw1', '5@gmail.com', 'Ben',     'NUTRITIONIST',    DATE_ADD(NOW(), INTERVAL -FLOOR(RAND() * DATEDIFF(NOW(), '2022-01-20')) DAY)),
-    ('6',  'user6',  1, 'pw1', '6@gmail.com', 'Sam',     'NUTRITIONIST',    DATE_ADD(NOW(), INTERVAL -FLOOR(RAND() * DATEDIFF(NOW(), '2022-01-20')) DAY)),
-    ('7',  'user7',  1, 'pw1', '7@gmail.com', 'John',    'REGISTERED_USER', DATE_ADD(NOW(), INTERVAL -FLOOR(RAND() * DATEDIFF(NOW(), '2022-01-20')) DAY)),
-    ('8',  'user8',  1, 'pw1', '8@gmail.com', 'William', 'REGISTERED_USER', DATE_ADD(NOW(), INTERVAL -FLOOR(RAND() * DATEDIFF(NOW(), '2022-01-20')) DAY)),
-    ('9',  'user9',  1, 'pw1', '9@gmail.com', 'Patricia','REGISTERED_USER', DATE_ADD(NOW(), INTERVAL -FLOOR(RAND() * DATEDIFF(NOW(), '2022-01-20')) DAY)),
-    ('10', 'user10', 1, 'pw1', '10@gmail.com', 'Mike',   'REGISTERED_USER', DATE_ADD(NOW(), INTERVAL -FLOOR(RAND() * DATEDIFF(NOW(), '2022-01-20')) DAY)),
-    ('11', 'user11', 1, 'pw1', '11@gmail.com', 'Ben',    'REGISTERED_USER', DATE_ADD(NOW(), INTERVAL -FLOOR(RAND() * DATEDIFF(NOW(), '2022-01-20')) DAY)),
-    ('12', 'user12', 1, 'pw1', '12@gmail.com', 'Sam',    'REGISTERED_USER', DATE_ADD(NOW(), INTERVAL -FLOOR(RAND() * DATEDIFF(NOW(), '2022-01-20')) DAY));
-
--- System admin
-INSERT INTO System_Admin
-(ID, DOB)
-VALUES
-    ('1', '1997-01-20'),
-    ('2', '1990-02-10');
-
-
--- Business user
-INSERT INTO Business_User
-(ID, Company_Name, UEN,contact_number, company_address)
-VALUES
-    ('3', 'Trump Enterprise', '4799775584', '92345678', '123, Jurong Street, Singapore 523456'),
-    ('4', 'Star Enterprise', '4799775777', '82345678', '123, Tampines Street, Singapore 514234');
-
--- Nutritionist
-INSERT INTO Nutritionist
-(ID, Company_Name, company_address, contact_number)
-VALUES
-    ('5', 'Wellness Limited', '123, Bedok Street, Singapore 123456', '98345678') ,
-    ('6', 'Shine Company', '23, Hougang, Singapore 123456', '88345678') ;
-
--- Registered user
-INSERT INTO Registered_User
-(ID, DOB)
-VALUES
-    ('7',  '1999-09-23' ),
-    ('8',  '1954-09-14' ),
-    ('9',  '1999-09-15' ),
-    ('10', '1995-09-16' ),
-    ('11', '1993-09-16' ),
-    ('12', '1995-09-12' );
-
--- User info over time (for registered user)
-INSERT INTO User_Info_Over_Time
-(User_ID, weight, date)
-VALUES
-    ('7',  70.50,  '2022-12-08' ),
-    ('7',  60.50,  '2023-10-08' ),
-    ('7',  50.50,  '2023-12-08' ),
-    ('8',  80.50,  '2022-12-08' ),
-    ('8',  70.50,  '2023-10-08' ),
-    ('8',  60.50,  '2023-12-08' ),
-    ('9',  90.50,  '2022-12-08' ),
-    ('9',  80.50,  '2023-10-08' ),
-    ('9',  70.50,  '2023-12-08' ),
-    ('10', 100.50, '2022-12-08' ),
-    ('10', 90.50,  '2023-10-08' ),
-    ('10', 80.50,  '2023-12-08' ),
-    ('11', 110.50, '2022-12-08' ),
-    ('11', 100.50, '2023-10-08' ),
-    ('11', 90.50,  '2023-12-08' ),
-    ('12', 120.50, '2022-12-08' ),
-    ('12', 110.50, '2023-10-08' ),
-    ('12', 100.50, '2023-12-08' );
-
-
--- To test verfied user
--- User Account
-INSERT INTO USERACCOUNT
-(ID, Username, enabled, Password, Email, Full_Name, role, created_date)
-VALUES
-    ('20',  'user2' ,  1, 'pw1', '20@gmail.com' , 'John',    'BUSINESS_USER',    DATE_ADD(NOW(), INTERVAL -FLOOR(RAND() * DATEDIFF(NOW(), '2022-01-20')) DAY)),
-    ('21',  'user21',  1, 'pw1', '21@gmail.com' , 'John',    'BUSINESS_USER',    DATE_ADD(NOW(), INTERVAL -FLOOR(RAND() * DATEDIFF(NOW(), '2022-01-20')) DAY)),
-    ('22',  'user22',  1, 'pw1', '22@gmail.com' , 'Will',    'BUSINESS_USER',    DATE_ADD(NOW(), INTERVAL -FLOOR(RAND() * DATEDIFF(NOW(), '2022-01-20')) DAY)),
-    ('23',  'user23',  1, 'pw1', '23@gmail.com' , 'Patr',    'BUSINESS_USER',    DATE_ADD(NOW(), INTERVAL -FLOOR(RAND() * DATEDIFF(NOW(), '2022-01-20')) DAY)),
-    ('24',  'user24',  0, 'pw1', '24@gmail.com' , 'Mike',    'BUSINESS_USER',    DATE_ADD(NOW(), INTERVAL -FLOOR(RAND() * DATEDIFF(NOW(), '2022-01-20')) DAY)),
-    ('25',  'user25',  1, 'pw1', '25@gmail.com' , 'Ben' ,    'NUTRITIONIST' ,    DATE_ADD(NOW(), INTERVAL -FLOOR(RAND() * DATEDIFF(NOW(), '2022-01-20')) DAY)),
-    ('26',  'user26',  1, 'pw1', '26@gmail.com' , 'Sam' ,    'NUTRITIONIST' ,    DATE_ADD(NOW(), INTERVAL -FLOOR(RAND() * DATEDIFF(NOW(), '2022-01-20')) DAY)),
-    ('27',  'user27',  1, 'pw1', '27@gmail.com' , 'John',    'NUTRITIONIST' ,    DATE_ADD(NOW(), INTERVAL -FLOOR(RAND() * DATEDIFF(NOW(), '2022-01-20')) DAY));
-
-
-INSERT INTO Business_User
-(ID, Company_Name, UEN,contact_number, company_address)
-VALUES
-    ('20', 'Will Enterprise' , '4757752980', '92345678', '23, Kallang Avenue 6, Singapore 538928'   ),
-    ('21', 'ENC Enterprise'  , '4757752900', '92345678', '13, Jurong Street, Singapore 538212'      ),
-    ('22', 'Star Enterprise' , '4757752911', '82345678', '3, Tampines Street, Singapore 517727'     ),
-    ('23', 'Trump Enterprise', '4757752922', '92345678', '10, Jurong Street, Singapore 592012'      ),
-    ('24', 'SMU Enterprise'  , '4757752933', '92345678', '23, Tampines Avenue 1, Singapore 503020'  );
-
--- Nutritionist
-INSERT INTO Nutritionist
-(ID, Company_Name, company_address, contact_number)
-VALUES
-    ('25', 'Wellness Limited' , '45, Bedok Street, Singapore 555712', '98345678') ,
-    ('26', 'Shine Company'    , '23, Hougang, Singapore 532134',      '88345678'),
-    ('27', 'Shine Company'    , '23, Sengkang, Singapore 537212',     '88945678');
-
 -- Category
 -- 1. Allergies
 Insert into allergies
@@ -127,7 +21,20 @@ VALUES
     ('Vegetarian' ),
     ('Pescatarian');
 
--- 3. Health goals
+-- 3. Meal type
+INSERT INTO
+    meal_type (subcategory_name)
+VALUES
+    ('Chinese'),
+    ('Western'),
+    ('Japanese'),
+    ('Italian'),
+    ('Mexican'),
+    ('Thai'),
+    ('Indian'),
+    ('Mediterranean');
+
+-- 4. Health goals
 Insert into health_goal
 (subcategory_name)
 VALUES
@@ -136,7 +43,7 @@ VALUES
     ('Weight Loss');
 
 
--- 4. Blog post category
+-- 5. Blog post category
 Insert into blog_post_category
 (subcategory_name)
 VALUES
@@ -144,12 +51,185 @@ VALUES
     ('Kitchenware'),
     ('Miscellaneous');
 
--- 5. Educational content category
+-- 6. Educational content category
 Insert into educational_content_category
 (subcategory_name)
 VALUES
     ('Healthy Eating'),
     ('Healthy Lifestyle');
+
+
+-- User Account
+INSERT INTO USERACCOUNT
+(ID, Username, enabled, Password, Email, Full_Name, role, created_date)
+VALUES   
+    ('1',  'user1',  1, 'pw1',   '1@gmail.com',    'John',        'ADMIN',              DATE_ADD(NOW(), INTERVAL -FLOOR(RAND() * DATEDIFF(NOW(), '2022-01-20')) DAY)),
+    ('2',  'user2',  1, 'pw1',   '2@gmail.com',    'William',     'ADMIN',              DATE_ADD(NOW(), INTERVAL -FLOOR(RAND() * DATEDIFF(NOW(), '2022-01-20')) DAY)),
+    ('3',  'user3',  1, 'pw1',   '3@gmail.com',    'Patricia',    'BUSINESS_USER',      DATE_ADD(NOW(), INTERVAL -FLOOR(RAND() * DATEDIFF(NOW(), '2022-01-20')) DAY)),
+    ('4',  'user4',  1, 'pw1',   '4@gmail.com',    'Mike',        'BUSINESS_USER',      DATE_ADD(NOW(), INTERVAL -FLOOR(RAND() * DATEDIFF(NOW(), '2022-01-20')) DAY)),
+    ('5',  'user5',  1, 'pw1',   '5@gmail.com',    'Ben',         'NUTRITIONIST',       DATE_ADD(NOW(), INTERVAL -FLOOR(RAND() * DATEDIFF(NOW(), '2022-01-20')) DAY)),
+    ('6',  'user6',  1, 'pw1',   '6@gmail.com',    'Sam',         'NUTRITIONIST',       DATE_ADD(NOW(), INTERVAL -FLOOR(RAND() * DATEDIFF(NOW(), '2022-01-20')) DAY)),
+    ('7',  'user7',  1, 'pw1',   '7@gmail.com',    'John',        'REGISTERED_USER',    DATE_ADD(NOW(), INTERVAL -FLOOR(RAND() * DATEDIFF(NOW(), '2022-01-20')) DAY)),
+    ('8',  'user8',  1, 'pw1',   '8@gmail.com',    'William',     'REGISTERED_USER',    DATE_ADD(NOW(), INTERVAL -FLOOR(RAND() * DATEDIFF(NOW(), '2022-01-20')) DAY)),
+    ('9',  'user9',  1, 'pw1',   '9@gmail.com',    'Patricia',    'REGISTERED_USER',    DATE_ADD(NOW(), INTERVAL -FLOOR(RAND() * DATEDIFF(NOW(), '2022-01-20')) DAY)),
+    ('10', 'user10', 1, 'pw1',   '10@gmail.com',   'Mika',        'REGISTERED_USER',    DATE_ADD(NOW(), INTERVAL -FLOOR(RAND() * DATEDIFF(NOW(), '2022-01-20')) DAY)),
+    ('11', 'user11', 1, 'pw1',   '11@gmail.com',   'Jessica',     'REGISTERED_USER',    DATE_ADD(NOW(), INTERVAL -FLOOR(RAND() * DATEDIFF(NOW(), '2022-01-20')) DAY)),
+    ('12', 'user12', 1, 'pw1',   '12@gmail.com',   'Samuel',      'REGISTERED_USER',    DATE_ADD(NOW(), INTERVAL -FLOOR(RAND() * DATEDIFF(NOW(), '2022-01-20')) DAY)),
+    ('13', 'user10', 1, 'pw1',   '13@gmail.com',   'Christopher', 'REGISTERED_USER',    DATE_ADD(NOW(), INTERVAL -FLOOR(RAND() * DATEDIFF(NOW(), '2022-01-20')) DAY)),
+    ('14', 'user11', 1, 'pw1',   '14@gmail.com',   'Bennedict',   'REGISTERED_USER',    DATE_ADD(NOW(), INTERVAL -FLOOR(RAND() * DATEDIFF(NOW(), '2022-01-20')) DAY)),
+    ('15', 'user12', 1, 'pw1',   '15@gmail.com',   'Angela',      'REGISTERED_USER',    DATE_ADD(NOW(), INTERVAL -FLOOR(RAND() * DATEDIFF(NOW(), '2022-01-20')) DAY)),
+    ('16', 'user10', 1, 'pw1',   '16@gmail.com',   'Alan',        'REGISTERED_USER',    DATE_ADD(NOW(), INTERVAL -FLOOR(RAND() * DATEDIFF(NOW(), '2022-01-20')) DAY)),
+    ('17', 'user11', 1, 'pw1',   '17@gmail.com',   'Kenneth',     'REGISTERED_USER',    DATE_ADD(NOW(), INTERVAL -FLOOR(RAND() * DATEDIFF(NOW(), '2022-01-20')) DAY)),
+    ('18', 'user12', 1, 'pw1',   '18@gmail.com',   'Samatha',     'REGISTERED_USER',    DATE_ADD(NOW(), INTERVAL -FLOOR(RAND() * DATEDIFF(NOW(), '2022-01-20')) DAY)),
+    ('19', 'user10', 1, 'pw1',   '19@gmail.com',   'Mikel',       'REGISTERED_USER',    DATE_ADD(NOW(), INTERVAL -FLOOR(RAND() * DATEDIFF(NOW(), '2022-01-20')) DAY)),
+    ('20', 'user11', 1, 'pw1',   '20@gmail.com',   'Parker',      'REGISTERED_USER',    DATE_ADD(NOW(), INTERVAL -FLOOR(RAND() * DATEDIFF(NOW(), '2022-01-20')) DAY)),
+    ('21', 'user21', 0, 'pw1',   '21@gmail.com' ,  'John',        'BUSINESS_USER',      DATE_ADD(NOW(), INTERVAL -FLOOR(RAND() * DATEDIFF(NOW(), '2022-01-20')) DAY)),
+    ('22', 'user22', 0, 'pw1',   '22@gmail.com' ,  'Will',        'BUSINESS_USER',      DATE_ADD(NOW(), INTERVAL -FLOOR(RAND() * DATEDIFF(NOW(), '2022-01-20')) DAY)),
+    ('23', 'user23', 0, 'pw1',   '23@gmail.com' ,  'Patr',        'BUSINESS_USER',      DATE_ADD(NOW(), INTERVAL -FLOOR(RAND() * DATEDIFF(NOW(), '2022-01-20')) DAY)),
+    ('24', 'user24', 0, 'pw1',   '24@gmail.com' ,  'Mike',        'BUSINESS_USER',      DATE_ADD(NOW(), INTERVAL -FLOOR(RAND() * DATEDIFF(NOW(), '2022-01-20')) DAY)),
+    ('25', 'user25', 0, 'pw1',   '25@gmail.com' ,  'Ben' ,        'BUSINESS_USER' ,     DATE_ADD(NOW(), INTERVAL -FLOOR(RAND() * DATEDIFF(NOW(), '2022-01-20')) DAY)),
+    ('26', 'user26', 1, 'pw1',   '26@gmail.com' ,  'Sam' ,        'BUSINESS_USER' ,     DATE_ADD(NOW(), INTERVAL -FLOOR(RAND() * DATEDIFF(NOW(), '2022-01-20')) DAY)),
+    ('27', 'user27', 1, 'pw1',   '27@gmail.com' ,  'John',        'BUSINESS_USER' ,     DATE_ADD(NOW(), INTERVAL -FLOOR(RAND() * DATEDIFF(NOW(), '2022-01-20')) DAY)),
+    ('28', 'user28', 1, 'pw1',   '28@gmail.com' ,  'Mike',        'BUSINESS_USER',      DATE_ADD(NOW(), INTERVAL -FLOOR(RAND() * DATEDIFF(NOW(), '2022-01-20')) DAY)),
+    ('29', 'user29', 1, 'pw1',   '29@gmail.com' ,  'Ben' ,        'BUSINESS_USER' ,     DATE_ADD(NOW(), INTERVAL -FLOOR(RAND() * DATEDIFF(NOW(), '2022-01-20')) DAY)),
+    ('30', 'user30', 1, 'pw1',   '30@gmail.com' ,  'Sam' ,        'BUSINESS_USER' ,     DATE_ADD(NOW(), INTERVAL -FLOOR(RAND() * DATEDIFF(NOW(), '2022-01-20')) DAY)),
+    ('31', 'user31', 0, 'pw1',   '31@gmail.com' ,  'Jacky',       'NUTRITIONIST',       DATE_ADD(NOW(), INTERVAL -FLOOR(RAND() * DATEDIFF(NOW(), '2022-01-20')) DAY)),
+    ('32', 'user32', 0, 'pw1',   '32@gmail.com' ,  'Brad',        'NUTRITIONIST',       DATE_ADD(NOW(), INTERVAL -FLOOR(RAND() * DATEDIFF(NOW(), '2022-01-20')) DAY)),
+    ('33', 'user33', 0, 'pw1',   '33@gmail.com' ,  'Percy',       'NUTRITIONIST',       DATE_ADD(NOW(), INTERVAL -FLOOR(RAND() * DATEDIFF(NOW(), '2022-01-20')) DAY)),
+    ('34', 'user34', 0, 'pw1',   '34@gmail.com' ,  'Peter',       'NUTRITIONIST',       DATE_ADD(NOW(), INTERVAL -FLOOR(RAND() * DATEDIFF(NOW(), '2022-01-20')) DAY)),
+    ('35', 'user35', 0, 'pw1',   '35@gmail.com' ,  'Bronson' ,    'NUTRITIONIST' ,      DATE_ADD(NOW(), INTERVAL -FLOOR(RAND() * DATEDIFF(NOW(), '2022-01-20')) DAY)),
+    ('36', 'user36', 1, 'pw1',   '36@gmail.com' ,  'Ash' ,        'NUTRITIONIST' ,      DATE_ADD(NOW(), INTERVAL -FLOOR(RAND() * DATEDIFF(NOW(), '2022-01-20')) DAY)),
+    ('37', 'user37', 1, 'pw1',   '37@gmail.com' ,  'Rock',        'NUTRITIONIST' ,      DATE_ADD(NOW(), INTERVAL -FLOOR(RAND() * DATEDIFF(NOW(), '2022-01-20')) DAY)),
+    ('38', 'user38', 1, 'pw1',   '38@gmail.com' ,  'Brock',       'NUTRITIONIST',       DATE_ADD(NOW(), INTERVAL -FLOOR(RAND() * DATEDIFF(NOW(), '2022-01-20')) DAY)),
+    ('39', 'user39', 1, 'pw1',   '39@gmail.com' ,  'Alexansder',  'NUTRITIONIST' ,      DATE_ADD(NOW(), INTERVAL -FLOOR(RAND() * DATEDIFF(NOW(), '2022-01-20')) DAY)),
+    ('40', 'user40', 1, 'pw1',   '40@gmail.com' ,  'Jeff' ,       'NUTRITIONIST' ,      DATE_ADD(NOW(), INTERVAL -FLOOR(RAND() * DATEDIFF(NOW(), '2022-01-20')) DAY));
+   
+
+
+-- System admin
+INSERT INTO System_Admin
+(ID, DOB)
+VALUES
+    ('1', '1997-01-20'),
+    ('2', '1990-02-10');
+
+
+-- Business user
+INSERT INTO Business_User
+(ID, Company_Name, UEN,contact_number, company_address, postal_code, verified)
+VALUES
+    ('3',    'PTK Enterprise',         '479977558C',   '92345678',    '23, Jurong Street,    Singapore 523456', '523456', 1),
+    ('4',    'Star Enterprise',        '479977571A',   '82945671',    '53, Tampines Street,  Singapore 519234', '519234', 1),
+    ('21',   'ACK Enterprise',         '479977572B',   '82845672',    '13, Houagng Street,   Singapore 518231', '518231', 1),
+    ('22',   'TCP Enterprise',         '479977573C',   '82745673',    '23, Sengkang Street,  Singapore 517232', '517232', 1),
+    ('23',   'Healthy Coorporation',   '479977574D',   '82645674',    '33, Admiralty Street, Singapore 516233', '516233', 1),
+    ('24',   'WW Enterprise',          '479977575E',   '82545675',    '43, Woodland Street,  Singapore 515234', '515234', 1),
+    ('25',   'Loo Enterprise',         '479977576F',   '92445676',    '53, Bedok North,      Singapore 514235', '514235', 1),
+    ('26',   'Lim Enterprise',         '479977577G',   '92345677',    '3,  Serangoon Street, Singapore 513236', '513236', 0),
+    ('27',   'Chong Enterprise',       '479977578H',   '92245678',    '4,  Tampines Street,  Singapore 512237', '512237', 0),
+    ('28',   'Cheong Enterprise',      '479977579I',   '92145679',    '5,  Pasir Ris Street, Singapore 511238', '511238', 0),
+    ('29',   'Wong Enterprise',        '479977570J',   '92045670',    '6,  Serangoon Street, Singapore 510239', '510239', 0),
+    ('30',   'Alex Enterprise',        '479977581A',   '92145671',    '7,  Tampines Street,  Singapore 519230', '519230', 0);
+
+-- Nutritionist
+INSERT INTO Nutritionist
+(ID, Company_Name, contact_number, company_address, postal_code, verified)
+VALUES
+    ('5',    'Wellness Limited',      '91345678',    '33, Bedok Street, Singapore 523456',     '523456', 1),
+    ('6',    'Shine Company',         '88341235',    '23, Hougang Street, Singapore 523756',   '523756', 1),
+    ('31',   'ACK Enterprise',        '81845672',    '13, Houagng Street,   Singapore 518231', '518231', 1),
+    ('32',   'TCP Enterprise',        '82245673',    '23, Sengkang Street,  Singapore 517232', '517232', 1),
+    ('33',   'Healthy Coorporation',  '83645674',    '33, Admiralty Street, Singapore 516233', '516233', 1),
+    ('34',   'WW Enterprise',         '84545675',    '43, Woodland Street,  Singapore 515234', '515234', 1),
+    ('35',   'Loo Enterprise',        '95445676',    '53, Bedok North,      Singapore 514235', '514235', 1),
+    ('36',   'Lim Enterprise',        '96345677',    '3,  Serangoon Street, Singapore 513236', '513236', 0),
+    ('37',   'Chong Enterprise',      '97245678',    '4,  Tampines Street,  Singapore 512237', '512237', 0),
+    ('38',   'Cheong Enterprise',     '98145679',    '5,  Pasir Ris Street, Singapore 511238', '511238', 0),
+    ('39',   'Wong Enterprise',       '99045670',    '6,  Serangoon Street, Singapore 510239', '510239', 0),
+    ('40',   'Alex Enterprise',       '90045671',    '7,  Tampines Street,  Singapore 519230', '519230', 0);
+
+
+-- Registered user
+INSERT INTO Registered_User
+(ID, DOB, verified, dietary_preference, health_goal)
+VALUES
+    ('7',  '1999-09-23', 1 , 1, 3),
+    ('8',  '1954-09-14', 1 , 1, 3),
+    ('9',  '1999-11-15', 1 , 1, 3),
+    ('10', '1985-09-16', 1 , 1, 3),
+    ('11', '1993-09-16', 1 , 1, 3),
+    ('12', '1995-01-22', 1 , 2, 3),
+    ('13', '1995-10-22', 1 , 2, 2),
+    ('14', '1997-08-18', 1 , 2, 2),
+    ('15', '1988-02-12', 1 , 2, 2),
+    ('16', '1995-09-19', 0 , 2, 2),
+    ('17', '1985-09-12', 0 , 2, 1),
+    ('18', '1995-05-02', 0 , 3, 1),
+    ('19', '1965-09-12', 0 , 3, 1),
+    ('20', '1975-07-17', 0 , 3, 1);
+
+-- Registered user with allergies
+Insert into user_allergies
+(id, allergy_id)
+VALUES
+    ('8',  4),
+    ('8',  5),
+    ('8',  6),
+    ('9',  7),
+    ('9',  8),
+    ('9',  1),
+    ('10', 1),
+    ('10', 2),
+    ('10', 3),
+    ('11', 4),
+    ('11', 5),
+    ('11', 6),
+    ('12', 7),
+    ('12', 8),
+    ('12', 1),
+    ('13', 1),
+    ('13', 2),
+    ('13', 3),
+    ('15', 7),
+    ('15', 8),
+    ('15', 1);
+ 
+
+
+
+
+-- User info over time (for registered user)
+INSERT INTO User_Info_Over_Time
+(User_ID, weight, date)
+VALUES
+    ('7',  70.50,  '2022-12-08' ),
+    ('7',  60.50,  '2023-10-08' ),
+    ('7',  50.50,  '2023-12-08' ),
+    ('8',  80.50,  '2022-12-08' ),
+    ('8',  70.50,  '2023-10-08' ),
+    ('8',  60.50,  '2023-12-08' ),
+    ('9',  90.50,  '2022-12-08' ),
+    ('9',  80.50,  '2023-10-08' ),
+    ('9',  70.50,  '2023-12-08' ),
+    ('10', 100.50, '2022-12-08' ),
+    ('10', 90.50,  '2023-10-08' ),
+    ('10', 80.50,  '2023-12-08' ),
+    ('11', 110.50, '2022-12-08' ),
+    ('11', 100.50, '2023-10-08' ),
+    ('11', 90.50,  '2023-12-08' ),
+    ('12', 120.50, '2022-12-08' ),
+    ('12', 110.50, '2023-10-08' ),
+    ('12', 100.50, '2023-12-08' ),
+    ('13', 130.50, '2022-12-08' ),
+    ('13', 120.50, '2023-10-08' ),
+    ('13', 110.50, '2023-12-08' ),
+    ('14', 140.50, '2022-12-08' ),
+    ('14', 130.50, '2023-10-08' ),
+    ('14', 120.50, '2023-12-08' ),
+    ('15', 150.50, '2022-12-08' ),
+    ('15', 140.50, '2023-10-08' ),
+    ('15', 130.50, '2023-12-08' );
+
 
 
 -- Blog
@@ -344,7 +424,7 @@ VALUES
     ('I love this recipe!' ,                            4.0, '9', 1),
     ('I love this recipe!' ,                            4.0, '12', 1),
     ('This is very awesome',                            3.2, '7', 2),
-    ('The recipe is very d',                            5.0, '8', 2),
+    ('The recipe is very GOOD',                         5.0, '8', 2),
     ('I love this recipe!' ,                            4.0, '9', 2);
 
 
@@ -366,7 +446,7 @@ VALUES
 
 
 INSERT INTO recipe
-(id, publisher, title, info, calories, carbs, protein, fat, fibre, sodium, serving_size, description, steps, ingredients, UserID, Active, createddt, img, img_title, dietary_preference, cooking_time)
+(id, publisher, title, info, calories, carbs, protein, fat, fibre, sodium, serving_size, description, steps, ingredients, UserID, Active, createddt, img, img_title, dietary_preference, cooking_time, meal_type)
 VALUES
     (
         1,
@@ -384,7 +464,8 @@ VALUES
         'https://img.freepik.com/free-photo/grilled-salmon-fillet-with-fresh-vegetable-salad-generated-by-ai_188544-21273.jpg?t=st=1706581041~exp=1706584641~hmac=a5192395751401ed16e80a0043e0f94504123f21393174683c63426ba80cba62&w=996',
         'Author : Vecstock, Designed by Freepik',  -- img_title
         1, -- dietary_preference vegan,
-        25
+        25,
+        2 -- meal_type western
     ),
     (
         2,
@@ -402,7 +483,8 @@ VALUES
         'https://img.freepik.com/free-photo/bowl-pasta-with-chicken-breast-tomato-sauce_1340-25533.jpg?t=st=1706581185~exp=1706584785~hmac=0f73e15a6734c331bbca59e1e4b01228ff1f6c9b92598a6482e58ac8d5e74f08&w=826',
         'Author : Sketchepedia, Designed by Freepik',  -- img_title
         1, -- dietary_preference
-        20
+        20,
+        4 -- meal_type italian
     ),
     (
         3,
@@ -420,7 +502,8 @@ VALUES
         'https://img.freepik.com/free-photo/homemade-food-party_53876-31237.jpg?w=826&t=st=1705276322~exp=1705276922~hmac=ba7ce45ad424c09e8a5a175cc29e0a08096ef974ce55799fe3b212dbd255249b',
         'Designed by Freepik',  -- img_title
         3,
-        25
+        25,
+        2 -- meal_type western
     ),
     (
         4,
@@ -438,7 +521,8 @@ VALUES
         'https://img.freepik.com/free-photo/shrimp-sauteed-garlic-soy-caramel_2829-19579.jpg?w=826&t=st=1705276562~exp=1705277162~hmac=58b4053f4e10b6fd671636826e9c25c1ad92832d7721d3308b389a616c753291',
         'Designed by Freepik',  -- img_title
         3,
-        50
+        50,
+        2 -- meal_type western
 
     ),
     (
@@ -457,7 +541,8 @@ VALUES
         'https://img.freepik.com/free-photo/meatballs-salad-tomatoes-buckwheat-porridge-white-wooden-table-healthy-food-diet-meal-buddha-bowl_2829-6110.jpg?size=626&ext=jpg&ga=GA1.1.1875319134.1702524039&semt=ais',
         'Designed by Freepik',  -- img_title
         1, -- dietary_preference
-        40
+        40,
+        8 -- meal_type mediterranean
     ),
     (
         6,
@@ -475,7 +560,8 @@ VALUES
         'https://img.freepik.com/free-photo/chicken-broth-vegetable-soup-disposable-cup-bowl-served-with-green-vegetables_114579-905.jpg?w=740&t=st=1706620151~exp=1706620751~hmac=7bcc40a9e782bfa356f11ff36c92e5510f1aac7517e35c6b7bdbdc05eb298316',
         'Author : azerbaijan_stockers, Designed by Freepik',  -- img_title
         2, -- dietary_preference
-        30
+        30,
+        1 -- meal_type chinese
 
     ),
     (
@@ -494,7 +580,8 @@ VALUES
         'https://img.freepik.com/free-photo/delicious-traditional-pizza-assortment_23-2148921314.jpg?w=360&t=st=1706620453~exp=1706621053~hmac=6b54331cfb9ea30aeb79c8a4921a28f61bc02d8f0d1502e25c85184169d73e61',
         'Designed by Freepik',  -- img_title
         1, -- dietary_preference
-        70
+        70,
+        4 -- meal_type italian
     ),
     (
         8,
@@ -512,7 +599,8 @@ VALUES
         'https://img.freepik.com/free-photo/green-curry-bowl-spices-wooden-table_1150-21354.jpg?w=826&t=st=1706620599~exp=1706621199~hmac=de78438dda610d574840558b199d06a05724d2c628c43621d5ffed967fd0ee00',
         'Author : jcomp, Designed by Freepik',  -- img_title
         1, -- dietary_preference
-        40
+        40,
+        6 -- meal_type thai
     ),
     (
         9,
@@ -530,7 +618,8 @@ VALUES
         'https://img.freepik.com/free-photo/delicious-sweet-waffles-coffee-wooden-board_23-2148654490.jpg?size=626&ext=jpg&ga=GA1.2.1875319134.1702524039&semt=ais',
         'Author : KamranAydinov, Designed by Freepik',  -- img_title
         1, -- dietary_preference
-        50
+        50,
+        2 -- meal_type western
     ),
     (
         10,
@@ -548,7 +637,8 @@ VALUES
         'https://img.freepik.com/free-photo/salad-with-mozzarella-avocado_1220-7101.jpg?w=826&t=st=1706631737~exp=1706632337~hmac=691556ba70cbeaf313c5af09f8f50e0eaae65adea716e8f7372b25e24d1f5353',
         'Author : valeria_aksakova, Designed by Freepik',  -- img_title
         3, -- dietary_preference
-        10
+        10,
+        2 -- meal_type western
     ),
     (
         11,
@@ -566,7 +656,8 @@ VALUES
         'https://img.freepik.com/free-photo/delicious-goulash-ready-dinner_23-2149370851.jpg?w=360&t=st=1706623995~exp=1706624595~hmac=a2928b18365439db54279f8d1c7b63c651d188d5ad18a4f87a52cf2f28b0cca0',
         'Designed by Freepik',  -- img_title
         3, -- dietary_preference
-        120
+        120,
+        2 -- meal_type western
     ),
     (
         12,
@@ -584,7 +675,8 @@ VALUES
         'https://img.freepik.com/free-photo/fresh-taco_144627-38301.jpg?w=826&t=st=1706104298~exp=1706104898~hmac=b2c1b91f623e17583a7937923dcc6a2683ffa77c3817b606f6fad10357c56465',
         'Designed by Freepik',  -- img_title
         3, -- dietary_preference
-        30
+        30,
+        5 -- meal_type mexican
     );
 
 
@@ -593,17 +685,42 @@ VALUES
 -- Recipe allergies
 -- id refers to recipe id (refer to recipe table)
 -- allergy_id refers to allergy id (refer to allergies table)
-Insert Into recipe_allergies (id, allergy_id) VALUES (1, 1);
-Insert Into recipe_allergies (id, allergy_id) VALUES (1, 2);
-Insert Into recipe_allergies (id, allergy_id) VALUES (1, 3);
+Insert Into recipe_allergies 
+    (id, allergy_id) 
+VALUES 
+    (1, 1),
+    (1, 2),
+    (1, 3),
+    (2, 2),
+    (2, 7),
+    (3, 2),
+    (4, 3),
+    (4, 6),
+    (5, 1),
+    (5, 2),
+    (5, 3),
+    (6, 2),
+    (6, 7),
+    (7, 2),
+    (7, 3),
+    (7, 4),
+    (8, 2),
+    (8, 3),
+    (8, 4),
+    (9, 1),
+    (9, 2),
+    (9, 3),
+    (10, 2),
+    (10, 3),
+    (10, 4),
+    (11, 2),
+    (11, 3),
+    (11, 4),
+    (12, 2),
+    (12, 3),
+    (12, 4);
 
-Insert Into recipe_allergies (id, allergy_id) VALUES (2, 2);
-Insert Into recipe_allergies (id, allergy_id) VALUES (2, 7);
 
-Insert Into recipe_allergies (id, allergy_id) VALUES (3, 2);
-
-Insert Into recipe_allergies (id, allergy_id) VALUES (4, 3);
-Insert Into recipe_allergies (id, allergy_id) VALUES (4, 6);
 
 
 -- Recipe review rating
@@ -641,7 +758,7 @@ VALUES
         1, -- weight gain
         'https://img.freepik.com/free-photo/view-allergens-commonly-found-grains_23-2150170292.jpg?w=826&t=st=1706632336~exp=1706632936~hmac=b61507e8efe548ff6ea8b584a55fa5ac7c97835faec1cc67af28f7dd05876478',
         'Designed by Freepik',  -- img_title
-        '3' -- userid
+        '5' -- userid
     ),
     (
         2,
@@ -655,7 +772,7 @@ VALUES
         2, -- maintain health
         'https://img.freepik.com/free-photo/healthy-unhealthy-food-with-various-text-isolated-white-background_23-2148193120.jpg?size=626&ext=jpg&ga=GA1.2.1875319134.1702524039&semt=ais',
         'Designed by Freepik',  -- img_title
-        '3' -- userid
+        '5' -- userid
     ),
     (
         3,
@@ -669,7 +786,7 @@ VALUES
         3, -- weight loss
         'https://img.freepik.com/free-photo/front-view-vegetable_140725-103355.jpg?w=826&t=st=1706632162~exp=1706632762~hmac=488b3428d05108209f34fe672188a78bc9dd4abfadc8e7e43a3e1385bf7e134d',
         'Author : KamranAydinov, Designed by Freepik',  -- img_title
-        '3' -- userid
+        '5' -- userid
     ),
     (
         4,
@@ -683,7 +800,7 @@ VALUES
         3, -- weight loss
         'https://img.freepik.com/free-photo/plates-filled-with-blueberries-nuts_23-2148650204.jpg?w=826&t=st=1706619604~exp=1706620204~hmac=8beb76f97ad635ee2f5318ba01615cfcf7e8f63c8548bfa2d7de630ab7db1524',
         'Designed by Freepik',
-        '4' -- userid
+        '5' -- userid
     ),
     (
         5,
@@ -697,7 +814,7 @@ VALUES
         2, -- maintain health
         'https://img.freepik.com/free-photo/oil-ripe-fresh-avocado-rustic-wooden-table_123827-21380.jpg?w=826&t=st=1706619716~exp=1706620316~hmac=5c439907263988420faa7825910d62a6a439acba2a16ea3ae9054b90a06d9f2a',
         'Author : chandlervid85, Designed by Freepik',
-        '4' -- userid
+        '5' -- userid
     ),
     (
         6,
@@ -711,7 +828,7 @@ VALUES
         2, -- maintain health
         'https://img.freepik.com/free-photo/some-delicious-meal-with-salad-pickles-bowls-pot-wooden-surface_176474-6470.jpg?w=826&t=st=1706619889~exp=1706620489~hmac=a44c4406c082879c8d2b0da85c96402a80de1d5ab27dc97ac720b9c3f5179118',
         'Author : 8photo, Designed by Freepik',
-        '3' -- userid
+        '5' -- userid
     );
 
 
@@ -720,10 +837,26 @@ VALUES
 -- mealplan_recipe
 -- id refers to meal plan id (refer to meal_plan table)
 -- recipe_id refers to recipe id (refer to recipe table)
-insert into mealplan_recipe (id, recipe_id) values (1, 1); -- recipe is Easy Grilled Salmon
-insert into mealplan_recipe (id, recipe_id) values (1, 2); -- recipe is Cajun Chicken Pasta
-insert into mealplan_recipe (id, recipe_id) values (1, 3); -- recipe is Grilled Lemon-Herb Chicken
-insert into mealplan_recipe (id, recipe_id) values (2, 4);
-
+insert into mealplan_recipe 
+    (id, recipe_id) 
+values 
+    (1, 1),
+    (1, 2),
+    (1, 3),
+    (2, 4),
+    (2, 5),
+    (2, 6),
+    (3, 7),
+    (3, 8),
+    (3, 9),
+    (4, 10),
+    (4, 11),
+    (4, 12),
+    (5, 1),
+    (5, 2),
+    (5, 3),
+    (6, 4),
+    (6, 5),
+    (6, 6);
 
 

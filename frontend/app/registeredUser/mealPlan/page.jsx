@@ -32,17 +32,19 @@ const MealPlanPage = () => {
   const [categories, setCategories] = useState([]);
   const [displayedMealPlan, setDisplayedMealPlan] = useState([]);
   const [resultsCount, setResultsCount] = useState(0);
+  const [isLoading, setIsLoading] = useState(false);
   // Additional state to track if search button has been clicked
   const [searchButtonClicked, setSearchButtonClicked] = useState(false);
 
   // Fetch all meal plan and categories on page load
   useEffect(() => {
+    setIsLoading(true); // Set loading state to true
+
     const getData = async () => {
       const fetchedMealPlan = await fetchMealPlan();
       setAllMealPlan(fetchedMealPlan);
       setDisplayedMealPlan(fetchedMealPlan);
     };
-    getData();
 
     const fetchCategories = async () => {
       try {
@@ -54,7 +56,14 @@ const MealPlanPage = () => {
         console.error("Error fetching categories:", error);
       }
     };
-    fetchCategories();
+
+    Promise.all([getData(), fetchCategories()])
+      .catch((error) => {
+        console.error("Error in fetchData or fetchCategories:", error);
+      })
+      .finally(() => {
+        setIsLoading(false); // End loading after both operations are complete
+      });
   }, []);
 
   // Filter meal plan based on search term and category filter
@@ -155,13 +164,18 @@ const MealPlanPage = () => {
     >
       <img
         src={post.img}
-        alt="Designed by Freepik"
+        alt={post.img_title}
         className="w-full object-cover rounded-sm"
         style={{ height: "192px" }}
       />
       <div className="flex-grow flex flex-col justify-between p-4 bg-white">
         <div>
-          <h2 className="text-2xl font-extrabold mb-2">{post.title}</h2>
+          <h2
+            className="text-2xl font-extrabold mb-2 hover:text-orange-600 cursor-pointer"
+            onClick={() => handleViewMealPlan(post.id)}
+          >
+            {post.title}
+          </h2>
           <div
             className="text-gray-700 text-base mb-4 line-clamp-3"
             style={{ height: "4.5rem" }}
@@ -177,12 +191,6 @@ const MealPlanPage = () => {
             </p>
           </div>
         </div> */}
-        <button
-          onClick={() => handleViewMealPlan(post.id)}
-          className="text-white font-bold bg-gradient-to-br from-cyan-400 to-cyan-800 hover:bg-blue-950 border-2 border-black focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 rounded-lg text-sm mt-3 px-4 py-2 text-center"
-        >
-          Read more
-        </button>
       </div>
     </div>
   );
@@ -201,9 +209,9 @@ const MealPlanPage = () => {
   );
 
   return (
-    <div className="bg-white p-4 md:p-10">
-      <h1 className="text-2xl md:text-4xl font-extrabold font-mono text-cyan-800 mb-4 md:mb-8">
-        Meal Plan
+    <div className="p-4 md:p-10">
+      <h1 className="text-3xl text-center md:text-7xl font-extrabold font-sans text-gray-900 mb-4 md:mb-8">
+        Meal Plans
       </h1>
       <div className="flex sm:justify-between sm:items-center mb-4">
         {/* Search Section */}
@@ -220,19 +228,19 @@ const MealPlanPage = () => {
               }
             }}
             placeholder="Search by title..."
-            className="mr-2 p-2 rounded border-2 border-black mb-2 sm:mb-0"
+            className="mr-2 p-2 rounded-lg border w-full md:w-auto"
             style={{ flex: 1 }}
           />
           <button
             onClick={handleSearchClick}
-            className="text-white p-2 border-2 border-black bg-gradient-to-br from-cyan-400 to-cyan-800 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 rounded-lg text-base font-bold px-5 py-2.5 text-center"
+            className="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-1.5 px-5 rounded-full mt-2 w-full lg:w-auto"
             style={{ flexShrink: 0 }}
           >
             Search
           </button>
           {/* Results count */}
           {searchButtonClicked && searchPerformed && (
-            <p className="text-left text-red font-bold text-xl sm:ml-2">
+            <p className="text-left text-red-500 font-bold text-lg sm:ml-2">
               {resultsCount} results found.
             </p>
           )}
@@ -251,7 +259,7 @@ const MealPlanPage = () => {
               id="categoryFilter"
               value={categoryFilter}
               onChange={(e) => setCategoryFilter(e.target.value)}
-              className="p-2 rounded border-2 border-black text-black"
+              className="mr-2 p-2 rounded-lg border w-full md:w-auto"
               style={{ maxWidth: "300px" }}
             >
               <option value="">All Categories</option>
@@ -265,23 +273,34 @@ const MealPlanPage = () => {
         </div>
       </div>
       {/* Display the meal plans */}
-      {!searchPerformed && !categoryFilter ? (
-        <>
-          <div className="mb-5">
-            <h2 className="text-2xl font-bold mb-4 mt-4">Latest Meal Plan</h2>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
-              {latestMealPlan.map((post) => renderPostCard(post))}
-            </div>
-          </div>
-          <h2 className="text-2xl font-bold mb-4 mt-4">Other Meal Plan</h2>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-            {otherMealPlan.map((post) => renderPostCard(post))}
-          </div>
-        </>
-      ) : (
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-          {displayedMealPlan.map((post) => renderPostCard(post))}
+      {/* Display message while fetching data ftom backend */}
+      {isLoading ? (
+        <div className="text-xl text-center p-4">
+          <p>Please wait. It'll just take a moment.</p>
         </div>
+      ) : (
+        <>
+          {!searchPerformed && !categoryFilter ? (
+            <>
+              <div className="mb-5">
+                <h2 className="text-2xl font-bold mb-4 mt-4">
+                  Latest Meal Plan
+                </h2>
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
+                  {latestMealPlan.map((post) => renderPostCard(post))}
+                </div>
+              </div>
+              <h2 className="text-2xl font-bold mb-4 mt-4">Other Meal Plan</h2>
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                {otherMealPlan.map((post) => renderPostCard(post))}
+              </div>
+            </>
+          ) : (
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+              {displayedMealPlan.map((post) => renderPostCard(post))}
+            </div>
+          )}
+        </>
       )}
     </div>
   );

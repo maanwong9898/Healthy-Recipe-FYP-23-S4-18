@@ -6,6 +6,7 @@ import { useState, useEffect } from "react";
 import axiosInterceptorInstance from "../../../../axiosInterceptorInstance.js";
 import ArrowRightIcon from "@mui/icons-material/ArrowRight";
 import ArrowLeftIcon from "@mui/icons-material/ArrowLeft";
+import HomeNavbar from "@/app/components/navigation/homeNavBar/index.jsx";
 
 // this is to view particular meal plan
 // router path: /mealPlan/viewMealPlan/[id]
@@ -149,7 +150,7 @@ const ViewMealPlan = ({ params }) => {
       stars.push(
         <span
           key={i}
-          className={i < rating ? "text-yellow-400" : "text-gray-300"}
+          className={i < rating ? "text-yellow-300" : "text-gray-300"}
         >
           ★
         </span>
@@ -189,155 +190,159 @@ const ViewMealPlan = ({ params }) => {
   // );
 
   return (
-    <div className="pt-8 pb-16 lg:pt-16 lg:pb-24 bg-white">
-      <div className="text-center font-semibold font-sans">
-        <h1 className="flex flex-wrap justify-center mb-4 text-2xl font-extrabold text-gray-900 lg:mb-6 lg:text-5xl">
-          {mealPlan.title || "No title"}
-        </h1>
-        {/* Publisher and published date section */}
-        <div className="flex justify-center text-sm font-serif font-semibold lg:text-base text-gray-900 space-x-6 mx-auto max-w-screen-xl">
-          <p>
-            Published by:{" "}
-            <span className="text-orange-600 font-bold tracking-tight">
-              {mealPlan?.userID.fullName || "Not specified"}
-            </span>
-          </p>
-          <p>
-            Published on:{" "}
-            <span className="text-orange-600 font-bold tracking-tight">
-              {new Date(
-                mealPlan.createdDT || mealPlan.lastUpdatedDT
-              ).toLocaleDateString("en-GB", {
-                day: "2-digit",
-                month: "short",
-                year: "numeric",
-              })}
-            </span>
-          </p>
+    <div>
+      <HomeNavbar />
+      <div className="pt-8 pb-16 lg:pt-16 lg:pb-24 bg-white">
+        <div className="text-center font-semibold font-sans">
+          <h1 className="flex flex-wrap justify-center mb-4 text-2xl font-extrabold text-gray-900 lg:mb-6 lg:text-5xl">
+            {mealPlan.title || "Untitled Meal Plan"}
+          </h1>
+          {/* Publisher and published date section */}
+          <div className="flex justify-center text-sm font-serif font-semibold lg:text-base text-gray-900 space-x-6 mx-auto max-w-screen-xl">
+            <p>
+              Published by:{" "}
+              <span className="text-orange-600 font-bold tracking-tight">
+                {mealPlan?.userID.fullName || "Not specified"}
+              </span>
+            </p>
+            <p>
+              Published on:{" "}
+              <span className="text-orange-600 font-bold tracking-tight">
+                {new Date(
+                  mealPlan.createdDT || mealPlan.lastUpdatedDT
+                ).toLocaleDateString("en-GB", {
+                  day: "2-digit",
+                  month: "short",
+                  year: "numeric",
+                })}
+              </span>
+            </p>
 
-          <p>
-            Category:{" "}
-            <span className="text-orange-600 font-bold tracking-tight">
-              {mealPlan.healthGoal
-                ? mealPlan.healthGoal.subcategoryName
-                : "Not specified"}
-            </span>
-          </p>
+            <p>
+              Category:{" "}
+              <span className="text-orange-600 font-bold tracking-tight">
+                {mealPlan.healthGoal
+                  ? mealPlan.healthGoal.subcategoryName
+                  : "Not specified"}
+              </span>
+            </p>
+          </div>
+          {/* End of publisher, published date, category */}
         </div>
-        {/* End of publisher, published date, category */}
-      </div>
 
-      <article>
-        {/*Intro*/}
-        <section className="main-content mt-10 pl-9 pr-9 mx-auto max-w-screen-xl md:text-base text-left">
-          <div className="w-full p-2 rounded-lg whitespace-pre-line">
-            {mealPlan.introduction}
+        <article>
+          {/*Intro*/}
+          <section className="main-content mt-10 pl-9 pr-9 mx-auto max-w-screen-xl md:text-base text-left">
+            <div className="w-full p-2 rounded-lg whitespace-pre-line">
+              {mealPlan.introduction}
+            </div>
+          </section>
+          {/* Image */}
+          <img
+            src={mealPlan.img}
+            alt="Credit to the source of the image"
+            className="max-w-full mx-auto mt-8 mb-8 sm:max-w-xl sm:mt-16 sm:mb-16 rounded-lg shadow-xl"
+          />
+          {/* Main content */}
+          <section className="main-content mt-10 pl-9 pr-9 mx-auto max-w-screen-xl md:text-base text-left">
+            <div className="w-full p-2 rounded-lg whitespace-pre-line">
+              {mealPlan.mainContent}
+            </div>
+          </section>
+          {/* Recipes - LARGE SCREEN VIEW */}
+          <div className="mt-16 mx-auto max-w-screen-xl text-left border-t-2 border-gray-50">
+            <p className="font-sans font-bold text-2xl md:text-4xl text-gray-900 mb-4 md:mt-8 ml-4 lg:ml-0">
+              Suggested Recipes
+            </p>
+            {/* Recipes Carousel Section */}
+            {mealPlan?.recipes && mealPlan.recipes.length > 0 ? (
+              <div className="relative">
+                <div className="grid md:grid-cols-3 grid-cols-1 gap-4 justify-center">
+                  {displayedRecipes.map((recipe) => (
+                    <RecipeCard
+                      key={recipe.id}
+                      recipe={recipe}
+                      onViewRecipe={handleViewRecipe}
+                    />
+                  ))}
+                </div>
+                {mealPlan.recipes.length > 3 && (
+                  <>
+                    <button
+                      onClick={prevRecipeSet}
+                      className="absolute top-1/2 transform -translate-y-1/2 z-10"
+                      // style={{
+                      //   marginLeft: "0.5rem, // Adjust right margin to bring the arrow inside the viewport
+                      // }}
+                    >
+                      <ArrowLeftIcon
+                        style={{
+                          fontSize: "3rem",
+                          color: "blue",
+                        }} // 50% transparent blue
+                      />
+                    </button>
+                    <button
+                      onClick={nextRecipeSet}
+                      className="absolute top-1/2 right-0 transform -translate-y-1/2 z-10"
+                      style={{
+                        marginRight: "1rem", // Adjust right margin to bring the arrow inside the viewport
+                      }}
+                    >
+                      <ArrowRightIcon
+                        style={{ fontSize: "3rem", color: "blue" }} // Set the size and color here
+                      />
+                    </button>
+                  </>
+                )}
+              </div>
+            ) : (
+              <p className="text-center">No suggested recipes.</p>
+            )}
           </div>
-        </section>
-        {/* Image */}
-        <img
-          src={mealPlan.img}
-          alt="Credit to the source of the image"
-          className="max-w-xl mx-auto mt-8 mb-8 rounded-lg shadow-xl sm:mt-16 sm:mb-16"
-        />
-        {/* Main content */}
-        <section className="main-content mt-10 pl-9 pr-9 mx-auto max-w-screen-xl md:text-base text-left">
-          <div className="w-full p-2 rounded-lg whitespace-pre-line">
-            {mealPlan.mainContent}
-          </div>
-        </section>
-        {/* Recipes */}
+
+          {/* Conclusion */}
+          <section className="main-content mt-10 pl-9 pr-9 mx-auto max-w-screen-xl md:text-base text-left">
+            <div className="w-full p-2 rounded-lg whitespace-pre-line">
+              {mealPlan.conclusion}
+            </div>
+          </section>
+        </article>
+
+        {/* Ratings and Reviews */}
         <div className="mt-16 mx-auto max-w-screen-xl text-left border-t-2 border-gray-50">
           <p className="font-sans font-bold text-2xl md:text-4xl text-gray-900 mb-4 md:mt-8 ml-4 lg:ml-0">
-            Suggested Recipes
+            Rating and Reviews
           </p>
-          {/* Recipes Carousel Section */}
-          {mealPlan?.recipes && mealPlan.recipes.length > 0 ? (
-            <div className="relative">
-              <div className="grid md:grid-cols-3 gap-4 justify-center">
-                {displayedRecipes.map((recipe) => (
-                  <RecipeCard
-                    key={recipe.id}
-                    recipe={recipe}
-                    onViewRecipe={handleViewRecipe}
-                  />
-                ))}
+          {/* Check if reviews exist */}
+          {reviewsAndRatings.length > 0 ? (
+            reviewsAndRatings.map((review, index) => (
+              <div key={index} className="my-4 p-4 border-b border-gray-200">
+                <div className="flex items-center mb-2">
+                  <span className="font-bold text-sm md:text-base mr-2">
+                    {review?.userDTO?.username || "Anonymous"}
+                  </span>
+                  <div className="flex">{renderStars(review.rating)}</div>
+                  <span className="text-xs md:text-sm text-gray-500 ml-2">
+                    {new Date(review?.createdDateTime).toLocaleDateString(
+                      "en-GB",
+                      {
+                        day: "2-digit",
+                        month: "short",
+                        year: "numeric",
+                      }
+                    )}
+                  </span>
+                </div>
+                <p>{review.review}</p>
               </div>
-              {mealPlan.recipes.length > 3 && (
-                <>
-                  <button
-                    onClick={prevRecipeSet}
-                    className="absolute top-1/2 transform -translate-y-1/2 z-10"
-                    // style={{
-                    //   marginLeft: "0.5rem, // Adjust right margin to bring the arrow inside the viewport
-                    // }}
-                  >
-                    <ArrowLeftIcon
-                      style={{
-                        fontSize: "3rem",
-                        color: "blue",
-                      }} // 50% transparent blue
-                    />
-                  </button>
-                  <button
-                    onClick={nextRecipeSet}
-                    className="absolute top-1/2 right-0 transform -translate-y-1/2 z-10"
-                    style={{
-                      marginRight: "1rem", // Adjust right margin to bring the arrow inside the viewport
-                    }}
-                  >
-                    <ArrowRightIcon
-                      style={{ fontSize: "3rem", color: "blue" }} // Set the size and color here
-                    />
-                  </button>
-                </>
-              )}
-            </div>
+            ))
           ) : (
-            <p className="text-center">No suggested recipes.</p>
+            <p className="text-center text-gray-600">
+              No ratings and reviews yet.
+            </p>
           )}
         </div>
-        {/* Conclusion */}
-        <section className="main-content mt-10 pl-9 pr-9 mx-auto max-w-screen-xl md:text-base text-left">
-          <div className="w-full p-2 rounded-lg whitespace-pre-line">
-            {mealPlan.conclusion}
-          </div>
-        </section>
-      </article>
-
-      {/* Ratings and Reviews */}
-      <div className="mt-16 mx-auto max-w-screen-xl text-left border-t-2 border-gray-50">
-        <p className="font-sans font-bold text-2xl md:text-4xl text-gray-900 mb-4 md:mt-8 ml-4 lg:ml-0">
-          Rating and Reviews
-        </p>
-        {/* Check if reviews exist */}
-        {reviewsAndRatings.length > 0 ? (
-          reviewsAndRatings.map((review, index) => (
-            <div key={index} className="my-4 p-4 border-b border-gray-200">
-              <div className="flex items-center mb-2">
-                <span className="font-bold text-sm md:text-base mr-2">
-                  {review?.userDTO?.username || "Anonymous"}
-                </span>
-                <div className="flex">{renderStars(review.rating)}</div>
-                <span className="text-xs md:text-sm text-gray-500 ml-2">
-                  {new Date(review?.createdDateTime).toLocaleDateString(
-                    "en-GB",
-                    {
-                      day: "2-digit",
-                      month: "short",
-                      year: "numeric",
-                    }
-                  )}
-                </span>
-              </div>
-              <p>{review.review}</p>
-            </div>
-          ))
-        ) : (
-          <p className="text-center text-gray-600">
-            No ratings and reviews yet.
-          </p>
-        )}
       </div>
     </div>
   );

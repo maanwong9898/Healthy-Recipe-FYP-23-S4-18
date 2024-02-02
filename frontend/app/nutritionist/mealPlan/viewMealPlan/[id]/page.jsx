@@ -161,7 +161,7 @@ const ViewMealPlan = ({ params }) => {
       stars.push(
         <span
           key={i}
-          className={i < rating ? "text-yellow-400" : "text-gray-300"}
+          className={i < rating ? "text-yellow-300" : "text-gray-300"}
         >
           ★
         </span>

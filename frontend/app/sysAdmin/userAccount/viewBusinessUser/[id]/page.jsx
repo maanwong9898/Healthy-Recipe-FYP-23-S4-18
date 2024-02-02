@@ -9,6 +9,8 @@ import axiosInterceptorInstance from "../../../../axiosInterceptorInstance.js";
 const ViewBusinessUser = ({ params }) => {
   const router = useRouter();
   const [userAccount, setUserAccount] = useState("");
+  const [error, setError] = useState("");
+  const [success, setSuccess] = useState("");
 
   const viewUserDashboard = async () => {
     try {
@@ -32,6 +34,25 @@ const ViewBusinessUser = ({ params }) => {
 
   const handleBackButton = () => {
     router.push("/sysAdmin/userAccount");
+  };
+
+  const handleSuspendAccount = async () => {
+    try {
+      const userId = params.id;
+      const response = await axiosInterceptorInstance.put(
+        "/systemAdmin/suspend",
+        {
+          enabled: false,
+          id: userId,
+        }
+      );
+      console.log("User account suspended", response);
+      setSuccess("User account suspended successfully");
+      // Optionally, you can navigate the user back to the user account page
+    } catch (error) {
+      console.error("Error suspending user account", error);
+      setError("Failed to suspend user account");
+    }
   };
 
   return (
@@ -165,13 +186,35 @@ const ViewBusinessUser = ({ params }) => {
                 className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-base rounded-lg block w-full p-2.5"
               />
             </div>
-            <div className="flex flex-row space-x-5">
-              <button
-                className="bg-red-600 hover:bg-red-700 text-white font-semibold py-2 px-4 rounded-lg"
-                onClick={handleBackButton}
-              >
-                Back
-              </button>
+            {/*Errors*/}
+            {error && (
+              <div className="text-red-500 text-base font-medium">{error}</div>
+            )}
+            {/*Success*/}
+            {success && (
+              <div className="text-green-500 text-base font-medium">
+                {success}
+              </div>
+            )}
+
+            {/* Buttons */}
+            <div className="flex space-x-5 justify-center">
+              <div className="flex-1">
+                <button
+                  onClick={() => handleBackButton()}
+                  className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md bg-slate-700 hover:bg-slate-800 text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-slate-700"
+                >
+                  Back
+                </button>
+              </div>
+              <div className="flex-1">
+                <button
+                  onClick={() => handleSuspendAccount()}
+                  className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md bg-red-500 hover:bg-red-600 text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500"
+                >
+                  Suspend
+                </button>
+              </div>
             </div>
           </div>
         </div>

@@ -10,6 +10,8 @@ import DownloadIcon from "@mui/icons-material/Download";
 const ViewNutritionist = ({ params }) => {
   const router = useRouter();
   const [userAccount, setUserAccount] = useState("");
+  const [error, setError] = useState("");
+  const [success, setSuccess] = useState("");
 
   const viewUserDashboard = async () => {
     try {
@@ -35,16 +37,22 @@ const ViewNutritionist = ({ params }) => {
     router.push("/sysAdmin/userAccount");
   };
 
-  // Function for download certificate
-  const handleDownload = () => {
-    if (userAccount && userAccount.nutritionistCertificate) {
-      // Create a temporary anchor element
-      const downloadLink = document.createElement("a");
-      downloadLink.href = userAccount.nutritionistCertificate;
-      downloadLink.download = "nutritionist_certificate.png"; // Set desired file name
-      document.body.appendChild(downloadLink);
-      downloadLink.click();
-      document.body.removeChild(downloadLink); // Clean up
+  const handleSuspendAccount = async () => {
+    try {
+      const userId = params.id;
+      const response = await axiosInterceptorInstance.put(
+        "/systemAdmin/suspend",
+        {
+          enabled: false,
+          id: userId,
+        }
+      );
+      console.log("User account suspended", response);
+      setSuccess("User account suspended successfully");
+      // Optionally, you can navigate the user back to the user account page
+    } catch (error) {
+      console.error("Error suspending user account", error);
+      setError("Failed to suspend user account");
     }
   };
 
@@ -173,27 +181,42 @@ const ViewNutritionist = ({ params }) => {
               {/* {userAccount && userAccount.filePath && ( */}
               <div className="relative">
                 <img
-                  src="/banner.png"
+                  src=""
                   alt="Nutritionist Certificate"
                   className="h-auto w-full rounded-lg"
                 />
+              </div>
+            </div>
+
+            {/*Errors*/}
+            {error && (
+              <div className="text-red-500 text-base font-medium">{error}</div>
+            )}
+            {/*Success*/}
+            {success && (
+              <div className="text-green-500 text-base font-medium">
+                {success}
+              </div>
+            )}
+
+            {/* Buttons */}
+            <div className="flex space-x-5 justify-center">
+              <div className="flex-1">
                 <button
-                  onClick={handleDownload}
-                  className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 hover:bg-orange-300 px-2 py-2 rounded-full"
+                  onClick={() => handleBackButton()}
+                  className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md bg-slate-700 hover:bg-slate-800 text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-slate-700"
                 >
-                  <DownloadIcon />
+                  Back
                 </button>
               </div>
-              {/* )} */}
-            </div>
-            {/* Buttno */}
-            <div className="flex flex-row space-x-5 mt-4">
-              <button
-                className="bg-red-600 hover:bg-red-700 text-white font-semibold py-2 px-4 rounded-lg"
-                onClick={handleBackButton}
-              >
-                Back
-              </button>
+              <div className="flex-1">
+                <button
+                  onClick={() => handleSuspendAccount()}
+                  className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md bg-red-500 hover:bg-red-600 text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500"
+                >
+                  Suspend
+                </button>
+              </div>
             </div>
           </div>
         </div>

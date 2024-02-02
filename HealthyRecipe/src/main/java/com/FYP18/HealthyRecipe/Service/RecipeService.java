@@ -39,13 +39,24 @@ public class RecipeService {
         // create on default haiz
         recipe.setCreatedDT(LocalDate.now());
         recipe.setActive(true);
+        if(recipe.getPublisher() == null)
+        {  
+            recipe.setPublisher(userRepo.findById(recipe.getUserID().getId()).get().getFullName());
+        }
         return recipeRepository.save(recipe);
     }
- 
+  
     // i know its the same, i'm just separating in case
     public Recipe updateRecipe(Recipe recipe)
     {  
+
+        if(recipe.getPublisher() == null)
+        {  
+            recipe.setPublisher(userRepo.findById(recipe.getUserID().getId()).get().getFullName());
+        }
+
         recipe.setLastUpdatedDT(LocalDate.now());
+
         return recipeRepository.save(recipe);
     }
 

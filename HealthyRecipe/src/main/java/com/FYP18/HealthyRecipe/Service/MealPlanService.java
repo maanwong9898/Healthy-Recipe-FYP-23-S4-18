@@ -52,6 +52,12 @@ public class MealPlanService {
         mealPlan.setRecipes(toUpdate);
         mealPlan.setCreatedDT(LocalDate.now());
         mealPlan.setActive(true);
+
+        if(mealPlan.getPublisher() == null)
+        {  
+            mealPlan.setPublisher(userRepo.findById(mealPlan.getUserID().getId()).get().getFullName());
+        }
+
         return repo.save(mealPlan);
     }
  
@@ -81,6 +87,12 @@ public class MealPlanService {
             toUpdate.add(recipe);
         }
         mealPlan.setRecipes(toUpdate);
+        
+        if(mealPlan.getPublisher() == null)
+        {  
+            mealPlan.setPublisher(userRepo.findById(mealPlan.getUserID().getId()).get().getFullName());
+        }
+
         return repo.save(mealPlan);
     }
  

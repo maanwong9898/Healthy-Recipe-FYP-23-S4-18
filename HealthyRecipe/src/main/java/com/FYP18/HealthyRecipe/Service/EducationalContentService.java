@@ -79,6 +79,10 @@ public class EducationalContentService {
   
         educationalContent.setEducationalContentTypeId((educationalContentType.isPresent() ? educationalContentType.get().getId(): null));
         
+        if(educationalContent.getPublisher() == null)
+        {  
+            educationalContent.setPublisher(userRepo.findById(educationalContent.getUserID().getId()).get().getFullName());
+        }
      
         educationalContent.setLastUpdatedDateTime(LocalDateTime.now());
         return educationalContentRepository.save(educationalContent);

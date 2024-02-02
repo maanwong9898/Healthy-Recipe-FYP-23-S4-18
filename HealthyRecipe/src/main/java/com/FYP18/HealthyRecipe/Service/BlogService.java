@@ -42,7 +42,7 @@ public class BlogService {
     private BlogPostCategoryRepo blogTypeRepo;
  
     // create, read all, read 1, update, delete for blogReviewRating
-     
+      
     public Blog createBlog(Blog blog)
     {
         blog.setCreatedDateTime(LocalDateTime.now());

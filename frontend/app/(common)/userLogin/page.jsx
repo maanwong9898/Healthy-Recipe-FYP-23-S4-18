@@ -43,10 +43,12 @@ const userLogin = () => {
   // console.log(`Expires at: ${expHumanReadable}`);
   // console.log(`Current time: ${currentHumanReadable}`);
 
+  // Function to toggle password visibility
   const togglePasswordVisibility = () => {
     setPasswordVisible(!passwordVisible);
   };
 
+  // Dynamically change the background image every 3 seconds
   useEffect(() => {
     const intervalId = setInterval(() => {
       setCurrentImageIndex((prevIndex) => (prevIndex + 1) % images.length);
@@ -57,6 +59,7 @@ const userLogin = () => {
 
   // Function to retrieve user info from the token
   const fetchUserInfo = async () => {
+    console.log("Fetching user info...");
     try {
       // Retrieve the token from localStorage
       const token = localStorage.getItem("token");
@@ -64,6 +67,7 @@ const userLogin = () => {
       // Check if token exists
       if (!token) {
         console.error("No token found");
+        router.push("/");
         return;
       }
 
@@ -117,7 +121,7 @@ const userLogin = () => {
         headers: { Authorization: `Bearer ${token}` },
       };
 
-      // Make the GET request to the userAndAdmin endpoint
+      // Make the GET request to the particular role endpoint (testing purposes)
       const response = await axiosInterceptorInstance.get(
         "/test/admin",
         config
@@ -147,7 +151,11 @@ const userLogin = () => {
       // Now you can store the token in localStorage and redirect the user as needed
       localStorage.setItem("token", token);
 
-      console.log("Login successful:", response.data);
+      console.log("Login details :", response.data);
+      console.log("the error message : ", response.data.error);
+
+      // set the error message to the state
+      setError(response.data.error);
 
       // Call the function to make a request to the userAndAdmin endpoint
       await fetchUserInfo();
@@ -250,6 +258,12 @@ const userLogin = () => {
                       onChange={(e) => setPassword(e.target.value)}
                     />
                   </div>
+                  {/* Error Message */}
+                  {error && (
+                    <p className="text-red-500 text-base font-semibold">
+                      {error}
+                    </p>
+                  )}
                   {/* Submit Button */}
                   <button
                     type="submit"

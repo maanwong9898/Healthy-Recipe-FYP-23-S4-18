@@ -322,13 +322,11 @@ const UpdateAccount = () => {
 
                 {/* NUTRITION CERT PREVIEW */}
                 <div className="flex flex-col mb-3.5">
-                  <label className="mb-1">
-                    Nutritionist/Educational Certificates:
-                  </label>
+                  <label className="mb-1">Nutritionist Certificates:</label>
                   <div>
                     {/* IMAGE PREVIEW */}
                     <Image
-                      src="/banner.png"
+                      src=""
                       width={400}
                       height={300}
                       className="rounded-lg"

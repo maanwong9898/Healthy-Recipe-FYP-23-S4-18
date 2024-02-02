@@ -232,15 +232,16 @@ const CreateUserAccountPage = () => {
                   Admin account created successfully!
                 </p>
               )}
+
               {/* SUBMIT BUTTON */}
               <div className="flex flex-row space-x-5">
-                <button className="bg-red-600 hover:bg-red-700 text-white font-semibold py-2 px-4 rounded-lg">
+                <button className="bg-red-600 hover:bg-red-700 text-white font-semibold py-2 px-4 rounded-lg w-full">
                   <Link href="/sysAdmin/userAccount">Back</Link>
                 </button>
                 <button
                   type="submit"
                   onClick={handleCreateAdminAccount}
-                  className="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded-lg"
+                  className="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded-lg w-full"
                 >
                   Create
                 </button>

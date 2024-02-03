@@ -466,6 +466,63 @@ VALUES
         2, -- dietary_preference
         10 -- cooking_time  
         3   -- meal type (cuisines)
+    ),
+    (
+        23,
+        'Marianne Wren',
+        'Spanakopita Egg Casserole',
+        'Not Specified',
+        221, 6, 14, 16, 1, 344, -- calories, carbs, protein, fat, fibre, sodium
+        6,
+        'This breakfast version of a Greek classic eschews the hefty pastry and provides you with plenty of vegetables, creamy ricotta, and feta for a filling start to the day. Make it ahead of time and just warm it up in the toaster oven in the morning.',
+        'Preheat oven to 350˚F. Mist a 9-inch square baking dish with cooking spray.\nIn a large, deep skillet on medium-low, heat oil. Add onion and cook, stirring often, until soft, 4 to 5 minutes. Add garlic and cook, stirring frequently until fragrant, 30 seconds. Add spinach, salt and pepper; cook, tossing with tongs until spinach is wilted, about 2 minutes. Transfer mixture into prepared dish, spreading evenly to coat the bottom.\nIn a large bowl, whisk together eggs and cream until well combined. Stir in ricotta, feta, parsley and dill.\nPour egg mixture over spinach layer; stir gently, allowing some spinach to float into egg mixture. Bake until set and just starting to brown around the edges, 25 to 30 minutes. Slice into squares or triangles and serve warm.',
+        '2 tsp extra-virgin olive oil \n1 small yellow onion, finely chopped \n2 cloves garlic, minced \n5 oz baby spinach \n1/4 tsp each sea salt and ground black pepper \n8 large eggs \n1/2 cup light cream \n1/2 cup full-fat ricotta cheese \n1/2 cup crumbled full-fat feta cheese \n1/4 cup each chopped fresh flat-leaf parsley and dill',
+        '2', -- UserID
+        TRUE,
+        '2023-06-01 12:00:00',
+        'https://cdn.cleaneatingmag.com/wp-content/uploads/2019/03/spanakopita-egg-casserole_85-web-3.jpg?crop=535:301&width=1070&enable=upscale',
+        'Author : Darren Kemper, Designed by cleaneating',  -- img_title
+        3, -- dietary_preference
+        40 -- cooking_time  
+        9   -- meal type (cuisines)
+    ),
+    (
+        24,
+        'Beth Lipton',
+        'Grilled Eggplant Caprese',
+        'Not Specified',
+        243, 7, 9, 21, 3, 179, -- calories, carbs, protein, fat, fibre, sodium
+        4,
+        'A twist on a typical Caprese salad, our version uses grilled eggplant slices that you can make ahead for easier prep.',
+        'Spread eggplant, tomato and mozzarella slices on a platter. Scatter basil on top. Drizzle with oil and vinegar then sprinkle with salt and pepper. Alternatively, drizzle with Macadamia Basil Pesto.',
+        '2 eggplants, sliced then grilled \n4 heirloom tomatoes, sliced \n6 oz fresh mozzarella, sliced \n1 tbsp thinly sliced fresh basil (or use whole basil leaves) \n1 tbsp extra-virgin olive oil \n2 tsp balsamic vinegar \n1/8 tsp each coarse sea salt and ground black pepper',
+        '1', -- UserID
+        TRUE,
+        '2023-04-01 16:00:00',
+        'https://cdn.cleaneatingmag.com/wp-content/uploads/2018/05/grilled-eggplant-caprese_79-web-1.jpg?crop=535:301&width=1070&enable=upscale',
+        'Author : Beth Lipton, Designed by cleaneating',  -- img_title
+        3, -- dietary_preference
+        15 -- cooking_time  
+        9   -- meal type (cuisines)
+    ),
+    (
+        25,
+        'Beth Lipton',
+        'Grilled Eggplant Caprese',
+        'Not Specified',
+        221, 6, 14, 16, 1, 344, -- calories, carbs, protein, fat, fibre, sodium
+        4,
+        'A twist on a typical Caprese salad, our version uses grilled eggplant slices that you can make ahead for easier prep.',
+        'Spread eggplant, tomato and mozzarella slices on a platter. Scatter basil on top. Drizzle with oil and vinegar then sprinkle with salt and pepper. Alternatively, drizzle with Macadamia Basil Pesto.',
+        '2 eggplants, sliced then grilled \n4 heirloom tomatoes, sliced \n6 oz fresh mozzarella, sliced \n1 tbsp thinly sliced fresh basil (or use whole basil leaves) \n1 tbsp extra-virgin olive oil \n2 tsp balsamic vinegar \n1/8 tsp each coarse sea salt and ground black pepper',
+        '1', -- UserID
+        TRUE,
+        '2023-04-01 16:00:00',
+        'https://cdn.cleaneatingmag.com/wp-content/uploads/2018/05/grilled-eggplant-caprese_79-web-1.jpg?crop=535:301&width=1070&enable=upscale',
+        'Author : Beth Lipton, Designed by cleaneating',  -- img_title
+        3, -- dietary_preference
+        15 -- cooking_time  
+        9   -- meal type (cuisines)
     );
 
 

@@ -16,7 +16,7 @@ VALUES
     (
         '1',
         '2024-01-29 08:24:52',  -- CreatedDT
-        'Philps',  -- Publisher
+        'Philips',  -- Publisher
         'Elevate Your Kitchen with Philips: Top-Quality Kitchenware',  -- Title
         'Upgrade your kitchen experience with Philips! Your trusted partner for top-quality kitchenware. Discover a range of innovative and stylish appliances designed to make cooking a breeze. Efficiency in Every Appliance: Philips brings you kitchenware that simplifies your daily tasks. From powerful blenders to versatile food processors, our appliances are engineered for efficiency, saving you time and effort in the kitchen. Healthy Choices, Delicious Results: Explore our Airfryers and Juicers for a healthier cooking approach. Enjoy crispy dishes with less oil using our Airfryers, and create refreshing, nutrient-packed juices with ease using our Juicers. Sleek Design, Lasting Impressions: Philips kitchenware not only excels in functionality but also adds a touch of elegance to your kitchen. With modern designs and premium materials, our appliances seamlessly blend style with substance. Our kitchenware is crafted to meet your cooking needs while ensuring durability and long-lasting performance. \nUpgrade your kitchen with Philips – where innovation meets style. Explore our range of kitchenware today and discover the joy of cooking with precision and convenience. Philips, transforming kitchens for a better culinary experience.',
          1, -- userId Philips
@@ -90,8 +90,51 @@ VALUES
         'Designed by Freepik',  -- img_title
         3 -- blog_type_id Miscellaneous
     ),
-    
-    
+    (
+        '8',
+        '2023-12-18 16:00:00', 
+        'ModernChef',
+        'Smart Kitchen Appliances: Embracing Technology in the Culinary Space',
+        'Discover the future of cooking with smart kitchen appliances. ModernChef introduces you to innovative gadgets that leverage technology to simplify your culinary endeavors. From smart ovens to connected blenders, explore how the modern kitchen is evolving with cutting-edge technology.'
+        1, -- userId 
+        'https://img.freepik.com/free-photo/close-up-smartphone-with-kitchen-control_23-2148994128.jpg?w=996&t=st=1706988254~exp=1706988854~hmac=bb68f2552d7ce6deeb01503dad58129ee295910a4820d83f073bb2b7f16bc86f'
+        'Designed by Freepik',  -- img_title
+        2 -- blog_type_id kitchenware
+    ),
+    (
+        '9',
+        '2022-12-18 16:00:00', 
+        'HealthyEats',
+        'Nourishing Recipes for a Healthy Lifestyle: A Cookbook Review',
+        'Explore a collection of nourishing recipes designed for a healthy lifestyle. HealthyEats reviews a cookbook filled with delicious and nutritious dishes that promote overall well-being. From plant-based meals to wholesome desserts, discover the art of cooking for a healthier you.'
+        1, -- userId 
+        'https://www.freepik.com/free-photo/top-view-empty-menu-with-tomatoes-salad_7770971.htm#query=recipe%20cookbook&position=3&from_view=search&track=ais&uuid=932c26a4-5ecb-403c-a356-e81943a1b733'
+        'Designed by Freepik',  -- img_title
+        1 -- blog_type_id cookbook
+    ),
+    (
+        '10',
+        '2023-04-18 20:00:00', 
+        'HomeGardenVibes',
+        'Herb Gardening 101: Tips for Growing Fresh Herbs at Home',
+        'Transform your kitchen with a DIY herb garden and infuse fresh, aromatic flavors into your dishes. HomeGardenVibes provides a guide on creating a simple yet vibrant herb garden right in your home. Learn about the best herbs for indoor gardening, tips for care and maintenance, and creative ways to incorporate homegrown herbs into your favorite'
+        1, -- userId 
+        'https://img.freepik.com/premium-vector/watercolkor-background-with-culinary-herbs-plants_154848-268.jpg?w=996'
+        'Author: user6633193, Designed by Freepik',  -- img_title
+        3 -- blog_type_id Miscellaneous
+    ),
+    (
+        '11',
+        '2023-06-18 21:00:00', 
+        'CulinaryArtistry',
+        'Artisanal Kitchenware: Elevate Your Cooking with Handcrafted Tools',
+        'Immerse yourself in the world of artisanal kitchenware. CulinaryArtistry explores the beauty of handcrafted tools that bring a touch of craftsmanship to your culinary space. From hand-forged knives to bespoke utensils, discover how artisanal kitchenware combines functionality with exquisite craftsmanship.'
+        1, -- userId 
+        'https://www.freepik.com/free-photo/human-hand-cutting-mushroom-making-delicious-pasta-wooden-surface_4165862.htm#query=handcrafted%20kitchen%20knives&position=19&from_view=search&track=ais&uuid=42585427-0fd6-4c52-bbc1-9880b2538694'
+        'Designed by Freepik',  -- img_title
+        2 -- blog_type_id kitchenware
+    ),
+       
 
     --  Blog review rating
 INSERT INTO BLOG_REVIEW_RATING 
@@ -116,3 +159,7 @@ VALUE
     ('I love this blog post!',                                    4.0, '12', 6);
     ('The blog post is very descriptive and informative.',        5.0, '11', 7),
     ('I love this blog post!',                                    4.0, '12', 7);
+    ('The blog post is very descriptive and informative.',        5.0, '11', 8),
+    ('I love this blog post!',                                    5.0, '12', 9);
+    ('The blog post is very descriptive and informative.',        5.0, '11', 10),
+    ('I love this blog post!',                                    5.0, '12', 11);

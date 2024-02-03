@@ -1867,7 +1867,9 @@ const CreateRecipePage = () => {
       !fat.trim() ||
       !fibre.trim() ||
       !sodium.trim() ||
-      !imageUrl.trim() ||
+      // imgblob cannot be empty
+      !newImageBlob.trim() ||
+      // !imageUrl.trim() ||
       ingredientList.some((ingredient) => !ingredient.trim()) ||
       instructionList.some((instruction) => !instruction.trim())
     ) {
@@ -1942,7 +1944,7 @@ const CreateRecipePage = () => {
       dietaryPreferencesId: parseInt(dietaryPreference),
       mealTypeId: parseInt(mealType),
       allergies: allergyRestriction.map((id) => ({ id })),
-      img: imageUrl,
+      // img: imageUrl,
       imgBlob: newImageBlob, // Use updated image blob
     };
 
@@ -2447,7 +2449,7 @@ const CreateRecipePage = () => {
               </div>
 
               {/* IMAGE URL */}
-              <div className="flex flex-col">
+              {/* <div className="flex flex-col">
                 <label
                   htmlFor="imageUrl"
                   className="block text-xl mb-1 font-bold text-gray-900"
@@ -2467,7 +2469,7 @@ const CreateRecipePage = () => {
                 <p className="text-gray-500 text-sm">
                   {imageUrlCharCount}/255 characters
                 </p>
-              </div>
+              </div> */}
 
               {/* IMAGE file */}
               <div className="flex flex-col">

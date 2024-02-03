@@ -1076,7 +1076,7 @@ const UpdateRecipePage = ({ params }) => {
       !fat.trim() ||
       !fibre.trim() ||
       !sodium.trim() ||
-      !imageUrl.trim() ||
+      // !imageUrl.trim() ||
       ingredientList.some((ingredient) => !ingredient.trim()) ||
       instructionList.some((instruction) => !instruction.trim())
     ) {
@@ -1595,7 +1595,7 @@ const UpdateRecipePage = ({ params }) => {
               </div>
 
               {/* IMAGE URL */}
-              <div className="flex flex-col">
+              {/* <div className="flex flex-col">
                 <label
                   htmlFor="imageUrl"
                   className="block text-xl mb-1 font-bold text-gray-900"
@@ -1611,7 +1611,7 @@ const UpdateRecipePage = ({ params }) => {
                   onChange={clearErrorOnChange(setImageUrl)}
                   className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-base rounded-lg block w-full p-2.5"
                 />
-              </div>
+              </div> */}
 
               {/* IMAGE file */}
               <div className="flex flex-col">

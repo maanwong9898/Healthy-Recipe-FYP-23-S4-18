@@ -144,6 +144,52 @@ VALUES
         'Author: stockgiu, Designed by Freepik',  -- img_title
         1 -- educational_content_type_id
     ),
+    (
+        '9',
+        '2024-01-10 15:30:00',  -- CreatedDT
+        'healthhub',  -- Publisher
+        'Healthy Home Cooking Meal Tips',  -- Title
+        'Are you worried that you have no time or that you need to be able to cook like a chef to serve nourishing meals? Learn some practical tips to make healthy home cooking quick and easy. 
+        \nBalance Your Food Choices \nYou do not have to give up your favourite food just because it is high in calories. Reducing your portion size or making up for excess calories by eating a lower-calorie meal later are quick tips to help you manage your diet.
+        \nEat WholeGrains! \nBe it bread, rice or noodles, natural is best. The less processed your food is and the more wholegrains it contains, the longer and faster you will stay full.
+        \nWhen prepared well with less fat or sugar, wholegrains, fruits and vegetables offer you lower-calorie meal choices at any time of the day. Rich in antioxidants, they give you more goodness in a bite than a higher-calorie meal.
+        \nLove wholegrains? \nWholegrains are not being limited to bread and rice. Do you know that wholegrains now come in kway teow, noodles, man tou and biscuits? \nWho says being healthy cant be fun and easy?'
+        3,
+        'https://www.freepik.com/premium-vector/woman-drinks-coffee-tea-cozy-kitchen-kitchen-utensils-concept-banner-website-apps_47579163.htm#query=healthy%20home%20cooking%20tips&position=32&from_view=search&track=ais&uuid=16984310-7df8-4616-9a06-cca8a223d444'
+        'Author: i.serik, Designed by Freepik',  -- img_title
+        1 -- educational_content_type_id
+    ),
+    (
+        '10',
+        '2024-01-10 15:30:00',  -- CreatedDT
+        'healthhub',  -- Publisher
+        'Tips for Successful Weight Management',  -- Title
+        'A healthy lifestyle is the best long-term and sustainable weight management strategy. \nHere are simple things you can do every day that can help you achieve sustainable weight management.
+         \n1. Balance Your Food Choices \nCaloric balance is the key to managing your weight. You do not have to give up your favourite foods just because they are high in calories.
+         \n2. Watch What You Eat \nHealthy food does wonders for the body. Be mindful of the food choices you make and select healthier options whenever you can. 
+         \n3. Get Your Recommended Physical Activity Minutes \nPhysical activity is essential for effective weight management, as it burns calories that we have consumed over the day. 
+         \n4. Building Strength \nStrength-building activities provide additional health benefits. Strength training not only helps to improve bone and muscle strength but also contributes to greater muscle mass, which boosts resting metabolic rate, therefore helping your body burn more calories.
+         \n5. Have Regular Meals \nSkipping meals can cause you to snack more often or binge eat, leading you to consume even more calories. '
+        3,
+        'https://www.freepik.com/free-vector/healthy-people-carrying-different-icons_3226124.htm#query=healthy%20living&position=12&from_view=search&track=ais&uuid=415dd0fe-a18c-4182-9b34-7c748a53d7fa'
+        'Author: rawpixel.com, Designed by Freepik',  -- img_title
+        2 -- educational_content_type_id
+    ),
+    (
+        '11',
+        '2024-01-17 15:30:00',  -- CreatedDT
+        'healthhub',  -- Publisher
+        '3 Tips to Achieve A Healthy Weight the Right Way',  -- Title
+        'Stop skipping meals and have balanced, healthier meals to achieve and maintain a healthy weight sustainably. Check out these 3 counter-intuitive tips to manage your weight better.
+         \n1. Limit Or Avoid Sugary Drinks \nSugar from drinks provides empty calories, which raise your daily calorie count without adding nutrients. Sugary drinks unlikely to make you full and satiated, thus it is easy to over consume. Make water as your default drink option! The best thirst quencher which is sugar- and calorie-free. 
+         \n2. Switch To Wholegrains \nWholegrains could help you manage your weight as they help keep you feeling full longer. It is because wholegrain foods are higher in fibre, which provides bulk. In addition, they are generally digested at a slower rate.
+         \n3. Make Friends With Fruit and Vegetables \nYou probably heard this a million times already, but the importance of consuming more fruit and vegetables can never be stressed enough!
+         The water and fibre they contain add volume to your meals and fill you up more easily with lower overall calorie intake. Being rich in nutrients, fruit and vegetables are essential for your health.'
+        3,
+        'https://img.freepik.com/free-vector/healthy-eating-circle-composition_98292-7506.jpg?w=740&t=st=1706991424~exp=1706992024~hmac=a5a184b33ff7f1a0aa24d71976e96b1251351cd127ae7daabf9ef564628a5c8b'
+        'Author: macrovector_official, Designed by Freepik',  -- img_title
+        1 -- educational_content_type_id
+    ),
 
 
 -- Educational content review rating
@@ -162,3 +208,6 @@ VALUES
     ('This is really helpful!' ,                        5.0, '9', 6);
     ('The content is very informative!',                5.0, '8', 7),
     ('The content is very detailed',                    5.0, '8', 8),
+    ('This is really helpful!' ,                        5.0, '9', 9);
+    ('The content is very informative!',                5.0, '8', 10),
+    ('The content is very detailed',                    5.0, '8', 11),

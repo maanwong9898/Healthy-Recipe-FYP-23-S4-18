@@ -7,7 +7,17 @@ import axiosInterceptorInstance from "../../axiosInterceptorInstance.js";
 
 // rouuter path: /mealPlan
 
-// Fetch all educational content
+// Sorting options
+const sortOptions = {
+  LATEST: { key: "LATEST", label: "By Latest" },
+  OLDEST: { key: "OLDEST", label: "By Oldest" },
+  HIGHEST_RATINGS: { key: "HIGHEST_RATINGS", label: "Highest Ratings" },
+  // LOWEST_RATINGS: { key: "LOWEST_RATINGS", label: "Lowest Ratings" },
+  ALPHABETICAL_AZ: { key: "ALPHABETICAL_AZ", label: "Alphabetically (A to Z)" },
+  ALPHABETICAL_ZA: { key: "ALPHABETICAL_ZA", label: "Alphabetically (Z to A)" },
+};
+
+// Fetch all meal plan
 const fetchMealPlan = async () => {
   try {
     console.log("Fetching all meal plan...");
@@ -23,11 +33,34 @@ const fetchMealPlan = async () => {
   }
 };
 
+// Fetch the average rating for each single meal plan
+const fetchMealPlanAverage = async (mealPlanId) => {
+  try {
+    const response = await axiosInterceptorInstance.get(
+      `/mealPlan/getAverage/${mealPlanId}`
+    );
+    console.log(
+      "Average rating for meal plan",
+      mealPlanId,
+      "is:",
+      response.data
+    );
+    return response.data; // Assuming this returns the average data for the meal plan
+  } catch (error) {
+    console.error(
+      `Failed to fetch average for meal plan ${mealPlanId}:`,
+      error
+    );
+    return null; // or handle the error as you see fit
+  }
+};
+
 const MealPlanPage = () => {
   const router = useRouter();
   const [categoryFilter, setCategoryFilter] = useState("");
   const [AllMealPlan, setAllMealPlan] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
+  const [sortOption, setSortOption] = useState("");
   const [isSearchEmpty, setIsSearchEmpty] = useState(false);
   const [searchPerformed, setSearchPerformed] = useState(false);
   const [categories, setCategories] = useState([]);
@@ -44,8 +77,17 @@ const MealPlanPage = () => {
 
     const getData = async () => {
       const fetchedMealPlan = await fetchMealPlan();
-      setAllMealPlan(fetchedMealPlan);
-      setDisplayedMealPlan(fetchedMealPlan);
+
+      const mealPlansWithAverage = await Promise.all(
+        fetchedMealPlan.map(async (mealPlan) => {
+          const average = await fetchMealPlanAverage(mealPlan.id);
+          return { ...mealPlan, average };
+        })
+      );
+      console.log("mealPlan with average:", mealPlansWithAverage);
+
+      setAllMealPlan(mealPlansWithAverage);
+      setDisplayedMealPlan(mealPlansWithAverage);
     };
 
     const fetchCategories = async () => {
@@ -69,29 +111,57 @@ const MealPlanPage = () => {
 
   // Filter meal plan based on search term and category filter
   useEffect(() => {
-    const filterMealPlans = () => {
-      let filteredMealPlans = AllMealPlan;
+    let filteredMealPlans = AllMealPlan;
 
-      if (categoryFilter) {
-        filteredMealPlans = filteredMealPlans.filter(
-          (mealPlan) => mealPlan.healthGoalCategoryId === Number(categoryFilter)
+    if (categoryFilter) {
+      filteredMealPlans = filteredMealPlans.filter(
+        (mealPlan) => mealPlan.healthGoalCategoryId === Number(categoryFilter)
+      );
+    }
+
+    if (searchTerm.trim()) {
+    } else {
+      setSearchPerformed(false);
+    }
+
+    let sortedMealPlan = [...filteredMealPlans];
+    // Sorting
+    switch (sortOption) {
+      case "LATEST":
+        sortedMealPlan.sort(
+          (a, b) => new Date(b.createdDT) - new Date(a.createdDT)
         );
-      }
+        break;
+      case "OLDEST":
+        sortedMealPlan.sort(
+          (a, b) => new Date(a.createdDT) - new Date(b.createdDT)
+        );
+        break;
+      case "ALPHABETICAL_AZ":
+        sortedMealPlan.sort((a, b) => a.title.localeCompare(b.title));
+        break;
+      case "ALPHABETICAL_ZA":
+        sortedMealPlan.sort((a, b) => b.title.localeCompare(a.title));
+        break;
+      case "HIGHEST_RATINGS":
+        sortedMealPlan.sort((a, b) => {
+          const ratingDiff =
+            (b.average?.averageRatings || 0) - (a.average?.averageRatings || 0);
+          if (ratingDiff !== 0) return ratingDiff;
+          return new Date(b.createdDT) - new Date(a.createdDT); // Latest date first if tie
+        });
+        break;
+    }
 
-      if (searchTerm.trim()) {
-      } else {
-        setSearchPerformed(false);
-      }
+    console.log("Filtered meal plans:", filteredMealPlans);
 
-      setDisplayedMealPlan(filteredMealPlans);
-      // setResultsCount(filteredMealPlans.length);  /// This is causing the issue
-      setIsSearchEmpty(filteredMealPlans.length === 0);
-    };
+    setDisplayedMealPlan(sortedMealPlan);
+    setIsSearchEmpty(sortedMealPlan.length === 0);
 
-    filterMealPlans();
     // Reset searchButtonClicked when searchTerm changes
     setSearchButtonClicked(false);
-  }, [searchTerm, categoryFilter, AllMealPlan]);
+    console.log("Displayed meal plans:", displayedMealPlan);
+  }, [searchTerm, categoryFilter, AllMealPlan, sortOption]);
 
   const handleSearchClick = async () => {
     setSearchButtonClicked(true); // Set flag when search is performed
@@ -106,10 +176,42 @@ const MealPlanPage = () => {
           )
         : AllMealPlan;
 
-      setDisplayedMealPlan(filteredMealPlans);
-      setResultsCount(filteredMealPlans.length);
+      // Sort the results
+      let sortedResults = [...filteredMealPlans];
+      switch (sortOption) {
+        case "LATEST":
+          sortedResults.sort(
+            (a, b) => new Date(b.createdDT) - new Date(a.createdDT)
+          );
+          break;
+        case "OLDEST":
+          sortedResults.sort(
+            (a, b) => new Date(a.createdDT) - new Date(b.createdDT)
+          );
+          break;
+        case "ALPHABETICAL_AZ":
+          sortedResults.sort((a, b) => a.title.localeCompare(b.title));
+          break;
+        case "ALPHABETICAL_ZA":
+          sortedResults.sort((a, b) => b.title.localeCompare(a.title));
+          break;
+        case "HIGHEST_RATINGS":
+          sortedResults.sort((a, b) => {
+            const ratingDiff =
+              (b.average?.averageRatings || 0) -
+              (a.average?.averageRatings || 0);
+            if (ratingDiff !== 0) return ratingDiff;
+            return new Date(b.createdDT) - new Date(a.createdDT); // Latest date first if tie
+          });
+          break;
+      }
+
+      setDisplayedMealPlan(sortedResults);
+      setResultsCount(sortedResults.length);
       setIsSearchEmpty(false);
       setSearchPerformed(false);
+
+      console.log("Displayed meal plans after click:", displayedMealPlan);
     } else {
       // Search for meal plans
       try {
@@ -121,16 +223,56 @@ const MealPlanPage = () => {
           (mealPlan) => mealPlan.active === true
         );
 
+        // Fetch average ratings for each meal plans
+        let filteredResultsWithAverage = await Promise.all(
+          filteredResults.map(async (mealPlan) => {
+            const average = await fetchMealPlanAverage(mealPlan.id);
+            return { ...mealPlan, average }; // Augment each meal plans with its average
+          })
+        );
+
         if (categoryFilter) {
-          filteredResults = filteredResults.filter(
+          filteredResultsWithAverage = filteredResultsWithAverage.filter(
             (mealPlan) =>
               mealPlan.healthGoalCategoryId === Number(categoryFilter)
           );
         }
 
-        if (filteredResults.length > 0) {
-          setDisplayedMealPlan(filteredResults);
-          setResultsCount(filteredResults.length);
+        // Sort the results
+        let sortedResults = [...filteredResultsWithAverage];
+        switch (sortOption) {
+          case "LATEST":
+            sortedResults.sort(
+              (a, b) => new Date(b.createdDT) - new Date(a.createdDT)
+            );
+            break;
+          case "OLDEST":
+            sortedResults.sort(
+              (a, b) => new Date(a.createdDT) - new Date(b.createdDT)
+            );
+            break;
+          case "ALPHABETICAL_AZ":
+            sortedResults.sort((a, b) => a.title.localeCompare(b.title));
+            break;
+          case "ALPHABETICAL_ZA":
+            sortedResults.sort((a, b) => b.title.localeCompare(a.title));
+            break;
+          case "HIGHEST_RATINGS":
+            sortedResults.sort((a, b) => {
+              const ratingDiff =
+                (b.average?.averageRatings || 0) -
+                (a.average?.averageRatings || 0);
+              if (ratingDiff !== 0) return ratingDiff;
+              return new Date(b.createdDT) - new Date(a.createdDT); // Latest date first if tie
+            });
+            break;
+        }
+
+        console.log("Sorted results:", sortedResults);
+
+        if (sortedResults.length > 0) {
+          setDisplayedMealPlan(sortedResults);
+          setResultsCount(sortedResults.length);
           setIsSearchEmpty(false);
         } else {
           setIsSearchEmpty(true);
@@ -255,6 +397,29 @@ const MealPlanPage = () => {
             )}
           </div>
 
+          {/* Sort dropdown */}
+          <div className="mb-2 md:mb-0 md:mr-6">
+            <label
+              htmlFor="sort"
+              className="text-xl text-black mb-2 sm:mb-0 sm:mr-2"
+            >
+              Sort By:
+            </label>
+            <select
+              id="sort"
+              value={sortOption}
+              onChange={(e) => setSortOption(e.target.value)}
+              className="mr-2 p-2 rounded-lg border w-full md:w-auto"
+              style={{ maxWidth: "300px" }}
+            >
+              {Object.values(sortOptions).map((option) => (
+                <option key={option.key} value={option.key}>
+                  {option.label}
+                </option>
+              ))}
+            </select>
+          </div>
+
           {/* Filter Section - Adjusted to align to the right */}
           <div className="flex flex-col sm:flex-row sm:items-center">
             <label
@@ -289,7 +454,7 @@ const MealPlanPage = () => {
           </div>
         ) : (
           <>
-            {!searchPerformed && !categoryFilter ? (
+            {!searchPerformed && !categoryFilter && !sortOption ? (
               <>
                 <div className="mb-5">
                   <h2 className="text-3xl font-semibold mb-4 mt-4">

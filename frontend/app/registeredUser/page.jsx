@@ -146,7 +146,7 @@ const RegisteredUserHomepage = () => {
     // Make sure the recipeTitle
     console.log(`Recipe Title: ${id}`);
     // Redirect to the correct route
-    let routePath = `/recipes/viewRecipe/${id}`;
+    let routePath = `/registeredUser/recipes/viewRecipe/${id}`;
     router.push(routePath);
   };
 
@@ -195,7 +195,7 @@ const RegisteredUserHomepage = () => {
     // Make sure the Blog title
     console.log(`Blog Title: ${id}`);
     // Redirect to the correct route
-    let routePath = `/businessBlogPost/viewBusinessBlogPost/${id}`;
+    let routePath = `/registeredUser/businessBlogPost/viewBusinessBlogPost/${id}`;
     router.push(routePath);
   };
 
@@ -245,7 +245,7 @@ const RegisteredUserHomepage = () => {
     // Make sure the Meal Plan title
     console.log(`Meal Plan Title: ${id}`);
     // Redirect to the correct route
-    let routePath = `/mealPlan/viewMealPlan/${id}`;
+    let routePath = `/registeredUser/mealPlan/viewMealPlan/${id}`;
     router.push(routePath);
   };
 
@@ -293,7 +293,7 @@ const RegisteredUserHomepage = () => {
     // Make sure the Educational Content title
     console.log(`Educational Content Title: ${id}`);
     // Redirect to the correct route
-    let routePath = `/educationalContent/viewEducationalContent/${id}`;
+    let routePath = `/registeredUser/educationalContent/viewEducationalContent/${id}`;
     router.push(routePath);
   };
 

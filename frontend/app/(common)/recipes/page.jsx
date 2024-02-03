@@ -608,7 +608,7 @@ const RecipesPageForUser = () => {
 
   // Get the latest 3 recipes
   const latestRecipes = [...AllRecipes]
-    .sort((a, b) => new Date(b.createdDateTime) - new Date(a.createdDateTime))
+    .sort((a, b) => new Date(b.createdDT) - new Date(a.createdDT))
     .slice(0, 3);
 
   // Get the other recipes that are not the latest 3

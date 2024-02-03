@@ -149,9 +149,19 @@ const ViewRecipe = ({ params }) => {
     );
   };
 
+  // const getImageUrlFromBlob = (imgBlob) => {
+  //   if (!imgBlob) return ""; // Return an empty string or a placeholder image if blob is not available
+  //   return `data:image/jpeg;base64,${imgBlob}`;
+  // };
+
   const getImageUrlFromBlob = (imgBlob) => {
-    if (!imgBlob) return ""; // Return an empty string or a placeholder image if blob is not available
-    return `data:image/jpeg;base64,${imgBlob}`;
+    // Check if imgBlob is truthy
+    if (imgBlob) {
+      // Return the image URL created from the blob
+      return `data:image/jpeg;base64,${imgBlob}`;
+    }
+    // Return an empty string or a placeholder image URL if imgBlob is not available
+    return "";
   };
 
   return (
@@ -230,16 +240,21 @@ const ViewRecipe = ({ params }) => {
 
         {/* start of summary card */}
         <div className="flex flex-col lg:flex-row mt-4 p-5 bg-slate-100 mx-auto">
-          <img
-            className="h-auto w-full lg:max-w-lg rounded-lg ml-0 lg:ml-5 shadow-md"
-            src={recipe?.img || "Not specified"}
-            alt="Not found"
-          />
-          <img
-            className="h-auto w-full lg:max-w-lg rounded-lg ml-0 lg:ml-5 shadow-md"
-            src={getImageUrlFromBlob(recipe?.imgBlob)}
-            alt={recipe?.title || "Recipe Image"}
-          />
+          {recipe?.imgBlob ? (
+            // If imgBlob is available, display image from blob
+            <img
+              className="h-auto w-full lg:max-w-lg rounded-lg ml-0 lg:ml-5 shadow-md"
+              src={getImageUrlFromBlob(recipe?.imgBlob)}
+              alt={recipe?.title || "Recipe Image"}
+            />
+          ) : (
+            // If imgBlob is not available, display image from imgUrl
+            <img
+              className="h-auto w-full lg:max-w-lg rounded-lg ml-0 lg:ml-5 shadow-md"
+              src={recipe?.img || "Not specified"}
+              alt="Not found"
+            />
+          )}
           <div className="flex flex-col ml-0 lg:ml-4 mt-4">
             <div className="flex flex-row font-bold">
               <p className="mr-4 text-bold text-lg tracking-tight">
@@ -260,11 +275,15 @@ const ViewRecipe = ({ params }) => {
             <p className="font-bold mt-4 lg:mt-8 text-2xl tracking-tight">
               Description:
             </p>
-            <p className="mt-2 items-center">
+            <p className="mt-2 items-center whitespace-pre-line">
               {recipe?.description || "Not specified"}
             </p>
-            {/* <p className="font-bold mt-4">Dietary Information:</p>
-          <p className="mt-2">{recipe?.info || "Not specified"}</p> */}
+            <p className="font-bold mt-4 lg:mt-8 text-2xl tracking-tight">
+              Dietary Information:
+            </p>
+            <p className="mt-2 items-center whitespace-pre-line">
+              {recipe?.info || "Not specified"}
+            </p>
 
             {/* I need to display the info divided by serving size in future  */}
 

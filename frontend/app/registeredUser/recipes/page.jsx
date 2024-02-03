@@ -5,11 +5,21 @@ import { useState, useEffect } from "react";
 import axiosInterceptorInstance from "../../axiosInterceptorInstance.js";
 import Link from "next/link";
 
-// rouuter path: /recipes
+// rouuter path: /registeredUser/recipes
 
 // when change metrics of filter, must change
 // 1. useEffect for filter
 // 2. useEffect for
+
+// Sorting options
+const sortOptions = {
+  LATEST: { key: "LATEST", label: "By Latest" },
+  OLDEST: { key: "OLDEST", label: "By Oldest" },
+  HIGHEST_RATINGS: { key: "HIGHEST_RATINGS", label: "Highest Ratings" },
+  // LOWEST_RATINGS: { key: "LOWEST_RATINGS", label: "Lowest Ratings" },
+  ALPHABETICAL_AZ: { key: "ALPHABETICAL_AZ", label: "Alphabetically (A to Z)" },
+  ALPHABETICAL_ZA: { key: "ALPHABETICAL_ZA", label: "Alphabetically (Z to A)" },
+};
 
 // Fetch all recipes
 const fetchRecipes = async () => {
@@ -27,10 +37,24 @@ const fetchRecipes = async () => {
   }
 };
 
+const fetchRecipeAverage = async (recipeId) => {
+  try {
+    const response = await axiosInterceptorInstance.get(
+      `/recipe/getAverage/${recipeId}`
+    );
+    console.log("Average rating for recipe", recipeId, "is:", response.data);
+    return response.data; // Assuming this returns the average data for the recipe
+  } catch (error) {
+    console.error(`Failed to fetch average for recipe ${recipeId}:`, error);
+    return null; // or handle the error as you see fit
+  }
+};
+
 const RecipesPageForUser = () => {
   const router = useRouter();
   const [AllRecipes, setAllRecipes] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
+  const [sortOption, setSortOption] = useState("");
   const [isSearchEmpty, setIsSearchEmpty] = useState(false);
   const [searchPerformed, setSearchPerformed] = useState(false);
   const [displayedRecipes, setDisplayedRecipes] = useState([]);
@@ -41,10 +65,12 @@ const RecipesPageForUser = () => {
     []
   );
   const [allergyCategory, setAllergyCategory] = useState([]);
+  const [mealTypeCategory, setMealTypeCategory] = useState([]);
 
   // For filter by category
   const [selectedDietaryPreference, setSelectedDietaryPreference] =
     useState("");
+  const [selectedMealType, setSelectedMealType] = useState("");
   const [selectedAllergies, setSelectedAllergies] = useState([]);
   const [filteredRecipes, setFilteredRecipes] = useState([]);
 
@@ -76,14 +102,27 @@ const RecipesPageForUser = () => {
   const [cookingTimeMinFilter, setCookingTimeMinFilter] = useState("");
   const [cookingTimeMaxFilter, setCookingTimeMaxFilter] = useState("");
 
+  const [isLoading, setIsLoading] = useState(false);
+
   // Fetch all recipes
   useEffect(() => {
+    setIsLoading(true); // Start loading
+
     const getData = async () => {
       const fetchedRecipe = await fetchRecipes();
-      setAllRecipes(fetchedRecipe);
-      setDisplayedRecipes(fetchedRecipe);
+
+      const recipesWithAverage = await Promise.all(
+        fetchedRecipe.map(async (recipe) => {
+          const average = await fetchRecipeAverage(recipe.id);
+          return { ...recipe, average };
+        })
+      );
+
+      console.log("recipe with average:", recipesWithAverage);
+
+      setAllRecipes(recipesWithAverage);
+      setDisplayedRecipes(recipesWithAverage);
     };
-    getData();
 
     // Fetch all categories
     // Fetch all dietary preferences categories from backend
@@ -98,6 +137,23 @@ const RecipesPageForUser = () => {
           response.data
         );
         setDietaryPreferencesCategory(response.data);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    // Fetch all meal type categories from backend
+    const fetchMealTypes = async () => {
+      console.log("Fetching meal type categories...");
+      try {
+        const response = await axiosInterceptorInstance.get(
+          "/category/getAllMealTypes"
+        );
+        console.log(
+          "Meal Type Categories Successfully Fetched :  ",
+          response.data
+        );
+        setMealTypeCategory(response.data);
       } catch (error) {
         console.log(error);
       }
@@ -120,8 +176,18 @@ const RecipesPageForUser = () => {
       }
     };
 
-    fetchDietaryPreferences();
-    fetchAllergies();
+    Promise.all([
+      getData(),
+      fetchDietaryPreferences(),
+      fetchAllergies(),
+      fetchMealTypes(),
+    ])
+      .catch((error) => {
+        console.error("Error in fetchData or fetchCategories:", error);
+      })
+      .finally(() => {
+        setIsLoading(false); // End loading after both operations are complete
+      });
   }, []);
 
   // Toggle function for filter section
@@ -140,6 +206,13 @@ const RecipesPageForUser = () => {
         (recipe) =>
           recipe.dietaryPreferences?.subcategoryName ===
           selectedDietaryPreference
+      );
+    }
+
+    // Filter by meal type
+    if (selectedMealType) {
+      newFilteredRecipes = newFilteredRecipes.filter(
+        (recipe) => recipe.mealType?.subcategoryName === selectedMealType
       );
     }
 
@@ -240,12 +313,52 @@ const RecipesPageForUser = () => {
       });
     }
 
+    let sortedRecipes = [...newFilteredRecipes];
+    // Sorting
+    switch (sortOption) {
+      case "LATEST":
+        sortedRecipes.sort(
+          (a, b) => new Date(b.createdDT) - new Date(a.createdDT)
+        );
+        break;
+      case "OLDEST":
+        sortedRecipes.sort(
+          (a, b) => new Date(a.createdDT) - new Date(b.createdDT)
+        );
+        break;
+      case "ALPHABETICAL_AZ":
+        sortedRecipes.sort((a, b) => a.title.localeCompare(b.title));
+        break;
+      case "ALPHABETICAL_ZA":
+        sortedRecipes.sort((a, b) => b.title.localeCompare(a.title));
+        break;
+      case "HIGHEST_RATINGS":
+        sortedRecipes.sort((a, b) => {
+          const ratingDiff =
+            (b.average?.averageRatings || 0) - (a.average?.averageRatings || 0);
+          if (ratingDiff !== 0) return ratingDiff;
+          return new Date(b.createdDT) - new Date(a.createdDT); // Latest date first if tie
+        });
+        break;
+    }
+
+    console.log("Filtered recipes:", newFilteredRecipes);
+
+    // setDisplayedBlogPosts(sortedRecipes);
+    // setIsSearchEmpty(sortedRecipes.length === 0);
+
+    // // Reset searchButtonClicked when searchTerm changes
+    // setSearchButtonClicked(false);
+
+    // console.log("Displayed blog posts:", displayedBlogPosts);
+
     console.log("The recipe after multiple filtering: ", newFilteredRecipes);
     console.log("End doing filtering...");
-    setFilteredRecipes(newFilteredRecipes);
+    setFilteredRecipes(sortedRecipes);
   }, [
     AllRecipes,
     selectedDietaryPreference,
+    selectedMealType,
     selectedAllergies,
     caloriesMinFilter,
     caloriesMaxFilter,
@@ -262,6 +375,7 @@ const RecipesPageForUser = () => {
     cookingTimeFilter,
     cookingTimeMinFilter,
     cookingTimeMaxFilter,
+    sortOption,
   ]);
 
   // Apply search on filtered recipes
@@ -318,12 +432,6 @@ const RecipesPageForUser = () => {
           (recipe) => recipe.active === true
         );
 
-        // if (categoryFilter) {
-        //   filteredResults = filteredResults.filter(
-        //     (recipe) => recipe.blogType.subcategoryName === categoryFilter
-        //   );
-        // }
-
         if (filteredResults.length > 0) {
           // Apply additional filters to the search results
           let finalResults = filteredResults;
@@ -334,6 +442,13 @@ const RecipesPageForUser = () => {
               (recipe) =>
                 recipe.dietaryPreferences?.subcategoryName ===
                 selectedDietaryPreference
+            );
+          }
+
+          // Filter by meal type
+          if (selectedMealType) {
+            finalResults = finalResults.filter(
+              (recipe) => recipe.mealType?.subcategoryName === selectedMealType
             );
           }
 
@@ -446,10 +561,54 @@ const RecipesPageForUser = () => {
             });
           }
 
+          // Fetch average ratings for each recipe
+          let filteredResultsWithAverage = await Promise.all(
+            finalResults.map(async (recipe) => {
+              const average = await fetchRecipeAverage(recipe.id);
+              return { ...recipe, average }; // Augment each recipes with its average
+            })
+          );
+
+          // Sort the results
+          let sortedResults = [...filteredResultsWithAverage];
+          switch (sortOption) {
+            case "LATEST":
+              sortedResults.sort(
+                (a, b) => new Date(b.createdDT) - new Date(a.createdDT)
+              );
+              break;
+            case "OLDEST":
+              sortedResults.sort(
+                (a, b) => new Date(a.createdDT) - new Date(b.createdDT)
+              );
+              break;
+            case "ALPHABETICAL_AZ":
+              sortedResults.sort((a, b) => a.title.localeCompare(b.title));
+              break;
+            case "ALPHABETICAL_ZA":
+              sortedResults.sort((a, b) => b.title.localeCompare(a.title));
+              break;
+            case "HIGHEST_RATINGS":
+              sortedResults.sort((a, b) => {
+                const ratingDiff =
+                  (b.average?.averageRatings || 0) -
+                  (a.average?.averageRatings || 0);
+                if (ratingDiff !== 0) return ratingDiff;
+                return new Date(b.createdDT) - new Date(a.createdDT); // Latest date first if tie
+              });
+              break;
+          }
+
+          console.log("Sorted results:", sortedResults);
+
+          setDisplayedRecipes(sortedResults);
+          setResultsCount(sortedResults.length);
+          setIsSearchEmpty(sortedResults.length === 0);
+
           // Update displayed recipes
-          setDisplayedRecipes(finalResults);
-          setResultsCount(finalResults.length);
-          setIsSearchEmpty(finalResults.length === 0);
+          // setDisplayedRecipes(finalResults);
+          // setResultsCount(finalResults.length);
+          // setIsSearchEmpty(finalResults.length === 0);
         } else {
           setIsSearchEmpty(true);
           setDisplayedRecipes([]);
@@ -504,7 +663,7 @@ const RecipesPageForUser = () => {
         </div>
         {/* <div className="flex justify-between items-center">
           <div className="flex items-center text-red-700 font-semibold text-xl">
-            {post.blogType.subcategoryName}
+            {post.mealType?.subcategoryName || "No Meal Type"}
           </div>
         </div> */}
       </div>
@@ -613,6 +772,7 @@ const RecipesPageForUser = () => {
   const hasSearchOrFilterBeenApplied =
     searchTerm.trim() !== "" ||
     selectedDietaryPreference !== "" ||
+    selectedMealType !== "" ||
     selectedAllergies.length > 0 ||
     caloriesMinFilter !== "" ||
     caloriesMaxFilter !== "" ||
@@ -627,7 +787,8 @@ const RecipesPageForUser = () => {
     fibreMinFilter !== "" ||
     fibreMaxFilter !== "" ||
     cookingTimeMinFilter !== "" ||
-    cookingTimeMaxFilter !== "";
+    cookingTimeMaxFilter !== "" ||
+    sortOption !== "";
 
   return (
     <div className="p-4 md:p-10">
@@ -666,6 +827,28 @@ const RecipesPageForUser = () => {
             </p>
           )}
         </div>
+        {/* Sort dropdown */}
+        <div className="mb-2 md:mb-0 md:mr-6">
+          <label
+            htmlFor="sort"
+            className="text-xl text-black mb-2 sm:mb-0 sm:mr-2"
+          >
+            Sort By:
+          </label>
+          <select
+            id="sort"
+            value={sortOption}
+            onChange={(e) => setSortOption(e.target.value)}
+            className="mr-2 p-2 rounded-lg border w-full md:w-auto"
+            style={{ maxWidth: "300px" }}
+          >
+            {Object.values(sortOptions).map((option) => (
+              <option key={option.key} value={option.key}>
+                {option.label}
+              </option>
+            ))}
+          </select>
+        </div>
         {/* <div className="mb-2 md:mb-0 md:mr-6">
           <button
             onClick={handlePersonalisedRecipe}
@@ -676,6 +859,7 @@ const RecipesPageForUser = () => {
           </button>
         </div> */}
       </div>
+
       {/* Button to open filter option */}
       <div className="mb-5 mr-3">
         <button
@@ -714,6 +898,28 @@ const RecipesPageForUser = () => {
                   {dietaryPreferencesCategory.map((dp) => (
                     <option key={dp.id} value={dp.subcategoryName}>
                       {dp.subcategoryName}
+                    </option>
+                  ))}
+                </select>
+              </div>
+
+              {/* Meal Type */}
+              <div className="flex-1 min-w-[200px]">
+                <label
+                  htmlFor="mealType"
+                  className="text-2xl text-black font-bold mb-2 sm:mb-0 sm:mr-2"
+                >
+                  Meal Type:
+                </label>
+                <select
+                  value={selectedMealType}
+                  onChange={(e) => setSelectedMealType(e.target.value)}
+                  className="form-select mr-2 p-2 rounded-lg border w-full md:w-auto"
+                >
+                  <option value="">All Meal Types</option>
+                  {mealTypeCategory.map((mt) => (
+                    <option key={mt.id} value={mt.subcategoryName}>
+                      {mt.subcategoryName}
                     </option>
                   ))}
                 </select>

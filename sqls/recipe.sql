@@ -507,22 +507,79 @@ VALUES
     ),
     (
         25,
-        'Beth Lipton',
-        'Grilled Eggplant Caprese',
+        'Marianne Wren',
+        'Halibut with Olive Tapenade Crust',
         'Not Specified',
         221, 6, 14, 16, 1, 344, -- calories, carbs, protein, fat, fibre, sodium
         4,
-        'A twist on a typical Caprese salad, our version uses grilled eggplant slices that you can make ahead for easier prep.',
-        'Spread eggplant, tomato and mozzarella slices on a platter. Scatter basil on top. Drizzle with oil and vinegar then sprinkle with salt and pepper. Alternatively, drizzle with Macadamia Basil Pesto.',
-        '2 eggplants, sliced then grilled \n4 heirloom tomatoes, sliced \n6 oz fresh mozzarella, sliced \n1 tbsp thinly sliced fresh basil (or use whole basil leaves) \n1 tbsp extra-virgin olive oil \n2 tsp balsamic vinegar \n1/8 tsp each coarse sea salt and ground black pepper',
+        'A fast olive, garlic, and caper tapenade tops tender fish, which is served with roasted grape tomatoes and lemon-scented couscous with fresh parsley.',
+        'Preheat over to 400°F. Line a roasting pan with parchment paper.\nIn a food processor, pulse olives, garlic, capers and 2 tsp oil until coarsely chopped. In a medium bowl, toss tomatoes with remaining 1 tsp oil. Arrange halibut and tomatoes in pan and sprinkle both with salt and pepper. Divide olive mixture over top halibut. Bake for 15 minutes, or until fish is opaque and flakes easily with a fork and tomatoes are soft and collapsed.\nMeanwhile, cook couscous according to package directions. Drain, return to pot and stir in parsley and lemon zest. Serve fish and tomatoes over couscous.',
+        '12 pitted black olives \n2 cloves garlic \n2 tbsp capers, drained \n1 tbsp olive oil, divided \n2 cups grape tomatoes, halved \n4 6-oz boneless, skinless halibut fillets \n1/4 tsp sea salt \n1 tsp fresh ground black pepper \n1 cup Israeli couscous \n2 tbsp chopped fresh flat-leaf parsley leaves \n1 tsp finely grated lemon zest',
         '1', -- UserID
         TRUE,
-        '2023-04-01 16:00:00',
-        'https://cdn.cleaneatingmag.com/wp-content/uploads/2018/05/grilled-eggplant-caprese_79-web-1.jpg?crop=535:301&width=1070&enable=upscale',
-        'Author : Beth Lipton, Designed by cleaneating',  -- img_title
+        '2023-11-23 10:00:00',
+        'https://cdn.cleaneatingmag.com/wp-content/uploads/2018/12/HalibutOliveTapenade_Feature.jpg?crop=535:301&width=1070&enable=upscale',
+        'Author : Marianne Wren, Designed by cleaneating',  -- img_title
         3, -- dietary_preference
-        15 -- cooking_time  
+        20 -- cooking_time  
         9   -- meal type (cuisines)
+    ),
+    (
+        26,
+        'Jesse Jane Lee',
+        'Veggie Scramble with Quinoa',
+        'Not Specified',
+        418, 29, 19, 26, 5, 416, -- calories, carbs, protein, fat, fibre, sodium
+        1,
+        'This light breakfast will keep you going throughout the morning. Prepare 1 and a half cups of cooked quinoa ahead of time and refrigerate for subsequent breakfasts to save time this week.',
+        'In a sauté pan on medium, heat oil. Add onion and cook 5 minutes until translucent. Add spinach and tomatoes; sauté until spinach wilts, about 3 minutes.\nWhile veggies are cooking, in a bowl, whisk eggs with salt and pepper. Once spinach has wilted, add eggs; heat and scramble to desired doneness. Serve over cooked quinoa.',
+        '1 tbsp avocado oil \n1/4 cup diced yellow onion \n1 cup loosely packed chopped baby spinach \n1/2 cup diced tomato \n2 large eggs \n1/8 tsp sea salt \n1/4 tsp ground black pepper \n1/2 cup cooked quinoa',
+        '1', -- UserID
+        TRUE,
+        '2023-11-23 10:00:00',
+        'https://cdn.cleaneatingmag.com/wp-content/uploads/2019/10/veggie-scramble-1.jpg?crop=535:301&width=1070&enable=upscale',
+        'Author : Jesse Jane Lee, Designed by cleaneating',  -- img_title
+        3, -- dietary_preference
+        20 -- cooking_time  
+        9   -- meal type (cuisines)
+    ),
+    (
+        27,
+        'Jesse Jane Lee',
+        'Banana Coconut Chocolate Smoothie',
+        'Not Specified',
+        221, 6, 14, 16, 1, 344, -- calories, carbs, protein, fat, fibre, sodium
+        4,
+        'Chocolate for breakfast? Sure, please! Because it contains entire foods like spinach, beans, and bananas, this smoothie will keep you feeling full. Pick a protein powder without any additional sweeteners.',
+        'Place all ingredients in a blender and blend until smooth.',
+        '1 banana, cut into chunks and frozen \n1 cup packed baby spinach \n1 cup water \n1/2 cup full-fat coconut milk \n1/4 cup canned cannellini beans, drained \n1 scoop chocolate protein powder  \n1 tsp ground cinnamon',
+        '1', -- UserID
+        TRUE,
+        '2023-09-20 15:00:00',
+        'https://cdn.cleaneatingmag.com/wp-content/uploads/2019/10/banana-almond-chocolate-smoothie-1-1-1-e1611878429924.jpg?crop=535:301&width=1070&enable=upscale',
+        'Author : Jesse Jane Lee, Designed by cleaneating',  -- img_title
+        2, -- dietary_preference
+        5 -- cooking_time  
+        2   -- meal type (cuisines)
+    ),
+    (
+        28,
+        'Jesse Jane Lee',
+        'Poached Egg Avocado Toast',
+        'Not Specified',
+        221, 6, 14, 16, 1, 344, -- calories, carbs, protein, fat, fibre, sodium
+        1,
+        'This egg-topped avocado toast elevates the dish to new heights. Make sure your bread slices are firm enough to withstand the toppings.',
+        'Mash avocado with lime juice. Divide among 2 slices of toast.\nIn a saucepan over medium-low, heat 3 inches water; bring to a gentle simmer.\nWorking 1 at a time, break egg into small dish and gently slide egg into hot water. Add second egg in same method. Keep water at a very low simmer water until egg whites are set and yolks are cooked to desired doneness, 3 to 5 minutes.\nRemove eggs from water with slotted spoon, drain well on paper towels and place over avocado on toast. Top with pepper, salt and pepper flakes.',
+        '1/2 avocado \n1 tsp fresh lime juice \n2 thin slices whole-wheat or sourdough bread, toasted \n2 large eggs \n1/4 tsp ground black pepper \n1/8 tsp each sea salt and red pepper flakes',
+        '2', -- UserID
+        TRUE,
+        '2023-07-04 09:00:00',
+        'https://cdn.cleaneatingmag.com/wp-content/uploads/2019/10/poached-egg-avocado-toast-1.jpg?crop=535:301&width=1070&enable=upscale',
+        'Author : Jesse Jane Lee, Designed by cleaneating',  -- img_title
+        3, -- dietary_preference
+        10 -- cooking_time  
+        2   -- meal type (cuisines)
     );
 
 

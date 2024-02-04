@@ -45,7 +45,8 @@ VALUES
     ('Indian'),
     ('Mediterranean'),
     ('Vietnamese'),
-    ('Moroccan');
+    ('Moroccan'),
+    ('Korean');
 
 -- first set of recipes 
 INSERT INTO recipe
@@ -743,8 +744,8 @@ VALUES
         531, 38, 32, 30, 7, 559, -- calories, carbs, protein, fat, fibre, sodium
         4,
         'This tasty, full southwestern-style supper is entertaining. These tacos are similar to traditional steak tacos, but with sweet potato bits added.',
-        'Preheat the oven to 425°F. Line a baking sheet with parchment paper. Toss the sweet potato, cabbage, onion, oil, cumin, chipotle powder and one-half of salt and pepper on the prepared sheet. Roast until sweet potatoes are tender, 30 minutes. Sprinkle with cilantro.\nHeat a cast iron skillet over medium-high heat. Season steak with remaining salt and pepper. Reduce heat to medium. Cook steaks 3 minutes per side for medium-rare, or to desired doneness. Transfer steaks to a cutting board and let rest, covered for 5 minutes, then thinly slice. Top tortillas with steak, roasted vegetables and sour cream; top with avocado and hot sauce (if using). Sprinkle with squeezed lime juice. ',
-        '2 sweet potatoes, cut into 1-inch pieces \n2 cups sliced red cabbage \n1/2 red onion, sliced \n2 tbsp extra-virgin olive oil \n1 tsp each ground cumin and chipotle chile powder \n½ tsp each sea salt and ground black pepper, divided \n1/4 cup chopped fresh cilantro \n2 8-oz striploin steaks, trimmed \n1/4 cup full-fat sour cream \n2 limes, cut into wedges \n8 almond flour or corn tortillas, warmed \navocado slices and hot sauce, optional',
+        'Preheat the oven to 425°F. Line a baking sheet with parchment paper. Toss the sweet potato, cabbage, onion, oil, cumin, chipotle powder and one-half of salt and pepper on the prepared sheet. Roast until sweet potatoes are tender, 30 minutes. Sprinkle with cilantro.\nHeat a cast iron skillet over medium-high heat. Season steak with remaining salt and pepper. Reduce heat to medium. Cook steaks 3 minutes per side for medium-rare, or to desired doneness. Transfer steaks to a cutting board and let rest, covered for 5 minutes, then thinly slice. Top tortillas with steak, roasted vegetables and sour cream; top with avocado and hot sauce (if using). Sprinkle with squeezed lime juice.',
+        '2 sweet potatoes, cut into 1-inch pieces \n2 cups sliced red cabbage \n1/2 red onion, sliced \n2 tbsp extra-virgin olive oil \n1 tsp each ground cumin and chipotle chile powder \n1/2 tsp each sea salt and ground black pepper, divided \n1/4 cup chopped fresh cilantro \n2 8-oz striploin steaks, trimmed \n1/4 cup full-fat sour cream \n2 limes, cut into wedges \n8 almond flour or corn tortillas, warmed \navocado slices and hot sauce, optional',
         '1', -- UserID
         TRUE,
         '2023-01-13 11:00:00',
@@ -752,6 +753,253 @@ VALUES
         'Author : Roberto Caruso, Designed by cleaneating',  -- img_title
         4, -- dietary_preference
         35 -- cooking_time  
+        6   -- meal type (cuisines)
+    ),
+    (
+        38,
+        'Tiffani Bachus',
+        'Green Curry Poached Halibut',
+        'Not Specified',
+        361, 12, 33.5, 20, 3, 811, -- calories, carbs, protein, fat, fibre, sodium
+        2,
+        'It is easy to eat more brain-fueling fish with this fragrant curry recipe.  Omega-3 fatty acids, vitamin B6, and magnesium are present in halibut and are essential for the production of neurotransmitters that carry signals in the brain.',
+        'In a large skillet on medium-high, heat 1 tbsp oil. Add spinach and garlic; sauté 2 minutes then transfer to a serving dish.\nIn same skillet on medium-high, heat remaining 1 tbsp oil. Add onion and sauté for 3 minutes. Whisk in broth, coconut milk, curry paste and salt. Bring mixture to a simmer and cook until liquid is reduced by half, about 10 minutes.\nAdd halibut to skillet and spoon some of the liquid over top; cook for 1 minute. Cover and poach halibut until it flakes easily with a fork, 5 to 7 minutes. Gently transfer halibut to serving dish over cooked spinach.\nTo liquid in pan, add cilantro, lime zest and lime juice; cook for 1 minute. Ladle liquid over halibut and spinach in serving dish.',
+        '2 tbsp avocado oil, divided \n4 cups spinach \n1 clove garlic, minced \n1/4 yellow onion, finely chopped \n1 cup low-sodium vegetable broth \n1 cup coconut milk beverage \n2 tbsp green curry paste \nPinch sea salt \n2 4-oz halibut fillets \n1/4 cup chopped fresh cilantro \n1 lime, zested and juiced',
+        '1', -- UserID
+        TRUE,
+        '2023-01-26 19:00:00',
+        'https://cdn.cleaneatingmag.com/wp-content/uploads/2017/11/green-curry-poached-halibut-73-web-1.jpg?crop=535:301&width=1070&enable=upscale',
+        'Author : Tiffani Bachus, Designed by cleaneating',  -- img_title
+        3, -- dietary_preference
+        30 -- cooking_time  
+        7   -- meal type (cuisines)
+    ),
+    (
+        39,
+        'Tiffani Bachus',
+        'Zucchini Lasagna with Cashew Cheese Pesto',
+        'Not Specified',
+        365, 26, 14, 10.5, 8, 480, -- calories, carbs, protein, fat, fibre, sodium
+        4,
+        'If you want to make a low-carb version of this comfort dish, simply replace the pasta with zucchini. Since the filling is primarily made of cashews, you may substitute nutritional yeast for Parmesan to make the dish dairy-free.',
+        'Preheat oven to 375°F. Prepare cashew cheese pesto: Soak cashews in a bowl of water overnight or at least 4 hours; drain and transfer to a food processor. Add lemon zest and juice, basil leaves, 2 tbsp Parmesan and garlic; pulse a few times to break down nuts then process, adding 1 to 2 tbsp water, until mixture reaches the consistency of ricotta cheese.\nUsing a Y-shaped vegetable peeler or mandoline, thinly slice zucchini lengthwise into ½-inch-thick planks. Place on a baking sheet and sprinkle with salt. Let stand for 10 minutes; blot zucchini to remove salt and moisture on the surface.\nSpread ¼ cup marinara on bottom of an 8-inch square ceramic or glass baking dish; top with 2 layers of zucchini, one layer running top to bottom and the second layer running right to left. Spread half of roasted bell pepper over zucchini, followed by half of cashew cheese pesto. Spoon ½ cup marinara over cashew cheese pesto. Repeat 2 layers of zucchini, remaining half of bell peppers and cashew cheese pesto and ½ cup marinara. Top with 2 layers of zucchini, followed by remaining marinara. Sprinkle top with remaining 2 tbsp Parmesan. Cover with foil and bake for 30 minutes.\nUncover dish and set oven to broil. Broil for 3 minutes, or until topping is lightly browned. Let cool for 10 minutes. Sprinkle additional basil over slices before serving.',
+        '2 tbsp avocado oil, divided \n4 cups spinach \n1 clove garlic, minced \n1/4 yellow onion, finely chopped \n1 cup low-sodium vegetable broth \n1 cup coconut milk beverage \n2 tbsp green curry paste \nPinch sea salt \n2 4-oz halibut fillets \n1/4 cup chopped fresh cilantro \n1 lime, zested and juiced',
+        '1', -- UserID
+        TRUE,
+        '2023-01-26 19:00:00',
+        'https://cdn.cleaneatingmag.com/wp-content/uploads/2017/11/meal-plan-lead_zucchini-lasagna-with-cashew-cheese-pesto-73-web-1.jpg?crop=535:301&width=1070&enable=upscale',
+        'Author : Tiffani Bachus, Designed by cleaneating',  -- img_title
+        2, -- dietary_preference
+        40 -- cooking_time  
+        4   -- meal type (cuisines)
+    ),
+    (
+        40,
+        'Tiffani Bachus',
+        'Roasted Butternut Squash',
+        'Not Specified',
+        158, 21, 1.8, 9.2, 6.1, 106, -- calories, carbs, protein, fat, fibre, sodium
+        1,
+        'This easy but tasty roasted butternut squash recipe highlights the inherent sweetness and earthy richness of this seasonal veggie. It is a side dish that not only complements other main meals but also serves as a healthy meal on its own.',
+        'Peel 1 butternut squash, cut in half and scoop out seeds. Cut squash into cubes and toss with 1 tbsp avocado oil and ½ tsp each salt and smoked paprika; spread on baking sheet. Roast at 375°F for 25 minutes, or until tender.',
+        '1 butternut squash \n1 tbsp avocado oil \n1 clove garlic, minced \n1/2 tsp each salt and smoked paprika',
+        '2', -- UserID
+        TRUE,
+        '2023-03-14 09:00:00',
+        'https://cdn.cleaneatingmag.com/wp-content/uploads/2017/11/roasted-butternut-squash-73-web-opt2-1.jpg?crop=535:301&width=1070&enable=upscale',
+        'Author : Tiffani Bachus, Designed by cleaneating',  -- img_title
+        2, -- dietary_preference
+        40 -- cooking_time  
+        2   -- meal type (cuisines)
+    ),
+    (
+        41,
+        'Nathan Lyon',
+        'Apple, Frisée & Radicchio Salad with Lemon Kefir Dressing',
+        'Not Specified',
+        302, 24, 0, 23, 7, 115, -- calories, carbs, protein, fat, fibre, sodium
+        4,
+        'Gut-friendly kefir adds creaminess to salad dressings. This salad is quite filling and goes well with tofu or chicken as a topping. For six people, you may alternatively serve it as an appetizer or side salad.',
+        'In a small container with a tight-fitting lid, combine shallot, lemon juice, walnut and grape seed oil, close lid tightly; shake well. Add kefir and shake again.\nIn a large bowl, combine frisée, radicchio, radishes, cucumbers, apples, parsley, mint and walnuts. Pour dressing over top and toss.Season with salt and pepper.',
+        '1 large shallot, diced small \n3 tbsp fresh lemon juice \n2 tbsp roasted walnut oil or extra-virgin olive oil \n2 tbsp grape seed oil \n5 tbsp whole-milk kefir \n10 oz frisée (2 small heads), cored and leaves cut into 1-inch pieces \n4 oz radicchio (1/2 small head), halved lengthwise and cut into 1/3-inch slices \n7 small radishes (preferably the French variety, if available), quartered \n2 Persian cucumbers, sliced in half lengthwise and cut diagonally (¼-inch thickness) \n2 apples (Fuji, Pink Lady or Honeycrisp), cored and sliced into 1/8-inch slices \n3/4 cup roughly chopped fresh flat-leaf parsley \n1/3 cup fresh mint leaves, roughly chopped \n1/2 cup toasted unsalted walnuts, roughly chopped \nKosher salt (or sea salt) and ground black pepper, to taste',
+        '2', -- UserID
+        TRUE,
+        '2023-03-25 10:40:00',
+        'https://cdn.cleaneatingmag.com/wp-content/uploads/2016/09/apple-frise-radicchio-salad-with-lemon-kefir-dressing-2.jpg?crop=535:301&width=1070&enable=upscale',
+        'Author : Tiffani Bachus, Designed by cleaneating',  -- img_title
+        2, -- dietary_preference
+        25 -- cooking_time  
+        2   -- meal type (cuisines)
+    ),
+    (
+        42,
+        'Julie O Hara',
+        'Kimchi Fried Rice with Tempeh',
+        'Not Specified',
+        376, 38, 21, 17, 5, 569, -- calories, carbs, protein, fat, fibre, sodium
+        4,
+        'Our veggie-packed, Asian-style fried rice tastes equally as tasty and can be prepared in 25 minutes, so there is no need to order delivery. We have also introduced fermented kimchi and tempeh, both of which contain gut-friendly probiotics.',
+        'In a large skillet on medium-high, heat safflower oil. Add tempeh and salt; cook, stirring occasionally, until golden brown, about 4 minutes. Transfer to a small bowl and set aside.\nMist same skillet, still on medium high, with cooking spray. Add rice, edamame and 3 tbsp water. Cook, stirring frequently, until rice and edamame are heated through and water is nearly evaporated, 2 to 3 minutes. Add carrots and continue cooking, stirring frequently, until tender, about 2 minutes. Reduce heat to medium low. (Note: If using leftover brown rice, add it at the same time as carrots, once water and edamame are heated through.)\nIn a medium bowl, whisk together eggs, 1 tsp tamari and 1 tsp sesame oil. (Time-Saving Tip: Whisk egg mixture while tempeh and rice are cooking.) Push rice mixture to edges of skillet, mist center of skillet with cooking spray and add egg mixture. When eggs just start to set, gently break them up and fold them into rice mixture until combined. Add tempeh and remaining 1 tbsp tamari; stir until combined. Remove skillet from heat and stir in kimchi and remaining 1 tsp sesame oil. Divide among serving bowls and sprinkle with chives.',
+        '1 tbsp safflower oil \n8 oz organic tempeh, cut into 1/2-inch pieces \n1/4 tsp sea salt \nOlive oil cooking spray \n3 cups frozen precooked brown rice \n1 cup frozen shelled edamame \n1 cup peeled and matchstick-cut carrots \n2 large eggs \n4 tsp reduced-sodium tamari, divided \n2 tsp dark sesame oil, divided \n1 cup drained and packed kimchi, roughly chopped \n2 tbsp chopped fresh chives',
+        '3', -- UserID
+        TRUE,
+        '2023-05-04 13:00:00',
+        'https://cdn.cleaneatingmag.com/wp-content/uploads/2015/02/kimchi-fried-rice-with-tempeh.jpg?crop=535:301&width=1070&enable=upscale',
+        'Author : Ted Gibson, Designed by cleaneating',  -- img_title
+        3, -- dietary_preference
+        25 -- cooking_time  
+        12   -- meal type (cuisines)
+    ),
+    (
+        43,
+        'Alison Kent',
+        'Mediterranean Chicken & Vegetable Quiche',
+        'Not Specified',
+        321, 11.5, 19, 22, 5, 245, -- calories, carbs, protein, fat, fibre, sodium
+        6,
+        'This grain-free quiche starts with a simple press-in crust made of egg, coconut oil, and coconut flour. Serve with a green salad or simple roasted veggies for a complete supper.',
+        'Preheat oven to 350°F. Prepare crust: In a medium bowl, whisk 2 eggs and oil until blended. Stir in flour until just combined.\nLightly grease a 9-inch pie plate. Using your hands, press crust mixture into plate until base and sides are evenly covered and smooth. Bake until light golden brown, about 10 minutes. (Make Ahead: Prepare crust up to this point up to 2 days ahead; cover and refrigerate. Bring to room temperature before filling and baking.)\nIncrease oven temperature to 375°F. In a medium bowl, combine chicken, tomatoes, cheese, scallion, dill and mint. Sprinkle evenly into pie shell. In bowl, whisk together 3 eggs, milk, nutmeg, salt and pepper; pour evenly over ingredients in shell.\nBake in center of oven until a knife inserted in center of quiche comes out clean, about 30 minutes. (Tip: If edges begin to brown too much before quiche is set, loosely cover crust with foil.) Let cool',
+        '1 cup cooked and diced boneless, skinless chicken breast \n1/2 cup halved cherry tomatoes \n1/3 cup crumbled feta cheese \n1 scallion, thinly sliced \n2 tbsp chopped fresh dill \n1 to 2 tbsp chopped fresh mint leaves \n3 eggs \n1 cup whole milk \n1/4 tsp ground nutmeg \nSea salt and fresh ground black pepper, to taste \n2 eggs, beaten \n1/3 cup coconut oil, melted, plus additional for greasing pie plate \n3/4 cup coconut flour',
+        '3', -- UserID
+        TRUE,
+        '2023-05-04 13:00:00',
+        'https://cdn.cleaneatingmag.com/wp-content/uploads/2015/02/kimchi-fried-rice-with-tempeh.jpg?crop=535:301&width=1070&enable=upscale',
+        'Author : Ted Gibson, Designed by cleaneating',  -- img_title
+        4, -- dietary_preference
+        50 -- cooking_time  
+        9   -- meal type (cuisines)
+    ),
+    (
+        44,
+        'Beth Lipton',
+        'Roasted Broccoli Steaks with Miso Butter',
+        'Not Specified',
+        253, 14, 7, 21, 5, 489, -- calories, carbs, protein, fat, fibre, sodium
+        4,
+        'Miso is a fermented meal that has good probiotic bacteria in addition to having an earthy, umami flavor. Here, it serves as a foundation for a seasoned butter that melts delightfully over the soft broccoli "steaks."',
+        'Place a large rimmed baking sheet in oven and preheat to 450ºF.\nIn a small bowl, mash together butter, miso and lemon zest until well combined. Use immediately or form into a log, cover tightly with plastic wrap and refrigerate for up to 1 week or freeze for up to 3 months. (Yields 5 tbsp butter.)\nUsing a sharp chef knife, cut ½-inch-thick “steaks” lengthwise down center of each head of broccoli. (Broccoli heads vary in size, so the yield of steaks will vary slightly; when chopping, some florets will fall off; reserve them and remaining broccoli for another use.) Brush steaks all over with oil and season with salt and pepper.\nRemove baking sheet from oven and add broccoli steaks. Return to oven and roast, turning once halfway through, until lightly browned on the outside and tender throughout (but not mushy), about 20 to 25 minutes.\nDivide steaks among plates. Place a dollop of miso butter (or a slice, if you’ve chilled it) on each steak. Wrap and reserve any remaining miso butter in the refrigerator or freezer for another use.',
+        '1/4 cup organic or grass-fed unsalted butter, at room temperature \n4 tsp white miso \n1 tsp grated lemon zest \n3 to 4 large heads (about 4 lb total) broccoli, bottoms of stems trimmed \n3 tbsp avocado oil \n1/2 tsp sea salt \n1/4 tsp ground black pepper',
+        '1', -- UserID
+        TRUE,
+        '2023-05-04 13:00:00',
+        'https://cdn.cleaneatingmag.com/wp-content/uploads/2018/04/roasted-broccoli-steaks-with-miso-butter_78-web-2.jpg?crop=535:301&width=1070&enable=upscale',
+        'Author : Beth Lipton, Designed by cleaneating',  -- img_title
+        2, -- dietary_preference
+        35 -- cooking_time  
+        3   -- meal type (cuisines)
+    ),
+    (
+        45,
+        'Beth Lipton',
+        'Gingery Braised Chicken Thighs',
+        'Not Specified',
+        547, 11, 51, 34, 3, 837, -- calories, carbs, protein, fat, fibre, sodium
+        4,
+        'In addition to being fantastic for gut health, ginger, garlic, and chicken bone broth work together to make a flavorful, well-seasoned braising sauce that keeps these chicken thighs succulent.',
+        'In a Dutch oven, heat oil on medium-high. Pat chicken dry; season all over with 1 tsp salt and 1/2 tsp pepper. Add chicken to pan, skin side down, and cook until skin is browned and crisp, 6 to 8 minutes. Turn and cook until bottom is browned, 6 to 8 minutes. Transfer to a plate, cover and set aside. Drain off all but 1 tbsp fat in pan.\nReduce heat to medium. Add shallots and carrots and season with ¼ tsp salt and additional pepper. Cook, stirring occasionally, until tender, about 6 minutes. Add ginger, turmeric and garlic; cook, stirring, until fragrant, about 1 minute. Stir in mustard seeds and cook, stirring, for 1 minute.\nPour broth and orange juice into pan, stirring up any browned bits on bottom. Add orange zest and bay leaf and bring to a boil. Reduce heat to medium-low. Return chicken to pan, skin side up, along with any accumulated juices on plate. Partially cover and simmer until chicken is no longer pink inside and flavors have developed, about 30 minutes. Season with additional salt. Discard orange zest and bay leaf before serving.',
+        '2 tbsp avocado oil \n8 small (or 4 large) bone-in, skin-on chicken thighs (about 3 lb) \n1/4 tsp sea salt, divided + additional to taste \n1/2 tsp ground black pepper + additional to taste \n3 shallots, chopped \n2 large carrots, chopped \n1 3 and a 1/2-inch piece fresh ginger, peeled and chopped \n1 1-inch piece fresh turmeric, peeled and finely chopped \n3 cloves garlic, chopped \n2 tsp yellow mustard seeds \n2 cups chicken bone broth (preferably organic or homemade) \n4 1- to 2-inch-long strips orange zest + 1/4 cup fresh orange juice, divided \n1 bay leaf',
+        '1', -- UserID
+        TRUE,
+        '2023-05-10 12:00:00',
+        'https://cdn.cleaneatingmag.com/wp-content/uploads/2018/04/gingery-braised-chicken-thighs_78-web-2.jpg?crop=535:301&width=1070&enable=upscale',
+        'Author : Ronald Tsang, Designed by cleaneating',  -- img_title
+        4, -- dietary_preference
+        75 -- cooking_time  
+        8   -- meal type (cuisines)
+    ),
+    (
+        46,
+        'Clean Eating',
+        'Turkey & Mushroom Ragu-Stuffed Acorn Squash',
+        'Not Specified',
+        442, 43, 33, 18, 9, 444, -- calories, carbs, protein, fat, fibre, sodium
+        4,
+        'A delectable combination of spicy ground turkey, mushrooms, and zesty ragu makes for a healthful and high-protein dish. Acorn squash is at its best in the fall.',
+        'Preheat oven to 400ºF. Wrap each squash half in foil and place on baking sheet. Bake until squash flesh is soft when poked with a fork, about 45 minutes.\nMeanwhile, in a large, deep skillet on medium-high, heat oil. Add onion, shiitake and cremini mushrooms, salt and pepper and sauté for 5 minutes. Add turkey and cook for 5 minutes, breaking up with a wooden spoon. Add tomato paste, thyme and smoked paprika. Stir to combine and cook for 3 minutes more.\nStir in marinara, coconut aminos and vinegar. Add bay leaf, cover, reduce heat to low and simmer for 25 minutes. Stir in ¼ cup nutritional yeast. Remove bay leaf.\nTo serve, divide turkey mixture among roasted squash halves. Top with remaining 1 tbsp nutritional yeast and basil.',
+        '2 acorn squash, halved and seeded \n2 tbsp avocado oil \n1 cup chopped yellow onion \n3 and a 1/2 oz shiitake mushrooms, chopped \n5 oz cremini mushrooms, chopped \nPinch each sea salt and ground black pepper \n1 lb lean ground turkey \n2 tbsp unsalted tomato paste \n1 tsp smoked paprika \n1 and a 1/2 cups marinara sauce \n1 tbsp coconut aminos \n1 tbsp balsamic vinegar \n1 bay leaf \n1/4 cup + 1 tbsp nutritional yeast, divided \n1/4 cup sliced fresh basil',
+        '1', -- UserID
+        TRUE,
+        '2023-05-10 12:00:00',
+        'https://cdn.cleaneatingmag.com/wp-content/uploads/2018/10/turkey-and-mushroom-ragu-stuffed-acorn-squash_82-web-1.jpg?crop=535:301&width=1070&enable=upscale',
+        'Author : cleaneating, Designed by cleaneating',  -- img_title
+        4, -- dietary_preference
+        55 -- cooking_time  
+        2   -- meal type (cuisines)
+    ),
+    (
+        47,
+        'Tiffani Bachus',
+        'Spicy Salmon Poke Bowl',
+        'Not Specified',
+        558, 43, 32, 32, 14, 532, -- calories, carbs, protein, fat, fibre, sodium
+        4,
+        'A delectable combination of spicy ground turkey, mushrooms, and zesty ragu makes for a healthful and high-protein dish. Acorn squash is at its best in the fall.',
+        'Preheat oven to 400ºF. Wrap each squash half in foil and place on baking sheet. Bake until squash flesh is soft when poked with a fork, about 45 minutes.\nMeanwhile, in a large, deep skillet on medium-high, heat oil. Add onion, shiitake and cremini mushrooms, salt and pepper and sauté for 5 minutes. Add turkey and cook for 5 minutes, breaking up with a wooden spoon. Add tomato paste, thyme and smoked paprika. Stir to combine and cook for 3 minutes more.\nStir in marinara, coconut aminos and vinegar. Add bay leaf, cover, reduce heat to low and simmer for 25 minutes. Stir in ¼ cup nutritional yeast. Remove bay leaf.\nTo serve, divide turkey mixture among roasted squash halves. Top with remaining 1 tbsp nutritional yeast and basil.',
+        '2 acorn squash, halved and seeded \n2 tbsp avocado oil \n1 cup chopped yellow onion \n3 and a 1/2 oz shiitake mushrooms, chopped \n5 oz cremini mushrooms, chopped \nPinch each sea salt and ground black pepper \n1 lb lean ground turkey \n2 tbsp unsalted tomato paste \n1 tsp smoked paprika \n1 and a 1/2 cups marinara sauce \n1 tbsp coconut aminos \n1 tbsp balsamic vinegar \n1 bay leaf \n1/4 cup + 1 tbsp nutritional yeast, divided \n1/4 cup sliced fresh basil',
+        '1', -- UserID
+        TRUE,
+        '2023-05-10 12:00:00',
+        'https://cdn.cleaneatingmag.com/wp-content/uploads/2018/10/turkey-and-mushroom-ragu-stuffed-acorn-squash_82-web-1.jpg?crop=535:301&width=1070&enable=upscale',
+        'Author : cleaneating, Designed by cleaneating',  -- img_title
+        3, -- dietary_preference
+        55 -- cooking_time  
+        3   -- meal type (cuisines)
+    ),
+    (
+        48,
+        'Tiffani Bachus',
+        'Sheet Pan Dijon Balsamic Chicken & Veggies',
+        'Not Specified',
+        308, 18, 26, 15, 3, 516, -- calories, carbs, protein, fat, fibre, sodium
+        4,
+        'A sheet pan is a great tool for a quick weekday dinner. With about 45 minutes, you can have a tasty and nutritious dinner by piling your ingredients upon it and baking it.',
+        'Line a large rimmed baking sheet with parchment paper. In a small saucepan, whisk together vinegar, 2 tbsp oil, mustard, 1 tbsp maple syrup, garlic, thyme and rosemary. Pour half of marinade into a large bowl and add chicken. Marinate in the refrigerator for at least 1 hour, or up to 8 hours. To remaining half of marinade in saucepan, whisk in remaining 1 tbsp maple syrup and hot sauce; refrigerate marinade in saucepan.\nPreheat oven to 350ºF. In a bowl, toss carrots, broccoli and onion with remaining 2 tbsp oil; spread on one side of baking sheet. Remove chicken from marinade and place on other side of baking sheet. Discard marinade. Season chicken and vegetables with salt and pepper. Bake for 25 minutes, until a thermometer inserted in center of chicken reads 165ºF and vegetables are fork tender.\nMeanwhile, place saucepan of reserved marinade over low heat and bring to a gentle simmer for 10 minutes. Drizzle sauce over chicken and vegetables.',
+        '1/4 cup balsamic vinegar \n1/4 cup avocado oil, divided \n2 tbsp Dijon mustard \n2 tbsp pure maple syrup, divided \n3 cloves garlic, chopped \n2 tsp each chopped fresh thyme and rosemary \n4 4-oz boneless, skinless chicken breasts \n2 cups broccoli florets \n1/2 small yellow onion, thinly sliced \n1/2 tsp each sea salt and ground black pepper',
+        '1', -- UserID
+        TRUE,
+        '2023-05-10 12:00:00',
+        'https://cdn.cleaneatingmag.com/wp-content/uploads/2018/09/sheet-pan-dijon-balsamic-chicken-and-veggies_82-web-1.jpg?crop=535:301&width=1070&enable=upscale',
+        'Author : Crayola England, Designed by cleaneating',  -- img_title
+        4, -- dietary_preference
+        40 -- cooking_time  
+        2   -- meal type (cuisines)
+    ),
+    (
+        49,
+        'Kathryn Hendrix',
+        'Sweet Potato and Black Bean Taco Cups',
+        'Not Specified',
+        171, 23, 6, 7, 3, 269, -- calories, carbs, protein, fat, fibre, sodium
+        12,
+        'Use a muffin tin to make these crispy tortilla cups stuffed with substantial taco fixings like black beans and sweet potatoes. Use queso quesadilla, the super-melty cheese frequently found in queso dips and nachos, for a rich, creamy outcome.',
+        'Preheat the oven to 350 degrees F (175 degrees C). Coat 12 (2 1/2-inch) muffin cups with cooking spray. Press 1 tortilla into the bottom of each muffin cup, pleating edges as needed to fit.\nHeat oil in a large skillet over medium-high heat. Add sweet potato; cook until tender, about 10 minutes. Add onion; cook until softened, 2 to 3 minutes. Add jalapeño and garlic; cook until fragrant, about 2 minutes. Stir in beans, salt, and black pepper.\nDivide bean mixture evenly among prepared muffin cups and sprinkle with cheese.\nBake in the preheated oven until cheese is melted and filling is bubbly, 15 to 20 minutes. Top with avocado and garnish with cilantro. Serve with limes and lime crema.',
+        'cooking spray \n12 (4-inch) flour tortillas \n1 tablespoon olive oil \n1 cup peeled and chopped sweet potato \n1 yellow onion, chopped \n1 jalapeño, seeded and minced \n3 cloves garlic, minced \n1 (15-ounces) can black beans in mild chili sauce, undrained \n1/4 teaspoon salt \n1/4 teaspoon black pepper \n3 ounces shredded queso quesadilla or Mexican-style cheese blend \n1 small avocado, diced \nchopped fresh cilantro, for garnish \nlime wedges and lime crema, for serving',
+        '2', -- UserID
+        TRUE,
+        '2023-08-16 14:00:00',
+        'https://www.allrecipes.com/thmb/4ukV1YDU_ehHDsMqOagRHEXBalI=/750x0/filters:no_upscale():max_bytes(150000):strip_icc():format(webp)/7567956-sweet-potati-black-bean-taco-cups-KH-AR15538-4x3-9f9208892b8340a4adce4ff0fc3bf066.jpg',
+        'Author : allrecipes, Designed by allrecipes',  -- img_title
+        3, -- dietary_preference
+        30 -- cooking_time  
+        6   -- meal type (cuisines)
+    ),
+    (
+        50,
+        'Maryellen',
+        'Guacamole',
+        'Not Specified',
+        262, 18, 4, 22, 11, 596, -- calories, carbs, protein, fat, fibre, sodium
+        4,
+        'The addition of cayenne and cilantro gives this guacamole recipe a spicy kick. According to your preferences, you can serve it smooth or chunky. Accompany them with freshly prepared tortilla chips.',
+        'Mash avocados, lime juice, and salt together in a medium bowl; mix in tomatoes, onion, cilantro, and garlic. Stir in cayenne pepper.\nServe immediately, or cover and refrigerate for 1 hour for improved flavor.',
+        '3 avocados - peeled, pitted, and mashed \n1 lime, juiced \n1 teaspoon salt \n2 roma (plum) tomatoes, diced \n1/2 cup diced onion \n3 tablespoons chopped fresh cilantro \n1 teaspoon minced garlic \n1 pinch ground cayenne pepper (Optional)',
+        '2', -- UserID
+        TRUE,
+        '2023-08-14 14:30:00',
+        'https://www.allrecipes.com/thmb/uJAHG8X_AOBr-OnMGPdLDEBEFnU=/0x512/filters:no_upscale():max_bytes(150000):strip_icc()/4521556_Guacamole4x3photobybd.weld-c81ae0bd3f2b4893a8e309365dda023b.jpg',
+        'Author : bd.weld, Designed by allrecipes',  -- img_title
+        2, -- dietary_preference
+        15 -- cooking_time  
         6   -- meal type (cuisines)
     );
 

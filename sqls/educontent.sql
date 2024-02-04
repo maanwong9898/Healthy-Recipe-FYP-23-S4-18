@@ -190,6 +190,63 @@ VALUES
         'Author: macrovector_official, Designed by Freepik',  -- img_title
         1 -- educational_content_type_id
     ),
+    (
+        '12',
+        '2024-01-22 15:30:00',  -- CreatedDT
+        'UCFSHealth',  -- Publisher
+        'Healthy Lifestyles, Healthy Outlook',  -- Title
+        'Healthy Lifestyles \nA healthy lifestyle can help you thrive as you move through your life. Making healthy choices isnt always easy – it can be hard to find the time and energy to exercise regularly or prepare healthy meals. 
+         \nSteps you can take: \nBe physically active for 30 minutes most days of the week. Break this up into three 10-minute sessions when pressed for time. Healthy movement may include walking, sports, dancing, yoga or running.
+         \nEat a well-balanced, low-fat diet with lots of fruits, vegetables, and whole grains. Choose a diet that is low in saturated fat and cholesterol, and moderate in sugar, salt and total fat.
+         \nHealthy Outlook \nYou may feel pulled in different directions and experience stress from dealing with work, family and other matters, leaving little time for yourself. Learning to balance your life with some time for yourself will pay off with big benefits.
+         \nSteps you can take: \nStay in touch with family and friends. \nBe involved in your community. \nMaintain a positive attitude and do things that make you happy.
+         \nLearn to recognize and manage stress in your life. Good ways to deal with stress include regular exercise, healthy eating habits, and relaxation exercises such as deep breathing or meditation. '
+        3,
+        'https://www.freepik.com/free-vector/healthy-lifestyle-diet-fitness-vector-sign-shape-heart-with-multiple-icons-depicting-various-sports-vegetables-cereals-seafood-meat-fruit-sleep-weight-beverages_10703442.htm#query=healthy%20living&position=28&from_view=search&track=ais&uuid=c66ce9cd-0d9d-4713-895a-cbe5bb977b79'
+        'Author: macrovector, Designed by Freepik',  -- img_title
+        1 -- educational_content_type_id
+    ),
+    (
+        '13',
+        '2024-01-22 17:30:00',  -- CreatedDT
+        'MayoClinic',  -- Publisher
+        'Stress basics',  -- Title
+        'Stress is a normal psychological and physical reaction to the demands of life. A small amount of stress can be good, motivating you to perform well. But many challenges daily, such as sitting in traffic, meeting deadlines and paying bills, can push you beyond your ability to cope.
+         \nYour brain comes hard-wired with an alarm system for your protection. When your brain perceives a threat, it signals your body to release a burst of hormones that increase your heart rate and raise your blood pressure. Once the threat is gone, your body is meant to return to a normal, relaxed state. 
+         \nStress management gives you a range of tools to reset and to recalibrate your alarm system. It can help your mind and body adapt (resilience). Without it, your body might always be on high alert. Over time, chronic stress can lead to serious health problems.
+         \nDo not wait till stress damages your health, relationships or quality of life. Start practicing stress management techniques today.'
+        3,
+        'https://img.freepik.com/free-vector/business-stress-professional-burnout-scenes-flat-isolated-vector-illustration_1284-77609.jpg?w=1380&t=st=1707022447~exp=1707023047~hmac=87f6b75edf42a42722b5a5d5e3e70c3a248d58bfe4141d07fdbd534397d3afe1'
+        'Author: macrovector, Designed by Freepik',  -- img_title
+        1 -- educational_content_type_id
+    ),
+    (
+        '14',
+        '2024-01-22 17:30:00',  -- CreatedDT
+        'MayoClinic',  -- Publisher
+        'Fitness basics',  -- Title
+        'Starting a fitness program may be one of the best things you can do for your health. After all, physical activity can reduce your risk of chronic disease, improve your balance and coordination, help you lose weight, and even boost your self-esteem. And you can reap these benefits regardless of your age, sex or physical ability. For most healthy adults, these exercise guidelines are recommended:
+        \nAerobic activity. \nGet at least 150 minutes of moderate aerobic activity or 75 minutes of vigorous aerobic activity a week, or an equal combination of moderate and vigorous aerobic activity. Even small amounts of physical activity are helpful. Being active for short periods of time throughout the day can add up to provide health benefits.
+        \nStrength training. \nDo strength training exercises for all major muscle groups at least two times a week. Aim to do a single set of each exercise using a weight or resistance level heavy enough to tire your muscles after about 12 to 15 repetitions. Regular exercise can help you control your weight, reduce your risk of heart disease and certain cancers, and strengthen your bones and muscles. 
+        \nStarting a fitness program is an important decision, but it does not have to be an overwhelming one. By planning carefully and pacing yourself, you can make fitness a healthy habit that lasts a lifetime.'
+        3,
+        'https://img.freepik.com/free-vector/isometic-gym-fitness-club-icons-set-with-males-females-training-indoors-isolated-vector-illustration_1284-75736.jpg?w=740&t=st=1707022776~exp=1707023376~hmac=7ed82bea8e5ec90fa5c39f986225cfe780dd46622b2ad6237132d9bd6dee2fd1'
+        'Author: macrovector, Designed by Freepik',  -- img_title
+        1 -- educational_content_type_id
+    ),
+    (
+        '15',
+        '2024-01-22 17:30:00',  -- CreatedDT
+        'MayoClinic',  -- Publisher
+        'Nutrition basics',  -- Title
+        'Do you feel like you are unable keep up with the latest nutrition news because its always changing? Knowledge about nutrition and diet evolves over time, but there are some nutrition basics that can help you sort through the latest research and advice.
+        \nNutrition basics come down to eating wholesome foods that support your health. Want to go beyond the basics? Talk to a healthcare professional, such as a dietitian. You can ask for diet advice that takes into account your health, lifestyle and food preferences.'
+        3,
+        'https://img.freepik.com/free-vector/nutritionist-recommendations-cartoon-composition-with-dietitian-appointment-healthy-meal-fruit-vegetables-supplements-diet-planning_1284-59044.jpg?w=740&t=st=1707023087~exp=1707023687~hmac=0c6f38b5356847d5c5595cedc36cceffcb8e5025651af65b658db8e3da891a0a'
+        'Author: macrovector, Designed by Freepik',  -- img_title
+        2 -- educational_content_type_id
+    ),
+    
 
 
 -- Educational content review rating
@@ -211,3 +268,7 @@ VALUES
     ('This is really helpful!' ,                        5.0, '9', 9);
     ('The content is very informative!',                5.0, '8', 10),
     ('The content is very detailed',                    5.0, '8', 11),
+    ('This is awesome!',                                5.0, '7', 12),
+    ('The content is very insightful.',                 5.0, '8', 13),
+    ('I love this content!' ,                           4.0, '9', 14),
+    ('I love this content!' ,                           4.0, '12', 15),

@@ -134,6 +134,52 @@ VALUES
         'Designed by Freepik',  -- img_title
         2 -- blog_type_id kitchenware
     ),
+    (
+        '12',
+        '2023-06-19 21:00:00', 
+        'ChefEssentials',
+        'Professional Culinary Tools: A Guide for Aspiring Chefs',
+        'Embark on a culinary journey with ChefEssentials as we unveil the essential tools for aspiring chefs. From high-quality chef knives to precision measuring instruments, explore the professional culinary tools that every kitchen should have for achieving perfection in your culinary creations.'
+        1, -- userId 
+        'https://www.freepik.com/free-photo/front-view-gray-platten-with-big-knife-dark-blue-background-color-photo-sharp-blue-sea-food-kitchen-desk_13061154.htm#query=kitchen%20knives%20and%20measuring%20equipments&position=42&from_view=search&track=ais&uuid=b65f9b16-99c8-4cb1-b7b3-a45522feccca'
+        'Author: mdjaff, Designed by Freepik',  -- img_title
+        2 -- blog_type_id kitchenware
+    ),
+    (
+        '13',
+        '2023-08-19 21:00:00', 
+        'GlobalFlavorss',
+        'Culinary Adventures Across Continents: A Cookbook Showcase',
+        'Join GlobalFlavors on a culinary adventure as we showcase a collection of cookbooks that take you on a journey across continents. From spicy dishes of Asia to hearty meals of Europe, explore diverse flavors and expand your cooking repertoire with these delightful culinary treasures.'
+        1, -- userId 
+        'https://img.freepik.com/free-photo/top-view-notepad-white-plate-green-tomato-black-pepper-bowl-wooden-spoons-garlic-broccoli-mint-leaves-grey-table_140725-145666.jpg?w=996&t=st=1707023966~exp=1707024566~hmac=3b117a6b06320db35cdb78f3de40f95f597b9739efdddee941f4301251cc956c'
+        'Author: KamranAydinov, Designed by Freepik',  -- img_title
+        1 -- blog_type_id cookbook
+    ),
+    (
+        '14',
+        '2023-08-19 21:00:00', 
+        'CulinaryChronicles',
+        'Unveiling Culinary Tales: Must-Read Cookbooks for Food Enthusiasts',
+        'Join CulinaryChronicles as we unveil captivating culinary tales through must-read cookbooks. Whether you are a seasoned food enthusiast or a novice in the kitchen, these storytelling cookbooks offer a delightful blend of recipes and narratives, making your culinary journey truly memorable.'
+        1, -- userId 
+        'https://img.freepik.com/free-vector/slicing-tomato-salad_53876-6911.jpg?w=740&t=st=1707024271~exp=1707024871~hmac=b8ae518fd67c49083e87b9cf841a84f3c519aff436869d799df1c0ece289431a'
+        'Author: rawpixel.com, Designed by Freepik',  -- img_title
+        1 -- blog_type_id cookbook
+    ),
+    (
+        '15',
+        '2023-08-19 22:00:00', 
+        'KitchenVibes',
+        'Unconventional Kitchen Hacks: Elevate Your Culinary Experience',
+        'Dive into the world of KitchenVibes as we share unconventional kitchen hacks to elevate your culinary experience. Discover creative ways to repurpose common kitchen tools, explore time-saving cooking techniques, and embrace innovative solutions for common kitchen challenges. Transform your cooking space into a hub of creativity with these unique and practical kitchen miscellanea!'
+        1, -- userId 
+        'https://img.freepik.com/premium-vector/kitchen-shelves-with-cooking-tools-set-kitchen-utensils-vector-illustration_263366-27.jpg?w=740'
+        'Author: kuryanovichtatsiana, Designed by Freepik',  -- img_title
+        3 -- blog_type_id Miscellaneous
+    ),
+
+
        
 
     --  Blog review rating
@@ -163,3 +209,7 @@ VALUE
     ('I love this blog post!',                                    5.0, '12', 9);
     ('The blog post is very descriptive and informative.',        5.0, '11', 10),
     ('I love this blog post!',                                    5.0, '12', 11);
+    ('This is very awesome',                                      5.0, '7', 12),
+    ('The blog post is very descriptive and informative.',        5.0, '8', 13),
+    ('I love this blog post!',                                    4.0, '9', 14),
+    ('This blog is very useful',                                  5.0, '10', 15),

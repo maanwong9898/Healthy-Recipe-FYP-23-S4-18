@@ -99,6 +99,34 @@ VALUES
         'https://img.freepik.com/free-photo/closeup-bright-fresh-vegetables-fruits-berries_169016-20713.jpg?w=1060&t=st=1706974313~exp=1706974913~hmac=c345661003cedc41897386be14c22385dd596ea5dc1b95857079324e75d17c74',
         'Designed by pvproductions',  -- img_title
         '1' -- userid
+    ),
+    (
+        7,
+        'Jesse Lane Lee',
+        'Your Quit-Sugar Meal Plan',
+        TRUE,
+        'With this sugar- and sweetener-free meal plan, you can kick your sweet tooth. This real-food menu is so tasty and filling that you will not miss it.',
+        'Did you know that the average person consumes 22 teaspoons of sugar each day, more than three times the amount recommended by the American Heart Association? Reducing or eliminating sugar consumption is a great step toward better overall health.',
+        'Gradually lowering your sugar consumption can help your taste buds adjust. This diet includes substantial meals that will keep you full, so you will not crave sugar.',
+        '2023-11-30',
+        2, -- maintain health
+        'https://img.freepik.com/free-photo/healthy-food-vs-unhealthy-food_23-2147961022.jpg?w=1060&t=st=1707014411~exp=1707015011~hmac=699970e8b2e172324289e923af3a2ad956dc18c3acad1a09f754787a82449bb2',
+        'Designed by pvproductions',  -- img_title
+        '1' -- userid
+    ),
+    (
+        8,
+        'Jesse Lane Lee',
+        'Your Quit-Sugar Meal Plan',
+        TRUE,
+        'With this sugar- and sweetener-free meal plan, you can kick your sweet tooth. This real-food menu is so tasty and filling that you will not miss it.',
+        'Did you know that the average person consumes 22 teaspoons of sugar each day, more than three times the amount recommended by the American Heart Association? Reducing or eliminating sugar consumption is a great step toward better overall health.',
+        'Gradually lowering your sugar consumption can help your taste buds adjust. This diet includes substantial meals that will keep you full, so you will not crave sugar.',
+        '2023-11-30',
+        2, -- maintain health
+        'https://img.freepik.com/free-photo/healthy-food-vs-unhealthy-food_23-2147961022.jpg?w=1060&t=st=1707014411~exp=1707015011~hmac=699970e8b2e172324289e923af3a2ad956dc18c3acad1a09f754787a82449bb2',
+        'Designed by pvproductions',  -- img_title
+        '1' -- userid
     );
     
     
@@ -126,4 +154,10 @@ values
     (5, 9),
     (6, 23),
     (6, 24),
-    (6, 6);
+    (6, 25),
+    (7, 26),
+    (7, 27),
+    (7, 28),
+    (8, ),
+    (8, ),
+    (8, );

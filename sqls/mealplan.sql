@@ -127,6 +127,34 @@ VALUES
         'https://img.freepik.com/free-photo/fried-meat-with-greens-tomatoes-clay-pot_140725-7317.jpg?w=1060&t=st=1707022112~exp=1707022712~hmac=ef1dc83bcd9b0e12f9e5df228b9b63d87eeb9cc54201e5b510e46ebd50c03ba1',
         'Designed by kamranaydinov',  -- img_title
         '2' -- userid
+    ),
+    (
+        9,
+        'Jesse Lane Lee',
+        'Eco-Minded Meal Plan',
+        TRUE,
+        'This simple meal plan will pile your plate high with vegetables and other plant-based foods. Including more plants on your plate is a great way to make your meals more sustainable and minimize your total environmental impact.',
+        'This nutrient-dense, plant-based meal plan is also high in vegetables. Recipes contain an abundance of different phytonutrients. Phytonutrients protect plants from viruses and germs while also providing antioxidant and anti-inflammatory benefits.',
+        'Increasing the quantity of fruits, vegetables, legumes, nuts, and other plant-based foods you eat will suffice to keep your meat consumption in check. You will be able to satisfy your hunger, maintain a healthy gut, and meet your daily fiber requirements.',
+        '2023-05-10',
+        2, -- maintain health
+        'https://cdn.cleaneatingmag.com/wp-content/uploads/2021/11/YogurtBowl_Feature.jpg?crop=535:301&width=1070&enable=upscale',
+        'Designed by Olimpia Davies',  -- img_title
+        '6' -- userid
+    ),
+    (
+        10,
+        'Sarah Sweeney',
+        'Gluten-Free Meal Plan',
+        TRUE,
+        'Try a week of filling and delicious meals with this gluten-free, no-sweat meal plan.',
+        'Regardless of why you have given up gluten, you do not have to substantially restrict your diet. Additionally, you do not have to give up on tasty dishes and a wide variety of products when following a gluten-free diet.',
+        'There are so many different things to eat, and that's precisely what we're emphasizing in our easy yet tasty meal plan. A healthy gluten-free diet emphasizes real foods and minimizes processed goods, which should be consumed in moderation.',
+        '2023-03-31',
+        2, -- maintain health
+        'https://cdn.cleaneatingmag.com/wp-content/uploads/2022/02/CleanEating_CE101FebMar2022_MealPlan_Steak-Sweet-Potato-Tacos_web-1.jpg?crop=535:301&width=1070&enable=upscale',
+        'Designed by Olimpia Davies',  -- img_title
+        '6' -- userid
     );
     
     
@@ -158,6 +186,12 @@ values
     (7, 26),
     (7, 27),
     (7, 28),
-    (8, ),
-    (8, ),
-    (8, );
+    (8, 29),
+    (8, 30),
+    (8, 31),
+    (9, 32),
+    (9, 33),
+    (9, 34),
+    (10, 35),
+    (10, 36),
+    (10, 37);

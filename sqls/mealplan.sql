@@ -149,12 +149,54 @@ VALUES
         TRUE,
         'Try a week of filling and delicious meals with this gluten-free, no-sweat meal plan.',
         'Regardless of why you have given up gluten, you do not have to substantially restrict your diet. Additionally, you do not have to give up on tasty dishes and a wide variety of products when following a gluten-free diet.',
-        'There are so many different things to eat, and that's precisely what we're emphasizing in our easy yet tasty meal plan. A healthy gluten-free diet emphasizes real foods and minimizes processed goods, which should be consumed in moderation.',
+        'There are so many different things to eat, and that is precisely what we are emphasizing in our easy yet tasty meal plan. A healthy gluten-free diet emphasizes real foods and minimizes processed goods, which should be consumed in moderation.',
         '2023-03-31',
         2, -- maintain health
         'https://cdn.cleaneatingmag.com/wp-content/uploads/2022/02/CleanEating_CE101FebMar2022_MealPlan_Steak-Sweet-Potato-Tacos_web-1.jpg?crop=535:301&width=1070&enable=upscale',
         'Designed by Olimpia Davies',  -- img_title
         '6' -- userid
+    ),
+    (
+        11,
+        'Clean Eating',
+        'Mood-Boosting Meal Plan',
+        TRUE,
+        'You may have heard the phrase "Good health starts in the gut," which means that the state of your gut has a wide-ranging impact on your general health and well-being.',
+        'You may have heard the phrase "Good health starts in the gut," which means that the condition of your gut has far-reaching effects for your entire health. This adage is particularly applicable to mental health issues, such as sadness and anxiety.',
+        'The perfect ratio of vibrant fruits and vegetables, lean protein, and healthy fats is included in this meal plan to support your brain''s production of the proper amount of neurotransmitters (NTs), which help control your mood.',
+        '2023-11-24',
+        2, -- maintain health
+        'https://cdn.cleaneatingmag.com/wp-content/uploads/2022/02/CleanEating_CE101FebMar2022_MealPlan_Steak-Sweet-Potato-Tacos_web-1.jpg?crop=535:301&width=1070&enable=upscale',
+        'Designed by Olimpia Davies',  -- img_title
+        '5' -- userid
+    ),
+    (
+        12,
+        'Jesse Lane Lee',
+        'Healthier Gut Meal Plan',
+        TRUE,
+        'Embark on a journey to improve your gut health with our carefully crafted gut-healing food plan. Every meal is prepared using ingredients known for their gut-friendly qualities, with the goal of nourishing and calming the digestive system.',
+        'Fermented foods like tempeh, kefir, miso, and kimchi are staples of this gut-healing diet. Fermented foods include high levels of helpful bacteria known as probiotics, which promote gut health.',
+        'This gut-healing meal plan offers a comprehensive approach to promoting digestive health. Start on a path to a better, healthier you by making meals an occasion to celebrate your gut''s wellness.',
+        '2023-01-21',
+        2, -- maintain health
+        'https://img.freepik.com/free-photo/top-view-person-raising-salad-bowl_1150-37020.jpg?w=1060&t=st=1707051989~exp=1707052589~hmac=9957858c1e731b397cb504c680a76bf57061cd7960acf862631c77276e3ade76',
+        'Designed by jcomp',  -- img_title
+        '5' -- userid
+    ),
+    (
+        13,
+        'Clean Eating',
+        'Preholiday Immunity Booster Meal Plan',
+        TRUE,
+        'This pre-holiday food plan will boost immunity, increase energy, and keep you from gaining weight. You can stay motivated and on track throughout this season of success by following this well-balanced strategy.. Every meal is prepared using ingredients known for their gut-friendly qualities, with the goal of nourishing and calming the digestive system.',
+        'The weeks preceding the extended holiday season are ideal for rejuvenating your body and setting it up for success with a 14-day regimen of nutritious food to boost immunity, reduce inflammation, and potentially prevent weight gain.',
+        'This meal plan focuses on nutrient-dense foods high in fiber, protein, and fat to keep you satisfied and energized. Think of these healthy meal ideas as the start of a joyous and well-being holiday season.',
+        '2023-11-06',
+        2, -- maintain health
+        'https://cdn.cleaneatingmag.com/wp-content/uploads/2020/10/spicy-salmon-poke-bowls_82-web-1.jpg?crop=535:301&width=1070&enable=upscale',
+        'Designed by cleaneating',  -- img_title
+        '1' -- userid
     );
     
     
@@ -194,4 +236,13 @@ values
     (9, 34),
     (10, 35),
     (10, 36),
-    (10, 37);
+    (10, 37),
+    (11, 38),
+    (11, 39),
+    (11, 40),
+    (12, 41),
+    (12, 42),
+    (12, 43),
+    (13, 46),
+    (13, 47),
+    (13, 48);

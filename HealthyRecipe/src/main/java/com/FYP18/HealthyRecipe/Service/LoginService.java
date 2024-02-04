@@ -314,13 +314,20 @@ public class LoginService {
         User user = userRepository.findById(userId).get();
         user.setEnabled(true);
         userRepository.save(user);
-
+        try{
+            emailService.sendVerifiedEmail(user.getEmail()); 
+        }
+        catch(Exception e)
+        {
+            e.printStackTrace();
+        }
+    
         if(user.getRole().equals(Role.BUSINESS_USER))
         {
             BusinessUser bUser = businessUserRepository.findById(userId).get();
             bUser.setVerified(true);
-            businessUserRepository.save(bUser); 
-        }
+            businessUserRepository.save(bUser);
+        } 
         else
         { 
             Nutritionist nut = nutritionistRepository.findById(userId).get();
@@ -329,7 +336,7 @@ public class LoginService {
         } 
     }
     public void deleteUser(DeleteUserRequest request )
-    {
+    { 
         if(request.getRole().equals(Role.BUSINESS_USER))
         {
             businessUserRepository.deleteById(request.getId());
@@ -337,6 +344,14 @@ public class LoginService {
         else
         {
             nutritionistRepository.deleteById(request.getId());
+        }
+        User user = userRepository.findById(request.getId()).get();
+        try{
+            emailService.sendVerifiedEmail(user.getEmail()); 
+        }
+        catch(Exception e)
+        {
+            e.printStackTrace();
         }
         userRepository.deleteById(request.getId());
     }

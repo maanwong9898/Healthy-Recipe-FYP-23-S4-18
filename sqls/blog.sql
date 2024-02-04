@@ -178,6 +178,63 @@ VALUES
         'Author: kuryanovichtatsiana, Designed by Freepik',  -- img_title
         3 -- blog_type_id Miscellaneous
     ),
+    (
+        '16',
+        '2023-08-20 22:00:00', 
+        'KitchenEssentials',
+        'Essential Tools for Every Kitchen: A Comprehensive Guide',
+        'Explore comprehensive guide to essential tools for every kitchen. From versatile knives to efficient gadgets, make your cooking endeavors seamless and enjoyable.'
+        1, -- userId 
+        'https://img.freepik.com/free-photo/set-kitchen-knifes-table_1373-48.jpg?w=1060&t=st=1707050562~exp=1707051162~hmac=8337310a8d68dba07ddb3cdb979db8ed1044cb269ce64cdc190cd71389060d53'
+        'Author: aopsan, Designed by Freepik',  -- img_title
+        2 -- blog_type_id kitchenware
+    ),
+    (
+        '17',
+        '2023-03-20 22:00:00', 
+        'FlavorfulReads',
+        'Culinary Adventures in Literature: Must-Read Cookbooks',
+        'Embark on culinary adventures with FlavorfulReads as we recommend must-read cookbooks that blend the art of cooking with the joy of literature. From fictional feasts to culinary memoirs, these books will ignite your passion for both reading and cooking.'
+        1, -- userId 
+        'https://img.freepik.com/free-vector/fresh-cook_1042-280.jpg?w=826&t=st=1707050845~exp=1707051445~hmac=4a640647c7d665194274e0846038f9552917187af680efb0e885309a6b8cd0e6'
+        'Author: elsystudio, Designed by Freepik',  -- img_title
+        1 -- blog_type_id cookbook
+    ),
+    (
+        '18',
+        '2023-03-20 22:00:00', 
+        'KitchenInnovations',
+        'Innovative Kitchen Gadgets: Enhance Your Culinary Journey',  -- Title
+        'Discover the latest in kitchen innovations with KitchenInnovations. From smart appliances to ingenious gadgets, we unveil a world of innovative tools that can enhance your culinary journey and simplify your time in the kitchen.'
+        1, -- userId 
+        'https://img.freepik.com/free-photo/smart-application-tablet-placed-kitchen-desk-empty-house-automation-system-turning-l_482257-2841.jpg?w=1380&t=st=1707051079~exp=1707051679~hmac=58c3b4770cab439b1d9d178bc75fb86cc8b1046197329323ad7e32ebe06cef1d'
+        'Author: DC Studio, Designed by Freepik',  -- img_title
+        2 -- blog_type_id kitchenware
+    ),
+    (
+        '19',
+        '2024-02-05 22:00:00', 
+        'ChicCookware',
+        'Elevate Your Style: Chic Cookware for Modern Kitchens', -- Title
+        'ChicCookware presents a collection of stylish cookware designed to elevate the aesthetic of modern kitchens. From sleek pots and pans to elegant utensils, explore how these chic additions can transform your cooking space into a fashionable culinary haven.'
+        1, -- userId 
+        'https://img.freepik.com/free-vector/kitchen-tools-with-vegetables_1284-11446.jpg?w=740&t=st=1707051276~exp=1707051876~hmac=521599198dc8ab629ecdc87c53a785e4dc592bca78d6868e92f3cf2ae71e30a7'
+        'Author: Macrovector, Designed by Freepik',  -- img_title
+        2 -- blog_type_id kitchenware
+    ),
+    (
+        '20',
+        '2024-02-07 11:00:00', 
+        'CulinaryEscape',
+        'Global Flavors on Your Shelf: Explore International Cookbooks', -- Title
+        'Join CulinaryEscape on a journey to explore international flavors through carefully curated cookbooks. From Asian delicacies to European classics, these cookbooks bring global culinary experiences to your kitchen, allowing you to create diverse and delicious meals at home.'
+        1, -- userId 
+        'https://img.freepik.com/free-photo/rustic-wood-tray-holds-gourmet-appetizers-indoors-generated-by-ai_188544-13380.jpg?w=1060&t=st=1707051497~exp=1707052097~hmac=2ff8b109775d45a9b8dc416c76d89b1bcded9b1f1ffc87ce7d343aecff6a26d7'
+        'Author: Vecstock, Designed by Freepik',  -- img_title
+        1 -- blog_type_id cookbook
+    ),
+
+
 
 
        
@@ -202,14 +259,19 @@ VALUE
     ('I love this blog post!',                                    4.0, '9', 3),
     ('Highly recommended',                                        2.0, '10', 4),
     ('The blog post is very descriptive and informative.',        5.0, '11', 5),
-    ('I love this blog post!',                                    4.0, '12', 6);
+    ('I love this blog post!',                                    4.0, '12', 6),
     ('The blog post is very descriptive and informative.',        5.0, '11', 7),
-    ('I love this blog post!',                                    4.0, '12', 7);
+    ('I love this blog post!',                                    4.0, '12', 7),
     ('The blog post is very descriptive and informative.',        5.0, '11', 8),
-    ('I love this blog post!',                                    5.0, '12', 9);
+    ('I love this blog post!',                                    5.0, '12', 9),
     ('The blog post is very descriptive and informative.',        5.0, '11', 10),
-    ('I love this blog post!',                                    5.0, '12', 11);
+    ('I love this blog post!',                                    5.0, '12', 11),
     ('This is very awesome',                                      5.0, '7', 12),
     ('The blog post is very descriptive and informative.',        5.0, '8', 13),
     ('I love this blog post!',                                    4.0, '9', 14),
     ('This blog is very useful',                                  5.0, '10', 15),
+    ('I love this blog post!',                                    5.0, '12', 16),
+    ('This is very awesome',                                      5.0, '7', 17),
+    ('The blog post is very descriptive and informative.',        5.0, '8', 18),
+    ('I love this blog post!',                                    4.0, '9', 19),
+    ('This blog is very useful',                                  5.0, '10', 20);

@@ -233,11 +233,61 @@ VALUES
         'Author: Vecstock, Designed by Freepik',  -- img_title
         1 -- blog_type_id cookbook
     ),
-
-
-
-
-       
+    (
+        '21',
+        '2024-02-07 11:00:00', 
+        'WellnessWonders',
+        'Holistic Wellness: Integrating Mind, Body, and Kitchen', -- Title
+        'Embark on a journey of holistic wellness with WellnessWonders. Explore the connection between mind, body, and kitchen as we delve into mindful cooking practices, nourishing recipes, and wellness tips to enhance your overall well-being.'
+        1, -- userId 
+        'https://img.freepik.com/free-vector/woman-cooking-with-red-tomatoes_24877-76629.jpg?w=740&t=st=1707062080~exp=1707062680~hmac=f54fdf09690a5b27806681003d230a0647fb926e948bdeb23a17b2fa6afd1c18'
+        'Author: studiogstock, Designed by Freepik',  -- img_title
+        3 -- blog_type_id Miscellaneous
+    ),
+    (
+        '22',
+        '2024-02-07 11:00:00', 
+        'EcoCuisine',
+        'Sustainable Kitchenware: Embracing Eco-Friendly Culinary Tools', -- Title
+        'Join EcoCuisine in the journey towards sustainability. Discover a range of eco-friendly kitchenware designed to minimize environmental impact. From bamboo utensils to recycled materials, explore how sustainable choices in the kitchen can contribute to a greener lifestyle.'
+        1, -- userId 
+        'https://img.freepik.com/free-photo/top-view-wooden-spoons-collection_23-2148677992.jpg?w=1380&t=st=1707062250~exp=1707062850~hmac=0efe6151c7dcbcd5f7e12cc16d8ad8cb612dbd90b3e26b202ebe00a2249e99b4'
+        'Designed by Freepik',  -- img_title
+        2 -- blog_type_id kitchenware
+    ),
+    (
+        '23',
+        '2024-01-07 11:00:00', 
+        'FlavorsOfCulture',
+        'Culinary Passport: Exploring Diverse Flavors in Cookbooks', -- Title
+        'Take a culinary journey with FlavorsOfCulture as we explore cookbooks that act as passports to diverse flavors. From regional cuisines to international fusion, these cookbooks offer a taste of cultural diversity, allowing you to bring global flavors to your home kitchen.'
+        1, -- userId 
+        'https://img.freepik.com/premium-photo/sweet-globe-manipulation-background-with-cupcakes-representing-global-desserts-culture_674594-5287.jpg?w=1060'
+        'Author: 3DdarkZone, Designed by Freepik',  -- img_title
+        1 -- blog_type_id cookbook
+    ),
+    (
+        '24',
+        '2023-01-07 11:00:00', 
+        'CulinaryCreativity',
+        'Unleashing Creativity in the Kitchen: Beyond Recipes', -- Title
+        'Join CulinaryCreativity in unlocking the art of culinary expression. Explore creative approaches in the kitchen beyond traditional recipes, from food styling to personalized presentations. Unleash your inner chef and transform your kitchen into a canvas of culinary creativity.'
+        1, -- userId 
+        'https://img.freepik.com/free-photo/empty-modern-room-with-furniture_23-2149178335.jpg?w=996&t=st=1707062629~exp=1707063229~hmac=b54ee25c22ba4233aba420adaee025d945457cc8f242884cdf093b3267f42b44'
+        'Designed by Freepik',  -- img_title
+        3 -- blog_type_id Miscellaneous
+    ),
+    (
+        '25',
+        '2023-07-07 11:00:00', 
+        'ModernCulinarySpaces',
+        'Contemporary Kitchenware: Blending Style and Functionality', -- Title
+        'Explore the fusion of style and functionality with ModernCulinarySpaces. Dive into a world of contemporary kitchenware that not only enhances your cooking experience but also elevates the aesthetics of your culinary space. Discover the perfect blend of modern design and practical utility.'
+        1, -- userId 
+        'https://img.freepik.com/free-vector/bon-appetit-seamless-background-pattern-with-scattered-ingredients-kitchen-utensils-making-italian-ravioli-pasta-square-format-suitable-wallpaper-wrapping-paper-fabric_1284-44086.jpg?w=740&t=st=1707062743~exp=1707063343~hmac=7c803cf6fbff4ff14301668112c4d89f4e6f7782e935437899406dac7dba904c'
+        'Author: macrovector, Designed by Freepik',  -- img_title
+        2 -- blog_type_id kitchenware
+    ),     
 
     --  Blog review rating
 INSERT INTO BLOG_REVIEW_RATING 
@@ -274,4 +324,9 @@ VALUE
     ('This is very awesome',                                      5.0, '7', 17),
     ('The blog post is very descriptive and informative.',        5.0, '8', 18),
     ('I love this blog post!',                                    4.0, '9', 19),
-    ('This blog is very useful',                                  5.0, '10', 20);
+    ('This blog is very useful',                                  5.0, '10', 20),
+    ('I love this blog post!',                                    5.0, '12', 21),
+    ('This is very awesome',                                      5.0, '7', 22),
+    ('The blog post is very descriptive and informative.',        5.0, '8', 23),
+    ('I love this blog post!',                                    4.0, '9', 24),
+    ('This blog is very useful',                                  5.0, '10', 25);

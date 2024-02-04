@@ -246,6 +246,87 @@ VALUES
         'Author: macrovector, Designed by Freepik',  -- img_title
         2 -- educational_content_type_id
     ),
+    (
+        '16',
+        '2024-01-23 17:30:00',  -- CreatedDT
+        'HelpGuide',  -- Publisher
+        'What is a healthy diet?',  -- Title
+        'The fundamentals of healthy eating \nWhile some extreme diets may suggest otherwise, we all need a balance of protein, fat, carbohydrates, fiber, vitamins, and minerals in our diets to sustain a healthy body. You do not need to eliminate certain categories of food from your diet, but rather select the healthiest options from each category.
+         \nMaking the switch to a healthy diet \nSwitching to a healthy diet does not have to be an all or nothing proposition. You dont have to completely eliminate foods you enjoy or change everything all at once — that usually only leads to cheating or giving up on your new eating plan.'
+        3,
+        'https://img.freepik.com/premium-vector/food-diet-healthy-lifestyle-weight-loss-banner-with-dish-salad-table-set-smartphone-diet-plan-notebook_250257-474.jpg?w=1060'
+        'Author: virinaflora, Designed by Freepik',  -- img_title
+        2 -- educational_content_type_id
+    ),
+    (
+        '17',
+        '2024-01-23 17:30:00',  -- CreatedDT
+        'World Health Organisation',  -- Publisher
+        'Healthy diet',  -- Title
+        'A healthy diet is essential for good health and nutrition. Eating a variety of foods and consuming less salt, sugars and saturated and industrially-produced trans-fats, are essential for healthy diet. A healthy diet comprises a combination of different foods. These include: Staples like cereals or starchy tubers or roots, Legumes, Fruit and vegetables, Foods from animal sources.
+        \nHere is some useful information to follow a healthy diet, and the benefits of doing so.
+        \nEat plenty of vegetables and fruit: \nThey are important sources of vitamins, minerals, dietary fibre, plant protein and antioxidants.
+        \nEat less fat: \nFats and oils and concentrated sources of energy. Eating too much, particularly the wrong kinds of fat, like saturated and industrially-produced trans-fat, can increase the risk of heart disease and stroke. Use unsaturated vegetable oils rather than animal fats or oils high in saturated fats.
+        \nLimit intake of sugars: \nFor a healthy diet, sugars should represent less than 10% of your total energy intake. Reducing even further to under 5% has additional health benefits. 
+        \nReduce salt intake: \nKeeping your salt intake to less than 5h per day helps prevent hypertension and reduces the risk of heart disease and stroke in the adult population.'
+        3,
+        'https://img.freepik.com/free-vector/people-healthy-food_24908-55181.jpg?w=740&t=st=1707060287~exp=1707060887~hmac=8f50d4c17a86bbca0eccb52150bcfdb9abc14a8f7a328fe833e8bf3078175a8f'
+        'Author: gstudioimagen, Designed by Freepik',  -- img_title
+        1 -- educational_content_type_id
+    ),
+    (
+        '18',
+        '2024-01-23 17:30:00',  -- CreatedDT
+        'World Health Organisation',  -- Publisher
+        'Physical activity',  -- Title
+        'Being physically active helps all people, no matter their age, lead healthier lives. Some physical activity is better than doing none. By being more active throughout the day in relatively simple ways, people can quite easily achieve the recommended activity levels. Below are the levels of physical activity WHO recommends people of different ages undertake.
+        \nChildren and adolescents aged 5-17 years \n Should do at least 60 minutes of moderate to vigorous-intensity physical activity daily. Physical activity of amounts more than 60 minutes daily provides additional health benefits.
+        \nAdults aged 18–64 years \nShould do at least 150 minutes of moderate-intensity physical activity throughout the week, or do at least 75 minutes of vigorous-intensity physical activity, or an equivalent combination of both. For additional health benefits, adults should increase their moderate-intensity physical activity to 300 minutes per week, or equivalent.
+        \nAdults aged 65 years and above \nShould do at least 150 minutes of moderate-intensity physical activity throughout the week, or at least 75 minutes of vigorous-intensity physical activity, or an equivalent combination of both. Those with poor mobility should perform physical activity to enhance balance and prevent falls, 3 or more days per week.'
+        3,
+        'https://www.freepik.com/free-vector/flat-happy-children-play-run-cycling-public-park_27059506.htm#query=physical%20activity&position=9&from_view=search&track=ais&uuid=70a23307-fd12-4673-81dd-281d900cc9b4'
+        'Author: redgreystock, Designed by Freepik',  -- img_title
+        2 -- educational_content_type_id
+    ),
+    (
+        '19',
+        '2023-01-23 17:30:00',  -- CreatedDT
+        'CDC',  -- Publisher
+        'Benefits of Healthy Eating',  -- Title
+        'Benefits of Healthy Eating for Adults includes: Keeps skin, teeth, and eyes healthy, Supports muscles, Boosts immunity, Strengthens bones, Lowers risk of heart disease, type 2 diabetes, Helps the digestive system function, Helps achieve and maintain a healthy weight
+        \nBenefits of Healthy Eating for Children includes: Keeps skin, teeth, and eyes healthy, Supports muscles, Helps achieve and maintain a healthy weight, Strengthens bones, Supports brain development and healthy growth, Boosts immunity, Helps the digestive system function.'
+        3,
+        'https://img.freepik.com/free-photo/portrait-healthy-woman-eating-salad-kitchen_23-2148075987.jpg?w=996&t=st=1707061004~exp=1707061604~hmac=98c9078a5b017111a38abfd355c0755598a3dd7c254db39e47d38dd0b7214e4a'
+        'Designed by Freepik',  -- img_title
+        1 -- educational_content_type_id
+    ),
+    (
+        '20',
+        '2024-01-23 17:30:00',  -- CreatedDT
+        'medicalnewstoday',  -- Publisher
+        'What are the benefits of eating healthy?',  -- Title
+        'Following a healthy diet has many benefits, including building strong bones, protecting the heart, preventing disease, and boosting mood.
+        \nA healthy diet typically includes nutrient-dense foods from all of the major food groups, including lean proteins, whole grains, healthy fats, and fruits and vegetables of many colors. Healthy eating habits also include replacing foods that contain trans fats, added salt, and sugar with more nutritious options. Following a healthy diet has many benefits, including building strong bones, protecting the heart, preventing disease, and boosting the mood.'
+        3,
+        'https://img.freepik.com/free-vector/healthy-food-concept-with-people-vegetables_107791-11174.jpg?w=996&t=st=1707061253~exp=1707061853~hmac=bc0d17c0a949982f257043fd094b6af77e1fd0c41de80a7421d25c2f08d5c088'
+        'Author: upklyak, Designed by Freepik',  -- img_title
+        1 -- educational_content_type_id
+    ),
+    (
+        '21',
+        '2024-01-23 19:30:00',  -- CreatedDT
+        'mBritish Heart Foundation',  -- Publisher
+        'Healthy Eating',  -- Title
+        'Eating a healthy diet can help reduce your risk of developing coronary heart disease and stop you from gaining too much weight, reducing your risk of diabetes and high blood pressure. It can also help lower your cholesterol levels and reduce your risk of some cancers. Even if you already have a heart condition, a healthy diet can benefit your heart.
+         \nA balanced diet \nEveryone should aim for a well-balanced diet. Strict diets are hard to sustain long term and may not provide the balance of nutrients you need.
+         \nHealthy eating is not about cutting out or focusing on individual foods or nutrients. It is thinking about your whole diet and eating a variety of foods in the right amounts to give your body what it needs. 
+         \nThere are foods we need to eat more of, like fruit and vegetables, and others we need to eat less of, which are foods high in saturated fat, sugar and salt. It is all about getting the right balance. Eating healthily can be tasty, simple and fun. It is about making small, long-term changes and enjoying the food you eat.'
+        3,
+        'https://img.freepik.com/free-vector/eating-variety-foods-concept-illustration_114360-11295.jpg?w=740&t=st=1707061728~exp=1707062328~hmac=afbffa590c8b411a91cafeca0e8542287d1e8d50254c1428df438af6559f9049'
+        'Author: storyset, Designed by Freepik',  -- img_title
+        1 -- educational_content_type_id
+    ),
+    
     
 
 

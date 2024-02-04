@@ -580,6 +580,25 @@ VALUES
         3, -- dietary_preference
         10 -- cooking_time  
         2   -- meal type (cuisines)
+    ),
+    (
+        29,
+        'Heather BainBridge',
+        'Cajun Catfish Po Boy & Cooling Vegetable Salad',
+        'Not Specified',
+        345, 35, 31, 14, 7.5, 592, -- calories, carbs, protein, fat, fibre, sodium
+        2,
+        'Try this healthier version of the traditional New Orleans sammie, which includes grilled fish, an abundance of vegetables, a whole-wheat baguette, and a light goat cheese spread, instead of heading south for the greasy, deep-fried original.',
+        'Ensure that 2 racks are in middle positions in oven. Preheat oven to 400°F.\nPrepare Cooling Vegetable Salad: In a medium bowl, combine cucumbers, tomatoes, carrot, parsley and onion. Then add pepper, garlic powder, oil and vinegar and stir until vegetables are evenly coated. Place in refrigerator to let flavors meld until ready to serve meal. \nPrepare Cajun Catfish: Place catfish on a foil-lined cookie sheet. Brush fillets with oil and sprinkle with spices. Bake 12 to 15 minutes, until flaky and no longer translucent.\nPrepare Goat Cheese Spread: In a small bowl, stir together cheese, yogurt, lemon juice, parsley, carrot, cucumber and pepper until combined. Set aside.\nTo assemble each sandwich, smear Goat Cheese Spread on 1 side of a baguette slice and set aside. Place a catfish fillet on another slice of baguette. Top fillet with 2 onion slices, 2 tomato slices and 1 lettuce leaf; then top with reserved baguette slice, spread-side-down. Repeat with remaining catfish fillet and accompaniments. Serve with Cooling Vegetable Salad. Keep stored in refrigerator for 2 to 4 days to ensure freshness.',
+        '1 cup cucumbers, peeled and halved \n10 grape tomatoes, halved \n1/4 cup carrots, shredded  \n¼ cup flat-leaf parsley, minced \n1/4 cup red onion, diced \n1/4 tsp ground black pepper \n1/4 tsp garlic powder \n1/2 tsp extra-virgin olive oil \n1 tbsp rice wine vinegar \n2 3-oz catfish fillets \n1 tsp extra-virgin olive oil \n1 1/2 tsp Cajun spices \n4 oz bakery-fresh wholewheat baguette, sliced into 4 pieces and toasted \n4 slices red onion \n4 slices tomato (each slice 1/4-inch thick) \n2 Boston lettuce leaves \n1 oz goat cheese \n3 tbsp nonfat Greek-style yogurt \n1 tsp fresh lemon juice \n2 tbsp flat-leaf parsley, minced \n3 tbsp carrots, shredded \n2 tbsp cucumbers, diced \n1/2 tsp ground black pepper',
+        '2', -- UserID
+        TRUE,
+        '2023-07-10 10:00:00',
+        'https://cdn.cleaneatingmag.com/wp-content/uploads/2019/10/poached-egg-avocado-toast-1.jpg?crop=535:301&width=1070&enable=upscale',
+        'Author : Jesse Jane Lee, Designed by cleaneating',  -- img_title
+        3, -- dietary_preference
+        25 -- cooking_time  
+        2   -- meal type (cuisines)
     );
 
 

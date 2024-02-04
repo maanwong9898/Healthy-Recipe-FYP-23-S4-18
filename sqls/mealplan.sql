@@ -116,17 +116,17 @@ VALUES
     ),
     (
         8,
-        'Jesse Lane Lee',
-        'Your Quit-Sugar Meal Plan',
+        'Heather BainBridge',
+        'Fresh Low-Cal Meal Plan',
         TRUE,
-        'With this sugar- and sweetener-free meal plan, you can kick your sweet tooth. This real-food menu is so tasty and filling that you will not miss it.',
-        'Did you know that the average person consumes 22 teaspoons of sugar each day, more than three times the amount recommended by the American Heart Association? Reducing or eliminating sugar consumption is a great step toward better overall health.',
-        'Gradually lowering your sugar consumption can help your taste buds adjust. This diet includes substantial meals that will keep you full, so you will not crave sugar.',
-        '2023-11-30',
-        2, -- maintain health
-        'https://img.freepik.com/free-photo/healthy-food-vs-unhealthy-food_23-2147961022.jpg?w=1060&t=st=1707014411~exp=1707015011~hmac=699970e8b2e172324289e923af3a2ad956dc18c3acad1a09f754787a82449bb2',
-        'Designed by pvproductions',  -- img_title
-        '1' -- userid
+        'Get out of the winter blues and welcome spring with a new wave of fresh, seasonal, and waist-reducing meal ideas.',
+        'Herbs and spices stimulate the senses, incorporating flavors from different cultures for interesting taste combinations. The main goal of this meal plan is to serve wholesome, low-calorie meals that are high in fiber, vitamins, and minerals.',
+        'Many studies have found that herbs and spices can provide health advantages in the form of free-radical-fighting antioxidants. Hence, let the harmony of flavor enhance your meals, and your health may reap benefits as well!',
+        '2023-11-06',
+        3, -- weight loss
+        'https://img.freepik.com/free-photo/fried-meat-with-greens-tomatoes-clay-pot_140725-7317.jpg?w=1060&t=st=1707022112~exp=1707022712~hmac=ef1dc83bcd9b0e12f9e5df228b9b63d87eeb9cc54201e5b510e46ebd50c03ba1',
+        'Designed by kamranaydinov',  -- img_title
+        '2' -- userid
     );
     
     

@@ -19,7 +19,8 @@ Insert into dietary_preferences
 VALUES
 ("Vegan"),
 ("Vegetarian"),
-("Pescatarian");
+("Pescatarian"),
+("Meat-Based");
 
 -- Recipe
   -- publisher should be author of the recipe
@@ -43,7 +44,8 @@ VALUES
     ('Thai'),
     ('Indian'),
     ('Mediterranean'),
-    ('Vietnamese');
+    ('Vietnamese'),
+    ('Moroccan');
 
 -- first set of recipes 
 INSERT INTO recipe
@@ -579,7 +581,7 @@ VALUES
         'Author : Jesse Jane Lee, Designed by cleaneating',  -- img_title
         3, -- dietary_preference
         10 -- cooking_time  
-        2   -- meal type (cuisines)
+        3   -- meal type (cuisines)
     ),
     (
         29,
@@ -590,15 +592,167 @@ VALUES
         2,
         'Try this healthier version of the traditional New Orleans sammie, which includes grilled fish, an abundance of vegetables, a whole-wheat baguette, and a light goat cheese spread, instead of heading south for the greasy, deep-fried original.',
         'Ensure that 2 racks are in middle positions in oven. Preheat oven to 400°F.\nPrepare Cooling Vegetable Salad: In a medium bowl, combine cucumbers, tomatoes, carrot, parsley and onion. Then add pepper, garlic powder, oil and vinegar and stir until vegetables are evenly coated. Place in refrigerator to let flavors meld until ready to serve meal. \nPrepare Cajun Catfish: Place catfish on a foil-lined cookie sheet. Brush fillets with oil and sprinkle with spices. Bake 12 to 15 minutes, until flaky and no longer translucent.\nPrepare Goat Cheese Spread: In a small bowl, stir together cheese, yogurt, lemon juice, parsley, carrot, cucumber and pepper until combined. Set aside.\nTo assemble each sandwich, smear Goat Cheese Spread on 1 side of a baguette slice and set aside. Place a catfish fillet on another slice of baguette. Top fillet with 2 onion slices, 2 tomato slices and 1 lettuce leaf; then top with reserved baguette slice, spread-side-down. Repeat with remaining catfish fillet and accompaniments. Serve with Cooling Vegetable Salad. Keep stored in refrigerator for 2 to 4 days to ensure freshness.',
-        '1 cup cucumbers, peeled and halved \n10 grape tomatoes, halved \n1/4 cup carrots, shredded  \n¼ cup flat-leaf parsley, minced \n1/4 cup red onion, diced \n1/4 tsp ground black pepper \n1/4 tsp garlic powder \n1/2 tsp extra-virgin olive oil \n1 tbsp rice wine vinegar \n2 3-oz catfish fillets \n1 tsp extra-virgin olive oil \n1 1/2 tsp Cajun spices \n4 oz bakery-fresh wholewheat baguette, sliced into 4 pieces and toasted \n4 slices red onion \n4 slices tomato (each slice 1/4-inch thick) \n2 Boston lettuce leaves \n1 oz goat cheese \n3 tbsp nonfat Greek-style yogurt \n1 tsp fresh lemon juice \n2 tbsp flat-leaf parsley, minced \n3 tbsp carrots, shredded \n2 tbsp cucumbers, diced \n1/2 tsp ground black pepper',
+        '1 cup cucumbers, peeled and halved \n10 grape tomatoes, halved \n1/4 cup carrots, shredded  \n1/4 cup flat-leaf parsley, minced \n1/4 cup red onion, diced \n1/4 tsp ground black pepper \n1/4 tsp garlic powder \n1/2 tsp extra-virgin olive oil \n1 tbsp rice wine vinegar \n2 3-oz catfish fillets \n1 tsp extra-virgin olive oil \n1 1/2 tsp Cajun spices \n4 oz bakery-fresh wholewheat baguette, sliced into 4 pieces and toasted \n4 slices red onion \n4 slices tomato (each slice 1/4-inch thick) \n2 Boston lettuce leaves \n1 oz goat cheese \n3 tbsp nonfat Greek-style yogurt \n1 tsp fresh lemon juice \n2 tbsp flat-leaf parsley, minced \n3 tbsp carrots, shredded \n2 tbsp cucumbers, diced \n1/2 tsp ground black pepper',
         '2', -- UserID
         TRUE,
         '2023-07-10 10:00:00',
-        'https://cdn.cleaneatingmag.com/wp-content/uploads/2019/10/poached-egg-avocado-toast-1.jpg?crop=535:301&width=1070&enable=upscale',
-        'Author : Jesse Jane Lee, Designed by cleaneating',  -- img_title
+        'https://cdn.cleaneatingmag.com/wp-content/uploads/2019/06/poboy-1.jpg?crop=535:301&width=1070&enable=upscale',
+        'Author : Heather BainBridge, Designed by cleaneating',  -- img_title
         3, -- dietary_preference
         25 -- cooking_time  
+        3   -- meal type (cuisines)
+    ),
+    (
+        30,
+        'Heather BainBridge',
+        'Moroccan Buffalo & Chickpea Chili',
+        'Not Specified',
+        397, 51, 29, 9, 11, 267, -- calories, carbs, protein, fat, fibre, sodium
+        6,
+        'Buffalo is a great substitute for beef because it is low in fat and high in protein. Our chili features large cubes of lean meat combined with vegetables and nine different spices.',
+        'In a large nonstick pot, cook steak for 2 minutes over medium high heat. Add garlic, onion, celery, carrots and all spices. Cook for 5 minutes. Then add chickpeas, cooking for 2 more minutes.\nTurn up heat to high and pour in 4 cups water, corn, tomatoes and bay leaf. Bring to a boil and stir in tomato paste. Reduce heat to medium and simmer, uncovered, for 30 to 35 minutes, stirring occasionally, until liquid reduces and chili thickens. Squeeze juice of both lemons into chili, if desired, and stir. Remove bay leaf before serving. Chili can be stored in refrigerator for 5 days or frozen for 2 to 3 months.',
+        '1 lb top-round buffalo steak or lean beef stew meat, cut into 1-inch cubes \n2 tbsp garlic, minced \n2 1/2 cups yellow onion, chopped \n1 cup celery, chopped \n2 cups carrots, cut into matchsticks \n1 tbsp cumin, ground \n2 tsp dried coriander \n1 tsp ground black pepper \n1/2 tsp turmeric \n1/2 tsp paprika \n3 1/2 cups cooked chickpeas \n1 cup frozen corn (no need to thaw) \n2 cups tomatoes, chopped \n1 bay leaf \n1 6-oz jar tomato paste',
+        '5', -- UserID
+        TRUE,
+        '2023-02-17 17:30:00',
+        'https://cdn.cleaneatingmag.com/wp-content/uploads/2019/06/chili-1.jpg?crop=535:301&width=1070&enable=upscale',
+        'Author : Heather BainBridge, Designed by cleaneating',  -- img_title
+        4, -- dietary_preference
+        40 -- cooking_time  
+        11   -- meal type (cuisines)
+    ),
+    (
+        31,
+        'Heather BainBridge',
+        'Sesame Garlic Chicken with Tahini Spinach & Toasted Peanut Quinoa',
+        'Not Specified',
+        470, 54, 38, 13, 15, 520, -- calories, carbs, protein, fat, fibre, sodium
+        2,
+        'The taste of nutrient-dense sesame seeds, both toasted on top of the chicken grilled with garlic and in the Middle Eastern-inspired tahini sauce, gives this flavorful dish a double dose of punch.',
+        'Ensure that 2 racks are in middle positions in oven. Preheat oven to 375˚F.\nPlace chicken on a foil-lined baking pan. With a sharp knife, make 3 slits, a quarter to halfway through each chicken breast. Stuff thin slits with garlic, dividing evenly. Sprinkle 1 tsp sesame seeds on top of chicken. Place in oven on middle rack and bake for 30 to 35 minutes, until chicken’s juices run clear and no pink remains.\nMeanwhile, on a separate foiled-lined baking pan, toast peanuts in the same 375˚F oven for 4 to 6 minutes on top rack.\nRinse quinoa thoroughly with water in a fine-mesh strainer until water runs clear. Drain well. Combine quinoa and 1 cup water in a medium-size saucepan. Bring to a boil, then reduce heat to medium-low, cover and cook until grains become translucent, about 15 to 20 minutes. Add toasted peanuts to cooked quinoa.\nPrepare Tahini Sauce: In a small bowl, whisk together tahini, vinegar, soy sauce, 1 tsp water and stevia until combined.\nDivide spinach between 2 plates and top with Tahini Sauce. Sprinkle remaining 1/2 tsp sesame seeds on top of spinach. Plate chicken breasts and quinoa off to side of spinach. Chicken can be kept stored in refrigerator for 4 days.',
+        '2 4-oz boneless, skinless chicken breasts \n1 clove garlic, sliced \n1 1/2 tsp unsalted sesame seeds, divided \n3 tbsp unsalted raw peanuts \n1/2 cup quinoa \n1 16-oz bag spinach, washed, drained, stems removed and steamed \n1 1/2 tbsp sesame tahini \n1 tbsp rice wine vinegar \n1 tsp low-sodium soy sauce \n1 tsp stevia powder',
+        '5', -- UserID
+        TRUE,
+        '2023-04-30 17:30:00',
+        'https://cdn.cleaneatingmag.com/wp-content/uploads/2013/04/sesamegarlicchicken_article-1.jpg',
+        'Author : Heather BainBridge, Designed by cleaneating',  -- img_title
+        4, -- dietary_preference
+        20 -- cooking_time  
+        1   -- meal type (cuisines)
+    ),
+    (
+        32,
+        'Marriane Wren',
+        'Egg Sandwiches with Red Peppers and Tahini',
+        'Not Specified',
+        277, 24, 18, 13, 4, 560, -- calories, carbs, protein, fat, fibre, sodium
+        2,
+        'Start your day off right with these sandwiches, which are loaded with probiotics from kefir and prebiotics from chives and yellow onions. If prepared ahead of time, keep the eggs, sauce, and pita separate and assemble before eating.',
+        'In a small bowl, whisk together eggs, egg whites, salt and pepper. In a separate bowl, combine kefir, lemon juice, tahini and chives. Set bowls side.\nIn a large skillet on medium-high, heat oil. Add onion and cook, stirring often, until soft, 2 to 3 minutes. Add red and green peppers and continue cooking, stirring often, until peppers soften, 4 minutes more.\nReduce heat to medium-low and add egg mixture. Cook, stirring often, until eggs are set, 4 to 5 minutes.\nDivide egg mixture among pita halves; drizzle with tahini mixture. Garnish with additional chives.',
+        '3 large eggs + 4 egg whites \n1/4 tsp each sea salt and ground black pepper \n2 tbsp plain whole-milk kefir \n1/2 tbsp fresh lemon juice \n1/2 tbsp tahini paste \n1/2 tbsp chopped fresh chives + additional for garnish \n1 tsp olive oil \n1/4 cup chopped yellow onion \n1/2 cup each chopped red and green bell pepper \n1 6-inch whole-grain pocket-style pita, halved',
+        '5', -- UserID
+        TRUE,
+        '2023-05-01 17:30:00',
+        'https://cdn.cleaneatingmag.com/wp-content/uploads/2017/03/ce68-weightloss-middle-eastern-western-egg-sandwiches-web-1.jpg?crop=535:301&width=1070&enable=upscale',
+        'Author : Marianne Wren, Designed by cleaneating',  -- img_title
+        3, -- dietary_preference
+        20 -- cooking_time  
+        9   -- meal type (cuisines)
+    ),
+    (
+        33,
+        'Beth Lipton',
+        'The California Salad',
+        'Not Specified',
+        404, 23, 21, 26, 12, 757, -- calories, carbs, protein, fat, fibre, sodium
+        4,
+        'Enjoy this colorful array of healthful, classic California dishes, such as creamy avocado, veggie burgers, microgreens, and more, and feel like a true Californian.',
+        'Make dressing: In a small food processor, blend all dressing ingredients. (MAKE AHEAD: Make dressing up to 1 day ahead; cover and refrigerate. Whisk well before using.).\nMake salad: In a large bowl, toss lettuce with 2 tbsp of the dressing (add more to taste), then divide among bowls. Arrange tomatoes, carrots, beets and avocado on top. Add a patty to each and top with microgreens. Sprinkle with walnuts and goat cheese (if using). Serve with remaining dressing on the side.',
+        '1/2 cup fresh flat-leaf parsley, roughly chopped \n1/4 cup fresh basil, roughly chopped \n1/4 cup extra-virgin olive oil \n2 tbsp apple cider vinegar \n1 tbsp Dijon mustard \n1 tsp pure maple syrup \n1/4 tsp sea salt \n1/8 tsp ground black pepper \n6 cups mixed baby lettuces (about 7 1/2 oz) \n1 cup cherry or grape tomatoes \n2 carrots, shredded \n1 cup chopped steamed beets \n1 avocado, pitted, sliced \n4 veggie patties of choice \n1 cup microgreens or sprouts \n1/4 cup toasted walnuts, optional',
+        '5', -- UserID
+        TRUE,
+        '2023-06-02 13:30:00',
+        'https://cdn.cleaneatingmag.com/wp-content/uploads/2017/03/ce68-weightloss-middle-eastern-western-egg-sandwiches-web-1.jpg?crop=535:301&width=1070&enable=upscale',
+        'Author : Marianne Wren, Designed by cleaneating',  -- img_title
+        2, -- dietary_preference
+        15 -- cooking_time  
+        9   -- meal type (cuisines)
+    ),
+    (
+        34,
+        'Sarah Sweeney',
+        'Savory Yogurt Bowl with Roasted Chickpeas',
+        'Not Specified',
+        404, 23, 21, 26, 12, 757, -- calories, carbs, protein, fat, fibre, sodium
+        4,
+        'Roasted chickpeas lend a flavorful crunch to this unusual savory breakfast when combined with plain yogurt, veggies, and za atar, a Middle Eastern spice mixture.',
+        'Preheat the oven to 400°F. On a large, parchment-lined baking sheet, place chickpeas; toss with one-half of oil, cumin and salt. Roast for 35 minutes, stirring halfway through, until golden and crisp. (MAKE AHEAD: Store chickpeas in an airtight container until ready to use.)\nDivide the yogurt between serving bowls and top with cucumber, tomatoes and mint and parsley. Drizzle with remaining one-half of oil and garnish with za’atar and pine nuts (if using).',
+        '1 15-oz BPA-free can chickpeas, drained, rinsed and patted dry \n2 tbsp extra-virgin olive oil, divided \n1 tsp ground cumin \n1/4 tsp sea salt \n1 1/2 cups whole-milk plain yogurt \n2 Lebanese cucumbers, sliced \n1/2 cup cherry tomatoes, halved \n1 tbsp each fresh mint and flat-leaf parsley, chopped',
+        '5', -- UserID
+        TRUE,
+        '2023-01-10 13:00:00',
+        'https://cdn.cleaneatingmag.com/wp-content/uploads/2017/03/ce68-weightloss-middle-eastern-western-egg-sandwiches-web-1.jpg?crop=535:301&width=1070&enable=upscale',
+        'Author : Marianne Wren, Designed by cleaneating',  -- img_title
+        2, -- dietary_preference
+        35 -- cooking_time  
+        9   -- meal type (cuisines)
+    ),
+    (
+        35,
+        'Sarah Sweeney',
+        'Balsamic Roasted Portobellos',
+        'Not Specified',
+        270, 16, 18, 16, 5, 736, -- calories, carbs, protein, fat, fibre, sodium
+        4,
+        'These juicy mushrooms topped with spinach, tomatoes, and eggs are a delicious way to start the day.',
+        'Preheat oven to 400°F. In a medium bowl, toss mushrooms, one-half of oil, vinegar, Italian seasoning and one-half the salt and pepper. Place on a large parchment-lined baking sheet. Divide spinach and onion over mushrooms. Place tomato halves around mushrooms and sprinkle with remaining oil, salt and pepper. Bake for 15 minutes.\nHeat a medium skillet on medium-high. Mist with cooking spray and add eggs. Cook for 2 minutes, or until desired doneness.\nTo serve, top each mushroom with a fried egg, and spoon over a few roasted tomatoes. Sprinkle with basil.\nMAKE AHEAD:  Prepare Step one and hold cooked mushrooms in the fridge until ready to eat. Reheat portobellos and tomatoes at 350°F for 10 mins. Top with fried egg.',
+        '8 portobello mushrooms, stems removed \n4 tsp extra-virgin olive oil, divided \n2 tbsp balsamic vinegar \n2 tsp Italian seasoning \n1 tsp sea salt and ground black pepper, divided \n4 cups baby spinach \n1 cup thinly sliced red onion \n12-14 cocktail tomatoes, halved \n8 large eggs \n¼ cup fresh torn basil',
+        '5', -- UserID
+        TRUE,
+        '2023-01-10 13:00:00',
+        'https://cdn.cleaneatingmag.com/wp-content/uploads/2022/02/CleanEating_CE101FebMar2022_MealPlan_Balsamic-Roasted-Portobellos-with-Fried-Eggs_web.jpg?crop=535:301&width=1070&enable=upscale',
+        'Author : Olimpia Davies, Designed by cleaneating',  -- img_title
+        2, -- dietary_preference
+        20 -- cooking_time  
+        9   -- meal type (cuisines)
+    ),
+    (
+        36,
+        'Sarah Sweeney',
+        'Hearty Chicken Quinoa Soup',
+        'Not Specified',
+        350, 12, 20, 11, 6, 687, -- calories, carbs, protein, fat, fibre, sodium
+        4,
+        'It is a cup of traditional chicken soup with some extra-healthy ingredients added. We have given the traditional a clean eating touch by adding extra veggies and a generous serving of quinoa to our spin on chicken soup.',
+        'In a Dutch oven on medium-high, heat oil. Add onion and sauté for 3 minutes until soft. Add ginger, garlic, carrot, celery, thyme, turmeric, salt and pepper. Cook for 3 minutes, stirring occasionally. Add chicken, broth and water. Bring to a boil and simmer for 30 minutes.\nRemove chicken from the pot and place on a cutting board. Shred the chicken using two forks and add it back into the pot along with the quinoa. Simmer for 5 additional minutes. Stir in the kale and simmer for another 3 minutes.',
+        '1 tbsp extra-virgin olive oil \n1 yellow onion, diced \n1 tbsp minced ginger \n2 cloves garlic, minced \n1 carrot, diced \n2 celery ribs, chopped \n2 tsp thyme, chopped \n1/2 tsp ground turmeric \n1/2 tsp sea salt \n1/4 tsp ground black pepper \n1 lb boneless, skinless chicken thighs \n4 cups low-sodium chicken broth \n2 cups water \n1/2 cup white quinoa, rinsed \n1/2 cup white quinoa, rinsed 3 cups kale, stems removed and roughly chopped',
+        '2', -- UserID
+        TRUE,
+        '2023-01-27 19:00:00',
+        'https://cdn.cleaneatingmag.com/wp-content/uploads/2022/02/CleanEating_CE101FebMar2022_MealPlan_Hearty-Chicken-Quinoa-Soup-with-Kale_web.jpg?crop=535:301&width=1070&enable=upscale',
+        'Author : Olimpia Davies, Designed by cleaneating',  -- img_title
+        4, -- dietary_preference
+        45 -- cooking_time  
         2   -- meal type (cuisines)
+    ),
+    (
+        37,
+        'Sarah Sweeney',
+        'Steak & Sweet Potato Tacos',
+        'Not Specified',
+        531, 38, 32, 30, 7, 559, -- calories, carbs, protein, fat, fibre, sodium
+        4,
+        'This tasty, full southwestern-style supper is entertaining. These tacos are similar to traditional steak tacos, but with sweet potato bits added.',
+        'Preheat the oven to 425°F. Line a baking sheet with parchment paper. Toss the sweet potato, cabbage, onion, oil, cumin, chipotle powder and one-half of salt and pepper on the prepared sheet. Roast until sweet potatoes are tender, 30 minutes. Sprinkle with cilantro.\nHeat a cast iron skillet over medium-high heat. Season steak with remaining salt and pepper. Reduce heat to medium. Cook steaks 3 minutes per side for medium-rare, or to desired doneness. Transfer steaks to a cutting board and let rest, covered for 5 minutes, then thinly slice. Top tortillas with steak, roasted vegetables and sour cream; top with avocado and hot sauce (if using). Sprinkle with squeezed lime juice. ',
+        '2 sweet potatoes, cut into 1-inch pieces \n2 cups sliced red cabbage \n1/2 red onion, sliced \n2 tbsp extra-virgin olive oil \n1 tsp each ground cumin and chipotle chile powder \n½ tsp each sea salt and ground black pepper, divided \n1/4 cup chopped fresh cilantro \n2 8-oz striploin steaks, trimmed \n1/4 cup full-fat sour cream \n2 limes, cut into wedges \n8 almond flour or corn tortillas, warmed \navocado slices and hot sauce, optional',
+        '1', -- UserID
+        TRUE,
+        '2023-01-13 11:00:00',
+        'https://cdn.cleaneatingmag.com/wp-content/uploads/2022/03/Steak-Sweet-Potato-Tacos-2400x1350-1.png?crop=535:301&width=1070&enable=upscale',
+        'Author : Roberto Caruso, Designed by cleaneating',  -- img_title
+        4, -- dietary_preference
+        35 -- cooking_time  
+        6   -- meal type (cuisines)
     );
 
 

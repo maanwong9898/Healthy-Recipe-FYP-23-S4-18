@@ -391,6 +391,7 @@ import React, { use } from "react";
 import Link from "next/link";
 import { useState, useEffect } from "react";
 import axiosInterceptorInstance from "../../../../axiosInterceptorInstance.js";
+import SecureStorage from "react-secure-storage";
 
 // router path: /businessUser/recipes/viewRecipe/[id]
 
@@ -626,14 +627,14 @@ const BusinessViewRecipe = ({ params }) => {
           <img
             className="h-auto w-full lg:max-w-lg rounded-lg ml-0 lg:ml-5 shadow-md"
             src={getImageUrlFromBlob(recipe?.imgBlob)}
-            alt={recipe?.title || "Recipe Image"}
+            alt={"Recipe Image"}
           />
         ) : (
           // If imgBlob is not available, display image from imgUrl
           <img
             className="h-auto w-full lg:max-w-lg rounded-lg ml-0 lg:ml-5 shadow-md"
             src={recipe?.img || "Not specified"}
-            alt="Not found"
+            alt="Recipe Image"
           />
         )}
         <div className="flex flex-col ml-0 lg:ml-4 mt-4">

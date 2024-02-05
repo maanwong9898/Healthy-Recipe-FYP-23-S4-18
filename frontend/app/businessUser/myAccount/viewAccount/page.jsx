@@ -4,6 +4,7 @@ import React from "react";
 import Link from "next/link";
 import { useState, useEffect } from "react";
 import axiosInterceptorInstance from "../../../axiosInterceptorInstance.js";
+import SecureStorage from "react-secure-storage";
 
 // router path for this page: /businessUser/myAccount/viewAccount
 // things to do:
@@ -31,8 +32,8 @@ const UpdateAccount = () => {
 
   const viewUserDashboard = async () => {
     try {
-      const userId = localStorage.getItem("userId");
-      const token = localStorage.getItem("token");
+      const userId = SecureStorage.getItem("userId");
+      const token = SecureStorage.getItem("token");
 
       const config = {
         headers: { Authorization: `Bearer ${token}` },
@@ -96,8 +97,8 @@ const UpdateAccount = () => {
     }
 
     try {
-      const userId = localStorage.getItem("userId");
-      const token = localStorage.getItem("token");
+      const userId = SecureStorage.getItem("userId");
+      const token = SecureStorage.getItem("token");
       const config = {
         headers: { Authorization: `Bearer ${token}` },
       };

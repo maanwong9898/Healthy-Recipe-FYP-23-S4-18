@@ -818,6 +818,7 @@ import { useRouter } from "next/navigation";
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import axiosInterceptorInstance from "../../../../axiosInterceptorInstance.js";
+import SecureStorage from "react-secure-storage";
 
 // router path: /businessUser/recipes/updateRecipe/[id]
 // this is the page to update a recipe
@@ -1123,7 +1124,7 @@ const UpdateRecipePage = ({ params }) => {
     // Use newImageBlob if available, otherwise fallback to original imageBlob
     const updatedImageBlob = newImageBlob || imageBlob;
 
-    const userId = localStorage.getItem("userId");
+    const userId = SecureStorage.getItem("userId");
 
     // Construct the payload
     const recipeData = {

@@ -4,6 +4,7 @@ import React from "react";
 import Link from "next/link";
 import { useState, useEffect } from "react";
 import axiosInterceptorInstance from "../../../axiosInterceptorInstance.js";
+import SecureStorage from "react-secure-storage";
 
 //router path for this page: /businessUser/myAccount/changePwd
 
@@ -40,7 +41,7 @@ const changeUserPwd = () => {
     });
 
     try {
-      const userId = localStorage.getItem("userId");
+      const userId = SecureStorage.getItem("userId");
       const updatedData = {
         id: userId,
         oldPassword: oldPwd,

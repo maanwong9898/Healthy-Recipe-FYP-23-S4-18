@@ -67,7 +67,7 @@ const userLogin = () => {
       // Check if token exists
       if (!token) {
         console.error("No token found");
-        router.push("/");
+        // router.push("/");
         return;
       }
 

@@ -6,6 +6,7 @@ import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import SearchIcon from "@mui/icons-material/Search";
 import SwapVertIcon from "@mui/icons-material/SwapVert";
+import SecureStorage from "react-secure-storage";
 
 // router path is /businessUser/businessBlogPost
 
@@ -21,7 +22,7 @@ const sortOptions = {
 
 // Fetch all blog posts from the backend - backend controller is BlogController
 const fetchBlogPosts = async () => {
-  const userID = localStorage.getItem("userId");
+  const userID = SecureStorage.getItem("userId");
   console.log("Current id", userID);
   try {
     const response = await axiosInterceptorInstance.get(
@@ -50,8 +51,6 @@ const fetchBlogAverage = async (blogId) => {
     return null; // or handle the error as you see fit
   }
 };
-
-//http://localhost:8080/blog/getAverage/1
 
 const MyBusinessBlogPosts = () => {
   const router = useRouter();

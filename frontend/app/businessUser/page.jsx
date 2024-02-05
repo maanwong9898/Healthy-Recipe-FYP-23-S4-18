@@ -8,64 +8,12 @@ import ArticleIcon from "@mui/icons-material/Article";
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
 import { Pie } from "react-chartjs-2";
 import axiosInterceptorInstance from "../axiosInterceptorInstance";
+import SecureStorage from "react-secure-storage";
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
 // home page for business user
 // router path: /businessUser
-
-// Fetch all blog posts from the backend - backend controller is BlogController
-const fetchBlogPosts = async () => {
-  const userID = localStorage.getItem("userId");
-  console.log("Current id", userID);
-  try {
-    const response = await axiosInterceptorInstance.get(
-      "/blog/findByUserId/" + userID
-    );
-
-    console.log("All business blog posts belongs to this user:", response.data);
-
-    return response.data;
-  } catch (error) {
-    console.error("Failed to fetch blog posts:", error);
-    throw error;
-  }
-};
-
-const fetchRecipes = async () => {
-  const userID = localStorage.getItem("userId");
-  try {
-    const response = await axiosInterceptorInstance.get(
-      "/recipe/findByUserId/" + userID
-    );
-
-    console.log("All recipes created belongs to this user:", response.data);
-
-    return response.data;
-  } catch (error) {
-    console.error("Failed to fetch recipes:", error);
-    throw error;
-  }
-};
-
-const fetchEducationcalContent = async () => {
-  const userID = localStorage.getItem("userId");
-  try {
-    const response = await axiosInterceptorInstance.get(
-      "/educationalContent/findByUserId/" + userID
-    );
-
-    console.log(
-      "All educational content created belongs to this user:",
-      response.data
-    );
-
-    return response.data;
-  } catch (error) {
-    console.error("Failed to fetch educational content:", error);
-    throw error;
-  }
-};
 
 const BusinessUserHomePage = () => {
   const router = useRouter();
@@ -77,83 +25,72 @@ const BusinessUserHomePage = () => {
   const [userDietaryPreferenceCount, setUserDietaryPreferenceCount] = useState(
     []
   );
-
-  // Calling dashboard API to get user account information
-  const viewUserDashboard = async () => {
-    try {
-      const userId = localStorage.getItem("userId");
-      const token = localStorage.getItem("token");
-
-      const config = {
-        headers: { Authorization: `Bearer ${token}` },
-      };
-
-      // Make the GET request to the userAndAdmin endpoint
-      const response = await axiosInterceptorInstance.get(
-        "/register/dashboard/" + userId,
-        config
-      );
-
-      setUserAccount(response.data);
-      console.log(response.data);
-    } catch (error) {
-      console.error("Error fetching user data", error);
-    }
-  };
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    viewUserDashboard();
-  }, []);
-
-  // set username of current user
-  useEffect(() => {
-    setUsername(userAccount ? userAccount.username : "");
-  }, [userAccount]);
-
-  const fetchDietaryPreferences = async () => {
-    try {
-      const response = await axiosInterceptorInstance.get(
-        "/registeredUsers/getDemo"
-      );
-      console.log("Fetched dietary preferences:", response.data);
-      setUserDietaryPreferenceCount(response.data);
-    } catch (error) {
-      console.error("Error fetching dietary preferences:", error);
-    }
-  };
-  useEffect(() => {
-    const fetchBlogPostsData = async () => {
-      try {
-        const posts = await fetchBlogPosts();
-        setBusinessBlogPost(posts); // Set the retrieved blog posts in the state
-      } catch (error) {
-        console.error("Failed to fetch blog posts:", error);
+    const checkAuthAndFetchData = async () => {
+      if (
+        !SecureStorage.getItem("token") ||
+        SecureStorage.getItem("role") !== "BUSINESS_USER"
+      ) {
+        // clear the storage and redirect to login page
+        SecureStorage.clear();
+        console.log("Redirecting to home page");
+        router.push("/");
+        return;
       }
+
+      try {
+        const userId = SecureStorage.getItem("userId");
+        const token = SecureStorage.getItem("token");
+        const config = {
+          headers: { Authorization: `Bearer ${token}` },
+        };
+
+        const blogPostsResponse = await axiosInterceptorInstance.get(
+          "/blog/findByUserId/" + userId,
+          config
+        );
+        const recipesResponse = await axiosInterceptorInstance.get(
+          "/recipe/findByUserId/" + userId,
+          config
+        );
+        const educationalContentResponse = await axiosInterceptorInstance.get(
+          "/educationalContent/findByUserId/" + userId,
+          config
+        );
+
+        setBusinessBlogPost(blogPostsResponse.data);
+        setRecipes(recipesResponse.data);
+        setEducationalContent(educationalContentResponse.data);
+
+        const userAccountResponse = await axiosInterceptorInstance.get(
+          "/register/dashboard/" + userId,
+          config
+        );
+        setUserAccount(userAccountResponse.data);
+        setUsername(
+          userAccountResponse.data ? userAccountResponse.data.username : ""
+        );
+
+        const dietaryPreferencesResponse = await axiosInterceptorInstance.get(
+          "/registeredUsers/getDemo"
+        );
+        setUserDietaryPreferenceCount(dietaryPreferencesResponse.data);
+      } catch (error) {
+        console.error("Error in data fetching", error);
+      }
+
+      setIsLoading(false);
     };
 
-    const fetchRecipesData = async () => {
-      try {
-        const getRecipes = await fetchRecipes();
-        setRecipes(getRecipes); // Set the retrieved recipes in the state
-      } catch (error) {
-        console.error("Failed to fetch recipes:", error);
-      }
-    };
+    checkAuthAndFetchData();
+  }, []); // router is a dependency
 
-    const fetchEducationcalContentData = async () => {
-      try {
-        const getEducationalContents = await fetchEducationcalContent();
-        setEducationalContent(getEducationalContents); // Set the retrieved recipes in the state
-      } catch (error) {
-        console.error("Failed to fetch educational content:", error);
-      }
-    };
-
-    fetchRecipesData();
-    fetchBlogPostsData();
-    fetchEducationcalContentData();
-    fetchDietaryPreferences();
-  }, []); // Empty dependency array ensures this runs once after component mounts
+  // Conditional Rendering Based on Authentication Status
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
 
   //Pie chart data for dietary preferences
   const dietaryPreferencePieData = {

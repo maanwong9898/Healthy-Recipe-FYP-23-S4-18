@@ -197,6 +197,20 @@ VALUES
         'https://cdn.cleaneatingmag.com/wp-content/uploads/2020/10/spicy-salmon-poke-bowls_82-web-1.jpg?crop=535:301&width=1070&enable=upscale',
         'Designed by cleaneating',  -- img_title
         '1' -- userid
+    ),
+    (
+        14,
+        'Taylor Hawkins',
+        'Weight Gain Meal Plan for Healthy Results',
+        TRUE,
+        'You could need to put on weight for a variety of reasons, such as cancer, digestive disorders, or loss of appetite. A high-protein, high-calorie diet can help you achieve your goals while being healthy.',
+        'You must consume more calories than you expend in order to gain weight. The majority of people require an extra 500 calories a day to achieve their weight-gain objective.',
+        'Maintain a diet rich in nutrients, eat five to six times a day, and dress your meals and snacks with high-calorie condiments. Food options that are high in calories and protein will help you meet your goals.',
+        '2023-11-06',
+        1, -- weight gain
+        'https://assets-global.website-files.com/623de5fee0c46d7bf3a5ff45/651c7825f0b63a838180c5a0_iStock-1433432507.jpg',
+        'Designed by Shutterstock',  -- img_title
+        '1' -- userid
     );
     
     

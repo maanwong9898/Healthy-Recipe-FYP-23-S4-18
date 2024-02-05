@@ -318,12 +318,19 @@ const MealPlanPage = () => {
           >
             {post.title}
           </h2>
-          <div
-            className="text-gray-700 text-base mb-4 line-clamp-3"
-            style={{ height: "4.5rem" }}
-          >
+          <p className="text-gray-700 text-base mb-4 line-clamp-3">
             <div className="whitespace-pre-line">{post.introduction}</div>
-          </div>
+          </p>
+          {/* Publisher */}
+          <p
+            className="text-gray-900 text-base font-semibold"
+            style={{ height: "3.5rem" }}
+          >
+            Publisher:{" "}
+            <span className="text-orange-600 font-bold tracking-tight">
+              {post?.publisher || "Not Specified"}
+            </span>
+          </p>
         </div>
         {/*to debug*/}
         {/* <div className="flex flex-wrap">

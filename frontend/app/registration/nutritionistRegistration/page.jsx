@@ -27,6 +27,11 @@ const NutritionistRegistration = () => {
   const handleCreateNutritionistAccount = async (event) => {
     event.preventDefault();
 
+    if (!newImageBlob) {
+      setError("Please upload the required certificate.");
+      return;
+    }
+
     if (
       !fullName.trim() ||
       !userName.trim() ||

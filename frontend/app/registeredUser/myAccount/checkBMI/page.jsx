@@ -68,15 +68,9 @@ const checkBMI = () => {
     }
   };
 
-  const handleHeightChange = (e) => {
-    setHeight(e.target.value);
-    setError("");
-    setBMI("");
-    setMsg("");
-  };
-
-  const handleWeightChange = (e) => {
-    setWeight(e.target.value);
+  // Clear Error msg on change
+  const clearErrorOnChange = (setter) => (e) => {
+    setter(e.target.value);
     setError("");
     setBMI("");
     setMsg("");
@@ -212,7 +206,7 @@ const checkBMI = () => {
                   id="height"
                   placeholder="Enter height in cm"
                   value={height}
-                  onChange={handleHeightChange}
+                  onChange={clearErrorOnChange(setHeight)}
                   className="border px-4 py-2 rounded-lg w-full lg:w-72 bg-white border-gray-300 text-gray-900 sm:text-sm"
                 />
               </div>
@@ -230,13 +224,15 @@ const checkBMI = () => {
                   id="weight"
                   placeholder="Enter weight in kg"
                   value={weight}
-                  onChange={handleWeightChange}
+                  onChange={clearErrorOnChange(setWeight)}
                   className="border px-4 py-2 rounded-lg w-full lg:w-72 bg-white border-gray-300 text-gray-900 sm:text-sm"
                 />
               </div>
 
               {/* ERROR */}
-              {error && <p className="text-red-500">{error}</p>}
+              {error && (
+                <p className="text-red-500 font-medium text-base">{error}</p>
+              )}
 
               {/* BUTTONS */}
               <div className="flex flex-row justify-start gap-4 mt-3">

@@ -71,6 +71,7 @@ const changeUserPwd = () => {
   const clearErrorOnChange = (setter) => (e) => {
     setter(e.target.value);
     setError("");
+    setSuccess("");
   };
 
   // Redirect to my account page

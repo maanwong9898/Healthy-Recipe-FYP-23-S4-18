@@ -127,20 +127,8 @@ const UpdateAccount = () => {
   };
 
   // Clear Error msg on change
-  const handleFullnameOnChange = (e) => {
-    setFullName(e.target.value);
-    setError("");
-    setSuccess("");
-  };
-
-  const handleUsernameOnChange = (e) => {
-    setUsername(e.target.value);
-    setError("");
-    setSuccess("");
-  };
-
-  const handleDobOnChange = (e) => {
-    setDOB(e.target.value);
+  const clearErrorOnChange = (setter) => (e) => {
+    setter(e.target.value);
     setError("");
     setSuccess("");
   };
@@ -282,7 +270,7 @@ const UpdateAccount = () => {
                     placeholder="Your Name"
                     className=" bg-white border border-gray-300 text-gray-900 sm:text-sm rounded-lg p-2.5"
                     value={fullName}
-                    onChange={handleFullnameOnChange}
+                    onChange={clearErrorOnChange(setFullName)}
                   />
 
                   {/* USERNAME */}
@@ -293,7 +281,7 @@ const UpdateAccount = () => {
                     placeholder="Your Username"
                     className=" bg-white border border-gray-300 text-gray-900 sm:text-sm rounded-lg p-2.5"
                     value={username}
-                    onChange={handleUsernameOnChange}
+                    onChange={clearErrorOnChange(setUsername)}
                   />
                 </div>
 
@@ -325,7 +313,7 @@ const UpdateAccount = () => {
                     name="dob"
                     max={todayDate}
                     value={dob}
-                    onChange={handleDobOnChange}
+                    onChange={clearErrorOnChange(setDOB)}
                     className="border px-4 py-2 rounded-lg w-full bg-white border-gray-300 text-gray-900 sm:text-sm"
                   ></input>
                 </div>

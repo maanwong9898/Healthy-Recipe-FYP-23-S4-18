@@ -84,9 +84,10 @@ const TrackWeight = () => {
   };
 
   // Clear error msg on change
-  const handleInputChange = (e) => {
-    setCurrentWeight(e.target.value);
+  const clearErrorOnChange = (setter) => (e) => {
+    setter(e.target.value);
     setError("");
+    setSuccess("");
   };
 
   // Function to handle deletion of a weight record
@@ -123,6 +124,7 @@ const TrackWeight = () => {
       setTimeout(() => {
         setSuccess("");
       }, 5000);
+      setError("");
 
       // Refresh weight data
       viewUserWeight();
@@ -270,7 +272,7 @@ const TrackWeight = () => {
                     name="currentWeight"
                     placeholder="Enter weight in kg"
                     value={currentWeight}
-                    onChange={handleInputChange}
+                    onChange={clearErrorOnChange(setCurrentWeight)}
                     className="border px-4 py-2 rounded-lg w-full lg:w-72 bg-white border-gray-300 text-gray-900 sm:text-sm"
                   />
                   <span className="ml-2">kg</span>
@@ -305,14 +307,7 @@ const TrackWeight = () => {
                   Save
                 </button>
               </div>
-              {/* <div>
-            <p
-              // onClick={handleWeightHistory}
-              className="mt-4 text-blue-600 hover:underline text-sm dark:text-blue-500 cursor-pointer"
-            >
-              Show History
-            </p>
-          </div> */}
+
               <div>
                 <h2 className="text-lg font-semibold mb-4 mt-5">
                   Weight History

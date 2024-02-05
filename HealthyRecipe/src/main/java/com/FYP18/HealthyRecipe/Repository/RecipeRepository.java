@@ -6,7 +6,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.FYP18.HealthyRecipe.DTO.RecipeDTO;
+import com.FYP18.HealthyRecipe.DTO.RecipeDTO; 
 import com.FYP18.HealthyRecipe.Entity.Recipe;
 import com.FYP18.HealthyRecipe.Entity.User;
 
@@ -25,6 +25,14 @@ public interface RecipeRepository extends JpaRepository<Recipe, Long>{
     @Transactional
     @Query("DELETE FROM Recipe b WHERE b.ID = :id")
     void deleteByRecipeId(Long id);
+
+
+    @Query("SELECT r from Recipe r WHERE r.active = true")
+    List<Recipe> findAllActiveRecipes();
+
+
+    @Query("SELECT Count(r) from Recipe r WHERE r.active = true")
+    Integer findAllActiveRecipesCount();
 
     @Modifying
     @Transactional 
@@ -46,4 +54,12 @@ public interface RecipeRepository extends JpaRepository<Recipe, Long>{
     // @Query(value ="SELECT r.title AS title, r.description AS description FROM Recipe r WHERE r.title LIKE %:keyword%", nativeQuery = false)
     List<RecipeDTO> findRecipeDTOsByIds(@Param("ids") List<Long> ids);
 
+    @Query(value="SELECT COUNT(r) AS count FROM Recipe r WHERE r.userID.id = :id")
+    Integer findCountById(@Param("id") String id);
+
+
+    // @Query(value="SELECT r.userID.id AS id, COUNT(r) AS count, 'Recipe' AS type FROM Recipe r WHERE r.userID.id = :id")
+    // List<TypeCountIdRequest> findCountById(@Param("id") String id);
+
+    // SELECT userId, COUNT(userid) FROM RECIPE GROUP BY USERID;;
 }

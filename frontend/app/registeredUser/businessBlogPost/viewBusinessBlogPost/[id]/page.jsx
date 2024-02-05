@@ -4,6 +4,7 @@ import React from "react";
 import Link from "next/link";
 import { useState, useEffect } from "react";
 import axiosInterceptorInstance from "../../../../axiosInterceptorInstance.js";
+import SecureStorage from "react-secure-storage";
 
 // this is to view particular blog post from blog page
 // router path: /registeredUser/businessBlogPost/viewBusinessBlogPost/[id]
@@ -57,7 +58,7 @@ const ViewBusinessBlogPost = ({ params }) => {
   useEffect(() => {
     setIsLoading(true); // Set loading state to true
 
-    const userId = localStorage.getItem("userId");
+    const userId = SecureStorage.getItem("userId");
     if (userId) {
       console.log("Registered user id is: ", userId);
     } else {
@@ -96,7 +97,7 @@ const ViewBusinessBlogPost = ({ params }) => {
       });
 
       // Get the ID of the current user
-      const currentUserId = localStorage.getItem("userId");
+      const currentUserId = SecureStorage.getItem("userId");
 
       // Check if current user has already submitted a review
       const userReview = response.data.find(
@@ -123,7 +124,7 @@ const ViewBusinessBlogPost = ({ params }) => {
     // Construct the payload according to your API requirements
     const payload = {
       blogReviewRatingId: {
-        UserID: localStorage.getItem("userId"), // The ID of the user submitting the review
+        UserID: SecureStorage.getItem("userId"), // The ID of the user submitting the review
         blogID: businessBlogPost.id, // The ID of the blog post being reviewed
       },
       rating: newRating,

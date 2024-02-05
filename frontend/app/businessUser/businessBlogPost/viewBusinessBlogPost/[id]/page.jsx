@@ -154,7 +154,7 @@ const ViewBusinessBlogPost = ({ params }) => {
       <article>
         <img
           src={businessBlogPost.img}
-          alt="Designed by Freepik"
+          alt="blog post image"
           className="max-w-full mx-auto mt-8 mb-8 sm:max-w-xl sm:mt-16 sm:mb-16 rounded-lg shadow-xl"
         />
         {/* Info*/}

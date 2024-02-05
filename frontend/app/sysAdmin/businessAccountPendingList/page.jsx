@@ -5,6 +5,7 @@ import Link from "next/link";
 import { useState, useEffect } from "react";
 import axiosInterceptorInstance from "../../axiosInterceptorInstance.js";
 import SwapVertIcon from "@mui/icons-material/SwapVert";
+import SysAdminNavBar from "../../components/navigation/sysAdminNavBar";
 
 // router path: /sysAdmin/businessAccountPendingList
 // this is to view the list of business users and dietitians that status are waiting for verification
@@ -125,9 +126,10 @@ const BusinessAccountPendingList = () => {
       setCreatedDateOrder("LATEST");
     }
   };
-  
+
   return (
     <div className="px-2 sm:px-5 min-h-screen flex flex-col py-5">
+      <SysAdminNavBar />
       <h1 className="text-2xl lg:text-5xl text-gray-900 p-3 mb-4 font-bold text-center sm:text-center">
         Pending Business Account List for Verification
       </h1>

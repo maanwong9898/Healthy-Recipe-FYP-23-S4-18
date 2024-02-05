@@ -6,6 +6,7 @@ import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import SearchIcon from "@mui/icons-material/Search";
 import SwapVertIcon from "@mui/icons-material/SwapVert";
+import SecureStorage from "react-secure-storage";
 
 // router path is /nutritionist/mealPlan
 
@@ -21,8 +22,7 @@ const sortOptions = {
 
 // Fetch all meal plan from the backend - backend controller is MealPlanController
 const fetchMealPlans = async () => {
-  const userID = localStorage.getItem("userId");
-  console.log("Current id", userID);
+  const userID = SecureStorage.getItem("userId");
   try {
     const response = await axiosInterceptorInstance.get(
       "/mealPlan/findByUserId/" + userID
@@ -58,8 +58,6 @@ const fetchMealPlanAverage = async (mealPlanId) => {
     return null; // or handle the error as you see fit
   }
 };
-
-//http://localhost:8080/blog/getAverage/1
 
 const MyMealPlan = () => {
   const router = useRouter();

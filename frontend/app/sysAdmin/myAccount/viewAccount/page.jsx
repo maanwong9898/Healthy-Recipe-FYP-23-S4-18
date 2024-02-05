@@ -4,6 +4,8 @@ import React from "react";
 import Link from "next/link";
 import { useState, useEffect } from "react";
 import axiosInterceptorInstance from "../../../axiosInterceptorInstance.js";
+import SecureStorage from "react-secure-storage";
+import SysAdminNavBar from "../../../components/navigation/sysAdminNavBar";
 
 // things to do:
 // edit the user account details
@@ -37,8 +39,8 @@ const UpdateAccount = () => {
 
   const viewUserDashboard = async () => {
     try {
-      const userId = localStorage.getItem("userId");
-      const token = localStorage.getItem("token");
+      const userId = SecureStorage.getItem("userId");
+      const token = SecureStorage.getItem("token");
 
       const config = {
         headers: { Authorization: `Bearer ${token}` },
@@ -80,64 +82,60 @@ const UpdateAccount = () => {
   const handleAccountUpdate = async (event) => {
     event.preventDefault();
 
-    // ... existing validation code
-
     // Check if fields are not empty
-    if (fullName === "" || email === "" || dob === "") {
+    if (fullName === "" || dob === "" || username === "") {
       setError("All fields are required.");
-
-      // Check if email is valid
-    } else if (!emailValidation.test(email)) {
-      setError("Invalid email address.");
 
       // Success msg
     } else {
-      setSuccess("Update Successful!");
-      // Remove success msg after 5 seconds
-      setTimeout(() => {
-        setSuccess("");
-      }, 5000);
-      // Clear error messages after update
-      setError("");
+      try {
+        const userId = SecureStorage.getItem("userId");
+        const token = SecureStorage.getItem("token");
+        const config = {
+          headers: { Authorization: `Bearer ${token}` },
+        };
+
+        const updatedData = {
+          id: userId,
+          fullName,
+          username,
+          email,
+          dob,
+          contactNumber,
+          companyName,
+          postalCode,
+          companyAddress,
+          uen,
+          allergies,
+          dietaryPreferences,
+          healthGoal,
+        };
+
+        console.log("Updated data:", updatedData);
+
+        const response = await axiosInterceptorInstance.post(
+          "/register/dashboardSet", // Adjust URL if needed
+          updatedData,
+          config
+        );
+
+        console.log("Account updated:", response.data);
+        setSuccess("Account updated successfully!");
+        setTimeout(() => {
+          setSuccess("");
+        }, 5000);
+      } catch (error) {
+        console.error("Error updating account", error);
+        setError("Failed to update account.");
+      }
     }
+  };
 
-    try {
-      const userId = localStorage.getItem("userId");
-      const token = localStorage.getItem("token");
-      const config = {
-        headers: { Authorization: `Bearer ${token}` },
-      };
-
-      const updatedData = {
-        id: userId,
-        fullName,
-        username,
-        email,
-        dob,
-        contactNumber,
-        companyName,
-        postalCode,
-        companyAddress,
-        uen,
-        allergies,
-        dietaryPreferences,
-        healthGoal,
-      };
-
-      console.log("Updated data:", updatedData);
-
-      const response = await axiosInterceptorInstance.post(
-        "/register/dashboardSet", // Adjust URL if needed
-        updatedData,
-        config
-      );
-
-      console.log("Account updated:", response.data);
-      setSuccess("Account updated successfully!");
-    } catch (error) {
-      console.error("Error updating account", error);
-      setError("Failed to update account.");
-    }
+  // Clear Error msg on change
+  const clearErrorOnChange = (setter) => (e) => {
+    setter(e.target.value);
+    setError("");
+    setSuccess("");
   };
 
   // Redirect to my account page
@@ -162,6 +160,7 @@ const UpdateAccount = () => {
 
   return (
     <div className="flex flex-col min-h-screen">
+      <SysAdminNavBar />
       <div className="flex justify-center">
         <div className="p-5 max-w-3xl w-full mx-5 items-center ">
           <div className="bg-white border border-gray-100 rounded-lg shadow">
@@ -215,9 +214,9 @@ const UpdateAccount = () => {
                     id="fullName"
                     name="fullName"
                     placeholder="Your Name"
-                    className=" bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg p-2.5"
+                    className=" bg-white border border-gray-300 text-gray-900 sm:text-sm rounded-lg p-2.5"
                     value={fullName}
-                    onChange={(e) => setFullName(e.target.value)}
+                    onChange={clearErrorOnChange(setFullName)}
                   />
 
                   {/* USERNAME */}
@@ -226,23 +225,23 @@ const UpdateAccount = () => {
                     id="userName"
                     name="userName"
                     placeholder="Your Username"
-                    className=" bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg p-2.5"
+                    className=" bg-white border border-gray-300 text-gray-900 sm:text-sm rounded-lg p-2.5"
                     value={username}
-                    onChange={(e) => setUsername(e.target.value)}
+                    onChange={clearErrorOnChange(setUsername)}
                   />
                 </div>
 
                 {/* EMAIL */}
                 <div className="flex flex-col mb-3.5">
-                  <label className="mb-1">
+                  <label htmlFor="email" className="mb-1">
                     Email:
-                    <span className="text-red-500">*</span>
                   </label>
                   <input
                     type="text"
                     id="email"
                     name="email"
-                    className="border px-4 py-2 rounded-lg w-full bg-white border-gray-300 text-gray-900 sm:text-sm"
+                    disabled
+                    className="border px-4 py-2 rounded-lg w-full bg-gray-300 border-gray-300 text-gray-900 sm:text-sm"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                   />
@@ -250,7 +249,7 @@ const UpdateAccount = () => {
 
                 {/* DOB */}
                 <div className="flex flex-col mb-3.5">
-                  <label className="mb-1">
+                  <label htmlFor="dob" className="mb-1">
                     Date of Birth:
                     <span className="text-red-500">*</span>
                   </label>
@@ -260,19 +259,27 @@ const UpdateAccount = () => {
                     name="dob"
                     max={todayDate}
                     value={dob}
-                    onChange={(e) => setDOB(e.target.value)}
+                    onChange={clearErrorOnChange(setDOB)}
                     className="border px-4 py-2 rounded-lg w-full bg-white border-gray-300 text-gray-900 sm:text-sm"
                   ></input>
                 </div>
-                <p className="text-red-500 text-sm">{error}</p>
-                <p className="text-green-500 text-sm">{success}</p>
+
+                {/* Error and success msg */}
+                {error && (
+                  <p className="text-red-500 text-base font-medium">{error}</p>
+                )}
+                {success && (
+                  <p className="text-green-500 text-base font-medium">
+                    {success}
+                  </p>
+                )}
 
                 {/* UPDATE BTN */}
-                <div className="flex flex-row justify-end">
+                <div className="flex flex-row justify-start mt-3">
                   <button
                     type="submit"
                     onClick={handleAccountUpdate}
-                    className=" bg-blue-600 hover:bg-blue-700 text-white w-24 rounded-lg font-bold py-2 ml-auto"
+                    className=" bg-blue-600 hover:bg-blue-700 text-white w-24 rounded-lg font-bold py-2"
                   >
                     Update
                   </button>

@@ -6,6 +6,8 @@ import axiosInterceptorInstance from "../../../axiosInterceptorInstance.js";
 import SearchIcon from "@mui/icons-material/Search";
 import AddCircleIcon from "@mui/icons-material/AddCircle";
 import RemoveCircleIcon from "@mui/icons-material/RemoveCircle";
+import SecureStorage from "react-secure-storage";
+
 // https://uiwjs.github.io/react-md-editor/
 
 // router path: /nutritionist/mealPlan/createMealPlan
@@ -37,7 +39,6 @@ const CreateMealPlan = () => {
   // success and error state
   const [error, setError] = useState("");
   const [success, setSuccess] = useState(false);
-  const [userId, setUserId] = useState("");
 
   // States for recipe search
   const [searchTerm, setSearchTerm] = useState("");
@@ -149,12 +150,6 @@ const CreateMealPlan = () => {
   };
 
   useEffect(() => {
-    const storedUserId = localStorage.getItem("userId"); // Retrieve user ID from localStorage
-    console.log("Current id", storedUserId);
-    if (storedUserId) {
-      setUserId(storedUserId);
-    }
-
     // Fetch all health goal(meal plan) categories from backend
     const fetchCategories = async () => {
       console.log("Fetching health goal categories...");
@@ -235,6 +230,8 @@ const CreateMealPlan = () => {
     console.log("Create method called.");
 
     console.log("category id:", category);
+
+    const userId = SecureStorage.getItem("userId");
 
     // Construct the payload according to the required format
     const mealPlanData = {

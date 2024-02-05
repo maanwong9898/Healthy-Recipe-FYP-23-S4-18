@@ -6,6 +6,7 @@ import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import SearchIcon from "@mui/icons-material/Search";
 import SwapVertIcon from "@mui/icons-material/SwapVert";
+import SecureStorage from "react-secure-storage";
 
 // router path is /businessUser/educationalContent
 
@@ -21,8 +22,7 @@ const sortOptions = {
 
 // Fetch all educational contents from the backend - backend controller is EducationalContentController
 const fetchEducationalContent = async () => {
-  const userID = localStorage.getItem("userId");
-  console.log("Current id", userID);
+  const userID = SecureStorage.getItem("userId");
   try {
     const response = await axiosInterceptorInstance.get(
       "/educationalContent/findByUserId/" + userID

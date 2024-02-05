@@ -3,6 +3,7 @@ import { useRouter } from "next/navigation";
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import axiosInterceptorInstance from "../../../axiosInterceptorInstance.js";
+import SecureStorage from "react-secure-storage";
 
 // https://uiwjs.github.io/react-md-editor/
 
@@ -54,12 +55,6 @@ const CreateEducationalContent = () => {
   };
 
   useEffect(() => {
-    const storedUserId = localStorage.getItem("userId"); // Retrieve user ID from localStorage
-    console.log("Current id", storedUserId);
-    if (storedUserId) {
-      setUserId(storedUserId);
-    }
-
     // Fetch all business blog categories from backend
     const fetchCategories = async () => {
       console.log("Fetching categories...");
@@ -123,6 +118,7 @@ const CreateEducationalContent = () => {
     }
 
     console.log("category id:", category);
+    const userId = SecureStorage.getItem("userId");
 
     // Construct the payload according to the required format
     const eduContentData = {

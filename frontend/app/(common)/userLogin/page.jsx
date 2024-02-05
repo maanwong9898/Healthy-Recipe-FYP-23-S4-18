@@ -9,6 +9,7 @@ import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
 import axiosInterceptorInstance from "../../axiosInterceptorInstance.js";
 import { jwtDecode } from "jwt-decode";
 import Footer from "../../components/footer";
+import SecureStorage from "react-secure-storage";
 
 // router path: /userLogin
 
@@ -61,13 +62,12 @@ const userLogin = () => {
   const fetchUserInfo = async () => {
     console.log("Fetching user info...");
     try {
-      // Retrieve the token from localStorage
-      const token = localStorage.getItem("token");
+      const token = SecureStorage.getItem("token");
 
       // Check if token exists
       if (!token) {
         console.error("No token found");
-        router.push("/");
+        // router.push("/");
         return;
       }
 
@@ -77,44 +77,8 @@ const userLogin = () => {
       // check what payload is in the token
       console.log(decodedToken);
 
-      // Set the user info in localStorage (role and id)
-      localStorage.setItem("role", decodedToken.role);
-      localStorage.setItem("userId", decodedToken.id);
-
-      {
-        /* 
-          exp : 1706024535
-
-          iat : 1705160535
-          
-          id : "1"
-
-          role : "ADMIN"
-
-          sub  : "1@gmail.com"
-        */
-      }
-
-      // const payload = JSON.parse(atob(token.split(".")[1])); // Decode base64 payload of the token
-      // const currentTime = Date.now() / 1000; // Get current time in seconds
-
-      // if (payload.exp < currentTime) {
-      //   // Token has expired
-      //   // Prompt user to log in again or automatically log out
-      //   localStorage.removeItem("token"); // Remove the expired token
-      //   // Redirect to login or do a full page refresh to clear app state
-      //   window.location.href = "/login";
-      // } else if (payload.exp > currentTime) {
-      //   // Token is still valid
-      //   // check what time is it
-      //   console.log("Current time: " + currentTime);
-
-      //   // check what time is the token expired
-      //   console.log("Token expired at: " + payload.exp);
-
-      //   // Do whatever you want with the token
-      //   console.log("token is still valid");
-      // }
+      SecureStorage.setItem("role", decodedToken.role);
+      SecureStorage.setItem("userId", decodedToken.id);
 
       // Set up the authorization header with the bearer token
       const config = {
@@ -148,8 +112,9 @@ const userLogin = () => {
 
       const { token } = response.data; // Destructure the token from response data
 
-      // Now you can store the token in localStorage and redirect the user as needed
-      localStorage.setItem("token", token);
+      SecureStorage.setItem("token", token);
+
+      console.log("the current token ", SecureStorage.getItem("token"));
 
       console.log("Login details :", response.data);
       console.log("the error message : ", response.data.error);
@@ -161,7 +126,7 @@ const userLogin = () => {
       await fetchUserInfo();
 
       // Redirect based on profile type
-      const profile = localStorage.getItem("role");
+      const profile = SecureStorage.getItem("role");
       switch (profile) {
         case "ADMIN":
           router.push("/sysAdmin");
@@ -294,3 +259,36 @@ const userLogin = () => {
 };
 
 export default userLogin;
+
+/* 
+    exp : 1706024535
+
+    iat : 1705160535
+    
+    id : "1"
+
+    role : "ADMIN"
+
+    sub  : "1@gmail.com"
+  */
+
+// const payload = JSON.parse(atob(token.split(".")[1])); // Decode base64 payload of the token
+// const currentTime = Date.now() / 1000; // Get current time in seconds
+
+// if (payload.exp < currentTime) {
+//   // Token has expired
+//   // Prompt user to log in again or automatically log out
+//   localStorage.removeItem("token"); // Remove the expired token
+//   // Redirect to login or do a full page refresh to clear app state
+//   window.location.href = "/login";
+// } else if (payload.exp > currentTime) {
+//   // Token is still valid
+//   // check what time is it
+//   console.log("Current time: " + currentTime);
+
+//   // check what time is the token expired
+//   console.log("Token expired at: " + payload.exp);
+
+//   // Do whatever you want with the token
+//   console.log("token is still valid");
+// }

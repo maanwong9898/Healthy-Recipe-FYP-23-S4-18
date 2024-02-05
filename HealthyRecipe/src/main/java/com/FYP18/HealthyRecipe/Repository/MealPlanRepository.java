@@ -33,5 +33,8 @@ public interface MealPlanRepository extends JpaRepository<MealPlan,Long> {
     @Modifying 
     @Query("SELECT r FROM MealPlan r WHERE r.title LIKE %:keyword%")
     List<MealPlan> findByKeyword(@Param("keyword") String keyword);
-   
+    
+    @Query(value="SELECT COUNT(r) AS count FROM MealPlan r WHERE r.userID.id = :id")
+    Integer findCountById(@Param("id") String id);
+
 }

@@ -46,12 +46,6 @@ const ViewEduContent = ({ params }) => {
 
   useEffect(() => {
     setIsLoading(true); // Set loading state to true
-    const userId = localStorage.getItem("userId");
-    if (userId) {
-      console.log("Registered user id is: ", userId);
-    } else {
-      console.log("User ID not found in local storage");
-    }
 
     const postId = decodeURIComponent(params.id); // Make sure to decode the ID
     fetchEduContentById(postId)
@@ -78,20 +72,6 @@ const ViewEduContent = ({ params }) => {
 
       // Assuming response.data is the array of reviews for the given educationalContentId
       setReviewsAndRatings(response.data);
-
-      // Optionally, log each review to the console
-      response.data.forEach((reviewData, index) => {
-        console.log(`Review ${index + 1}:`, reviewData.review);
-      });
-
-      // Get the ID of the current user
-      const currentUserId = localStorage.getItem("userId");
-
-      // Check if current user has already submitted a review
-      const userReview = response.data.find(
-        (review) => review.userDTO.id === currentUserId
-      );
-      setHasAlreadyReviewed(!!userReview);
     } catch (error) {
       console.error("Failed to fetch ratings and reviews:", error);
     }
@@ -178,7 +158,7 @@ const ViewEduContent = ({ params }) => {
           <article>
             <img
               src={eduContent.img}
-              alt="Designed by Freepik"
+              alt="Educational Content Image"
               className="max-w-full mx-auto mt-8 mb-8 sm:max-w-xl sm:mt-16 sm:mb-16 rounded-lg shadow-xl"
             />
             {/* Info*/}

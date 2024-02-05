@@ -4,6 +4,8 @@ import React from "react";
 import Link from "next/link";
 import { useState, useEffect } from "react";
 import axiosInterceptorInstance from "../../../axiosInterceptorInstance.js";
+import SecureStorage from "react-secure-storage";
+import SysAdminNavBar from "../../../components/navigation/sysAdminNavBar";
 
 //router path for this page: /sysAdmin/myAccount/changePwd
 
@@ -40,7 +42,7 @@ const changeUserPwd = () => {
     });
 
     try {
-      const userId = localStorage.getItem("userId");
+      const userId = SecureStorage.getItem("userId");
       const updatedData = {
         id: userId,
         oldPassword: oldPwd,
@@ -72,6 +74,7 @@ const changeUserPwd = () => {
   const clearErrorOnChange = (setter) => (e) => {
     setter(e.target.value);
     setError("");
+    setSuccess("");
   };
 
   // Redirect to my account page
@@ -96,6 +99,7 @@ const changeUserPwd = () => {
 
   return (
     <div className="flex flex-col min-h-screen">
+      <SysAdminNavBar />
       <div className="flex justify-center">
         <div className="p-5 max-w-3xl w-full mx-5 items-center ">
           <div className="bg-white border border-gray-100 rounded-lg shadow">
@@ -185,24 +189,24 @@ const changeUserPwd = () => {
                 </div>
                 {/* ERROR MESSAGE */}
                 {error && (
-                  <div className="text-red-500 text-sm font-bold mt-2">
+                  <div className="text-red-500 text-base font-medium">
                     {error}
                   </div>
                 )}
 
                 {/* SUCCESS MESSAGE */}
                 {success && (
-                  <div className="text-green-500 text-sm font-bold mt-2">
+                  <div className="text-green-500 text-base font-medium">
                     {success}
                   </div>
                 )}
 
                 {/* UPDATE BTN */}
-                <div className="flex flex-row justify-end">
+                <div className="flex flex-row justify-start mt-3">
                   <button
                     type="submit"
                     onClick={handlePwdChange}
-                    className="bg-blue-600 hover:bg-blue-700 text-white w-24 rounded-lg font-bold py-2 px-4 ml-auto"
+                    className="bg-blue-600 hover:bg-blue-700 text-white w-24 rounded-lg font-bold py-2 px-4"
                   >
                     Update
                   </button>

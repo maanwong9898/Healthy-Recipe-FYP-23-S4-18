@@ -5,6 +5,7 @@ import React, { use } from "react";
 import Link from "next/link";
 import { useState, useEffect } from "react";
 import axiosInterceptorInstance from "../../../../axiosInterceptorInstance.js";
+import SecureStorage from "react-secure-storage";
 
 // router path: /registeredUser/dietaryPreference/updatePreference
 // cancel btn to redirect to dietary preference page
@@ -43,8 +44,8 @@ const UpdateDietaryPreference = () => {
 
   const viewUserDashboard = async () => {
     try {
-      const userId = localStorage.getItem("userId");
-      const token = localStorage.getItem("token");
+      const userId = SecureStorage.getItem("userId");
+      const token = SecureStorage.getItem("token");
 
       const config = {
         headers: { Authorization: `Bearer ${token}` },
@@ -183,28 +184,10 @@ const UpdateDietaryPreference = () => {
   const handlePreferencesUpdate = async (event) => {
     event.preventDefault();
 
-    // Check if fields are not empty
-    if (fullName === "" || email === "" || dob === "") {
-      setError("All fields are required.");
-
-      // Check if email is valid
-    } else if (!emailValidation.test(email)) {
-      setError("Invalid email address.");
-
-      // Success msg
-    } else {
-      setSuccess("Update Successful!");
-      // Remove success msg after 5 seconds
-      setTimeout(() => {
-        setSuccess("");
-      }, 5000);
-      // Clear error messages after update
-      setError("");
-    }
-
     try {
-      const userId = localStorage.getItem("userId");
-      const token = localStorage.getItem("token");
+      const userId = SecureStorage.getItem("userId");
+      const token = SecureStorage.getItem("token");
+
       const config = {
         headers: { Authorization: `Bearer ${token}` },
       };
@@ -242,6 +225,12 @@ const UpdateDietaryPreference = () => {
       console.error("Error updating preferences", error);
       setError("Failed to update preferences.");
     }
+  };
+
+  // Redirect back to dietary preference page
+  const handleCancelUpdate = (event) => {
+    event.preventDefault();
+    router.push("/registeredUser/myAccount/dietaryPreference");
   };
 
   // Redirect to my account page
@@ -399,7 +388,7 @@ const UpdateDietaryPreference = () => {
 
                   <div className="grid lg:grid-cols-4 grid-cols-3 gap-10 w-full lg:w-72">
                     {allergyCategory.map((cat, index) => (
-                      <label key={index} className="mr-24 mt-3 flex flex-row">
+                      <div className="flex items-center" key={index}>
                         <input
                           type="checkbox"
                           name="allergies"
@@ -411,7 +400,7 @@ const UpdateDietaryPreference = () => {
                           className="w-4 h-4 bg-gray-100 border-gray-300 rounded mr-2"
                         />
                         {cat.subcategoryName}
-                      </label>
+                      </div>
                     ))}
                   </div>
                 </div>
@@ -439,22 +428,22 @@ const UpdateDietaryPreference = () => {
 
                 {/* ERROR MESSAGE */}
                 {error && (
-                  <div className="text-red-500 text-sm font-bold mt-2">
+                  <div className="text-red-500 text-base font-medium mt-3">
                     {error}
                   </div>
                 )}
 
                 {/* SUCCESS MESSAGE */}
                 {success && (
-                  <div className="text-green-500 text-sm font-bold mt-2">
+                  <div className="text-green-500 text-base font-medium mt-3">
                     {success}
                   </div>
                 )}
 
                 {/* BUTTON */}
-                <div className="flex flex-row justify-start gap-4 mt-3">
+                <div className="flex flex-row justify-start gap-4 mt-5">
                   <button
-                    //onClick={handleCancelUpdate}
+                    onClick={handleCancelUpdate}
                     className="bg-gray-200 hover:bg-gray-300 text-gray-900 w-24 rounded-lg font-semibold py-2"
                   >
                     Cancel

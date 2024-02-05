@@ -1,6 +1,6 @@
 "use client";
 import { useRouter } from "next/navigation";
-import React from "react";
+import React, { use } from "react";
 import { useState, useEffect } from "react";
 
 const checkBMI = () => {
@@ -8,6 +8,8 @@ const checkBMI = () => {
   const [weight, setWeight] = useState("");
   const [bmi, setBMI] = useState("");
   const [msg, setMsg] = useState("");
+  const [msgClass, setMsgClass] = useState("");
+  const [error, setError] = useState("");
   const router = useRouter();
   const [isTabSelected, setIsTabSelected] = useState("checkBMI");
 
@@ -17,11 +19,24 @@ const checkBMI = () => {
     setWeight("");
     setBMI("");
     setMsg("");
+    setError("");
   };
 
+  // Set color for BMI range
+  const requireAttentionClass = "text-red-500";
+  const normalClass = "text-green-500";
+
   const calculateBMI = () => {
+    console.log("Calculating BMI...");
     // Check if height and weight is not null
-    if (height && weight) {
+    if (!height || !weight) {
+      setError("Please enter both height and weight.");
+    } else if (isNaN(height) || isNaN(weight)) {
+      setError("Please enter a only numeric value for height and weight.");
+    } else if (height < 0 || weight < 0) {
+      setError("Please enter a valid input");
+    } else {
+      // Calculate BMI
       const heightInMeters = height / 100;
       const bmiVal = (weight / (heightInMeters * heightInMeters)).toFixed(2);
       setBMI(bmiVal);
@@ -31,22 +46,34 @@ const checkBMI = () => {
         setMsg(
           "Oh No! You are in the underweight range. Aim to have a balanced meal."
         );
+        setMsgClass(requireAttentionClass);
       } else if (bmiVal >= 18.5 && bmiVal < 22.9) {
         setMsg(
           "Yay! You are in the normal and healthy range. Keep up and maintain your weight with a balanced meal!"
         );
+        setMsgClass(normalClass);
       } else if (bmiVal >= 23 && bmiVal < 29.9) {
         setMsg(
           "Oh No! You are in the overweight range. Aim to reduce your caloric intake and increase physical activities."
         );
+        setMsgClass(requireAttentionClass);
       } else if (bmiVal >= 30) {
         setMsg(
           "Watch Out! You are in the obese range. Aim to reduce your caloric intake and increase physical activities."
         );
+        setMsgClass(requireAttentionClass);
       } else {
         setBMI("");
       }
     }
+  };
+
+  // Clear Error msg on change
+  const clearErrorOnChange = (setter) => (e) => {
+    setter(e.target.value);
+    setError("");
+    setBMI("");
+    setMsg("");
   };
 
   // Redirect to my account page
@@ -179,7 +206,7 @@ const checkBMI = () => {
                   id="height"
                   placeholder="Enter height in cm"
                   value={height}
-                  onChange={(e) => setHeight(e.target.value)}
+                  onChange={clearErrorOnChange(setHeight)}
                   className="border px-4 py-2 rounded-lg w-full lg:w-72 bg-white border-gray-300 text-gray-900 sm:text-sm"
                 />
               </div>
@@ -197,12 +224,18 @@ const checkBMI = () => {
                   id="weight"
                   placeholder="Enter weight in kg"
                   value={weight}
-                  onChange={(e) => setWeight(e.target.value)}
+                  onChange={clearErrorOnChange(setWeight)}
                   className="border px-4 py-2 rounded-lg w-full lg:w-72 bg-white border-gray-300 text-gray-900 sm:text-sm"
                 />
               </div>
+
+              {/* ERROR */}
+              {error && (
+                <p className="text-red-500 font-medium text-base">{error}</p>
+              )}
+
               {/* BUTTONS */}
-              <div className="flex flex-row justify-start gap-4">
+              <div className="flex flex-row justify-start gap-4 mt-3">
                 <button
                   onClick={resetVal}
                   className="bg-gray-200 hover:bg-gray-300 text-gray-900 w-24 rounded-lg font-semibold py-2"
@@ -217,8 +250,8 @@ const checkBMI = () => {
                 </button>
               </div>
               {bmi && msg && (
-                <div className="mt-5 text-gray-900">
-                  <p>Your BMI: {bmi} kg/m²</p>
+                <div className={msgClass}>
+                  <p className="mt-5">Your BMI: {bmi} kg/m²</p>
                   <p>Result: {msg}</p>
                 </div>
               )}

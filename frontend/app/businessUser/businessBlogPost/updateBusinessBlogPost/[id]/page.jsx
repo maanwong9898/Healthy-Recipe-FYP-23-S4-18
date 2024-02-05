@@ -4,6 +4,7 @@ import React from "react";
 import Link from "next/link";
 import { useState, useEffect } from "react";
 import axiosInterceptorInstance from "../../../../axiosInterceptorInstance.js";
+import SecureStorage from "react-secure-storage";
 
 const fetchBlogPostById = async (postId) => {
   try {
@@ -188,8 +189,7 @@ const UpdateBusinessBlogPostPage = ({ params }) => {
       return;
     }
 
-    const userId = localStorage.getItem("userId");
-    console.log("The user id in updated form is:", userId);
+    const userId = SecureStorage.getItem("userId");
     try {
       console.log("Updated category is:", category.id);
       const updatedPost = {

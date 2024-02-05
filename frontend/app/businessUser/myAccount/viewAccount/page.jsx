@@ -4,6 +4,7 @@ import React from "react";
 import Link from "next/link";
 import { useState, useEffect } from "react";
 import axiosInterceptorInstance from "../../../axiosInterceptorInstance.js";
+import SecureStorage from "react-secure-storage";
 
 // router path for this page: /businessUser/myAccount/viewAccount
 // things to do:
@@ -31,8 +32,8 @@ const UpdateAccount = () => {
 
   const viewUserDashboard = async () => {
     try {
-      const userId = localStorage.getItem("userId");
-      const token = localStorage.getItem("token");
+      const userId = SecureStorage.getItem("userId");
+      const token = SecureStorage.getItem("token");
 
       const config = {
         headers: { Authorization: `Bearer ${token}` },
@@ -74,64 +75,66 @@ const UpdateAccount = () => {
   const handleAccountUpdate = async (event) => {
     event.preventDefault();
 
-    // ... existing validation code
-
     // Check if fields are not empty
-    if (fullName === "" || email === "" || dob === "") {
+    if (
+      !fullName.trim() ||
+      !username.trim() ||
+      !contactNumber.trim() ||
+      !companyName.trim() ||
+      !postalCode.trim() ||
+      !companyAddress.trim()
+    ) {
       setError("All fields are required.");
-
-      // Check if email is valid
-    } else if (!emailValidation.test(email)) {
-      setError("Invalid email address.");
-
-      // Success msg
+    } else if (contactNumber.length !== 8) {
+      setError("Contact number must be 8 digits.");
+    } else if (postalCode.length !== 6) {
+      setError("Please enter a valid postal code.");
     } else {
-      setSuccess("Update Successful!");
-      // Remove success msg after 5 seconds
-      setTimeout(() => {
-        setSuccess("");
-      }, 5000);
-      // Clear error messages after update
-      setError("");
+      try {
+        const userId = SecureStorage.getItem("userId");
+        const token = SecureStorage.getItem("token");
+        const config = {
+          headers: { Authorization: `Bearer ${token}` },
+        };
+
+        const updatedData = {
+          id: userId,
+          fullName,
+          username,
+          email,
+          dob,
+          contactNumber,
+          companyName,
+          postalCode,
+          companyAddress,
+          uen,
+          allergies,
+          dietaryPreferences,
+          healthGoal,
+        };
+
+        console.log("Updated data:", updatedData);
+
+        const response = await axiosInterceptorInstance.post(
+          "/register/dashboardSet", // Adjust URL if needed
+          updatedData,
+          config
+        );
+
+        console.log("Account updated:", response.data);
+        setSuccess("Account updated successfully!");
+      } catch (error) {
+        console.error("Error updating account", error);
+        setError("Failed to update account.");
+      }
     }
+  };
 
-    try {
-      const userId = localStorage.getItem("userId");
-      const token = localStorage.getItem("token");
-      const config = {
-        headers: { Authorization: `Bearer ${token}` },
-      };
-
-      const updatedData = {
-        id: userId,
-        fullName,
-        username,
-        email,
-        dob,
-        contactNumber,
-        companyName,
-        postalCode,
-        companyAddress,
-        uen,
-        allergies,
-        dietaryPreferences,
-        healthGoal,
-      };
-
-      console.log("Updated data:", updatedData);
-
-      const response = await axiosInterceptorInstance.post(
-        "/register/dashboardSet", // Adjust URL if needed
-        updatedData,
-        config
-      );
-
-      console.log("Account updated:", response.data);
-      setSuccess("Account updated successfully!");
-    } catch (error) {
-      console.error("Error updating account", error);
-      setError("Failed to update account.");
-    }
+  // Clear Error msg on change
+  const clearErrorOnChange = (setter) => (e) => {
+    setter(e.target.value);
+    setError("");
+    setSuccess("");
   };
 
   // Redirect to my account page
@@ -209,9 +212,9 @@ const UpdateAccount = () => {
                     id="fullName"
                     name="fullName"
                     placeholder="Your Name"
-                    className=" bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg p-2.5"
+                    className=" bg-white border border-gray-300 text-gray-900 sm:text-sm rounded-lg p-2.5"
                     value={fullName}
-                    onChange={(e) => setFullName(e.target.value)}
+                    onChange={clearErrorOnChange(setFullName)}
                   />
 
                   {/* USERNAME */}
@@ -220,9 +223,9 @@ const UpdateAccount = () => {
                     id="userName"
                     name="userName"
                     placeholder="Your Username"
-                    className=" bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg p-2.5"
+                    className=" bg-white border border-gray-300 text-gray-900 sm:text-sm rounded-lg p-2.5"
                     value={username}
-                    onChange={(e) => setUsername(e.target.value)}
+                    onChange={clearErrorOnChange(setUsername)}
                   />
                 </div>
 
@@ -238,7 +241,7 @@ const UpdateAccount = () => {
                     name="contactNumber"
                     className="border px-4 py-2 rounded-lg w-full bg-white border-gray-300 text-gray-900 sm:text-sm"
                     value={contactNumber}
-                    onChange={(e) => setContactNumber(e.target.value)}
+                    onChange={clearErrorOnChange(setContactNumber)}
                   />
                 </div>
 
@@ -268,23 +271,7 @@ const UpdateAccount = () => {
                     name="companyName"
                     className="border px-4 py-2 rounded-lg w-full bg-white border-gray-300 text-gray-900 sm:text-sm"
                     value={companyName}
-                    onChange={(e) => setCompanyName(e.target.value)}
-                  />
-                </div>
-
-                {/* POSTAL CODE*/}
-                <div className="flex flex-col mb-3.5">
-                  <label className="mb-1">
-                    Postal Code:
-                    <span className="text-red-500">*</span>
-                  </label>
-                  <input
-                    type="text"
-                    id="postalCode"
-                    name="postalCode"
-                    className="border px-4 py-2 rounded-lg w-full bg-white border-gray-300 text-gray-900 sm:text-sm"
-                    value={postalCode}
-                    onChange={(e) => setPostalCode(e.target.value)}
+                    onChange={clearErrorOnChange(setCompanyName)}
                   />
                 </div>
 
@@ -300,37 +287,57 @@ const UpdateAccount = () => {
                     name="companyAddress"
                     className="border px-4 py-2 rounded-lg w-full bg-white border-gray-300 text-gray-900 sm:text-sm"
                     value={companyAddress}
-                    onChange={(e) => setCompanyAddress(e.target.value)}
+                    onChange={clearErrorOnChange(setCompanyAddress)}
+                  />
+                </div>
+
+                {/* POSTAL CODE*/}
+                <div className="flex flex-col mb-3.5">
+                  <label className="mb-1">
+                    Postal Code:
+                    <span className="text-red-500">*</span>
+                  </label>
+                  <input
+                    type="text"
+                    id="postalCode"
+                    name="postalCode"
+                    className="border px-4 py-2 rounded-lg w-full bg-white border-gray-300 text-gray-900 sm:text-sm"
+                    value={postalCode}
+                    onChange={clearErrorOnChange(setPostalCode)}
                   />
                 </div>
 
                 {/* COMPANY UEN  */}
                 <div className="flex flex-col mb-3.5">
-                  <label className="mb-1">
-                    UEN:
-                    <span className="text-red-500">*</span>
-                  </label>
+                  <label className="mb-1">UEN:</label>
                   <input
                     type="text"
                     id="uen"
                     name="uen"
-                    className="border px-4 py-2 rounded-lg w-full bg-white border-gray-300 text-gray-900 sm:text-sm"
+                    disabled
+                    className="border px-4 py-2 rounded-lg w-full bg-gray-300 border-gray-300 text-gray-900 sm:text-sm"
                     value={uen}
                     onChange={(e) => setUen(e.target.value)}
                   />
                 </div>
 
-                <p className="text-red-500 text-sm">{error}</p>
-                <p className="text-green-500 text-sm">{success}</p>
+                {error && (
+                  <p className="text-red-500 text-base font-medium">{error}</p>
+                )}
+                {success && (
+                  <p className="text-green-500 text-base font-medium">
+                    {success}
+                  </p>
+                )}
 
-                {/* SAVE BTN */}
-                <div className="flex flex-row justify-end">
+                {/* UPDATE BTN */}
+                <div className="flex flex-row justify-start mt-3">
                   <button
                     type="submit"
                     onClick={handleAccountUpdate}
-                    className="bg-blue-500 hover:bg-blue-700 text-white rounded-md font-bold py-2 px-4 ml-auto"
+                    className=" bg-blue-600 hover:bg-blue-700 text-white w-24 rounded-lg font-bold py-2"
                   >
-                    Save
+                    Update
                   </button>
                 </div>
               </form>

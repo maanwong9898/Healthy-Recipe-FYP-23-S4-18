@@ -6,6 +6,7 @@ import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import SearchIcon from "@mui/icons-material/Search";
 import SwapVertIcon from "@mui/icons-material/SwapVert";
+import SecureStorage from "react-secure-storage";
 
 // router path is /businessUser/recipes
 
@@ -21,7 +22,7 @@ const sortOptions = {
 
 // Fetch all recipes from the backend - backend controller is Recipe Controller
 const fetchRecipes = async () => {
-  const userID = localStorage.getItem("userId");
+  const userID = SecureStorage.getItem("userId");
   console.log("Current id", userID);
   try {
     const response = await axiosInterceptorInstance.get(

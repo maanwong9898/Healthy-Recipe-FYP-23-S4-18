@@ -5,6 +5,7 @@ import Link from "next/link";
 import { useState, useEffect } from "react";
 import axiosInterceptorInstance from "../../axiosInterceptorInstance.js";
 import SwapVertIcon from "@mui/icons-material/SwapVert";
+import SysAdminNavBar from "../../components/navigation/sysAdminNavBar";
 
 // this is the user account list page under sysAdmin
 // router path: /sysAdmin/userAccount
@@ -112,14 +113,11 @@ const UserAccount = () => {
         // console.error(`Unknown profile type: ${profileType}`);
         return; // Exit the function if profile type is unknown
     }
-
-    // Redirect to the correct route
-    // const routePath = `/${userTypePath}/userAccount/viewUserAccount/${username}`;
-    // router.push(routePath);
   };
 
   return (
     <div className="px-2 sm:px-5 min-h-screen flex flex-col py-5">
+      <SysAdminNavBar />
       {/* Display message while fetching data ftom backend */}
       {isLoading ? (
         <div className="text-xl text-center p-4">

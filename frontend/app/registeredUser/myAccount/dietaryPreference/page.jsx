@@ -5,6 +5,7 @@ import React, { use } from "react";
 import Link from "next/link";
 import { useState, useEffect } from "react";
 import axiosInterceptorInstance from "../../../axiosInterceptorInstance.js";
+import SecureStorage from "react-secure-storage";
 
 // router path = /registeredUser/myAccount/dietaryPreference
 
@@ -18,8 +19,8 @@ const ViewDietaryPreference = () => {
 
   const viewUserDashboard = async () => {
     try {
-      const userId = localStorage.getItem("userId");
-      const token = localStorage.getItem("token");
+      const userId = SecureStorage.getItem("userId");
+      const token = SecureStorage.getItem("token");
 
       const config = {
         headers: { Authorization: `Bearer ${token}` },
@@ -180,14 +181,19 @@ const ViewDietaryPreference = () => {
 
             {/* Start of dietary preference card */}
             <div className="p-8">
-              <h1 className="text-lg font-semibold mb-4">My Dietary Preference</h1>
+              <h1 className="text-lg font-semibold mb-4">
+                My Dietary Preference
+              </h1>
               {/* Diet Preference */}
               <div className="mb-4">
                 <label className="block mb-2 text-gray-900 font-medium">
                   Diet:
                 </label>
-                <div className="flex items-center border rounded-full w-28 h-28">
-                  <label id="diet" className="text-center p-2 w-full">
+                <div className="flex items-center rounded-full w-60">
+                  <label
+                    id="diet"
+                    className="border border-gray-400 rounded-full text-center p-2 w-full"
+                  >
                     {dietaryPreference}
                   </label>
                 </div>
@@ -197,18 +203,18 @@ const ViewDietaryPreference = () => {
                 <label className="block mb-2 text-gray-900 font-medium">
                   Allergies and Restrictions:
                 </label>
-                <div className="flex flex-row flex-wrap gap-2">
+                <div className="flex flex-row flex-wrap gap-2 items-center">
                   {allergies.length > 0 ? (
                     allergies.map((allergy, index) => (
                       <span
                         key={index}
-                        className="flex items-center border rounded-full px-4 py-2"
+                        className="flex items-center border border-gray-400 rounded-full px-4 py-2"
                       >
                         {allergy.subcategoryName}
                       </span>
                     ))
                   ) : (
-                    <span className="flex items-center border rounded-full px-4 py-2 w-60">
+                    <span className="flex items-center border border-gray-400 rounded-full px-4 py-2 w-60">
                       Not specified
                     </span>
                   )}
@@ -219,15 +225,16 @@ const ViewDietaryPreference = () => {
                 <label className="block mb-2 text-gray-900 font-medium">
                   Health Goal:
                 </label>
-                <div className="flex items-center border rounded-full w-60">
+                <div className="flex items-center rounded-full w-60">
                   <label
                     id="healthGoal"
-                    className="border rounded-full text-center p-2 w-full"
+                    className="border border-gray-400 rounded-full text-center p-2 w-full"
                   >
                     {healthGoal}
                   </label>
                 </div>
               </div>
+
               {/* UPDATE BTN */}
               <div className="flex flex-row justify-start">
                 <button

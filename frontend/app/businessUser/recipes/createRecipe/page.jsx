@@ -1644,6 +1644,7 @@ import { useRouter } from "next/navigation";
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import axiosInterceptorInstance from "../../../axiosInterceptorInstance.js";
+import SecureStorage from "react-secure-storage";
 
 // router path: /businessUser/recipes/createRecipe
 // this is the page to create a recipe
@@ -1931,7 +1932,7 @@ const CreateRecipePage = () => {
       title,
       description,
       info: dietaryInformation,
-      userID: { id: localStorage.getItem("userId") }, // Replace with actual user ID or fetch dynamically
+      userID: { id: SecureStorage.getItem("userId") }, // Replace with actual user ID or fetch dynamically
       calories: parseInt(totalCalories),
       protein: parseInt(protein),
       fat: parseInt(fat),

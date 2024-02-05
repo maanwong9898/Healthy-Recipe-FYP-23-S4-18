@@ -5,6 +5,7 @@ import Link from "next/link";
 import { useState, useEffect } from "react";
 import axiosInterceptorInstance from "../../../../axiosInterceptorInstance.js";
 import DownloadIcon from "@mui/icons-material/Download";
+import SysAdminNavBar from "../../../../components/navigation/sysAdminNavBar";
 
 // router path: /sysAdmin/userAccount/viewNutritionist/[id]
 const ViewNutritionist = ({ params }) => {
@@ -58,6 +59,7 @@ const ViewNutritionist = ({ params }) => {
 
   return (
     <div className="min-h-screen flex flex-col justify-center px-6 lg:px-8">
+      <SysAdminNavBar />
       <div
         className="mt-16 mb-16 mx-auto bg-white rounded-lg shadow-lg p-4 md:p-8 lg:p-12"
         style={{ maxWidth: "600px", width: "100%" }} // Increase maxWidth and set width to 100%

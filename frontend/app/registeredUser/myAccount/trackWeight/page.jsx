@@ -4,15 +4,13 @@ import React from "react";
 import Link from "next/link";
 import { useState, useEffect } from "react";
 import axiosInterceptorInstance from "../../../axiosInterceptorInstance.js";
+import SecureStorage from "react-secure-storage";
 
 const TrackWeight = () => {
   const [weightData, setWeightData] = useState([]);
-  //const [startingWeight, setStartingWeight] = useState("");
-  const [targetWeight, setTargetWeight] = useState("");
   const [currentWeight, setCurrentWeight] = useState("");
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
-  const [showHistory, setShowHistory] = useState(false);
   const router = useRouter();
   const [isTabSelected, setIsTabSelected] = useState("trackWeight");
 
@@ -21,8 +19,7 @@ const TrackWeight = () => {
   // http://localhost:8080/registeredUsers/getWeights/7 sample url
   const viewUserWeight = async () => {
     try {
-      const userId = localStorage.getItem("userId");
-      // const userId = 7;
+      const userId = SecureStorage.getItem("userId");
 
       const response = await axiosInterceptorInstance.get(
         `/registeredUsers/getWeights/${userId}`
@@ -42,11 +39,9 @@ const TrackWeight = () => {
 
   // Reset values
   const resetVal = () => {
-    setTargetWeight("");
     setCurrentWeight("");
   };
 
-  // Handle weight validations
   // Handle weight validations and storage
   const handleWeightStorage = async () => {
     if (currentWeight === "") {
@@ -55,13 +50,10 @@ const TrackWeight = () => {
       setError("Please enter a valid input.");
     } else {
       try {
-        // Assuming '7' is the user ID, replace with dynamic user ID if needed
-        // const userId = localStorage.getItem("userId");
-        // const userId = 7;
-        const userId = localStorage.getItem("userId");
+        const userID = SecureStorage.getItem("userId");
         const payload = {
           id: {
-            userId: userId,
+            userId: userID,
           },
           weight: parseInt(currentWeight),
         };
@@ -88,11 +80,17 @@ const TrackWeight = () => {
     }
   };
 
+  // Clear error msg on change
+  const clearErrorOnChange = (setter) => (e) => {
+    setter(e.target.value);
+    setError("");
+    setSuccess("");
+  };
+
   // Function to handle deletion of a weight record
   const handleDeleteWeight = async (date) => {
     try {
-      // const userId = 7; // Replace with dynamic user ID if needed
-      const userId = localStorage.getItem("userId");
+      const userId = SecureStorage.getItem("userId");
       const payload = {
         id: {
           userId: userId,
@@ -122,6 +120,7 @@ const TrackWeight = () => {
       setTimeout(() => {
         setSuccess("");
       }, 5000);
+      setError("");
 
       // Refresh weight data
       viewUserWeight();
@@ -269,17 +268,28 @@ const TrackWeight = () => {
                     name="currentWeight"
                     placeholder="Enter weight in kg"
                     value={currentWeight}
-                    onChange={(e) => setCurrentWeight(e.target.value)}
+                    onChange={clearErrorOnChange(setCurrentWeight)}
                     className="border px-4 py-2 rounded-lg w-full lg:w-72 bg-white border-gray-300 text-gray-900 sm:text-sm"
                   />
                   <span className="ml-2">kg</span>
                 </div>
               </div>
-              <p className="text-red-500 text-sm">{error}</p>
-              <p className="text-green-500 text-sm">{success}</p>
+
+              {/* ERROR MESSAGE */}
+              {error && (
+                <p className="text-red-500 font-medium text-base">{error}</p>
+              )}
+              {success && (
+                <p className="text-green-500 font-medium text-base">
+                  {success}
+                </p>
+              )}
+
+              {/* <p className="text-red-500 text-base font-medium">{error}</p>
+              <p className="text-green-500 text-base font-medium">{success}</p> */}
 
               {/* BUTTONS */}
-              <div className="flex flex-row justify-start gap-4">
+              <div className="flex flex-row justify-start gap-4 mt-3">
                 <button
                   onClick={resetVal}
                   className="bg-gray-200 hover:bg-gray-300 text-gray-900 w-24 rounded-lg font-semibold py-2"
@@ -293,14 +303,7 @@ const TrackWeight = () => {
                   Save
                 </button>
               </div>
-              {/* <div>
-            <p
-              // onClick={handleWeightHistory}
-              className="mt-4 text-blue-600 hover:underline text-sm dark:text-blue-500 cursor-pointer"
-            >
-              Show History
-            </p>
-          </div> */}
+
               <div>
                 <h2 className="text-lg font-semibold mb-4 mt-5">
                   Weight History

@@ -4,12 +4,12 @@ import React from "react";
 import Link from "next/link";
 import { useState, useEffect } from "react";
 import axiosInterceptorInstance from "../../../axiosInterceptorInstance.js";
+import SecureStorage from "react-secure-storage";
 
 //router path for this page: /businessUser/myAccount/changePwd
 
 const changeUserPwd = () => {
   const router = useRouter();
-  const [userOldPwd, setUserOldPwd] = useState("");
   const [oldPwd, setOldPwd] = useState("");
   const [newPwd, setNewPwd] = useState("");
   const [repeatPwd, setRepeatPwd] = useState("");
@@ -40,7 +40,7 @@ const changeUserPwd = () => {
     });
 
     try {
-      const userId = localStorage.getItem("userId");
+      const userId = SecureStorage.getItem("userId");
       const updatedData = {
         id: userId,
         oldPassword: oldPwd,
@@ -185,14 +185,14 @@ const changeUserPwd = () => {
                 </div>
                 {/* ERROR MESSAGE */}
                 {error && (
-                  <div className="text-red-500 text-sm font-bold mt-2">
+                  <div className="text-red-500 text-base font-medium">
                     {error}
                   </div>
                 )}
 
                 {/* SUCCESS MESSAGE */}
                 {success && (
-                  <div className="text-green-500 text-sm font-bold mt-2">
+                  <div className="text-green-500 text-base font-medium">
                     {success}
                   </div>
                 )}

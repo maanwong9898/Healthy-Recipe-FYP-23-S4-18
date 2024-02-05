@@ -5,13 +5,10 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.transaction.annotation.Transactional;
+ 
+import com.FYP18.HealthyRecipe.Entity.Blog; 
 
-import com.FYP18.HealthyRecipe.Entity.Blog;
-import com.FYP18.HealthyRecipe.Entity.Recipe;
-import com.FYP18.HealthyRecipe.Entity.User;
-
-import java.util.List;
-import java.util.Optional;
+import java.util.List; 
 
 
 public interface BlogRepository extends JpaRepository<Blog, Long>{
@@ -42,6 +39,9 @@ public interface BlogRepository extends JpaRepository<Blog, Long>{
     // @Transactional
     // @Query("SELECT b FROM Blog b WHERE b.userID = :id")
     // List<Blog> findByUserId(String id);
+
+    @Query(value="SELECT COUNT(r) AS count FROM Blog r WHERE r.userID.id = :id")
+    Integer findCountById(@Param("id") String id);
 
 
     @Modifying

@@ -6,6 +6,7 @@ import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import SearchIcon from "@mui/icons-material/Search";
 import SwapVertIcon from "@mui/icons-material/SwapVert";
+import SysAdminNavBar from "../../components/navigation/sysAdminNavBar";
 
 // router path is /sysAdmin/suspendRecipe
 
@@ -21,8 +22,6 @@ const sortOptions = {
 
 // Fetch all recipes from the backend - backend controller is Recipe Controller
 const fetchRecipes = async () => {
-  const userID = localStorage.getItem("userId");
-  console.log("Current id", userID);
   try {
     const response = await axiosInterceptorInstance.get("/recipe/get");
     console.log("All recipes :", response.data);
@@ -261,6 +260,7 @@ const SuspendRecipe = () => {
 
   return (
     <div className="px-2 sm:px-5 min-h-screen flex flex-col py-5">
+      <SysAdminNavBar />
       <h1 className="text-6xl text-gray-900 p-3 mb-4 font-bold text-center sm:text-center">
         All Recipes
       </h1>

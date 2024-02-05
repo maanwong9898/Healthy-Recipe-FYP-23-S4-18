@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { use, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
@@ -9,6 +9,8 @@ import BookIcon from "@mui/icons-material/Book";
 import RestaurantIcon from "@mui/icons-material/Restaurant";
 import MenuBookIcon from "@mui/icons-material/MenuBook";
 import ArticleIcon from "@mui/icons-material/Article";
+import SecureStorage from "react-secure-storage";
+import SysAdminNavBar from "../components/navigation/sysAdminNavBar";
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
@@ -85,6 +87,30 @@ const fetchAllUsers = async () => {
   }
 };
 
+// Calling dashboard API to get user account information
+const viewUserDashboard = async () => {
+  try {
+    const token = SecureStorage.getItem("token");
+    const userId = SecureStorage.getItem("userId");
+
+    const config = {
+      headers: { Authorization: `Bearer ${token}` },
+    };
+
+    // Make the GET request to the userAndAdmin endpoint
+    const response = await axiosInterceptorInstance.get(
+      "/register/dashboard/" + userId,
+      config
+    );
+
+    return response.data;
+    // setUserAccount(response.data);
+    // console.log(response.data);
+  } catch (error) {
+    console.error("Error fetching user data", error);
+  }
+};
+
 const AdminHomePage = () => {
   const router = useRouter();
   const [userAccount, setUserAccount] = useState("");
@@ -94,6 +120,7 @@ const AdminHomePage = () => {
   const [educationalContent, setEducationalContent] = useState([]);
   const [mealPlans, setMealPlans] = useState([]);
   const [userAccounts, setUserAccounts] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
 
   const [userCounts, setUserCounts] = useState({
     REGISTERED_USER: 0,
@@ -102,31 +129,57 @@ const AdminHomePage = () => {
     ADMIN: 0,
   });
 
-  // Calling dashboard API to get user account information
-  const viewUserDashboard = async () => {
-    try {
-      const userId = localStorage.getItem("userId");
-      const token = localStorage.getItem("token");
-
-      const config = {
-        headers: { Authorization: `Bearer ${token}` },
-      };
-
-      // Make the GET request to the userAndAdmin endpoint
-      const response = await axiosInterceptorInstance.get(
-        "/register/dashboard/" + userId,
-        config
-      );
-
-      setUserAccount(response.data);
-      console.log(response.data);
-    } catch (error) {
-      console.error("Error fetching user data", error);
-    }
-  };
-
   useEffect(() => {
-    viewUserDashboard();
+    const checkAuthAndFetchData = async () => {
+      if (
+        !SecureStorage.getItem("token") ||
+        SecureStorage.getItem("role") !== "ADMIN"
+      ) {
+        // clear the secure storage
+        SecureStorage.clear();
+        console.log("Redirecting to home page");
+        router.push("/");
+      } else {
+        try {
+          // Fetch all necessary data
+          const blogPostsData = await fetchBlogPosts();
+          const recipesData = await fetchRecipes();
+          const educationalContentData = await fetchEducationcalContent();
+          const mealPlansData = await fetchMealPlans();
+          const userAccountsData = await fetchAllUsers();
+          const userDashboardData = await viewUserDashboard();
+
+          // Update state with fetched data
+          setBusinessBlogPost(blogPostsData);
+          setRecipes(recipesData);
+          setEducationalContent(educationalContentData);
+          setMealPlans(mealPlansData);
+          setUserAccounts(userAccountsData);
+          setUserAccount(userDashboardData);
+
+          // Count users by role
+          const counts = {
+            REGISTERED_USER: userAccountsData.filter(
+              (user) => user.role === "REGISTERED_USER"
+            ).length,
+            BUSINESS_USER: userAccountsData.filter(
+              (user) => user.role === "BUSINESS_USER"
+            ).length,
+            NUTRITIONIST: userAccountsData.filter(
+              (user) => user.role === "NUTRITIONIST"
+            ).length,
+            ADMIN: userAccountsData.filter((user) => user.role === "ADMIN")
+              .length,
+          };
+          setUserCounts(counts);
+        } catch (error) {
+          console.error("Error in data fetching", error);
+        }
+        setIsLoading(false);
+      }
+    };
+
+    checkAuthAndFetchData();
   }, []);
 
   // set username of current user
@@ -134,69 +187,9 @@ const AdminHomePage = () => {
     setUsername(userAccount ? userAccount.username : "");
   }, [userAccount]);
 
-  useEffect(() => {
-    const fetchBlogPostsData = async () => {
-      try {
-        const posts = await fetchBlogPosts();
-        setBusinessBlogPost(posts); // Set the retrieved blog posts in the state
-      } catch (error) {
-        console.error("Failed to fetch blog posts:", error);
-      }
-    };
-
-    const fetchRecipesData = async () => {
-      try {
-        const getRecipes = await fetchRecipes();
-        setRecipes(getRecipes); // Set the retrieved recipes in the state
-      } catch (error) {
-        console.error("Failed to fetch recipes:", error);
-      }
-    };
-
-    const fetchEducationcalContentData = async () => {
-      try {
-        const getEducationalContents = await fetchEducationcalContent();
-        setEducationalContent(getEducationalContents); // Set the retrieved educational content in the state
-      } catch (error) {
-        console.error("Failed to fetch educational content:", error);
-      }
-    };
-
-    const fetchMealPlanData = async () => {
-      try {
-        const posts = await fetchMealPlans();
-        setMealPlans(posts); // Set the retrieved meal plans in the state
-      } catch (error) {
-        console.error("Failed to fetch meal plans:", error);
-      }
-    };
-
-    const fetchAllUsersData = async () => {
-      try {
-        const users = await fetchAllUsers();
-        setUserAccounts; // Set the retrieved users in the state
-        const counts = {
-          REGISTERED_USER: users.filter(
-            (user) => user.role === "REGISTERED_USER"
-          ).length,
-          BUSINESS_USER: users.filter((user) => user.role === "BUSINESS_USER")
-            .length,
-          NUTRITIONIST: users.filter((user) => user.role === "NUTRITIONIST")
-            .length,
-          ADMIN: users.filter((user) => user.role === "ADMIN").length,
-        };
-        setUserCounts(counts);
-      } catch (error) {
-        console.error("Failed to fetch users:", error);
-      }
-    };
-
-    fetchRecipesData();
-    fetchBlogPostsData();
-    fetchEducationcalContentData();
-    fetchMealPlanData();
-    fetchAllUsersData();
-  }, []); // Empty dependency array ensures this runs once after component mounts
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
 
   // The button under user account management will redirect to corresponding page
   const handleCreateUserAccount = () => {
@@ -261,6 +254,7 @@ const AdminHomePage = () => {
 
   return (
     <div className="min-h-screen w-full overflow-x-hidden">
+      <SysAdminNavBar />
       <h2 className="text-5xl font-bold text-center text-gray-800 p-4">
         Dashboard
       </h2>

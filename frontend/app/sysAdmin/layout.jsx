@@ -18,7 +18,7 @@ function SysAdminLayout({ children }) {
         {/* Viewport meta tag */}
         {/* Other meta tags and links to stylesheets can be added here */}
       </Head>
-      <UserNavigation />
+      {/* <UserNavigation /> */}
       <div className="w-full overflow-x-hidden">{children}</div>
       <Footer />
     </>

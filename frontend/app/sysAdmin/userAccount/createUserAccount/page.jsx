@@ -1,8 +1,10 @@
 "use client";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { use, useState, useEffect } from "react";
 import Link from "next/link";
 import axiosInterceptorInstance from "../../../axiosInterceptorInstance";
+import SysAdminNavBar from "../../../components/navigation/sysAdminNavBar";
+import SecureStorage from "react-secure-storage";
 
 // router path: /sysAdmin/userAccount/createUserAccount
 // this is the page to create user account (systen admin only) according to user story
@@ -16,8 +18,25 @@ const CreateUserAccountPage = () => {
   const [confirmPwd, setConfirmPwd] = useState("");
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
-
+  const [isLoading, setIsLoading] = useState(true);
   const emailValidation = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+  useEffect(() => {
+    const checkAuthAndFetchData = async () => {
+      if (
+        !SecureStorage.getItem("token") ||
+        SecureStorage.getItem("role") !== "ADMIN"
+      ) {
+        // clear the secure storage
+        SecureStorage.clear();
+        console.log("Redirecting to home page");
+        router.push("/");
+      }
+      setIsLoading(false);
+    };
+
+    checkAuthAndFetchData();
+  }, []);
 
   // Get today's date in the correct format for the max attribute (yyyy-mm-dd)
   const getFormattedDate = (date) => {
@@ -113,6 +132,7 @@ const CreateUserAccountPage = () => {
 
   return (
     <div className="min-h-screen flex flex-col justify-center px-6 lg:px-8">
+      <SysAdminNavBar />
       {/* Adjust the max-width and width in the inline style */}
       <div
         className="mt-16 mb-16 mx-auto bg-white rounded-lg shadow-lg p-4 md:p-8 lg:p-12"

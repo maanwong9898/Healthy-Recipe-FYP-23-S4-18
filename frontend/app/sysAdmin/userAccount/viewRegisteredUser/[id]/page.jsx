@@ -4,6 +4,7 @@ import React from "react";
 import Link from "next/link";
 import { useState, useEffect } from "react";
 import axiosInterceptorInstance from "../../../../axiosInterceptorInstance.js";
+import SysAdminNavBar from "../../../../components/navigation/sysAdminNavBar";
 
 // router path: /sysAdmin/userAccount/viewRegisteredUser/[id]
 
@@ -41,19 +42,6 @@ const ViewRegisteredUser = ({ params }) => {
   useEffect(() => {
     viewUserDashboard();
   }, []);
-
-  // Function to render allergies
-  //   const renderAllergies = () => {
-  //     if (!allergies || allergies.length === 0) {
-  //       return <span>Not specified</span>;
-  //     }
-  //     return allergies.map((allergy, index) => (
-  //       <span key={index}>
-  //         {allergy.subcategoryName}
-  //         {index < allergies.length - 1 ? ", " : ""}
-  //       </span>
-  //     ));
-  //   };
 
   const renderAllergies = () => {
     if (!allergies || allergies.length === 0) {
@@ -110,6 +98,7 @@ const ViewRegisteredUser = ({ params }) => {
 
   return (
     <div className="min-h-screen flex flex-col justify-center px-6 lg:px-8">
+      <SysAdminNavBar />
       <div
         className="mt-16 mb-16 mx-auto bg-white rounded-lg shadow-lg p-4 md:p-8 lg:p-12"
         style={{ maxWidth: "600px", width: "100%" }} // Increase maxWidth and set width to 100%

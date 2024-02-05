@@ -2,6 +2,8 @@
 import axiosInterceptorInstance from "../../axiosInterceptorInstance.js";
 import { useRouter } from "next/navigation";
 import React, { useState, useEffect } from "react";
+import SecureStorage from "react-secure-storage";
+import SysAdminNavBar from "../../components/navigation/sysAdminNavBar";
 
 // router path: /sysAdmin/allCategory
 const AllCategories = () => {
@@ -14,7 +16,7 @@ const AllCategories = () => {
 
   useEffect(() => {
     // This effect runs once on component mount
-    const token = localStorage.getItem("token"); // Replace with your token retrieval logic
+    const token = SecureStorage.getItem("token");
     if (!token) {
       // No token found, redirect to the home page
       router.push("/"); // Redirect to the home page
@@ -183,6 +185,7 @@ const AllCategories = () => {
 
   return (
     <div className="px-2 sm:px-5 min-h-screen flex flex-col py-5">
+      <SysAdminNavBar />
       <h1 className="text-3xl lg:text-5xl text-gray-900 p-3 mb-4 font-bold text-center sm:text-center">
         Category Management
       </h1>

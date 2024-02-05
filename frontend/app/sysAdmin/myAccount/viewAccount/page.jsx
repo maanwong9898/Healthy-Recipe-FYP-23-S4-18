@@ -4,6 +4,8 @@ import React from "react";
 import Link from "next/link";
 import { useState, useEffect } from "react";
 import axiosInterceptorInstance from "../../../axiosInterceptorInstance.js";
+import SecureStorage from "react-secure-storage";
+import SysAdminNavBar from "../../../components/navigation/sysAdminNavBar";
 
 // things to do:
 // edit the user account details
@@ -37,8 +39,8 @@ const UpdateAccount = () => {
 
   const viewUserDashboard = async () => {
     try {
-      const userId = localStorage.getItem("userId");
-      const token = localStorage.getItem("token");
+      const userId = SecureStorage.getItem("userId");
+      const token = SecureStorage.getItem("token");
 
       const config = {
         headers: { Authorization: `Bearer ${token}` },
@@ -87,8 +89,8 @@ const UpdateAccount = () => {
       // Success msg
     } else {
       try {
-        const userId = localStorage.getItem("userId");
-        const token = localStorage.getItem("token");
+        const userId = SecureStorage.getItem("userId");
+        const token = SecureStorage.getItem("token");
         const config = {
           headers: { Authorization: `Bearer ${token}` },
         };
@@ -158,6 +160,7 @@ const UpdateAccount = () => {
 
   return (
     <div className="flex flex-col min-h-screen">
+      <SysAdminNavBar />
       <div className="flex justify-center">
         <div className="p-5 max-w-3xl w-full mx-5 items-center ">
           <div className="bg-white border border-gray-100 rounded-lg shadow">

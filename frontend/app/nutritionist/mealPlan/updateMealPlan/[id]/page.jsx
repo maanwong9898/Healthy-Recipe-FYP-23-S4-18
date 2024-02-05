@@ -6,6 +6,7 @@ import axiosInterceptorInstance from "../../../../axiosInterceptorInstance.js";
 import SearchIcon from "@mui/icons-material/Search";
 import AddCircleIcon from "@mui/icons-material/AddCircle";
 import RemoveCircleIcon from "@mui/icons-material/RemoveCircle";
+import SecureStorage from "react-secure-storage";
 
 // https://uiwjs.github.io/react-md-editor/
 
@@ -64,7 +65,6 @@ const UpdateMealPlan = ({ params }) => {
   // success and error state
   const [error, setError] = useState("");
   const [success, setSuccess] = useState(false);
-  const [userId, setUserId] = useState("");
 
   // States for recipe search
   const [searchTerm, setSearchTerm] = useState("");
@@ -246,12 +246,6 @@ const UpdateMealPlan = ({ params }) => {
   };
 
   useEffect(() => {
-    const storedUserId = localStorage.getItem("userId"); // Retrieve user ID from localStorage
-    console.log("Current id", storedUserId);
-    if (storedUserId) {
-      setUserId(storedUserId);
-    }
-
     // Fetch all health goal(meal plan) categories from backend
     const fetchCategories = async () => {
       console.log("Fetching health goal categories...");
@@ -330,8 +324,9 @@ const UpdateMealPlan = ({ params }) => {
       return;
     }
 
-    const userId = localStorage.getItem("userId");
-    console.log("The user id in updated form is:", userId);
+    // const userId = localStorage.getItem("userId");
+    const userId = SecureStorage.getItem("userId");
+
     try {
       console.log("Updated category is:", category.id);
       const updatedMealPlan = {

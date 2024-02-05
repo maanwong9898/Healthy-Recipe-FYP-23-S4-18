@@ -7,13 +7,13 @@ import MenuBookIcon from "@mui/icons-material/MenuBook";
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
 import { Pie } from "react-chartjs-2";
 import axiosInterceptorInstance from "../axiosInterceptorInstance";
+import SecureStorage from "react-secure-storage";
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
 // Get meal plan that belongs to specific user when logged in
 const fetchMealPlans = async () => {
-  const userID = localStorage.getItem("userId");
-  console.log("Current id", userID);
+  const userID = SecureStorage.getItem("userId");
 
   try {
     const response = await axiosInterceptorInstance.get(
@@ -53,8 +53,8 @@ const NutritionistHomePage = () => {
   // Calling dashboard API to get user account information
   const viewUserDashboard = async () => {
     try {
-      const userId = localStorage.getItem("userId");
-      const token = localStorage.getItem("token");
+      const userId = SecureStorage.getItem("userId");
+      const token = SecureStorage.getItem("token");
 
       const config = {
         headers: { Authorization: `Bearer ${token}` },
@@ -95,12 +95,6 @@ const NutritionistHomePage = () => {
   };
 
   useEffect(() => {
-    // This code runs only on the client side
-    const storedUsername = localStorage.getItem("username");
-    if (storedUsername) {
-      setUsername(storedUsername);
-    }
-
     const fetchMealPlanData = async () => {
       try {
         const posts = await fetchMealPlans();

@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 import com.FYP18.HealthyRecipe.DTO.DashboardDTO;
 import com.FYP18.HealthyRecipe.DTO.DeleteUserRequest;
 import com.FYP18.HealthyRecipe.DTO.PasswordChangeRequest;
+import com.FYP18.HealthyRecipe.DTO.RoleCountRequest;
 import com.FYP18.HealthyRecipe.Entity.BusinessUser;
 import com.FYP18.HealthyRecipe.Entity.Nutritionist;
 import com.FYP18.HealthyRecipe.Entity.RegisteredUser;
@@ -361,4 +362,9 @@ public class LoginService {
 
         
     // }
+
+    public List<RoleCountRequest> getRoleCount()
+    {
+        return userRepository.getRoleCount();
+    }
 }

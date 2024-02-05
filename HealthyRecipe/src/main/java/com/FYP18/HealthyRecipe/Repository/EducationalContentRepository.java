@@ -30,6 +30,9 @@ public interface EducationalContentRepository extends JpaRepository<EducationalC
     @Query("SELECT r FROM EducationalContent r WHERE r.educationalContentTypeId = :educationalContentTypeId")
     List<EducationalContent> findByEducationalContentTypeId(Long educationalContentTypeId);
 
+    @Query(value="SELECT COUNT(r) AS count FROM EducationalContent r WHERE r.userID.id = :id")
+    Integer findCountById(@Param("id") String id);
+
     // @Modifying
     // @Transactional
     // @Query("SELECT b FROM Blog b WHERE b.ID = :id")

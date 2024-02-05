@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.FYP18.HealthyRecipe.DTO.DeleteUserRequest;
 import com.FYP18.HealthyRecipe.DTO.PasswordChangeRequest;
+import com.FYP18.HealthyRecipe.DTO.RoleCountRequest;
 import com.FYP18.HealthyRecipe.Entity.BusinessUser;
 import com.FYP18.HealthyRecipe.Entity.Nutritionist;
 import com.FYP18.HealthyRecipe.Entity.User;
@@ -37,7 +38,6 @@ public class UserAccountController {
     {
         return loginService.GetAllUsers();
     }
-  
    
     @GetMapping("/getAllUnverifiedBusinessUser")
     public List<BusinessUser> getBusinessUsers()
@@ -51,6 +51,11 @@ public class UserAccountController {
          return loginService.getUnverifiedNutritionists();
     }
 
+    @GetMapping("/getRoleCount")
+    public List<RoleCountRequest> getRoleCount()
+    {
+        return loginService.getRoleCount();
+    }
     @PostMapping("/verifyUser/{userId}")
     public void verifyUser(@PathVariable String userId)
     {

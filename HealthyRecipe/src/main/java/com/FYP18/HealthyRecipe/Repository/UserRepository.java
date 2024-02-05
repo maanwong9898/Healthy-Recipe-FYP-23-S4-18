@@ -8,6 +8,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.FYP18.HealthyRecipe.DTO.RoleCountRequest;
 import com.FYP18.HealthyRecipe.DTO.UserInfoDTO;
 import com.FYP18.HealthyRecipe.Entity.User;
 import java.util.List;
@@ -40,6 +41,9 @@ public interface UserRepository extends JpaRepository<User,String> {
 
     @Query(value ="SELECT r.id AS id, r.username AS username, r.role AS role, r.email AS email, r.createdDate AS createdDate, r.enabled AS enabled FROM User r")
     List<UserInfoDTO> getUsersDTO();
+
+    @Query(value="SELECT r.role AS role, COUNT(r) as count FROM User r GROUP BY r.role")
+    List<RoleCountRequest> getRoleCount();
     // List<User> findByUsername(String username);
     // @Modifying
     // @Transactional

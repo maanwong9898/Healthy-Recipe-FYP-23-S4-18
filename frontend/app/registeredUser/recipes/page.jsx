@@ -4,19 +4,15 @@ import React from "react";
 import { useState, useEffect } from "react";
 import axiosInterceptorInstance from "../../axiosInterceptorInstance.js";
 import Link from "next/link";
+import { Tooltip } from "react-tooltip";
 
 // rouuter path: /registeredUser/recipes
-
-// when change metrics of filter, must change
-// 1. useEffect for filter
-// 2. useEffect for
 
 // Sorting options
 const sortOptions = {
   LATEST: { key: "LATEST", label: "By Latest" },
   OLDEST: { key: "OLDEST", label: "By Oldest" },
   HIGHEST_RATINGS: { key: "HIGHEST_RATINGS", label: "Highest Ratings" },
-  // LOWEST_RATINGS: { key: "LOWEST_RATINGS", label: "Lowest Ratings" },
   ALPHABETICAL_AZ: { key: "ALPHABETICAL_AZ", label: "Alphabetically (A to Z)" },
   ALPHABETICAL_ZA: { key: "ALPHABETICAL_ZA", label: "Alphabetically (Z to A)" },
 };
@@ -101,6 +97,11 @@ const RecipesPageForUser = () => {
   // State variables for cooking time min and max
   const [cookingTimeMinFilter, setCookingTimeMinFilter] = useState("");
   const [cookingTimeMaxFilter, setCookingTimeMaxFilter] = useState("");
+
+  // State for ingredient search
+  const [ingredientSearchTerm, setIngredientSearchTerm] = useState("");
+  const [isIngredientSearchActive, setIsIngredientSearchActive] =
+    useState(false);
 
   const [isLoading, setIsLoading] = useState(false);
 
@@ -193,6 +194,134 @@ const RecipesPageForUser = () => {
   // Toggle function for filter section
   const toggleFilterSection = () => {
     setIsFilterSectionOpen(!isFilterSectionOpen);
+  };
+
+  // Function to clear the search term
+  const clearSearchTerm = () => {
+    setSearchTerm("");
+  };
+
+  const clearIngredientSearchTerm = () => {
+    setIngredientSearchTerm("");
+  };
+
+  // Example for dietary preference filter change
+  const handleDietaryPreferenceChange = (e) => {
+    setSelectedDietaryPreference(e.target.value);
+    clearSearchTerm();
+    clearIngredientSearchTerm();
+  };
+
+  // Example for sort option change
+  const handleSortOptionChange = (e) => {
+    setSortOption(e.target.value);
+    clearSearchTerm();
+    clearIngredientSearchTerm();
+  };
+
+  // Example for meal type filter change
+  const handleMealTypeChange = (e) => {
+    setSelectedMealType(e.target.value);
+    clearSearchTerm();
+    clearIngredientSearchTerm();
+  };
+
+  // Handler for calories min filter change
+  const handleCaloriesMinFilterChange = (e) => {
+    setCaloriesMinFilter(e.target.value);
+    clearSearchTerm();
+    clearIngredientSearchTerm();
+  };
+
+  // Handler for calories max filter change
+  const handleCaloriesMaxFilterChange = (e) => {
+    setCaloriesMaxFilter(e.target.value);
+    clearSearchTerm();
+    clearIngredientSearchTerm();
+  };
+
+  // Handler for carbs min filter change
+  const handleCarbsMinFilterChange = (e) => {
+    setCarbsMinFilter(e.target.value);
+    clearSearchTerm();
+    clearIngredientSearchTerm();
+  };
+
+  // Handler for carbs max filter change
+  const handleCarbsMaxFilterChange = (e) => {
+    setCarbsMaxFilter(e.target.value);
+    clearSearchTerm();
+    clearIngredientSearchTerm();
+  };
+
+  // Handler for protein min filter change
+  const handleProteinMinFilterChange = (e) => {
+    setProteinMinFilter(e.target.value);
+    clearSearchTerm();
+    clearIngredientSearchTerm();
+  };
+
+  // Handler for protein max filter change
+  const handleProteinMaxFilterChange = (e) => {
+    setProteinMaxFilter(e.target.value);
+    clearSearchTerm();
+    clearIngredientSearchTerm();
+  };
+
+  // Handler for fat min filter change
+  const handleFatMinFilterChange = (e) => {
+    setFatMinFilter(e.target.value);
+    clearSearchTerm();
+    clearIngredientSearchTerm();
+  };
+
+  // Handler for fat max filter change
+  const handleFatMaxFilterChange = (e) => {
+    setFatMaxFilter(e.target.value);
+    clearSearchTerm();
+    clearIngredientSearchTerm();
+  };
+
+  // Handler for sodium min filter change
+  const handleSodiumMinFilterChange = (e) => {
+    setSodiumMinFilter(e.target.value);
+    clearSearchTerm();
+    clearIngredientSearchTerm();
+  };
+
+  // Handler for sodium max filter change
+  const handleSodiumMaxFilterChange = (e) => {
+    setSodiumMaxFilter(e.target.value);
+    clearSearchTerm();
+    clearIngredientSearchTerm();
+  };
+
+  // Handler for fibre min filter change
+  const handleFibreMinFilterChange = (e) => {
+    setFibreMinFilter(e.target.value);
+    clearSearchTerm();
+    clearIngredientSearchTerm();
+  };
+
+  // Handler for fibre max filter change
+  const handleFibreMaxFilterChange = (e) => {
+    setFibreMaxFilter(e.target.value);
+    clearSearchTerm();
+    clearIngredientSearchTerm();
+  };
+
+  // Handler for cooking time min filter change
+  const handleCookingTimeMinFilterChange = (e) => {
+    setCookingTimeMinFilter(e.target.value);
+    clearSearchTerm();
+    clearIngredientSearchTerm();
+  };
+
+  // Handler for cooking time max filter change
+  const handleCookingTimeMaxFilterChange = (e) => {
+    setCookingTimeMaxFilter(e.target.value);
+    clearSearchTerm();
+    clearIngredientSearchTerm();
   };
 
   // Apply filters (without search term)
@@ -382,16 +511,18 @@ const RecipesPageForUser = () => {
   useEffect(() => {
     let searchResults = filteredRecipes;
     if (searchTerm.trim()) {
-      // searchResults = filteredRecipes.filter((recipe) =>
-      //   recipe.title.toLowerCase().includes(searchTerm.toLowerCase())
-      // );
     } else {
       setSearchPerformed(false); // To prevent results count from showing when no search is performed
     }
 
+    if (ingredientSearchTerm.trim()) {
+    } else {
+      setSearchPerformed(false);
+    }
+
     setDisplayedRecipes(searchResults);
     setIsSearchEmpty(searchResults.length === 0);
-  }, [filteredRecipes, searchTerm]);
+  }, [filteredRecipes, searchTerm, ingredientSearchTerm]);
 
   // Handler for changing allergies selection
   const handleAllergyChange = (event, allergy) => {
@@ -408,12 +539,6 @@ const RecipesPageForUser = () => {
     setSearchPerformed(true);
 
     if (!searchTerm.trim()) {
-      // const filteredRecipes = categoryFilter
-      //   ? AllRecipes.filter(
-      //       (post) => post.blogType.subcategoryName === categoryFilter
-      //     )
-      //   : AllRecipes;
-
       // temporary fix
       const filteredRecipes = AllRecipes;
 
@@ -427,6 +552,223 @@ const RecipesPageForUser = () => {
         const formattedSearchTerm = searchTerm.trim().replace(/\s+/g, "+");
         const response = await axiosInterceptorInstance.get(
           `/recipe/find?keyword=${formattedSearchTerm}`
+        );
+        let filteredResults = response.data.filter(
+          (recipe) => recipe.active === true
+        );
+
+        if (filteredResults.length > 0) {
+          // Apply additional filters to the search results
+          let finalResults = filteredResults;
+
+          // Filter by dietary preference
+          if (selectedDietaryPreference) {
+            finalResults = finalResults.filter(
+              (recipe) =>
+                recipe.dietaryPreferences?.subcategoryName ===
+                selectedDietaryPreference
+            );
+          }
+
+          // Filter by meal type
+          if (selectedMealType) {
+            finalResults = finalResults.filter(
+              (recipe) => recipe.mealType?.subcategoryName === selectedMealType
+            );
+          }
+
+          // Filter by allergies
+          if (selectedAllergies.length > 0) {
+            finalResults = finalResults.filter(
+              (recipe) =>
+                !selectedAllergies.some((allergy) =>
+                  recipe.allergies.some((a) => a.subcategoryName === allergy)
+                )
+            );
+          }
+
+          // Filter all nutrion values
+          // Filter by calories
+          if (caloriesMinFilter || caloriesMaxFilter) {
+            finalResults = finalResults.filter((recipe) => {
+              const calories = recipe.calories;
+              const min = caloriesMinFilter
+                ? parseFloat(caloriesMinFilter, 10)
+                : -Infinity;
+              const max = caloriesMaxFilter
+                ? parseFloat(caloriesMaxFilter, 10)
+                : Infinity;
+              return calories >= min && calories <= max;
+            });
+          }
+
+          // Filter by carbs
+          if (carbsMinFilter || carbsMaxFilter) {
+            finalResults = finalResults.filter((recipe) => {
+              const carbs = recipe.carbs;
+              const min = carbsMinFilter
+                ? parseFloat(carbsMinFilter, 10)
+                : -Infinity;
+              const max = carbsMaxFilter
+                ? parseFloat(carbsMaxFilter, 10)
+                : Infinity;
+              return carbs >= min && carbs <= max;
+            });
+          }
+
+          // Filter by protein
+          if (proteinMinFilter || proteinMaxFilter) {
+            finalResults = finalResults.filter((recipe) => {
+              const protein = recipe.protein;
+              const min = proteinMinFilter
+                ? parseFloat(proteinMinFilter, 10)
+                : -Infinity;
+              const max = proteinMaxFilter
+                ? parseFloat(proteinMaxFilter, 10)
+                : Infinity;
+              return protein >= min && protein <= max;
+            });
+          }
+
+          // Filter by fat
+          if (fatMinFilter || fatMaxFilter) {
+            finalResults = finalResults.filter((recipe) => {
+              const fat = recipe.fat;
+              const min = fatMinFilter
+                ? parseFloat(fatMinFilter, 10)
+                : -Infinity;
+              const max = fatMaxFilter
+                ? parseFloat(fatMaxFilter, 10)
+                : Infinity;
+              return fat >= min && fat <= max;
+            });
+          }
+
+          // Filter by sodium
+          if (sodiumMinFilter || sodiumMaxFilter) {
+            finalResults = finalResults.filter((recipe) => {
+              const sodium = recipe.sodium;
+              const min = sodiumMinFilter
+                ? parseFloat(sodiumMinFilter, 10)
+                : -Infinity;
+              const max = sodiumMaxFilter
+                ? parseFloat(sodiumMaxFilter, 10)
+                : Infinity;
+              return sodium >= min && sodium <= max;
+            });
+          }
+
+          // Filter by fibre
+          if (fibreMinFilter || fibreMaxFilter) {
+            finalResults = finalResults.filter((recipe) => {
+              const fibre = recipe.fibre;
+              const min = fibreMinFilter
+                ? parseFloat(fibreMinFilter, 10)
+                : -Infinity;
+              const max = fibreMaxFilter
+                ? parseFloat(fibreMaxFilter, 10)
+                : Infinity;
+              return fibre >= min && fibre <= max;
+            });
+          }
+
+          // Filter by cooking time
+          if (cookingTimeMinFilter || cookingTimeMaxFilter) {
+            finalResults = finalResults.filter((recipe) => {
+              const cookingTime = recipe.cookingTime;
+              const min = cookingTimeMinFilter
+                ? parseFloat(cookingTimeMinFilter, 10)
+                : -Infinity;
+              const max = cookingTimeMaxFilter
+                ? parseFloat(cookingTimeMaxFilter, 10)
+                : Infinity;
+              return cookingTime >= min && cookingTime <= max;
+            });
+          }
+
+          // Fetch average ratings for each recipe
+          let filteredResultsWithAverage = await Promise.all(
+            finalResults.map(async (recipe) => {
+              const average = await fetchRecipeAverage(recipe.id);
+              return { ...recipe, average }; // Augment each recipes with its average
+            })
+          );
+
+          // Sort the results
+          let sortedResults = [...filteredResultsWithAverage];
+          switch (sortOption) {
+            case "LATEST":
+              sortedResults.sort(
+                (a, b) => new Date(b.createdDT) - new Date(a.createdDT)
+              );
+              break;
+            case "OLDEST":
+              sortedResults.sort(
+                (a, b) => new Date(a.createdDT) - new Date(b.createdDT)
+              );
+              break;
+            case "ALPHABETICAL_AZ":
+              sortedResults.sort((a, b) => a.title.localeCompare(b.title));
+              break;
+            case "ALPHABETICAL_ZA":
+              sortedResults.sort((a, b) => b.title.localeCompare(a.title));
+              break;
+            case "HIGHEST_RATINGS":
+              sortedResults.sort((a, b) => {
+                const ratingDiff =
+                  (b.average?.averageRatings || 0) -
+                  (a.average?.averageRatings || 0);
+                if (ratingDiff !== 0) return ratingDiff;
+                return new Date(b.createdDT) - new Date(a.createdDT); // Latest date first if tie
+              });
+              break;
+          }
+
+          console.log("Sorted results:", sortedResults);
+
+          setDisplayedRecipes(sortedResults);
+          setResultsCount(sortedResults.length);
+          setIsSearchEmpty(sortedResults.length === 0);
+
+          // Update displayed recipes
+          // setDisplayedRecipes(finalResults);
+          // setResultsCount(finalResults.length);
+          // setIsSearchEmpty(finalResults.length === 0);
+        } else {
+          setIsSearchEmpty(true);
+          setDisplayedRecipes([]);
+          setResultsCount(0);
+        }
+        setSearchPerformed(true);
+      } catch (error) {
+        console.error("Error searching recipes:", error);
+      }
+    }
+  };
+
+  ///////////////////////////////////////////////////////////////////////
+
+  const handleIngredientSearchClick = async () => {
+    setSearchButtonClicked(true); // Set flag when search is performed
+    setIsSearchEmpty(false);
+    setSearchPerformed(true);
+
+    if (!ingredientSearchTerm.trim()) {
+      // temporary fix
+      const filteredRecipes = AllRecipes;
+
+      setDisplayedRecipes(filteredRecipes);
+      setResultsCount(filteredRecipes.length);
+      setIsSearchEmpty(false);
+      setSearchPerformed(false);
+    } else {
+      // Search for recipes
+      try {
+        const formattedIngredientSearchTerm = ingredientSearchTerm
+          .trim()
+          .replace(/\s+/g, "+");
+        const response = await axiosInterceptorInstance.get(
+          `/recipe/findByIngredients?keyword=${formattedIngredientSearchTerm}`
         );
         let filteredResults = response.data.filter(
           (recipe) => recipe.active === true
@@ -746,6 +1088,17 @@ const RecipesPageForUser = () => {
   //             {post.cookingTime} Minutes
   //           </div>
   //         </div>
+  //         <div className="flex justify-between items-center">
+  //           <div className="flex items-center text-blue-900 font-semibold text-xl">
+  //             {post.mealType?.subcategoryName || "No Meal Type"}
+  //           </div>
+  //         </div>
+
+  //         {/* Displaying Ingredients */}
+  //         <div className="mb-4">
+  //           <strong>Ingredients:</strong>
+  //           <p className="text-gray-700">{post.ingredients}</p>
+  //         </div>
 
   //         <button
   //           onClick={() => handleViewRecipe(post.id)}
@@ -771,6 +1124,7 @@ const RecipesPageForUser = () => {
   // Determine if any search or filter has been applied
   const hasSearchOrFilterBeenApplied =
     searchTerm.trim() !== "" ||
+    ingredientSearchTerm.trim() !== "" ||
     selectedDietaryPreference !== "" ||
     selectedMealType !== "" ||
     selectedAllergies.length > 0 ||
@@ -800,8 +1154,8 @@ const RecipesPageForUser = () => {
         <div className="flex-grow">
           <input
             type="text"
-            id="recipeSearch"
-            name="recipeSearch"
+            id="titleSearch"
+            name="titleSearch"
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
             onKeyDown={(e) => {
@@ -809,24 +1163,32 @@ const RecipesPageForUser = () => {
                 handleSearchClick();
               }
             }}
-            placeholder="Search recipe title..."
+            placeholder={
+              ingredientSearchTerm.trim() !== ""
+                ? "Disabled"
+                : "Search recipe title..."
+            }
+            disabled={ingredientSearchTerm.trim() !== ""}
+            data-tooltip-id="titleSearchTooltip"
+            data-tooltip-content={
+              ingredientSearchTerm.trim() !== ""
+                ? "Search by title is disabled while using ingredient search"
+                : ""
+            }
             className="mr-2 p-2 rounded-lg border w-full md:w-auto"
-            style={{ flex: 1 }}
           />
+          {/* Tooltip component activated for the input field */}
+          {/* Tooltip Component */}
+          <Tooltip id="titleSearchTooltip" place="top" effect="solid" />
           <button
             onClick={handleSearchClick}
             className="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-1.5 px-5 rounded-full mt-2 w-full lg:w-auto"
             style={{ flexShrink: 0 }}
           >
-            Search
+            Search by title
           </button>
-          {/* Results count */}
-          {searchButtonClicked && searchPerformed && (
-            <p className="text-left text-red font-bold text-xl sm:ml-2">
-              {resultsCount} results found.
-            </p>
-          )}
         </div>
+
         {/* Sort dropdown */}
         <div className="mb-2 md:mb-0 md:mr-6">
           <label
@@ -838,7 +1200,8 @@ const RecipesPageForUser = () => {
           <select
             id="sort"
             value={sortOption}
-            onChange={(e) => setSortOption(e.target.value)}
+            // onChange={(e) => setSortOption(e.target.value)}
+            onChange={handleSortOptionChange}
             className="mr-2 p-2 rounded-lg border w-full md:w-auto"
             style={{ maxWidth: "300px" }}
           >
@@ -849,16 +1212,50 @@ const RecipesPageForUser = () => {
             ))}
           </select>
         </div>
-        {/* <div className="mb-2 md:mb-0 md:mr-6">
-            <button
-              onClick={handlePersonalisedRecipe}
-              className="mr-2 p-2 rounded-lg border w-full md:w-auto bg-orange-400 hover:bg-orange-500 text-white py-1.5 px-5"
-              style={{ maxWidth: "300px" }}
-            >
-              Personalised Recipe
-            </button>
-          </div> */}
       </div>
+      {/* Ingredient Search Section */}
+      <div className="flex sm:items-center mb-4">
+        <input
+          type="text"
+          id="ingredientSearch"
+          name="ingredientSearch"
+          value={ingredientSearchTerm}
+          onChange={(e) => setIngredientSearchTerm(e.target.value)}
+          onKeyDown={(e) => {
+            if (e.key === "Enter") {
+              handleIngredientSearchClick();
+            }
+          }}
+          placeholder={
+            searchTerm.trim() !== "" ? "Disabled" : "Search by ingredient..."
+          }
+          disabled={searchTerm.trim() !== ""}
+          data-tooltip-id="ingredientSearchTooltip"
+          data-tooltip-content={
+            searchTerm.trim() !== ""
+              ? "Ingredient search is disabled while using title search"
+              : ""
+          }
+          className="mr-2 p-2 rounded-lg border w-full md:w-auto"
+        />
+        {/* Tooltip component activated for the input field */}
+        {/* Tooltip Component */}
+        <Tooltip id="ingredientSearchTooltip" place="top" effect="solid" />
+        <button
+          onClick={handleIngredientSearchClick}
+          className="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-1.5 px-5 rounded-full mt-2 w-full lg:w-auto"
+          style={{ flexShrink: 0 }}
+        >
+          Search by ingredient
+        </button>
+      </div>
+
+      {/* Results count */}
+      {searchButtonClicked && searchPerformed && (
+        <p className="text-left text-red font-bold text-xl sm:ml-2">
+          {resultsCount} results found.
+        </p>
+      )}
 
       {/* Button to open filter option */}
       {/* Display message while fetching data ftom backend */}
@@ -898,9 +1295,10 @@ const RecipesPageForUser = () => {
                     </label>
                     <select
                       value={selectedDietaryPreference}
-                      onChange={(e) =>
-                        setSelectedDietaryPreference(e.target.value)
-                      }
+                      // onChange={(e) =>
+                      //   setSelectedDietaryPreference(e.target.value)
+                      // }
+                      onChange={handleDietaryPreferenceChange}
                       className="form-select mr-2 p-2 rounded-lg border w-full md:w-auto"
                     >
                       <option value="">All Dietary Preferences</option>
@@ -922,7 +1320,7 @@ const RecipesPageForUser = () => {
                     </label>
                     <select
                       value={selectedMealType}
-                      onChange={(e) => setSelectedMealType(e.target.value)}
+                      onChange={handleMealTypeChange}
                       className="form-select mr-2 p-2 rounded-lg border w-full md:w-auto"
                     >
                       <option value="">All Meal Types</option>
@@ -992,7 +1390,7 @@ const RecipesPageForUser = () => {
                           type="number"
                           id="caloriesMinFilter"
                           value={caloriesMinFilter}
-                          onChange={(e) => setCaloriesMinFilter(e.target.value)}
+                          onChange={handleCaloriesMinFilterChange}
                           className="form-control block rounded-lg border border-gray-400"
                           style={{ width: "80px", marginRight: "8px" }} // adjust the width as needed
                         />
@@ -1007,7 +1405,7 @@ const RecipesPageForUser = () => {
                           type="number"
                           id="caloriesMaxFilter"
                           value={caloriesMaxFilter}
-                          onChange={(e) => setCaloriesMaxFilter(e.target.value)}
+                          onChange={handleCaloriesMaxFilterChange}
                           className="form-control block rounded-lg border border-gray-400"
                           style={{ width: "80px" }} // adjust the width as needed
                         />
@@ -1028,7 +1426,7 @@ const RecipesPageForUser = () => {
                           type="number"
                           id="carbsMinFilter"
                           value={carbsMinFilter}
-                          onChange={(e) => setCarbsMinFilter(e.target.value)}
+                          onChange={handleCarbsMinFilterChange}
                           className="form-control block rounded-lg border border-gray-400"
                           style={{ width: "80px", marginRight: "8px" }} // adjust the width as needed
                         />
@@ -1043,7 +1441,7 @@ const RecipesPageForUser = () => {
                           type="number"
                           id="carbsMaxFilter"
                           value={carbsMaxFilter}
-                          onChange={(e) => setCarbsMaxFilter(e.target.value)}
+                          onChange={handleCarbsMaxFilterChange}
                           className="form-control block rounded-lg border border-gray-400"
                           style={{ width: "80px" }} // adjust the width as needed
                         />
@@ -1064,7 +1462,7 @@ const RecipesPageForUser = () => {
                           type="number"
                           id="proteinMinFilter"
                           value={proteinMinFilter}
-                          onChange={(e) => setProteinMinFilter(e.target.value)}
+                          onChange={handleProteinMinFilterChange}
                           className="form-control block rounded-lg border border-gray-400"
                           style={{ width: "80px", marginRight: "8px" }} // adjust the width as needed
                         />
@@ -1079,7 +1477,7 @@ const RecipesPageForUser = () => {
                           type="number"
                           id="proteinMaxFilter"
                           value={proteinMaxFilter}
-                          onChange={(e) => setProteinMaxFilter(e.target.value)}
+                          onChange={handleProteinMaxFilterChange}
                           className="form-control block rounded-lg border border-gray-400"
                           style={{ width: "80px" }} // adjust the width as needed
                         />
@@ -1100,7 +1498,7 @@ const RecipesPageForUser = () => {
                           type="number"
                           id="fatMinFilter"
                           value={fatMinFilter}
-                          onChange={(e) => setFatMinFilter(e.target.value)}
+                          onChange={handleFatMinFilterChange}
                           className="form-control block rounded-lg border border-gray-400"
                           style={{ width: "80px", marginRight: "8px" }} // adjust the width as needed
                         />
@@ -1115,7 +1513,7 @@ const RecipesPageForUser = () => {
                           type="number"
                           id="fatMaxFilter"
                           value={fatMaxFilter}
-                          onChange={(e) => setFatMaxFilter(e.target.value)}
+                          onChange={handleFatMaxFilterChange}
                           className="form-control block rounded-lg border border-gray-400"
                           style={{ width: "80px" }} // adjust the width as needed
                         />
@@ -1136,7 +1534,7 @@ const RecipesPageForUser = () => {
                           type="number"
                           id="sodiumMinFilter"
                           value={sodiumMinFilter}
-                          onChange={(e) => setSodiumMinFilter(e.target.value)}
+                          onChange={handleSodiumMinFilterChange}
                           className="form-control block rounded-lg border border-gray-400"
                           style={{ width: "80px", marginRight: "8px" }} // adjust the width as needed
                         />
@@ -1151,7 +1549,7 @@ const RecipesPageForUser = () => {
                           type="number"
                           id="sodiumMaxFilter"
                           value={sodiumMaxFilter}
-                          onChange={(e) => setSodiumMaxFilter(e.target.value)}
+                          onChange={handleSodiumMaxFilterChange}
                           className="form-control block rounded-lg border border-gray-400"
                           style={{ width: "80px" }} // adjust the width as needed
                         />
@@ -1172,7 +1570,7 @@ const RecipesPageForUser = () => {
                           type="number"
                           id="fibreMinFilter"
                           value={fibreMinFilter}
-                          onChange={(e) => setFibreMinFilter(e.target.value)}
+                          onChange={handleFibreMinFilterChange}
                           className="form-control block rounded-lg border border-gray-400"
                           style={{ width: "80px", marginRight: "8px" }} // adjust the width as needed
                         />
@@ -1187,7 +1585,7 @@ const RecipesPageForUser = () => {
                           type="number"
                           id="fibreMaxFilter"
                           value={fibreMaxFilter}
-                          onChange={(e) => setFibreMaxFilter(e.target.value)}
+                          onChange={handleFibreMaxFilterChange}
                           className="form-control block rounded-lg border border-gray-400"
                           style={{ width: "80px" }} // adjust the width as needed
                         />
@@ -1214,9 +1612,7 @@ const RecipesPageForUser = () => {
                         type="number"
                         id="cookingTimeMinFilter"
                         value={cookingTimeMinFilter}
-                        onChange={(e) =>
-                          setCookingTimeMinFilter(e.target.value)
-                        }
+                        onChange={handleCookingTimeMinFilterChange}
                         className="form-control block rounded-lg border border-gray-400"
                         style={{ width: "80px", marginRight: "8px" }} // adjust the width as needed
                       />
@@ -1231,9 +1627,7 @@ const RecipesPageForUser = () => {
                         type="number"
                         id="cookingTimeMaxFilter"
                         value={cookingTimeMaxFilter}
-                        onChange={(e) =>
-                          setCookingTimeMaxFilter(e.target.value)
-                        }
+                        onChange={handleCookingTimeMaxFilterChange}
                         className="form-control block rounded-lg border border-gray-400"
                         style={{ width: "80px" }} // adjust the width as needed
                       />

@@ -335,7 +335,7 @@ const Home = () => {
     console.log("Fetching user accounts...");
     try {
       const response = await axiosInterceptorInstance.get(
-        "/allUsers/getRoleCount"
+        "/landingPage/getRoleCount"
       );
       console.log("User Role Counts: ", response.data);
       setTotalUserCount(response.data);

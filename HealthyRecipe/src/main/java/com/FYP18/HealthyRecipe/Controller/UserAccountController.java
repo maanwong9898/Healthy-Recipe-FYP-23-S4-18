@@ -51,11 +51,6 @@ public class UserAccountController {
          return loginService.getUnverifiedNutritionists();
     }
 
-    @GetMapping("/getRoleCount")
-    public List<RoleCountRequest> getRoleCount()
-    {
-        return loginService.getRoleCount();
-    }
     @PostMapping("/verifyUser/{userId}")
     public void verifyUser(@PathVariable String userId)
     {

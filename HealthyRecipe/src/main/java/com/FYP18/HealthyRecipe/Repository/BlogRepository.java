@@ -48,6 +48,12 @@ public interface BlogRepository extends JpaRepository<Blog, Long>{
     @Transactional
     @Query("SELECT b FROM Blog b WHERE b.userID.id = :userId")
     List<Blog> findByUserID(String userId); 
+
+
+    @Query(value ="SELECT r.title AS title, r.id AS id, r.img AS img, r.introduction AS introduction FROM MealPlan r WHERE r.id IN :ids", nativeQuery = false)
+    List<Blog> findBlogDTOsByIds(@Param("ids") List<Long> ids);
+
+ 
 }
 
 // Validation failed for query for method public abstract com.FYP18.HealthyRecipe.Entity.Blog com.FYP18.HealthyRecipe.Repository.BlogRepository.findByUserId(java.lang.Long)

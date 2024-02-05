@@ -363,8 +363,4 @@ public class LoginService {
         
     // }
 
-    public List<RoleCountRequest> getRoleCount()
-    {
-        return userRepository.getRoleCount();
-    }
 }

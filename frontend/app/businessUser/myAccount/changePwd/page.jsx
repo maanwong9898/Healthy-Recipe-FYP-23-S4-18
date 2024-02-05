@@ -10,7 +10,6 @@ import SecureStorage from "react-secure-storage";
 
 const changeUserPwd = () => {
   const router = useRouter();
-  const [userOldPwd, setUserOldPwd] = useState("");
   const [oldPwd, setOldPwd] = useState("");
   const [newPwd, setNewPwd] = useState("");
   const [repeatPwd, setRepeatPwd] = useState("");
@@ -186,14 +185,14 @@ const changeUserPwd = () => {
                 </div>
                 {/* ERROR MESSAGE */}
                 {error && (
-                  <div className="text-red-500 text-sm font-bold mt-2">
+                  <div className="text-red-500 text-base font-medium">
                     {error}
                   </div>
                 )}
 
                 {/* SUCCESS MESSAGE */}
                 {success && (
-                  <div className="text-green-500 text-sm font-bold mt-2">
+                  <div className="text-green-500 text-base font-medium">
                     {success}
                   </div>
                 )}

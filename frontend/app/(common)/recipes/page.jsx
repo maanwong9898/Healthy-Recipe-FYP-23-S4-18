@@ -1008,7 +1008,7 @@ const RecipesPageForUser = () => {
           >
             Publisher:{" "}
             <span className="text-orange-600 font-bold tracking-tight">
-              {post.publisher}
+              {post?.publisher || "Not Specified"}
             </span>
           </p>
         </div>

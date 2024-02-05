@@ -173,11 +173,18 @@ const RegisteredUserHomepage = () => {
             {post.title}
           </h2>
           {/* Description */}
-          <p
-            className="text-gray-700 text-base mb-4 line-clamp-3"
-            style={{ height: "4.5rem" }}
-          >
+          <p className="text-gray-700 text-base mb-4 line-clamp-3">
             {post.description}
+          </p>
+          {/* Publisher */}
+          <p
+            className="text-gray-900 text-base font-semibold"
+            style={{ height: "3.5rem" }}
+          >
+            Publisher:{" "}
+            <span className="text-orange-600 font-bold tracking-tight">
+              {post.publisher}
+            </span>
           </p>
         </div>
       </div>

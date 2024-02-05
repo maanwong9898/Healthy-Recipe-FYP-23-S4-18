@@ -6,59 +6,56 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.FYP18.HealthyRecipe.DTO.RecipeDTO; 
+import com.FYP18.HealthyRecipe.DTO.RecipeDTO;
 import com.FYP18.HealthyRecipe.Entity.Recipe;
 import com.FYP18.HealthyRecipe.Entity.User;
 
 import java.util.List;
 
-
-public interface RecipeRepository extends JpaRepository<Recipe, Long>{
-    
+public interface RecipeRepository extends JpaRepository<Recipe, Long> {
 
     @Modifying
     @Transactional
     @Query("SELECT b FROM Recipe b WHERE b.userID.id = :userId")
     List<Recipe> findByUserID(String userId);
- 
+
     @Modifying
     @Transactional
     @Query("DELETE FROM Recipe b WHERE b.ID = :id")
     void deleteByRecipeId(Long id);
 
-
     @Query("SELECT r from Recipe r WHERE r.active = true")
     List<Recipe> findAllActiveRecipes();
-
 
     @Query("SELECT Count(r) from Recipe r WHERE r.active = true")
     Integer findAllActiveRecipesCount();
 
     @Modifying
-    @Transactional 
+    @Transactional
     @Query("SELECT r FROM Recipe r WHERE r.title LIKE %:keyword%")
     List<Recipe> findRecipesByTitle(@Param("keyword") String keyword);
 
     @Modifying
-    @Transactional 
+    @Transactional
     @Query("SELECT r FROM Recipe r WHERE r.ingredients LIKE %:keyword%")
     List<Recipe> findRecipesByIngredients(@Param("keyword") String keyword);
- 
+
     @Transactional
-    @Query(value ="SELECT r.title AS title, r.description AS description, r.id AS id, r.img AS img, r.calories AS calories, r.protein AS protein, r.fat AS fat, r.fibre AS fibre, r.sodium AS sodium, r.carbs AS carbs FROM Recipe r WHERE r.title LIKE %:keyword%", nativeQuery = false)
-    // @Query(value ="SELECT r.title AS title, r.description AS description FROM Recipe r WHERE r.title LIKE %:keyword%", nativeQuery = false)
+    @Query(value = "SELECT r.title AS title, r.description AS description, r.id AS id, r.img AS img, r.calories AS calories, r.protein AS protein, r.fat AS fat, r.fibre AS fibre, r.sodium AS sodium, r.carbs AS carbs FROM Recipe r WHERE r.title LIKE %:keyword%", nativeQuery = false)
+    // @Query(value ="SELECT r.title AS title, r.description AS description FROM
+    // Recipe r WHERE r.title LIKE %:keyword%", nativeQuery = false)
     List<RecipeDTO> findRecipeDTOsByKeyword(@Param("keyword") String keyword);
 
-
-    @Query(value ="SELECT r.title AS title, r.description AS description, r.id AS id, r.img AS img, r.calories AS calories, r.protein AS protein, r.fat AS fat, r.fibre AS fibre, r.sodium AS sodium, r.carbs AS carbs FROM Recipe r WHERE r.id IN :ids", nativeQuery = false)
-    // @Query(value ="SELECT r.title AS title, r.description AS description FROM Recipe r WHERE r.title LIKE %:keyword%", nativeQuery = false)
+    @Query(value = "SELECT r.title AS title, r.publisher AS publisher, r.description AS description, r.id AS id, r.img AS img, r.calories AS calories, r.protein AS protein, r.fat AS fat, r.fibre AS fibre, r.sodium AS sodium, r.carbs AS carbs FROM Recipe r WHERE r.id IN :ids", nativeQuery = false)
+    // @Query(value ="SELECT r.title AS title, r.description AS description FROM
+    // Recipe r WHERE r.title LIKE %:keyword%", nativeQuery = false)
     List<RecipeDTO> findRecipeDTOsByIds(@Param("ids") List<Long> ids);
 
-    @Query(value="SELECT COUNT(r) AS count FROM Recipe r WHERE r.userID.id = :id")
+    @Query(value = "SELECT COUNT(r) AS count FROM Recipe r WHERE r.userID.id = :id")
     Integer findCountById(@Param("id") String id);
 
-
-    // @Query(value="SELECT r.userID.id AS id, COUNT(r) AS count, 'Recipe' AS type FROM Recipe r WHERE r.userID.id = :id")
+    // @Query(value="SELECT r.userID.id AS id, COUNT(r) AS count, 'Recipe' AS type
+    // FROM Recipe r WHERE r.userID.id = :id")
     // List<TypeCountIdRequest> findCountById(@Param("id") String id);
 
     // SELECT userId, COUNT(userid) FROM RECIPE GROUP BY USERID;;

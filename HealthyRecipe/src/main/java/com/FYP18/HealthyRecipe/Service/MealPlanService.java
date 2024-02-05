@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.FYP18.HealthyRecipe.DTO.MealPlanDTO;
+import com.FYP18.HealthyRecipe.DTO.PopularReviewRatingDTO;
 import com.FYP18.HealthyRecipe.DTO.ReviewRatingDTO;
 import com.FYP18.HealthyRecipe.DTO.UserInfoDTO;
 import com.FYP18.HealthyRecipe.Entity.MealPlan;
@@ -189,4 +190,15 @@ public class MealPlanService {
         mealPlanReviewRatingRepository.deleteById(id);
     }
  
+    public List<MealPlanDTO> getMostPopularMealPlans()
+    {
+        List<PopularReviewRatingDTO> dto = mealPlanReviewRatingRepository.getMostPopularMealPlans();
+        List<Long> ids = new ArrayList<>();
+
+        for(PopularReviewRatingDTO id : dto)
+        {
+            ids.add(id.getId());
+        } 
+        return repo.findMealPlanDTOsByIds(ids);
+    }
 }

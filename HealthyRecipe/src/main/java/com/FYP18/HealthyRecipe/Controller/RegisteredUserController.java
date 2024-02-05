@@ -10,7 +10,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.FYP18.HealthyRecipe.DTO.AgeGroupRequest;
 import com.FYP18.HealthyRecipe.DTO.DietaryPreferenceDemographic;
+import com.FYP18.HealthyRecipe.DTO.MealPlanDTO;
 import com.FYP18.HealthyRecipe.DTO.WeightDTO;
+import com.FYP18.HealthyRecipe.Entity.MealPlan;
 import com.FYP18.HealthyRecipe.Entity.RegisteredUser;
 import com.FYP18.HealthyRecipe.Entity.UserInfoOverTime;
 import com.FYP18.HealthyRecipe.Repository.RegisteredUserRepository;
@@ -83,4 +85,12 @@ public class RegisteredUserController {
     { 
         return service.getDemo();
     }
+
+    @GetMapping("/getMealPlans/{healthGoalId}")
+    public List<MealPlan> getMealPlans(@PathVariable Long healthGoalId)
+    {
+        return service.getMealPlans(healthGoalId);
+    }
+
+
 }

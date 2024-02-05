@@ -16,10 +16,12 @@ const NutritionistRegistration = () => {
   const [companyName, setCompanyName] = useState("");
   const [companyAddress, setCompanyAddress] = useState("");
   const [postalCode, setPostalCode] = useState("");
-  const [nutriCert, setNutriCert] = useState("");
+  // const [nutriCert, setNutriCert] = useState("");
   const [error, setError] = useState("");
   const [success, setSuccess] = useState(false);
   const [filePreviews, setFilePreviews] = useState([]);
+  const [imageFile, setImageFile] = useState(null);
+  const [newImageBlob, setNewImageBlob] = useState(null); // New uploaded image
   const emailValidation = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
   const handleCreateNutritionistAccount = async (event) => {
@@ -32,7 +34,7 @@ const NutritionistRegistration = () => {
       !confirmPwd.trim() ||
       !contactNumber.trim() ||
       !workEmail.trim() ||
-      !nutriCert
+      !newImageBlob.trim()
     ) {
       setError("Please fill in all the required fields.");
       return;
@@ -62,7 +64,7 @@ const NutritionistRegistration = () => {
     // }
 
     console.log("Creating account...");
-    const formData = {
+    const nutritionistData = {
       password: password,
       username: userName,
       fullName: fullName,
@@ -71,14 +73,15 @@ const NutritionistRegistration = () => {
       companyAddress: companyAddress,
       contactNumber: contactNumber,
       postalCode: postalCode,
-      nutriCert: nutriCert,
+      imgBlob: newImageBlob, // Use updated image blob
+      // nutriCert: nutriCert,
     };
-    console.log(formData);
+    console.log(nutritionistData);
 
     try {
       const response = await axiosInterceptorInstance.post(
         "/register/nut",
-        formData
+        nutritionistData
       );
       console.log("Account successfully:", response.data);
 
@@ -92,7 +95,7 @@ const NutritionistRegistration = () => {
       setCompanyName("");
       setCompanyAddress("");
       setPostalCode("");
-      setNutriCert("");
+      // setNutriCert("");
 
       setError("");
       // Clear success msg after 5 seconds
@@ -111,22 +114,42 @@ const NutritionistRegistration = () => {
     setError("");
   };
 
-  const handleFileChange = (event) => {
-    const files = Array.from(event.target.files);
-    setNutriCert(files);
-    const previews = files.map((file) => URL.createObjectURL(file));
-    setFilePreviews(previews);
+  const handleFileChange = (e) => {
+    console.log("File change event:", e);
+    const file = e.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = (event) => {
+        let dataURL = event.target.result;
+        console.log("Complete Data URL:", dataURL);
+
+        // Extract Base64 Data
+        let base64Data = dataURL.split(",")[1];
+        console.log("Base64 Data:", base64Data);
+
+        // Use base64Data as needed
+        setNewImageBlob(base64Data); // Assuming you have a state setter like this
+      };
+      reader.readAsDataURL(file);
+      console.log("File:", file);
+    }
   };
 
-  const renderFilePreviews = () => {
-    return filePreviews.map((preview, index) => (
+  const renderImage = () => {
+    const imageToShow = newImageBlob;
+    return imageToShow ? (
       <img
-        key={index}
-        src={preview}
-        alt={`File Preview ${index + 1}`}
+        src={`data:image/jpeg;base64,${imageToShow}`}
+        alt="Nutritionist Certificate"
         className="mt-2 w-32 h-32 object-cover rounded"
+        onError={(e) => {
+          console.error("Error loading image:", e);
+          e.target.style.display = "none";
+        }}
       />
-    ));
+    ) : (
+      <p>No image available</p>
+    );
   };
 
   return (
@@ -176,9 +199,9 @@ const NutritionistRegistration = () => {
                   Create an Account
                 </h1>
                 <form
-                  action="https://localhost:8080/register/upload"
-                  method="POST"
-                  encType="multipart/formdata"
+                // action="https://localhost:8080/register/upload"
+                // method="POST"
+                // encType="multipart/formdata"
                 >
                   <div className="grid grid-cols-2 gap-3 mt-2">
                     <label htmlFor="fullName" className="flex items-center">
@@ -340,21 +363,26 @@ const NutritionistRegistration = () => {
                       A copy of your undergraduate/postgraduate certificate
                     </p>
 
-                    <input
-                      type="file"
-                      id="nutriCert"
-                      name="nutriCert"
-                      className="border-solid mt-3 rounded-lg bg-white border border-gray-400 w-full"
-                      accept=".pdf, .jpg, .png .jpeg"
-                      value={nutriCert}
-                      onChange={(e) => {
-                        handleFileChange(e);
-                        clearErrorOnChange(setNutriCert)(e);
-                      }}
-                    />
-                    {/* Display file previews */}
+                    {/* IMAGE file */}
+                    <div className="flex flex-col">
+                      <label
+                        htmlFor="image"
+                        className="block text-xl mb-1 font-bold text-gray-900"
+                      >
+                        Image<span className="text-red-500">*</span>
+                      </label>
+                      <input
+                        type="file"
+                        id="image"
+                        name="image"
+                        accept="image/*"
+                        onChange={handleFileChange}
+                        className="border-solid mt-3 rounded-lg bg-white border border-gray-400 w-full"
+                      />
+                    </div>
+
                     <div className="mt-2 flex flex-row space-x-4">
-                      {renderFilePreviews()}
+                      {renderImage()}
                     </div>
                   </div>
 

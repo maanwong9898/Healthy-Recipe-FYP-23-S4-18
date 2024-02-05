@@ -28,12 +28,14 @@ public class DashboardDTO {
     private String email;
     private String id;
     private LocalDate dob; //this only applies to registered user + System admin
+    private Boolean enabled; 
 
     private String contactNumber;
     private String companyName;
     private String companyAddress;
     private String UEN;
     private String postalCode;
+    private byte[] imgBlob; // this is for the nutritionist 
 
 
     private Set<Allergies> allergies;

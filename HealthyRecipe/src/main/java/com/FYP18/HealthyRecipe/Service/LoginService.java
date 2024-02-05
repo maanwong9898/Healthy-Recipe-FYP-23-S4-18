@@ -221,6 +221,7 @@ public class LoginService {
                 n.setCompanyName(dto.getCompanyName());
                 n.setCompanyAddress(dto.getCompanyAddress());
                 n.setPostalCode(dto.getPostalCode());
+                n.setImgBlob(dto.getImgBlob());
 
                 nutritionistRepository.save(n);
                 break; 
@@ -253,6 +254,8 @@ public class LoginService {
        dto.setFullName(user.getFullName());
        dto.setEmail(user.getEmail());
        dto.setId(user.getId()); 
+       dto.setEnabled(user.getEnabled());
+       
    
        switch(role)
        {
@@ -270,6 +273,7 @@ public class LoginService {
                 dto.setCompanyName(n.getCompanyName());
                 dto.setCompanyAddress(n.getCompanyAddress());
                 dto.setPostalCode(n.getPostalCode());
+                dto.setImgBlob(n.getImgBlob());
                 break; 
 
             case REGISTERED_USER:

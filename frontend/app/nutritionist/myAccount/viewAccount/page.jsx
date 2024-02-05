@@ -25,6 +25,8 @@ const UpdateAccount = () => {
   const [postalCode, setPostalCode] = useState("");
   const [companyAddress, setCompanyAddress] = useState("");
   const [nutriCert, setNutriCert] = useState("");
+  const [imageBlob, setImageBlob] = useState(""); // Original image
+  const [newImageBlob, setNewImageBlob] = useState(null); // New uploaded image
   const [isTabSelected, setIsTabSelected] = useState("myAccount");
 
   const viewUserDashboard = async () => {
@@ -63,7 +65,16 @@ const UpdateAccount = () => {
     setCompanyName(userAccount ? userAccount.companyName : "");
     setPostalCode(userAccount?.postalCode || "");
     setCompanyAddress(userAccount ? userAccount.companyAddress : "");
-    setNutriCert(userAccount ? userAccount.nutriCert : "");
+    // setNutriCert(userAccount ? userAccount.nutriCert : "");
+    if (userAccount.imgBlob) {
+      console.log("Image blob available");
+      console.log("Image blob:", userAccount.imgBlob);
+      // Directly use base64 string as the image source
+      setImageBlob(userAccount.imgBlob);
+    } else {
+      console.log("No image blob available");
+      // Handle the absence of an image blob appropriately
+    }
   }, [userAccount]);
 
   const handleAccountUpdate = async (event) => {
@@ -87,6 +98,9 @@ const UpdateAccount = () => {
           headers: { Authorization: `Bearer ${token}` },
         };
 
+        // Use newImageBlob if available, otherwise fallback to original imageBlob
+        const updatedImageBlob = newImageBlob || imageBlob;
+
         const updatedData = {
           id: userId,
           fullName,
@@ -97,7 +111,8 @@ const UpdateAccount = () => {
           companyName,
           postalCode,
           companyAddress,
-          nutriCert,
+          // nutriCert,
+          imgBlob: updatedImageBlob, // Use updated image blob
         };
 
         console.log("Updated data:", updatedData);
@@ -142,6 +157,44 @@ const UpdateAccount = () => {
     } else if (tab === "changePwd") {
       handleViewChangePwd();
     }
+  };
+
+  const handleFileChange = (e) => {
+    console.log("File change event:", e);
+    const file = e.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = (event) => {
+        let dataURL = event.target.result;
+        console.log("Complete Data URL:", dataURL);
+
+        // Extract Base64 Data
+        let base64Data = dataURL.split(",")[1];
+        console.log("Base64 Data:", base64Data);
+
+        // Use base64Data as needed
+        setNewImageBlob(base64Data); // Assuming you have a state setter like this
+      };
+      reader.readAsDataURL(file);
+      console.log("File:", file);
+    }
+  };
+
+  const renderImage = () => {
+    const imageToShow = newImageBlob || imageBlob;
+    return imageToShow ? (
+      <img
+        src={`data:image/jpeg;base64,${imageToShow}`}
+        alt="nutritionist certificate"
+        className="mt-2 w-32 h-32 object-cover rounded"
+        onError={(e) => {
+          console.error("Error loading image:", e);
+          e.target.style.display = "none";
+        }}
+      />
+    ) : (
+      <p>No image available</p>
+    );
   };
 
   return (
@@ -285,10 +338,9 @@ const UpdateAccount = () => {
                 </div>
 
                 {/* NUTRITION CERT PREVIEW */}
-                <div className="flex flex-col mb-3.5">
+                {/* <div className="flex flex-col mb-3.5">
                   <label className="mb-1">Nutritionist Certificate:</label>
                   <div>
-                    {/* IMAGE PREVIEW */}
                     <Image
                       src=""
                       width={400}
@@ -296,6 +348,28 @@ const UpdateAccount = () => {
                       className="rounded-lg"
                     />
                   </div>
+                </div> */}
+
+                {/* IMAGE file */}
+                <div className="flex flex-col">
+                  <label
+                    htmlFor="image"
+                    className="block text-xl mb-1 font-bold text-gray-900"
+                  >
+                    Image<span className="text-red-500">*</span>
+                  </label>
+                  <input
+                    type="file"
+                    id="image"
+                    name="image"
+                    accept="image/*"
+                    onChange={handleFileChange}
+                    className="border-solid mt-3 rounded-lg bg-white border border-gray-400 w-full"
+                  />
+                </div>
+
+                <div className="mt-2 flex flex-row space-x-4">
+                  {renderImage()}
                 </div>
 
                 {error && (

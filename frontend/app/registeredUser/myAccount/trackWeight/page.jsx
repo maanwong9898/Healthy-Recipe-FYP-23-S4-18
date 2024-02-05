@@ -4,6 +4,7 @@ import React from "react";
 import Link from "next/link";
 import { useState, useEffect } from "react";
 import axiosInterceptorInstance from "../../../axiosInterceptorInstance.js";
+import SecureStorage from "react-secure-storage";
 
 const TrackWeight = () => {
   const [weightData, setWeightData] = useState([]);
@@ -18,8 +19,7 @@ const TrackWeight = () => {
   // http://localhost:8080/registeredUsers/getWeights/7 sample url
   const viewUserWeight = async () => {
     try {
-      const userId = localStorage.getItem("userId");
-      // const userId = 7;
+      const userId = SecureStorage.getItem("userId");
 
       const response = await axiosInterceptorInstance.get(
         `/registeredUsers/getWeights/${userId}`
@@ -50,13 +50,10 @@ const TrackWeight = () => {
       setError("Please enter a valid input.");
     } else {
       try {
-        // Assuming '7' is the user ID, replace with dynamic user ID if needed
-        // const userId = localStorage.getItem("userId");
-        // const userId = 7;
-        const userId = localStorage.getItem("userId");
+        const userID = SecureStorage.getItem("userId");
         const payload = {
           id: {
-            userId: userId,
+            userId: userID,
           },
           weight: parseInt(currentWeight),
         };
@@ -93,8 +90,7 @@ const TrackWeight = () => {
   // Function to handle deletion of a weight record
   const handleDeleteWeight = async (date) => {
     try {
-      // const userId = 7; // Replace with dynamic user ID if needed
-      const userId = localStorage.getItem("userId");
+      const userId = SecureStorage.getItem("userId");
       const payload = {
         id: {
           userId: userId,

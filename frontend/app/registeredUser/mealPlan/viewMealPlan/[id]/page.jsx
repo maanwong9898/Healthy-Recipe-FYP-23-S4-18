@@ -6,6 +6,7 @@ import { useState, useEffect } from "react";
 import axiosInterceptorInstance from "../../../../axiosInterceptorInstance.js";
 import ArrowRightIcon from "@mui/icons-material/ArrowRight";
 import ArrowLeftIcon from "@mui/icons-material/ArrowLeft";
+import SecureStorage from "react-secure-storage";
 
 // this is to view particular meal plan
 // router path: /registeredUser/mealPlan/viewMealPlan/[id]
@@ -131,7 +132,7 @@ const ViewMealPlan = ({ params }) => {
       });
 
       // Get the ID of the current user
-      const currentUserId = localStorage.getItem("userId");
+      const currentUserId = SecureStorage.getItem("userId");
 
       // Check if current user has already submitted a review
       const userReview = response.data.find(
@@ -158,7 +159,7 @@ const ViewMealPlan = ({ params }) => {
     // Construct the payload according to your API requirements
     const payload = {
       mealPlanReviewRatingId: {
-        UserID: localStorage.getItem("userId"), // The ID of the user submitting the review
+        UserID: SecureStorage.getItem("userId"), // The ID of the user submitting the review
         MealPlanID: mealPlan.id, // The ID of the meal plan being reviewed
       },
       rating: newRating,

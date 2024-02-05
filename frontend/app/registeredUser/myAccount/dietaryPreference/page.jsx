@@ -5,6 +5,7 @@ import React, { use } from "react";
 import Link from "next/link";
 import { useState, useEffect } from "react";
 import axiosInterceptorInstance from "../../../axiosInterceptorInstance.js";
+import SecureStorage from "react-secure-storage";
 
 // router path = /registeredUser/myAccount/dietaryPreference
 
@@ -18,8 +19,8 @@ const ViewDietaryPreference = () => {
 
   const viewUserDashboard = async () => {
     try {
-      const userId = localStorage.getItem("userId");
-      const token = localStorage.getItem("token");
+      const userId = SecureStorage.getItem("userId");
+      const token = SecureStorage.getItem("token");
 
       const config = {
         headers: { Authorization: `Bearer ${token}` },

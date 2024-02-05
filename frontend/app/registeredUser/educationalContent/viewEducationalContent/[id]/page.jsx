@@ -4,6 +4,7 @@ import React from "react";
 import Link from "next/link";
 import { useState, useEffect } from "react";
 import axiosInterceptorInstance from "../../../../axiosInterceptorInstance.js";
+import SecureStorage from "react-secure-storage";
 
 // this is to view particular educational content
 // router path: /registeredUser/educationalContent/viewEducationalContent/[id]
@@ -46,7 +47,9 @@ const ViewEducationalContent = ({ params }) => {
 
   useEffect(() => {
     setIsLoading(true); // Set loading state to true
-    const userId = localStorage.getItem("userId");
+
+    // Get the user ID from local storage
+    const userId = SecureStorage.getItem("userId");
     if (userId) {
       console.log("Registered user id is: ", userId);
     } else {
@@ -85,7 +88,7 @@ const ViewEducationalContent = ({ params }) => {
       });
 
       // Get the ID of the current user
-      const currentUserId = localStorage.getItem("userId");
+      const currentUserId = SecureStorage.getItem("userId");
 
       // Check if current user has already submitted a review
       const userReview = response.data.find(
@@ -114,7 +117,7 @@ const ViewEducationalContent = ({ params }) => {
     // Construct the payload according to your API requirements
     const payload = {
       educationalContentReviewRatingId: {
-        UserID: localStorage.getItem("userId"), // The ID of the user submitting the review
+        UserID: SecureStorage.getItem("userId"), // The ID of the user submitting the review
         educationalContentID: eduContent.id, // The ID of the blog post being reviewed
       },
       rating: newRating,

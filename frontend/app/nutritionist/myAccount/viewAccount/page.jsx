@@ -18,19 +18,13 @@ const UpdateAccount = () => {
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [dob, setDOB] = useState("");
-  const emailValidation = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
   const [contactNumber, setContactNumber] = useState("");
   const [companyName, setCompanyName] = useState("");
   const [postalCode, setPostalCode] = useState("");
   const [companyAddress, setCompanyAddress] = useState("");
-  const [uen, setUen] = useState("");
-  const [allergies, setAllergies] = useState([]);
-  const [dietaryPreferences, setDietaryPreferences] = useState("");
-  const [healthGoal, setHealthGoal] = useState("");
-  const [selectedFiles, setSelectedFiles] = useState([]);
-  const [filePreviews, setFilePreviews] = useState([]);
+  const [nutriCert, setNutriCert] = useState("");
   const [isTabSelected, setIsTabSelected] = useState("myAccount");
 
   const viewUserDashboard = async () => {
@@ -49,7 +43,7 @@ const UpdateAccount = () => {
       );
 
       setUserAccount(response.data);
-      console.log(response.data);
+      console.log("Dashboard data feteched: ", response.data);
     } catch (error) {
       console.error("Error fetching user data", error);
     }
@@ -69,25 +63,15 @@ const UpdateAccount = () => {
     setCompanyName(userAccount ? userAccount.companyName : "");
     setPostalCode(userAccount?.postalCode || "");
     setCompanyAddress(userAccount ? userAccount.companyAddress : "");
-    setUen(userAccount ? userAccount.uen : "");
-    setAllergies(userAccount ? userAccount.allergies : "");
-    setDietaryPreferences(userAccount ? userAccount.dietaryPreferences : "");
-    setHealthGoal(userAccount ? userAccount.healthGoal : "");
+    setNutriCert(userAccount ? userAccount.nutriCert : "");
   }, [userAccount]);
 
   const handleAccountUpdate = async (event) => {
     event.preventDefault();
 
-    // ... existing validation code
-
     // Check if fields are not empty
-    if (fullName === "" || email === "" || dob === "") {
+    if (!fullName.trim() || !username.trim() || !contactNumber.trim()) {
       setError("All fields are required.");
-
-      // Check if email is valid
-    } else if (!emailValidation.test(email)) {
-      setError("Invalid email address.");
-
       // Success msg
     } else if (
       companyName.trim() &&
@@ -96,71 +80,48 @@ const UpdateAccount = () => {
       setError("Please provide both company address and postal code.");
       return;
     } else {
-      setSuccess("Update Successful!");
-      // Remove success msg after 5 seconds
-      setTimeout(() => {
-        setSuccess("");
-      }, 5000);
-      // Clear error messages after update
-      setError("");
-    }
+      try {
+        const userId = SecureStorage.getItem("userId");
+        const token = SecureStorage.getItem("token");
+        const config = {
+          headers: { Authorization: `Bearer ${token}` },
+        };
 
-    try {
-      const userId = SecureStorage.getItem("userId");
-      const token = SecureStorage.getItem("token");
-      const config = {
-        headers: { Authorization: `Bearer ${token}` },
-      };
+        const updatedData = {
+          id: userId,
+          fullName,
+          username,
+          email,
+          dob,
+          contactNumber,
+          companyName,
+          postalCode,
+          companyAddress,
+          nutriCert,
+        };
 
-      const updatedData = {
-        id: userId,
-        fullName,
-        username,
-        email,
-        dob,
-        contactNumber,
-        companyName,
-        postalCode,
-        companyAddress,
-        uen,
-        allergies,
-        dietaryPreferences,
-        healthGoal,
-      };
+        console.log("Updated data:", updatedData);
 
-      console.log("Updated data:", updatedData);
+        const response = await axiosInterceptorInstance.post(
+          "/register/dashboardSet", // Adjust URL if needed
+          updatedData,
+          config
+        );
 
-      const response = await axiosInterceptorInstance.post(
-        "/register/dashboardSet", // Adjust URL if needed
-        updatedData,
-        config
-      );
-
-      console.log("Account updated:", response.data);
-      setSuccess("Account updated successfully!");
-    } catch (error) {
-      console.error("Error updating account", error);
-      setError("Failed to update account.");
+        console.log("Account updated:", response.data);
+        setSuccess("Account updated successfully!");
+      } catch (error) {
+        console.error("Error updating account", error);
+        setError("Failed to update account.");
+      }
     }
   };
 
-  const handleFileChange = (e) => {
-    const files = e.target.files;
-    if (files) {
-      const newPreviews = Array.from(files).map((file) => files.name);
-      setFilePreviews((prevPreviews) => [...prevPreviews, ...newPreviews]);
-      setSelectedFiles((prevFiles) => [...prevFiles, ...files]);
-    }
-  };
-
-  const handleDeleteImage = (index) => {
-    const updatedPreviews = [...filePreviews];
-    updatedPreviews.splice(index, 1);
-    setFilePreviews(updatedPreviews);
-
-    const updatedFiles = [...selectedFiles];
-    updatedFiles.splice(index, 1);
-    setSelectedFiles(updatedFiles);
+  // Clear Error msg on change
+  const clearErrorOnChange = (setter) => (e) => {
+    setter(e.target.value);
+    setError("");
+    setSuccess("");
   };
 
   // Redirect to my account page
@@ -238,33 +199,35 @@ const UpdateAccount = () => {
                     id="fullName"
                     name="fullName"
                     placeholder="Your Name"
-                    className=" bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg p-2.5"
+                    className=" bg-white border border-gray-300 text-gray-900 sm:text-sm rounded-lg p-2.5"
                     value={fullName}
-                    onChange={(e) => setFullName(e.target.value)}
+                    onChange={clearErrorOnChange(setFullName)}
                   />
-
                   {/* USERNAME */}
                   <input
                     type="text"
                     id="userName"
                     name="userName"
                     placeholder="Your Username"
-                    className=" bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg p-2.5"
+                    className=" bg-white border border-gray-300 text-gray-900 sm:text-sm rounded-lg p-2.5"
                     value={username}
-                    onChange={(e) => setUsername(e.target.value)}
+                    onChange={clearErrorOnChange(setUsername)}
                   />
                 </div>
 
                 {/* CONTACT NUMBER */}
                 <div className="flex flex-col mb-3.5">
-                  <label className="mb-1">Contact Number:</label>
+                  <label className="mb-1">
+                    Contact Number:
+                    <span className="text-red-500">*</span>
+                  </label>
                   <input
                     type="text"
                     id="contactNumber"
                     name="contactNumber"
                     className="border px-4 py-2 rounded-lg w-full bg-white border-gray-300 text-gray-900 sm:text-sm"
                     value={contactNumber}
-                    onChange={(e) => setContactNumber(e.target.value)}
+                    onChange={clearErrorOnChange(setContactNumber)}
                   />
                 </div>
 
@@ -291,20 +254,7 @@ const UpdateAccount = () => {
                     name="companyName"
                     className="border px-4 py-2 rounded-lg w-full bg-white border-gray-300 text-gray-900 sm:text-sm"
                     value={companyName}
-                    onChange={(e) => setCompanyName(e.target.value)}
-                  />
-                </div>
-
-                {/* POSTAL CODE*/}
-                <div className="flex flex-col mb-3.5">
-                  <label className="mb-1">Postal Code:</label>
-                  <input
-                    type="text"
-                    id="postalCode"
-                    name="postalCode"
-                    className="border px-4 py-2 rounded-lg w-full bg-white border-gray-300 text-gray-900 sm:text-sm"
-                    value={postalCode}
-                    onChange={(e) => setPostalCode(e.target.value)}
+                    onChange={clearErrorOnChange(setCompanyName)}
                   />
                 </div>
 
@@ -317,13 +267,26 @@ const UpdateAccount = () => {
                     name="companyAddress"
                     className="border px-4 py-2 rounded-lg w-full bg-white border-gray-300 text-gray-900 sm:text-sm"
                     value={companyAddress}
-                    onChange={(e) => setCompanyAddress(e.target.value)}
+                    onChange={clearErrorOnChange(setCompanyAddress)}
+                  />
+                </div>
+
+                {/* POSTAL CODE*/}
+                <div className="flex flex-col mb-3.5">
+                  <label className="mb-1">Postal Code:</label>
+                  <input
+                    type="text"
+                    id="postalCode"
+                    name="postalCode"
+                    className="border px-4 py-2 rounded-lg w-full bg-white border-gray-300 text-gray-900 sm:text-sm"
+                    value={postalCode}
+                    onChange={clearErrorOnChange(setPostalCode)}
                   />
                 </div>
 
                 {/* NUTRITION CERT PREVIEW */}
                 <div className="flex flex-col mb-3.5">
-                  <label className="mb-1">Nutritionist Certificates:</label>
+                  <label className="mb-1">Nutritionist Certificate:</label>
                   <div>
                     {/* IMAGE PREVIEW */}
                     <Image
@@ -335,15 +298,21 @@ const UpdateAccount = () => {
                   </div>
                 </div>
 
-                <p className="text-red-500 text-sm">{error}</p>
-                <p className="text-green-500 text-sm">{success}</p>
+                {error && (
+                  <p className="text-red-500 text-base font-medium">{error}</p>
+                )}
+                {success && (
+                  <p className="text-green-500 text-base font-medium">
+                    {success}
+                  </p>
+                )}
 
                 {/* UPDATE BTN */}
-                <div className="flex flex-row justify-end">
+                <div className="flex flex-row justify-start mt-3">
                   <button
                     type="submit"
                     onClick={handleAccountUpdate}
-                    className=" bg-blue-600 hover:bg-blue-700 text-white w-24 rounded-lg font-bold py-2 ml-auto"
+                    className=" bg-blue-600 hover:bg-blue-700 text-white w-24 rounded-lg font-bold py-2"
                   >
                     Update
                   </button>

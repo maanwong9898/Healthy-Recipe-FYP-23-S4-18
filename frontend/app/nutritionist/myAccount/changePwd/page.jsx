@@ -10,7 +10,6 @@ import SecureStorage from "react-secure-storage";
 
 const changeUserPwd = () => {
   const router = useRouter();
-  const [userOldPwd, setUserOldPwd] = useState("");
   const [oldPwd, setOldPwd] = useState("");
   const [newPwd, setNewPwd] = useState("");
   const [repeatPwd, setRepeatPwd] = useState("");
@@ -186,24 +185,24 @@ const changeUserPwd = () => {
                 </div>
                 {/* ERROR MESSAGE */}
                 {error && (
-                  <div className="text-red-500 text-sm font-bold mt-2">
+                  <div className="text-red-500 text-base font-medium">
                     {error}
                   </div>
                 )}
 
                 {/* SUCCESS MESSAGE */}
                 {success && (
-                  <div className="text-green-500 text-sm font-bold mt-2">
+                  <div className="text-green-500 text-base font-medium">
                     {success}
                   </div>
                 )}
 
                 {/* UPDATE BTN */}
-                <div className="flex flex-row justify-end">
+                <div className="flex flex-row justify-start mt-3">
                   <button
                     type="submit"
                     onClick={handlePwdChange}
-                    className="bg-blue-600 hover:bg-blue-700 text-white w-24 rounded-lg font-bold py-2 px-4 ml-auto"
+                    className="bg-blue-600 hover:bg-blue-700 text-white w-24 rounded-lg font-bold py-2 px-4"
                   >
                     Update
                   </button>

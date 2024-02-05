@@ -194,6 +194,7 @@ const UpdateDietaryPreference = () => {
       // Success msg
     } else {
       setSuccess("Update Successful!");
+      router.push("/registeredUser/myAccount/dietaryPreference");
       // Remove success msg after 5 seconds
       setTimeout(() => {
         setSuccess("");
@@ -242,6 +243,12 @@ const UpdateDietaryPreference = () => {
       console.error("Error updating preferences", error);
       setError("Failed to update preferences.");
     }
+  };
+
+  // Redirect back to dietary preference page
+  const handleCancelUpdate = (event) => {
+    event.preventDefault();
+    router.push("/registeredUser/myAccount/dietaryPreference");
   };
 
   // Redirect to my account page
@@ -454,7 +461,7 @@ const UpdateDietaryPreference = () => {
                 {/* BUTTON */}
                 <div className="flex flex-row justify-start gap-4 mt-3">
                   <button
-                    //onClick={handleCancelUpdate}
+                    onClick={handleCancelUpdate}
                     className="bg-gray-200 hover:bg-gray-300 text-gray-900 w-24 rounded-lg font-semibold py-2"
                   >
                     Cancel

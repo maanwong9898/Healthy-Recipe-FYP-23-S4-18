@@ -7,12 +7,9 @@ import axiosInterceptorInstance from "../../../axiosInterceptorInstance.js";
 
 const TrackWeight = () => {
   const [weightData, setWeightData] = useState([]);
-  //const [startingWeight, setStartingWeight] = useState("");
-  const [targetWeight, setTargetWeight] = useState("");
   const [currentWeight, setCurrentWeight] = useState("");
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
-  const [showHistory, setShowHistory] = useState(false);
   const router = useRouter();
   const [isTabSelected, setIsTabSelected] = useState("trackWeight");
 
@@ -42,11 +39,9 @@ const TrackWeight = () => {
 
   // Reset values
   const resetVal = () => {
-    setTargetWeight("");
     setCurrentWeight("");
   };
 
-  // Handle weight validations
   // Handle weight validations and storage
   const handleWeightStorage = async () => {
     if (currentWeight === "") {
@@ -86,6 +81,12 @@ const TrackWeight = () => {
         setError("Error saving weight.");
       }
     }
+  };
+
+  // Clear error msg on change
+  const handleInputChange = (e) => {
+    setCurrentWeight(e.target.value);
+    setError("");
   };
 
   // Function to handle deletion of a weight record
@@ -269,17 +270,28 @@ const TrackWeight = () => {
                     name="currentWeight"
                     placeholder="Enter weight in kg"
                     value={currentWeight}
-                    onChange={(e) => setCurrentWeight(e.target.value)}
+                    onChange={handleInputChange}
                     className="border px-4 py-2 rounded-lg w-full lg:w-72 bg-white border-gray-300 text-gray-900 sm:text-sm"
                   />
                   <span className="ml-2">kg</span>
                 </div>
               </div>
-              <p className="text-red-500 text-sm">{error}</p>
-              <p className="text-green-500 text-sm">{success}</p>
+
+              {/* ERROR MESSAGE */}
+              {error && (
+                <p className="text-red-500 font-medium text-base">{error}</p>
+              )}
+              {success && (
+                <p className="text-green-500 font-medium text-base">
+                  {success}
+                </p>
+              )}
+
+              {/* <p className="text-red-500 text-base font-medium">{error}</p>
+              <p className="text-green-500 text-base font-medium">{success}</p> */}
 
               {/* BUTTONS */}
-              <div className="flex flex-row justify-start gap-4">
+              <div className="flex flex-row justify-start gap-4 mt-3">
                 <button
                   onClick={resetVal}
                   className="bg-gray-200 hover:bg-gray-300 text-gray-900 w-24 rounded-lg font-semibold py-2"

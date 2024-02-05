@@ -17,9 +17,9 @@ const fetchMealPlans = async () => {
 
   try {
     const response = await axiosInterceptorInstance.get(
-      "/mealPlan/get" + userID
+      "/nutritionist/findMealPlanCountById/" + userID
     );
-    console.log("All meal plans belongs to this user:", response.data);
+    console.log("Total Meal Plan Count for this user:", response.data);
     return response.data;
   } catch (error) {
     console.error("Error fetching meal plans:", error);
@@ -30,8 +30,10 @@ const fetchMealPlans = async () => {
 // Get all recipes available in the databse
 const fetchRecipes = async () => {
   try {
-    const response = await axiosInterceptorInstance.get("/recipe/get");
-    console.log("All recipes:", response.data);
+    const response = await axiosInterceptorInstance.get(
+      "/nutritionist/findRecipeCount"
+    );
+    console.log("Total Recipe Count:", response.data);
     return response.data;
   } catch (error) {
     console.error("Error fetching recipes:", error);
@@ -180,7 +182,7 @@ const NutritionistHomePage = () => {
                 Total Recipes Available
               </p>
               <h4 className="mt-3 block tracking-normal font-sans text-2xl font-semibold text-gray-900">
-                {recipes ? recipes.length : 0}
+                {recipes}
               </h4>
             </div>
           </div>
@@ -201,7 +203,7 @@ const NutritionistHomePage = () => {
                 Total Meal Plans
               </p>
               <h4 className="mt-3 block tracking-normal font-sans text-2xl font-semibold text-gray-900">
-                {mealPlans ? mealPlans.length : 0}
+                {mealPlans}
               </h4>
             </div>
           </div>

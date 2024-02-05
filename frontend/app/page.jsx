@@ -29,19 +29,6 @@ const fetchMostPopularRecipes = async () => {
   }
 };
 
-// fetch all recipes
-// const fetchRecipes = async () => {
-//   try {
-//     console.log("Fetching recipes...");
-//     const response = await axiosInterceptorInstance.get("/recipe/get");
-//     console.log("All Recipes: ", response.data);
-//     return response.data;
-//   } catch (error) {
-//     console.log("Failed to fetch recipes: ", error);
-//     throw error;
-//   }
-// };
-
 // fetch all educational contents
 const fetchEducationalContents = async () => {
   try {
@@ -92,12 +79,7 @@ const Home = () => {
   const [MostPopularRecipes, setMostPopularRecipes] = useState([]);
   const [userAccounts, setUserAccounts] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
-  const [userCounts, setUserCounts] = useState({
-    REGISTERED_USER: 0,
-    BUSINESS_USER: 0,
-    NUTRITIONIST: 0,
-  });
-
+  const [totalUserCount, setTotalUserCount] = useState([]);
   useEffect(() => {
     setIsLoading(true);
     const fetchMostPopularRecipesData = async () => {
@@ -348,35 +330,22 @@ const Home = () => {
 
   // END OF EDUCATIONAL CONTENTS RELATED
 
-  // Get all user accounts
-  const fetchUserAccounts = async () => {
+  // Get user counts
+  const fetchUserCounts = async () => {
     console.log("Fetching user accounts...");
     try {
       const response = await axiosInterceptorInstance.get(
-        "/systemAdmin/getAllUsers"
+        "/allUsers/getRoleCount"
       );
-      console.log("User Accounts: ", response.data);
-      setUserAccounts(response.data);
-      countUserRoles(response.data);
+      console.log("User Role Counts: ", response.data);
+      setTotalUserCount(response.data);
     } catch (error) {
-      console.log("Failed to fetch user accounts: ", error);
+      console.log("Failed to fetch user role counts: ", error);
     }
   };
 
-  // Filter and count the number of users for each role
-  const countUserRoles = (users) => {
-    const counts = {
-      REGISTERED_USER: users.filter((user) => user.role === "REGISTERED_USER")
-        .length,
-      BUSINESS_USER: users.filter((user) => user.role === "BUSINESS_USER")
-        .length,
-      NUTRITIONIST: users.filter((user) => user.role === "NUTRITIONIST").length,
-    };
-    setUserCounts(counts);
-  };
-
   useEffect(() => {
-    fetchUserAccounts();
+    fetchUserCounts();
   }, []);
 
   // Carousel banner contents
@@ -428,7 +397,7 @@ const Home = () => {
   }, []);
 
   return (
-    <div>
+    <div className="min-h-screen">
       <HomeNavBar />
       <div className="min-h-screen">
         {/* Carousel Banner */}
@@ -527,11 +496,38 @@ const Home = () => {
         <div className="p-5">
           <div className="grid grid-cols-1 md:grid-cols-2 items-center bg-white border border-gray-200 rounded-lg shadow md:flex-row">
             <div className="flex flex-col justify-between p-8 leading-normal">
-              <div className="relative">
+              {/* Mobile View */}
+              <div className="bg-white border border-gray-200 rounded-xl shadow lg:hidden">
+                <img
+                  src="/pokeBowl.jpg"
+                  alt="Raw Pixel, Designed by Freepik"
+                  className="relative w-full h-full object-cover transition-all rounded-ss-xl duration-300 hover:grayscale-0 cursor-pointer"
+                />
+                <div className="p-5">
+                  <h2 className="text-3xl font-semibold text-gray-900 text-center">
+                    Our Mission
+                  </h2>
+                  <p className="text-gray-700">
+                    Welcome to My Healthy Recipe, your number-one source for
+                    healthy and delicious recipes. We're dedicated to providing
+                    nutritional, delicious, and easy-to-make recipes. Committed
+                    to your well-being, we follow HPB's guidelines for daily
+                    sodium intake to ensure that every recipe aligns with the
+                    highest nutritional standards. More than just a collection
+                    of recipes, our commitment to health is ingrained in every
+                    dish we create.
+                  </p>
+                </div>
+              </div>
+              {/*End of Mobile View */}
+
+              {/* Large Screen View */}
+              <div className="relative hidden lg:block">
                 <img
                   src="/pokeBowl.jpg"
                   alt="Raw Pixel, Designed by Freepik"
                   className="relative w-full h-full object-cover rounded-xl transition-all duration-300 hover:grayscale-0 cursor-pointer"
+                  onClick={() => router.push("/aboutUs")}
                 />
                 <div className="absolute inset-0 left-0 w-full h-full flex flex-col justify-end items-center">
                   <div className="bg-zinc-100 p-6 rounded-b-lg opacity-90">
@@ -551,45 +547,37 @@ const Home = () => {
                   </div>
                 </div>
               </div>
+              {/* End of Large Screen View */}
             </div>
             {/* Right Column */}
             <div className="relative">
               {/* Dynamic user profiles */}
               <div className="grid grid-rows-2 p-6">
-                <h2 className="text-center items-center justify-center font-bold font-serif text-5xl text-black">
+                <h2 className="text-center items-center place-content-center justify-center font-bold font-serif text-5xl text-black">
                   With Over 100+ Healthy Recipes
                 </h2>
-                <div className="grid grid-cols-3 justify-center mt-8 md:justify-start md:mt-0 bg-orange-300 rounded-xl py-5">
-                  <div className="flex flex-col justify-center items-center">
-                    <div className="bg-white p-4 rounded-full w-32 h-32 flex flex-col justify-center items-center">
-                      <p className="text-orange-600 text-lg md:text-xl font-bold text-center">
-                        {userCounts.REGISTERED_USER}
-                      </p>
-                      <p className="text-gray-900 font-sans font-medium text-center">
-                        Active Users
-                      </p>
-                    </div>
-                  </div>
-                  <div className="flex flex-col justify-center items-center">
-                    <div className="bg-white p-4 rounded-full w-32 h-32 flex flex-col justify-center items-center">
-                      <p className="text-orange-600 text-lg md:text-xl font-bold text-center">
-                        {userCounts.BUSINESS_USER}
-                      </p>
-                      <p className="text-gray-900 font-sans font-medium text-center">
-                        Business Partners
-                      </p>
-                    </div>
-                  </div>
-                  <div className="flex flex-col justify-center items-center">
-                    <div className="bg-white p-4 rounded-full w-32 h-32 flex flex-col justify-center items-center">
-                      <p className="text-orange-600 text-lg md:text-xl font-bold text-center">
-                        {userCounts.NUTRITIONIST}
-                      </p>
-                      <p className="text-gray-900 font-sans font-medium text-center">
-                        Nutritionist
-                      </p>
-                    </div>
-                  </div>
+                <div className="grid grid-cols-2 md:grid-cols-3 gap-4 md:justify-start md:mt-0 bg-orange-300 rounded-xl py-5">
+                  {totalUserCount
+                    .filter((user) => user.role !== "ADMIN")
+                    .map((user) => (
+                      <div
+                        className="flex flex-col justify-center items-center"
+                        key={user.role}
+                      >
+                        <div className="bg-white p-4 rounded-full w-32 h-32 flex flex-col justify-center items-center">
+                          <p className="text-orange-600 text-lg md:text-xl font-bold text-center">
+                            {user.count}
+                          </p>
+                          <p className="text-gray-900 font-sans font-medium text-center">
+                            {user.role === "REGISTERED_USER" && "Users"}
+                            {user.role === "NUTRITIONIST" &&
+                              "Certified Nutritionist"}
+                            {user.role === "BUSINESS_USER" &&
+                              "Business Partners"}
+                          </p>
+                        </div>
+                      </div>
+                    ))}
                 </div>
               </div>
             </div>

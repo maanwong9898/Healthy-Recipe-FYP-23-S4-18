@@ -260,7 +260,12 @@ const TrackWeight = () => {
               </h1>
               {/* CURRENT WEIGHT */}
               <div className="flex flex-col mb-3.5">
-                <label className="mb-1">Current Weight:</label>
+                <label
+                  htmlFor="currentWeight"
+                  className="font-medium text-base mb-1"
+                >
+                  Current Weight:
+                </label>
                 <div className="flex items-center">
                   <input
                     type="text"
@@ -269,7 +274,7 @@ const TrackWeight = () => {
                     placeholder="Enter weight in kg"
                     value={currentWeight}
                     onChange={clearErrorOnChange(setCurrentWeight)}
-                    className="border px-4 py-2 rounded-lg w-full lg:w-72 bg-white border-gray-300 text-gray-900 sm:text-sm"
+                    className="bg-white border border-gray-300 text-gray-900 sm:text-sm rounded-lg p-2.5 w-full lg:w-72"
                   />
                   <span className="ml-2">kg</span>
                 </div>
@@ -305,7 +310,7 @@ const TrackWeight = () => {
               </div>
 
               <div>
-                <h2 className="text-lg font-semibold mb-4 mt-5">
+                <h2 className="text-lg font-semibold mb-2 mt-5">
                   Weight History
                 </h2>
                 {/* TABLE */}

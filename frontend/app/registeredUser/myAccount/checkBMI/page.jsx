@@ -193,11 +193,8 @@ const checkBMI = () => {
               <h1 className="text-lg font-semibold mb-4">Check BMI</h1>
 
               {/* HEIGHT */}
-              <div className="flex flex-col mb-4">
-                <label
-                  htmlFor="height"
-                  className="block text-sm font-medium text-gray-700 mb-1"
-                >
+              <div className="flex flex-col mb-3.5">
+                <label htmlFor="height" className="font-medium text-base mb-1">
                   Height (in cm)
                 </label>
                 <input
@@ -207,15 +204,12 @@ const checkBMI = () => {
                   placeholder="Enter height in cm"
                   value={height}
                   onChange={clearErrorOnChange(setHeight)}
-                  className="border px-4 py-2 rounded-lg w-full lg:w-72 bg-white border-gray-300 text-gray-900 sm:text-sm"
+                  className="bg-white border border-gray-300 text-gray-900 sm:text-sm rounded-lg p-2.5 w-full lg:w-72"
                 />
               </div>
               {/* WEIGHT */}
-              <div className="flex flex-col mb-4">
-                <label
-                  htmlFor="weight"
-                  className="block text-sm font-medium text-gray-700 mb-1"
-                >
+              <div className="flex flex-col mb-3.5">
+                <label htmlFor="weight" className="font-medium text-base mb-1">
                   Weight (in kg)
                 </label>
                 <input
@@ -225,7 +219,7 @@ const checkBMI = () => {
                   placeholder="Enter weight in kg"
                   value={weight}
                   onChange={clearErrorOnChange(setWeight)}
-                  className="border px-4 py-2 rounded-lg w-full lg:w-72 bg-white border-gray-300 text-gray-900 sm:text-sm"
+                  className="bg-white border border-gray-300 text-gray-900 sm:text-sm rounded-lg p-2.5 w-full lg:w-72"
                 />
               </div>
 

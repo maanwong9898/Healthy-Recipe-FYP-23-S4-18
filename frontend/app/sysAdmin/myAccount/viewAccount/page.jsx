@@ -200,43 +200,51 @@ const UpdateAccount = () => {
                 Account Information
               </h1>
               <form>
-                <div className="grid grid-cols-2 gap-3 mt-2">
-                  <label htmlFor="fullName" className="flex items-center">
-                    Full Name:
-                    <span className="text-red-500">*</span>
-                  </label>
-                  <label htmlFor="username" className="flex items-center">
-                    Username:
-                    <span className="text-red-500">*</span>
-                  </label>
-                </div>
-                <div className="grid grid-cols-2 gap-3 mb-3.5">
-                  {/* NAME */}
-                  <input
-                    type="text"
-                    id="fullName"
-                    name="fullName"
-                    placeholder="Your Name"
-                    className=" bg-white border border-gray-300 text-gray-900 sm:text-sm rounded-lg p-2.5"
-                    value={fullName}
-                    onChange={clearErrorOnChange(setFullName)}
-                  />
+                <div className="grid gap-3 mt-2 sm:grid-cols-2">
+                  {/* Full Name */}
+                  <div className="flex flex-col mb-3.5">
+                    <label
+                      htmlFor="fullName"
+                      className="font-medium text-base mb-1"
+                    >
+                      Full Name:
+                      <span className="text-red-500">*</span>
+                    </label>
+                    <input
+                      type="text"
+                      id="fullName"
+                      name="fullName"
+                      placeholder="Your Name"
+                      className="bg-white border border-gray-300 text-gray-900 sm:text-sm rounded-lg p-2.5 w-full"
+                      value={fullName}
+                      onChange={clearErrorOnChange(setFullName)}
+                    />
+                  </div>
 
-                  {/* USERNAME */}
-                  <input
-                    type="text"
-                    id="userName"
-                    name="userName"
-                    placeholder="Your Username"
-                    className=" bg-white border border-gray-300 text-gray-900 sm:text-sm rounded-lg p-2.5"
-                    value={username}
-                    onChange={clearErrorOnChange(setUsername)}
-                  />
+                  {/* Username */}
+                  <div className="flex flex-col mb-3.5">
+                    <label
+                      htmlFor="userName"
+                      className="font-medium text-base mb-1"
+                    >
+                      Username:
+                      <span className="text-red-500">*</span>
+                    </label>
+                    <input
+                      type="text"
+                      id="userName"
+                      name="userName"
+                      placeholder="Your Username"
+                      className="bg-white border border-gray-300 text-gray-900 sm:text-sm rounded-lg p-2.5 w-full"
+                      value={username}
+                      onChange={clearErrorOnChange(setUsername)}
+                    />
+                  </div>
                 </div>
 
                 {/* EMAIL */}
                 <div className="flex flex-col mb-3.5">
-                  <label htmlFor="email" className="mb-1">
+                  <label htmlFor="email" className="font-medium text-base mb-1">
                     Email:
                   </label>
                   <input
@@ -244,7 +252,7 @@ const UpdateAccount = () => {
                     id="email"
                     name="email"
                     disabled
-                    className="border px-4 py-2 rounded-lg w-full bg-gray-300 border-gray-300 text-gray-900 sm:text-sm"
+                    className="bg-gray-200 border border-gray-300 text-gray-900 sm:text-sm rounded-lg p-2.5 w-full"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                   />
@@ -252,7 +260,7 @@ const UpdateAccount = () => {
 
                 {/* DOB */}
                 <div className="flex flex-col mb-3.5">
-                  <label htmlFor="dob" className="mb-1">
+                  <label htmlFor="dob" className="font-medium text-base mb-1">
                     Date of Birth:
                     <span className="text-red-500">*</span>
                   </label>
@@ -263,7 +271,7 @@ const UpdateAccount = () => {
                     max={todayDate}
                     value={dob}
                     onChange={clearErrorOnChange(setDOB)}
-                    className="border px-4 py-2 rounded-lg w-full bg-white border-gray-300 text-gray-900 sm:text-sm"
+                    className="bg-white border border-gray-300 text-gray-900 sm:text-sm rounded-lg p-2.5 w-full"
                   ></input>
                 </div>
 

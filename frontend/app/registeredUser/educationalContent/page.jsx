@@ -286,41 +286,38 @@ const EducationalContentPageForUser = () => {
     router.push(routePath);
   };
 
-  // Render each blog post card
+  // Render each educational content card
   const renderPostCard = (post) => (
     <div
       key={post.id}
-      className="rounded shadow-lg overflow-hidden flex flex-col"
+      className="max-w-xl bg-white border border-gray-200 rounded-lg shadow-md overflow-hidden flex flex-col cursor-pointer hover:shadow-stone-700 transition duration-300 ease-in-out"
       style={{
         border: "0.5px solid transparent",
-        background:
-          "linear-gradient(to right, #22d3ee 0%, #8b5cf6 100%), white",
+        background: "#48494B",
         backgroundOrigin: "border-box",
         backgroundClip: "content-box, border-box",
       }}
+      onClick={() => handleViewEduContent(post.id)}
     >
       <img
         src={post.img}
         alt={post.img_title}
-        className="w-full object-cover rounded-sm"
+        className="w-full object-cover rounded-sm text-white text-center"
         style={{ height: "192px" }}
       />
       <div className="flex-grow flex flex-col justify-between p-4 bg-white">
-        <div>
+        <div className="grid grid-rows-3 items-center">
           <h2
-            className="text-2xl font-extrabold mb-2 hover:text-orange-600 cursor-pointer"
-            onClick={() => handleViewEduContent(post.id)}
+            className="text-2xl font-extrabold mb-2"
+            //onClick={() => handleViewEduContent(post.id)}
           >
-            {post.title}
+            {post?.title || "Untitled Educational Content"}
           </h2>
           <p className="text-gray-700 text-base mb-4 line-clamp-3">
             <div className="whitespace-pre-line">{post.info}</div>
           </p>
           {/* Publisher */}
-          <p
-            className="text-gray-900 text-base font-semibold"
-            style={{ height: "3.5rem" }}
-          >
+          <p className="text-gray-900 text-base font-semibold">
             Publisher:{" "}
             <span className="text-orange-600 font-bold tracking-tight">
               {post?.publisher || "Not Specified"}
@@ -351,13 +348,13 @@ const EducationalContentPageForUser = () => {
       <h1 className="text-3xl text-center md:text-7xl font-extrabold font-sans text-gray-900 mb-4 md:mb-8">
         Educational Content
       </h1>
-      <div className="flex sm:justify-between sm:items-center mb-4">
+      <div className="flex flex-col lg:flex-row mb-4">
         {/* Search Section */}
         <div className="flex-grow">
           <input
             type="text"
-            id="mealPlanSearch"
-            name="mealPlanSearch"
+            id="educationalContentSearch"
+            name="educationalContentSearch"
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
             onKeyDown={(e) => {
@@ -371,24 +368,24 @@ const EducationalContentPageForUser = () => {
           />
           <button
             onClick={handleSearchClick}
-            className="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-1.5 px-5 rounded-full mt-2 w-full lg:w-auto"
+            className="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-1.5 px-5 rounded-full mt-2 w-full md:w-auto lg:w-auto"
             style={{ flexShrink: 0 }}
           >
             Search
           </button>
           {/* Results count */}
           {searchButtonClicked && searchPerformed && (
-            <p className="text-left text-red-500 font-bold text-lg sm:ml-2">
+            <p className="text-left text-red-500 font-medium text-lg">
               {resultsCount} results found.
             </p>
           )}
         </div>
 
         {/* Sort dropdown */}
-        <div className="mb-2 md:mb-0 md:mr-6">
+        <div className="flex flex-col lg:flex-row lg:items-center mt-4 lg:mt-0">
           <label
             htmlFor="sort"
-            className="text-xl text-black mb-2 sm:mb-0 sm:mr-2"
+            className="text-xl text-black mb-1 sm:mb-0 sm:mr-2"
           >
             Sort By:
           </label>
@@ -407,10 +404,10 @@ const EducationalContentPageForUser = () => {
           </select>
         </div>
         {/* Filter Section - Adjusted to align to the right */}
-        <div className="flex flex-col sm:flex-row sm:items-center">
+        <div className="flex flex-col lg:flex-row lg:items-center mt-4 lg:mt-0">
           <label
             htmlFor="categoryFilter"
-            className="text-xl text-black mb-2 sm:mb-0 sm:mr-2"
+            className="text-xl text-black mb-1 sm:mb-0 sm:mr-2"
           >
             Filter By:
           </label>
@@ -423,11 +420,11 @@ const EducationalContentPageForUser = () => {
               style={{ maxWidth: "300px" }}
             >
               <option value="">All Categories</option>
-              {categories.map((category) => (
+              {categories?.map((category) => (
                 <option key={category.id} value={category.subcategoryName}>
                   {category.subcategoryName}
                 </option>
-              ))}
+              )) || []}
             </select>
           </div>
         </div>
@@ -443,14 +440,14 @@ const EducationalContentPageForUser = () => {
           {!searchPerformed && !categoryFilter && !sortOption ? (
             <>
               <div className="mb-5">
-                <h2 className="text-2xl font-bold mb-4 mt-4">
+                <h2 className="text-3xl font-bold mb-4 mt-4">
                   Latest Educational Content
                 </h2>
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
                   {latestEduContent.map((post) => renderPostCard(post))}
                 </div>
               </div>
-              <h2 className="text-2xl font-bold mb-4 mt-4">
+              <h2 className="text-3xl font-bold mb-4 mt-4">
                 Other Educational Content
               </h2>
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4">

@@ -338,29 +338,32 @@ const Home = () => {
   const renderEducationContentCard = (post) => (
     <div
       key={post.id}
-      className="max-w-xl bg-white border border-gray-200 rounded-lg shadow-md overflow-hidden flex flex-col"
+      className="max-w-xl bg-white border border-gray-200 rounded-lg shadow-md overflow-hidden flex flex-col cursor-pointer hover:shadow-stone-700 transition duration-300 ease-in-out"
+      style={{
+        border: "0.5px solid transparent",
+        background: "#48494B",
+        backgroundOrigin: "border-box",
+        backgroundClip: "content-box, border-box",
+      }}
+      onClick={() => handleViewEducationalContent(post.id)}
     >
-      {/* Image */}
       <img
         src={post.img}
         alt={post.img_title}
-        className="w-full h-48 rounded-t-lg object-cover"
+        className="w-full object-cover rounded-sm text-white text-center"
         style={{ height: "192px" }}
       />
-      <div className="flex flex-grow flex-col justify-between p-5">
+      <div className="flex-grow flex flex-col justify-between p-4 bg-white">
         <div className="grid grid-rows-3 items-center">
-          {/* Title */}
           <h2
-            className="text-2xl font-extrabold mb-2 hover:text-orange-600 cursor-pointer"
-            onClick={() => handleViewEducationalContent(post.id)}
+            className="text-2xl font-extrabold mb-2"
+            //onClick={() => handleViewEduContent(post.id)}
           >
-            {post.title}
+            {post?.title || "Untitled Educational Content"}
           </h2>
-          {/* Description */}
           <p className="text-gray-700 text-base mb-4 line-clamp-3">
-            {post.info}
+            <div className="whitespace-pre-line">{post.info}</div>
           </p>
-
           {/* Publisher */}
           <p className="text-gray-900 text-base font-semibold">
             Publisher:{" "}

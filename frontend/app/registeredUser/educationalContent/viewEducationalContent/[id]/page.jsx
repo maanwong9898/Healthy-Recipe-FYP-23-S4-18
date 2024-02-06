@@ -179,8 +179,8 @@ const ViewEducationalContent = ({ params }) => {
         </div>
       ) : (
         <>
-          <div className="text-center font-semibold font-sans">
-            <h1 className="flex flex-wrap justify-center mb-4 text-2xl font-extrabold text-gray-900 lg:mb-6 lg:text-5xl">
+          <div className="text-center font-semibold font-sans p-4 lg:p-0">
+            <h1 className="flex flex-wrap justify-center mb-4 text-xl font-extrabold text-gray-900 lg:mb-6 lg:text-4xl">
               {eduContent.title || "Untitled Educational Content"}
             </h1>
             {/* Publisher and published date section */}

@@ -10,6 +10,8 @@ import {
   faChevronRight,
   faChevronLeft,
 } from "@fortawesome/free-solid-svg-icons";
+import ChevronRightIcon from "@mui/icons-material/ChevronRight";
+import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import Image from "next/image";
 import axiosInterceptorInstance from "./axiosInterceptorInstance";
 import Footer from "./components/footer";
@@ -19,7 +21,7 @@ const fetchMostPopularRecipes = async () => {
   try {
     console.log("Fetching most popular recipes...");
     const response = await axiosInterceptorInstance.get(
-      "/recipe/getPopularRecipes"
+      "/landingPage/getMostPopularRecipes"
     );
     console.log("Most Popular Recipes: ", response.data);
     return response.data;
@@ -29,42 +31,47 @@ const fetchMostPopularRecipes = async () => {
   }
 };
 
-// fetch all educational contents
-const fetchEducationalContents = async () => {
+// fetch most popular educational contents
+const fetchMostPopularEducationalContent = async () => {
   try {
-    console.log("Fetching educational contents...");
+    console.log("Fetching most popular educational contents...");
     const response = await axiosInterceptorInstance.get(
-      "/educationalContent/get"
+      "/landingPage/getMostPopularEducationalContents"
     );
-    console.log("Educational Contents: ", response.data);
+    console.log("Most Popular Educational Contents: ", response.data);
     return response.data;
   } catch (error) {
-    console.log("Failed to fetch educational contents: ", error);
+    console.log("Failed to fetch most popular educational contents: ", error);
     throw error;
   }
 };
 
-// Fetch all blog posts
-const fetchBlogPosts = async () => {
+// Fetch most popular blog posts
+const fetchMostPopularBlogPosts = async () => {
   try {
-    console.log("Fetching blog posts...");
-    const response = await axiosInterceptorInstance.get("/blog/get");
-    console.log("All blogs:", response.data);
+    console.log("Fetching most popular blog posts...");
+    const response = await axiosInterceptorInstance.get(
+      "/landingPage/getMostPopularBlogs"
+    );
+    console.log("Most Popular Blog Posts:", response.data);
     return response.data;
   } catch (error) {
-    console.error("Failed to fetch blog posts:", error);
+    console.error("Failed to fetch most popular blog posts:", error);
     throw error;
   }
 };
 
-const fetchMealPlans = async () => {
+// Fetch most popular meal plans
+const fetchMostPopularMealPlans = async () => {
   try {
-    console.log("Fetching meal plans...");
-    const response = await axiosInterceptorInstance.get("/mealPlan/get");
-    console.log("Meal Plans: ", response.data);
+    console.log("Fetching most popular meal plans...");
+    const response = await axiosInterceptorInstance.get(
+      "/landingPage/getPopularMealPlans"
+    );
+    console.log("Most Popular Meal Plans: ", response.data);
     return response.data;
   } catch (error) {
-    console.log("Failed to fetch meal plans: ", error);
+    console.log("Failed to fetch most popular meal plans: ", error);
     throw error;
   }
 };
@@ -72,57 +79,61 @@ const fetchMealPlans = async () => {
 const Home = () => {
   const router = useRouter();
   const [currentCarouselContentIndex, setCarouselContentIndex] = useState(0);
-  const [AllBusinessBlogPosts, setAllBusinessBlogPosts] = useState([]);
-  const [AllRecipes, setAllRecipes] = useState([]);
-  const [AllEducationalContents, setAllEducationalContents] = useState([]);
-  const [AllMealPlans, setAllMealPlans] = useState([]);
+
   const [MostPopularRecipes, setMostPopularRecipes] = useState([]);
-  const [userAccounts, setUserAccounts] = useState([]);
+  const [MostPopularEducationalContents, setMostPopularEducationalContents] =
+    useState([]);
+  const [MostPopularBlogPosts, setMostPopularBlogPosts] = useState([]);
+  const [MostPopularMealPlans, setMostPopularMealPlans] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [totalUserCount, setTotalUserCount] = useState([]);
   useEffect(() => {
     setIsLoading(true);
     const fetchMostPopularRecipesData = async () => {
       try {
-        const mostPopularRecipesData = await fetchMostPopularRecipes();
-        setMostPopularRecipes(mostPopularRecipesData);
+        const mpRecipes = await fetchMostPopularRecipes();
+        setMostPopularRecipes(mpRecipes);
       } catch (error) {
         console.log("Failed to fetch most popular recipes: ", error);
       }
     };
 
-    const fetchAllEducationalContents = async () => {
+    const fetchMostPopularEducationalContentData = async () => {
       try {
-        const allEducationalContentsData = await fetchEducationalContents();
-        setAllEducationalContents(allEducationalContentsData);
+        const mpEducationalContents =
+          await fetchMostPopularEducationalContent();
+        setMostPopularEducationalContents(mpEducationalContents);
       } catch (error) {
-        console.log("Failed to fetch educational contents: ", error);
+        console.log(
+          "Failed to fetch most popular educational contents: ",
+          error
+        );
       }
     };
 
-    const fetchAllBlogPosts = async () => {
+    const fetchMostPopularBlogPostsData = async () => {
       try {
-        const allBlogPosts = await fetchBlogPosts();
-        setAllBusinessBlogPosts(allBlogPosts);
+        const mpBlogs = await fetchMostPopularBlogPosts();
+        setMostPopularBlogPosts(mpBlogs);
       } catch (error) {
-        console.log("Failed to fetch blog posts: ", error);
+        console.log("Failed to fetch most popular blog posts: ", error);
       }
     };
 
-    const fetchAllMealPlans = async () => {
+    const fetchMostPopularMealPlansData = async () => {
       try {
-        const allMealPlansData = await fetchMealPlans();
-        setAllMealPlans(allMealPlansData);
+        const mpMealPlans = await fetchMostPopularMealPlans();
+        setMostPopularMealPlans(mpMealPlans);
       } catch (error) {
-        console.log("Failed to fetch meal plans: ", error);
+        console.log("Failed to fetch most popular meal plans: ", error);
       }
     };
 
     Promise.all([
       fetchMostPopularRecipesData(),
-      fetchAllEducationalContents(),
-      fetchAllBlogPosts(),
-      fetchAllMealPlans(),
+      fetchMostPopularEducationalContentData(),
+      fetchMostPopularBlogPostsData(),
+      fetchMostPopularMealPlansData(),
     ])
       .catch((error) => {
         console.error("Error in fetching data: ", error);
@@ -162,7 +173,7 @@ const Home = () => {
         style={{ height: "192px" }}
       />
       <div className="flex flex-grow flex-col justify-between p-5">
-        <div>
+        <div className="grid grid-rows-3 items-center">
           {/* Title */}
           <h2
             className="text-2xl font-extrabold mb-2 hover:text-orange-600 cursor-pointer"
@@ -175,10 +186,7 @@ const Home = () => {
             {post.description}
           </p>
           {/* Publisher */}
-          <p
-            className="text-gray-900 text-base font-semibold"
-            style={{ height: "3.5rem" }}
-          >
+          <p className="text-gray-900 text-base font-semibold">
             Publisher:{" "}
             <span className="text-orange-600 font-bold tracking-tight">
               {post?.publisher || "Not Specified"}
@@ -192,9 +200,11 @@ const Home = () => {
   // END OF RECIPE RELATED
 
   // BLOG POSTS RELATED
-  const latestBlogs = [...AllBusinessBlogPosts]
-    .sort((a, b) => new Date(b.createdDateTime) - new Date(a.createdDateTime))
-    .slice(0, 3);
+  // const latestBlogs = [...AllBusinessBlogPosts]
+  //   .sort((a, b) => new Date(b.createdDateTime) - new Date(a.createdDateTime))
+  //   .slice(0, 3);
+
+  const blogPostLimit = [...MostPopularBlogPosts].slice(0, 3);
 
   const handleViewBlogPost = (id) => {
     // Make sure the Blog title
@@ -218,7 +228,7 @@ const Home = () => {
         style={{ height: "192px" }}
       />
       <div className="flex flex-grow flex-col justify-between p-5">
-        <div>
+        <div className="grid grid-rows-3 items-center">
           {/* Title */}
           <h2
             className="text-2xl font-extrabold mb-2 hover:text-orange-600 cursor-pointer"
@@ -232,10 +242,7 @@ const Home = () => {
           </p>
 
           {/* Publisher */}
-          <p
-            className="text-gray-900 text-base font-semibold"
-            style={{ height: "3.5rem" }}
-          >
+          <p className="text-gray-900 text-base font-semibold">
             Publisher:{" "}
             <span className="text-orange-600 font-bold tracking-tight">
               {post?.publisher || "Not Specified"}
@@ -248,9 +255,11 @@ const Home = () => {
   // END OF BLOG POST RELATED
 
   // MEAL PLAN RELATED
-  const latestMealPlans = [...AllMealPlans]
-    .sort((a, b) => new Date(b.createdDateTime) - new Date(a.createdDateTime))
-    .slice(0, 3);
+  // const latestMealPlans = [...AllMealPlans]
+  //   .sort((a, b) => new Date(b.createdDateTime) - new Date(a.createdDateTime))
+  //   .slice(0, 3);
+
+  const mealPlanLimit = [...MostPopularMealPlans].slice(0, 3);
 
   const handleViewMealPlan = (id) => {
     // Make sure the Meal Plan title
@@ -274,7 +283,7 @@ const Home = () => {
         style={{ height: "192px" }}
       />
       <div className="flex flex-grow flex-col justify-between p-5">
-        <div>
+        <div className="grid grid-rows-3 items-center">
           {/* Title */}
           <h2
             className="text-2xl font-extrabold mb-2 hover:text-orange-600 cursor-pointer"
@@ -288,10 +297,7 @@ const Home = () => {
           </p>
 
           {/* Publisher */}
-          <p
-            className="text-gray-900 text-base font-semibold"
-            style={{ height: "3.5rem" }}
-          >
+          <p className="text-gray-900 text-base font-semibold">
             Publisher:{" "}
             <span className="text-orange-600 font-bold tracking-tight">
               {post?.publisher || "Not Specified"}
@@ -304,9 +310,14 @@ const Home = () => {
   // END OF MEAL PLAN RELATED
 
   // EDUCATIONAL CONTENTS RELATED
-  const latestEducationalContents = [...AllEducationalContents]
-    .sort((a, b) => new Date(b.createdDateTime) - new Date(a.createdDateTime))
-    .slice(0, 3);
+  // const latestEducationalContents = [...AllEducationalContents]
+  //   .sort((a, b) => new Date(b.createdDateTime) - new Date(a.createdDateTime))
+  //   .slice(0, 3);
+
+  const educationalContentLimit = [...MostPopularEducationalContents].slice(
+    0,
+    3
+  );
 
   const handleViewEducationalContent = (id) => {
     // Make sure the Educational Content title
@@ -329,7 +340,7 @@ const Home = () => {
         style={{ height: "192px" }}
       />
       <div className="flex flex-grow flex-col justify-between p-5">
-        <div>
+        <div className="grid grid-rows-3 items-center">
           {/* Title */}
           <h2
             className="text-2xl font-extrabold mb-2 hover:text-orange-600 cursor-pointer"
@@ -343,10 +354,7 @@ const Home = () => {
           </p>
 
           {/* Publisher */}
-          <p
-            className="text-gray-900 text-base font-semibold"
-            style={{ height: "3.5rem" }}
-          >
+          <p className="text-gray-900 text-base font-semibold">
             Publisher:{" "}
             <span className="text-orange-600 font-bold tracking-tight">
               {post?.publisher || "Not Specified"}
@@ -426,25 +434,25 @@ const Home = () => {
   }, []);
 
   return (
-    <div className="min-h-screen">
+    <div>
       <HomeNavBar />
       <div className="min-h-screen">
         {/* Carousel Banner */}
         <div className="max-w-[1400px] h-[480px] w-full m-auto py-6 px-2 relative group">
           {carouselContents[currentCarouselContentIndex].content ? (
             // 2-Column Layout for Images with Content
-            <div className="grid grid-cols-2 w-full h-full rounded-2xl bg-center bg-contain">
+            <div className="grid grid-cols-1 md:grid-cols-2 w-full h-full rounded-2xl bg-center bg-contain">
               <div
                 style={{
                   backgroundImage: `url(${carouselContents[currentCarouselContentIndex].url})`,
                 }}
                 className="w-full h-full rounded-tl-2xl rounded-bl-2xl bg-center bg-cover"
               />
-              <div className="w-full h-full bg-slate-100 rounded-tr-2xl rounded-br-2xl p-6">
+              <div className="md:relative p-8 bg-slate-100 border border-gray-200 lg:rounded-tr-2xl rounded-2xl">
                 <h1 className="text-4xl font-bold text-black pt-3 mb-4">
                   {carouselContents[currentCarouselContentIndex].content.title}
                 </h1>
-                <p className="text-black text-lg pt-4">
+                <p className="text-black text-base pt-4">
                   {carouselContents[currentCarouselContentIndex].content.text}
                 </p>
                 <button
@@ -466,13 +474,13 @@ const Home = () => {
           )}
 
           {/* Left Arrow */}
-          <div className="hidden group-hover:block absolute top-[50%] -translate-x-0 translate-y-[-50%] left-5 text-2xl rounded-full p-2 bg-black/20 text-white cursor-pointer">
-            <FontAwesomeIcon icon={faChevronLeft} onClick={prevSlide} />
+          <div className="hidden group-hover:block absolute top-[50%] -translate-x-0 translate-y-[-50%] left-5 rounded-full px-2 py-2 bg-black/20 text-white cursor-pointer items-cen">
+            <ChevronLeftIcon onClick={prevSlide} />
           </div>
 
           {/* Right Arrow */}
-          <div className="hidden group-hover:block absolute top-[50%] -translate-x-0 translate-y-[-50%] right-5 text-2xl rounded-full p-2 bg-black/20 text-white cursor-pointer">
-            <FontAwesomeIcon icon={faChevronRight} onClick={nextSlide} />
+          <div className="hidden group-hover:block absolute top-[50%] -translate-x-0 translate-y-[-50%] right-5 rounded-full px-2 py-2 bg-black/20 text-white cursor-pointer">
+            <ChevronRightIcon onClick={nextSlide} />
           </div>
         </div>
         {/* End of carousel banner */}
@@ -512,7 +520,7 @@ const Home = () => {
                   Latest Meal Plans
                 </h2>
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
-                  {latestMealPlans.map((post) => renderMealPlanCard(post))}
+                  {mealPlanLimit.map((post) => renderMealPlanCard(post))}
                 </div>
               </div>
             </>
@@ -627,7 +635,7 @@ const Home = () => {
                   Blogs
                 </h2>
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
-                  {latestBlogs.map((post) => renderBlogPost(post))}
+                  {blogPostLimit.map((post) => renderBlogPost(post))}
                 </div>
               </div>
             </>
@@ -648,7 +656,7 @@ const Home = () => {
                   Educational Contents
                 </h2>
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
-                  {latestEducationalContents.map((post) =>
+                  {educationalContentLimit.map((post) =>
                     renderEducationContentCard(post)
                   )}
                 </div>

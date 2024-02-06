@@ -134,7 +134,7 @@ const changeUserPwd = () => {
               <form onSubmit={handlePwdChange}>
                 {/* OLD PWD */}
                 <div className="flex flex-col mb-3.5">
-                  <label className="flex items-center text-base mb-1">
+                  <label className="font-medium text-base mb-1">
                     Old Password:
                     <span className=" text-red-500">*</span>
                   </label>
@@ -152,7 +152,7 @@ const changeUserPwd = () => {
 
                 {/* NEW PWD */}
                 <div className="flex flex-col mb-3.5">
-                  <label className="mb-1">
+                  <label className="font-medium text-base mb-1">
                     New Password:
                     <span className=" text-red-500">*</span>
                   </label>
@@ -169,7 +169,7 @@ const changeUserPwd = () => {
 
                 {/* REPEAT PWD */}
                 <div className="flex flex-col mb-3.5">
-                  <label className="mb-1">
+                  <label className="font-medium text-base mb-1">
                     Repeat Password:
                     <span className=" text-red-500">*</span>
                   </label>

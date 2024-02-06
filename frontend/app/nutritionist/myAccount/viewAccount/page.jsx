@@ -6,6 +6,7 @@ import { useState, useEffect } from "react";
 import axiosInterceptorInstance from "../../../axiosInterceptorInstance.js";
 import Image from "next/image";
 import SecureStorage from "react-secure-storage";
+import DownloadIcon from "@mui/icons-material/Download";
 
 //router path for this page: /nutritionist/myAccount/viewAccount
 
@@ -24,7 +25,6 @@ const UpdateAccount = () => {
   const [companyName, setCompanyName] = useState("");
   const [postalCode, setPostalCode] = useState("");
   const [companyAddress, setCompanyAddress] = useState("");
-  const [nutriCert, setNutriCert] = useState("");
   const [imageBlob, setImageBlob] = useState(""); // Original image
   const [newImageBlob, setNewImageBlob] = useState(null); // New uploaded image
   const [isTabSelected, setIsTabSelected] = useState("myAccount");
@@ -65,7 +65,7 @@ const UpdateAccount = () => {
     setCompanyName(userAccount ? userAccount.companyName : "");
     setPostalCode(userAccount?.postalCode || "");
     setCompanyAddress(userAccount ? userAccount.companyAddress : "");
-    // setNutriCert(userAccount ? userAccount.nutriCert : "");
+    // //setNutriCert(userAccount ? userAccount.nutriCert : "");
     if (userAccount.imgBlob) {
       console.log("Image blob available");
       console.log("Image blob:", userAccount.imgBlob);
@@ -125,6 +125,9 @@ const UpdateAccount = () => {
 
         console.log("Account updated:", response.data);
         setSuccess("Account updated successfully!");
+        setTimeout(() => {
+          setSuccess("");
+        }, 5000);
       } catch (error) {
         console.error("Error updating account", error);
         setError("Failed to update account.");
@@ -197,6 +200,31 @@ const UpdateAccount = () => {
     );
   };
 
+  const getImageUrlFromBlob = (imgBlob) => {
+    // Check if imgBlob is truthy
+    if (imgBlob) {
+      // Return the image URL created from the blob
+
+      return `data:image/jpeg;base64,${imgBlob}`;
+    }
+    // Return an empty string or a placeholder image URL if imgBlob is not available
+    return "";
+  };
+
+  // Download nutritionist certificate
+  const handleDownloadCertificate = (event) => {
+    event.preventDefault();
+    const imageUrl = getImageUrlFromBlob(userAccount?.imgBlob);
+    if (imageUrl) {
+      const link = document.createElement("a");
+      link.href = imageUrl;
+      link.download = "Nutritionist_Certificate"; // Set the download file name here
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    }
+  };
+
   return (
     <div className="flex flex-col min-h-screen">
       <div className="flex justify-center">
@@ -236,11 +264,17 @@ const UpdateAccount = () => {
               </h1>
               <form>
                 <div className="grid grid-cols-2 gap-3 mt-2">
-                  <label htmlFor="fullName" className="flex items-center">
+                  <label
+                    htmlFor="fullName"
+                    className="flex items-center font-medium"
+                  >
                     Full Name:
                     <span className="text-red-500">*</span>
                   </label>
-                  <label htmlFor="username" className="flex items-center">
+                  <label
+                    htmlFor="userName"
+                    className="flex items-center font-medium"
+                  >
                     Username:
                     <span className="text-red-500">*</span>
                   </label>
@@ -252,7 +286,7 @@ const UpdateAccount = () => {
                     id="fullName"
                     name="fullName"
                     placeholder="Your Name"
-                    className=" bg-white border border-gray-300 text-gray-900 sm:text-sm rounded-lg p-2.5"
+                    className="bg-white border border-gray-300 text-gray-900 sm:text-sm rounded-lg p-2.5 w-full"
                     value={fullName}
                     onChange={clearErrorOnChange(setFullName)}
                   />
@@ -262,7 +296,7 @@ const UpdateAccount = () => {
                     id="userName"
                     name="userName"
                     placeholder="Your Username"
-                    className=" bg-white border border-gray-300 text-gray-900 sm:text-sm rounded-lg p-2.5"
+                    className="bg-white border border-gray-300 text-gray-900 sm:text-sm rounded-lg p-2.5 w-full"
                     value={username}
                     onChange={clearErrorOnChange(setUsername)}
                   />
@@ -270,7 +304,10 @@ const UpdateAccount = () => {
 
                 {/* CONTACT NUMBER */}
                 <div className="flex flex-col mb-3.5">
-                  <label className="mb-1">
+                  <label
+                    htmlFor="contactNumber"
+                    className="font-medium text-base mb-1"
+                  >
                     Contact Number:
                     <span className="text-red-500">*</span>
                   </label>
@@ -278,7 +315,7 @@ const UpdateAccount = () => {
                     type="text"
                     id="contactNumber"
                     name="contactNumber"
-                    className="border px-4 py-2 rounded-lg w-full bg-white border-gray-300 text-gray-900 sm:text-sm"
+                    className="bg-white border border-gray-300 text-gray-900 sm:text-sm rounded-lg p-2.5 w-full"
                     value={contactNumber}
                     onChange={clearErrorOnChange(setContactNumber)}
                   />
@@ -286,13 +323,18 @@ const UpdateAccount = () => {
 
                 {/* EMAIL */}
                 <div className="flex flex-col mb-3.5">
-                  <label className="mb-1">Work Email Address:</label>
+                  <label
+                    htmlFor="workEmail"
+                    className="font-medium text-base mb-1"
+                  >
+                    Work Email Address:<span className="text-red-500">*</span>
+                  </label>
                   <input
                     type="text"
                     id="workEmail"
                     name="workEmail"
                     disabled
-                    className="border px-4 py-2 rounded-lg w-full bg-gray-300 border-gray-300 text-gray-900 sm:text-sm"
+                    className="bg-gray-300 border border-gray-300 text-gray-900 sm:text-sm rounded-lg p-2.5 w-full"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                   />
@@ -300,12 +342,17 @@ const UpdateAccount = () => {
 
                 {/* COMPANY NAME  */}
                 <div className="flex flex-col mb-3.5">
-                  <label className="mb-1">Company Name:</label>
+                  <label
+                    htmlFor="companyName"
+                    className="font-medium text-base mb-1"
+                  >
+                    Company Name:
+                  </label>
                   <input
                     type="text"
                     id="companyName"
                     name="companyName"
-                    className="border px-4 py-2 rounded-lg w-full bg-white border-gray-300 text-gray-900 sm:text-sm"
+                    className="bg-white border border-gray-300 text-gray-900 sm:text-sm rounded-lg p-2.5 w-full"
                     value={companyName}
                     onChange={clearErrorOnChange(setCompanyName)}
                   />
@@ -313,12 +360,17 @@ const UpdateAccount = () => {
 
                 {/* COMPANY ADDRESS  */}
                 <div className="flex flex-col mb-3.5">
-                  <label className="mb-1">Company Address:</label>
+                  <label
+                    htmlFor="companyAddress"
+                    className="font-medium text-base mb-1"
+                  >
+                    Company Address:
+                  </label>
                   <input
                     type="text"
                     id="companyAddress"
                     name="companyAddress"
-                    className="border px-4 py-2 rounded-lg w-full bg-white border-gray-300 text-gray-900 sm:text-sm"
+                    className="bg-white border border-gray-300 text-gray-900 sm:text-sm rounded-lg p-2.5 w-full"
                     value={companyAddress}
                     onChange={clearErrorOnChange(setCompanyAddress)}
                   />
@@ -326,32 +378,49 @@ const UpdateAccount = () => {
 
                 {/* POSTAL CODE*/}
                 <div className="flex flex-col mb-3.5">
-                  <label className="mb-1">Postal Code:</label>
+                  <label
+                    htmlFor="postalCode"
+                    className="font-medium text-base mb-1"
+                  >
+                    Postal Code:
+                  </label>
                   <input
                     type="text"
                     id="postalCode"
                     name="postalCode"
-                    className="border px-4 py-2 rounded-lg w-full bg-white border-gray-300 text-gray-900 sm:text-sm"
+                    className="bg-white border border-gray-300 text-gray-900 sm:text-sm rounded-lg p-2.5 w-full"
                     value={postalCode}
                     onChange={clearErrorOnChange(setPostalCode)}
                   />
                 </div>
-
                 {/* NUTRITION CERT PREVIEW */}
-                {/* <div className="flex flex-col mb-3.5">
-                  <label className="mb-1">Nutritionist Certificate:</label>
-                  <div>
-                    <Image
-                      src=""
+                <div className="flex flex-col mb-3.5 relative">
+                  <p className="font-medium text-base mb-1">
+                    Nutritionist Certificate:
+                    <span className="text-red-500">*</span>
+                  </p>
+                  <div className="relative group mx-auto">
+                    <img
+                      src={getImageUrlFromBlob(imageBlob)}
+                      alt="nutritionist certificate"
                       width={400}
                       height={300}
-                      className="rounded-lg"
+                      className="rounded-lg h-auto w-full lg:max-w-lg shadow-md cursor-pointer opacity-100 transition duration-500 ease-in-out transform group-hover:opacity-30"
                     />
+                    <div className="absolute top-0 left-0 w-full h-full flex items-center justify-center opacity-0 transition duration-500 ease-in-out group-hover:opacity-100">
+                      <button
+                        onClick={handleDownloadCertificate}
+                        className="bg-gray-600 text-white py-3 px-3 rounded-full opacity-80"
+                      >
+                        <DownloadIcon />
+                      </button>
+                    </div>
                   </div>
-                </div> */}
+                </div>
 
+                {/* To add during testing, remove in final source code  */}
                 {/* IMAGE file */}
-                <div className="flex flex-col">
+                {/* <div className="flex flex-col">
                   <label
                     htmlFor="image"
                     className="block text-xl mb-1 font-bold text-gray-900"
@@ -370,7 +439,7 @@ const UpdateAccount = () => {
 
                 <div className="mt-2 flex flex-row space-x-4">
                   {renderImage()}
-                </div>
+                </div> */}
 
                 {error && (
                   <p className="text-red-500 text-base font-medium">{error}</p>

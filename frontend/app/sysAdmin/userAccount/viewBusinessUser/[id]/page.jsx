@@ -37,22 +37,40 @@ const ViewBusinessUser = ({ params }) => {
     router.push("/sysAdmin/userAccount");
   };
 
-  const handleSuspendAccount = async () => {
+  const handleToggleUserStatus = async (suspendedUserId, isEnabled) => {
+    const newStatus = !isEnabled;
+
     try {
-      const userId = params.id;
       const response = await axiosInterceptorInstance.put(
         "/systemAdmin/suspend",
         {
-          enabled: false,
-          id: userId,
+          id: suspendedUserId,
+          enabled: newStatus,
         }
       );
-      console.log("User account suspended", response);
-      setSuccess("User account suspended successfully");
-      // Optionally, you can navigate the user back to the user account page
+
+      if (response.status === 200) {
+        console.log("User status updated:", response);
+
+        // Update the userAccount state with the new status
+        setUserAccount((prevState) => ({
+          ...prevState,
+          enabled: newStatus,
+        }));
+
+        // Set success message
+        setSuccess(
+          `User account has been ${
+            newStatus ? "unsuspended" : "suspended"
+          } successfully.`
+        );
+      } else {
+        console.error("Failed to update the user status:", response);
+      }
     } catch (error) {
-      console.error("Error suspending user account", error);
-      setError("Failed to suspend user account");
+      console.error("Error updating user status", error);
+      // Set error message for unsuccessful response
+      setError("Failed to update the user status.");
     }
   };
 
@@ -211,10 +229,16 @@ const ViewBusinessUser = ({ params }) => {
               </div>
               <div className="flex-1">
                 <button
-                  onClick={() => handleSuspendAccount()}
-                  className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md bg-red-500 hover:bg-red-600 text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500"
+                  onClick={() =>
+                    handleToggleUserStatus(userAccount.id, userAccount.enabled)
+                  }
+                  className={`text-white font-bold ${
+                    userAccount.enabled
+                      ? "bg-red-600 hover:bg-red-700"
+                      : "bg-stone-400 hover:bg-stone-500"
+                  } rounded-lg text-base px-5 py-2 text-center`}
                 >
-                  Suspend
+                  {userAccount.enabled ? "Suspend" : "Unsuspend"}
                 </button>
               </div>
             </div>

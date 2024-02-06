@@ -90,22 +90,18 @@ const UserAccount = () => {
     let thePath = "";
     switch (profileType) {
       case "REGISTERED_USER":
-        // userTypePath = "registeredUser";
         thePath = `/sysAdmin/userAccount/viewRegisteredUser/${viewId}`;
         router.push(thePath);
         break;
       case "BUSINESS_USER":
-        // userTypePath = "businessUser";
         thePath = `/sysAdmin/userAccount/viewBusinessUser/${viewId}`;
         router.push(thePath);
         break;
       case "ADMIN":
         thePath = `/sysAdmin/userAccount/viewSystemAdmin/${viewId}`;
-        // console.log(thePath);
         router.push(thePath);
         break;
       case "NUTRITIONIST":
-        // userTypePath = "dietitian";
         thePath = `/sysAdmin/userAccount/viewNutritionist/${viewId}`;
         router.push(thePath);
         break;

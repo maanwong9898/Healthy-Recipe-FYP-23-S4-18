@@ -7,6 +7,7 @@ import Link from "next/link";
 import SearchIcon from "@mui/icons-material/Search";
 import SwapVertIcon from "@mui/icons-material/SwapVert";
 import SysAdminNavBar from "../../components/navigation/sysAdminNavBar";
+import SecureStorage from "react-secure-storage";
 
 // router path is /sysAdmin/suspendRecipe
 
@@ -59,36 +60,43 @@ const SuspendRecipe = () => {
   const [datePublishedOrder, setDatePublishedOrder] = useState("LATEST");
   const [ratingsOrder, setRatingsOrder] = useState("HIGHEST");
   const [statusOrder, setStatusOrder] = useState("ACTIVE");
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
+  const [isAuthenticated, setIsAuthenticated] = useState(true); // New state variable
 
-  // fetch all recipes from backend
+  // fetch all business blog posts and categories from backend
   useEffect(() => {
-    const getData = async () => {
-      setIsLoading(true); // Set loading state to true
+    const token = SecureStorage.getItem("token");
+    const role = SecureStorage.getItem("role");
 
-      try {
-        const fetchedRecipe = await fetchRecipes();
-        const recipesWithAverage = await Promise.all(
-          fetchedRecipe.map(async (recipe) => {
-            const average = await fetchRecipeAverage(recipe.id);
-            return { ...recipe, average }; // Augment each recipe with its average
-          })
-        );
-        console.log("Recipe with average:", recipesWithAverage);
-        setRecipes(recipesWithAverage);
-        // ... [sorting and other logic]
-      } catch (error) {
-        console.error("Error while fetching data:", error);
-      }
-    };
-    Promise.all(getData())
-      .catch((error) => {
-        console.error("Error in fetchData:", error);
-      })
-      .finally(() => {
-        setIsLoading(false); // End loading after both operations are complete
-      });
-    // getData();
+    if (!token || role !== "ADMIN") {
+      // If token is invalid or role is not ADMIN
+      SecureStorage.clear();
+      router.push("/");
+      return;
+    } else {
+      const fetchData = async () => {
+        try {
+          const fetchedRecipe = await fetchRecipes();
+          const recipesWithAverage = await Promise.all(
+            fetchedRecipe.map(async (recipe) => {
+              const average = await fetchRecipeAverage(recipe.id);
+              return { ...recipe, average }; // Augment each recipe with its average
+            })
+          );
+          console.log("Recipe with average:", recipesWithAverage);
+          setRecipes(recipesWithAverage);
+        } catch (error) {
+          console.error("Error while fetching data:", error);
+        }
+      };
+
+      const fetchDataAndCategories = async () => {
+        await Promise.all([fetchData()]);
+        setIsLoading(false);
+      };
+
+      fetchDataAndCategories();
+    }
   }, []);
 
   // All in 1 -- sort, search
@@ -102,13 +110,6 @@ const SuspendRecipe = () => {
         recipe.title.toLowerCase().includes(searchTerm.toLowerCase())
       );
     }
-
-    // Category filter
-    // if (categoryFilter !== "ALL") {
-    //   processedBlogs = processedBlogs.filter(
-    //     (recipe) => recipe.blogTypeId === Number(categoryFilter)
-    //   );
-    // }
 
     // Utility function to get the date, preferring createdDT and falling back to lastUpdatedDT
     function getDateOrFallback(recipe) {
@@ -259,100 +260,215 @@ const SuspendRecipe = () => {
   };
 
   return (
-    <div className="px-2 sm:px-5 min-h-screen flex flex-col py-5">
-      <SysAdminNavBar />
-      <h1 className="text-6xl text-gray-900 p-3 mb-4 font-bold text-center sm:text-center">
-        All Recipes
-      </h1>
-
-      {/* Search and Sort Section */}
-      <div className="relative mb-4 md:mb-8 md:mr-2">
-        <input
-          type="text"
-          id="recipeSearch"
-          name="recipeSearch"
-          value={searchTerm}
-          onChange={(e) => setSearchTerm(e.target.value)}
-          placeholder="Search by title"
-          className="mr-2 p-2 rounded-lg border w-full md:w-auto pl-10"
-        />
-        {/* Search icon */}
-        <span className="absolute inset-y-0 left-0 flex items-center pl-2">
-          <SearchIcon />
-        </span>
-      </div>
-
+    <div>
       {isLoading ? (
         <div className="text-xl text-center p-4">
-          <p>Loading Recipes...</p>
+          <p>Loading...</p>
         </div>
       ) : (
         <>
-          {/* Table of recipes */}
-          <div className="overflow-x-auto rounded-lg hidden lg:block">
-            <table className="min-w-full rounded-lg border-zinc-200 border-2">
-              <thead className="bg-zinc-700 font-normal tracking-normal text-white border-gray-800 border-2">
-                <tr className="text-center text-lg">
-                  <th className="px-3 py-2">
-                    Recipe Title
-                    <button
-                      className="ml-1 focus:outline-none"
-                      onClick={handleSortAlphabetically}
-                    >
-                      <SwapVertIcon />
-                    </button>
-                  </th>
-                  <th className="px-3 py-2">Publisher</th>
-                  <th className="px-3 py-2">Company</th>
-                  <th className="px-3 py-2">
-                    Date Published
-                    <button
-                      className="ml-1 focus:outline-none"
-                      onClick={handleSortByDatePublished}
-                    >
-                      <SwapVertIcon />
-                    </button>
-                  </th>
-                  <th className="px-3 py-2">
-                    Status
-                    <button
-                      className="ml-1 focus:outline-none"
-                      onClick={handleSortByStatus}
-                    >
-                      <SwapVertIcon />
-                    </button>
-                  </th>
-                  <th className="px-3 py-2">
-                    Ratings
-                    <button
-                      className="ml-1 focus:outline-none"
-                      onClick={handleSortByRatings}
-                    >
-                      <SwapVertIcon />
-                    </button>
-                  </th>
-                  <th className="px-3 py-2"></th>
-                </tr>
-              </thead>
-              <tbody>
-                {displayedRecipes.map((recipe, index) => (
-                  <tr key={index} className="bg-white border-b">
-                    <td className="px-3 py-2 text-base text-center">
-                      {recipe.title}
-                    </td>
-                    <td className="px-3 py-2 text-base text-center">
-                      {recipe.userID?.fullName || "nil"}
-                    </td>
-                    <td className="px-3 py-2 text-base text-center">
-                      {recipe.userID?.companyName || "nil"}
-                    </td>
-                    <td className="px-3 py-2 text-base text-center">
-                      {new Date(
-                        recipe?.createdDT || recipe.lastUpdatedDT
-                      ).toLocaleDateString("en-GB")}
-                    </td>
+          <div className="px-2 sm:px-5 min-h-screen flex flex-col py-5">
+            <SysAdminNavBar />
+            <h1 className="text-6xl text-gray-900 p-3 mb-4 font-bold text-center sm:text-center">
+              All Recipes
+            </h1>
 
-                    <td className="px-3 py-2 text-base text-center">
+            {/* Search and Sort Section */}
+            <div className="relative mb-4 md:mb-8 md:mr-2">
+              <input
+                type="text"
+                id="recipeSearch"
+                name="recipeSearch"
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+                placeholder="Search by title"
+                className="mr-2 p-2 rounded-lg border w-full md:w-auto pl-10"
+              />
+              {/* Search icon */}
+              <span className="absolute inset-y-0 left-0 flex items-center pl-2">
+                <SearchIcon />
+              </span>
+            </div>
+
+            {/* Table of recipes */}
+            <div className="overflow-x-auto rounded-lg hidden lg:block">
+              <table className="min-w-full rounded-lg border-zinc-200 border-2">
+                <thead className="bg-zinc-700 font-normal tracking-normal text-white border-gray-800 border-2">
+                  <tr className="text-center text-lg">
+                    <th className="px-3 py-2">
+                      Recipe Title
+                      <button
+                        className="ml-1 focus:outline-none"
+                        onClick={handleSortAlphabetically}
+                      >
+                        <SwapVertIcon />
+                      </button>
+                    </th>
+                    <th className="px-3 py-2">Publisher</th>
+                    <th className="px-3 py-2">Company</th>
+                    <th className="px-3 py-2">
+                      Date Published
+                      <button
+                        className="ml-1 focus:outline-none"
+                        onClick={handleSortByDatePublished}
+                      >
+                        <SwapVertIcon />
+                      </button>
+                    </th>
+                    <th className="px-3 py-2">
+                      Status
+                      <button
+                        className="ml-1 focus:outline-none"
+                        onClick={handleSortByStatus}
+                      >
+                        <SwapVertIcon />
+                      </button>
+                    </th>
+                    <th className="px-3 py-2">
+                      Ratings
+                      <button
+                        className="ml-1 focus:outline-none"
+                        onClick={handleSortByRatings}
+                      >
+                        <SwapVertIcon />
+                      </button>
+                    </th>
+                    <th className="px-3 py-2"></th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {displayedRecipes.map((recipe, index) => (
+                    <tr key={index} className="bg-white border-b">
+                      <td className="px-3 py-2 text-base text-center">
+                        {recipe.title}
+                      </td>
+                      <td className="px-3 py-2 text-base text-center">
+                        {recipe.userID?.fullName || "nil"}
+                      </td>
+                      <td className="px-3 py-2 text-base text-center">
+                        {recipe.userID?.companyName || "nil"}
+                      </td>
+                      <td className="px-3 py-2 text-base text-center">
+                        {new Date(
+                          recipe?.createdDT || recipe.lastUpdatedDT
+                        ).toLocaleDateString("en-GB")}
+                      </td>
+
+                      <td className="px-3 py-2 text-base text-center">
+                        <span
+                          className={`rounded-full px-3 py-1 text-base font-semibold ${
+                            recipe.active
+                              ? "text-white bg-green-500"
+                              : "text-white bg-red-500"
+                          }`}
+                        >
+                          {recipe.active ? "Active" : "Inactive"}
+                        </span>
+                      </td>
+                      <td className="px-3 py-2 text-base text-center">
+                        <div
+                          className="rating-container flex flex-col"
+                          style={{ minWidth: "100px" }}
+                        >
+                          {recipe.average !== null &&
+                          typeof recipe.average.averageRatings === "number" &&
+                          typeof recipe.average.totalNumber === "number" ? (
+                            <span
+                              className="rating-text"
+                              style={{ fontWeight: "bold", color: "#0a0a0a" }}
+                            >
+                              {recipe.average.averageRatings.toFixed(1)}
+                            </span>
+                          ) : (
+                            "No ratings yet"
+                          )}
+                          {recipe.average && recipe.average.totalNumber > 0 && (
+                            <span
+                              className="rating-count"
+                              style={{ fontSize: "0.8rem", color: "#666" }}
+                            >
+                              ({recipe.average.totalNumber} rating
+                              {recipe.average.totalNumber !== 1 ? "s" : ""})
+                            </span>
+                          )}
+                        </div>
+                      </td>
+
+                      <td className="px-3 py-2 text-base text-center">
+                        <button
+                          onClick={() =>
+                            handleToggleRecipeStatus(recipe.id, recipe.active)
+                          }
+                          className={`text-white font-bold  ${
+                            recipe.active
+                              ? "bg-red-600 hover:bg-red-700"
+                              : "bg-stone-400 hover:bg-stone-500"
+                          } focus:ring-4 focus:outline-none focus:ring-blue-300
+    dark:focus:ring-blue-800 rounded-lg text-base px-5 py-2.5 text-center`}
+                        >
+                          {recipe.active ? "Suspend" : "Unsuspend"}
+                        </button>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+            {/* Mobile View for Tables */}
+            <div className="mx-auto items-center lg:hidden">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
+                {displayedRecipes.map((recipe, index) => (
+                  <div
+                    key={index}
+                    className="bg-white p-5 h-full flex flex-col border border-gray-300 rounded-2xl shadow"
+                  >
+                    {/* Title */}
+                    <p className="px-3 py-2 text-lg">
+                      <span className="font-semibold text-gray-900">
+                        Title:{" "}
+                      </span>
+                      <span className="font-normal text-gray-900">
+                        {recipe.title}
+                      </span>
+                    </p>
+
+                    {/* Name */}
+                    <p className="px-3 py-2 text-lg">
+                      <span className="font-semibold text-gray-900">
+                        Publisher:{" "}
+                      </span>
+                      <span className="font-normal text-gray-900">
+                        {recipe.userID?.fullName || "nil"}
+                      </span>
+                    </p>
+
+                    {/* Company Name */}
+                    <p className="px-3 py-2 text-lg">
+                      <span className="font-semibold text-gray-900">
+                        Company Name:{" "}
+                      </span>
+                      <span className="font-normal text-gray-900">
+                        {recipe.userID?.companyName || "nil"}
+                      </span>
+                    </p>
+
+                    {/* Date Published */}
+                    <p className="px-3 py-2 text-lg">
+                      <span className="font-semibold text-gray-900">
+                        Date Published:{" "}
+                      </span>
+                      <span className="font-normal text-gray-900">
+                        {new Date(
+                          recipe?.createdDT || recipe.lastUpdatedDT
+                        ).toLocaleDateString("en-GB")}
+                      </span>
+                    </p>
+
+                    {/* Status */}
+                    <p className="px-3 py-2 text-lg">
+                      <span className="font-semibold text-gray-900 mr-2">
+                        Status:{" "}
+                      </span>
                       <span
                         className={`rounded-full px-3 py-1 text-base font-semibold ${
                           recipe.active
@@ -362,12 +478,16 @@ const SuspendRecipe = () => {
                       >
                         {recipe.active ? "Active" : "Inactive"}
                       </span>
-                    </td>
-                    <td className="px-3 py-2 text-base text-center">
+                    </p>
+
+                    {/* Ratings */}
+                    <div className="px-3 py-2 text-lg">
                       <div
-                        className="rating-container flex flex-col"
+                        className="rating-container flex flex-row gap-2"
                         style={{ minWidth: "100px" }}
                       >
+                        <p className="font-semibold text-gray-900">Ratings: </p>
+
                         {recipe.average !== null &&
                         typeof recipe.average.averageRatings === "number" &&
                         typeof recipe.average.totalNumber === "number" ? (
@@ -390,9 +510,10 @@ const SuspendRecipe = () => {
                           </span>
                         )}
                       </div>
-                    </td>
+                    </div>
 
-                    <td className="px-3 py-2 text-base text-center">
+                    {/* Buttons */}
+                    <div className="mt-2 flex flex-col space-y-3 items-center">
                       <button
                         onClick={() =>
                           handleToggleRecipeStatus(recipe.id, recipe.active)
@@ -401,130 +522,14 @@ const SuspendRecipe = () => {
                           recipe.active
                             ? "bg-red-600 hover:bg-red-700"
                             : "bg-stone-400 hover:bg-stone-500"
-                        } focus:ring-4 focus:outline-none focus:ring-blue-300
-    dark:focus:ring-blue-800 rounded-lg text-base px-5 py-2.5 text-center`}
+                        } focus:ring-4 focus:outline-none focus:ring-blue-300 rounded-lg text-base px-5 py-2.5 w-full ml-2 mr-2 text-center`}
                       >
                         {recipe.active ? "Suspend" : "Unsuspend"}
                       </button>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-          {/* Mobile View for Tables */}
-          <div className="mx-auto items-center lg:hidden">
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
-              {displayedRecipes.map((recipe, index) => (
-                <div
-                  key={index}
-                  className="bg-white p-5 h-full flex flex-col border border-gray-300 rounded-2xl shadow"
-                >
-                  {/* Title */}
-                  <p className="px-3 py-2 text-lg">
-                    <span className="font-semibold text-gray-900">Title: </span>
-                    <span className="font-normal text-gray-900">
-                      {recipe.title}
-                    </span>
-                  </p>
-
-                  {/* Name */}
-                  <p className="px-3 py-2 text-lg">
-                    <span className="font-semibold text-gray-900">
-                      Publisher:{" "}
-                    </span>
-                    <span className="font-normal text-gray-900">
-                      {recipe.userID?.fullName || "nil"}
-                    </span>
-                  </p>
-
-                  {/* Company Name */}
-                  <p className="px-3 py-2 text-lg">
-                    <span className="font-semibold text-gray-900">
-                      Company Name:{" "}
-                    </span>
-                    <span className="font-normal text-gray-900">
-                      {recipe.userID?.companyName || "nil"}
-                    </span>
-                  </p>
-
-                  {/* Date Published */}
-                  <p className="px-3 py-2 text-lg">
-                    <span className="font-semibold text-gray-900">
-                      Date Published:{" "}
-                    </span>
-                    <span className="font-normal text-gray-900">
-                      {new Date(
-                        recipe?.createdDT || recipe.lastUpdatedDT
-                      ).toLocaleDateString("en-GB")}
-                    </span>
-                  </p>
-
-                  {/* Status */}
-                  <p className="px-3 py-2 text-lg">
-                    <span className="font-semibold text-gray-900 mr-2">
-                      Status:{" "}
-                    </span>
-                    <span
-                      className={`rounded-full px-3 py-1 text-base font-semibold ${
-                        recipe.active
-                          ? "text-white bg-green-500"
-                          : "text-white bg-red-500"
-                      }`}
-                    >
-                      {recipe.active ? "Active" : "Inactive"}
-                    </span>
-                  </p>
-
-                  {/* Ratings */}
-                  <div className="px-3 py-2 text-lg">
-                    <div
-                      className="rating-container flex flex-row gap-2"
-                      style={{ minWidth: "100px" }}
-                    >
-                      <p className="font-semibold text-gray-900">Ratings: </p>
-
-                      {recipe.average !== null &&
-                      typeof recipe.average.averageRatings === "number" &&
-                      typeof recipe.average.totalNumber === "number" ? (
-                        <span
-                          className="rating-text"
-                          style={{ fontWeight: "bold", color: "#0a0a0a" }}
-                        >
-                          {recipe.average.averageRatings.toFixed(1)}
-                        </span>
-                      ) : (
-                        "No ratings yet"
-                      )}
-                      {recipe.average && recipe.average.totalNumber > 0 && (
-                        <span
-                          className="rating-count"
-                          style={{ fontSize: "0.8rem", color: "#666" }}
-                        >
-                          ({recipe.average.totalNumber} rating
-                          {recipe.average.totalNumber !== 1 ? "s" : ""})
-                        </span>
-                      )}
                     </div>
                   </div>
-
-                  {/* Buttons */}
-                  <div className="mt-2 flex flex-col space-y-3 items-center">
-                    <button
-                      onClick={() =>
-                        handleToggleRecipeStatus(recipe.id, recipe.active)
-                      }
-                      className={`text-white font-bold  ${
-                        recipe.active
-                          ? "bg-red-600 hover:bg-red-700"
-                          : "bg-stone-400 hover:bg-stone-500"
-                      } focus:ring-4 focus:outline-none focus:ring-blue-300 rounded-lg text-base px-5 py-2.5 w-full ml-2 mr-2 text-center`}
-                    >
-                      {recipe.active ? "Suspend" : "Unsuspend"}
-                    </button>
-                  </div>
-                </div>
-              ))}
+                ))}
+              </div>
             </div>
           </div>
         </>

@@ -6,6 +6,7 @@ import { useState, useEffect } from "react";
 import axiosInterceptorInstance from "../../../../axiosInterceptorInstance.js";
 import DownloadIcon from "@mui/icons-material/Download";
 import SysAdminNavBar from "../../../../components/navigation/sysAdminNavBar";
+import SecureStorage from "react-secure-storage";
 
 // router path: /sysAdmin/businessAccountPendingList/verifyNutritionist/[id]
 
@@ -16,26 +17,43 @@ const ViewNutritionist = ({ params }) => {
   const [success, setSuccess] = useState("");
   // New state to track if an action has been completed
   const [actionCompleted, setActionCompleted] = useState(false);
-
-  const viewUserDashboard = async () => {
-    try {
-      const userId = params.id;
-
-      // Make the GET request to the userAndAdmin endpoint
-      const response = await axiosInterceptorInstance.get(
-        "/register/dashboard/" + userId
-      );
-
-      setUserAccount(response.data);
-      console.log(response.data);
-    } catch (error) {
-      console.error("Error fetching user data", error);
-    }
-  };
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    viewUserDashboard();
+    if (
+      !SecureStorage.getItem("token") ||
+      SecureStorage.getItem("role") !== "ADMIN"
+    ) {
+      // clear the secure storage to prevent any unauthorized access
+      SecureStorage.clear();
+      console.log("Redirecting to home page");
+      router.push("/");
+    } else {
+      const fetchData = async () => {
+        // Fetch data
+        try {
+          const userId = params.id;
+
+          // Make the GET request to the userAndAdmin endpoint
+          const response = await axiosInterceptorInstance.get(
+            "/register/dashboard/" + userId
+          );
+
+          setUserAccount(response.data);
+          console.log(response.data);
+          setIsLoading(false);
+        } catch (error) {
+          console.error("Error fetching user data", error);
+        }
+      };
+
+      fetchData();
+    }
   }, []);
+
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
 
   const handleApproveAccount = async (id) => {
     try {
@@ -89,19 +107,6 @@ const ViewNutritionist = ({ params }) => {
     // Return an empty string or a placeholder image URL if imgBlob is not available
     return "";
   };
-
-  // Function for download certificate
-  // const handleDownload = () => {
-  //   if (userAccount && userAccount.nutritionistCertificate) {
-  //     // Create a temporary anchor element
-  //     const downloadLink = document.createElement("a");
-  //     downloadLink.href = userAccount.nutritionistCertificate;
-  //     downloadLink.download = "nutritionist_certificate.png"; // Set desired file name
-  //     document.body.appendChild(downloadLink);
-  //     downloadLink.click();
-  //     document.body.removeChild(downloadLink); // Clean up
-  //   }
-  // };
 
   const handleDownloadCertificate = () => {
     const imageUrl = getImageUrlFromBlob(userAccount?.imgBlob);
@@ -232,28 +237,7 @@ const ViewNutritionist = ({ params }) => {
                 className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-base rounded-lg block w-full p-2.5"
               />
             </div>
-            {/* Nutrition Certificate */}
-            {/* <div className="flex flex-col">
-              <label className="block text-lg mb-1 font-semibold text-gray-900">
-                Nutritionist Certificate:
-              </label> */}
-            {/* Change based on what is labeled im backend */}
-            {/* {userAccount && userAccount.filePath && ( */}
-            {/* <div className="relative">
-                <img
-                  src="/banner.png"
-                  alt="Nutritionist Certificate"
-                  className="h-auto w-full rounded-lg border border-gray-500 shadow-sm"
-                />
-                <button
-                  onClick={handleDownload}
-                  className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 hover:bg-orange-300 px-2 py-2 rounded-full"
-                >
-                  <DownloadIcon />
-                </button>
-              </div> */}
-            {/* )} */}
-            {/* </div> */}
+            {/* Certificate */}
             <div className="flex flex-col lg:flex-row mt-4 p-5 bg-slate-100 mx-auto">
               {userAccount?.imgBlob ? (
                 <div>

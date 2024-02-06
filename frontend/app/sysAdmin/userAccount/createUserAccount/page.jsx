@@ -22,21 +22,21 @@ const CreateUserAccountPage = () => {
   const emailValidation = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
   useEffect(() => {
-    const checkAuthAndFetchData = async () => {
-      if (
-        !SecureStorage.getItem("token") ||
-        SecureStorage.getItem("role") !== "ADMIN"
-      ) {
-        // clear the secure storage
-        SecureStorage.clear();
-        console.log("Redirecting to home page");
-        router.push("/");
-      }
-      setIsLoading(false);
-    };
-
-    checkAuthAndFetchData();
+    if (
+      !SecureStorage.getItem("token") ||
+      SecureStorage.getItem("role") !== "ADMIN"
+    ) {
+      // clear the secure storage
+      SecureStorage.clear();
+      console.log("Redirecting to home page");
+      router.push("/");
+    }
+    setIsLoading(false);
   }, []);
+
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
 
   // Get today's date in the correct format for the max attribute (yyyy-mm-dd)
   const getFormattedDate = (date) => {

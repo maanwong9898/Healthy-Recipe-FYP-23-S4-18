@@ -5,12 +5,14 @@ import Link from "next/link";
 import { useState, useEffect } from "react";
 import axiosInterceptorInstance from "../../../../axiosInterceptorInstance.js";
 import SysAdminNavBar from "../../../../components/navigation/sysAdminNavBar";
+import SecureStorage from "react-secure-storage";
 
 // router path: /sysAdmin/userAccount/viewSystemAdmin/[id]
 
 const ViewSystemAdmin = ({ params }) => {
   const router = useRouter();
   const [userAccount, setUserAccount] = useState("");
+  const [isLoading, setIsLoading] = useState(true);
 
   const viewUserDashboard = async () => {
     try {
@@ -29,8 +31,28 @@ const ViewSystemAdmin = ({ params }) => {
   };
 
   useEffect(() => {
-    viewUserDashboard();
+    if (
+      !SecureStorage.getItem("token") ||
+      SecureStorage.getItem("role") !== "ADMIN"
+    ) {
+      // clear the secure storage to prevent any unauthorized access
+      SecureStorage.clear();
+      console.log("Redirecting to home page");
+      router.push("/");
+    } else {
+      // Fetch data
+      try {
+        viewUserDashboard();
+
+        setIsLoading(false);
+      } catch (error) {
+        console.error("Error fetching user data", error);
+      }
+    }
   }, []);
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
 
   const handleBackButton = () => {
     router.push("/sysAdmin/userAccount");

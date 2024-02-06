@@ -5,6 +5,7 @@ import Link from "next/link";
 import { useState, useEffect } from "react";
 import axiosInterceptorInstance from "../../../../axiosInterceptorInstance.js";
 import SysAdminNavBar from "../../../../components/navigation/sysAdminNavBar";
+import SecureStorage from "react-secure-storage";
 
 // router path: /sysAdmin/userAccount/viewRegisteredUser/[id]
 
@@ -16,6 +17,7 @@ const ViewRegisteredUser = ({ params }) => {
   const [healthGoal, setHealthGoal] = useState([]);
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
+  const [isLoading, setIsLoading] = useState(true);
 
   const viewUserDashboard = async () => {
     try {
@@ -26,22 +28,37 @@ const ViewRegisteredUser = ({ params }) => {
         "/register/dashboard/" + userId
       );
 
-      const data = response.data;
-      setUserAccount(data);
-      console.log("User detailes fetched", data);
-
-      // Set the state for allergies, dietary preferences, and health goals
-      setAllergies(data.allergies || []);
-      setDietaryPreferences(data.dietaryPreferences || null);
-      setHealthGoal(data.healthGoal || null);
+      setUserAccount(response.data);
+      console.log(response.data);
     } catch (error) {
       console.error("Error fetching user data", error);
     }
   };
 
   useEffect(() => {
-    viewUserDashboard();
+    if (
+      !SecureStorage.getItem("token") ||
+      SecureStorage.getItem("role") !== "ADMIN"
+    ) {
+      // clear the secure storage to prevent any unauthorized access
+      SecureStorage.clear();
+      console.log("Redirecting to home page");
+      router.push("/");
+    } else {
+      // Fetch data
+      try {
+        viewUserDashboard();
+
+        setIsLoading(false);
+      } catch (error) {
+        console.error("Error fetching user data", error);
+      }
+    }
   }, []);
+
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
 
   const renderAllergies = () => {
     if (!allergies || allergies.length === 0) {
@@ -63,14 +80,16 @@ const ViewRegisteredUser = ({ params }) => {
 
   // Function to render dietary preferences
   const renderDietaryPreferences = () => {
-    return dietaryPreferences
-      ? dietaryPreferences.subcategoryName
+    return userAccount?.dietaryPreferences
+      ? userAccount?.dietaryPreferences.subcategoryName
       : "Not specified";
   };
 
   // Function to render health goal
   const renderHealthGoal = () => {
-    return healthGoal ? healthGoal.subcategoryName : "Not specified";
+    return userAccount?.healthGoal
+      ? userAccount?.healthGoal.subcategoryName
+      : "Not specified";
   };
 
   const handleBackButton = () => {
@@ -211,12 +230,12 @@ const ViewRegisteredUser = ({ params }) => {
             </div>
 
             {/* Allergies */}
-            <div className="flex flex-col">
+            {/* <div className="flex flex-col">
               <label className="block text-lg mb-1 font-semibold text-gray-900">
                 Allergies:
               </label>
               {renderAllergies()}
-            </div>
+            </div> */}
 
             {/*Errors*/}
             {error && (

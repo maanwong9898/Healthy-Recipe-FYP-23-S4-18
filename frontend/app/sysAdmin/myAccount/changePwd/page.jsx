@@ -18,6 +18,25 @@ const changeUserPwd = () => {
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
   const [isTabSelected, setIsTabSelected] = useState("changePwd");
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    if (
+      !SecureStorage.getItem("token") ||
+      SecureStorage.getItem("role") !== "ADMIN"
+    ) {
+      // clear the secure storage
+      SecureStorage.clear();
+      console.log("Redirecting to home page");
+      router.push("/");
+    } else {
+      setIsLoading(false);
+    }
+  }, []);
+
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
 
   const handlePwdChange = async (event) => {
     event.preventDefault();

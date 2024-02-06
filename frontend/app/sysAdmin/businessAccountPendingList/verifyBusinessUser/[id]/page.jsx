@@ -5,6 +5,7 @@ import Link from "next/link";
 import { useState, useEffect } from "react";
 import axiosInterceptorInstance from "../../../../axiosInterceptorInstance.js";
 import SysAdminNavBar from "../../../../components/navigation/sysAdminNavBar";
+import SecureStorage from "react-secure-storage";
 
 // router path: /sysAdmin/businessAccountPendingList/verifyBusinessUser/[id]
 const ViewBusinessUser = ({ params }) => {
@@ -13,26 +14,43 @@ const ViewBusinessUser = ({ params }) => {
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
   const [actionCompleted, setActionCompleted] = useState(false);
-
-  const viewUserDashboard = async () => {
-    try {
-      const userId = params.id;
-
-      // Make the GET request to the userAndAdmin endpoint
-      const response = await axiosInterceptorInstance.get(
-        "/register/dashboard/" + userId
-      );
-
-      setUserAccount(response.data);
-      console.log(response.data);
-    } catch (error) {
-      console.error("Error fetching user data", error);
-    }
-  };
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    viewUserDashboard();
+    if (
+      !SecureStorage.getItem("token") ||
+      SecureStorage.getItem("role") !== "ADMIN"
+    ) {
+      // clear the secure storage to prevent any unauthorized access
+      SecureStorage.clear();
+      console.log("Redirecting to home page");
+      router.push("/");
+    } else {
+      const fetchData = async () => {
+        // Fetch data
+        try {
+          const userId = params.id;
+
+          // Make the GET request to the userAndAdmin endpoint
+          const response = await axiosInterceptorInstance.get(
+            "/register/dashboard/" + userId
+          );
+
+          setUserAccount(response.data);
+          console.log(response.data);
+          setIsLoading(false);
+        } catch (error) {
+          console.error("Error fetching user data", error);
+        }
+      };
+
+      fetchData();
+    }
   }, []);
+
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
 
   const handleApproveAccount = async (id) => {
     try {

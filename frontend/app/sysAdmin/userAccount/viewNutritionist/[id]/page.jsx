@@ -6,6 +6,7 @@ import { useState, useEffect } from "react";
 import axiosInterceptorInstance from "../../../../axiosInterceptorInstance.js";
 import DownloadIcon from "@mui/icons-material/Download";
 import SysAdminNavBar from "../../../../components/navigation/sysAdminNavBar";
+import SecureStorage from "react-secure-storage";
 
 // router path: /sysAdmin/userAccount/viewNutritionist/[id]
 const ViewNutritionist = ({ params }) => {
@@ -13,6 +14,7 @@ const ViewNutritionist = ({ params }) => {
   const [userAccount, setUserAccount] = useState("");
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
+  const [isLoading, setIsLoading] = useState(true);
 
   const viewUserDashboard = async () => {
     try {
@@ -31,8 +33,29 @@ const ViewNutritionist = ({ params }) => {
   };
 
   useEffect(() => {
-    viewUserDashboard();
+    if (
+      !SecureStorage.getItem("token") ||
+      SecureStorage.getItem("role") !== "ADMIN"
+    ) {
+      // clear the secure storage to prevent any unauthorized access
+      SecureStorage.clear();
+      console.log("Redirecting to home page");
+      router.push("/");
+    } else {
+      // Fetch data
+      try {
+        viewUserDashboard();
+
+        setIsLoading(false);
+      } catch (error) {
+        console.error("Error fetching user data", error);
+      }
+    }
   }, []);
+
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
 
   const handleBackButton = () => {
     router.push("/sysAdmin/userAccount");
@@ -72,6 +95,28 @@ const ViewNutritionist = ({ params }) => {
       console.error("Error updating user status", error);
       // Set error message for unsuccessful response
       setError("Failed to update the user status.");
+    }
+  };
+
+  const getImageUrlFromBlob = (imgBlob) => {
+    // Check if imgBlob is truthy
+    if (imgBlob) {
+      // Return the image URL created from the blob
+      return `data:image/jpeg;base64,${imgBlob}`;
+    }
+    // Return an empty string or a placeholder image URL if imgBlob is not available
+    return "";
+  };
+
+  const handleDownloadCertificate = () => {
+    const imageUrl = getImageUrlFromBlob(userAccount?.imgBlob);
+    if (imageUrl) {
+      const link = document.createElement("a");
+      link.href = imageUrl;
+      link.download = "Nutritionist_Certificate"; // Set the download file name here
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
     }
   };
 
@@ -193,19 +238,25 @@ const ViewNutritionist = ({ params }) => {
               />
             </div>
             {/* Nutrition Certificate */}
-            <div className="flex flex-col">
-              <label className="block text-lg mb-1 font-semibold text-gray-900">
-                Nutritionist Certificate:
-              </label>
-              {/* Change based on what is labeled im backend */}
-              {/* {userAccount && userAccount.filePath && ( */}
-              <div className="relative">
-                <img
-                  src=""
-                  alt="Nutritionist Certificate"
-                  className="h-auto w-full rounded-lg"
-                />
-              </div>
+            {/* Certificate */}
+            <div className="flex flex-col lg:flex-row mt-4 p-5 bg-slate-100 mx-auto">
+              {userAccount?.imgBlob ? (
+                <div>
+                  <img
+                    className="h-auto w-full lg:max-w-lg rounded-lg ml-0 lg:ml-5 shadow-md"
+                    src={getImageUrlFromBlob(userAccount?.imgBlob)}
+                    alt="Nutritionist Certificate"
+                  />
+                  <button
+                    onClick={handleDownloadCertificate}
+                    className="mt-2 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+                  >
+                    Download Certificate
+                  </button>
+                </div>
+              ) : (
+                <p>No certificate available</p>
+              )}
             </div>
 
             {/*Errors*/}

@@ -13,28 +13,25 @@ const AllCategories = () => {
   const [editingSubcategoryId, setEditingSubcategoryId] = useState(null);
   const [editedSubcategoryName, setEditedSubcategoryName] = useState("");
   const router = useRouter();
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    // This effect runs once on component mount
-    const token = SecureStorage.getItem("token");
-    if (!token) {
-      // No token found, redirect to the home page
-      router.push("/"); // Redirect to the home page
+    if (
+      !SecureStorage.getItem("token") ||
+      SecureStorage.getItem("role") !== "ADMIN"
+    ) {
+      // clear the secure storage
+      SecureStorage.clear();
+      console.log("Redirecting to home page");
+      router.push("/");
     } else {
-      console.log("Token found:", token);
-      // Token is found, fetch subcategories as usual
-      if (selectedCategory) {
-        fetchSubcategories(selectedCategory);
-      }
+      setIsLoading(false);
     }
-  }, [selectedCategory, router]);
+  }, []);
 
-  // Fetch subcategories whenever the selected category changes
-  useEffect(() => {
-    if (selectedCategory) {
-      fetchSubcategories(selectedCategory);
-    }
-  }, [selectedCategory]);
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
 
   // Mapping of categories to their respective API endpoints (for fetching subcategories)
   const categoryToEndpointMap = {

@@ -6,6 +6,7 @@ import { useState, useEffect } from "react";
 import axiosInterceptorInstance from "../../axiosInterceptorInstance.js";
 import SwapVertIcon from "@mui/icons-material/SwapVert";
 import SysAdminNavBar from "../../components/navigation/sysAdminNavBar";
+import SecureStorage from "react-secure-storage";
 
 // router path: /sysAdmin/businessAccountPendingList
 // this is to view the list of business users and dietitians that status are waiting for verification
@@ -29,33 +30,51 @@ const BusinessAccountPendingList = () => {
   const [sortOption, setSortOption] = useState(sortOptions.LATEST.key);
   const [alphabeticalOrder, setAlphabeticalOrder] = useState("AZ");
   const [createdDateOrder, setCreatedDateOrder] = useState("LATEST");
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    const fetchUnverifiedBusinessAccounts = async () => {
-      try {
-        const businessUsersResponse = await axiosInterceptorInstance.get(
-          "/allUsers/getAllUnverifiedBusinessUser"
-        );
-        const nutritionistsResponse = await axiosInterceptorInstance.get(
-          "/allUsers/getAllUnverifiedNutritionists"
-        );
+    if (
+      !SecureStorage.getItem("token") ||
+      SecureStorage.getItem("role") !== "ADMIN"
+    ) {
+      // clear the secure storage
+      SecureStorage.clear();
+      console.log("Redirecting to home page");
+      router.push("/");
+    } else {
+      const fetchData = async () => {
+        // Fetch data
+        try {
+          const businessUsersResponse = await axiosInterceptorInstance.get(
+            "/allUsers/getAllUnverifiedBusinessUser"
+          );
+          const nutritionistsResponse = await axiosInterceptorInstance.get(
+            "/allUsers/getAllUnverifiedNutritionists"
+          );
 
-        // Combine both arrays
-        const combinedData = [
-          ...businessUsersResponse.data,
-          ...nutritionistsResponse.data,
-        ];
+          // Combine both arrays
+          const combinedData = [
+            ...businessUsersResponse.data,
+            ...nutritionistsResponse.data,
+          ];
 
-        console.log("All unverified :", combinedData);
+          console.log("All unverified :", combinedData);
 
-        setUserAccounts(combinedData);
-      } catch (error) {
-        console.log(error);
-      }
-    };
+          setUserAccounts(combinedData);
 
-    fetchUnverifiedBusinessAccounts();
+          setIsLoading(false);
+        } catch (error) {
+          console.log(error);
+        }
+      };
+
+      fetchData();
+    }
   }, []);
+
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
 
   // Function to handle role filter change
   const handleRoleFilterChange = (role) => {

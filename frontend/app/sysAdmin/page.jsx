@@ -128,6 +128,7 @@ const AdminHomePage = () => {
     useState("");
   const [totalMealPlansCount, setTotalMealPlansCount] = useState("");
   const [isLoading, setIsLoading] = useState(true);
+  const [isChecking, setIsChecking] = useState(true);
 
   useEffect(() => {
     if (
@@ -139,6 +140,7 @@ const AdminHomePage = () => {
       console.log("Redirecting to home page");
       router.push("/");
     } else {
+      setIsChecking(false);
       const fetchData = async () => {
         try {
           // Fetch all necessary data
@@ -173,8 +175,12 @@ const AdminHomePage = () => {
     setUsername(userAccount ? userAccount.username : "");
   }, [userAccount]);
 
-  if (isLoading) {
-    return <div>Loading...</div>;
+  // if (isLoading) {
+  //   return <div>Loading...</div>;
+  // }
+
+  if (isChecking) {
+    return <div>Checking...</div>;
   }
 
   const labelMapping = {
@@ -241,15 +247,15 @@ const AdminHomePage = () => {
 
   return (
     <div>
-      {isLoading ? (
-        <div>Loading...</div>
-      ) : (
-        <>
-          <div className="min-h-screen w-full overflow-x-hidden">
-            <SysAdminNavBar />
-            <h2 className="text-5xl font-bold text-center text-gray-800 p-4">
-              Dashboard
-            </h2>
+      <div className="min-h-screen w-full overflow-x-hidden">
+        <SysAdminNavBar />
+        <h2 className="text-5xl font-bold text-center text-gray-800 p-4">
+          Dashboard
+        </h2>
+        {isLoading ? (
+          <div>Loading...</div>
+        ) : (
+          <>
             {/* Start of Card -- number of recipes, blogs, educational content created */}
             <div className="p-6 mb-7 grid gap-y-10 gap-x-6 md:grid-cols-2 xl:grid-cols-4">
               {/* Total recipe card */}
@@ -480,9 +486,9 @@ const AdminHomePage = () => {
                 </div>
               </div>
             </div>
-          </div>
-        </>
-      )}
+          </>
+        )}
+      </div>
     </div>
   );
 };

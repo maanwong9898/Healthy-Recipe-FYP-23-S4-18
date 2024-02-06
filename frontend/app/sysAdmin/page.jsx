@@ -73,20 +73,6 @@ const fetchMealPlans = async () => {
   }
 };
 
-// Get all users
-const fetchAllUsers = async () => {
-  try {
-    const response = await axiosInterceptorInstance.get(
-      "/systemAdmin/getAllUsers"
-    );
-    console.log("All users:", response.data);
-    return response.data;
-  } catch (error) {
-    console.error("Error fetching users:", error);
-    throw error;
-  }
-};
-
 // Calling dashboard API to get user account information
 const viewUserDashboard = async () => {
   try {
@@ -111,6 +97,20 @@ const viewUserDashboard = async () => {
   }
 };
 
+// Get user role counts
+const fetchUserRoleCounts = async () => {
+  console.log("Fetching user role counts...");
+  try {
+    const response = await axiosInterceptorInstance.get(
+      "/landingPage/getRoleCount"
+    );
+    console.log("User Role Counts: ", response.data);
+    return response.data;
+  } catch (error) {
+    console.log("Failed to fetch user role counts: ", error);
+  }
+};
+
 const AdminHomePage = () => {
   const router = useRouter();
   const [userAccount, setUserAccount] = useState("");
@@ -121,13 +121,7 @@ const AdminHomePage = () => {
   const [mealPlans, setMealPlans] = useState([]);
   const [userAccounts, setUserAccounts] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
-
-  const [userCounts, setUserCounts] = useState({
-    REGISTERED_USER: 0,
-    BUSINESS_USER: 0,
-    NUTRITIONIST: 0,
-    ADMIN: 0,
-  });
+  const [totalUserRoleCount, setTotalUserRoleCount] = useState([]);
 
   useEffect(() => {
     if (
@@ -146,7 +140,7 @@ const AdminHomePage = () => {
           const recipesData = await fetchRecipes();
           const educationalContentData = await fetchEducationcalContent();
           const mealPlansData = await fetchMealPlans();
-          const userAccountsData = await fetchAllUsers();
+          const totalUserRoleCountData = await fetchUserRoleCounts();
           const userDashboardData = await viewUserDashboard();
 
           // Update state with fetched data
@@ -154,24 +148,9 @@ const AdminHomePage = () => {
           setRecipes(recipesData);
           setEducationalContent(educationalContentData);
           setMealPlans(mealPlansData);
-          setUserAccounts(userAccountsData);
+          setTotalUserRoleCount(totalUserRoleCountData);
           setUserAccount(userDashboardData);
 
-          // Count users by role
-          const counts = {
-            REGISTERED_USER: userAccountsData.filter(
-              (user) => user.role === "REGISTERED_USER"
-            ).length,
-            BUSINESS_USER: userAccountsData.filter(
-              (user) => user.role === "BUSINESS_USER"
-            ).length,
-            NUTRITIONIST: userAccountsData.filter(
-              (user) => user.role === "NUTRITIONIST"
-            ).length,
-            ADMIN: userAccountsData.filter((user) => user.role === "ADMIN")
-              .length,
-          };
-          setUserCounts(counts);
           setIsLoading(false);
         } catch (error) {
           console.error("Error in data fetching", error);
@@ -190,6 +169,24 @@ const AdminHomePage = () => {
   if (isLoading) {
     return <div>Loading...</div>;
   }
+
+  const labelMapping = {
+    REGISTERED_USER: "Registered User",
+    BUSINESS_USER: "Business User",
+    NUTRITIONIST: "Nutritionist",
+    ADMIN: "System Admin",
+  };
+
+  const userAccountPieData = {
+    labels: totalUserRoleCount.map((user) => labelMapping[user.role]),
+
+    datasets: [
+      {
+        data: totalUserRoleCount.map((user) => user.count),
+        backgroundColor: ["#FFD1DC", "#AEC6CF", "#B0E0E6", "#FFDAB9"],
+      },
+    ],
+  };
 
   // The button under user account management will redirect to corresponding page
   const handleCreateUserAccount = () => {
@@ -233,23 +230,6 @@ const AdminHomePage = () => {
 
   const handleChangePassword = () => {
     router.push("/sysAdmin/myAccount/changePwd");
-  };
-
-  const labelMapping = {
-    REGISTERED_USER: "Registered User",
-    BUSINESS_USER: "Business User",
-    NUTRITIONIST: "Nutritionist",
-    ADMIN: "System Admin",
-  };
-
-  const userAccountPieData = {
-    labels: Object.keys(userCounts).map((key) => labelMapping[key] || key),
-    datasets: [
-      {
-        data: Object.values(userCounts),
-        backgroundColor: ["#FFD1DC", "#AEC6CF", "#B0E0E6", "#FFDAB9"],
-      },
-    ],
   };
 
   return (

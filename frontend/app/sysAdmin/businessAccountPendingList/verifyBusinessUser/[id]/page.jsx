@@ -109,9 +109,7 @@ const ViewBusinessUser = ({ params }) => {
           <div className="space-y-6 md:space-y-5 lg:space-y-3">
             {/* Username */}
             <div className="flex flex-col">
-              <label className="block text-lg mb-1 font-semibold text-gray-900">
-                Username:
-              </label>
+              <label className="font-medium text-base mb-1">Username:</label>
               <input
                 type="text"
                 name="username"
@@ -119,14 +117,12 @@ const ViewBusinessUser = ({ params }) => {
                 autoComplete="username"
                 value={userAccount ? userAccount.username : ""}
                 readOnly
-                className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-base rounded-lg block w-full p-2.5"
+                className="bg-gray-200 border border-gray-300 text-gray-900 sm:text-sm rounded-lg p-2.5 w-full"
               />
             </div>
             {/* FullName */}
             <div className="flex flex-col">
-              <label className="block text-lg mb-1 font-semibold text-gray-900">
-                Name:
-              </label>
+              <label className="font-medium text-base mb-1">Name:</label>
               <input
                 type="text"
                 name="name"
@@ -134,12 +130,12 @@ const ViewBusinessUser = ({ params }) => {
                 autoComplete="name"
                 value={userAccount ? userAccount.fullName : ""}
                 readOnly
-                className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-base rounded-lg block w-full p-2.5"
+                className="bg-gray-200 border border-gray-300 text-gray-900 sm:text-sm rounded-lg p-2.5 w-full"
               />
             </div>
             {/* Contact Number */}
             <div className="flex flex-col">
-              <label className="block text-lg mb-1 font-semibold text-gray-900">
+              <label className="font-medium text-base mb-1">
                 Contact Number:
               </label>
               <input
@@ -149,12 +145,12 @@ const ViewBusinessUser = ({ params }) => {
                 autoComplete="contactNumber"
                 value={userAccount ? userAccount.contactNumber : ""}
                 readOnly
-                className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-base rounded-lg block w-full p-2.5"
+                className="bg-gray-200 border border-gray-300 text-gray-900 sm:text-sm rounded-lg p-2.5 w-full"
               />
             </div>
             {/* Email Address */}
             <div className="flex flex-col">
-              <label className="block text-lg mb-1 font-semibold text-gray-900">
+              <label className="font-medium text-base mb-1">
                 Email Address:
               </label>
               <input
@@ -164,12 +160,12 @@ const ViewBusinessUser = ({ params }) => {
                 autoComplete="email"
                 value={userAccount ? userAccount.email : ""}
                 readOnly
-                className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-base rounded-lg block w-full p-2.5"
+                className="bg-gray-200 border border-gray-300 text-gray-900 sm:text-sm rounded-lg p-2.5 w-full"
               />
             </div>
             {/* Company Name */}
             <div className="flex flex-col">
-              <label className="block text-lg mb-1 font-semibold text-gray-900">
+              <label className="font-medium text-base mb-1">
                 Company Name:
               </label>
               <input
@@ -179,12 +175,12 @@ const ViewBusinessUser = ({ params }) => {
                 autoComplete="companyName"
                 value={userAccount ? userAccount.companyName : ""}
                 readOnly
-                className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-base rounded-lg block w-full p-2.5"
+                className="bg-gray-200 border border-gray-300 text-gray-900 sm:text-sm rounded-lg p-2.5 w-full"
               />
             </div>
             {/* Company Address */}
             <div className="flex flex-col">
-              <label className="block text-lg mb-1 font-semibold text-gray-900">
+              <label className="font-medium text-base mb-1">
                 Company Address:
               </label>
               <input
@@ -194,14 +190,12 @@ const ViewBusinessUser = ({ params }) => {
                 autoComplete="companyAddress"
                 value={userAccount ? userAccount.companyAddress : ""}
                 readOnly
-                className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-base rounded-lg block w-full p-2.5"
+                className="bg-gray-200 border border-gray-300 text-gray-900 sm:text-sm rounded-lg p-2.5 w-full"
               />
             </div>
             {/* Postal Code */}
             <div className="flex flex-col">
-              <label className="block text-lg mb-1 font-semibold text-gray-900">
-                Postal Code:
-              </label>
+              <label className="font-medium text-base mb-1">Postal Code:</label>
               <input
                 type="text"
                 name="postalCode"
@@ -209,14 +203,12 @@ const ViewBusinessUser = ({ params }) => {
                 autoComplete="postalCode"
                 value={userAccount ? userAccount.postalCode : ""}
                 readOnly
-                className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-base rounded-lg block w-full p-2.5"
+                className="bg-gray-200 border border-gray-300 text-gray-900 sm:text-sm rounded-lg p-2.5 w-full"
               />
             </div>
             {/* UEN */}
             <div className="flex flex-col">
-              <label className="block text-lg mb-1 font-semibold text-gray-900">
-                UEN:
-              </label>
+              <label className="font-medium text-base mb-1">UEN:</label>
               <input
                 type="text"
                 name="uen"
@@ -224,7 +216,7 @@ const ViewBusinessUser = ({ params }) => {
                 autoComplete="uen"
                 value={userAccount ? userAccount.uen : ""}
                 readOnly
-                className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-base rounded-lg block w-full p-2.5"
+                className="bg-gray-200 border border-gray-300 text-gray-900 sm:text-sm rounded-lg p-2.5 w-full"
               />
             </div>
             {/*Errors*/}
@@ -238,12 +230,12 @@ const ViewBusinessUser = ({ params }) => {
               </div>
             )}
             {/* Buttons */}
-            <div className="flex space-x-5 justify-center">
+            <div className="flex space-x-5 justify-center mt-5">
               <div className="flex-1">
                 <button
                   onClick={() => handleRejectAccount(userAccount.id)}
                   disabled={actionCompleted}
-                  className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md bg-red-500 hover:bg-red-800 text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500"
+                  className="group relative w-full flex justify-center py-2 px-4 border-2 border-red-600 text-md font-medium rounded-lg hover:bg-red-700 hover:text-white text-red-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500"
                 >
                   Reject
                 </button>
@@ -252,7 +244,7 @@ const ViewBusinessUser = ({ params }) => {
                 <button
                   onClick={() => handleApproveAccount(userAccount.id)}
                   disabled={actionCompleted}
-                  className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-emerald-600 hover:bg-emerald-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500"
+                  className="group relative w-full flex justify-center py-2 px-4 border-2 border-transparent text-md font-medium rounded-lg text-white bg-emerald-600 hover:bg-emerald-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500"
                 >
                   Approve
                 </button>

@@ -134,7 +134,7 @@ const ViewNutritionist = ({ params }) => {
           <div className="space-y-6 md:space-y-5 lg:space-y-3">
             {/* Username */}
             <div className="flex flex-col">
-              <label className="block text-lg mb-1 font-semibold text-gray-900">
+              <label className="font-medium text-base mb-1">
                 Username:
               </label>
               <input
@@ -144,12 +144,12 @@ const ViewNutritionist = ({ params }) => {
                 autoComplete="username"
                 value={userAccount ? userAccount.username : ""}
                 readOnly
-                className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-base rounded-lg block w-full p-2.5"
+                className="bg-gray-200 border border-gray-300 text-gray-900 sm:text-sm rounded-lg p-2.5 w-full"
               />
             </div>
             {/* FullName */}
             <div className="flex flex-col">
-              <label className="block text-lg mb-1 font-semibold text-gray-900">
+              <label className="font-medium text-base mb-1">
                 Name:
               </label>
               <input
@@ -159,12 +159,12 @@ const ViewNutritionist = ({ params }) => {
                 autoComplete="name"
                 value={userAccount ? userAccount.fullName : ""}
                 readOnly
-                className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-base rounded-lg block w-full p-2.5"
+                className="bg-gray-200 border border-gray-300 text-gray-900 sm:text-sm rounded-lg p-2.5 w-full"
               />
             </div>
             {/* Contact Number */}
             <div className="flex flex-col">
-              <label className="block text-lg mb-1 font-semibold text-gray-900">
+              <label className="font-medium text-base mb-1">
                 Contact Number:
               </label>
               <input
@@ -174,12 +174,12 @@ const ViewNutritionist = ({ params }) => {
                 autoComplete="contactNumber"
                 value={userAccount ? userAccount.contactNumber : ""}
                 readOnly
-                className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-base rounded-lg block w-full p-2.5"
+                className="bg-gray-200 border border-gray-300 text-gray-900 sm:text-sm rounded-lg p-2.5 w-full"
               />
             </div>
             {/* Email Address */}
             <div className="flex flex-col">
-              <label className="block text-lg mb-1 font-semibold text-gray-900">
+              <label className="font-medium text-base mb-1">
                 Email Address:
               </label>
               <input
@@ -189,12 +189,12 @@ const ViewNutritionist = ({ params }) => {
                 autoComplete="email"
                 value={userAccount ? userAccount.email : ""}
                 readOnly
-                className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-base rounded-lg block w-full p-2.5"
+                className="bg-gray-200 border border-gray-300 text-gray-900 sm:text-sm rounded-lg p-2.5 w-full"
               />
             </div>
             {/* Company Name */}
             <div className="flex flex-col">
-              <label className="block text-lg mb-1 font-semibold text-gray-900">
+              <label className="font-medium text-base mb-1">
                 Company Name:
               </label>
               <input
@@ -204,12 +204,12 @@ const ViewNutritionist = ({ params }) => {
                 autoComplete="companyName"
                 value={userAccount ? userAccount.companyName : ""}
                 readOnly
-                className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-base rounded-lg block w-full p-2.5"
+                className="bg-gray-200 border border-gray-300 text-gray-900 sm:text-sm rounded-lg p-2.5 w-full"
               />
             </div>
             {/* Company Address */}
             <div className="flex flex-col">
-              <label className="block text-lg mb-1 font-semibold text-gray-900">
+              <label className="font-medium text-base mb-1">
                 Company Address:
               </label>
               <input
@@ -219,14 +219,12 @@ const ViewNutritionist = ({ params }) => {
                 autoComplete="companyAddress"
                 value={userAccount ? userAccount.companyAddress : ""}
                 readOnly
-                className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-base rounded-lg block w-full p-2.5"
+                className="bg-gray-200 border border-gray-300 text-gray-900 sm:text-sm rounded-lg p-2.5 w-full"
               />
             </div>
             {/* Postal Code */}
             <div className="flex flex-col">
-              <label className="block text-lg mb-1 font-semibold text-gray-900">
-                Postal Code:
-              </label>
+              <label className="font-medium text-base mb-1">Postal Code:</label>
               <input
                 type="text"
                 name="postalCode"
@@ -234,28 +232,43 @@ const ViewNutritionist = ({ params }) => {
                 autoComplete="postalCode"
                 value={userAccount ? userAccount.postalCode : ""}
                 readOnly
-                className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-base rounded-lg block w-full p-2.5"
+                className="bg-gray-200 border border-gray-300 text-gray-900 sm:text-sm rounded-lg p-2.5 w-full"
               />
             </div>
+
             {/* Certificate */}
-            <div className="flex flex-col lg:flex-row mt-4 p-5 bg-slate-100 mx-auto">
-              {userAccount?.imgBlob ? (
-                <div>
-                  <img
-                    className="h-auto w-full lg:max-w-lg rounded-lg ml-0 lg:ml-5 shadow-md"
-                    src={getImageUrlFromBlob(userAccount?.imgBlob)}
-                    alt="Nutritionist Certificate"
-                  />
-                  <button
-                    onClick={handleDownloadCertificate}
-                    className="mt-2 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-                  >
-                    Download Certificate
-                  </button>
-                </div>
-              ) : (
-                <p>No certificate available</p>
-              )}
+            <div className="flex flex-col mb-3.5 relative">
+              <p className="font-medium text-base mb-1">
+                Nutritionist Certificate:
+              </p>
+              <div className="relative group mx-auto">
+                {userAccount?.imgBlob ? (
+                  <div>
+                    <img
+                      src={getImageUrlFromBlob(userAccount?.imgBlob)}
+                      alt="nutritionist certificate"
+                      className="rounded-lg h-auto w-full lg:max-w-lg shadow-md cursor-pointer opacity-100 transition duration-500 ease-in-out transform group-hover:opacity-30"
+                    />
+                    <div className="absolute top-0 left-0 w-full h-full flex items-center justify-center opacity-0 transition duration-500 ease-in-out group-hover:opacity-100">
+                      <button
+                        onClick={handleDownloadCertificate}
+                        className="bg-gray-600 text-white py-3 px-3 rounded-full opacity-80"
+                      >
+                        <DownloadIcon />
+                      </button>
+                    </div>
+
+                    {/* <button
+                      onClick={handleDownloadCertificate}
+                      className="mt-2 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-md text-center justify-center align-middle"
+                    >
+                      Download Certificate
+                    </button> */}
+                  </div>
+                ) : (
+                  <p>No certificate available</p>
+                )}
+              </div>
             </div>
 
             {/*Errors*/}
@@ -269,12 +282,12 @@ const ViewNutritionist = ({ params }) => {
               </div>
             )}
             {/* Buttons */}
-            <div className="flex space-x-5 justify-center">
+            <div className="flex space-x-5 justify-center mt-5">
               <div className="flex-1">
                 <button
                   onClick={() => handleRejectAccount(userAccount.id)}
                   disabled={actionCompleted}
-                  className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md bg-red-500 hover:bg-red-800 text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500"
+                  className="group relative w-full flex justify-center py-2 px-4 border-2 border-red-600 text-md font-medium rounded-lg hover:bg-red-700 hover:text-white text-red-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500"
                 >
                   Reject
                 </button>
@@ -283,7 +296,7 @@ const ViewNutritionist = ({ params }) => {
                 <button
                   onClick={() => handleApproveAccount(userAccount.id)}
                   disabled={actionCompleted}
-                  className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-emerald-600 hover:bg-emerald-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500"
+                  className="group relative w-full flex justify-center py-2 px-4 border-2 border-transparent text-md font-medium rounded-lg text-white bg-emerald-600 hover:bg-emerald-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500"
                 >
                   Approve
                 </button>

@@ -5,6 +5,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircleUser } from "@fortawesome/free-solid-svg-icons";
+import SecureStorage from "react-secure-storage";
 
 const AccountDropdownMenu = ({ onLogout }) => {
   return (
@@ -82,17 +83,13 @@ const NutritionistNavBar = () => {
   //Logout handler
   const confirmAndLogout = () => {
     console.log("logout");
-    // Clear user data from local storage
-    localStorage.removeItem("token");
-    localStorage.removeItem("role");
-    localStorage.removeItem("userId");
-
+    SecureStorage.clear();
     // check what is the local storage
-    console.log(localStorage.getItem("token"));
-    console.log(localStorage.getItem("role"));
-    console.log(localStorage.getItem("userId"));
+    console.log(SecureStorage.getItem("token"));
+    console.log(SecureStorage.getItem("role"));
+    console.log(SecureStorage.getItem("userId"));
 
-    // Redirect to the homepage
+    console.log("Redirecting to home page");
     router.push("/");
   };
 

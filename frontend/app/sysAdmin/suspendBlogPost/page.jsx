@@ -63,22 +63,11 @@ const SuspendBusinessBlogs = () => {
   const [ratingsOrder, setRatingsOrder] = useState("HIGHEST");
   const [statusOrder, setStatusOrder] = useState("ACTIVE");
   const [isLoading, setIsLoading] = useState(true);
+  const [isChecking, setIsChecking] = useState(true);
   const [isAuthenticated, setIsAuthenticated] = useState(true); // New state variable
 
   // fetch all business blog posts and categories from backend
   useEffect(() => {
-    // const token = SecureStorage.getItem("token");
-    // const role = SecureStorage.getItem("role");
-
-    // if (!token || role !== "ADMIN") {
-    //   // clear the secure storage
-    //   SecureStorage.clear();
-    //   console.log("Redirecting to home page");
-    //   setIsAuthenticated(false); // Set isAuthenticated to false
-    //   router.push("/");
-    //   return false; // Indicate failed auth check
-    // }
-
     const token = SecureStorage.getItem("token");
     const role = SecureStorage.getItem("role");
 
@@ -88,6 +77,7 @@ const SuspendBusinessBlogs = () => {
       router.push("/");
       return;
     } else {
+      setIsChecking(false);
       const fetchData = async () => {
         try {
           const fetchedBlog = await fetchBlogPosts();
@@ -282,11 +272,8 @@ const SuspendBusinessBlogs = () => {
 
   return (
     <div>
-      {isLoading ? (
-        <div className="loading-indicator text-center">
-          <p>Loading...</p>
-          {/* You can replace this with a spinner or any other visual indicator */}
-        </div>
+      {isLoading && isChecking ? (
+        <div>Loading...</div>
       ) : (
         <>
           <div className="px-2 sm:px-5 min-h-screen flex flex-col py-5">
@@ -294,7 +281,7 @@ const SuspendBusinessBlogs = () => {
             <h1 className="text-6xl text-gray-900 p-3 mb-4 font-bold text-center sm:text-center">
               All Blog Posts
             </h1>
-            {/* Search section */}
+
             <div className="flex flex-col mb-4 md:flex-row md:mr-2">
               <div className="relative mb-3 md:mb-8 md:mr-2">
                 <input

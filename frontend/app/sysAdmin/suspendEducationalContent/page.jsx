@@ -74,7 +74,8 @@ const SuspendEducationalContent = () => {
   const [ratingsOrder, setRatingsOrder] = useState("HIGHEST");
   const [statusOrder, setStatusOrder] = useState("ACTIVE");
   const [isLoading, setIsLoading] = useState(true);
-  const [isAuthenticated, setIsAuthenticated] = useState(true); // New state variable
+  const [isChecking, setIsChecking] = useState(true);
+  const [isAuthenticated, setIsAuthenticated] = useState(true);
 
   // fetch all business blog posts and categories from backend
   useEffect(() => {
@@ -87,6 +88,7 @@ const SuspendEducationalContent = () => {
       router.push("/");
       return;
     } else {
+      setIsChecking(false);
       const fetchData = async () => {
         try {
           const fetchedEduContent = await fetchEducationalContent();
@@ -295,12 +297,8 @@ const SuspendEducationalContent = () => {
 
   return (
     <div>
-      {/* Conditional rendering based on isLoading state */}
-      {isLoading ? (
-        <div className="loading-indicator text-center">
-          <p>Loading...</p>
-          {/* You can replace this with a spinner or any other visual indicator */}
-        </div>
+      {isLoading && isChecking ? (
+        <div>Loading...</div>
       ) : (
         <>
           <div className="px-2 sm:px-5 min-h-screen flex flex-col py-5">

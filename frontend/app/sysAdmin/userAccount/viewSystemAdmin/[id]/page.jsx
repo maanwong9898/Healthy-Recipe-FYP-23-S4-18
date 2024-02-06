@@ -13,6 +13,7 @@ const ViewSystemAdmin = ({ params }) => {
   const router = useRouter();
   const [userAccount, setUserAccount] = useState("");
   const [isLoading, setIsLoading] = useState(true);
+  const [isChecking, setIsChecking] = useState(true);
 
   const viewUserDashboard = async () => {
     try {
@@ -40,6 +41,7 @@ const ViewSystemAdmin = ({ params }) => {
       console.log("Redirecting to home page");
       router.push("/");
     } else {
+      setIsChecking(false);
       // Fetch data
       try {
         viewUserDashboard();
@@ -50,8 +52,8 @@ const ViewSystemAdmin = ({ params }) => {
       }
     }
   }, []);
-  if (isLoading) {
-    return <div>Loading...</div>;
+  if (isChecking) {
+    return <div>Checking...</div>;
   }
 
   const handleBackButton = () => {
@@ -69,79 +71,85 @@ const ViewSystemAdmin = ({ params }) => {
           <h1 className="text-3xl lg:text-4xl font-bold leading-tight tracking-tight text-center text-gray-900 mb-8">
             System Admin Details
           </h1>
-          <div className="space-y-6 md:space-y-5 lg:space-y-3">
-            {/* Username */}
-            <div className="flex flex-col">
-              <label className="block text-lg mb-1 font-semibold text-gray-900">
-                Username:
-              </label>
-              <input
-                type="text"
-                name="username"
-                id="username"
-                autoComplete="username"
-                value={userAccount ? userAccount.username : ""}
-                readOnly
-                className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-base rounded-lg block w-full p-2.5"
-              />
-            </div>
+          {isLoading ? (
+            <div>Loading...</div>
+          ) : (
+            <>
+              <div className="space-y-6 md:space-y-5 lg:space-y-3">
+                {/* Username */}
+                <div className="flex flex-col">
+                  <label className="block text-lg mb-1 font-semibold text-gray-900">
+                    Username:
+                  </label>
+                  <input
+                    type="text"
+                    name="username"
+                    id="username"
+                    autoComplete="username"
+                    value={userAccount ? userAccount.username : ""}
+                    readOnly
+                    className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-base rounded-lg block w-full p-2.5"
+                  />
+                </div>
 
-            {/* FullName */}
-            <div className="flex flex-col">
-              <label className="block text-lg mb-1 font-semibold text-gray-900">
-                Name:
-              </label>
-              <input
-                type="text"
-                name="name"
-                id="name"
-                autoComplete="name"
-                value={userAccount ? userAccount.fullName : ""}
-                readOnly
-                className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-base rounded-lg block w-full p-2.5"
-              />
-            </div>
+                {/* FullName */}
+                <div className="flex flex-col">
+                  <label className="block text-lg mb-1 font-semibold text-gray-900">
+                    Name:
+                  </label>
+                  <input
+                    type="text"
+                    name="name"
+                    id="name"
+                    autoComplete="name"
+                    value={userAccount ? userAccount.fullName : ""}
+                    readOnly
+                    className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-base rounded-lg block w-full p-2.5"
+                  />
+                </div>
 
-            {/* Date Of Birth */}
-            <div className="flex flex-col">
-              <label className="block text-lg mb-1 font-semibold text-gray-900">
-                Date Of Birth:
-              </label>
-              <input
-                type="text"
-                name="dob"
-                id="dob"
-                autoComplete="dob"
-                value={userAccount ? userAccount.dob : ""}
-                readOnly
-                className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-base rounded-lg block w-full p-2.5"
-              />
-            </div>
+                {/* Date Of Birth */}
+                <div className="flex flex-col">
+                  <label className="block text-lg mb-1 font-semibold text-gray-900">
+                    Date Of Birth:
+                  </label>
+                  <input
+                    type="text"
+                    name="dob"
+                    id="dob"
+                    autoComplete="dob"
+                    value={userAccount ? userAccount.dob : ""}
+                    readOnly
+                    className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-base rounded-lg block w-full p-2.5"
+                  />
+                </div>
 
-            {/* Email Address */}
-            <div className="flex flex-col">
-              <label className="block text-lg mb-1 font-semibold text-gray-900">
-                Email Address:
-              </label>
-              <input
-                type="email"
-                name="email"
-                id="email"
-                autoComplete="email"
-                value={userAccount ? userAccount.email : ""}
-                readOnly
-                className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-base rounded-lg block w-full p-2.5"
-              />
-            </div>
-            <div className="flex flex-row space-x-5">
-              <button
-                className="bg-red-600 hover:bg-red-700 text-white font-semibold py-2 px-4 rounded-lg"
-                onClick={handleBackButton}
-              >
-                Back
-              </button>
-            </div>
-          </div>
+                {/* Email Address */}
+                <div className="flex flex-col">
+                  <label className="block text-lg mb-1 font-semibold text-gray-900">
+                    Email Address:
+                  </label>
+                  <input
+                    type="email"
+                    name="email"
+                    id="email"
+                    autoComplete="email"
+                    value={userAccount ? userAccount.email : ""}
+                    readOnly
+                    className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-base rounded-lg block w-full p-2.5"
+                  />
+                </div>
+                <div className="flex flex-row space-x-5">
+                  <button
+                    className="bg-red-600 hover:bg-red-700 text-white font-semibold py-2 px-4 rounded-lg"
+                    onClick={handleBackButton}
+                  >
+                    Back
+                  </button>
+                </div>
+              </div>
+            </>
+          )}
         </div>
       </div>
     </div>

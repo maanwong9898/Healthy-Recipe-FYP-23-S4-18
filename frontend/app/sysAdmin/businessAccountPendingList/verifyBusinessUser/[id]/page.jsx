@@ -15,6 +15,7 @@ const ViewBusinessUser = ({ params }) => {
   const [success, setSuccess] = useState("");
   const [actionCompleted, setActionCompleted] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
+  const [isChecking, setIsChecking] = useState(true);
 
   useEffect(() => {
     if (
@@ -26,6 +27,7 @@ const ViewBusinessUser = ({ params }) => {
       console.log("Redirecting to home page");
       router.push("/");
     } else {
+      setIsChecking(false);
       const fetchData = async () => {
         // Fetch data
         try {
@@ -48,8 +50,8 @@ const ViewBusinessUser = ({ params }) => {
     }
   }, []);
 
-  if (isLoading) {
-    return <div>Loading...</div>;
+  if (isChecking) {
+    return <div>Checking...</div>;
   }
 
   const handleApproveAccount = async (id) => {
@@ -106,151 +108,163 @@ const ViewBusinessUser = ({ params }) => {
           <h1 className="text-3xl lg:text-4xl font-bold leading-tight tracking-tight text-center text-gray-900 mb-8">
             Business User Details
           </h1>
-          <div className="space-y-6 md:space-y-5 lg:space-y-3">
-            {/* Username */}
-            <div className="flex flex-col">
-              <label className="font-medium text-base mb-1">Username:</label>
-              <input
-                type="text"
-                name="username"
-                id="username"
-                autoComplete="username"
-                value={userAccount ? userAccount.username : ""}
-                readOnly
-                className="bg-gray-200 border border-gray-300 text-gray-900 sm:text-sm rounded-lg p-2.5 w-full"
-              />
-            </div>
-            {/* FullName */}
-            <div className="flex flex-col">
-              <label className="font-medium text-base mb-1">Name:</label>
-              <input
-                type="text"
-                name="name"
-                id="name"
-                autoComplete="name"
-                value={userAccount ? userAccount.fullName : ""}
-                readOnly
-                className="bg-gray-200 border border-gray-300 text-gray-900 sm:text-sm rounded-lg p-2.5 w-full"
-              />
-            </div>
-            {/* Contact Number */}
-            <div className="flex flex-col">
-              <label className="font-medium text-base mb-1">
-                Contact Number:
-              </label>
-              <input
-                type="text"
-                name="contactNumber"
-                id="contactNumber"
-                autoComplete="contactNumber"
-                value={userAccount ? userAccount.contactNumber : ""}
-                readOnly
-                className="bg-gray-200 border border-gray-300 text-gray-900 sm:text-sm rounded-lg p-2.5 w-full"
-              />
-            </div>
-            {/* Email Address */}
-            <div className="flex flex-col">
-              <label className="font-medium text-base mb-1">
-                Email Address:
-              </label>
-              <input
-                type="email"
-                name="email"
-                id="email"
-                autoComplete="email"
-                value={userAccount ? userAccount.email : ""}
-                readOnly
-                className="bg-gray-200 border border-gray-300 text-gray-900 sm:text-sm rounded-lg p-2.5 w-full"
-              />
-            </div>
-            {/* Company Name */}
-            <div className="flex flex-col">
-              <label className="font-medium text-base mb-1">
-                Company Name:
-              </label>
-              <input
-                type="text"
-                name="companyName"
-                id="companyName"
-                autoComplete="companyName"
-                value={userAccount ? userAccount.companyName : ""}
-                readOnly
-                className="bg-gray-200 border border-gray-300 text-gray-900 sm:text-sm rounded-lg p-2.5 w-full"
-              />
-            </div>
-            {/* Company Address */}
-            <div className="flex flex-col">
-              <label className="font-medium text-base mb-1">
-                Company Address:
-              </label>
-              <input
-                type="text"
-                name="companyAddress"
-                id="companyAddress"
-                autoComplete="companyAddress"
-                value={userAccount ? userAccount.companyAddress : ""}
-                readOnly
-                className="bg-gray-200 border border-gray-300 text-gray-900 sm:text-sm rounded-lg p-2.5 w-full"
-              />
-            </div>
-            {/* Postal Code */}
-            <div className="flex flex-col">
-              <label className="font-medium text-base mb-1">Postal Code:</label>
-              <input
-                type="text"
-                name="postalCode"
-                id="postalCode"
-                autoComplete="postalCode"
-                value={userAccount ? userAccount.postalCode : ""}
-                readOnly
-                className="bg-gray-200 border border-gray-300 text-gray-900 sm:text-sm rounded-lg p-2.5 w-full"
-              />
-            </div>
-            {/* UEN */}
-            <div className="flex flex-col">
-              <label className="font-medium text-base mb-1">UEN:</label>
-              <input
-                type="text"
-                name="uen"
-                id="uen"
-                autoComplete="uen"
-                value={userAccount ? userAccount.uen : ""}
-                readOnly
-                className="bg-gray-200 border border-gray-300 text-gray-900 sm:text-sm rounded-lg p-2.5 w-full"
-              />
-            </div>
-            {/*Errors*/}
-            {error && (
-              <div className="text-red-500 text-base font-medium">{error}</div>
-            )}
-            {/*Success*/}
-            {success && (
-              <div className="text-green-500 text-base font-medium">
-                {success}
+          {isLoading ? (
+            <div>Loading...</div>
+          ) : (
+            <>
+              <div className="space-y-6 md:space-y-5 lg:space-y-3">
+                {/* Username */}
+                <div className="flex flex-col">
+                  <label className="font-medium text-base mb-1">
+                    Username:
+                  </label>
+                  <input
+                    type="text"
+                    name="username"
+                    id="username"
+                    autoComplete="username"
+                    value={userAccount ? userAccount.username : ""}
+                    readOnly
+                    className="bg-gray-200 border border-gray-300 text-gray-900 sm:text-sm rounded-lg p-2.5 w-full"
+                  />
+                </div>
+                {/* FullName */}
+                <div className="flex flex-col">
+                  <label className="font-medium text-base mb-1">Name:</label>
+                  <input
+                    type="text"
+                    name="name"
+                    id="name"
+                    autoComplete="name"
+                    value={userAccount ? userAccount.fullName : ""}
+                    readOnly
+                    className="bg-gray-200 border border-gray-300 text-gray-900 sm:text-sm rounded-lg p-2.5 w-full"
+                  />
+                </div>
+                {/* Contact Number */}
+                <div className="flex flex-col">
+                  <label className="font-medium text-base mb-1">
+                    Contact Number:
+                  </label>
+                  <input
+                    type="text"
+                    name="contactNumber"
+                    id="contactNumber"
+                    autoComplete="contactNumber"
+                    value={userAccount ? userAccount.contactNumber : ""}
+                    readOnly
+                    className="bg-gray-200 border border-gray-300 text-gray-900 sm:text-sm rounded-lg p-2.5 w-full"
+                  />
+                </div>
+                {/* Email Address */}
+                <div className="flex flex-col">
+                  <label className="font-medium text-base mb-1">
+                    Email Address:
+                  </label>
+                  <input
+                    type="email"
+                    name="email"
+                    id="email"
+                    autoComplete="email"
+                    value={userAccount ? userAccount.email : ""}
+                    readOnly
+                    className="bg-gray-200 border border-gray-300 text-gray-900 sm:text-sm rounded-lg p-2.5 w-full"
+                  />
+                </div>
+                {/* Company Name */}
+                <div className="flex flex-col">
+                  <label className="font-medium text-base mb-1">
+                    Company Name:
+                  </label>
+                  <input
+                    type="text"
+                    name="companyName"
+                    id="companyName"
+                    autoComplete="companyName"
+                    value={userAccount ? userAccount.companyName : ""}
+                    readOnly
+                    className="bg-gray-200 border border-gray-300 text-gray-900 sm:text-sm rounded-lg p-2.5 w-full"
+                  />
+                </div>
+                {/* Company Address */}
+                <div className="flex flex-col">
+                  <label className="font-medium text-base mb-1">
+                    Company Address:
+                  </label>
+                  <input
+                    type="text"
+                    name="companyAddress"
+                    id="companyAddress"
+                    autoComplete="companyAddress"
+                    value={userAccount ? userAccount.companyAddress : ""}
+                    readOnly
+                    className="bg-gray-200 border border-gray-300 text-gray-900 sm:text-sm rounded-lg p-2.5 w-full"
+                  />
+                </div>
+                {/* Postal Code */}
+                <div className="flex flex-col">
+                  <label className="font-medium text-base mb-1">
+                    Postal Code:
+                  </label>
+                  <input
+                    type="text"
+                    name="postalCode"
+                    id="postalCode"
+                    autoComplete="postalCode"
+                    value={userAccount ? userAccount.postalCode : ""}
+                    readOnly
+                    className="bg-gray-200 border border-gray-300 text-gray-900 sm:text-sm rounded-lg p-2.5 w-full"
+                  />
+                </div>
+                {/* UEN */}
+                <div className="flex flex-col">
+                  <label className="font-medium text-base mb-1">UEN:</label>
+                  <input
+                    type="text"
+                    name="uen"
+                    id="uen"
+                    autoComplete="uen"
+                    value={userAccount ? userAccount.uen : ""}
+                    readOnly
+                    className="bg-gray-200 border border-gray-300 text-gray-900 sm:text-sm rounded-lg p-2.5 w-full"
+                  />
+                </div>
+                {/*Errors*/}
+                {error && (
+                  <div className="text-red-500 text-base font-medium">
+                    {error}
+                  </div>
+                )}
+                {/*Success*/}
+                {success && (
+                  <div className="text-green-500 text-base font-medium">
+                    {success}
+                  </div>
+                )}
+                {/* Buttons */}
+                <div className="flex space-x-5 justify-center mt-5">
+                  <div className="flex-1">
+                    <button
+                      onClick={() => handleRejectAccount(userAccount.id)}
+                      disabled={actionCompleted}
+                      className="group relative w-full flex justify-center py-2 px-4 border-2 border-red-600 text-md font-medium rounded-lg hover:bg-red-700 hover:text-white text-red-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500"
+                    >
+                      Reject
+                    </button>
+                  </div>
+                  <div className="flex-1">
+                    <button
+                      onClick={() => handleApproveAccount(userAccount.id)}
+                      disabled={actionCompleted}
+                      className="group relative w-full flex justify-center py-2 px-4 border-2 border-transparent text-md font-medium rounded-lg text-white bg-emerald-600 hover:bg-emerald-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500"
+                    >
+                      Approve
+                    </button>
+                  </div>
+                </div>
               </div>
-            )}
-            {/* Buttons */}
-            <div className="flex space-x-5 justify-center mt-5">
-              <div className="flex-1">
-                <button
-                  onClick={() => handleRejectAccount(userAccount.id)}
-                  disabled={actionCompleted}
-                  className="group relative w-full flex justify-center py-2 px-4 border-2 border-red-600 text-md font-medium rounded-lg hover:bg-red-700 hover:text-white text-red-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500"
-                >
-                  Reject
-                </button>
-              </div>
-              <div className="flex-1">
-                <button
-                  onClick={() => handleApproveAccount(userAccount.id)}
-                  disabled={actionCompleted}
-                  className="group relative w-full flex justify-center py-2 px-4 border-2 border-transparent text-md font-medium rounded-lg text-white bg-emerald-600 hover:bg-emerald-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500"
-                >
-                  Approve
-                </button>
-              </div>
-            </div>
-          </div>
+            </>
+          )}
         </div>
       </div>
     </div>

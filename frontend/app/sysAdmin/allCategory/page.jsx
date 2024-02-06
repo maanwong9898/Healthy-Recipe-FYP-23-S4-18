@@ -14,6 +14,7 @@ const AllCategories = () => {
   const [editedSubcategoryName, setEditedSubcategoryName] = useState("");
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(true);
+  const [isChecking, setIsChecking] = useState(true);
 
   useEffect(() => {
     if (
@@ -25,12 +26,13 @@ const AllCategories = () => {
       console.log("Redirecting to home page");
       router.push("/");
     } else {
+      setIsChecking(false);
       setIsLoading(false);
     }
   }, []);
 
-  if (isLoading) {
-    return <div>Loading...</div>;
+  if (isChecking) {
+    return <div>Checking...</div>;
   }
 
   // Mapping of categories to their respective API endpoints (for fetching subcategories)
@@ -186,115 +188,127 @@ const AllCategories = () => {
       <h1 className="text-3xl lg:text-5xl text-gray-900 p-3 mb-4 font-bold text-center sm:text-center">
         Category Management
       </h1>
-      <h1 className="text-xl lg:text-2xl font-medium tracking-normal font-sans mb-2">
-        Select a Category
-      </h1>
-      <select
-        value={selectedCategory}
-        onChange={handleCategoryChange}
-        className="p-2 rounded-lg border lg:w-72 md:w-72 mb-4"
-      >
-        <option value="">-- Select a Category --</option>
-        {categories.map((categoryKey) => (
-          <option key={categoryKey} value={categoryKey}>
-            {formatDisplayName(categoryKey)}
-          </option>
-        ))}{" "}
-      </select>
-
-      {selectedCategory && !isHealthGoals && (
-        <div className="flex items-center mb-10">
-          <input
-            type="text"
-            value={newSubcategoryName}
-            onChange={(e) => setNewSubcategoryName(e.target.value)}
-            className="mr-2 p-2 rounded-lg border w-full md:w-auto"
-            placeholder="New Subcategory Name"
-          />
-          <button
-            onClick={handleCreateSubcategory}
-            className="bg-blue-600 hover:bg-blue-700 text-white font-semibold px-4 py-1.5 rounded-full"
+      {isLoading ? (
+        <div>Loading...</div>
+      ) : (
+        <>
+          <h1 className="text-xl lg:text-2xl font-medium tracking-normal font-sans mb-2">
+            Select a Category
+          </h1>
+          <select
+            value={selectedCategory}
+            onChange={handleCategoryChange}
+            className="p-2 rounded-lg border lg:w-72 md:w-72 mb-4"
           >
-            Create
-          </button>
-        </div>
-      )}
-      <h2 className="text-2xl font-medium font-sans capitalize mb-5 ">
-        {formatDisplayName(selectedCategory)} Category
-      </h2>
+            <option value="">-- Select a Category --</option>
+            {categories.map((categoryKey) => (
+              <option key={categoryKey} value={categoryKey}>
+                {formatDisplayName(categoryKey)}
+              </option>
+            ))}{" "}
+          </select>
 
-      {/* Table */}
-      <div className="rounded-lg">
-        <table className="w-2/5 rounded-lg border-zinc-200 border-2">
-          <thead className="bg-zinc-700 font-normal text-white border-gray-800 border-2">
-            <tr className="text-center">
-              <th className="px-3 py-2 text-xl">Subcategories</th>
-              <th className="px-3 py-2 text-xl"></th>
-              <th className="px-3 py-2 text-xl"></th>
-            </tr>
-          </thead>
-          <tbody>
-            {subcategories.map((subcategory) => (
-              <tr
-                key={subcategory.id}
-                className={`bg-white border-b ${
-                  editingSubcategoryId === subcategory.id
-                    ? "p-2 rounded border-2 mr-2"
-                    : ""
-                }`}
+          {selectedCategory && !isHealthGoals && (
+            <div className="flex items-center mb-10">
+              <input
+                type="text"
+                value={newSubcategoryName}
+                onChange={(e) => setNewSubcategoryName(e.target.value)}
+                className="mr-2 p-2 rounded-lg border w-full md:w-auto"
+                placeholder="New Subcategory Name"
+              />
+              <button
+                onClick={handleCreateSubcategory}
+                className="bg-blue-600 hover:bg-blue-700 text-white font-semibold px-4 py-1.5 rounded-full"
               >
-                <td className="px-3 py-2 text-base text-center">
-                  {editingSubcategoryId === subcategory.id ? (
-                    <input
-                      type="text"
-                      value={editedSubcategoryName}
-                      onChange={(e) => setEditedSubcategoryName(e.target.value)}
-                      className="p-2 rounded-lg border"
-                    />
-                  ) : (
-                    subcategory.subcategoryName
-                  )}
-                </td>
-                <td className="px-3 py-2 text-base text-center">
-                  {!isHealthGoals &&
-                    editingSubcategoryId === subcategory.id && (
-                      <button
-                        onClick={() => handleSaveSubcategory(subcategory.id)}
-                        className="text-white font-bold bg-blue-600 hover:bg-blue-700 rounded-lg text-base px-5 py-2 ml-2 mr-2 text-center"
-                      >
-                        Save
-                      </button>
-                    )}
-                  {!isHealthGoals &&
-                    editingSubcategoryId !== subcategory.id && (
-                      <button
-                        onClick={() =>
-                          handleEditSubcategory(
-                            subcategory.id,
-                            subcategory.subcategoryName
-                          )
-                        }
-                        className="text-white font-bold bg-slate-700 hover:bg-slate-800 rounded-lg text-base px-5 py-2 ml-2 mr-2 text-center"
-                      >
-                        Edit
-                      </button>
-                    )}
-                </td>
-                <td className="px-3 py-2 text-base text-center">
-                  {!isHealthGoals && (
-                    <button
-                      onClick={() => handleDeleteSubcategory(subcategory.id)}
-                      className="text-white font-bold bg-red-600 hover:bg-red-700 rounded-lg text-base px-5 py-2 ml-2 mr-2 text-center"
-                    >
-                      Delete
-                    </button>
-                  )}
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
+                Create
+              </button>
+            </div>
+          )}
+          <h2 className="text-2xl font-medium font-sans capitalize mb-5 ">
+            {formatDisplayName(selectedCategory)} Category
+          </h2>
+
+          {/* Table */}
+          <div className="rounded-lg">
+            <table className="w-2/5 rounded-lg border-zinc-200 border-2">
+              <thead className="bg-zinc-700 font-normal text-white border-gray-800 border-2">
+                <tr className="text-center">
+                  <th className="px-3 py-2 text-xl">Subcategories</th>
+                  <th className="px-3 py-2 text-xl"></th>
+                  <th className="px-3 py-2 text-xl"></th>
+                </tr>
+              </thead>
+              <tbody>
+                {subcategories.map((subcategory) => (
+                  <tr
+                    key={subcategory.id}
+                    className={`bg-white border-b ${
+                      editingSubcategoryId === subcategory.id
+                        ? "p-2 rounded border-2 mr-2"
+                        : ""
+                    }`}
+                  >
+                    <td className="px-3 py-2 text-base text-center">
+                      {editingSubcategoryId === subcategory.id ? (
+                        <input
+                          type="text"
+                          value={editedSubcategoryName}
+                          onChange={(e) =>
+                            setEditedSubcategoryName(e.target.value)
+                          }
+                          className="p-2 rounded-lg border"
+                        />
+                      ) : (
+                        subcategory.subcategoryName
+                      )}
+                    </td>
+                    <td className="px-3 py-2 text-base text-center">
+                      {!isHealthGoals &&
+                        editingSubcategoryId === subcategory.id && (
+                          <button
+                            onClick={() =>
+                              handleSaveSubcategory(subcategory.id)
+                            }
+                            className="text-white font-bold bg-blue-600 hover:bg-blue-700 rounded-lg text-base px-5 py-2 ml-2 mr-2 text-center"
+                          >
+                            Save
+                          </button>
+                        )}
+                      {!isHealthGoals &&
+                        editingSubcategoryId !== subcategory.id && (
+                          <button
+                            onClick={() =>
+                              handleEditSubcategory(
+                                subcategory.id,
+                                subcategory.subcategoryName
+                              )
+                            }
+                            className="text-white font-bold bg-slate-700 hover:bg-slate-800 rounded-lg text-base px-5 py-2 ml-2 mr-2 text-center"
+                          >
+                            Edit
+                          </button>
+                        )}
+                    </td>
+                    <td className="px-3 py-2 text-base text-center">
+                      {!isHealthGoals && (
+                        <button
+                          onClick={() =>
+                            handleDeleteSubcategory(subcategory.id)
+                          }
+                          className="text-white font-bold bg-red-600 hover:bg-red-700 rounded-lg text-base px-5 py-2 ml-2 mr-2 text-center"
+                        >
+                          Delete
+                        </button>
+                      )}
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </>
+      )}
     </div>
   );
 };

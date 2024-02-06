@@ -72,6 +72,7 @@ const SuspendMealPlan = () => {
   const [ratingsOrder, setRatingsOrder] = useState("HIGHEST");
   const [statusOrder, setStatusOrder] = useState("ACTIVE");
   const [isLoading, setIsLoading] = useState(true);
+  const [isChecking, setIsChecking] = useState(true);
   const [isAuthenticated, setIsAuthenticated] = useState(true); // New state variable
 
   // fetch all business blog posts and categories from backend
@@ -85,6 +86,7 @@ const SuspendMealPlan = () => {
       router.push("/");
       return;
     } else {
+      setIsChecking(false);
       const fetchData = async () => {
         try {
           const fetchedMealPlan = await fetchMealPlans();
@@ -291,11 +293,8 @@ const SuspendMealPlan = () => {
 
   return (
     <div>
-      {isLoading ? (
-        <div className="loading-indicator text-center">
-          <p>Loading...</p>
-          {/* You can replace this with a spinner or any other visual indicator */}
-        </div>
+      {isLoading && isChecking ? (
+        <div>Loading...</div>
       ) : (
         <>
           <div className="px-2 sm:px-5 min-h-screen flex flex-col py-5">

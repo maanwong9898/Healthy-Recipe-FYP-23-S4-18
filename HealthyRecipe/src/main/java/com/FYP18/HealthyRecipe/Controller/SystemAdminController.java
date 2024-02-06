@@ -14,6 +14,7 @@ import com.FYP18.HealthyRecipe.Entity.SystemAdmin;
 import com.FYP18.HealthyRecipe.Entity.User;
 import com.FYP18.HealthyRecipe.Repository.SystemAdminRepository;
 import com.FYP18.HealthyRecipe.Repository.UserRepository;
+import com.FYP18.HealthyRecipe.Service.SystemAdminService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
 
@@ -31,53 +32,57 @@ import org.springframework.web.bind.annotation.RequestBody;
 public class SystemAdminController {
     
     @Autowired
-    private SystemAdminRepository repo;
-
-    @Autowired
-    private UserRepository userRepo;
-
+    private SystemAdminService service; 
     
     @GetMapping("/get")
     public List<SystemAdmin> GetAllSystemAdmins()
     {
-        return repo.findAll();
+        return service.GetAllSystemAdmins();
     } 
     
     @GetMapping("/getAllUsers")
     public List<UserInfoDTO> getDTOs()
     {     
-        return userRepo.getUsersDTO();
+        return service.getDTOs();
     }
 
     @GetMapping("/getUser/{id}")
     public UserInfoDTO getUser(@PathVariable String id)
     {
-        return userRepo.getUserInfoDTO(id);
+        return service.getUser(id);
     }
 
     @PutMapping("/suspend")
     public void suspendUser(@RequestBody User dto)
     {
-        User user = userRepo.findById(dto.getId()).get();
-        user.setEnabled(dto.getEnabled());
-        userRepo.save(user); 
+        service.suspendUser(dto); 
     }
 
     @GetMapping("/getAllUserInfo/{id}")
     public String getUserInfo(@PathVariable String id)
     {
-        try{
-            User user = userRepo.findById(id).get();
-            user.setPassword("");
-            ObjectWriter ow = new ObjectMapper().writer().withDefaultPrettyPrinter();
-            String json = ow.writeValueAsString(user);
-            return json;
-        }
-        catch(Exception e)
-        {
-            e.printStackTrace();
-            return "";
-        }
+        return service.getUserInfo(id); 
     }
-    
+
+     
+    @GetMapping("/findTotalRecipeCount")
+    public Integer findTotalRecipeCount()
+    {
+        return service.findTotalRecipeCount();
+    }
+    @GetMapping("/findTotalBlogCount")
+    public Integer findTotalBlogCount()
+    {
+        return service.findTotalBlogCount();
+    }
+    @GetMapping("/findTotalMealPlanCount")
+    public Integer findTotalMealPlanCount()
+    {
+        return service.findTotalMealPlanCount();
+    }
+    @GetMapping("/findTotalEducationalContentCount")
+    public Integer findTotalEducationalContentCount()
+    {
+        return service.findTotalEducationalContentCount();
+    }
 }

@@ -43,7 +43,9 @@ public interface BlogRepository extends JpaRepository<Blog, Long>{
     @Query(value="SELECT COUNT(r) AS count FROM Blog r WHERE r.userID.id = :id")
     Integer findCountById(@Param("id") String id);
 
-
+    @Query(value="SELECT COUNT(r) AS count FROM Blog r")
+    Integer findTotalBlogCount();
+    
     @Modifying
     @Transactional
     @Query("SELECT b FROM Blog b WHERE b.userID.id = :userId")

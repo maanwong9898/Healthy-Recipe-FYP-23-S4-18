@@ -53,7 +53,11 @@ public interface RecipeRepository extends JpaRepository<Recipe, Long> {
 
     @Query(value = "SELECT COUNT(r) AS count FROM Recipe r WHERE r.userID.id = :id")
     Integer findCountById(@Param("id") String id);
-
+  
+    @Query(value="SELECT COUNT(r) AS count FROM Recipe r")
+    Integer findTotalRecipeCount();
+    
+    
     // @Query(value="SELECT r.userID.id AS id, COUNT(r) AS count, 'Recipe' AS type
     // FROM Recipe r WHERE r.userID.id = :id")
     // List<TypeCountIdRequest> findCountById(@Param("id") String id);

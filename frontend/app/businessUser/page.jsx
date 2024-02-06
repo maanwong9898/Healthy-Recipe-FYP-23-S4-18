@@ -39,7 +39,6 @@ const BusinessUserHomePage = () => {
         router.push("/");
         return;
       }
-
       try {
         const userId = SecureStorage.getItem("userId");
         const token = SecureStorage.getItem("token");
@@ -48,15 +47,15 @@ const BusinessUserHomePage = () => {
         };
 
         const blogPostsResponse = await axiosInterceptorInstance.get(
-          "/blog/findByUserId/" + userId,
+          "/businessUser/findBlogCountById/" + userId,
           config
         );
         const recipesResponse = await axiosInterceptorInstance.get(
-          "/recipe/findByUserId/" + userId,
+          "/businessUser/findRecipeCountById/" + userId,
           config
         );
         const educationalContentResponse = await axiosInterceptorInstance.get(
-          "/educationalContent/findByUserId/" + userId,
+          "/businessUser/findEduCountById/" + userId,
           config
         );
 
@@ -118,8 +117,12 @@ const BusinessUserHomePage = () => {
     router.push("/businessUser/businessBlogPost/createBusinessBlogPost");
   };
 
-  const handleViewBlogPost = () => {
+  const handleViewMyBlogPost = () => {
     router.push("/businessUser/businessBlogPost");
+  };
+
+  const handleViewBlogPost = () => {
+    router.push("/businessUser/businessBlogPost/viewAllBusinessBlogPost");
   };
 
   // The button under recipe will redirect to corresponding page
@@ -172,7 +175,7 @@ const BusinessUserHomePage = () => {
                 Total Recipes
               </p>
               <h4 className="mt-3 block tracking-normal font-sans text-2xl font-semibold text-gray-900">
-                {recipes ? recipes.length : 0}
+                {recipes}
               </h4>
             </div>
           </div>
@@ -193,7 +196,7 @@ const BusinessUserHomePage = () => {
                 Total Blogs
               </p>
               <h4 className="mt-3 block tracking-normal font-sans text-2xl font-semibold text-gray-900">
-                {businessBlogPost ? businessBlogPost.length : 0}
+                {businessBlogPost}
               </h4>
             </div>
           </div>
@@ -214,7 +217,7 @@ const BusinessUserHomePage = () => {
                 Total Educational Contents
               </p>
               <h4 className="mt-3 block tracking-normal font-sans text-2xl font-semibold text-gray-900">
-                {educationalContent ? educationalContent.length : 0}
+                {educationalContent}
               </h4>
             </div>
           </div>
@@ -250,7 +253,7 @@ const BusinessUserHomePage = () => {
                 </div>
                 <div className="flex items-center justify-center">
                   <button
-                    className="px-6 py-2 mb-8 font-medium bg-indigo-500 text-white w-full transition-all shadow-[3px_3px_0px_black] hover:shadow-none hover:translate-x-[3px] hover:translate-y-[3px]"
+                    className="px-6 py-2 font-medium bg-indigo-500 text-white w-full transition-all shadow-[3px_3px_0px_black] hover:shadow-none hover:translate-x-[3px] hover:translate-y-[3px]"
                     onClick={handleViewRecipes}
                   >
                     View All Recipes
@@ -274,7 +277,15 @@ const BusinessUserHomePage = () => {
                 </div>
                 <div className="flex items-center justify-center">
                   <button
-                    className="px-6 py-2 mb-8 font-medium bg-indigo-500 text-white w-full transition-all shadow-[3px_3px_0px_black] hover:shadow-none hover:translate-x-[3px] hover:translate-y-[3px]"
+                    className="px-6 py-2 font-medium bg-indigo-500 text-white w-full transition-all shadow-[3px_3px_0px_black] hover:shadow-none hover:translate-x-[3px] hover:translate-y-[3px]"
+                    onClick={handleViewMyBlogPost}
+                  >
+                    View My Blog Posts
+                  </button>
+                </div>
+                <div className="flex items-center justify-center">
+                  <button
+                    className="px-6 py-2 font-medium bg-indigo-500 text-white w-full transition-all shadow-[3px_3px_0px_black] hover:shadow-none hover:translate-x-[3px] hover:translate-y-[3px]"
                     onClick={handleViewBlogPost}
                   >
                     View All Blog Posts

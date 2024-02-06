@@ -211,6 +211,34 @@ VALUES
         'https://assets-global.website-files.com/623de5fee0c46d7bf3a5ff45/651c7825f0b63a838180c5a0_iStock-1433432507.jpg',
         'Designed by Shutterstock',  -- img_title
         '1' -- userid
+    ),
+    (
+        15,
+        'Shoshana Pritzker',
+        'High Protein Meal PLan',
+        TRUE,
+        'Even with a high-protein diet, it can be difficult to meet your daily protein requirements. Poultry and meat can get boring very quickly. Though protein is the primary focus, balance is essential for a high-protein diet.',
+        'There are no carbohydrate or fat intake guidelines when following a high-protein diet. You might feel constrained and dissatisfied if you restrict either. As such, begin with a carb-to-fat ratio that is balanced, as well as a high-protein diet.',
+        'Indulge in a high-protein diet plan designed to feed your body and promote muscular growth. This meal plan provides a range of dishes high in protein to fulfill your appetite and meet your dietary requirements.',
+        '2023-09-29',
+        1, -- weight gain
+        'https://www.verywellfit.com/thmb/213N4bvA4MKDuYWOolfmzD__AFQ=/750x0/filters:no_upscale():max_bytes(150000):strip_icc():format(webp)/VWFit-Meal-Plan-Journey-7-Day-High-Protein-Meal-Plan-edit-2b3cf8e0d09a440f9fa12eb569815456.jpg',
+        'Designed by Verywell',  -- img_title
+        '1' -- userid
+    ),
+    (
+        16,
+        'Jesse Lane Lee',
+        'Drop Sugar, Lose the Weight Meal PLan',
+        TRUE,
+        'Get started on your weight-loss journey with this one-week plan that eliminates sugar and sweeteners while keeping calories at 1,300 or fewer each day.',
+        'One of the most difficult aspects of losing weight is that sugar is everywhere and in everything. Your blood sugar and, consequently, your weight are affected not only by cane sugar but also by an overall dependence on sweeteners.',
+        'Consider adopting a no-sugar lifestyle to help you lose weight more quickly. With this diet, you can experience what it is like to lessen your dependency on sugar by eliminating all sweets, including natural ones.',
+        '2023-11-09',
+        3, -- weight loss
+        'https://cdn.cleaneatingmag.com/wp-content/uploads/2017/05/spinach-cauli-rice-salad-with-cashew-dressing-69-web-1.jpg?crop=535:301&width=1070&enable=upscale',
+        'Designed by cleaneating',  -- img_title
+        '1' -- userid
     );
     
     
@@ -259,4 +287,13 @@ values
     (12, 43),
     (13, 46),
     (13, 47),
-    (13, 48);
+    (13, 48),
+    (14, 51),
+    (14, 52),
+    (14, 53),
+    (15, 54),
+    (15, 55),
+    (15, 56),
+    (16, 61),
+    (16, 62),
+    (16, 63);

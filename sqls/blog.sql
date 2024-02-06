@@ -342,7 +342,118 @@ VALUES
         'https://images.unsplash.com/photo-1612031736184-77bc60f94c06?q=80&w=2069&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
         'Author: Mike Gattorna, Designed by Unsplash',  -- img_title
         1 -- blog_type_id cookbook
-    ),                                                                  
+    ),   
+    (
+        '31',
+        '2023-03-08 12:00:00', 
+        'HealthFoodie',
+        'Healthy Meal Prep Cookbook', -- Title
+        'Dive into the world of meal prepping with our cookbook featuring nutritious and easy-to-make recipes. Simplify your meal planning and enjoy delicious, homemade meals every day.',
+        1, -- userId 
+        'https://images.unsplash.com/photo-1495546968767-f0573cca821e?q=80&w=1931&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+        'Author: Dan Gold, Designed by Unsplash',  -- img_title
+        1 -- blog_type_id cookbook
+    ),  
+    (
+        '32',
+        '2023-02-08 12:00:00', 
+        'WorldCuisine',
+        'Global Flavors: International Cuisine Cookbook', -- Title
+        'Embark on a culinary journey around the world with our cookbook featuring diverse and authentic recipes from various cultures. Experience the rich flavors and aromas of international cuisine from the comfort of your kitchen.',
+        1, -- userId 
+        'https://img.freepik.com/free-vector/poster-with-world-food-day-concept-design-advertise-leaflet-watercolor_83728-4276.jpg?w=740&t=st=1707225167~exp=1707225767~hmac=82a4842360eccbcb4bea0973dbeca1278a609ab612ff9708cd12fe81d3f204df',
+        'Author: photographeeasia, Designed by Freepik',  -- img_title
+        1 -- blog_type_id cookbook
+    ),  
+    (
+        '33',
+        '2023-02-08 12:00:00', 
+        'ChefEssentials',
+        'Essential Kitchen Gadgets for Home Chefs', -- Title
+        'Upgrade your kitchen with our selection of smart appliances designed to make cooking and meal preparation easier than ever. From WiFi-enabled ovens to smart refrigerators, revolutionize your kitchen today!',
+        1, -- userId 
+        'https://images.unsplash.com/photo-1541123437800-1bb1317badc2?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+        'Author: Lotus Design N Print, Designed by Unsplash',  -- img_title
+        2 -- blog_type_id kitchenware
+    ),  
+    (
+        '34',
+        '2023-02-08 12:00:00', 
+        'KitchenGizmos',
+        'Cutting-Edge Kitchen Tools for Modern Homes', -- Title
+        'Discover the latest cutting-edge kitchen tools and gadgets designed to revolutionize your cooking experience. From smart appliances to innovative utensils, equip your kitchen with the best.',
+        1, -- userId 
+        'https://images.unsplash.com/photo-1512914890251-2f96a9b0bbe2?q=80&w=2071&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+        'Author: Frames For Your Heart, Designed by Unsplash',  -- img_title
+        2 -- blog_type_id kitchenware
+    ), 
+    (
+        '35',
+        '2023-02-07 12:00:00', 
+        'HomeAndBeyond',
+        'Organize Your Kitchen: Tips for a Clutter-Free Space', -- Title
+        'Transform your kitchen into a organized haven with these practical tips. From efficient storage solutions to decluttering strategies, create a space that inspires creativity and makes every cooking experience a joy.',
+        1, -- userId 
+        'https://images.unsplash.com/photo-1556910096-6f5e72db6803?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+        'Author: Edgar Castrejon, Designed by Unsplash',  -- img_title
+         3 -- blog_type_id Miscellaneous
+    ),
+    ( 
+        '36'
+        '2023-04-20 10:00:00',
+        'KitchenAdventures',
+        '10 Creative Ways to Use Leftover Ingredients',
+        'Reduce food waste and get creative in the kitchen with these 10 ideas for using leftover ingredients. From homemade stocks to inventive salads, make the most out of every ingredient!',
+        1, -- userId 
+        'https://img.freepik.com/free-photo/salad-from-tomatoes-cucumber-red-onions-lettuce-leaves-healthy-summer-vitamin-menu-vegan-vegetable-food-vegetarian-dinner-table_2829-6473.jpg?w=996&t=st=1707225891~exp=1707226491~hmac=5c8bc78a72585f98fc92d5ee1264eec2896c502277c9e9311c6e2e12808de4ce',
+        'Author: timolina, Designed by Freepik',
+        3 -- blog_type_id for miscellaneous                                                                                                                                                       
+    ),
+    ( 
+        '37'
+        '2023-04-20 10:00:00',
+        'TastyTreats',
+        'Quick & Easy Weeknight Dinners Cookbook',
+        'Simplify your weeknight meals with our collection of quick and easy dinner recipes. From one-pan wonders to simple stir-fries, discover delicious meals that can be whipped up in no time.',
+        1, -- userId 
+        'https://images.unsplash.com/photo-1533777857889-4be7c70b33f7?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+        'Author: Pablo Merchán Montes, Designed by Unsplash',
+        1 -- blog_type_id cookbook                                                                                                                                                      
+    ),
+    ( 
+        '38'
+        '2023-04-21 10:00:00',
+        'HealthyEats',
+        'Plant-Based Cooking: A Beginner Guide',
+        'Discover the world of plant-based cooking with our guide. Learn how to create flavorful and nutritious meals using fruits, vegetables, grains, and legumes.',
+        1, -- userId 
+        'https://images.unsplash.com/photo-1512621776951-a57141f2eefd?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+        'Author: Anna Pelzer, Designed by Unsplash',
+        1 -- blog_type_id cookbook                                                                                                                                                      
+    ),
+    ( 
+        '39'
+        '2023-05-21 10:00:00',
+        'ChefCreations',
+        'Scrumptious Seafood Recipes for Summer Gatherings',
+        'Impress your guests with our collection of scrumptious seafood recipes perfect for summer gatherings. From grilled shrimp skewers to refreshing ceviche, elevate your outdoor dining experience with these delicious dishes!',
+        1, -- userId 
+        'https://plus.unsplash.com/premium_photo-1693222065169-e447289b609d?q=80&w=1887&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+        'Author: Karolina Grabowska, Designed by Unsplash',
+        1 -- blog_type_id cookbook                                                                                                                                                      
+    ),
+    ( 
+        '40'
+        '2023-05-21 10:00:00',
+        'KitchenKorner',
+        'Upgrade Your Culinary Space with Modern Kitchen Gadgets',
+        'Transform your kitchen into a modern culinary haven with our selection of innovative kitchen gadgets. From smart sous vide machines to high-speed blenders, discover the latest tools to enhance your cooking experience!',
+        1, -- userId 
+        'https://img.freepik.com/free-photo/metal-food-blender-close-up-with-fresh-exotic-tropic-fruits-it-kitchen-background-with-empty-space-blender-wooden-table-kitchen_639032-170.jpg?w=996&t=st=1707227020~exp=1707227620~hmac=a29ec81d2222ff77fc36eb36b3c0f3e1af9c530c0b94daac0e3abf4bc83ae10b',
+        'Author: YuliiaKa, Designed by Freepik',
+        2 -- blog_type_id kitchenware                                                                                                                                                    
+    ),
+
 
     --  Blog review rating
 INSERT INTO BLOG_REVIEW_RATING 
@@ -389,4 +500,14 @@ VALUE
     ('This is very awesome',                                      5.0, '7', 27),
     ('The blog post is very descriptive and informative.',        5.0, '8', 28),
     ('I love this blog post!',                                    4.0, '9', 29),
-    ('This blog is very useful',                                  5.0, '10', 30);
+    ('This blog is very useful',                                  5.0, '10', 30),
+    ('I love this blog post!',                                    5.0, '12', 31),
+    ('This is very awesome',                                      5.0, '7', 32),
+    ('The blog post is very descriptive and informative.',        5.0, '8', 33),
+    ('I love this blog post!',                                    4.0, '9', 34),
+    ('This blog is very useful',                                  5.0, '10', 35),
+    ('I love this blog post!',                                    5.0, '12', 36),
+    ('This is very awesome',                                      5.0, '7', 37),
+    ('The blog post is very descriptive and informative.',        5.0, '8', 38),
+    ('I love this blog post!',                                    4.0, '9', 39),
+    ('This blog is very useful',                                  5.0, '10', 40);

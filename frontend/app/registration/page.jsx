@@ -9,11 +9,11 @@ const RegistrationSelection = () => {
   return (
     <div>
       <HomeNavbar />
-      <div className="bg-orange-50 min-h-screen py-16">
-        <div className="container mx-auto">
-          <div className="flex flex-col md:flex-row rounded-xl mx-auto bg-white shadow-lg">
+      <div className="min-h-screen py-16">
+        <div className="mx-auto p-6">
+          <div className="grid grid-rows-3 gap-4 lg:grid-cols-3 mx-auto">
             {/* IMG + REGISTER AS USER */}
-            <div className="w-full md:w-1/3 p-4 md:p-10 bg-white h-96 flex flex-col border border-slate-100">
+            <div className="w-full p-4 md:p-10 bg-white h-96 flex flex-col border border-slate-100 rounded-lg shadow-md">
               <div className="text-center mb-4">
                 <h1 className="font-semibold text-2xl">Sign Up as a User</h1>
               </div>
@@ -31,7 +31,7 @@ const RegistrationSelection = () => {
             </div>
 
             {/* IMG + REGISTER AS BUSINESS USER */}
-            <div className="w-full md:w-1/3 p-4 md:p-10 bg-white h-96 flex flex-col border border-slate-100">
+            <div className="w-full p-4 md:p-10 bg-white h-96 flex flex-col border border-slate-100 rounded-lg shadow-md">
               <div className="text-center mb-4">
                 <h1 className="font-semibold text-2xl">
                   Sign Up as a Business User
@@ -51,7 +51,7 @@ const RegistrationSelection = () => {
             </div>
 
             {/* IMG + REGISTER AS NUTRITIONIST */}
-            <div className="w-full md:w-1/3 p-4 md:p-10 h-96 bg-white flex flex-col border border-slate-100">
+            <div className="w-full p-4 md:p-10 bg-white h-96 flex flex-col border border-slate-100 rounded-lg shadow-md">
               <div className="text-center">
                 <h1 className="font-semibold text-2xl">
                   Sign Up as a Nutritionist

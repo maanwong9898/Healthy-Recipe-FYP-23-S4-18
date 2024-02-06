@@ -379,12 +379,9 @@ const UpdateDietaryPreference = () => {
 
                 {/* ALLERGIES AND RESTRICTIONS */}
                 <div className="flex flex-col mb-3.5">
-                  <label
-                    htmlFor="allergyRestriction"
-                    className="font-medium text-base mb-1"
-                  >
+                  <p className="font-medium text-base mb-1">
                     Allergies and Restrictions
-                  </label>
+                  </p>
 
                   <div className="grid lg:grid-cols-4 grid-cols-3 gap-10 w-full lg:w-72">
                     {allergyCategory.map((cat, index) => (

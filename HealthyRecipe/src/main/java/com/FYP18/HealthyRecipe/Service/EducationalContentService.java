@@ -1,6 +1,7 @@
 package com.FYP18.HealthyRecipe.Service;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -11,6 +12,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.FYP18.HealthyRecipe.ObjectToMapConverter;
+import com.FYP18.HealthyRecipe.DTO.MealPlanDTO;
+import com.FYP18.HealthyRecipe.DTO.PopularReviewRatingDTO;
 import com.FYP18.HealthyRecipe.DTO.ReviewRatingDTO;
 import com.FYP18.HealthyRecipe.DTO.UserInfoDTO;
 import com.FYP18.HealthyRecipe.Entity.EducationalContent;
@@ -203,4 +206,16 @@ public class EducationalContentService {
     {
         educationalContentReviewRatingRepository.deleteByEducationalContentId(id.UserID, id.educationalContentID);
     } 
+
+    public List<EducationalContent> getMostPopularEducationalContents()
+    {
+        List<PopularReviewRatingDTO> dto = educationalContentReviewRatingRepository.getMostPopularEducationalContents();
+        List<Long> ids = new ArrayList<>();
+
+        for(PopularReviewRatingDTO id : dto)
+        {
+            ids.add(id.getId());
+        } 
+        return educationalContentRepository.findAllById(ids);
+    }
 }

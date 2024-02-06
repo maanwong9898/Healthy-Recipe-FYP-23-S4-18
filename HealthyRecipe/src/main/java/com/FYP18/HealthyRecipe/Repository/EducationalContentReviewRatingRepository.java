@@ -8,6 +8,7 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.FYP18.HealthyRecipe.DTO.PopularReviewRatingDTO;
 import com.FYP18.HealthyRecipe.DTO.ReviewRatingDTO;
 import com.FYP18.HealthyRecipe.Entity.EducationalContent;
 import com.FYP18.HealthyRecipe.Entity.EducationalContentReviewRating;
@@ -39,6 +40,9 @@ public interface EducationalContentReviewRatingRepository extends JpaRepository<
     ReviewRatingDTO findAverageDTOByEducationalContentId (Long educationalContentId);
     // List<ReviewRatingDTO> findAverageByEducationalContentIds(List<EducationalContent> id);
     
+     @Query("SELECT COUNT(rr) as totalNumber, rr.educationalContentReviewRatingId.educationalContentID as id, AVG(rr.rating) AS averageRatings, AVG(LENGTH(COALESCE(rr.review, ''))) AS averageReviewSize FROM EducationalContentReviewRating rr GROUP BY id")
+    List<PopularReviewRatingDTO> getMostPopularEducationalContents(); 
+
     // List<EducationalContentReviewRating> findByEducationalContentReviewRatingId(EducationalContentReviewRatingId educationalContentReviewRatingId);
     // List<EducationalContent> findByUserID(User userID);
 }

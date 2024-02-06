@@ -12,7 +12,7 @@ import SecureStorage from "react-secure-storage";
 ChartJS.register(ArcElement, Tooltip, Legend);
 
 // Get meal plan that belongs to specific user when logged in
-const fetchMealPlans = async () => {
+const fetchMealPlanCount = async () => {
   const userID = SecureStorage.getItem("userId");
 
   try {
@@ -28,7 +28,7 @@ const fetchMealPlans = async () => {
 };
 
 // Get all recipes available in the databse
-const fetchRecipes = async () => {
+const fetchRecipesCount = async () => {
   try {
     const response = await axiosInterceptorInstance.get(
       "/nutritionist/findRecipeCount"
@@ -41,42 +41,79 @@ const fetchRecipes = async () => {
   }
 };
 
+// Calling dashboard API to get user account information
+const viewUserDashboard = async () => {
+  try {
+    const userId = SecureStorage.getItem("userId");
+    const token = SecureStorage.getItem("token");
+
+    const config = {
+      headers: { Authorization: `Bearer ${token}` },
+    };
+
+    // Make the GET request to the userAndAdmin endpoint
+    const response = await axiosInterceptorInstance.get(
+      "/register/dashboard/" + userId,
+      config
+    );
+
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching user data", error);
+  }
+};
+
+const fetchDietaryPreferences = async () => {
+  try {
+    const response = await axiosInterceptorInstance.get(
+      "/registeredUsers/getDemo"
+    );
+    console.log("Fetched dietary preferences:", response.data);
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching dietary preferences:", error);
+  }
+};
+
 // router path: /nutritionist
 const NutritionistHomePage = () => {
   const router = useRouter();
   const [username, setUsername] = useState("");
   const [userAccount, setUserAccount] = useState("");
-  const [mealPlans, setMealPlans] = useState([]);
-  const [recipes, setRecipes] = useState([]);
+  const [totalMealPlansCount, setTotalMealPlansCount] = useState("");
+  const [totalRecipesCount, setTotalRecipesCount] = useState("");
   const [userDietaryPreferenceCount, setUserDietaryPreferenceCount] = useState(
     []
   );
-
-  // Calling dashboard API to get user account information
-  const viewUserDashboard = async () => {
-    try {
-      const userId = SecureStorage.getItem("userId");
-      const token = SecureStorage.getItem("token");
-
-      const config = {
-        headers: { Authorization: `Bearer ${token}` },
-      };
-
-      // Make the GET request to the userAndAdmin endpoint
-      const response = await axiosInterceptorInstance.get(
-        "/register/dashboard/" + userId,
-        config
-      );
-
-      setUserAccount(response.data);
-      console.log(response.data);
-    } catch (error) {
-      console.error("Error fetching user data", error);
-    }
-  };
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    viewUserDashboard();
+    if (!SecureStorage.getItem("token") || !SecureStorage.getItem("userId")) {
+      SecureStorage.clear();
+      console.log("Redirecting to home page");
+      router.push("/");
+    } else {
+      const fetchData = async () => {
+        try {
+          // Fetch all necessary data
+          const mealPlanCountData = await fetchMealPlanCount();
+          const recipesCountData = await fetchRecipesCount();
+          const userDashboardData = await viewUserDashboard();
+          const dietaryPreferenceData = await fetchDietaryPreferences();
+
+          // Update state with fetched data
+          setTotalMealPlansCount(mealPlanCountData);
+          setTotalRecipesCount(recipesCountData);
+          setUserAccount(userDashboardData);
+          setUserDietaryPreferenceCount(dietaryPreferenceData);
+
+          setIsLoading(false);
+        } catch (error) {
+          console.error("Error fetching data:", error);
+        }
+      };
+      fetchData();
+    }
   }, []);
 
   // set username of current user
@@ -84,41 +121,9 @@ const NutritionistHomePage = () => {
     setUsername(userAccount ? userAccount.username : "");
   }, [userAccount]);
 
-  const fetchDietaryPreferences = async () => {
-    try {
-      const response = await axiosInterceptorInstance.get(
-        "/registeredUsers/getDemo"
-      );
-      console.log("Fetched dietary preferences:", response.data);
-      setUserDietaryPreferenceCount(response.data);
-    } catch (error) {
-      console.error("Error fetching dietary preferences:", error);
-    }
-  };
-
-  useEffect(() => {
-    const fetchMealPlanData = async () => {
-      try {
-        const posts = await fetchMealPlans();
-        setMealPlans(posts); // Set the retrieved meal plans in the state
-      } catch (error) {
-        console.error("Failed to fetch meal plans:", error);
-      }
-    };
-
-    const fetchRecipesData = async () => {
-      try {
-        const getRecipes = await fetchRecipes();
-        setRecipes(getRecipes); // Set the retrieved recipes in the state
-      } catch (error) {
-        console.error("Failed to fetch recipes:", error);
-      }
-    };
-
-    fetchRecipesData();
-    fetchMealPlanData();
-    fetchDietaryPreferences();
-  }, []); // Empty dependency array ensures this runs once after component mounts
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
 
   //Pie chart data for dietary preferences
   const dietaryPreferencePieData = {
@@ -182,7 +187,7 @@ const NutritionistHomePage = () => {
                 Total Recipes Available
               </p>
               <h4 className="mt-3 block tracking-normal font-sans text-2xl font-semibold text-gray-900">
-                {recipes}
+                {totalRecipesCount}
               </h4>
             </div>
           </div>
@@ -203,7 +208,7 @@ const NutritionistHomePage = () => {
                 Total Meal Plans
               </p>
               <h4 className="mt-3 block tracking-normal font-sans text-2xl font-semibold text-gray-900">
-                {mealPlans}
+                {totalMealPlansCount}
               </h4>
             </div>
           </div>

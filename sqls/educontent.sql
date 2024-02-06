@@ -455,6 +455,147 @@ VALUES
         'Designed by Freepik',  -- img_title
         2 -- educational_content_type_id
     ),
+    (
+        '31',
+        '2024-02-25 16:30:00',  -- CreatedDT
+        'webmd',  -- Publisher
+        'Healthy Eating for Weight Loss',  -- Title
+        'Most health experts recommend that you eat a balanced, healthy diet to maintain or to lose weight. But exactly what is a healthy diet?
+        \nIt should include: \nProtein (found in fish, meat, poultry) \nFat (found in animal and dairy products) \nCarbohydrates (found in fruits, vegetables, whole grains) \nVitamins and Minerals \nWater (both in what you drink, and naturally in foods)
+        \nDieting or not, everyone needs a mix of those nutrients, ideally from foods. Fill half your plate with fruits and vegetables. Split the other half between whole grains and lean protein. Stick to your calorie “budget,” because when you are working on losing weight, you need to burn more calories than you eat or drink.',
+        3,
+        'https://img.freepik.com/free-vector/main-food-groups-macronutrients-vector_1308-127916.jpg?w=1060&t=st=1707227650~exp=1707228250~hmac=12d758a1788c0d3d0554c67fc9daed7e833dd0acc7dccd950f75eb2f2356b5b9',
+        'Author: brgfx, Designed by Freepik',  -- img_title
+        1 -- educational_content_type_id
+    ),
+    (
+        '32',
+        '2024-02-25 16:30:00',  -- CreatedDT
+        'webmd',  -- Publisher
+        'Fun Facts About Fruits and Vegetables',  -- Title
+        'Bell Peppers Are Fruits \nSurprised? Scientists define fruit as the part of a plant that develops from a flower and has seeds. So that means bell peppers -- along with squash, cucumbers, and pumpkins -- are fruits. It is up to you whether or not to include any of those items in your next fruit salad.
+        \nBananas Are Berries \nA true berry is a fruit that develops from a single flower and a single ovary. The ovary is the female part of a flower. That means grapes, kiwis, and even bananas are berries. Think about that the next time you peel into a banana.
+        \nPotatoes Top Bananas in Potassium \nWe need potassium to help strengthen our muscles and control our blood pressure. Bananas are high in it, but they arent the best source. Why not try a spud instead? Potatoes have more potassium. They dont have any fat and are a good source of vitamins and iron, too.
+        \nFigs Match Milk in Calcium \nTrying to get more calcium? Instead of pouring another glass of milk, you could reach for the fruit bowl. Figs are high in calcium. A cup of dried ones has as much calcium as the same amount of milk. And unlike the cool drink, figs are also a great source of fiber. But dont overdo it. They pack a lot of sugar and calories.',
+        3,
+        'https://img.freepik.com/free-vector/fruits-berries-colorful-icons-collection_1284-20043.jpg?w=740&t=st=1707228006~exp=1707228606~hmac=95551b0cf671888ea956ab5822108215180ff58760ab50b49bf4ee26ae4a288f',
+        'Author: macrovector, Designed by Freepik',  -- img_title
+        1 -- educational_content_type_id
+    ),
+    (
+        '33',
+        '2024-02-25 16:30:00',  -- CreatedDT
+        'webmd',  -- Publisher
+        'Best Diet Tips Ever - Ways to Stay on Track',  -- Title
+        'Tip No. 1: Drink plenty of water or other calorie-free beverages. \nBefore you tear into that bag of potato chips, drink a glass of water first. People sometimes confuse thirst with hunger, so you can end up eating extra calories when an ice-cold glass of water is really all you needed. If plain water doesnt cut it, try drinking flavored sparkling water or brewing a cup of fruit-infused herbal tea.
+        \nTip No. 2: Be choosy about nighttime snacks. \nMindless eating occurs most frequently after dinner, when you finally sit down and relax. Snacking in front of the TV is one of the easiest ways to throw your diet off course. Either close down the kitchen after a certain hour, or allow yourself a low-calorie snack, like a 100-calorie pack of cookies or a half-cup scoop of low-fat ice cream.
+        \nTip No. 3: Eat protein at every meal. \nProtein is the ultimate fill-me-up food - its more satisfying than carbs or fats and keeps you feeling full for longer. It also helps preserve muscle mass and encourages fat burning. So be sure to incorporate healthy proteins like seafood, lean meat, egg whites, yogurt, cheese, soy, nuts, or beans into your meals and snacks.',
+        3,
+        'https://img.freepik.com/free-photo/healthy-menu-recipe-food-diet_53876-122837.jpg?w=996&t=st=1707228255~exp=1707228855~hmac=cfb5ca41d30cb7dba6735142129e94d9ac331070b45ab6755f6904d0cff7a820',
+        'Author: rawpixel.com, Designed by Freepik',  -- img_title
+        1 -- educational_content_type_id
+    ),
+    (
+        '34',
+        '2024-02-26 16:30:00',  -- CreatedDT
+        'webmd',  -- Publisher
+        'Why Cant I Lose Weight?',  -- Title
+        'You try hard, but that scale wont budge. It is only human nature to wonder if those pounds will ever come off. But dont raise the white flag and chuck your diet just yet. See if one of these sneaky things is secretly messing with your weight loss hopes.
+        \nIs it because I skip breakfast? \nIt could be. When you take a pass on that first meal of the day, it can work against you. You are likely to get hungrier later, so you may overdo it at lunch. Try to eat within an hour of waking up. A high-fiber, protein-packed breakfast can help you feel full, longer. Try cottage cheese with fruit, eggs with whole-wheat toast, or Greek yogurt with a banana.
+        \nDo I eat too close to bedtime? \nA late-night meal can spell trouble for your weight loss plan. It may raise your body temperature, blood sugar, and insulin, which makes it harder for you to burn fat. Try to eat dinner at least 3 hours before you go to sleep. Be careful about snacking after supper. You take in more calories than you realize when you nibble while you watch TV or use the computer. You may also be tempted to eat unhealthy foods like ice cream or potato chips.
+        \nIs it because I am under too much stress? \nIt is possible. It can make you reach for high-calorie, high-fat foods. Your body also tends to store more fat when you are stressed out.',
+        3,
+        'https://images.unsplash.com/photo-1604480132715-bd70038b74df?q=80&w=1836&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+        'Author: Total Shape, Designed by Unsplash',  -- img_title
+        2 -- educational_content_type_id
+    ),
+    (
+        '35',
+        '2024-02-26 16:30:00',  -- CreatedDT
+        'healthline',  -- Publisher
+        'The Definitive Guide to Healthy Grocery Shopping',  -- Title
+        'Before you go \nWhile some people can go grocery shopping without a list or an idea of which meals they will cook during the coming week, most people need some sort of a plan. Bringing along a grocery list or a weekly menu is a good idea if you get easily side-tracked in the store or unsure of where to begin.
+        \nCreating a healthy shopping list \nA grocery list is an essential tool for many shoppers. It can help you stay on task and remind you of the items you need. Plus, studies show that grocery lists may help you make healthier choices while shopping.
+        \nBut what does a “healthy” grocery shopping list include? \nGenerally, a healthy, well-rounded diet should primarily comprise whole, nutrient-dense foods. Foods such as veggies, fruits, protein sources like fish and eggs, beans, nuts, and seeds, these are foods to prioritize on your list.
+        \nPlanning a weekly menu \nIf you prefer, you can bring a weekly menu to the store instead of a regular shopping list. This menu can list which ingredients you need to make the meals you would like to cook the week ahead.',
+        3,
+        'https://img.freepik.com/free-photo/woman-picking-bell-peppers-reusable-bag-ecology-earth-day-thematics_1268-21680.jpg?w=1380&t=st=1707229566~exp=1707230166~hmac=451cc055fff9485580ffe8e17ddc6320e97d2e8c07492985cea1765735496761',
+        'Author: frimufilms, Designed by Freepik',  -- img_title
+        1 -- educational_content_type_id
+    ),
+    (
+        '36',
+        '2024-02-26 16:30:00',  -- CreatedDT
+        'healthline',  -- Publisher
+        'Proven Health Benefits of Dark Chocolate',  -- Title
+        'Eating dark chocolate with high cocoa content in moderation can deliver antioxidants and minerals and may help protect you from heart disease. But it may also contain high amounts of sugar and calories. Dark chocolate is loaded with nutrients that can positively affect your health. Made from the seed of the cacao tree, its one of the best sources of antioxidants you can find. Studies show that dark chocolate can improve your health and lower the risk of heart disease.
+         \nVery nutritious \nIf you buy quality dark chocolate with a high cocoa content, then it is quite nutritious. It contains a decent amount of soluble fiber and is loaded with minerals.
+         \nMay improve blood flow and lower blood pressure \nThe flavanoids in dark chocolate can stimulate the endothelium, the lining of arteries, to produce nitric oxide.One of the functions of NO is to send signals to the arteries to relax, which lowers the resistance to blood flow and therefore reduces blood pressure.
+         \nMay reduce heart disease risk \nThe compounds in dark chocolate appear to be highly protective against the oxidation of LDL. In the long term, this should cause much less cholesterol to lodge in the arteries, resulting in a lower risk of heart disease.',
+        3,
+        'https://img.freepik.com/free-photo/close-up-view-delicious-chocolate-wooden-table_23-2148746668.jpg?w=1380&t=st=1707230131~exp=1707230731~hmac=26c7f680e3d909ddb7447d4d8357558a53c2ff52df45aff90bcb1b9e88bcf711',
+        'Designed by Freepik',  -- img_title
+        1 -- educational_content_type_id
+    ),
+    (
+        '37',
+        '2024-02-26 16:30:00',  -- CreatedDT
+        'healthline',  -- Publisher
+        'Health Benefits of Eating Oats and Oatmeal',  -- Title
+        'Studies show that oats and oatmeal have many health benefits. These include weight loss, lower blood sugar levels, and a reduced risk of heart disease. Oats are among the healthiest grains on earth. They aree a gluten-free whole grain and a great source of important vitamins, minerals, fiber, and antioxidants.
+        \n1. Oats are incredibly nutritious \nThe nutrient composition of oats is well-balanced. They are a good source of carbs and fiber, including the fiber beta-glucan. Oats are also a good source of high quality protein, with a good balance of essential amino acids. Oats are loaded with important vitamins, minerals, and antioxidant plant compounds.
+        \n2. Whole oats are rich in antioxidants \nWhole oats are high in antioxidants and beneficial plant compounds called polyphenols. Most notable is a unique group of antioxidants called avenanthramides, which are almost solely found in oats.
+        \n3. Oats can lower cholesterol levels \nHeart disease is the leading cause of death globally. One major risk factor is high blood cholesterol. Many studies have shown that the beta-glucan fiber in oats is effective at reducing both total and LDL (bad) cholesterol levels.',
+        3,
+        'https://img.freepik.com/free-photo/top-close-up-view-berries-bowl-oatmeal-spoon-board-red-currants-black-grapes_140725-71988.jpg?w=996&t=st=1707230882~exp=1707231482~hmac=88e6fd199b63d52545687ae1d45d830c5449606c8dd500514d58c8d1b2530114',
+        'Author: KamranAydinov, Designed by Freepik',  -- img_title
+        1 -- educational_content_type_id
+    ),
+    (
+        '38',
+        '2024-02-26 16:30:00',  -- CreatedDT
+        'healthline',  -- Publisher
+        'Salmon Nutrition and Health Benefits',  -- Title
+        'Salmon is one of the most nutritious foods on the planet. This popular fatty fish is not only loaded with nutrients but also may reduce certain risk factors for several diseases. What’s more, it’s tasty, versatile, and widely available.
+         \nSalmon nutrition facts \nThe nutritional value of salmon can vary slightly among the varieties. For example, farmed salmon contains slightly more healthy fats and calories, whereas wild-caught salmon is a bit higher in protein. However, both types are great sources of many key nutrients, including selenium, phosphorus, and B vitamins.
+         \nSalmon health benefits \n1. Rich in omega-3 fatty acids \nSalmon is one of the best sources of the long-chain omega-3 fatty acids eicosapentaenoic acid (EPA) and docosahexaenoic acid (DHA).
+         \n2. Great source of protein \nSalmon is rich in high quality protein. Like omega-3 fats, protein is an essential nutrient that you must get from your diet.
+         \nProtein plays a number of important roles in your body, including helping you heal after injury, protecting bone health, and maintaining muscle mass during weight loss and as you get older.',
+        3,
+        'https://img.freepik.com/free-photo/salmon-dish-with-herbs-spices_23-2148195516.jpg?w=996&t=st=1707231240~exp=1707231840~hmac=55163b601bef55c8da5fd4f8240762d931c79915e11b0b6827ab0cb9378db6ce',
+        'Designed by Freepik',  -- img_title
+        1 -- educational_content_type_id
+    ),
+    (
+        '39',
+        '2024-02-26 16:30:00',  -- CreatedDT
+        'healthline',  -- Publisher
+        'Impressive Health Benefits of Apples',  -- Title
+        'This nutritious fruit offers multiple health benefits. Apples may lower your chance of developing cancer, diabetes, and heart disease. Research says apples may also help you lose weight while improving your gut and brain health. Apples are the most widely consumed fruit globally.
+         From sweet red varieties, like Red Delicious, Fuji, or Gala, to tangy green ones They’re commonly used in recipes like pies, cookies, muffins, jam, salads, oatmeal, or smoothies. They also make a great snack or wedged and smeared with nut butter. In addition to their culinary versatility and numerous colors and flavors, apples are an exceptionally healthy fruit with many research-backed benefits.
+        \nWhat are the benefits of apples? \n1. Nutritious \nApples are considered nutrient-dense fruits, meaning they provide a lot of nutrients per serving.
+        \n2. May support weight loss \nApples are high in fiber and water, which makes them filling. Eating whole apples increased fullness more than consuming equal amounts of apple juice. This may happen because whole apples reduce gastric emptying — the rate at which your stomach empties.
+        \n3. Could be good for your heart \nApples have been linked to a lower chance of heart disease. Research has found that eating 100-150 g/d of whole apples is associated with a lower chanceTrusted Source of heart disease and risk factors such as high blood pressure.',
+        3,
+        'https://img.freepik.com/free-vector/sticker-basket-with-many-red-apples_1308-59661.jpg?w=900&t=st=1707231584~exp=1707232184~hmac=8bb46b54360f7d388a332b4f5f6785684a3f9e9962b7bb94f7172566499402c8',
+        'Author: brgfx, Designed by Freepik',  -- img_title
+        1 -- educational_content_type_id
+    ),
+    (
+        '40',
+        '2024-02-26 16:30:00',  -- CreatedDT
+        'healthline',  -- Publisher
+        'Health Benefits of Kale',  -- Title
+        'Kale is a nutritious food rich in antioxidants, vitamin C, vitamin K, and beta-carotene. It also contains nutrients that can support eye health, weight management, heart health, and more. Loaded with important micronutrients and antioxidants, kale is one of the most nutritious leafy greens available. Plus, it’s versatile and boasts a nutty, earthy flavor that works well in a wide range of recipes.
+        \n1. Highly nutritious \nKale is a popular vegetable and a member of the cabbage family. It is a cruciferous vegetable and is closely related to cabbage, broccoli, cauliflower, collard greens, and Brussels sprouts.
+        \n2. Provides powerful antioxidants \nLike other leafy greens, kale is very high in antioxidants. These include beta-carotene and vitamin C, as well as various flavonoids and polyphenols. \nAntioxidants are substances that help counteract oxidative damage by neutralizing free radicals in the body.
+        \n3. Excellent source of vitamin C \nVitamin C is an important water-soluble antioxidant that serves many vital functions in the body’s cells. For example, it is necessary for the synthesis of collagen, the most abundant structural protein in the body. \nKale is higher in vitamin C than most other greens, containing about three times much as spinach and collard greens.',
+        3,
+        'https://img.freepik.com/free-photo/close-up-shot-kale_23-2148685356.jpg?w=740&t=st=1707231994~exp=1707232594~hmac=285d138ff284bd8d999a1be85690ad4dbb10bed282acaea32ee62078ce17bba8',
+        'Designed by Freepik',  -- img_title
+        1 -- educational_content_type_id
+    ),
+    
     
 
 -- Educational content review rating
@@ -494,4 +635,14 @@ VALUES
     ('The content is very informative!',                5.0, '8', 27),
     ('The content is very detailed',                    5.0, '8', 28),
     ('This is awesome!',                                5.0, '7', 29),
-    ('The content is very insightful.',                 5.0, '8', 30);
+    ('The content is very insightful.',                 5.0, '8', 30),
+    ('I love this content!' ,                           4.0, '12', 31),
+    ('I love this content!' ,                           4.0, '9', 32),
+    ('I love this content!' ,                           4.0, '12', 33),
+    ('I love this content!' ,                           4.0, '12', 34),
+    ('I love this content!' ,                           4.0, '9', 35),
+    ('I love this content!' ,                           4.0, '12', 36),
+    ('The content is very informative!',                5.0, '8', 37),
+    ('The content is very detailed',                    5.0, '8', 38),
+    ('This is awesome!',                                5.0, '7', 39),
+    ('The content is very insightful.',                 5.0, '8', 40);

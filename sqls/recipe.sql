@@ -46,7 +46,8 @@ VALUES
     ('Mediterranean'),
     ('Vietnamese'),
     ('Moroccan'),
-    ('Korean');
+    ('Korean'),
+    ('Southeast Asian');
 
 -- first set of recipes 
 INSERT INTO recipe
@@ -1001,6 +1002,253 @@ VALUES
         2, -- dietary_preference
         15 -- cooking_time  
         6   -- meal type (cuisines)
+    ),
+    (
+        51,
+        'Hungryroot Team',
+        'Shrimp + Turkey Sausage Gumbo',
+        'Not Specified',
+        580, 36, 47, 17, 12, 1600, -- calories, carbs, protein, fat, fibre, sodium
+        2,
+        'This recipe is a fantastic combo for muscle and weight-building, with excellent flavor and protein-rich nutrients. Soft wild-caught gulf shrimp and flavorful hot Italian turkey sausage, is cooked to perfection.',
+        'Remove sausage from casings + discard casings; heat 1 tbsp oil in a pot over med-high; add sausage to pan, break into large chunks + sear undisturbed 2 min; flip meat over + break into small pieces, then cook 2-3 min until fully cooked + no pinkness remains; remove from pot + reserve pan juices\nCut onion into 1/2-inch pieces; heat 1 tbsp oil to same pot over medium, add chopped onion + cook 3-4 min while stirring\nSeason shrimp with salt/pep + add to onions; cook 3-4 min until shrimp is opaque\nAdd half the packet of sauce, beans, cooked sausage + 4 tbsp water to the pot; bring to a simmer + cook 12-15 min until warmed through—enjoy!',
+        'Superfood Tomato Sauce \nWild Caught Gulf Shrimp \nHot Italian Turkey Sausage \nCreole Red Beans \nJumbo Yellow Onion',
+        '4', -- UserID
+        TRUE,
+        '2023-12-15 15:30:00',
+        'https://assets-global.website-files.com/62d69f8cc65b0055741a8270/648b47a81507b53da2eb9e35_SoupsStews_127964_Bowl_Fork-1.jpg',
+        'Author : hungryroot, Designed by hungryroot',  -- img_title
+        4, -- dietary_preference
+        30 -- cooking_time  
+        2   -- meal type (cuisines)
+    ),
+    (
+        52,
+        'Hungryroot Team',
+        'Roasted Chicken Thigh + Pad Thai Veggies',
+        'Not Specified',
+        430, 26, 31, 6, 4, 720, -- calories, carbs, protein, fat, fibre, sodium
+        2,
+        'With a perfect blend of flavors and nutrients, this protein-rich dish will fuel your muscles and help you recover from your workout. Tender, boneless chicken thighs are served with sautéed stir-fried vegetables for a satisfying combination of carbs and nutrition.',
+        'Preheat oven to 400°; pat chicken thighs dry, trim excess fat if desired + season with salt/pep; add chicken to sheet pan, drizzle with 1 tbsp oil; roast 20-25 min until fully cooked, no pink remains + internal temp is 165°\nMeanwhile, heat 1 tbsp oil in skillet over med-high; sauté stir-fry veggies with salt/pep 3-4 min; add sauce packet, cover + cook 1-2 more min until tender\nDivide chicken + veggies between plates—looks great!',
+        'Boneless Skinless Chicken Thighs \nPad Thai Veggie Stir-Fry Kit',
+        '4', -- UserID
+        TRUE,
+        '2023-12-15 15:30:00',
+        'https://assets-global.website-files.com/62d69f8cc65b0055741a8270/648b47c6dac40bbe30f67e6e_Main_465213_Plate_Fork-1.jpg',
+        'Author : hungryroot, Designed by hungryroot',  -- img_title
+        4, -- dietary_preference
+        25 -- cooking_time  
+        7   -- meal type (cuisines)
+    ),
+    (
+        53,
+        'Hungryroot Team',
+        'Cilantro Lime Chicken + Steamed Broccoli',
+        'Not Specified',
+        390, 9, 35, 11, 2, 690, -- calories, carbs, protein, fat, fibre, sodium
+        2,
+        'Enjoy the mouthwatering tastes of cilantro lime chicken with steamed broccoli in this protein-rich meal. The crisp and colorful broccoli contrasts with the flavorful and juicy chicken that is cooked until it is soft.',
+        'Drain broth from chicken packet; heat 1 tbsp oil in skillet over medium; add chicken to pan, break into small pieces + sauté 2-3 min until browned; turn heat to low, add sauce packet + cook 1 min until sauce is hot; divide between plates\nHeat 1 tbsp oil in skillet over med-high; add half the bag of broccoli, salt/pep + sauté 4-5 min until lightly browned; add 2 tbsp water, reduce heat, cover + steam 3-5 min until tender; divide between plates—that was easy!',
+        'Broccoli Florets \nCilantro Lime Chicken',
+        '4', -- UserID
+        TRUE,
+        '2023-12-15 15:30:00',
+        'https://assets-global.website-files.com/62d69f8cc65b0055741a8270/6480c937f74306ec77a5bdc0_Main%2BSides_464501_Plate.jpg',
+        'Author : hungryroot, Designed by hungryroot',  -- img_title
+        4, -- dietary_preference
+        15 -- cooking_time  
+        6   -- meal type (cuisines)
+    ),
+    (
+        54,
+        'Hungryroot Team',
+        'Super Honey Poppyseed Chicken Protein Bowl',
+        'Not Specified',
+        530, 56, 34, 10, 11, 810, -- calories, carbs, protein, fat, fibre, sodium
+        2,
+        'This lean, chicken protein bowl is jam-packed with sweet and savory ingredients, so up your protein game. This dish contains a delicious combination of super blend salad, lentil quinoa rice mix, and seasoned grilled chicken breast.',
+        'Heat skillet over med-high + add rice mix with 1 tbsp water; stir occasionally 2 min until warm + add to bowls\nHeat lightly oiled skillet over med-high, pat chicken dry + sear 2 min per side until warm; slice + add to bowls\nHeat 1 tbsp oil in skillet over med-high + cook Superblend with salt/pep 5 min until tender, stirring minimally to ensure browning; add to bowls\nMix in or drizzle on 1-2 tbsp dressing per bowl—looks good!',
+        'Superblend Salad \nLentil Quinoa Rice Mix \nSeasoned Grilled Chicken Breast \nHoney Poppyseed Dressing',
+        '4', -- UserID
+        TRUE,
+        '2023-09-29 09:00:00',
+        'https://assets-global.website-files.com/62d69f8cc65b0055741a8270/648b48651507b53da2ec965e_GrainBowl_123246_Bowl_Fork-1.jpg',
+        'Author : hungryroot, Designed by hungryroot',  -- img_title
+        4, -- dietary_preference
+        13 -- cooking_time  
+        2   -- meal type (cuisines)
+    ),
+    (
+        55,
+        'Hungryroot Team',
+        'Oven-Roasted Salmon with Couscous + Brussels',
+        'Not Specified',
+        800, 59, 40, 6, 9, 250, -- calories, carbs, protein, fat, fibre, sodium
+        2,
+        'Treat yourself to this gourmet culinary delight that provides a good balance of nutrition with its protein-rich salmon and carb-packed brussels sprouts.',
+        'Preheat oven to 400° F; pat fish dry, line a sheet pan with foil, drizzle fish with oil, salt + pep; bake 10-12 min until firm, opaque + cooked through\nHeat 1 tbsp oil in pan over med-high; add brussels + cook 4-5 minutes; add caesar dressing to brussels and set aside\nBoil large pot of salted water, add 1 cup couscous + stir; cook 5 min, then drain; add to brussels and mix evenly\nServe fish on top of couscous + enjoy!',
+        'Shaved Brussels \nVegan Caesar Dressing Cup \nFresh Lemon \nAtlantic Salmon Fillets \nTri-Color Pearled Couscous',
+        '5', -- UserID
+        TRUE,
+        '2023-09-29 09:00:00',
+        'https://assets-global.website-files.com/62d69f8cc65b0055741a8270/648b48651507b53da2ec965e_GrainBowl_123246_Bowl_Fork-1.jpg',
+        'Author : hungryroot, Designed by hungryroot',  -- img_title
+        3, -- dietary_preference
+        14 -- cooking_time  
+        2   -- meal type (cuisines)
+    ),
+    (
+        56,
+        'Hungryroot Team',
+        'Coconut Curry Tofu + Broccoli Wrap',
+        'Not Specified',
+        440, 43, 29, 14, 16, 810, -- calories, carbs, protein, fat, fibre, sodium
+        2,
+        'In this dish you can savor the rich and aromatic coconut curry perfectly complemented by hearty tofu veggie bites. Tender sweet baby broccoli adds a vibrant crunch to every bite.',
+        'Chop burgers into 1-inch pieces + heat 1 tbsp oil in skillet over med-high; sear tofu until browned, 1-2 min; set aside\nChop broccoli in 1-inch pieces + heat 1 tbsp oil in skillet over med-high; cook with salt/pep 2-3 min, then add ½ cup water, cover + let steam 3 more min\nAdd 2 wraps to plates + spread 1-2 tbsp curry onto each wrap\nDivide fillings between wraps + roll up—yum!',
+        'Coconut Curry Sauuce \nHearty Tofu Veggie Burger \nSweet Baby Broccoli \nSweet Potato Wraps',
+        '5', -- UserID
+        TRUE,
+        '2023-09-29 09:00:00',
+        'https://assets-global.website-files.com/62d69f8cc65b0055741a8270/648b489ad81f1d3fd9ddb4f5_Wrap_122142_Plate-2.jpg',
+        'Author : hungryroot, Designed by hungryroot',  -- img_title
+        1, -- dietary_preference
+        10 -- cooking_time  
+        13   -- meal type (cuisines)
+    ),
+    (
+        57,
+        'Miriam Nice',
+        'Seitan & black bean stir-fry',
+        'Not Specified',
+        326, 37, 22, 8, 7, 1232, -- calories, carbs, protein, fat, fibre, sodium
+        4,
+        'With a sticky sweet and spicy sauce, this easy vegan stir-fry creates a filling dinner. Seitan, peanut butter, and a variety of vegetables are a winning combo.',
+        'Start by making the sauce, tip half the beans into the bowl of a food processor with the rest of the ingredients and add 50ml water. Season, then blend until smooth. Pour into a saucepan and heat gently for about 5 mins or until thick and glossy.\nDrain the seitan and pat dry with kitchen paper. Toss the seitan pieces in a bowl with the cornflour and set aside. Heat your wok to a high temperature, add a little oil, then the seitan – you might need to do this in batches. Stir-fry for around 5 mins until golden brown at the edges. Remove the seitan from the wok using a slotted spoon and set aside on a plate.\nIf the wok is dry at this stage, add 1 tsp vegetable oil. Throw in the chopped peppers, the rest of the beans, pak choi and spring onion. Cook for 3-4 mins, then return the seitan to the pan, stir in the sauce and bring to the boil for 1 min. Serve with cooked rice or noodles.',
+        '400g can black beans, drained and rinsed \n75g dark brown soft sugar \n3 garlic cloves \n2 tbsp soy sauce \n1 tsp Chinese five-spice powder \n2 tbsp rice vinegar \n1 tbsp smooth peanut butter \n1 red chilli, finely chopped \n350g marinated seitan pieces \n1 tbsp cornflour \n2-3 tbsp vegetable oil \n1 red pepper, sliced \n300g pak choi, chopped \n2 spring onions, sliced \ncooked rice noodles or rice, to serve',
+        '5', -- UserID
+        TRUE,
+        '2023-09-29 09:00:00',
+        'https://images.immediate.co.uk/production/volatile/sites/30/2020/08/seitan-and-black-bean-stir-fry-6adb3dd.jpg?quality=90&webp=true&resize=440,400',
+        'Author : Miriam Nice, Designed by bbcgoodfood',  -- img_title
+        2, -- dietary_preference
+        25 -- cooking_time  
+        1   -- meal type (cuisines)
+    ),
+    (
+        58,
+        'Nadine Brown',
+        'Tofu Curry',
+        'Not Specified',
+        318, 8, 22, 21, 4, 80, -- calories, carbs, protein, fat, fibre, sodium
+        4,
+        'Make a quick and summery veggie curry with tofu and spinach for an easy midweek meal. Serve with lime wedges and wholemeal chapatis.',
+        'Heat 1/2 tbsp of the oil in a large, wide, non-stick frying pan over a medium-high heat. Fry the tofu with a pinch of salt for 5 mins, turning every couple of minutes until golden brown. Remove to a plate using a slotted spoon.\nAdd the remaining oil to the pan, then fry half the onions for 5 mins, stirring often until golden brown. Add the ginger and garlic paste, stir-frying for a minute, then add the turmeric and cook for another 30 seconds to release the flavour.\nStir in the coconut milk, then return the tofu to the pan along with the lime juice and 100ml water, and simmer for 5 mins. Stir in the spinach and the coriander, and cook for 1 min until wilted, then season.\nServe the curry in bowls topped with the coriander leaves and the remaining onion, the lime wedges for squeezing over, and the chapatis on the side.',
+        '1tbsp rapeseed oil \ntofu, cut into 2cm cubes \n2 red onions, thinly sliced \n1 1/2 ginger and garlic paste \n1 1/2 ground turmeric \n400ml light coconut milk \n2 limes, 1 juiced, 1 cut into wedges to serve \n160g baby spinach \n10g coriander, most roughly chopped, reserve a few whole leaves to serve \n4 wholemeal chapatis, to serve',
+        '1', -- UserID
+        TRUE,
+        '2023-09-02 10:00:00',
+        'https://images.immediate.co.uk/production/volatile/sites/30/2022/05/Tofu-curry-c24b410.jpg?quality=90&webp=true&resize=375,341',
+        'Author : Nadine Brown, Designed by bbcgoodfood',  -- img_title
+        1, -- dietary_preference
+        20 -- cooking_time  
+        8   -- meal type (cuisines)
+    ),
+    (
+        59,
+        'Good Food team',
+        'Stir-fried sprouts with green beans, lemon & pine nuts',
+        'Not Specified',
+        140, 14, 5, 6, 6, 16, -- calories, carbs, protein, fat, fibre, sodium
+        8,
+        'This new option for your Christmas sprouts is a fantastic source of vitamin C and folic acid.',
+        'Cook the brussels sprouts and beans in a pan of boiling salted water for 3 mins, then drain well. Heat the oil in a large wok or frying pan. When hot, add the lemon zest and pine nuts. Cook for a couple of seconds, then add the vegetables and stir-fry for 3-4 mins until the sprouts colour a little. Add a squeeze of lemon juice and salt and pepper to taste.',
+        '600g brussels sprouts, trimmed and quartered \n600g green beans \n1 tbsp olive oil \nzest and juice 1 lemon \n4 tbsp toasted pine nuts',
+        '1', -- UserID
+        TRUE,
+        '2023-09-10 16:00:00',
+        'https://images.immediate.co.uk/production/volatile/sites/30/2020/08/recipe-image-legacy-id-487479_11-8abbef4.jpg?quality=90&webp=true&resize=440,400',
+        'Author : Good Food team, Designed by bbcgoodfood',  -- img_title
+        1, -- dietary_preference
+        10 -- cooking_time  
+        2   -- meal type (cuisines)
+    ),
+    (
+        60,
+        'Mary Cadaogan',
+        'Pumpkin, spinach & black bean dopiaza',
+        'Not Specified',
+        354, 42, 17, 14, 0, 204, -- calories, carbs, protein, fat, fibre, sodium
+        2,
+        'This new option for your Christmas sprouts is a fantastic source of vitamin C and folic acid.',
+        'Cook the brussels sprouts and beans in a pan of boiling salted water for 3 mins, then drain well. Heat the oil in a large wok or frying pan. When hot, add the lemon zest and pine nuts. Cook for a couple of seconds, then add the vegetables and stir-fry for 3-4 mins until the sprouts colour a little. Add a squeeze of lemon juice and salt and pepper to taste.',
+        '600g brussels sprouts, trimmed and quartered \n600g green beans \n1 tbsp olive oil \nzest and juice 1 lemon \n4 tbsp toasted pine nuts',
+        '1', -- UserID
+        TRUE,
+        '2023-08-04 10:00:00',
+        'https://images.immediate.co.uk/production/volatile/sites/30/2020/08/recipe-image-legacy-id-279520_11-b0a79cf.jpg?quality=90&webp=true&resize=440,400',
+        'Author : Mary Cadogan, Designed by bbcgoodfood',  -- img_title
+        1, -- dietary_preference
+        25 -- cooking_time  
+        8   -- meal type (cuisines)
+    ),
+    (
+        61,
+        'John Berardi',
+        'Berry Green Smoothie',
+        'Not Specified',
+        185, 20, 13, 6, 3, 194, -- calories, carbs, protein, fat, fibre, sodium
+        1,
+        'Get a hearty helping of vegetables and fruit with this recipe for a delicious berry and spinach smoothie.',
+        'Combine all ingredients in a blender. Blend on high until mixture is a smooth consistency.',
+        '1/2 cup frozen berries \n1/2 cup spinach \n1/2 cup plain full-fat yogurt \n1/4 cup whole milk or almond milk \n1 scoop vanilla protein powder',
+        '2', -- UserID
+        TRUE,
+        '2023-04-11 12:00:00',
+        'https://cdn.cleaneatingmag.com/wp-content/uploads/2016/08/green-monster.jpg?crop=535:301&width=1070&enable=upscale',
+        'Author : John Berardi, Designed by cleaneating',  -- img_title
+        2, -- dietary_preference
+        5 -- cooking_time  
+        2   -- meal type (cuisines)
+    ),
+    (
+        62,
+        'Clean Eating',
+        'Grilled Asparagus Salad with Feta Hazelnut Crumble',
+        'Not Specified',
+        127, 7, 2, 11, 2, 38, -- calories, carbs, protein, fat, fibre, sodium
+        4,
+        'This quick and delicious salad features smokey grilled asparagus with a simple lemon dressing.',
+        'In a small bowl, soak onion in lemon juice for 10 to 15 minutes. Drain, reserving lemon juice.\nMeanwhile, preheat a grill or grill pan to medium-high. In a large bowl, toss asparagus with 1 tbsp oil and season with salt and pepper. Add to grill and cook for 2 to 3 minutes per side. Remove from heat and cool to room temperature.\nPrepare topping (if using): In a small food processor, pulse cheese and hazelnuts into rough crumbs.\nPrepare dressing: In a small bowl, whisk remaining 2 tbsp oil and reserved lemon juice. Season with salt and pepper.\nDivide arugula among plates and top with tomatoes, asparagus, onions and dressing, dividing evenly. Garnish with topping.',
+        '1/4 small red onion, thinly sliced \n2 tbsp fresh lemon juice \n16 spears fresh asparagus (about 1 bunch), trimmed \n3 tbsp olive oil, divided \nSea salt and ground black pepper, to taste \n2 cups baby arugula \n2 cups grape tomatoes, halved',
+        '2', -- UserID
+        TRUE,
+        '2023-02-28 12:00:00',
+        'https://cdn.cleaneatingmag.com/wp-content/uploads/2016/06/grilled-asparagus-salad-with-feta-and-hazelnut-crumble-1.jpg?crop=535:301&width=1070&enable=upscale',
+        'Author : Clean Eating, Designed by cleaneating',  -- img_title
+        2, -- dietary_preference
+        15 -- cooking_time  
+        9   -- meal type (cuisines)
+    ),
+    (
+        63,
+        'Alexa Weibel',
+        'White Bean Soup with Caper Almond Pesto',
+        'Not Specified',
+        619, 66, 25, 13, 19, 761, -- calories, carbs, protein, fat, fibre, sodium
+        2,
+        'White beans lend a rich, creamy texture to this dairy-free soup. A 5-minute almond pesto, made while the soup is boiling, adds flavor to the recipe.',
+        'In a blender, purée beans, broth, milk, shallot, garlic, ½ tsp herbes de provence, salt and pepper.\nTransfer soup to a medium saucepan, cover and heat on medium, whisking occasionally, until warmed, about 10 minutes.\nMeanwhile, prepare pesto: In a bowl, stir together oil, basil, almonds, capers and remaining 1/4 tsp herbes de provence.\nDivide soup among bowls and drizzle with pesto.',
+        '2 15-oz BPA-free cans unsalted white beans (such as cannellini or navy beans), drained and rinsed \n1 cup low-sodium chicken broth \n1 cup plain unsweetened almond milk \n1 large shallot, roughly chopped \n1 clove garlic, roughly chopped \n3/4 tsp dried herbes de provence, divided \n½ tsp sea salt \n¼ tsp ground black pepper \n3 tbsp extra-virgin olive oil \n2 tbsp finely chopped fresh basil \n2 tbsp finely chopped roasted unsalted almonds \n2 tsp drained jarred capers, chopped',
+        '2', -- UserID
+        TRUE,
+        '2023-02-28 12:00:00',
+        'https://cdn.cleaneatingmag.com/wp-content/uploads/2016/06/grilled-asparagus-salad-with-feta-and-hazelnut-crumble-1.jpg?crop=535:301&width=1070&enable=upscale',
+        'Author : Clean Eating, Designed by cleaneating',  -- img_title
+        2, -- dietary_preference
+        20 -- cooking_time  
+        9   -- meal type (cuisines)
     );
 
 

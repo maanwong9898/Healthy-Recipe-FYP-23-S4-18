@@ -210,39 +210,46 @@ const RegisteredUserHomepage = () => {
   const renderBlogPost = (post) => (
     <div
       key={post.id}
-      className="max-w-xl bg-white border border-gray-200 rounded-lg shadow-md overflow-hidden flex flex-col"
+      className="max-w-xl bg-white border border-gray-200 rounded-lg shadow-md overflow-hidden flex flex-col cursor-pointer hover:shadow-stone-700 transition duration-300 ease-in-out"
+      style={{
+        border: "0.5px solid transparent",
+        background: "#48494B",
+        backgroundOrigin: "border-box",
+        backgroundClip: "content-box, border-box",
+      }}
+      onClick={() => handleViewBlogPost(post.id)}
     >
-      {/* Image */}
       <img
         src={post.img}
-        alt={post.img_title}
-        className="w-full h-48 rounded-t-lg object-cover"
+        alt={post.imgTitle}
+        className="w-full object-cover rounded-sm text-white text-center"
         style={{ height: "192px" }}
       />
-      <div className="flex flex-grow flex-col justify-between p-5">
-        <div>
-          {/* Title */}
-          <h2
-            className="text-2xl font-extrabold mb-2 hover:text-orange-600 cursor-pointer"
-            onClick={() => handleViewBlogPost(post.id)}
-          >
-            {post.title}
-          </h2>
-          {/* Description */}
-          <p className="text-gray-700 text-base mb-4 line-clamp-3">
-            {post.info}
-          </p>
 
-          {/* Publisher */}
-          <p
-            className="text-gray-900 text-base font-semibold"
-            style={{ height: "3.5rem" }}
+      <div className="flex-grow flex flex-col justify-between p-4 bg-white">
+        <div className="grid grid-rows-3 items-center">
+          <h2
+            className="text-2xl font-extrabold mb-2"
+            //onClick={() => handleViewBlogPost(post.id)}
           >
+            {post?.title || "Untitled Blog Post"}
+          </h2>
+          <p className="text-gray-700 text-base mb-4 line-clamp-3">
+            <div className="whitespace-pre-line">{post.info}</div>
+          </p>
+          {/* Publisher */}
+          <p className="text-gray-900 text-base font-semibold">
             Publisher:{" "}
             <span className="text-orange-600 font-bold tracking-tight">
               {post?.publisher || "Not Specified"}
             </span>
           </p>
+
+          {/* <div className="flex justify-between items-center">
+              <div className="flex items-center text-red-700 font-semibold text-xl">
+                {post.blogType.subcategoryName}
+              </div>
+            </div> */}
         </div>
       </div>
     </div>

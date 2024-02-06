@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -15,6 +16,9 @@ import com.FYP18.HealthyRecipe.DTO.RecipeDTO;
 import com.FYP18.HealthyRecipe.DTO.RoleCountRequest;
 import com.FYP18.HealthyRecipe.Entity.Blog;
 import com.FYP18.HealthyRecipe.Entity.EducationalContent;
+import com.FYP18.HealthyRecipe.Entity.Categories.BlogPostCategory;
+import com.FYP18.HealthyRecipe.Entity.Categories.DietaryPreferences;
+import com.FYP18.HealthyRecipe.Entity.Categories.MealType;
 import com.FYP18.HealthyRecipe.Repository.MealPlanRepository;
 import com.FYP18.HealthyRecipe.Repository.MealPlanReviewRatingRepository;
 import com.FYP18.HealthyRecipe.Service.BlogService;
@@ -60,8 +64,13 @@ public class LandingPage {
     public List<Blog> getMostPopularBlogs()
     {
         return blogService.getMostPopularBlogs();
-    }
+    } 
 
+    @GetMapping("/findBlogByBlogType")
+    public List<Blog> findBlogByBlogType(@RequestBody BlogPostCategory id)
+    {
+        return blogService.findBlogByBlogType(id);
+    }
     @Autowired
     private RecipeService recipeService;
 
@@ -70,4 +79,17 @@ public class LandingPage {
     {
         return recipeService.getMostPopularRecipes();
     }
+
+     @GetMapping("/findRecipeDTOsByDietaryPreferences")
+    public List<RecipeDTO> findRecipeDTOsByDietaryPreferences(@RequestBody DietaryPreferences dp)
+    {
+       return recipeService.findRecipeDTOsByDietaryPreferences(dp);
+    }
+    
+    @GetMapping("/findRecipeDTOsByMealType")
+    public List<RecipeDTO> findRecipeDTOsByMealType(@RequestBody MealType dp)
+    {
+       return recipeService.findRecipeDTOsByMealType(dp);
+    }
+    
 }

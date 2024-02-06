@@ -9,6 +9,13 @@ import org.springframework.transaction.annotation.Transactional;
 import com.FYP18.HealthyRecipe.DTO.RecipeDTO;
 import com.FYP18.HealthyRecipe.Entity.Recipe;
 import com.FYP18.HealthyRecipe.Entity.User;
+import com.FYP18.HealthyRecipe.Entity.Categories.DietaryPreferences;
+
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 
 import java.util.List;
 
@@ -57,7 +64,19 @@ public interface RecipeRepository extends JpaRepository<Recipe, Long> {
     @Query(value="SELECT COUNT(r) AS count FROM Recipe r")
     Integer findTotalRecipeCount();
     
+
+    @Query(value = "SELECT r.title AS title, r.publisher AS publisher, r.description AS description, r.id AS id, r.img AS img, r.calories AS calories, r.protein AS protein, r.fat AS fat, r.fibre AS fibre, r.sodium AS sodium, r.carbs AS carbs FROM Recipe r WHERE r.dietaryPreferencesId = :dp")
+    List<RecipeDTO> findRecipeDTOsByDietaryPreferences(Long dp);
     
+    @Query(value = "SELECT r.title AS title, r.publisher AS publisher, r.description AS description, r.id AS id, r.img AS img, r.calories AS calories, r.protein AS protein, r.fat AS fat, r.fibre AS fibre, r.sodium AS sodium, r.carbs AS carbs FROM Recipe r WHERE r.mealTypeId = :mealType")
+    List<RecipeDTO> findRecipeDTOsByMealType(Long mealType);
+    // @Column(name = "dietaryPreference", nullable = true)
+    // private Long dietaryPreferencesId;
+    
+    // @ManyToOne(fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH})
+    // @JoinColumn(name="dietaryPreference", insertable = false, updatable = false)  
+    // private DietaryPreferences dietaryPreferences;
+
     // @Query(value="SELECT r.userID.id AS id, COUNT(r) AS count, 'Recipe' AS type
     // FROM Recipe r WHERE r.userID.id = :id")
     // List<TypeCountIdRequest> findCountById(@Param("id") String id);

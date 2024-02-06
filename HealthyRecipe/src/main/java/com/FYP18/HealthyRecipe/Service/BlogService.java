@@ -219,4 +219,10 @@ public class BlogService {
         return blogRepository.findAllById(ids);
         // return 
     }
+
+    public List<Blog> findBlogByBlogType(BlogPostCategory blogType)
+    {
+        return blogRepository.findBlogByBlogType(blogType.getId());
+    }
+    
 }

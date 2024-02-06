@@ -4,22 +4,23 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+ 
 
-import javax.management.RuntimeErrorException;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cglib.core.Local;
+import org.springframework.beans.factory.annotation.Autowired; 
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.FYP18.HealthyRecipe.DTO.PopularReviewRatingDTO;
 import com.FYP18.HealthyRecipe.DTO.RecipeDTO;
 import com.FYP18.HealthyRecipe.DTO.ReviewRatingDTO;
-import com.FYP18.HealthyRecipe.DTO.UserInfoDTO;
-import com.FYP18.HealthyRecipe.Entity.BlogReviewRating;
+import com.FYP18.HealthyRecipe.DTO.UserInfoDTO; 
 import com.FYP18.HealthyRecipe.Entity.Recipe;
 import com.FYP18.HealthyRecipe.Entity.RecipeReviewRating;
 import com.FYP18.HealthyRecipe.Entity.RecipeReviewRatingId;
+import com.FYP18.HealthyRecipe.Entity.Categories.DietaryPreferences;
+import com.FYP18.HealthyRecipe.Entity.Categories.MealType;
 import com.FYP18.HealthyRecipe.Repository.RecipeRepository;
 import com.FYP18.HealthyRecipe.Repository.RecipeReviewRatingRepository;
 import com.FYP18.HealthyRecipe.Repository.UserRepository;
@@ -201,7 +202,15 @@ public class RecipeService {
     {
         recipeReviewRatingRepository.deleteById(id);
     }
-
-    
+  
+    public List<RecipeDTO> findRecipeDTOsByDietaryPreferences( DietaryPreferences dp)
+    {
+       return recipeRepository.findRecipeDTOsByDietaryPreferences(dp.getId());
+    }
+     
+    public List<RecipeDTO> findRecipeDTOsByMealType( MealType dp)
+    {
+       return recipeRepository.findRecipeDTOsByMealType(dp.getId());
+    }
     
 }

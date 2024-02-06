@@ -17,58 +17,64 @@ ChartJS.register(ArcElement, Tooltip, Legend);
 // home page for system admin
 // router path: /sysAdmin
 
-// Get all blog post
-const fetchBlogPosts = async () => {
-  try {
-    const response = await axiosInterceptorInstance.get("/blog/get");
-
-    console.log("All business blog posts:", response.data);
-
-    return response.data;
-  } catch (error) {
-    console.error("Failed to fetch blog posts:", error);
-    throw error;
-  }
-};
-
-// Get all recipes
-const fetchRecipes = async () => {
-  try {
-    const response = await axiosInterceptorInstance.get("/recipe/get");
-
-    console.log("All recipes:", response.data);
-
-    return response.data;
-  } catch (error) {
-    console.error("Failed to fetch recipes:", error);
-    throw error;
-  }
-};
-
-// Get all educational content
-const fetchEducationcalContent = async () => {
+// Get all blog post count
+const fetchBlogPostsCount = async () => {
   try {
     const response = await axiosInterceptorInstance.get(
-      "/educationalContent/get"
+      "systemAdmin/findTotalBlogCount"
     );
 
-    console.log("All educational content:", response.data);
+    console.log("Total business blogs count:", response.data);
 
     return response.data;
   } catch (error) {
-    console.error("Failed to fetch educational content:", error);
+    console.error("Failed to fetch blog post count:", error);
     throw error;
   }
 };
 
-// Get all meal plans
-const fetchMealPlans = async () => {
+// Get all recipes count
+const fetchRecipesCount = async () => {
   try {
-    const response = await axiosInterceptorInstance.get("/mealPlan/get");
-    console.log("All meal plans:", response.data);
+    const response = await axiosInterceptorInstance.get(
+      "systemAdmin/findTotalRecipeCount"
+    );
+
+    console.log("Total recipes count:", response.data);
+
     return response.data;
   } catch (error) {
-    console.error("Error fetching meal plans:", error);
+    console.error("Failed to fetch recipes count:", error);
+    throw error;
+  }
+};
+
+// Get all educational content count
+const fetchEducationcalContentCount = async () => {
+  try {
+    const response = await axiosInterceptorInstance.get(
+      "systemAdmin/findTotalEducationalContentCount"
+    );
+
+    console.log("Total educational content count:", response.data);
+
+    return response.data;
+  } catch (error) {
+    console.error("Failed to fetch educational content count:", error);
+    throw error;
+  }
+};
+
+// Get all meal planscount
+const fetchMealPlansCount = async () => {
+  try {
+    const response = await axiosInterceptorInstance.get(
+      "/systemAdmin/findTotalMealPlanCount"
+    );
+    console.log("Total meal plans count:", response.data);
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching meal plans count:", error);
     throw error;
   }
 };
@@ -115,13 +121,13 @@ const AdminHomePage = () => {
   const router = useRouter();
   const [userAccount, setUserAccount] = useState("");
   const [username, setUsername] = useState("");
-  const [businessBlogPost, setBusinessBlogPost] = useState([]);
-  const [recipes, setRecipes] = useState([]);
-  const [educationalContent, setEducationalContent] = useState([]);
-  const [mealPlans, setMealPlans] = useState([]);
-  const [userAccounts, setUserAccounts] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
   const [totalUserRoleCount, setTotalUserRoleCount] = useState([]);
+  const [totalBlogPostCount, setTotalBlogPostCount] = useState("");
+  const [totalRecipesCount, setTotalRecipesCount] = useState("");
+  const [totalEducationalContentCount, setTotalEducationalContentCount] =
+    useState("");
+  const [totalMealPlansCount, setTotalMealPlansCount] = useState("");
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     if (
@@ -136,18 +142,19 @@ const AdminHomePage = () => {
       const fetchData = async () => {
         try {
           // Fetch all necessary data
-          const blogPostsData = await fetchBlogPosts();
-          const recipesData = await fetchRecipes();
-          const educationalContentData = await fetchEducationcalContent();
-          const mealPlansData = await fetchMealPlans();
+          const blogPostsCountData = await fetchBlogPostsCount();
+          const recipesCountData = await fetchRecipesCount();
+          const educationalContentCountData =
+            await fetchEducationcalContentCount();
+          const mealPlansCountData = await fetchMealPlansCount();
           const totalUserRoleCountData = await fetchUserRoleCounts();
           const userDashboardData = await viewUserDashboard();
 
           // Update state with fetched data
-          setBusinessBlogPost(blogPostsData);
-          setRecipes(recipesData);
-          setEducationalContent(educationalContentData);
-          setMealPlans(mealPlansData);
+          setTotalBlogPostCount(blogPostsCountData);
+          setTotalRecipesCount(recipesCountData);
+          setTotalEducationalContentCount(educationalContentCountData);
+          setTotalMealPlansCount(mealPlansCountData);
           setTotalUserRoleCount(totalUserRoleCountData);
           setUserAccount(userDashboardData);
 
@@ -261,7 +268,7 @@ const AdminHomePage = () => {
                       Total Recipes
                     </p>
                     <h4 className="mt-3 block tracking-normal font-sans text-2xl font-semibold text-gray-900">
-                      {recipes ? recipes.length : 0}
+                      {totalRecipesCount}
                     </h4>
                   </div>
                 </div>
@@ -282,7 +289,7 @@ const AdminHomePage = () => {
                       Total Meal Plans
                     </p>
                     <h4 className="mt-3 block tracking-normal font-sans text-2xl font-semibold text-gray-900">
-                      {mealPlans ? mealPlans.length : 0}
+                      {totalMealPlansCount}
                     </h4>
                   </div>
                 </div>
@@ -303,7 +310,7 @@ const AdminHomePage = () => {
                       Total Blogs
                     </p>
                     <h4 className="mt-3 block tracking-normal font-sans text-2xl font-semibold text-gray-900">
-                      {businessBlogPost ? businessBlogPost.length : 0}
+                      {totalBlogPostCount}
                     </h4>
                   </div>
                 </div>
@@ -324,7 +331,7 @@ const AdminHomePage = () => {
                       Total Educational Contents
                     </p>
                     <h4 className="mt-3 block tracking-normal font-sans text-2xl font-semibold text-gray-900">
-                      {educationalContent ? educationalContent.length : 0}
+                      {totalEducationalContentCount}
                     </h4>
                   </div>
                 </div>

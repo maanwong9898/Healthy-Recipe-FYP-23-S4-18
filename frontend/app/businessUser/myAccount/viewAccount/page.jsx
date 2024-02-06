@@ -25,7 +25,6 @@ const UpdateAccount = () => {
   const [allergies, setAllergies] = useState([]);
   const [dietaryPreferences, setDietaryPreferences] = useState("");
   const [healthGoal, setHealthGoal] = useState("");
-  const emailValidation = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
   const [isTabSelected, setIsTabSelected] = useState("myAccount");
@@ -195,43 +194,54 @@ const UpdateAccount = () => {
                 Account Information
               </h1>
               <form>
-                <div className="grid grid-cols-2 gap-3 mt-2">
-                  <label htmlFor="fullName" className="flex items-center">
-                    Full Name:
-                    <span className="text-red-500">*</span>
-                  </label>
-                  <label htmlFor="username" className="flex items-center">
-                    Username:
-                    <span className="text-red-500">*</span>
-                  </label>
-                </div>
-                <div className="grid grid-cols-2 gap-3 mb-3.5">
-                  {/* NAME */}
-                  <input
-                    type="text"
-                    id="fullName"
-                    name="fullName"
-                    placeholder="Your Name"
-                    className=" bg-white border border-gray-300 text-gray-900 sm:text-sm rounded-lg p-2.5"
-                    value={fullName}
-                    onChange={clearErrorOnChange(setFullName)}
-                  />
+                <div className="grid gap-3 mt-2 sm:grid-cols-2">
+                  {/* Full Name */}
+                  <div className="flex flex-col mb-3.5">
+                    <label
+                      htmlFor="fullName"
+                      className="font-medium text-base mb-1"
+                    >
+                      Full Name:
+                      <span className="text-red-500">*</span>
+                    </label>
+                    <input
+                      type="text"
+                      id="fullName"
+                      name="fullName"
+                      placeholder="Your Name"
+                      className="bg-white border border-gray-300 text-gray-900 sm:text-sm rounded-lg p-2.5 w-full"
+                      value={fullName}
+                      onChange={clearErrorOnChange(setFullName)}
+                    />
+                  </div>
 
-                  {/* USERNAME */}
-                  <input
-                    type="text"
-                    id="userName"
-                    name="userName"
-                    placeholder="Your Username"
-                    className=" bg-white border border-gray-300 text-gray-900 sm:text-sm rounded-lg p-2.5"
-                    value={username}
-                    onChange={clearErrorOnChange(setUsername)}
-                  />
+                  {/* Username */}
+                  <div className="flex flex-col mb-3.5">
+                    <label
+                      htmlFor="userName"
+                      className="font-medium text-base mb-1"
+                    >
+                      Username:
+                      <span className="text-red-500">*</span>
+                    </label>
+                    <input
+                      type="text"
+                      id="userName"
+                      name="userName"
+                      placeholder="Your Username"
+                      className="bg-white border border-gray-300 text-gray-900 sm:text-sm rounded-lg p-2.5 w-full"
+                      value={username}
+                      onChange={clearErrorOnChange(setUsername)}
+                    />
+                  </div>
                 </div>
 
                 {/* CONTACT NUMBER */}
                 <div className="flex flex-col mb-3.5">
-                  <label className="mb-1">
+                  <label
+                    htmlFor="contactNumber"
+                    className="font-medium text-base mb-1"
+                  >
                     Contact Number:
                     <span className="text-red-500">*</span>
                   </label>
@@ -239,7 +249,7 @@ const UpdateAccount = () => {
                     type="text"
                     id="contactNumber"
                     name="contactNumber"
-                    className="border px-4 py-2 rounded-lg w-full bg-white border-gray-300 text-gray-900 sm:text-sm"
+                    className="bg-white border border-gray-300 text-gray-900 sm:text-sm rounded-lg p-2.5 w-full"
                     value={contactNumber}
                     onChange={clearErrorOnChange(setContactNumber)}
                   />
@@ -247,13 +257,18 @@ const UpdateAccount = () => {
 
                 {/* EMAIL */}
                 <div className="flex flex-col mb-3.5">
-                  <label className="mb-1">Work Email Address:</label>
+                  <label
+                    htmlFor="workEmail"
+                    className="font-medium text-base mb-1"
+                  >
+                    Work Email Address:
+                  </label>
                   <input
                     type="text"
                     id="workEmail"
                     name="workEmail"
                     disabled
-                    className="border px-4 py-2 rounded-lg w-full bg-gray-300 border-gray-300 text-gray-900 sm:text-sm"
+                    className="bg-gray-200 border border-gray-300 text-gray-900 sm:text-sm rounded-lg p-2.5 w-full"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                   />
@@ -261,7 +276,10 @@ const UpdateAccount = () => {
 
                 {/* COMPANY NAME  */}
                 <div className="flex flex-col mb-3.5">
-                  <label className="mb-1">
+                  <label
+                    htmlFor="companyName"
+                    className="font-medium text-base mb-1"
+                  >
                     Company Name:
                     <span className="text-red-500">*</span>
                   </label>
@@ -269,7 +287,7 @@ const UpdateAccount = () => {
                     type="text"
                     id="companyName"
                     name="companyName"
-                    className="border px-4 py-2 rounded-lg w-full bg-white border-gray-300 text-gray-900 sm:text-sm"
+                    className="bg-white border border-gray-300 text-gray-900 sm:text-sm rounded-lg p-2.5 w-full"
                     value={companyName}
                     onChange={clearErrorOnChange(setCompanyName)}
                   />
@@ -277,7 +295,10 @@ const UpdateAccount = () => {
 
                 {/* COMPANY ADDRESS  */}
                 <div className="flex flex-col mb-3.5">
-                  <label className="mb-1">
+                  <label
+                    htmlFor="companyAddress"
+                    className="font-medium text-base mb-1"
+                  >
                     Company Address:
                     <span className="text-red-500">*</span>
                   </label>
@@ -285,7 +306,7 @@ const UpdateAccount = () => {
                     type="text"
                     id="companyAddress"
                     name="companyAddress"
-                    className="border px-4 py-2 rounded-lg w-full bg-white border-gray-300 text-gray-900 sm:text-sm"
+                    className="bg-white border border-gray-300 text-gray-900 sm:text-sm rounded-lg p-2.5 w-full"
                     value={companyAddress}
                     onChange={clearErrorOnChange(setCompanyAddress)}
                   />
@@ -293,7 +314,10 @@ const UpdateAccount = () => {
 
                 {/* POSTAL CODE*/}
                 <div className="flex flex-col mb-3.5">
-                  <label className="mb-1">
+                  <label
+                    htmlFor="postalCode"
+                    className="font-medium text-base mb-1"
+                  >
                     Postal Code:
                     <span className="text-red-500">*</span>
                   </label>
@@ -301,7 +325,7 @@ const UpdateAccount = () => {
                     type="text"
                     id="postalCode"
                     name="postalCode"
-                    className="border px-4 py-2 rounded-lg w-full bg-white border-gray-300 text-gray-900 sm:text-sm"
+                    className="bg-white border border-gray-300 text-gray-900 sm:text-sm rounded-lg p-2.5 w-full"
                     value={postalCode}
                     onChange={clearErrorOnChange(setPostalCode)}
                   />
@@ -309,13 +333,15 @@ const UpdateAccount = () => {
 
                 {/* COMPANY UEN  */}
                 <div className="flex flex-col mb-3.5">
-                  <label className="mb-1">UEN:</label>
+                  <label htmlFor="uen" className="font-medium text-base mb-1">
+                    UEN:
+                  </label>
                   <input
                     type="text"
                     id="uen"
                     name="uen"
                     disabled
-                    className="border px-4 py-2 rounded-lg w-full bg-gray-300 border-gray-300 text-gray-900 sm:text-sm"
+                    className="bg-gray-200 border border-gray-300 text-gray-900 sm:text-sm rounded-lg p-2.5 w-full"
                     value={uen}
                     onChange={(e) => setUen(e.target.value)}
                   />

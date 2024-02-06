@@ -354,10 +354,10 @@ const UpdateDietaryPreference = () => {
               </h1>
               <form>
                 {/* DIETARY PREFERENCE */}
-                <div className="mt-3">
+                <div className="flex flex-col mb-3.5">
                   <label
                     htmlFor="dietaryPreference"
-                    className="flex items-center"
+                    className="font-medium text-base mb-1"
                   >
                     Dietary Preference
                   </label>
@@ -366,7 +366,7 @@ const UpdateDietaryPreference = () => {
                     name="dietaryPreference"
                     value={dietaryPreference}
                     onChange={handleDietaryPreferenceCategoryChange}
-                    className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg w-full lg:w-72 p-2.5"
+                    className="bg-white border border-gray-300 text-gray-900 sm:text-sm rounded-lg p-2.5 w-full lg:w-72"
                   >
                     <option value="">Select Dietary Preference</option>
                     {dietaryPreferencesCategory.map((cat, index) => (
@@ -378,10 +378,10 @@ const UpdateDietaryPreference = () => {
                 </div>
 
                 {/* ALLERGIES AND RESTRICTIONS */}
-                <div className="mt-3">
+                <div className="flex flex-col mb-3.5">
                   <label
                     htmlFor="allergyRestriction"
-                    className="flex items-center"
+                    className="font-medium text-base mb-1"
                   >
                     Allergies and Restrictions
                   </label>
@@ -397,7 +397,7 @@ const UpdateDietaryPreference = () => {
                           onChange={(e) =>
                             handleAllergyCategoryChange(e, cat.id)
                           }
-                          className="w-4 h-4 bg-gray-100 border-gray-300 rounded mr-2"
+                          className="w-4 h-4 bg-gray-50 border-gray-300 rounded mr-2"
                         />
                         {cat.subcategoryName}
                       </div>
@@ -406,8 +406,11 @@ const UpdateDietaryPreference = () => {
                 </div>
 
                 {/* HEALTH GOAL */}
-                <div className="mt-3">
-                  <label htmlFor="healthGoals" className="flex items-center">
+                <div className="flex flex-col mb-3.5">
+                  <label
+                    htmlFor="healthGoals"
+                    className="font-medium text-base mb-1"
+                  >
                     Health Goal
                   </label>
                   <select
@@ -415,7 +418,7 @@ const UpdateDietaryPreference = () => {
                     name="healthGoals"
                     value={healthGoals}
                     onChange={handleHealthCategoryChange}
-                    className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg w-full lg:w-72 p-2.5"
+                    className="bg-white border border-gray-300 text-gray-900 sm:text-sm rounded-lg p-2.5 w-full lg:w-72"
                   >
                     <option value="">Select Health Goal</option>
                     {healthGoalsCategory.map((cat, index) => (

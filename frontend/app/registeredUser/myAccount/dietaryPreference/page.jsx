@@ -185,8 +185,8 @@ const ViewDietaryPreference = () => {
                 My Dietary Preference
               </h1>
               {/* Diet Preference */}
-              <div className="mb-4">
-                <label className="block mb-2 text-gray-900 font-medium">
+              <div className="flex flex-col mb-3.5">
+                <label htmlFor="diet" className="font-medium text-base mb-1">
                   Diet:
                 </label>
                 <div className="flex items-center rounded-full w-60">
@@ -199,8 +199,8 @@ const ViewDietaryPreference = () => {
                 </div>
               </div>
               {/* Allergies */}
-              <div className="mb-4">
-                <label className="block mb-2 text-gray-900 font-medium">
+              <div className="flex flex-col mb-3.5">
+                <label className="font-medium text-base mb-1">
                   Allergies and Restrictions:
                 </label>
                 <div className="flex flex-row flex-wrap gap-2 items-center">
@@ -214,15 +214,15 @@ const ViewDietaryPreference = () => {
                       </span>
                     ))
                   ) : (
-                    <span className="flex items-center border border-gray-400 rounded-full px-4 py-2 w-60">
+                    <span className="border border-gray-400 rounded-full text-center p-2 w-60">
                       Not specified
                     </span>
                   )}
                 </div>
               </div>
               {/* Health Goal */}
-              <div className="mb-4">
-                <label className="block mb-2 text-gray-900 font-medium">
+              <div className="flex flex-col mb-3.5">
+                <label className="font-medium text-base mb-1">
                   Health Goal:
                 </label>
                 <div className="flex items-center rounded-full w-60">

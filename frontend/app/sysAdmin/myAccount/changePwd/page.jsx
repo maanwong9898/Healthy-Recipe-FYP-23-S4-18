@@ -157,7 +157,7 @@ const changeUserPwd = () => {
               <form onSubmit={handlePwdChange}>
                 {/* OLD PWD */}
                 <div className="flex flex-col mb-3.5">
-                  <label className="flex items-center text-base mb-1">
+                  <label className="font-medium text-base mb-1">
                     Old Password:
                     <span className=" text-red-500">*</span>
                   </label>
@@ -169,13 +169,13 @@ const changeUserPwd = () => {
                     placeholder="Enter old password"
                     value={oldPwd}
                     onChange={clearErrorOnChange(setOldPwd)}
-                    className="border px-4 py-2 rounded-lg w-full bg-white border-gray-300 text-gray-900 sm:text-sm"
+                    className="bg-white border border-gray-300 text-gray-900 sm:text-sm rounded-lg p-2.5 w-full"
                   />
                 </div>
 
                 {/* NEW PWD */}
                 <div className="flex flex-col mb-3.5">
-                  <label className="mb-1">
+                  <label className="font-medium text-base mb-1">
                     New Password:
                     <span className=" text-red-500">*</span>
                   </label>
@@ -186,13 +186,13 @@ const changeUserPwd = () => {
                     placeholder="Enter new password"
                     value={newPwd}
                     onChange={clearErrorOnChange(setNewPwd)}
-                    className="border px-4 py-2 rounded-lg w-full bg-white border-gray-300 text-gray-900 sm:text-sm"
+                    className="bg-white border border-gray-300 text-gray-900 sm:text-sm rounded-lg p-2.5 w-full"
                   />
                 </div>
 
                 {/* REPEAT PWD */}
                 <div className="flex flex-col mb-3.5">
-                  <label className="mb-1">
+                  <label className="font-medium text-base mb-1">
                     Repeat Password:
                     <span className=" text-red-500">*</span>
                   </label>
@@ -203,7 +203,7 @@ const changeUserPwd = () => {
                     placeholder="Repeat new password"
                     value={repeatPwd}
                     onChange={clearErrorOnChange(setRepeatPwd)}
-                    className="border px-4 py-2 rounded-lg w-full bg-white border-gray-300 text-gray-900 sm:text-sm"
+                    className="bg-white border border-gray-300 text-gray-900 sm:text-sm rounded-lg p-2.5 w-full"
                   />
                 </div>
                 {/* ERROR MESSAGE */}

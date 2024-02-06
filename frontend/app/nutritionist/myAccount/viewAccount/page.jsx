@@ -263,43 +263,46 @@ const UpdateAccount = () => {
                 Account Information
               </h1>
               <form>
-                <div className="grid grid-cols-2 gap-3 mt-2">
-                  <label
-                    htmlFor="fullName"
-                    className="flex items-center font-medium"
-                  >
-                    Full Name:
-                    <span className="text-red-500">*</span>
-                  </label>
-                  <label
-                    htmlFor="userName"
-                    className="flex items-center font-medium"
-                  >
-                    Username:
-                    <span className="text-red-500">*</span>
-                  </label>
-                </div>
-                <div className="grid grid-cols-2 gap-3 mb-3.5">
-                  {/* NAME */}
-                  <input
-                    type="text"
-                    id="fullName"
-                    name="fullName"
-                    placeholder="Your Name"
-                    className="bg-white border border-gray-300 text-gray-900 sm:text-sm rounded-lg p-2.5 w-full"
-                    value={fullName}
-                    onChange={clearErrorOnChange(setFullName)}
-                  />
-                  {/* USERNAME */}
-                  <input
-                    type="text"
-                    id="userName"
-                    name="userName"
-                    placeholder="Your Username"
-                    className="bg-white border border-gray-300 text-gray-900 sm:text-sm rounded-lg p-2.5 w-full"
-                    value={username}
-                    onChange={clearErrorOnChange(setUsername)}
-                  />
+                <div className="grid gap-3 mt-2 sm:grid-cols-2">
+                  {/* Full Name */}
+                  <div className="flex flex-col mb-3.5">
+                    <label
+                      htmlFor="fullName"
+                      className="font-medium text-base mb-1"
+                    >
+                      Full Name:
+                      <span className="text-red-500">*</span>
+                    </label>
+                    <input
+                      type="text"
+                      id="fullName"
+                      name="fullName"
+                      placeholder="Your Name"
+                      className="bg-white border border-gray-300 text-gray-900 sm:text-sm rounded-lg p-2.5 w-full"
+                      value={fullName}
+                      onChange={clearErrorOnChange(setFullName)}
+                    />
+                  </div>
+
+                  {/* Username */}
+                  <div className="flex flex-col mb-3.5">
+                    <label
+                      htmlFor="userName"
+                      className="font-medium text-base mb-1"
+                    >
+                      Username:
+                      <span className="text-red-500">*</span>
+                    </label>
+                    <input
+                      type="text"
+                      id="userName"
+                      name="userName"
+                      placeholder="Your Username"
+                      className="bg-white border border-gray-300 text-gray-900 sm:text-sm rounded-lg p-2.5 w-full"
+                      value={username}
+                      onChange={clearErrorOnChange(setUsername)}
+                    />
+                  </div>
                 </div>
 
                 {/* CONTACT NUMBER */}
@@ -334,7 +337,7 @@ const UpdateAccount = () => {
                     id="workEmail"
                     name="workEmail"
                     disabled
-                    className="bg-gray-300 border border-gray-300 text-gray-900 sm:text-sm rounded-lg p-2.5 w-full"
+                    className="bg-gray-200 border border-gray-300 text-gray-900 sm:text-sm rounded-lg p-2.5 w-full"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                   />

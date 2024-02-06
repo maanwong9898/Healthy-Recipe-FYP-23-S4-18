@@ -149,24 +149,23 @@ const userLogin = () => {
       setError("Login failed"); // Update the state to display the error message
     }
   };
-  // max-w-4xl mx-auto bg-cyan-600/50 grid grid-cols-1 md:grid-cols-2 items-center gap-20 p-5 rounded-2xl
   return (
     <div>
       <HomeNavbar />
-      <div className="bg-orange-50 min-h-screen py-16">
+      <div className="min-h-screen py-16">
         <div className="container mx-auto">
-          <div className="flex flex-col md:flex-row rounded-2xl mx-auto bg-slate-100 shadow-lg overflow-hidden">
+          <div className="grid grid-cols-1 md:grid-cols-2 rounded-2xl mx-auto bg-slate-100 shadow-lg overflow-hidden">
             {/* BG IMG */}
-            <div className="w-full md:w-1/2 bg-white">
+            <div className="w-full bg-white">
               <div
-                className="h-full w-full bg-cover bg-center flex items-center justify-center flex-col p-8"
+                className="h-full w-full bg-cover bg-center items-center justify-center p-8 hidden lg:block"
                 style={{
                   backgroundImage: `url('${images[currentImageIndex]}')`,
                 }}
               ></div>
             </div>
             {/* LOGIN FORM CONTAINER*/}
-            <div className="w-full md:w-1/2 mx-5 flex items-center justify-center">
+            <div className="w-full flex items-center justify-center">
               <div className="w-full p-4 md:p-10">
                 <Image
                   src="/logo.png"
@@ -200,7 +199,8 @@ const userLogin = () => {
                       type="text"
                       placeholder="Email"
                       value={email}
-                      className="w-full bg-white py-2 pl-12 pr-3 rounded-full border border-white focus:border-black focus:outline-none focus:ring-1 focus:ring-black"
+                      className="pl-12 pr-3 bg-white border border-gray-300 text-gray-900 sm:text-sm rounded-lg p-2.5 w-full"
+                      // className="w-full bg-white py-2 pl-12 pr-3 rounded-full border border-white focus:border-black focus:outline-none focus:ring-1 focus:ring-black"
                       onChange={(e) => setEmail(e.target.value)} // Assuming you have a setEmail function
                     />
                   </div>
@@ -218,14 +218,14 @@ const userLogin = () => {
                     <input
                       type={passwordVisible ? "text" : "password"}
                       placeholder="Password"
-                      className="w-full bg-white py-2 pl-12 pr-3 rounded-full border border-white focus:border-black focus:outline-none focus:ring-1 focus:ring-black"
+                      className="pl-12 pr-3 bg-white border border-gray-300 text-gray-900 sm:text-sm rounded-lg p-2.5 w-full"
                       value={password}
                       onChange={(e) => setPassword(e.target.value)}
                     />
                   </div>
                   {/* Error Message */}
                   {error && (
-                    <p className="text-red-500 text-base font-semibold">
+                    <p className="text-red-500 text-base font-medium">
                       {error}
                     </p>
                   )}

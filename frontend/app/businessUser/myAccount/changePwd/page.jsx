@@ -5,6 +5,7 @@ import Link from "next/link";
 import { useState, useEffect } from "react";
 import axiosInterceptorInstance from "../../../axiosInterceptorInstance.js";
 import SecureStorage from "react-secure-storage";
+import BusinessUserNavBar from "../../../components/navigation/businessUserNavBar";
 
 //router path for this page: /businessUser/myAccount/changePwd
 
@@ -16,6 +17,27 @@ const changeUserPwd = () => {
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
   const [isTabSelected, setIsTabSelected] = useState("changePwd");
+  const [isLoading, setIsLoading] = useState(true);
+  const [isChecking, setIsChecking] = useState(true);
+
+  useEffect(() => {
+    if (
+      !SecureStorage.getItem("token") ||
+      SecureStorage.getItem("role") !== "BUSINESS_USER"
+    ) {
+      // clear the secure storage
+      SecureStorage.clear();
+      console.log("Redirecting to home page");
+      router.push("/");
+    } else {
+      setIsChecking(false);
+      setIsLoading(false);
+    }
+  }, []);
+
+  if (isChecking) {
+    return <div>Checking...</div>;
+  }
 
   const handlePwdChange = async (event) => {
     event.preventDefault();
@@ -96,6 +118,7 @@ const changeUserPwd = () => {
 
   return (
     <div className="flex flex-col min-h-screen">
+      <BusinessUserNavBar />
       <div className="flex justify-center">
         <div className="p-5 max-w-3xl w-full mx-5 items-center ">
           <div className="bg-white border border-gray-100 rounded-lg shadow">
@@ -127,88 +150,97 @@ const changeUserPwd = () => {
                 </button>
               </li>
             </ul>
-            <div className="p-8">
-              <h1 className="text-lg font-semibold mb-4">Change Password</h1>
 
-              {/* Form Start */}
-              <form onSubmit={handlePwdChange}>
-                {/* OLD PWD */}
-                <div className="flex flex-col mb-3.5">
-                  <label className="font-medium text-base mb-1">
-                    Old Password:
-                    <span className=" text-red-500">*</span>
-                  </label>
+            {isLoading ? (
+              <div>Loading...</div>
+            ) : (
+              <>
+                <div className="p-8">
+                  <h1 className="text-lg font-semibold mb-4">
+                    Change Password
+                  </h1>
 
-                  <input
-                    type="password"
-                    id="oldPwd"
-                    name="oldPwd"
-                    placeholder="Enter old password"
-                    value={oldPwd}
-                    onChange={clearErrorOnChange(setOldPwd)}
-                    className="bg-white border border-gray-300 text-gray-900 sm:text-sm rounded-lg p-2.5 w-full"
-                  />
+                  {/* Form Start */}
+                  <form onSubmit={handlePwdChange}>
+                    {/* OLD PWD */}
+                    <div className="flex flex-col mb-3.5">
+                      <label className="font-medium text-base mb-1">
+                        Old Password:
+                        <span className=" text-red-500">*</span>
+                      </label>
+
+                      <input
+                        type="password"
+                        id="oldPwd"
+                        name="oldPwd"
+                        placeholder="Enter old password"
+                        value={oldPwd}
+                        onChange={clearErrorOnChange(setOldPwd)}
+                        className="bg-white border border-gray-300 text-gray-900 sm:text-sm rounded-lg p-2.5 w-full"
+                      />
+                    </div>
+
+                    {/* NEW PWD */}
+                    <div className="flex flex-col mb-3.5">
+                      <label className="font-medium text-base mb-1">
+                        New Password:
+                        <span className=" text-red-500">*</span>
+                      </label>
+                      <input
+                        type="password"
+                        id="newPwd"
+                        name="newPwd"
+                        placeholder="Enter new password"
+                        value={newPwd}
+                        onChange={clearErrorOnChange(setNewPwd)}
+                        className="bg-white border border-gray-300 text-gray-900 sm:text-sm rounded-lg p-2.5 w-full"
+                      />
+                    </div>
+
+                    {/* REPEAT PWD */}
+                    <div className="flex flex-col mb-3.5">
+                      <label className="font-medium text-base mb-1">
+                        Repeat Password:
+                        <span className=" text-red-500">*</span>
+                      </label>
+                      <input
+                        type="password"
+                        id="repeatPwd"
+                        name="repeatPwd"
+                        placeholder="Repeat new password"
+                        value={repeatPwd}
+                        onChange={clearErrorOnChange(setRepeatPwd)}
+                        className="bg-white border border-gray-300 text-gray-900 sm:text-sm rounded-lg p-2.5 w-full"
+                      />
+                    </div>
+                    {/* ERROR MESSAGE */}
+                    {error && (
+                      <div className="text-red-500 text-base font-medium">
+                        {error}
+                      </div>
+                    )}
+
+                    {/* SUCCESS MESSAGE */}
+                    {success && (
+                      <div className="text-green-500 text-base font-medium">
+                        {success}
+                      </div>
+                    )}
+
+                    {/* UPDATE BTN */}
+                    <div className="flex flex-row justify-start mt-3">
+                      <button
+                        type="submit"
+                        onClick={handlePwdChange}
+                        className="bg-blue-600 hover:bg-blue-700 text-white w-24 rounded-lg font-bold py-2 px-4"
+                      >
+                        Update
+                      </button>
+                    </div>
+                  </form>
                 </div>
-
-                {/* NEW PWD */}
-                <div className="flex flex-col mb-3.5">
-                  <label className="font-medium text-base mb-1">
-                    New Password:
-                    <span className=" text-red-500">*</span>
-                  </label>
-                  <input
-                    type="password"
-                    id="newPwd"
-                    name="newPwd"
-                    placeholder="Enter new password"
-                    value={newPwd}
-                    onChange={clearErrorOnChange(setNewPwd)}
-                    className="bg-white border border-gray-300 text-gray-900 sm:text-sm rounded-lg p-2.5 w-full"
-                  />
-                </div>
-
-                {/* REPEAT PWD */}
-                <div className="flex flex-col mb-3.5">
-                  <label className="font-medium text-base mb-1">
-                    Repeat Password:
-                    <span className=" text-red-500">*</span>
-                  </label>
-                  <input
-                    type="password"
-                    id="repeatPwd"
-                    name="repeatPwd"
-                    placeholder="Repeat new password"
-                    value={repeatPwd}
-                    onChange={clearErrorOnChange(setRepeatPwd)}
-                    className="bg-white border border-gray-300 text-gray-900 sm:text-sm rounded-lg p-2.5 w-full"
-                  />
-                </div>
-                {/* ERROR MESSAGE */}
-                {error && (
-                  <div className="text-red-500 text-base font-medium">
-                    {error}
-                  </div>
-                )}
-
-                {/* SUCCESS MESSAGE */}
-                {success && (
-                  <div className="text-green-500 text-base font-medium">
-                    {success}
-                  </div>
-                )}
-
-                {/* UPDATE BTN */}
-                <div className="flex flex-row justify-start mt-3">
-                  <button
-                    type="submit"
-                    onClick={handlePwdChange}
-                    className="bg-blue-600 hover:bg-blue-700 text-white w-24 rounded-lg font-bold py-2 px-4"
-                  >
-                    Update
-                  </button>
-                </div>
-              </form>
-            </div>
+              </>
+            )}
           </div>
         </div>
       </div>

@@ -19,7 +19,7 @@ function BusinessUserLayout({ children }) {
         {/* Viewport meta tag */}
         {/* Other meta tags and links to stylesheets can be added here */}
       </Head>
-      <BusinessUserNavigation />
+      {/* <BusinessUserNavigation /> */}
       <div className="w-full overflow-x-hidden">{children}</div>
       <Footer />
     </>

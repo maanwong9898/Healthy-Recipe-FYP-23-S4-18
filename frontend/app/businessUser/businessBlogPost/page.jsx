@@ -7,6 +7,7 @@ import Link from "next/link";
 import SearchIcon from "@mui/icons-material/Search";
 import SwapVertIcon from "@mui/icons-material/SwapVert";
 import SecureStorage from "react-secure-storage";
+import BusinessUserNavBar from "../../components/navigation/businessUserNavBar";
 
 // router path is /businessUser/businessBlogPost
 
@@ -63,55 +64,71 @@ const MyBusinessBlogPosts = () => {
   const [searchResultsCount, setSearchResultsCount] = useState(0);
   const [categories, setCategories] = useState([]);
   const [categoryFilter, setCategoryFilter] = useState("ALL");
-  const [isLoading, setIsLoading] = useState(false);
   const [alphabeticalOrder, setAlphabeticalOrder] = useState("AZ");
   const [datePublishedOrder, setDatePublishedOrder] = useState("LATEST");
   const [ratingsOrder, setRatingsOrder] = useState("HIGHEST");
   const [statusOrder, setStatusOrder] = useState("ACTIVE");
+  const [isChecking, setIsChecking] = useState(true);
+  const [isLoading, setIsLoading] = useState(true);
 
   // fetch all business blog posts and categories from backend
   useEffect(() => {
-    setIsLoading(true); // Set loading state to true
-    const getData = async () => {
-      try {
-        setIsLoading(true); // Set loading state to true
-        const fetchedBlog = await fetchBlogPosts();
-        const blogsWithAverage = await Promise.all(
-          fetchedBlog.map(async (blog) => {
-            const average = await fetchBlogAverage(blog.id);
-            return { ...blog, average }; // Augment each blog post with its average
-          })
-        );
-        console.log("Blog with average:", blogsWithAverage);
-        setBusinessBlogs(blogsWithAverage);
-        // ... [sorting and other logic]
-      } catch (error) {
-        console.error("Error while fetching data:", error);
-      }
-    };
+    const token = SecureStorage.getItem("token");
+    const role = SecureStorage.getItem("role");
 
-    // Fetch all business blog categories from backend
-    const fetchCategories = async () => {
-      console.log("Fetching blog categories...");
-      try {
-        const response = await axiosInterceptorInstance.get(
-          "category/getAllBlogPostCategories"
-        );
-        console.log("Categories fetched:", response.data);
-        setCategories(response.data);
-      } catch (error) {
-        console.error("Error fetching categories:", error);
-      }
-    };
+    if (!token || role !== "BUSINESS_USER") {
+      // If token is invalid or role is not business user, redirect to login
+      SecureStorage.clear();
+      router.push("/");
+      return;
+    } else {
+      setIsChecking(false);
 
-    Promise.all([getData(), fetchCategories()])
-      .catch((error) => {
-        console.error("Error in fetchData or fetchCategories:", error);
-      })
-      .finally(() => {
-        setIsLoading(false); // End loading after both operations are complete
-      });
+      const getData = async () => {
+        try {
+          setIsLoading(true); // Set loading state to true
+          const fetchedBlog = await fetchBlogPosts();
+          const blogsWithAverage = await Promise.all(
+            fetchedBlog.map(async (blog) => {
+              const average = await fetchBlogAverage(blog.id);
+              return { ...blog, average }; // Augment each blog post with its average
+            })
+          );
+          console.log("Blog with average:", blogsWithAverage);
+          setBusinessBlogs(blogsWithAverage);
+          // ... [sorting and other logic]
+        } catch (error) {
+          console.error("Error while fetching data:", error);
+        }
+      };
+
+      // Fetch all business blog categories from backend
+      const fetchCategories = async () => {
+        console.log("Fetching blog categories...");
+        try {
+          const response = await axiosInterceptorInstance.get(
+            "category/getAllBlogPostCategories"
+          );
+          console.log("Categories fetched:", response.data);
+          setCategories(response.data);
+        } catch (error) {
+          console.error("Error fetching categories:", error);
+        }
+      };
+
+      Promise.all([getData(), fetchCategories()])
+        .catch((error) => {
+          console.error("Error in fetchData or fetchCategories:", error);
+        })
+        .finally(() => {
+          setIsLoading(false); // End loading after both operations are complete
+        });
+    }
   }, []);
+
+  // if (isChecking) {
+  //   return <div>Checking...</div>;
+  // }
 
   // All in 1 -- sort, filter, search
   useEffect(() => {
@@ -308,364 +325,385 @@ const MyBusinessBlogPosts = () => {
 
   return (
     <div className="px-2 sm:px-5 min-h-screen flex flex-col py-5">
-      {/* Display message while fetching data ftom backend */}
-      {isLoading ? (
-        <div className="text-xl text-center p-4">
-          <p>Loading your blog post...</p>
-        </div>
+      {isLoading && isChecking ? (
+        <div>Loading...</div>
       ) : (
         <>
-          <h1 className="text-6xl text-gray-900 p-3 mb-4 font-bold text-center sm:text-center">
-            My Blog Posts
-          </h1>
-          <div>
-            <button className="text-white bg-blue-600 hover:bg-blue-700 rounded-lg text-base font-semibold px-5 py-2.5 mr-7 mb-4 text-center">
-              <Link href="/businessUser/businessBlogPost/createBusinessBlogPost">
-                Create Blog Post
-              </Link>
-            </button>
-          </div>
-          {/* Search section */}
-          <div className="flex flex-col mb-4 md:flex-row md:mr-2">
-            <div className="relative mb-3 md:mb-8 md:mr-2">
-              <input
-                type="text"
-                id="blogSearch"
-                name="blogSearch"
-                value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
-                placeholder="Search by title"
-                className="mr-2 p-2 rounded-lg border w-full md:w-auto pl-10"
-              />
-              {/* Search icon */}
-              <span className="absolute inset-y-0 left-0 flex items-center pl-2">
-                <SearchIcon />
-              </span>
+          <BusinessUserNavBar />
+          {/* Display message while fetching data ftom backend */}
+          {isLoading ? (
+            <div className="text-xl text-center p-4">
+              <p>Loading your blog post...</p>
             </div>
-            {/* Filter dropdown */}
-            <div className="relative md:ml-auto">
-              <label
-                htmlFor="categoryFilter"
-                className="ml-2 mr-2 font-2xl text-gray-900"
-              >
-                Filter By:
-              </label>
-              <select
-                id="categoryFilter"
-                onChange={(e) => setCategoryFilter(e.target.value)}
-                className="p-2 rounded-lg border"
-              >
-                <option value="ALL">All Categories</option>
-                {categories.map((category, index) => (
-                  <option
-                    key={index}
-                    value={category.id}
-                    className="text-black"
-                  >
-                    {category.subcategoryName}
-                  </option>
-                ))}
-              </select>
-            </div>
-          </div>
-          {/* Table of blog posts */}
-          <div className="overflow-x-auto rounded-lg hidden lg:block">
-            <table className="min-w-full rounded-lg border-zinc-200 border-2">
-              <thead className="bg-zinc-700 font-normal text-white border-gray-800 border-2">
-                <tr className="text-center text-lg">
-                  <th className="px-3 py-2">
-                    Blog Post Title
-                    <button
-                      className="ml-1 focus:outline-none"
-                      onClick={handleSortAlphabetically}
-                    >
-                      <SwapVertIcon />
-                    </button>
-                  </th>
-                  <th className="px-3 py-2">
-                    Date Published
-                    <button
-                      className="ml-1 focus:outline-none"
-                      onClick={handleSortByDatePublished}
-                    >
-                      <SwapVertIcon />
-                    </button>
-                  </th>
-                  <th className="px-3 py-2">Category</th>
-                  <th className="px-3 py-2">
-                    Status
-                    <button
-                      className="ml-1 focus:outline-none"
-                      onClick={handleSortByStatus}
-                    >
-                      <SwapVertIcon />
-                    </button>
-                  </th>
-                  <th className="px-3 py-2">
-                    Ratings
-                    <button
-                      className="ml-1 focus:outline-none"
-                      onClick={handleSortByRatings}
-                    >
-                      <SwapVertIcon />
-                    </button>
-                  </th>
-                  <th className="px-3 py-2"></th>
-                  <th className="px-3 py-2"></th>
-                  <th className="px-3 py-2"></th>
-                  <th className="px-3 py-2"></th>
-                  <th className="px-3 py-2"></th>
-                </tr>
-              </thead>
-              <tbody>
-                {displayedBlogs.map((businessBlogPost, index) => (
-                  <tr key={index} className="bg-white border-b">
-                    <td className="px-3 py-2 text-base text-center">
-                      {businessBlogPost.title}
-                    </td>
-                    <td className="px-3 py-2 text-base text-center">
-                      {new Date(
-                        businessBlogPost.createdDateTime
-                      ).toLocaleDateString("en-GB")}
-                    </td>
-                    <td className="px-3 py-2 text-base text-center">
-                      {businessBlogPost.blogType
-                        ? businessBlogPost.blogType.subcategoryName
-                        : "Not specified"}
-                    </td>
-
-                    <td className="px-3 py-2 text-base text-center">
-                      <span
-                        className={`rounded-full px-3 py-1 text-base font-semibold ${
-                          businessBlogPost.active
-                            ? "text-white bg-green-500"
-                            : "text-white bg-red-500"
-                        }`}
-                      >
-                        {businessBlogPost.active ? "Active" : "Inactive"}
-                      </span>
-                    </td>
-                    <td className="px-3 py-2 text-base text-center">
-                      <div
-                        className="rating-container flex flex-col"
-                        style={{ minWidth: "100px" }}
-                      >
-                        {businessBlogPost.average !== null &&
-                        typeof businessBlogPost.average.averageRatings ===
-                          "number" &&
-                        typeof businessBlogPost.average.totalNumber ===
-                          "number" ? (
-                          <span
-                            className="rating-text"
-                            style={{ fontWeight: "bold", color: "#0a0a0a" }}
-                          >
-                            {businessBlogPost.average.averageRatings.toFixed(1)}
-                          </span>
-                        ) : (
-                          "No ratings yet"
-                        )}
-                        {businessBlogPost.average &&
-                          businessBlogPost.average.totalNumber > 0 && (
-                            <span
-                              className="rating-count"
-                              style={{ fontSize: "0.8rem", color: "#666" }}
-                            >
-                              ({businessBlogPost.average.totalNumber} rating
-                              {businessBlogPost.average.totalNumber !== 1
-                                ? "s"
-                                : ""}
-                              )
-                            </span>
-                          )}
-                      </div>
-                    </td>
-                    <td className="px-3 py-2 text-base text-center"></td>
-                    <td className="px-3 py-2 justify-center sm:justify-start">
-                      <button
-                        onClick={() => handleViewBlogPost(businessBlogPost.id)}
-                        className="text-white font-bold bg-blue-600 hover:bg-blue-700 rounded-lg text-base px-5 py-2 ml-2 mr-2 text-center"
-                      >
-                        {" "}
-                        View
-                      </button>
-                    </td>
-                    <td className="px-3 py-2 justify-center sm:justify-start">
-                      <button
-                        onClick={() =>
-                          handleUpdateBlogPost(businessBlogPost.id)
-                        }
-                        className="text-white font-bold bg-slate-700 hover:bg-slate-800 rounded-lg text-base px-5 py-2 ml-2 mr-2 text-center"
-                      >
-                        {" "}
-                        Edit
-                      </button>
-                    </td>
-                    <td className="px-3 py-2 justify-center sm:justify-start">
-                      <button
-                        onClick={() =>
-                          handleToggleBlogPostStatus(
-                            businessBlogPost.id,
-                            businessBlogPost.active
-                          )
-                        }
-                        className={`text-white font-bold ${
-                          businessBlogPost.active
-                            ? "bg-red-600 hover:bg-red-700"
-                            : "bg-stone-400 hover:bg-stone-500"
-                        } rounded-lg text-base px-5 py-2 text-center`}
-                      >
-                        {businessBlogPost.active ? "Suspend" : "Unsuspend"}
-                      </button>
-                    </td>
-                    <td className="px-3 py-2 justify-center sm:justify-start">
-                      <button
-                        onClick={() =>
-                          handleDeleteBlogPost(businessBlogPost.id)
-                        }
-                        className="text-white font-bold bg-red-600 hover:bg-red-700 rounded-lg text-base px-5 py-2 ml-2 mr-2 text-center"
-                      >
-                        {" "}
-                        Delete
-                      </button>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-          {/* Mobile View for Tables */}
-          <div className="mx-auto items-center lg:hidden">
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
-              {displayedBlogs.map((businessBlogPost, index) => (
-                <div
-                  key={index}
-                  className="bg-white p-5 h-full flex flex-col border border-gray-300 rounded-2xl shadow"
-                >
-                  {/* Title */}
-                  <p className="px-3 py-2 text-lg">
-                    <span className="font-semibold text-gray-900">Title: </span>
-                    <span className="font-normal text-gray-900">
-                      {businessBlogPost.title}
-                    </span>
-                  </p>
-
-                  {/* Date Published */}
-                  <p className="px-3 py-2 text-lg">
-                    <span className="font-semibold text-gray-900">
-                      Date Published:{" "}
-                    </span>
-                    <span className="font-normal text-gray-900">
-                      {new Date(
-                        businessBlogPost.createdDateTime
-                      ).toLocaleDateString("en-GB")}
-                    </span>
-                  </p>
-
-                  {/* Category */}
-                  <p className="px-3 py-2 text-lg">
-                    <span className="font-semibold text-gray-900">
-                      Category:{" "}
-                    </span>
-                    <span className="font-normal text-gray-900">
-                      {businessBlogPost.blogType
-                        ? businessBlogPost.blogType.subcategoryName
-                        : "Not specified"}
-                    </span>
-                  </p>
-
-                  {/* Status */}
-                  <p className="px-3 py-2 text-lg">
-                    <span className="font-semibold text-gray-900 mr-2">
-                      Status:{" "}
-                    </span>
-                    <span
-                      className={`rounded-full px-3 py-1 text-base font-semibold ${
-                        businessBlogPost.active
-                          ? "text-white bg-green-500"
-                          : "text-white bg-red-500"
-                      }`}
-                    >
-                      {businessBlogPost.active ? "Active" : "Inactive"}
-                    </span>
-                  </p>
-
-                  {/* Ratings */}
-                  <div className="px-3 py-2 text-lg">
-                    <div
-                      className="rating-container flex flex-row gap-2"
-                      style={{ minWidth: "100px" }}
-                    >
-                      <p className="font-semibold text-gray-900">Ratings: </p>
-                      {businessBlogPost.average !== null &&
-                      typeof businessBlogPost.average.averageRatings ===
-                        "number" &&
-                      typeof businessBlogPost.average.totalNumber ===
-                        "number" ? (
-                        <span
-                          className="rating-text"
-                          style={{ fontWeight: "bold", color: "#0a0a0a" }}
-                        >
-                          {businessBlogPost.average.averageRatings.toFixed(1)}
-                        </span>
-                      ) : (
-                        "No ratings yet"
-                      )}
-                      {businessBlogPost.average &&
-                        businessBlogPost.average.totalNumber > 0 && (
-                          <span
-                            className="rating-count"
-                            style={{ fontSize: "0.8rem", color: "#666" }}
-                          >
-                            ({businessBlogPost.average.totalNumber} rating
-                            {businessBlogPost.average.totalNumber !== 1
-                              ? "s"
-                              : ""}
-                            )
-                          </span>
-                        )}
-                    </div>
-                  </div>
-
-                  {/* Buttons */}
-                  <div className="mt-2 flex flex-col space-y-3 items-center">
-                    <button
-                      onClick={() => handleViewBlogPost(businessBlogPost.id)}
-                      className="text-white font-bold bg-blue-600 hover:bg-blue-700 rounded-lg text-base w-full px-5 py-2 ml-2 mr-2 text-center"
-                    >
-                      View
-                    </button>
-                    <button
-                      onClick={() => handleUpdateBlogPost(businessBlogPost.id)}
-                      className="text-white font-bold bg-slate-700 hover:bg-slate-800 rounded-lg text-base w-full px-5 py-2 ml-2 mr-2 text-center"
-                    >
-                      Edit
-                    </button>
-                    <button
-                      onClick={() =>
-                        handleToggleBlogPostStatus(
-                          businessBlogPost.id,
-                          businessBlogPost.active
-                        )
-                      }
-                      className={`text-white font-bold  ${
-                        businessBlogPost.active
-                          ? "bg-red-600 hover:bg-red-700"
-                          : "bg-stone-400 hover:bg-stone-500"
-                      } focus:ring-4 focus:outline-none focus:ring-blue-300 rounded-lg text-base px-5 py-2.5 w-full ml-2 mr-2 text-center`}
-                    >
-                      {businessBlogPost.active ? "Suspend" : "Unsuspend"}
-                    </button>
-                    <button
-                      onClick={() => handleDeleteBlogPost(blogPostId.id)}
-                      className="text-white font-bold bg-red-600 hover:bg-red-700 rounded-lg text-base px-5 py-2.5 w-full ml-2 mr-2 text-center"
-                    >
-                      Delete
-                    </button>
-                  </div>
+          ) : (
+            <>
+              <h1 className="text-6xl text-gray-900 p-3 mb-4 font-bold text-center sm:text-center">
+                My Blog Posts
+              </h1>
+              <div>
+                <button className="text-white bg-blue-600 hover:bg-blue-700 rounded-lg text-base font-semibold px-5 py-2.5 mr-7 mb-4 text-center">
+                  <Link href="/businessUser/businessBlogPost/createBusinessBlogPost">
+                    Create Blog Post
+                  </Link>
+                </button>
+              </div>
+              {/* Search section */}
+              <div className="flex flex-col mb-4 md:flex-row md:mr-2">
+                <div className="relative mb-3 md:mb-8 md:mr-2">
+                  <input
+                    type="text"
+                    id="blogSearch"
+                    name="blogSearch"
+                    value={searchTerm}
+                    onChange={(e) => setSearchTerm(e.target.value)}
+                    placeholder="Search by title"
+                    className="mr-2 p-2 rounded-lg border w-full md:w-auto pl-10"
+                  />
+                  {/* Search icon */}
+                  <span className="absolute inset-y-0 left-0 flex items-center pl-2">
+                    <SearchIcon />
+                  </span>
                 </div>
-              ))}
-            </div>
-          </div>
+                {/* Filter dropdown */}
+                <div className="relative md:ml-auto">
+                  <label
+                    htmlFor="categoryFilter"
+                    className="ml-2 mr-2 font-2xl text-gray-900"
+                  >
+                    Filter By:
+                  </label>
+                  <select
+                    id="categoryFilter"
+                    onChange={(e) => setCategoryFilter(e.target.value)}
+                    className="p-2 rounded-lg border"
+                  >
+                    <option value="ALL">All Categories</option>
+                    {categories.map((category, index) => (
+                      <option
+                        key={index}
+                        value={category.id}
+                        className="text-black"
+                      >
+                        {category.subcategoryName}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+              </div>
+              {/* Table of blog posts */}
+              <div className="overflow-x-auto rounded-lg hidden lg:block">
+                <table className="min-w-full rounded-lg border-zinc-200 border-2">
+                  <thead className="bg-zinc-700 font-normal text-white border-gray-800 border-2">
+                    <tr className="text-center text-lg">
+                      <th className="px-3 py-2">
+                        Blog Post Title
+                        <button
+                          className="ml-1 focus:outline-none"
+                          onClick={handleSortAlphabetically}
+                        >
+                          <SwapVertIcon />
+                        </button>
+                      </th>
+                      <th className="px-3 py-2">
+                        Date Published
+                        <button
+                          className="ml-1 focus:outline-none"
+                          onClick={handleSortByDatePublished}
+                        >
+                          <SwapVertIcon />
+                        </button>
+                      </th>
+                      <th className="px-3 py-2">Category</th>
+                      <th className="px-3 py-2">
+                        Status
+                        <button
+                          className="ml-1 focus:outline-none"
+                          onClick={handleSortByStatus}
+                        >
+                          <SwapVertIcon />
+                        </button>
+                      </th>
+                      <th className="px-3 py-2">
+                        Ratings
+                        <button
+                          className="ml-1 focus:outline-none"
+                          onClick={handleSortByRatings}
+                        >
+                          <SwapVertIcon />
+                        </button>
+                      </th>
+                      <th className="px-3 py-2"></th>
+                      <th className="px-3 py-2"></th>
+                      <th className="px-3 py-2"></th>
+                      <th className="px-3 py-2"></th>
+                      <th className="px-3 py-2"></th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {displayedBlogs.map((businessBlogPost, index) => (
+                      <tr key={index} className="bg-white border-b">
+                        <td className="px-3 py-2 text-base text-center">
+                          {businessBlogPost.title}
+                        </td>
+                        <td className="px-3 py-2 text-base text-center">
+                          {new Date(
+                            businessBlogPost.createdDateTime
+                          ).toLocaleDateString("en-GB")}
+                        </td>
+                        <td className="px-3 py-2 text-base text-center">
+                          {businessBlogPost.blogType
+                            ? businessBlogPost.blogType.subcategoryName
+                            : "Not specified"}
+                        </td>
+
+                        <td className="px-3 py-2 text-base text-center">
+                          <span
+                            className={`rounded-full px-3 py-1 text-base font-semibold ${
+                              businessBlogPost.active
+                                ? "text-white bg-green-500"
+                                : "text-white bg-red-500"
+                            }`}
+                          >
+                            {businessBlogPost.active ? "Active" : "Inactive"}
+                          </span>
+                        </td>
+                        <td className="px-3 py-2 text-base text-center">
+                          <div
+                            className="rating-container flex flex-col"
+                            style={{ minWidth: "100px" }}
+                          >
+                            {businessBlogPost.average !== null &&
+                            typeof businessBlogPost.average.averageRatings ===
+                              "number" &&
+                            typeof businessBlogPost.average.totalNumber ===
+                              "number" ? (
+                              <span
+                                className="rating-text"
+                                style={{ fontWeight: "bold", color: "#0a0a0a" }}
+                              >
+                                {businessBlogPost.average.averageRatings.toFixed(
+                                  1
+                                )}
+                              </span>
+                            ) : (
+                              "No ratings yet"
+                            )}
+                            {businessBlogPost.average &&
+                              businessBlogPost.average.totalNumber > 0 && (
+                                <span
+                                  className="rating-count"
+                                  style={{ fontSize: "0.8rem", color: "#666" }}
+                                >
+                                  ({businessBlogPost.average.totalNumber} rating
+                                  {businessBlogPost.average.totalNumber !== 1
+                                    ? "s"
+                                    : ""}
+                                  )
+                                </span>
+                              )}
+                          </div>
+                        </td>
+                        <td className="px-3 py-2 text-base text-center"></td>
+                        <td className="px-3 py-2 justify-center sm:justify-start">
+                          <button
+                            onClick={() =>
+                              handleViewBlogPost(businessBlogPost.id)
+                            }
+                            className="text-white font-bold bg-blue-600 hover:bg-blue-700 rounded-lg text-base px-5 py-2 ml-2 mr-2 text-center"
+                          >
+                            {" "}
+                            View
+                          </button>
+                        </td>
+                        <td className="px-3 py-2 justify-center sm:justify-start">
+                          <button
+                            onClick={() =>
+                              handleUpdateBlogPost(businessBlogPost.id)
+                            }
+                            className="text-white font-bold bg-slate-700 hover:bg-slate-800 rounded-lg text-base px-5 py-2 ml-2 mr-2 text-center"
+                          >
+                            {" "}
+                            Edit
+                          </button>
+                        </td>
+                        <td className="px-3 py-2 justify-center sm:justify-start">
+                          <button
+                            onClick={() =>
+                              handleToggleBlogPostStatus(
+                                businessBlogPost.id,
+                                businessBlogPost.active
+                              )
+                            }
+                            className={`text-white font-bold ${
+                              businessBlogPost.active
+                                ? "bg-red-600 hover:bg-red-700"
+                                : "bg-stone-400 hover:bg-stone-500"
+                            } rounded-lg text-base px-5 py-2 text-center`}
+                          >
+                            {businessBlogPost.active ? "Suspend" : "Unsuspend"}
+                          </button>
+                        </td>
+                        <td className="px-3 py-2 justify-center sm:justify-start">
+                          <button
+                            onClick={() =>
+                              handleDeleteBlogPost(businessBlogPost.id)
+                            }
+                            className="text-white font-bold bg-red-600 hover:bg-red-700 rounded-lg text-base px-5 py-2 ml-2 mr-2 text-center"
+                          >
+                            {" "}
+                            Delete
+                          </button>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+              {/* Mobile View for Tables */}
+              <div className="mx-auto items-center lg:hidden">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
+                  {displayedBlogs.map((businessBlogPost, index) => (
+                    <div
+                      key={index}
+                      className="bg-white p-5 h-full flex flex-col border border-gray-300 rounded-2xl shadow"
+                    >
+                      {/* Title */}
+                      <p className="px-3 py-2 text-lg">
+                        <span className="font-semibold text-gray-900">
+                          Title:{" "}
+                        </span>
+                        <span className="font-normal text-gray-900">
+                          {businessBlogPost.title}
+                        </span>
+                      </p>
+
+                      {/* Date Published */}
+                      <p className="px-3 py-2 text-lg">
+                        <span className="font-semibold text-gray-900">
+                          Date Published:{" "}
+                        </span>
+                        <span className="font-normal text-gray-900">
+                          {new Date(
+                            businessBlogPost.createdDateTime
+                          ).toLocaleDateString("en-GB")}
+                        </span>
+                      </p>
+
+                      {/* Category */}
+                      <p className="px-3 py-2 text-lg">
+                        <span className="font-semibold text-gray-900">
+                          Category:{" "}
+                        </span>
+                        <span className="font-normal text-gray-900">
+                          {businessBlogPost.blogType
+                            ? businessBlogPost.blogType.subcategoryName
+                            : "Not specified"}
+                        </span>
+                      </p>
+
+                      {/* Status */}
+                      <p className="px-3 py-2 text-lg">
+                        <span className="font-semibold text-gray-900 mr-2">
+                          Status:{" "}
+                        </span>
+                        <span
+                          className={`rounded-full px-3 py-1 text-base font-semibold ${
+                            businessBlogPost.active
+                              ? "text-white bg-green-500"
+                              : "text-white bg-red-500"
+                          }`}
+                        >
+                          {businessBlogPost.active ? "Active" : "Inactive"}
+                        </span>
+                      </p>
+
+                      {/* Ratings */}
+                      <div className="px-3 py-2 text-lg">
+                        <div
+                          className="rating-container flex flex-row gap-2"
+                          style={{ minWidth: "100px" }}
+                        >
+                          <p className="font-semibold text-gray-900">
+                            Ratings:{" "}
+                          </p>
+                          {businessBlogPost.average !== null &&
+                          typeof businessBlogPost.average.averageRatings ===
+                            "number" &&
+                          typeof businessBlogPost.average.totalNumber ===
+                            "number" ? (
+                            <span
+                              className="rating-text"
+                              style={{ fontWeight: "bold", color: "#0a0a0a" }}
+                            >
+                              {businessBlogPost.average.averageRatings.toFixed(
+                                1
+                              )}
+                            </span>
+                          ) : (
+                            "No ratings yet"
+                          )}
+                          {businessBlogPost.average &&
+                            businessBlogPost.average.totalNumber > 0 && (
+                              <span
+                                className="rating-count"
+                                style={{ fontSize: "0.8rem", color: "#666" }}
+                              >
+                                ({businessBlogPost.average.totalNumber} rating
+                                {businessBlogPost.average.totalNumber !== 1
+                                  ? "s"
+                                  : ""}
+                                )
+                              </span>
+                            )}
+                        </div>
+                      </div>
+
+                      {/* Buttons */}
+                      <div className="mt-2 flex flex-col space-y-3 items-center">
+                        <button
+                          onClick={() =>
+                            handleViewBlogPost(businessBlogPost.id)
+                          }
+                          className="text-white font-bold bg-blue-600 hover:bg-blue-700 rounded-lg text-base w-full px-5 py-2 ml-2 mr-2 text-center"
+                        >
+                          View
+                        </button>
+                        <button
+                          onClick={() =>
+                            handleUpdateBlogPost(businessBlogPost.id)
+                          }
+                          className="text-white font-bold bg-slate-700 hover:bg-slate-800 rounded-lg text-base w-full px-5 py-2 ml-2 mr-2 text-center"
+                        >
+                          Edit
+                        </button>
+                        <button
+                          onClick={() =>
+                            handleToggleBlogPostStatus(
+                              businessBlogPost.id,
+                              businessBlogPost.active
+                            )
+                          }
+                          className={`text-white font-bold  ${
+                            businessBlogPost.active
+                              ? "bg-red-600 hover:bg-red-700"
+                              : "bg-stone-400 hover:bg-stone-500"
+                          } focus:ring-4 focus:outline-none focus:ring-blue-300 rounded-lg text-base px-5 py-2.5 w-full ml-2 mr-2 text-center`}
+                        >
+                          {businessBlogPost.active ? "Suspend" : "Unsuspend"}
+                        </button>
+                        <button
+                          onClick={() => handleDeleteBlogPost(blogPostId.id)}
+                          className="text-white font-bold bg-red-600 hover:bg-red-700 rounded-lg text-base px-5 py-2.5 w-full ml-2 mr-2 text-center"
+                        >
+                          Delete
+                        </button>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </>
+          )}
         </>
       )}
     </div>

@@ -453,6 +453,122 @@ VALUES
         'Author: YuliiaKa, Designed by Freepik',
         2 -- blog_type_id kitchenware                                                                                                                                                    
     ),
+    ( 
+        '41'
+        '2023-05-21 11:00:00',
+        'MasterfulRecipes',
+        'Delectable Desserts: A Sweet Symphony from MasterfulRecipes',
+        'Satisfy your sweet cravings with MasterfulRecipes! Indulge in a sweet symphony of flavors with our collection of cookbooks that includes delectable desserts, meticulously crafted to delight your taste buds.',
+        1, -- userId 
+        'https://img.freepik.com/free-photo/hot-chocolate-with-cake-muffin_23-2148019542.jpg?w=996&t=st=1707302344~exp=1707302944~hmac=82f7cb983f2f737d698d436d0eccdeea47fe5ea3a0525d8da1f08aaec130f386',
+        'Designed by Freepik',
+        1 -- blog_type_id cookbook                                                                                                                                                     
+    ),
+    ( 
+        '42'
+        '2023-05-21 11:00:00',
+        'CuisineCrafters',
+        'Elevate Your Cooking Experience with CuisineCrafters Kitchenware',
+        'Unleash your culinary creativity with CuisineCrafters! Elevate your cooking experience with our premium kitchenware collection, designed to inspire home chefs to create delicious masterpieces.',
+        1, -- userId 
+        'https://images.unsplash.com/photo-1580929753603-10519c6e480a?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+        'Author: 🇸🇮 Janko Ferlič, Designed by Unsplash',
+        2 -- blog_type_id kitchenware                                                                                                                                                      
+    ),
+    ( 
+        '43'
+        '2023-05-22 11:00:00',
+        'EpicureanEats',
+        'Gourmet Delights: Exquisite Recipes from EpicureanEats',
+        'Embark on a culinary journey with EpicureanEats! Discover exquisite recipes that tantalize the taste buds and elevate everyday meals into gourmet delights.',
+        1, -- userId 
+        'https://images.unsplash.com/photo-1616669944447-d65d41a222bd?q=80&w=2054&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+        'Author: Delightin Dee, Designed by Unsplash',
+        1 -- blog_type_id cookbook                                                                                                                                                      
+    ),
+    ( 
+        '44'
+        '2023-05-22 12:00:00',
+        'GlobalGastronomy',
+        'Around the World in 10 Dishes: GlobalGastronomy Cookbook',
+        'Embark on a culinary adventure with GlobalGastronomy! Explore diverse cuisines from around the world through our collection of 10 authentic dishes that capture the essence of global gastronomy.',
+        1, -- userId 
+        'https://img.freepik.com/free-photo/traditional-mexican-food-world-tourism-day_23-2149114019.jpg?w=996&t=st=1707303173~exp=1707303773~hmac=3b573dc608b22f7a3f6342c1b111476c2116f01692ac60a011ca80df3018ff8b',
+        'Designed by Freepik',
+        1 -- blog_type_id cookbook                                                                                                                                                      
+    ),
+    ( 
+        '45'
+        '2024-01-22 12:00:00',
+        'ModernKitchen',
+        'Sleek and Stylish: ModernKitchen Contemporary Cookware Collection',
+        'Upgrade your kitchen with contemporary cookware collection! Discover sleek and stylish pots, pans, and gadgets that bring modern elegance to your culinary space.',
+        1, -- userId 
+        'https://img.freepik.com/free-vector/kitchen-tools-with-vegetables_1284-11446.jpg?w=740&t=st=1707303302~exp=1707303902~hmac=3aa385b0a87b1650c345c1d1de3e8e23e0eb6cad6406d9a3d7bf4a6b016a4c12',
+        'Author: Macrovector, Designed by Freepik',
+        2 -- blog_type_id kitchenware                                                                                                                                                       
+    ),
+    ( 
+        '46'
+        '2024-01-22 12:00:00',
+        'SavorTheFlavors',
+        'Flavors of the Mediterranean: SavorTheFlavors Cookbook',
+        'Experience the taste of the Mediterranean with SavorTheFlavors! Delight in the rich flavors and vibrant ingredients of Mediterranean cuisine with our collection of authentic recipes.',
+        1, -- userId 
+        'https://plus.unsplash.com/premium_photo-1667215177072-6539146bc577?q=80&w=1964&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+        'Author: Marios Gkortsilas, Designed by Unsplash',
+        1 -- blog_type_id cookbook                                                                                                                                                       
+    ),
+    ( 
+        '47'
+        '2024-01-22 12:00:00',
+        'MasterChefTools',
+        'MasterChefTools: Tools of the Trade for Culinary Mastery',
+        'Equip yourself with the tools of culinary mastery from MasterChefTools! Discover professional-grade kitchenware and gadgets that empower you to unleash your inner chef.',
+        1, -- userId 
+        'https://images.unsplash.com/photo-1556909114-44e3e70034e2?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+        'Author: Becca Tapert, Designed by Unsplash',
+        2 -- blog_type_id kitchenware                                                                                                                                                       
+    ),
+    ( 
+        '48'
+        '2024-01-22 12:00:00',
+        'Caraway',
+        'Enhance Your Cooking Experience with Caraway Kitchenware',
+        'Discover the joy of cooking with Caraway! Our premium kitchenware sets are designed to make cooking easier, healthier, and more enjoyable. From non-stick ceramic cookware to ergonomic utensils, each product is crafted with quality and functionality in mind, ensuring that every meal you prepare is a culinary masterpiece.',
+        1, -- userId 
+        'https://images.unsplash.com/photo-1556910148-3adb7f0c665a?q=80&w=1887&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+        'Author: Edgar Castrejon, Designed by Unsplash',
+        2 -- blog_type_id kitchenware                                                                                                                                                       
+    ),
+    ( 
+        '49'
+        '2024-01-29 12:00:00',
+        'EpicureanReads',
+        'Savor the Flavor: EpicureanReads Cookbook Collection',
+        'Embark on a culinary journey with EpicureanReads! Explore our curated collection of cookbooks filled with tantalizing recipes and culinary inspiration. From gourmet meals to everyday delights, our cookbooks are your guide to savoring the flavor of every dish.',
+        1, -- userId 
+        'https://images.unsplash.com/photo-1588960952097-4cf35f0a0306?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+        'Author: Brett Jordan, Designed by Unsplash',
+         1 -- blog_type_id cookbook                                                                                                                                                      
+    ),
+    ( 
+        '50'
+        '2023-01-29 12:00:00',
+        'HomeChefHub',
+        'Clever Kitchen Hacks Every Home Chef Should Know',
+        'Unlock the secrets of the kitchen with these 10 clever hacks! From reviving wilted herbs to rescuing over-salted dishes, these kitchen tricks will save you time and hassle while elevating your cooking game. Discover ingenious ways to organize your pantry, simplify meal prep, and make the most of your kitchen space. Whether you are a novice cook or a seasoned chef, these hacks will help you navigate the kitchen with confidence and creativity.',
+        1, -- userId 
+        'https://img.freepik.com/free-vector/woman-standing-near-stove-kitchen-holding-spoon_74855-20425.jpg?w=826&t=st=1707304750~exp=1707305350~hmac=0202000d1979999c2442a80d81a6c4ab54706522d10050d0ad75bd0a4bcd0945',
+        'Author: pch.vector, Designed by Freepik',
+        3 -- blog_type_id for miscellaneous                                                                                                                                                      
+    ),
+
+
+
+
+
+
 
 
     --  Blog review rating
@@ -510,4 +626,14 @@ VALUE
     ('This is very awesome',                                      5.0, '7', 37),
     ('The blog post is very descriptive and informative.',        5.0, '8', 38),
     ('I love this blog post!',                                    4.0, '9', 39),
-    ('This blog is very useful',                                  5.0, '10', 40);
+    ('This blog is very useful',                                  5.0, '10', 40),
+    ('I love this blog post!',                                    5.0, '12', 41),
+    ('This is very awesome',                                      5.0, '7', 42),
+    ('The blog post is very descriptive and informative.',        5.0, '8', 43),
+    ('I love this blog post!',                                    4.0, '9', 44),
+    ('This blog is very useful',                                  5.0, '10', 45),
+    ('I love this blog post!',                                    5.0, '12', 46),
+    ('This is very awesome',                                      5.0, '7', 47),
+    ('The blog post is very descriptive and informative.',        5.0, '8', 48),
+    ('I love this blog post!',                                    4.0, '9', 49),
+    ('This blog is very useful',                                  5.0, '10', 50);

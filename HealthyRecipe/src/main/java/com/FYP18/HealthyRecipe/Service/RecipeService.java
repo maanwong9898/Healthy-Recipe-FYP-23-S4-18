@@ -225,6 +225,8 @@ public class RecipeService {
 
     // havent incldued the checking where they have NO DIETARY PREFERENCE // NO HEALTH GOAL // NO ALLERGIES
     // so not quite done
+
+    // use in Registered User's Landing page ( limit to 3) and Registered's user's Recipe page, (no limitation as of now)
     public List<RecipeDTO> findRecipeDTOsByAllergiesAndDP(String userId) 
     { 
         RegisteredUser ru = ruRepo.findById(userId).get();
@@ -233,8 +235,19 @@ public class RecipeService {
         Set<Long> ids = allergies.stream()
                         .map(Allergies::getId)
                         .collect(Collectors.toSet());
+ 
+        List<RecipeDTO> toReturn; 
+        if(ids.size() == 0)
+        {
+            toReturn = dp == null ? recipeRepository.findRandomRecipes(3):
+                                    recipeRepository.findRecipeDTOsByDietaryPreferences(dp.getId());
+        }
+        else
+        {
+           toReturn = dp == null ? recipeRepository.findRecipeDTOsByAllergies(ids) : 
+                                    recipeRepository.findRecipeDTOsByAllergiesAndDP(ids, dp.getId());
+        }
 
-        List<RecipeDTO> toReturn = recipeRepository.findRecipeDTOsByAllergiesAndDP(ids, dp.getId());
         if(toReturn.size()  < 3)
         {
             int count  = 3 - toReturn.size();
@@ -248,24 +261,25 @@ public class RecipeService {
             toReturn.addAll(addOn); 
         }
         HealthGoal hg = ru.getHealthGoal();
-
-        if(hg.getId() == 1)
+        if(hg != null)
         {
-            toReturn = toReturn.stream()
-            .sorted(Comparator
-            .comparing((RecipeDTO dto) -> dto.getCarbs() == null ? 0 : dto.getCarbs(), Comparator.reverseOrder())
-            .thenComparing((RecipeDTO dto) -> dto.getProtein() == null ? 0 : dto.getProtein(), Comparator.reverseOrder()))
-            .collect(Collectors.toList());
-        }
+            if(hg.getId() == 1)
+            {
+                toReturn = toReturn.stream()
+                .sorted(Comparator
+                .comparing((RecipeDTO dto) -> dto.getCarbs() == null ? 0 : dto.getCarbs(), Comparator.reverseOrder())
+                .thenComparing((RecipeDTO dto) -> dto.getProtein() == null ? 0 : dto.getProtein(), Comparator.reverseOrder()))
+                .collect(Collectors.toList());
+            }
 
-        else if (hg.getId() == 3)
-        {
-            toReturn = toReturn.stream()
-            .sorted(Comparator
-                .comparing((RecipeDTO dto) ->  dto.getFibre() == null? 0 : dto.getFibre(), Comparator.reverseOrder()))
-            .collect(Collectors.toList());
+            else if (hg.getId() == 3)
+            {
+                toReturn = toReturn.stream()
+                .sorted(Comparator
+                    .comparing((RecipeDTO dto) ->  dto.getFibre() == null? 0 : dto.getFibre(), Comparator.reverseOrder()))
+                .collect(Collectors.toList());
+            }   
         }
-  
         return toReturn;
     }
 

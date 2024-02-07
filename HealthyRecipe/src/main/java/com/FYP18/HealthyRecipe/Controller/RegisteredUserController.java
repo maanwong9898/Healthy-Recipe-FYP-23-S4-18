@@ -97,7 +97,7 @@ public class RegisteredUserController {
         return service.getMealPlans(healthGoalId);
     }
      
- 
+    
     @GetMapping("/findRecipeDTOsByAllergiesAndDP/{userId}")
     public List<RecipeDTO> findRecipeDTOsByAllergiesAndDP(@PathVariable String userId)
     {

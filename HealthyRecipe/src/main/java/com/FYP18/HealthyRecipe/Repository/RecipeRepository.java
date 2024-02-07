@@ -82,6 +82,10 @@ public interface RecipeRepository extends JpaRepository<Recipe, Long> {
     List<RecipeDTO> findRecipeDTOsByAllergiesAndDP(@Param("allergies") Set<Long> allergies, @Param("dp") Long dp);
 
 
+    @Query(value = "SELECT DISTINCT r.title as title, r.publisher AS publisher, r.description AS description, r.id AS id, r.img AS img, r.calories AS calories, r.protein AS protein, r.fat AS fat, r.fibre AS fibre, r.sodium AS sodium, r.carbs AS carbs "
+    + "FROM Recipe r JOIN r.allergies al WHERE al.id NOT IN (:allergies)")
+    List<RecipeDTO> findRecipeDTOsByAllergies(@Param("allergies") Set<Long> allergies);
+
     // @Query(value = "SELECT DISTINCT r.title as title, r.publisher AS publisher, r.description AS description, r.id AS id, r.img AS img, r.calories AS calories, r.protein AS protein, r.fat AS fat, r.fibre AS fibre, r.sodium AS sodium, r.carbs AS carbs "
     // + "FROM Recipe r JOIN r.allergies al WHERE al.id NOT IN (:allergies) AND r.dietaryPreferencesId = :dp  LIMIT :count")
     // List<RecipeDTO> findRecipeDTOsByAllergiesAndDP(@Param("allergies") Set<Long> allergies, @Param("dp") Long dp, Integer count);

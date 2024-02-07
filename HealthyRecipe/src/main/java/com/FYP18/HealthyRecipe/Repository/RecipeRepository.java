@@ -18,6 +18,7 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 
 import java.util.List;
+import java.util.Set;
 
 public interface RecipeRepository extends JpaRepository<Recipe, Long> {
 
@@ -70,6 +71,30 @@ public interface RecipeRepository extends JpaRepository<Recipe, Long> {
     
     @Query(value = "SELECT r.title AS title, r.publisher AS publisher, r.description AS description, r.id AS id, r.img AS img, r.calories AS calories, r.protein AS protein, r.fat AS fat, r.fibre AS fibre, r.sodium AS sodium, r.carbs AS carbs FROM Recipe r WHERE r.mealTypeId = :mealType")
     List<RecipeDTO> findRecipeDTOsByMealType(Long mealType);
+    
+    // @Query("SELECT r.title AS title FROM Recipe r JOIN r.mealTypes mt WHERE mt.id IN (:mealTypes)")
+    // List<RecipeDTO> findRecipeDTOsByMealTypes(@Param("mealTypes") List<Long> mealTypes);
+    
+    // @Query(value = "SELECT r.title as title FROM Recipe r JOIN Allergies al ON al.id = r.allergies.id WHERE al.id NOT IN (:allergies) AND r.dietaryPreferencesId = :dp ORDER BY title")
+ 
+    @Query(value = "SELECT DISTINCT r.title as title, r.publisher AS publisher, r.description AS description, r.id AS id, r.img AS img, r.calories AS calories, r.protein AS protein, r.fat AS fat, r.fibre AS fibre, r.sodium AS sodium, r.carbs AS carbs "
+    + "FROM Recipe r JOIN r.allergies al WHERE al.id NOT IN (:allergies) AND r.dietaryPreferencesId = :dp")
+    List<RecipeDTO> findRecipeDTOsByAllergiesAndDP(@Param("allergies") Set<Long> allergies, @Param("dp") Long dp);
+
+
+    // @Query(value = "SELECT DISTINCT r.title as title, r.publisher AS publisher, r.description AS description, r.id AS id, r.img AS img, r.calories AS calories, r.protein AS protein, r.fat AS fat, r.fibre AS fibre, r.sodium AS sodium, r.carbs AS carbs "
+    // + "FROM Recipe r JOIN r.allergies al WHERE al.id NOT IN (:allergies) AND r.dietaryPreferencesId = :dp  LIMIT :count")
+    // List<RecipeDTO> findRecipeDTOsByAllergiesAndDP(@Param("allergies") Set<Long> allergies, @Param("dp") Long dp, Integer count);
+
+    // SELECT id FROM RECIPE WHERE id NOT IN (1) ORDER BY RAND() LIMIT 3;
+
+    @Query(value= "SELECT DISTINCT r.title as title, r.publisher AS publisher, r.description AS description, r.id AS id, r.img AS img, r.calories AS calories, r.protein AS protein, r.fat AS fat, r.fibre AS fibre, r.sodium AS sodium, r.carbs AS carbs " 
+     + "FROM Recipe r WHERE r.id NOT IN (:ids) ORDER BY RAND() LIMIT :count")
+    List<RecipeDTO> findRandomRecipes(@Param("ids") List<Long> ids, Integer count);
+ 
+    @Query(value= "SELECT DISTINCT r.title as title, r.publisher AS publisher, r.description AS description, r.id AS id, r.img AS img, r.calories AS calories, r.protein AS protein, r.fat AS fat, r.fibre AS fibre, r.sodium AS sodium, r.carbs AS carbs " 
+     + "FROM Recipe r ORDER BY RAND() LIMIT :count")
+    List<RecipeDTO> findRandomRecipes(Integer count);
     // @Column(name = "dietaryPreference", nullable = true)
     // private Long dietaryPreferencesId;
     

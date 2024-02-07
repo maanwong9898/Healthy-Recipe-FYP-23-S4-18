@@ -71,6 +71,7 @@ public class LandingPage {
     {
         return blogService.findBlogByBlogType(id);
     }
+    
     @Autowired
     private RecipeService recipeService;
 
@@ -80,7 +81,7 @@ public class LandingPage {
         return recipeService.getMostPopularRecipes();
     }
 
-     @GetMapping("/findRecipeDTOsByDietaryPreferences")
+    @GetMapping("/findRecipeDTOsByDietaryPreferences")
     public List<RecipeDTO> findRecipeDTOsByDietaryPreferences(@RequestBody DietaryPreferences dp)
     {
        return recipeService.findRecipeDTOsByDietaryPreferences(dp);

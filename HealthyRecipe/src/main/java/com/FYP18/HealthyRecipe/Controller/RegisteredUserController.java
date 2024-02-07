@@ -11,12 +11,15 @@ import org.springframework.web.bind.annotation.RestController;
 import com.FYP18.HealthyRecipe.DTO.AgeGroupRequest;
 import com.FYP18.HealthyRecipe.DTO.DietaryPreferenceDemographic;
 import com.FYP18.HealthyRecipe.DTO.MealPlanDTO;
+import com.FYP18.HealthyRecipe.DTO.RecipeDTO;
 import com.FYP18.HealthyRecipe.DTO.WeightDTO;
 import com.FYP18.HealthyRecipe.Entity.MealPlan;
 import com.FYP18.HealthyRecipe.Entity.RegisteredUser;
 import com.FYP18.HealthyRecipe.Entity.UserInfoOverTime;
+import com.FYP18.HealthyRecipe.Entity.Categories.Allergies;
 import com.FYP18.HealthyRecipe.Repository.RegisteredUserRepository;
 import com.FYP18.HealthyRecipe.Repository.UserInfoRepository;
+import com.FYP18.HealthyRecipe.Service.RecipeService;
 import com.FYP18.HealthyRecipe.Service.RegisteredUserService;
 
 import org.springframework.web.bind.annotation.GetMapping;
@@ -41,6 +44,8 @@ public class RegisteredUserController {
     @Autowired
     private RegisteredUserService service;
 
+    @Autowired
+    private RecipeService recipeService;
     //   @DeleteMapping("/delete/{id}")
     // public ResponseEntity<?> deleteBlog(@PathVariable("id") long id )
   
@@ -91,6 +96,11 @@ public class RegisteredUserController {
     {
         return service.getMealPlans(healthGoalId);
     }
-
-
+     
+ 
+    @GetMapping("/findRecipeDTOsByAllergiesAndDP/{userId}")
+    public List<RecipeDTO> findRecipeDTOsByAllergiesAndDP(@PathVariable String userId)
+    {
+        return recipeService.findRecipeDTOsByAllergiesAndDP(userId);
+    }
 }

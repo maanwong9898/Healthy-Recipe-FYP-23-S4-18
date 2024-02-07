@@ -306,7 +306,7 @@ const ViewMealPlan = ({ params }) => {
 
             {/* Recipes Carousel Section - Large Screen */}
             {mealPlan?.recipes && mealPlan.recipes.length > 0 ? (
-              <div className="grid lg:grid-cols-3 gap-4 relative">
+              <div className="grid grid-cols-3 gap-4 relative">
                 {/* Render recipe cards here */}
                 {renderRecipeCards()}
                 {/* Position arrows */}
@@ -342,8 +342,8 @@ const ViewMealPlan = ({ params }) => {
             <p className="font-sans font-bold text-4xl text-gray-900 mb-4 md:mt-8 ml-4">
               Suggested Recipes
             </p>
-            <div className="flex justify-between items-center mb-4 md:mt-8 ml-4">
-              <div></div> {/* Empty div for spacing */}
+            {/* <div className="flex justify-between items-center mb-4 md:mt-8 ml-4">
+              <div></div> 
               <div className="flex gap-4">
                 <button
                   onClick={prevRecipe}
@@ -365,11 +365,31 @@ const ViewMealPlan = ({ params }) => {
                   />
                 </button>
               </div>
-            </div>
+            </div> */}
             {mealPlan?.recipes && mealPlan.recipes.length > 0 ? (
-              <div className="grid grid-cols-1 gap-4 justify-center items-center">
+              <div className="grid grid-cols-1 gap-4 justify-center items-center relative">
                 {/* Render recipe cards here */}
                 {renderMobileRecipeCards()}
+
+                {/* Position arrows */}
+                <button
+                  onClick={prevRecipe}
+                  className="absolute top-1/2 left-0 transform rounded-full bg-orange-500 hover:bg-orange-700 transition duration-300 ease-in-out"
+                  style={{ zIndex: 1 }}
+                >
+                  <ChevronLeftIcon
+                    style={{ fontSize: "2.5rem", color: "white" }}
+                  />
+                </button>
+                <button
+                  onClick={nextRecipe}
+                  className="absolute top-1/2 right-0 transform rounded-full bg-orange-500 hover:bg-orange-700 transition duration-300 ease-in-out"
+                  style={{ zIndex: 1 }}
+                >
+                  <ChevronRightIcon
+                    style={{ fontSize: "2.5rem", color: "white" }}
+                  />
+                </button>
               </div>
             ) : (
               <p className="text-center">No suggested recipes.</p>

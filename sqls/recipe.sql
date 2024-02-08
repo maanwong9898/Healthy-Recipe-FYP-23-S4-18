@@ -1260,7 +1260,45 @@ VALUES
 -- Insert Into recipe_allergies (id, allergy_id) VALUES (1, 3);
 -- Insert Into recipe_allergies (id, allergy_id) VALUES (2, 2);
 -- Insert Into recipe_allergies (id, allergy_id) VALUES (2, 7);
-
+Insert Into recipe_allergies
+(id, allergy_id)
+VALUES
+    (1, 9),
+    (2, 1),
+    (2, 8),
+    (2, 9),
+    (3, 1),
+    (4, 5),
+    (4, 7),
+    (5, 5),
+    (5, 8),
+    (6, 8),
+    (7, 3),
+    (7, 7),
+    (8, 8),
+    (9, 1),
+    (9, 7),
+    (10, 8),
+    (11, 3),
+    (11, 8),
+    (12, 8),
+    (13, 3),
+    (13, 6),
+    (13, 7),
+    (13, 8),
+    (14, 3),
+    (15, 5),
+    (16, 1),
+    (16, 8),
+    (16, 9),
+    (17, 1),
+    (17, 3),
+    (17, 4),
+    (17, 9),
+    (18, 3),
+    (19, ),
+    (20, 4);
+    
 
 
 

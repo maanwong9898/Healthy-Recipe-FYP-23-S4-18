@@ -1,10 +1,13 @@
 package com.FYP18.HealthyRecipe.Service;
+ 
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
- 
+import java.util.Set;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired; 
 import org.springframework.stereotype.Service;
@@ -19,10 +22,14 @@ import com.FYP18.HealthyRecipe.DTO.UserInfoDTO;
 import com.FYP18.HealthyRecipe.Entity.Recipe;
 import com.FYP18.HealthyRecipe.Entity.RecipeReviewRating;
 import com.FYP18.HealthyRecipe.Entity.RecipeReviewRatingId;
+import com.FYP18.HealthyRecipe.Entity.RegisteredUser;
+import com.FYP18.HealthyRecipe.Entity.Categories.Allergies;
 import com.FYP18.HealthyRecipe.Entity.Categories.DietaryPreferences;
+import com.FYP18.HealthyRecipe.Entity.Categories.HealthGoal;
 import com.FYP18.HealthyRecipe.Entity.Categories.MealType;
 import com.FYP18.HealthyRecipe.Repository.RecipeRepository;
 import com.FYP18.HealthyRecipe.Repository.RecipeReviewRatingRepository;
+import com.FYP18.HealthyRecipe.Repository.RegisteredUserRepository;
 import com.FYP18.HealthyRecipe.Repository.UserRepository;
 
 @Service  
@@ -213,4 +220,69 @@ public class RecipeService {
        return recipeRepository.findRecipeDTOsByMealType(dp.getId());
     }
     
+    @Autowired 
+    private RegisteredUserRepository ruRepo;
+
+    // havent incldued the checking where they have NO DIETARY PREFERENCE // NO HEALTH GOAL // NO ALLERGIES
+    // so not quite done
+
+    // use in Registered User's Landing page ( limit to 3) and Registered's user's Recipe page, (no limitation as of now)
+    public List<RecipeDTO> findRecipeDTOsByAllergiesAndDP(String userId) 
+    { 
+        RegisteredUser ru = ruRepo.findById(userId).get();
+        Set<Allergies> allergies = ru.getAllergies();
+        DietaryPreferences dp = ru.getDietaryPreferences();
+        Set<Long> ids = allergies.stream()
+                        .map(Allergies::getId)
+                        .collect(Collectors.toSet());
+ 
+        List<RecipeDTO> toReturn; 
+        if(ids.size() == 0)
+        {
+            toReturn = dp == null ? recipeRepository.findRandomRecipes(3):
+                                    recipeRepository.findRecipeDTOsByDietaryPreferences(dp.getId());
+        }
+        else
+        {
+           toReturn = dp == null ? recipeRepository.findRecipeDTOsByAllergies(ids) : 
+                                    recipeRepository.findRecipeDTOsByAllergiesAndDP(ids, dp.getId());
+        }
+
+        if(toReturn.size()  < 3)
+        {
+            int count  = 3 - toReturn.size();
+            List<Long> checked = new ArrayList<>() ;
+            for(RecipeDTO r :toReturn)
+            {
+                checked.add(r.getId());
+            }
+            List<RecipeDTO> addOn = count == 3 ? recipeRepository.findRandomRecipes(count) :
+                                         recipeRepository.findRandomRecipes( checked, count);
+            toReturn.addAll(addOn); 
+        }
+        HealthGoal hg = ru.getHealthGoal();
+        if(hg != null)
+        {
+            if(hg.getId() == 1)
+            {
+                toReturn = toReturn.stream()
+                .sorted(Comparator
+                .comparing((RecipeDTO dto) -> dto.getCarbs() == null ? 0 : dto.getCarbs(), Comparator.reverseOrder())
+                .thenComparing((RecipeDTO dto) -> dto.getProtein() == null ? 0 : dto.getProtein(), Comparator.reverseOrder()))
+                .collect(Collectors.toList());
+            }
+
+            else if (hg.getId() == 3)
+            {
+                toReturn = toReturn.stream()
+                .sorted(Comparator
+                    .comparing((RecipeDTO dto) ->  dto.getFibre() == null? 0 : dto.getFibre(), Comparator.reverseOrder()))
+                .collect(Collectors.toList());
+            }   
+        }
+        return toReturn;
+    }
+
+
+
 }

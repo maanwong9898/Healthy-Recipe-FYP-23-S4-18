@@ -5,6 +5,7 @@ import Link from "next/link";
 import { useState, useEffect } from "react";
 import axiosInterceptorInstance from "../../../../axiosInterceptorInstance.js";
 import BusinessUserNavBar from "../../../../components/navigation/businessUserNavBar";
+import SecureStorage from "react-secure-storage";
 
 // this is to view particular educational content
 // router path: /businessUser/educationalContent/viewEducationalContent/[id]
@@ -43,25 +44,8 @@ const ViewEduContent = ({ params }) => {
   const [submitting, setSubmitting] = useState(false);
   const [hasAlreadyReviewed, setHasAlreadyReviewed] = useState(false);
   const [validationMessage, setValidationMessage] = useState("");
-  const [isLoading, setIsLoading] = useState(false);
-
-  useEffect(() => {
-    setIsLoading(true); // Set loading state to true
-
-    const postId = decodeURIComponent(params.id); // Make sure to decode the ID
-    fetchEduContentById(postId)
-      .then((data) => {
-        setEduContent(data);
-        // Assuming the educational content ID is needed to fetch the reviews
-        fetchEduContentRatingsAndReviews(data.id);
-      })
-      .catch((error) => {
-        console.error("Error fetching educational content:", error);
-      })
-      .finally(() => {
-        setIsLoading(false); // Set loading to false when operation is complete
-      });
-  }, [params.id]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [isChecking, setIsChecking] = useState(true);
 
   const fetchEduContentRatingsAndReviews = async (educationalContentId) => {
     try {
@@ -77,6 +61,37 @@ const ViewEduContent = ({ params }) => {
       console.error("Failed to fetch ratings and reviews:", error);
     }
   };
+
+  useEffect(() => {
+    const token = SecureStorage.getItem("token");
+    const role = SecureStorage.getItem("role");
+
+    if (!token || role !== "BUSINESS_USER") {
+      // If token is invalid or role is not business user, redirect to login
+      SecureStorage.clear();
+      router.push("/");
+      return;
+    } else {
+      setIsChecking(false);
+      const postId = decodeURIComponent(params.id); // Make sure to decode the ID
+      fetchEduContentById(postId)
+        .then((data) => {
+          setEduContent(data);
+          // Assuming the educational content ID is needed to fetch the reviews
+          fetchEduContentRatingsAndReviews(data.id);
+        })
+        .catch((error) => {
+          console.error("Error fetching educational content:", error);
+        })
+        .finally(() => {
+          setIsLoading(false); // Set loading to false when operation is complete
+        });
+    }
+  }, [params.id]);
+
+  if (isChecking) {
+    return <div>Checking...</div>;
+  }
 
   // Check if the educational content has been fetched yet
   if (!eduContent) {
@@ -109,117 +124,145 @@ const ViewEduContent = ({ params }) => {
     router.push(routePath);
   };
 
+  const getImageUrlFromBlob = (imgBlob) => {
+    // Check if imgBlob is truthy
+    if (imgBlob) {
+      // Return the image URL created from the blob
+      return `data:image/jpeg;base64,${imgBlob}`;
+    }
+    // Return an empty string or a placeholder image URL if imgBlob is not available
+    return "";
+  };
+
   return (
     <div>
-      <BusinessUserNavBar />
-      <div className="pt-8 pb-16 lg:pt-16 lg:pb-24 bg-white">
-        {/* Conditional rendering based on isLoading state */}
-        {isLoading ? (
-          <div className="loading-indicator text-center">
-            <p>Loading educational content...</p>
-          </div>
-        ) : (
-          <>
-            <div className="text-center font-semibold font-sans">
-              <h1 className="flex flex-wrap justify-center mb-4 text-2xl font-extrabold text-gray-900 lg:mb-6 lg:text-5xl">
-                {eduContent.title || "Untitled Educational Content"}
-              </h1>
-              {/* Publisher and published date section */}
-              <div className="flex justify-center text-sm font-serif font-semibold lg:text-base text-gray-900 space-x-6 mx-auto max-w-screen-xl">
-                <p>
-                  Published by:{" "}
-                  <span className="text-orange-600 font-bold tracking-tight">
-                    {eduContent.publisher || "Not Specified"}
-                  </span>
-                </p>
-                <p>
-                  Posted on:{" "}
-                  <span className="text-orange-600 font-bold tracking-tight">
-                    {new Date(eduContent.createdDateTime).toLocaleDateString(
-                      "en-GB",
-                      {
-                        day: "2-digit",
-                        month: "short",
-                        year: "numeric",
-                      }
-                    )}
-                  </span>
-                </p>
-
-                <p>
-                  Category:{" "}
-                  <span className="text-orange-600 font-bold tracking-tight">
-                    {eduContent.educationalContentType
-                      ? eduContent.educationalContentType.subcategoryName
-                      : "Not specified"}
-                  </span>
-                </p>
-              </div>
-              {/* End of publihsed, published date, category */}
-            </div>
-            {/* Image Section */}
-            <article>
-              <img
-                src={eduContent.img}
-                alt="Educational Content Image"
-                className="max-w-full mx-auto mt-8 mb-8 sm:max-w-xl sm:mt-16 sm:mb-16 rounded-lg shadow-xl"
-              />
-              {/* Info*/}
-              <section className="main-content mt-10 pl-9 pr-9 mx-auto max-w-screen-xl md:text-base text-left">
-                <div className="w-full p-2 rounded-lg whitespace-pre-line">
-                  {eduContent.info}
-                </div>
-              </section>
-            </article>
-
-            {/* Ratings and Reviews */}
-            <div className="blog-post-reviews mt-16 mx-auto max-w-screen-xl text-left border-t-2 border-gray-50">
-              <p className="font-sans font-bold text-2xl md:text-4xl text-gray-900 mb-4 md:mt-8 ml-4 lg:ml-0">
-                Rating and Reviews
-              </p>
-              {/* Check if reviews exist */}
-              {reviewsAndRatings.length > 0 ? (
-                reviewsAndRatings.map((review, index) => (
-                  <div
-                    key={index}
-                    className="my-4 p-4 border-b border-gray-200"
-                  >
-                    <div className="flex items-center mb-2">
-                      <span className="font-bold text-sm md:text-base mr-2">
-                        {review?.userDTO?.username || "Anonymous"}
+      {isLoading && isChecking ? (
+        <div>Loading...</div>
+      ) : (
+        <>
+          <BusinessUserNavBar />
+          {isLoading ? (
+            <div>Loading...</div>
+          ) : (
+            <>
+              <div className="pt-8 pb-16 lg:pt-16 lg:pb-24 bg-white">
+                <div className="text-center font-semibold font-sans">
+                  <h1 className="flex flex-wrap justify-center mb-4 text-2xl font-extrabold text-gray-900 lg:mb-6 lg:text-5xl">
+                    {eduContent.title || "Untitled Educational Content"}
+                  </h1>
+                  {/* Publisher and published date section */}
+                  <div className="flex justify-center text-sm font-serif font-semibold lg:text-base text-gray-900 space-x-6 mx-auto max-w-screen-xl">
+                    <p>
+                      Published by:{" "}
+                      <span className="text-orange-600 font-bold tracking-tight">
+                        {eduContent.publisher || "Not Specified"}
                       </span>
-                      <div className="flex">{renderStars(review.rating)}</div>
-                      <span className="text-xs md:text-sm text-gray-500 ml-2">
-                        {new Date(review?.createdDateTime).toLocaleDateString(
-                          "en-GB",
-                          {
-                            day: "2-digit",
-                            month: "short",
-                            year: "numeric",
-                          }
-                        )}
+                    </p>
+                    <p>
+                      Posted on:{" "}
+                      <span className="text-orange-600 font-bold tracking-tight">
+                        {new Date(
+                          eduContent.createdDateTime
+                        ).toLocaleDateString("en-GB", {
+                          day: "2-digit",
+                          month: "short",
+                          year: "numeric",
+                        })}
                       </span>
-                    </div>
-                    <p>{review.review}</p>
+                    </p>
+
+                    <p>
+                      Category:{" "}
+                      <span className="text-orange-600 font-bold tracking-tight">
+                        {eduContent.educationalContentType
+                          ? eduContent.educationalContentType.subcategoryName
+                          : "Not specified"}
+                      </span>
+                    </p>
                   </div>
-                ))
-              ) : (
-                <p className="text-center text-gray-600">
-                  No ratings and reviews yet.
-                </p>
-              )}
-            </div>
-            <div className="flex flex-row space-x-5 justify-end mr-10 mt-16">
-              <button
-                onClick={() => handleUpdateEduContent(eduContent.id)}
-                className="bg-blue-600 hover:bg-blue-700 text-white w-24 font-bold py-2 px-4 rounded-lg"
-              >
-                Edit
-              </button>
-            </div>
-          </>
-        )}
-      </div>
+                  {/* End of publihsed, published date, category */}
+                </div>
+                {/* Image Section */}
+                <article>
+                  {/* <img
+                    src={eduContent.img}
+                    alt="Educational Content Image"
+                    className="max-w-full mx-auto mt-8 mb-8 sm:max-w-xl sm:mt-16 sm:mb-16 rounded-lg shadow-xl"
+                  /> */}
+                  {eduContent?.imgBlob ? (
+                    // If imgBlob is available, display image from blob
+                    <img
+                      className="max-w-full mx-auto mt-8 mb-8 sm:max-w-xl sm:mt-16 sm:mb-16 rounded-lg shadow-xl"
+                      src={getImageUrlFromBlob(eduContent?.imgBlob)}
+                      alt={"Educational content Image"}
+                    />
+                  ) : (
+                    // If imgBlob is not available, display image from imgUrl
+                    <img
+                      className="max-w-full mx-auto mt-8 mb-8 sm:max-w-xl sm:mt-16 sm:mb-16 rounded-lg shadow-xl"
+                      src={eduContent?.img || "Not specified"}
+                      alt="Educational content Image"
+                    />
+                  )}
+                  {/* Info*/}
+                  <section className="main-content mt-10 pl-9 pr-9 mx-auto max-w-screen-xl md:text-base text-left">
+                    <div className="w-full p-2 rounded-lg whitespace-pre-line">
+                      {eduContent.info}
+                    </div>
+                  </section>
+                </article>
+
+                {/* Ratings and Reviews */}
+                <div className="blog-post-reviews mt-16 mx-auto max-w-screen-xl text-left border-t-2 border-gray-50">
+                  <p className="font-sans font-bold text-2xl md:text-4xl text-gray-900 mb-4 md:mt-8 ml-4 lg:ml-0">
+                    Rating and Reviews
+                  </p>
+                  {/* Check if reviews exist */}
+                  {reviewsAndRatings.length > 0 ? (
+                    reviewsAndRatings.map((review, index) => (
+                      <div
+                        key={index}
+                        className="my-4 p-4 border-b border-gray-200"
+                      >
+                        <div className="flex items-center mb-2">
+                          <span className="font-bold text-sm md:text-base mr-2">
+                            {review?.userDTO?.username || "Anonymous"}
+                          </span>
+                          <div className="flex">
+                            {renderStars(review.rating)}
+                          </div>
+                          <span className="text-xs md:text-sm text-gray-500 ml-2">
+                            {new Date(
+                              review?.createdDateTime
+                            ).toLocaleDateString("en-GB", {
+                              day: "2-digit",
+                              month: "short",
+                              year: "numeric",
+                            })}
+                          </span>
+                        </div>
+                        <p>{review.review}</p>
+                      </div>
+                    ))
+                  ) : (
+                    <p className="text-center text-gray-600">
+                      No ratings and reviews yet.
+                    </p>
+                  )}
+                </div>
+                <div className="flex flex-row space-x-5 justify-end mr-10 mt-16">
+                  <button
+                    onClick={() => handleUpdateEduContent(eduContent.id)}
+                    className="bg-blue-600 hover:bg-blue-700 text-white w-24 font-bold py-2 px-4 rounded-lg"
+                  >
+                    Edit
+                  </button>
+                </div>
+              </div>
+            </>
+          )}
+        </>
+      )}
     </div>
   );
 };

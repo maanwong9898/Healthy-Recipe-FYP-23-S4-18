@@ -49,49 +49,73 @@ const UpdateBusinessBlogPostPage = ({ params }) => {
   // error and success states
   const [error, setError] = useState("");
   const [success, setSuccess] = useState(false);
+  const [isChecking, setIsChecking] = useState(true);
+  const [isLoading, setIsLoading] = useState(true);
+  const [imageBlob, setImageBlob] = useState(""); // Original image
+  const [newImageBlob, setNewImageBlob] = useState(null); // New uploaded image
 
   useEffect(() => {
-    console.log("The success state is being called");
-    // Reset success state when component mounts or postId changes
-    setSuccess(false);
+    const token = SecureStorage.getItem("token");
+    const role = SecureStorage.getItem("role");
+
+    if (!token || role !== "BUSINESS_USER") {
+      // If token is invalid or role is not business user, redirect to login
+      SecureStorage.clear();
+      router.push("/");
+      return;
+    } else {
+      setIsChecking(false);
+
+      const postId = decodeURIComponent(params.id); // Make sure to decode the ID
+      fetchBlogPostById(postId)
+        .then((data) => {
+          setBusinessBlogPost(data);
+          console.log("The displayed particular blog is:", data);
+
+          // Set each piece of state with the corresponding data
+          setTitle(data.title || "Not Specified");
+          setTitleCharCount(data.title ? data.title.length : 0); // Set title character count
+          setCategory(data.blogType.id || "");
+          setInfo(data.info || "Not Specified");
+          setInfoCharCount(data.info ? data.info.length : 0); // Set info character count
+          setImageUrl(data.img || "Not Specified");
+          setImageUrlCharCount(data.img ? data.img.length : 0); // Set image URL character count
+          if (data.imgBlob) {
+            console.log("Image blob available");
+            console.log("Image blob:", data.imgBlob);
+            // Directly use base64 string as the image source
+            setImageBlob(data.imgBlob);
+          } else {
+            console.log("No image blob available");
+            // Handle the absence of an image blob appropriately
+          }
+          setIsLoading(false);
+        })
+        .catch((error) => {
+          console.error("Error fetching blog post:", error);
+        });
+
+      // Fetch all business blog categories from backend
+      const fetchCategories = async () => {
+        console.log("Fetching categories...");
+        try {
+          const response = await axiosInterceptorInstance.get(
+            "category/getAllBlogPostCategories"
+          );
+          console.log("Categories fetched:", response.data);
+          setCategories(response.data);
+        } catch (error) {
+          console.error("Error fetching categories:", error);
+        }
+      };
+
+      fetchCategories();
+    }
   }, [params.id]);
 
-  useEffect(() => {
-    const postId = decodeURIComponent(params.id); // Make sure to decode the ID
-    fetchBlogPostById(postId)
-      .then((data) => {
-        setBusinessBlogPost(data);
-        console.log("The displayed particular blog is:", data);
-
-        // Set each piece of state with the corresponding data
-        setTitle(data.title || "Not Specified");
-        setTitleCharCount(data.title ? data.title.length : 0); // Set title character count
-        setCategory(data.blogType.id || "");
-        setInfo(data.info || "Not Specified");
-        setInfoCharCount(data.info ? data.info.length : 0); // Set info character count
-        setImageUrl(data.img || "Not Specified");
-        setImageUrlCharCount(data.img ? data.img.length : 0); // Set image URL character count
-      })
-      .catch((error) => {
-        console.error("Error fetching blog post:", error);
-      });
-
-    // Fetch all business blog categories from backend
-    const fetchCategories = async () => {
-      console.log("Fetching categories...");
-      try {
-        const response = await axiosInterceptorInstance.get(
-          "category/getAllBlogPostCategories"
-        );
-        console.log("Categories fetched:", response.data);
-        setCategories(response.data);
-      } catch (error) {
-        console.error("Error fetching categories:", error);
-      }
-    };
-
-    fetchCategories();
-  }, [params.id]);
+  if (isChecking) {
+    return <div>Checking ...</div>;
+  }
 
   // Update blog post (calling controller)
   const updateBlogPost = async (updatedPost) => {
@@ -146,6 +170,44 @@ const UpdateBusinessBlogPostPage = ({ params }) => {
     console.log("New image url:", e.target.value);
   };
 
+  const handleFileChange = (e) => {
+    console.log("File change event:", e);
+    const file = e.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = (event) => {
+        let dataURL = event.target.result;
+        console.log("Complete Data URL:", dataURL);
+
+        // Extract Base64 Data
+        let base64Data = dataURL.split(",")[1];
+        console.log("Base64 Data:", base64Data);
+
+        // Use base64Data as needed
+        setNewImageBlob(base64Data); // Assuming you have a state setter like this
+      };
+      reader.readAsDataURL(file);
+      console.log("File:", file);
+    }
+  };
+
+  const renderImage = () => {
+    const imageToShow = newImageBlob || imageBlob;
+    return imageToShow ? (
+      <img
+        src={`data:image/jpeg;base64,${imageToShow}`}
+        alt="Recipe"
+        className="max-w-full h-auto"
+        onError={(e) => {
+          console.error("Error loading image:", e);
+          e.target.style.display = "none";
+        }}
+      />
+    ) : (
+      <p>No image available</p>
+    );
+  };
+
   // Validate the form before submitting
   const validateForm = () => {
     console.log("Type of category:", typeof category);
@@ -166,19 +228,20 @@ const UpdateBusinessBlogPostPage = ({ params }) => {
       setError("Info cannot be empty.");
       return false;
     }
-    if (!imageUrl.trim()) {
-      setError("Image URL cannot be empty.");
+    // if (!imageUrl.trim()) {
+    //   setError("Image URL cannot be empty.");
+    //   return false;
+    // }
+
+    // check image blob
+    if (!newImageBlob && !imageBlob) {
+      setError("Image is required.");
       return false;
     }
     // Clear any existing errors if all validations pass
     setError("");
     return true;
   };
-
-  // const handleBackClick = () => {
-  //   setSuccess(false); // Reset the success state
-  //   router.push("/businessUser/businessBlogPost"); // Navigate back
-  // };
 
   // Form to update blog post
   const handleUpdateClick = async (e) => {
@@ -191,6 +254,8 @@ const UpdateBusinessBlogPostPage = ({ params }) => {
     }
 
     const userId = SecureStorage.getItem("userId");
+    // Use newImageBlob if available, otherwise fallback to original imageBlob
+    const updatedImageBlob = newImageBlob || imageBlob;
     try {
       console.log("Updated category is:", category.id);
       const updatedPost = {
@@ -198,8 +263,9 @@ const UpdateBusinessBlogPostPage = ({ params }) => {
         active: true,
         title: title,
         info: info,
-        img: imageUrl,
+        // img: imageUrl,
         blogTypeId: category,
+        imgBlob: updatedImageBlob, // Use updated image blob
         userID: { id: userId }, // Need to change to the current user ID
       };
 
@@ -215,144 +281,176 @@ const UpdateBusinessBlogPostPage = ({ params }) => {
 
   return (
     <div className="min-h-screen flex flex-col justify-center px-6 lg:px-8">
-      <BusinessUserNavBar />
-      <div
-        className="mt-16 mb-16 mx-auto bg-white rounded-lg shadow-lg p-4 md:p-8 lg:p-12"
-        style={{ maxWidth: "600px", width: "100%" }}
-      >
-        <div className="p-4 space-y-4 md:space-y-12">
-          <div className="p-6 space-y-4 md:space-y-2 sm:p-4">
-            <h1 className="text-3xl lg:text-4xl font-bold leading-tight tracking-tight text-center text-gray-900 mb-8">
-              Update Blog Post
-            </h1>
-            <form
-              className="space-y-6 md:space-y-5 lg:space-y-3"
-              // onSubmit={handleSubmit}
-            >
-              {/* TITLE */}
-              <div className="flex flex-col">
-                <label
-                  htmlFor="title"
-                  className="block text-lg mb-1 font-semibold text-gray-900"
-                >
-                  Title<span className="text-red-500">*</span>
-                </label>
-                <input
-                  type="text"
-                  name="title"
-                  id="title"
-                  placeholder="Title (Max 80 characters)"
-                  maxLength="80"
-                  value={title}
-                  onChange={handleTitleChange}
-                  className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-base rounded-lg block w-full p-2.5"
-                />
-                <span className="text-sm text-gray-600">
-                  {titleCharCount}/80 characters
-                </span>
-              </div>
-              {/* CATEGORY DROPDOWN */}
-              <div className="flex flex-col">
-                <label
-                  htmlFor="category"
-                  className="block text-lg mb-1 font-semibold text-gray-900"
-                >
-                  Category<span className="text-red-500">*</span>
-                </label>
-                <select
-                  id="category"
-                  name="category"
-                  value={category}
-                  // onChange={(e) => setCategory(e.target.value)}
-                  onChange={(e) => setCategory(Number(e.target.value))}
-                  className="bg-gray-50 border border-gray-300 text-black sm:text-base rounded-lg block w-full p-2.5"
-                >
-                  <option value="">Select a category</option>
-                  {categories.map((cat, index) => (
-                    <option key={index} value={cat.id}>
-                      {cat.subcategoryName}
-                    </option>
-                  ))}
-                </select>
-              </div>
-              {/* Info*/}
-              <div className="flex flex-col">
-                <label
-                  htmlFor="info"
-                  className="block text-lg mb-1 font-semibold text-gray-900"
-                >
-                  Main Content<span className="text-red-500">*</span>
-                </label>
-                <textarea
-                  name="info"
-                  id="info"
-                  placeholder="Info"
-                  value={info}
-                  rows={10}
-                  maxLength="1000"
-                  onChange={handleInfoChange}
-                  className="bg-gray-50 border border-gray-300 text-black sm:text-base rounded-lg block w-full p-2.5"
-                />
-              </div>
-              <span className="text-sm text-gray-600">
-                {infoCharCount}/1000 characters
-              </span>
+      {isLoading && isChecking ? (
+        <div>Loading...</div>
+      ) : (
+        <>
+          <BusinessUserNavBar />
+          {isLoading ? (
+            <div>Loading...</div>
+          ) : (
+            <>
+              <div
+                className="mt-16 mb-16 mx-auto bg-white rounded-lg shadow-lg p-4 md:p-8 lg:p-12"
+                style={{ maxWidth: "600px", width: "100%" }}
+              >
+                <div className="p-4 space-y-4 md:space-y-12">
+                  <div className="p-6 space-y-4 md:space-y-2 sm:p-4">
+                    <h1 className="text-3xl lg:text-4xl font-bold leading-tight tracking-tight text-center text-gray-900 mb-8">
+                      Update Blog Post
+                    </h1>
+                    <form
+                      className="space-y-6 md:space-y-5 lg:space-y-3"
+                      // onSubmit={handleSubmit}
+                    >
+                      {/* TITLE */}
+                      <div className="flex flex-col">
+                        <label
+                          htmlFor="title"
+                          className="block text-lg mb-1 font-semibold text-gray-900"
+                        >
+                          Title<span className="text-red-500">*</span>
+                        </label>
+                        <input
+                          type="text"
+                          name="title"
+                          id="title"
+                          placeholder="Title (Max 80 characters)"
+                          maxLength="80"
+                          value={title}
+                          onChange={handleTitleChange}
+                          className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-base rounded-lg block w-full p-2.5"
+                        />
+                        <span className="text-sm text-gray-600">
+                          {titleCharCount}/80 characters
+                        </span>
+                      </div>
+                      {/* CATEGORY DROPDOWN */}
+                      <div className="flex flex-col">
+                        <label
+                          htmlFor="category"
+                          className="block text-lg mb-1 font-semibold text-gray-900"
+                        >
+                          Category<span className="text-red-500">*</span>
+                        </label>
+                        <select
+                          id="category"
+                          name="category"
+                          value={category}
+                          // onChange={(e) => setCategory(e.target.value)}
+                          onChange={(e) => setCategory(Number(e.target.value))}
+                          className="bg-gray-50 border border-gray-300 text-black sm:text-base rounded-lg block w-full p-2.5"
+                        >
+                          <option value="">Select a category</option>
+                          {categories.map((cat, index) => (
+                            <option key={index} value={cat.id}>
+                              {cat.subcategoryName}
+                            </option>
+                          ))}
+                        </select>
+                      </div>
+                      {/* Info*/}
+                      <div className="flex flex-col">
+                        <label
+                          htmlFor="info"
+                          className="block text-lg mb-1 font-semibold text-gray-900"
+                        >
+                          Main Content<span className="text-red-500">*</span>
+                        </label>
+                        <textarea
+                          name="info"
+                          id="info"
+                          placeholder="Info"
+                          value={info}
+                          rows={10}
+                          maxLength="1000"
+                          onChange={handleInfoChange}
+                          className="bg-gray-50 border border-gray-300 text-black sm:text-base rounded-lg block w-full p-2.5"
+                        />
+                      </div>
+                      <span className="text-sm text-gray-600">
+                        {infoCharCount}/1000 characters
+                      </span>
 
-              {/* IMAGE URL */}
-              <div className="flex flex-col">
-                <label
-                  htmlFor="imageUrl"
-                  className="block text-lg mb-1 font-semibold text-gray-900"
-                >
-                  Image URL<span className="text-red-500">*</span>
-                </label>
-                <input
-                  type="text"
-                  name="imageUrl"
-                  id="imageUrl"
-                  placeholder="Image URL"
-                  maxLength="255"
-                  value={imageUrl}
-                  onChange={handleImageUrlChange}
-                  className="bg-gray-50 border border-gray-300 text-black sm:text-base rounded-lg block w-full p-2.5"
-                />
-                <span className="text-sm text-gray-600">
-                  {imageUrlCharCount}/255 characters
-                </span>
+                      {/* IMAGE URL */}
+                      {/* <div className="flex flex-col">
+                        <label
+                          htmlFor="imageUrl"
+                          className="block text-lg mb-1 font-semibold text-gray-900"
+                        >
+                          Image URL<span className="text-red-500">*</span>
+                        </label>
+                        <input
+                          type="text"
+                          name="imageUrl"
+                          id="imageUrl"
+                          placeholder="Image URL"
+                          maxLength="255"
+                          value={imageUrl}
+                          onChange={handleImageUrlChange}
+                          className="bg-gray-50 border border-gray-300 text-black sm:text-base rounded-lg block w-full p-2.5"
+                        />
+                        <span className="text-sm text-gray-600">
+                          {imageUrlCharCount}/255 characters
+                        </span>
+                      </div> */}
+
+                      {/* IMAGE file */}
+                      <div className="flex flex-col">
+                        <label
+                          htmlFor="image"
+                          className="block text-xl mb-1 font-bold text-gray-900"
+                        >
+                          Image<span className="text-red-500">*</span>
+                        </label>
+                        <input
+                          type="file"
+                          id="image"
+                          name="image"
+                          accept="image/*"
+                          onChange={handleFileChange}
+                          className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-base rounded-lg block w-full p-2.5"
+                        />
+                      </div>
+
+                      <div className="image-section">{renderImage()}</div>
+                      {/* ERROR MESSAGE */}
+                      {error && (
+                        <p className="text-red-500 font-semibold text-sm">
+                          Failed in updating blog post: {error}
+                        </p>
+                      )}
+                      {success && (
+                        <p className="text-green-500 font-semibold text-sm">
+                          Blog post updated successfully!
+                        </p>
+                      )}
+                      {/* SUBMIT BUTTON */}
+                      <div className="flex flex-row space-x-5">
+                        <Link href="/businessUser/businessBlogPost">
+                          <button
+                            className="bg-red-600 hover:bg-red-700 text-white font-semibold py-2 px-4 rounded-lg"
+                            // onClick={handleBackClick}
+                          >
+                            Back
+                          </button>
+                        </Link>
+                        <button
+                          type="submit"
+                          onClick={handleUpdateClick}
+                          className="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded-lg"
+                        >
+                          Update
+                        </button>
+                      </div>
+                    </form>
+                  </div>
+                </div>
               </div>
-              {/* ERROR MESSAGE */}
-              {error && (
-                <p className="text-red-500 font-semibold text-sm">
-                  Failed in updating blog post: {error}
-                </p>
-              )}
-              {success && (
-                <p className="text-green-500 font-semibold text-sm">
-                  Blog post updated successfully!
-                </p>
-              )}
-              {/* SUBMIT BUTTON */}
-              <div className="flex flex-row space-x-5">
-                <Link href="/businessUser/businessBlogPost">
-                  <button
-                    className="bg-red-600 hover:bg-red-700 text-white font-semibold py-2 px-4 rounded-lg"
-                    // onClick={handleBackClick}
-                  >
-                    Back
-                  </button>
-                </Link>
-                <button
-                  type="submit"
-                  onClick={handleUpdateClick}
-                  className="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded-lg"
-                >
-                  Update
-                </button>
-              </div>
-            </form>
-          </div>
-        </div>
-      </div>
+            </>
+          )}
+        </>
+      )}
     </div>
   );
 };

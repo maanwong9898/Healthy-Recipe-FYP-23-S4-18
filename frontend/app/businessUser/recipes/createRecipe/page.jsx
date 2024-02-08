@@ -236,6 +236,12 @@ const CreateRecipePage = () => {
 
   // Function to validate the form before submission
   const validateForm = () => {
+    // check image blob
+    // if (!newImageBlob) {
+    //   setError("Please upload an image.");
+    //   return false;
+    // }
+
     // Checking only essential fields
     if (
       !title.trim() ||
@@ -248,8 +254,9 @@ const CreateRecipePage = () => {
       !fat.trim() ||
       !fibre.trim() ||
       !sodium.trim() ||
+      !newImageBlob ||
       // imgblob cannot be empty
-      !newImageBlob.trim() ||
+      // !newImageBlob.trim() ||/ssww
       // !imageUrl.trim() ||
       ingredientList.some((ingredient) => !ingredient.trim()) ||
       instructionList.some((instruction) => !instruction.trim())
@@ -395,8 +402,9 @@ const CreateRecipePage = () => {
       setMealType("");
       setAllergyRestriction([]);
     } catch (error) {
-      console.error("Error creating recipe", error);
-      setError("Failed to create recipe. " + error.message);
+      // console.error("Error creating recipe", error);
+      console.log(error.message);
+      setError("Failed to create recipe. ");
       setSuccess(""); // Clear any existing success message
     }
   };

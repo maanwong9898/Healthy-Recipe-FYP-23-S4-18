@@ -308,7 +308,7 @@ const MyRecipes = () => {
           {/* Display message while fetching data ftom backend */}
           {isLoading ? (
             <div className="text-xl text-center p-4">
-              <p>Loading your blog post...</p>
+              <p>Loading your recipes...</p>
             </div>
           ) : (
             <>

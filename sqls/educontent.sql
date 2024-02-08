@@ -595,6 +595,154 @@ VALUES
         'Designed by Freepik',  -- img_title
         1 -- educational_content_type_id
     ),
+    (
+        '41',
+        '2024-01-08 16:30:00',  -- CreatedDT
+        'eatright',  -- Publisher
+        'Tips for Better Breakfasts',  -- Title
+        'We have all experienced "morning madness" — whether a busy commute or working with picky eaters, many things can make for a stressful morning. Breakfast, however, is really an important meal! Research shows that breaking an overnight fast with a balanced meal can make a significant difference in overall health and well-being.
+        \nIf You Wake Up on Time, Enjoy.. \nScrambled Eggs: Serve with fruit and whole-grain toast. Mix in extra vegetables such as spinach and mushrooms when cooking the eggs.
+        \nWhole-Grain Waffles: If you have a waffle iron, try a whole-grain waffle mix from the grocery store for a special treat. Serve topped with fresh fruit.
+        \nIf You Hit the Snooze Button One Time, Eat.. \nEnglish Muffin Sandwich: Toast a whole-grain English muffin. Put low-fat cheese and sliced deli ham on the toasted muffin. Warm the sandwich in the microwave to melt the cheese. 
+        \nBreakfast Tacos: Scramble and cook eggs or egg whites. Serve eggs with beans on a tortilla.
+        \nIf You Hit the Snooze Button Two (or More) Times, You Can Still Break the Fast.. \nInstant Oatmeal: Look for varieties without added sugar and just add boiling water. Stir in dried cranberries and almonds.
+        \n45-Second Scrambled Eggs: Put eggs and a splash of milk in a bowl, whisk it up and put it in a microwave for 30 seconds. Stir and put back in for another 10 seconds.',
+        3,
+        'https://img.freepik.com/free-photo/toast-egg-bacon-tomatoes-microgreens-salad_2829-4804.jpg?w=996&t=st=1707371496~exp=1707372096~hmac=efe90efde636cdb14d1126b13ca2848fb9d27339efb181754ce3f9444685cf81',
+        'Author: timolina, Designed by Freepik',  -- img_title
+        1 -- educational_content_type_id
+    ),
+    (
+        '42',
+        '2024-01-08 16:30:00',  -- CreatedDT
+        'eatright',  -- Publisher
+        'Family Dinners for a Healthy Heart',  -- Title
+        'Want your family to have healthy hearts? Start at the family dinner table. Not only do many adults consume too much sodium, many kids do as well. Eating too much sodium can increase risk for high blood pressure which can eventually lead to heart disease, stroke and kidney disease. 
+        \nChoose Spices Over Salt \nIn the kitchen, think out of the box. Opt for spices instead of added salt. When you are cooking, reach for low-sodium seasonings such as fresh lemon or lime juice, fresh herbs or salt-free herb blends and vinegar to boost the flavor of your favorite foods.
+        \nRead Nutrition Labels \nYou can trim the sodium  by carefully reading the Nutrition Facts Label when buying canned, frozen and packaged foods. Comparing brands and labels also can go a long way, as the amount of sodium in foods can vary from brand to brand by hundreds of milligrams.
+        \nLook for Foods Low in Sodium \nIt also helps to focus on foods that are naturally low in sodium. Eating more vegetables and fruit can help lower your sodium intake and increase your potassium intake. Produce contains little sodium, yet it is rich in potassium, a mineral that helps balance blood pressure. However, few of us get the potassium we require.',
+        3,
+        'https://img.freepik.com/free-vector/family-enjoying-time-together_23-2148512124.jpg?w=996&t=st=1707372025~exp=1707372625~hmac=8a6c20f7f33122139f267731aaccf97e536eb2d109fe619b3735ea1692c600be',
+        'Designed by Freepik',  -- img_title
+        1 -- educational_content_type_id
+    ),
+    (
+        '43',
+        '2024-01-08 16:30:00',  -- CreatedDT
+        'eatright',  -- Publisher
+        'Breakfast: Key to Growing Healthy',  -- Title
+        'Breakfast is an important meal for growing children. Studies show that breakfast eaters tend to have higher school attendance, less tardiness and fewer hunger-induced stomach aches in the morning. Their overall test scores are higher, they concentrate better, solve problems more easily and have better muscle coordination. Children who eat breakfast also are more likely to maintain a healthy weight and get enough calcium, too. 
+        \nWhip Up a Quick and Easy Morning Meal \nStart their day in a healthful direction with a balanced breakfast that incorporates a variety of nutrient-dense foods. Try some of these quick and easy options:
+        \nPeanut butter spread on whole-grain toast \nGrits and eggs \nPorridge with ginger and cinnamon \nChilaquiles with eggs
+        \nMake a Breakfast Bar \nLet your kids build their own breakfast with a breakfast bar. Similar to a salad bar, a breakfast bar includes a variety of foods to mix and match. Little ones love to create unusual combinations by mixing, stacking and organizing ingredients. Here are some ideas:
+        \nWhole-grain cereals, waffles, tortillas, bread or English muffins \nPeanut butter \nLow-fat or fat-free yogurt \nCottage cheese \nFig or apricot jam \nVariety of sliced fruit such as bananas strawberries, papaya or passionfruit',
+        3,
+        'https://images.unsplash.com/photo-1495214783159-3503fd1b572d?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+        'Author: Brooke Lark, Designed by Unsplash',  -- img_title
+        1 -- educational_content_type_id
+    ),
+    (
+        '44',
+        '2024-01-08 16:30:00',  -- CreatedDT
+        'eatright',  -- Publisher
+        'Tips to Help Kids Enjoy Fruits and Veggies',  -- Title
+        'Fruits and vegetables are loaded with the nutrients kids need to grow, be strong and healthy and perform well in school. Unfortunately, most children do not get enough fruits and vegetables throughout the day. Here are some ideas on how to make meals nutritious and delicious by incorporating produce in fun and interesting ways that kids will enjoy.
+        \nFill Half the Plate with Fruits and Vegetables \nEncourage kids to consume more of these nutritional powerhouses by making produce the star of the meal. Dish out generous helpings and always include options that your family enjoys. Serve vegetables in a variety of ways to give your child an opportunity to explore the tastes, textures and aromas.
+        \nTake Fruit to Lunch \nFruit is a great way to add a little sweetness to a meal. Make a habit of tucking an apple, tangerine, melon slices, plums, kiwifruit, grapes, cherries or dried fruits into lunch bags.
+        \nStuff Sandwiches with Fruits and Vegetables \nCreate a sandwich bar with whole-grain breads, wraps and rolls, various lean meats, low-fat cheese, sliced tomato, bell pepper rings, cucumber slices, lettuce, marinated artichoke hearts, roasted red peppers, sliced avocado, hummus and mustard.',
+        3,
+        'https://img.freepik.com/free-photo/breakfast-consists-bread-boiled-eggs-black-grape-salad-dressing-tomatoes-sliced-onions_1150-24465.jpg?w=996&t=st=1707372961~exp=1707373561~hmac=c750d25954f99dc9e6547f11847177952f7b345563a961d0892fe4b149b8da39',
+        'Author: jcomp, Designed by Freepik',  -- img_title
+        1 -- educational_content_type_id
+    ),
+    (
+        '45',
+        '2024-01-01 15:30:00',  -- CreatedDT
+        'eatright',  -- Publisher
+        'When Should My Kids Snack?',  -- Title
+        'Does it seem like it is always snack time? Many children graze throughout the day, enjoying a never-ending snack time. Snacks are good for kids because they help them stay focused at school and on homework, give them needed nutrients and help keep hunger at bay. Yet, for lots of kids and teens, a snack is a bag of chips, some cookies or some other low-nutrient food. Instead, think of snacks as mini-meals.
+        \nWhen Should Kids Snack? \nMost children and teens need to eat snacks in addition to meals to fuel their growing, active bodies and meet their daily recommendations. This translates into the following:
+        \nYounger kids need three meals and about two snacks a day. \nOlder kids need to eat three meals and about one snack a day (they may need two snacks if they are going through a growth spurt or if they are very physically active).
+        \nWhere Should Kids Snack? \nWhen at home, designate a certain area as the "eating-only zone'' and limit all snacking to that location. The kitchen table or countertop works well. When kids snack all over the house, that makes it hard for you to know what and how much they are eating. Also, dont let kids eat snacks while watching TV. Studies show that this mindless munching leads to overeating.',
+        3,
+        'https://img.freepik.com/free-vector/broken-oatmeal-cookies-set-traditional-american-biscuit-with-chocolate-crunches-isolated-white-illustration-home-baked-food-recipe-snacks-concept_74855-14297.jpg?w=1060&t=st=1707373609~exp=1707374209~hmac=4902ac2f226508f8c665e2011fc574ca66fc287b7278da2d59370d220fcd8e94',
+        'Author: pch.vector, Designed by Freepik',  -- img_title
+        1 -- educational_content_type_id
+    ),
+    (
+        '46',
+        '2024-01-01 15:30:00',  -- CreatedDT
+        'eatright',  -- Publisher
+        'Foods for Eye Health',  -- Title
+        'Do your eyes have all the nutrients they need to help prevent cataracts, macular degeneration, glaucoma and other sight woes? Read on to learn about some of the top foods to promote eye health. To get these nutrients — your best sources of vitamins, minerals and antioxidants are from whole foods, since it may be a combination of nutrients within the foods which provide these benefits.
+        \nKale: See the Light \nThis leafy green is a source of lutein and zeaxanthin, which are related to vitamin A and beta-carotene, and may help protect eye tissues from sunlight damage and reduce the risk of eye changes related to aging.
+        \nSweet Potatoes: The Color of Health \nBeta-carotene gives these tubers their orange color. Your body converts beta-carotene to vitamin A, a nutrient that helps prevent night blindness and age related macular degeneration. Sweet potatoes not your favorite? For beta-carotene, try other deep orange foods, such as carrots and butternut squash
+        \nHealthy Fats: Include Sources of Omega-3 Fatty Acids \nBesides helping with the absorption of certain nutrients, some healthy fats also contain omega-3 fatty acids. Salmon is an excellent source of omega-3s, which may be beneficial for eye health.',
+        3,
+        'https://img.freepik.com/free-photo/funny-young-woman-with-orange-halves-kitchen_169016-29797.jpg?w=996&t=st=1707374515~exp=1707375115~hmac=64c1bf76269b2739b1b3f48cda3a3802f26534f939f725afaba0d8f38f836ef4',
+        'Author: pvproductions, Designed by Freepik',  -- img_title
+        1 -- educational_content_type_id
+    ),
+    (
+        '47',
+        '2023-01-01 15:30:00',  -- CreatedDT
+        'eatright',  -- Publisher
+        'Eating to Boost Energy',  -- Title
+        'We, as a society, are busy, stressed, need more physical activity and sometimes have poor eating habits — all contributing to low energy levels. One way to improve our energy levels is by eating better. The right combinations of food may help give you a boost. Follow these strategies to maximize your energy.
+        \nEat Regularly \nPlanning to eat every three to four hours may help prevent between-meal hunger that can lead to unwise snacking or overeating at meals. If you only are eating one to two meals a day, this may be an adjustment. As you learn how to eat more frequently throughout the day, remind yourself that you will feel better and be more focused when you have fuel in your system on a regular basis.
+        \nHonor Your Hunger and Fullness Cues \nEating just enough, but not too much, helps to curb cravings and reduces chances of overeating. 
+        \nBalance Your Plate \nA balanced meal includes foods from multiple food groups: whole grains, lean protein, fiber-rich fruits and vegetables, and fat-free or low-fat dairy. Balance out your plate with all the food groups.
+        \nRemove Energy Zappers \nSkip the foods and beverages with added sugars, such as soda, sugar-sweetened coffee and energy drinks. These beverages may leave you buzzing for an hour, but likely will cause an energy crash. Instead, quench your thirst with water, unsweetened flavored water or unsweetened tea.',
+        3,
+        'https://img.freepik.com/free-photo/young-blonde-woman-black-jacket_176474-102001.jpg?w=996&t=st=1707376268~exp=1707376868~hmac=7668757679c53c4c0791bad8069e110c437ea74604493720d7605fb06a163e06',
+        'Author: 8photo, Designed by Freepik',  -- img_title
+        1 -- educational_content_type_id
+    ),
+    (
+        '48',
+        '2023-01-01 15:30:00',  -- CreatedDT
+        'eatright',  -- Publisher
+        'Tips to Kick Bad Eating Habits to the Curb',  -- Title
+        'Are you guilty of skipping breakfast, ordering takeout too often or getting jitters from coffee overload? Time to kick those habits to the curb. Here is a guide to help you get started.
+        \nEat Breakfast \nThere is no better way to start your morning than with a healthy breakfast. Providing your body with a morning meal provides it with energy to power not only your muscles but your brain as well! Prevent brain fog and increase your focus by keeping your brain fed.
+        \nCut Back on Caffeine \nToo much caffeine can interfere with sleep, make you jittery and cause you to lose energy later in the day. Keep your caffeine intake in check by limiting regular coffee to about 3 cups or less per day, and watch what you put into it. Too much sugar isnt good for your teeth.
+        \nBring Lunch to Work \nHow do you make bringing lunch to work easy? The first step is to plan ahead by thinking through what you want for lunch and adding those foods to your grocery list. Stock your fridge with tasty, satisfying foods to set yourself up for success.',
+        3,
+        'https://img.freepik.com/free-vector/healthy-eating-advertising-poster-with-young-woman-holding-green-apple-useful-food-elements_1284-28271.jpg?w=740&t=st=1707376991~exp=1707377591~hmac=011c541ddf74e7767329ed513191b5b2d325bab1af07ff05e0b69d77b430efdc',
+        'Author: macrovector, Designed by Freepik',  -- img_title
+        1 -- educational_content_type_id
+    ),
+    (
+        '49',
+        '2023-01-01 15:30:00',  -- CreatedDT
+        'eatright',  -- Publisher
+        'Keys to Strength Building and Muscle Mass',  -- Title
+        'Muscle is harder to build and maintain as we age. In fact, most of us start losing muscle around age 30. Physically inactive people are at particular risk and can experience anywhere from a 3 to 8% loss of lean muscle mass every decade after that.
+        \nMuscle Strengthening Activities and Health \nMen and women should participate in muscle strengthening activities that work the major muscle groups at least two times each week. Examples of muscle strengthening activities include lifting weights, push-ups, pull-ups, sit-ups and some types of yoga.
+        \nProtein and Muscle Building \nWhen building muscle, the more protein the better, right? Not necessarily. Protein should make up 10 to 35% of total calories for adults. While working to build muscle with physical activity, your needs may be on the higher end of this range. Aim for 3 servings of low-fat or fat-free dairy and 3 ounce-equivalents of protein foods (such as fish, beans, poultry or lean meat) each day, to provide quality sources of protein to help reach that goal. Grains, especially whole grains, also provide some protein.
+        \nCarbohydrates and Muscle Building \nCarbohydrates are another important group of foods for fueling your muscles. That is because carbs are partially converted to glycogen, which is a form of energy stored in muscles. Try focusing on good quality carbohydrates that provide dietary fiber, such as whole-grain breads and cereals.',
+        3,
+        'https://img.freepik.com/free-vector/set-sporty-people-preparing-competition_1262-19353.jpg?w=1380&t=st=1707377593~exp=1707378193~hmac=d165ab72391a81cf1d292b3850e2388d7e40f13dd21cdeaf7a4c910150326511',
+        'Author: katemangostar, Designed by Freepik',  -- img_title
+        2 -- educational_content_type_id
+    ),
+    (
+        '50',
+        '2023-01-01 15:30:00',  -- CreatedDT
+        'eatright',  -- Publisher
+        'Strategies for Successful Meal Planning',  -- Title
+        'Planning ahead may help relieve mealtime stress. Think about your approach to meal planning — do you: Want to make a weekly or a monthly plan? Prefer to prepare meals ahead of time, just before the meal or a combination of both? Want to pick a day to cook meals for the week or a month that you can store in the freezer?
+        Stock Your Pantry and Freezer with the Five Food Groups. To get started with meal planning, take time to stock up on the basics. This includes healthy foods that you like to eat and prepare, add other items based on your personal health needs and food preferences.
+        \nVegetables: Keep a variety of canned tomatoes in stock. Use them in soups, stews, sauces. Dried mushrooms are another great pantry item because they can add depth of flavor to your meals.
+        \nFruits: Raisins, dried cranberries, dried apricots are loaded with dietary fiber. 
+        \nMilk and Dairy Products: Dried milk is a great back-up item to have on stock, boxed milk is also available in single-serving packages.
+        \nProtein Foods: Canned or dried lentils, cannellini, garbanzo and kidney beans. These legumes are a great source of protein. Canned tuna, anchovies and sardines are a pantry must.
+        \NGrains: Keep a stash of oatmeal and other whole-grain cereals in the pantry. Barley, quinoa and other grains provide staples for healthy meals. Also, keep a variety of rice on hand.',
+        3,
+        'https://img.freepik.com/free-photo/top-view-assortment-food-with-planner_23-2148484699.jpg?w=996&t=st=1707379150~exp=1707379750~hmac=33e86e1d38655bf232fdf3b9a78a28578036fe0a41df58704ae009ad5ca2a847',
+        'Designed by Freepik',  -- img_title
+        1 -- educational_content_type_id
+    ),
     
     
 
@@ -645,4 +793,14 @@ VALUES
     ('The content is very informative!',                5.0, '8', 37),
     ('The content is very detailed',                    5.0, '8', 38),
     ('This is awesome!',                                5.0, '7', 39),
-    ('The content is very insightful.',                 5.0, '8', 40);
+    ('The content is very insightful.',                 5.0, '8', 40),
+    ('I love this content!' ,                           4.0, '12', 41),
+    ('I love this content!' ,                           4.0, '9', 42),
+    ('I love this content!' ,                           4.0, '12', 43),
+    ('I love this content!' ,                           4.0, '12', 44),
+    ('I love this content!' ,                           4.0, '9', 45),
+    ('I love this content!' ,                           4.0, '12', 46),
+    ('The content is very informative!',                5.0, '8', 47),
+    ('The content is very detailed',                    5.0, '8', 48),
+    ('This is awesome!',                                5.0, '7', 49),
+    ('The content is very insightful.',                 5.0, '8', 50);

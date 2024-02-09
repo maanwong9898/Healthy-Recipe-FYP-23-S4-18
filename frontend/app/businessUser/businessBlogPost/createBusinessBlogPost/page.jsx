@@ -192,7 +192,7 @@ const CreateBusinessBlogPostPage = () => {
     const blogPostData = {
       title: title, // Retrieved from state
       info: info, // Retrieved from state
-      img: imageUrl, // Retrieved from state
+      // img: imageUrl, // Retrieved from state
       blogTypeId: category, // Pass the entire selected category id
       imgBlob: newImageBlob, // Use updated image blob
       userID: { id: userId }, // replace above

@@ -7,6 +7,7 @@ import Link from "next/link";
 import SearchIcon from "@mui/icons-material/Search";
 import SwapVertIcon from "@mui/icons-material/SwapVert";
 import SecureStorage from "react-secure-storage";
+import NutritionistNavBar from "../../components/navigation/nutritionistNavBar";
 
 // router path is /nutritionist/mealPlan
 
@@ -75,43 +76,61 @@ const MyMealPlan = () => {
   const [datePublishedOrder, setDatePublishedOrder] = useState("LATEST");
   const [ratingsOrder, setRatingsOrder] = useState("HIGHEST");
   const [statusOrder, setStatusOrder] = useState("ACTIVE");
+  const [isChecking, setIsChecking] = useState(true);
+  const [isLoading, setIsLoading] = useState(true);
 
   // fetch all meal plans and categories from backend
   useEffect(() => {
-    const getData = async () => {
-      try {
-        const fetchedMealPlan = await fetchMealPlans();
-        const mealPlansWithAverage = await Promise.all(
-          fetchedMealPlan.map(async (mealPlan) => {
-            const average = await fetchMealPlanAverage(mealPlan.id);
-            return { ...mealPlan, average }; // Augment each meal plan with its average
-          })
-        );
-        console.log("mealPlan with average:", mealPlansWithAverage);
-        setMealPlans(mealPlansWithAverage);
-        // ... [sorting and other logic]
-      } catch (error) {
-        console.error("Error while fetching data:", error);
-      }
-    };
+    if (
+      !SecureStorage.getItem("token") ||
+      SecureStorage.getItem("role") !== "NUTRITIONIST"
+    ) {
+      // clear the secure storage
+      SecureStorage.clear();
+      console.log("Redirecting to home page");
+      router.push("/");
+    } else {
+      setIsChecking(false);
 
-    getData();
+      const getData = async () => {
+        try {
+          const fetchedMealPlan = await fetchMealPlans();
+          const mealPlansWithAverage = await Promise.all(
+            fetchedMealPlan.map(async (mealPlan) => {
+              const average = await fetchMealPlanAverage(mealPlan.id);
+              return { ...mealPlan, average }; // Augment each meal plan with its average
+            })
+          );
+          console.log("mealPlan with average:", mealPlansWithAverage);
+          setMealPlans(mealPlansWithAverage);
+          // ... [sorting and other logic]
+        } catch (error) {
+          console.error("Error while fetching data:", error);
+        }
+      };
 
-    // Fetch all meal plan categories from backend
-    const fetchCategories = async () => {
-      console.log("Fetching meal plan categories...");
-      try {
-        const response = await axiosInterceptorInstance.get(
-          "category/getAllHealthGoals"
-        );
-        console.log("Categories fetched:", response.data);
-        setCategories(response.data);
-      } catch (error) {
-        console.error("Error fetching categories:", error);
-      }
-    };
+      // Fetch all meal plan categories from backend
+      const fetchCategories = async () => {
+        console.log("Fetching meal plan categories...");
+        try {
+          const response = await axiosInterceptorInstance.get(
+            "category/getAllHealthGoals"
+          );
+          console.log("Categories fetched:", response.data);
+          setCategories(response.data);
+        } catch (error) {
+          console.error("Error fetching categories:", error);
+        }
+      };
 
-    fetchCategories();
+      Promise.all([getData(), fetchCategories()])
+        .catch((error) => {
+          console.error("Error in fetchData or fetchCategories:", error);
+        })
+        .finally(() => {
+          setIsLoading(false); // End loading after both operations are complete
+        });
+    }
   }, []);
 
   // All in 1 -- sort, filter, search
@@ -318,335 +337,373 @@ const MyMealPlan = () => {
 
   return (
     <div className="px-2 sm:px-5 min-h-screen flex flex-col py-5">
-      <h1 className="text-6xl text-gray-900 p-3 mb-4 font-bold text-center sm:text-center">
-        My Meal Plans
-      </h1>
-      <div>
-        <button className="text-white bg-blue-600 hover:bg-blue-700 rounded-lg text-base font-semibold px-5 py-2.5 mr-7 mb-4 text-center">
-          <Link href="/nutritionist/mealPlan/createMealPlan">
-            Create Meal Plan
-          </Link>
-        </button>
-      </div>
-      {/* Search Section */}
-      <div className="flex flex-col mb-4 md:flex-row md:mr-2">
-        {/* Search bar */}
-        <div className="relative mb-3 md:mb-8 md:mr-2">
-          <input
-            type="text"
-            id="mealPlanSearch"
-            name="mealPlanSearch"
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
-            placeholder="Search by title"
-            className="mr-2 p-2 rounded-lg border w-full md:w-auto pl-10"
-          />
-          {/* Search icon */}
-          <span className="absolute inset-y-0 left-0 flex items-center pl-2">
-            <SearchIcon />
-          </span>
-        </div>
-
-        {/* Filter dropdown */}
-        <div className="relative md:ml-auto">
-          <label
-            htmlFor="categoryFilter"
-            className="ml-2 mr-2 font-2xl text-gray-900"
-          >
-            Filter By:
-          </label>
-          <select
-            id="categoryFilter"
-            onChange={(e) => setCategoryFilter(e.target.value)}
-            className="p-2 rounded-lg border"
-          >
-            <option value="ALL">All Categories</option>
-            {categories.map((category, index) => (
-              <option key={index} value={category.id} className="text-black">
-                {category.subcategoryName}
-              </option>
-            ))}
-          </select>
-        </div>
-      </div>
-
-      {/* Hidden when in smaller screens */}
-      {/* Table of meal plans */}
-      <div className="overflow-x-auto rounded-lg hidden lg:block">
-        <table className="min-w-full rounded-lg border-zinc-200 border-2">
-          <thead className="bg-zinc-700 font-normal text-white border-gray-800 border-2">
-            <tr className="text-center text-lg">
-              <th className="px-4 py-2">
-                Meal Plan Title
-                <button
-                  className="ml-1 focus:outline-none"
-                  onClick={handleSortAlphabetically}
-                >
-                  <SwapVertIcon />
+      {isLoading && isChecking ? (
+        <div>Loading...</div>
+      ) : (
+        <>
+          <NutritionistNavBar />
+          {/* Display message while fetching data ftom backend */}
+          {isLoading ? (
+            <div className="text-xl text-center p-4">
+              <p>Loading your meal plan...</p>
+            </div>
+          ) : (
+            <>
+              <h1 className="text-6xl text-gray-900 p-3 mb-4 font-bold text-center sm:text-center">
+                My Meal Plans
+              </h1>
+              <div>
+                <button className="text-white bg-blue-600 hover:bg-blue-700 rounded-lg text-base font-semibold px-5 py-2.5 mr-7 mb-4 text-center">
+                  <Link href="/nutritionist/mealPlan/createMealPlan">
+                    Create Meal Plan
+                  </Link>
                 </button>
-              </th>
-              <th className="px-4 py-2">
-                Date Published
-                <button
-                  className="ml-1 focus:outline-none"
-                  onClick={handleSortByDatePublished}
-                >
-                  <SwapVertIcon />
-                </button>
-              </th>
-              <th className="px-3 py-2">Category</th>
-              <th className="px-3 py-2">
-                Status{" "}
-                <button
-                  className="ml-1 focus:outline-none"
-                  onClick={handleSortByStatus}
-                >
-                  <SwapVertIcon />
-                </button>
-              </th>
-              <th className="px-3 py-2">
-                Ratings{" "}
-                <button
-                  className="ml-1 focus:outline-none"
-                  onClick={handleSortByRatings}
-                >
-                  <SwapVertIcon />
-                </button>
-              </th>
-              <th className="px-3 py-2"></th>
-              <th className="px-3 py-2"></th>
-              <th className="px-3 py-2"></th>
-              <th className="px-3 py-2"></th>
-              <th className="px-3 py-2"></th>
-            </tr>
-          </thead>
-          <tbody>
-            {displayedMealPlans.map((mealPlan, index) => (
-              <tr key={index} className="bg-white border-b">
-                <td className="px-3 py-2 text-base text-center">
-                  {mealPlan.title}
-                </td>
-                <td className="px-3 py-2 text-base text-center">
-                  {new Date(
-                    mealPlan?.createdDT || mealPlan.lastUpdatedDT
-                  ).toLocaleDateString("en-GB")}
-                </td>
-                <td className="px-3 py-2 text-base text-center">
-                  {mealPlan.healthGoal
-                    ? mealPlan.healthGoal.subcategoryName
-                    : "Not specified"}
-                </td>
-
-                <td className="px-3 py-2 text-base text-center">
-                  <span
-                    className={`rounded-full px-3 py-1 text-base font-semibold ${
-                      mealPlan.active
-                        ? "text-white bg-green-500"
-                        : "text-white bg-red-500"
-                    }`}
-                  >
-                    {mealPlan.active ? "Active" : "Inactive"}
+              </div>
+              {/* Search Section */}
+              <div className="flex flex-col mb-4 md:flex-row md:mr-2">
+                {/* Search bar */}
+                <div className="relative mb-3 md:mb-8 md:mr-2">
+                  <input
+                    type="text"
+                    id="mealPlanSearch"
+                    name="mealPlanSearch"
+                    value={searchTerm}
+                    onChange={(e) => setSearchTerm(e.target.value)}
+                    placeholder="Search by title"
+                    className="mr-2 p-2 rounded-lg border w-full md:w-auto pl-10"
+                  />
+                  {/* Search icon */}
+                  <span className="absolute inset-y-0 left-0 flex items-center pl-2">
+                    <SearchIcon />
                   </span>
-                </td>
-                <td className="px-3 py-2 text-base text-center">
-                  <div
-                    className="rating-container"
-                    style={{ minWidth: "100px" }}
+                </div>
+
+                {/* Filter dropdown */}
+                <div className="relative md:ml-auto">
+                  <label
+                    htmlFor="categoryFilter"
+                    className="ml-2 mr-2 font-2xl text-gray-900"
                   >
-                    {mealPlan.average !== null &&
-                    typeof mealPlan.average.averageRatings === "number" &&
-                    typeof mealPlan.average.totalNumber === "number" ? (
-                      <span
-                        className="rating-text"
-                        style={{ fontWeight: "bold", color: "#0a0a0a" }}
+                    Filter By:
+                  </label>
+                  <select
+                    id="categoryFilter"
+                    onChange={(e) => setCategoryFilter(e.target.value)}
+                    className="p-2 rounded-lg border"
+                  >
+                    <option value="ALL">All Categories</option>
+                    {categories.map((category, index) => (
+                      <option
+                        key={index}
+                        value={category.id}
+                        className="text-black"
                       >
-                        {mealPlan.average.averageRatings.toFixed(1)}
-                      </span>
-                    ) : (
-                      "No ratings yet"
-                    )}
-                    {mealPlan.average && mealPlan.average.totalNumber > 0 && (
-                      <span
-                        className="rating-count"
-                        style={{ fontSize: "0.8rem", color: "#666" }}
-                      >
-                        ({mealPlan.average.totalNumber} rating
-                        {mealPlan.average.totalNumber !== 1 ? "s" : ""})
-                      </span>
-                    )}
-                  </div>
-                </td>
-                <td className="px-3 py-2 text-base text-center"></td>
-                <td className="px-3 py-2 justify-center sm:justify-start">
-                  <button
-                    onClick={() => handleViewMealPlan(mealPlan.id)}
-                    className="text-white font-bold bg-blue-600 hover:bg-blue-700 rounded-lg text-base px-5 py-2 ml-2 mr-2 text-center"
-                  >
-                    {" "}
-                    View
-                  </button>
-                </td>
-                <td className="px-3 py-2 justify-center sm:justify-start">
-                  <button
-                    onClick={() => handleUpdateMealPlan(mealPlan.id)}
-                    className="text-white font-bold bg-slate-700 hover:bg-slate-800 rounded-lg text-base px-5 py-2 ml-2 mr-2 text-center"
-                  >
-                    {" "}
-                    Edit
-                  </button>
-                </td>
-                <td className="px-3 py-2 justify-center sm:justify-start">
-                  <button
-                    onClick={() =>
-                      handleToggleMealPlanStatus(mealPlan.id, mealPlan.active)
-                    }
-                    className={`text-white font-bold ${
-                      mealPlan.active
-                        ? "bg-red-600 hover:bg-red-700"
-                        : "bg-stone-400 hover:bg-stone-500"
-                    } rounded-lg text-base px-5 py-2 text-center`}
-                  >
-                    {mealPlan.active ? "Suspend" : "Unsuspend"}
-                  </button>
-                </td>
-                <td className="px-3 py-2 justify-center sm:justify-start">
-                  <button
-                    onClick={() => handleDeleteMealPlan(mealPlan.id)}
-                    className="text-white font-bold bg-red-600 hover:bg-red-700 rounded-lg text-base px-5 py-2 ml-2 mr-2 text-center"
-                  >
-                    {" "}
-                    Delete
-                  </button>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
-
-      {/* Mobile View for Tables */}
-      <div className="mx-auto items-center lg:hidden">
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
-          {displayedMealPlans.map((mealPlan, index) => (
-            <div
-              key={index}
-              className="bg-white p-5 h-full flex flex-col border border-gray-300 rounded-2xl shadow"
-            >
-              {/* Title */}
-              <p className="px-3 py-2 text-lg">
-                <span className="font-semibold text-gray-900">Title: </span>
-                <span className="font-normal text-gray-900">
-                  {mealPlan.title}
-                </span>
-              </p>
-
-              {/* Date Published */}
-              <p className="px-3 py-2 text-lg">
-                <span className="font-semibold text-gray-900">
-                  Date Published:{" "}
-                </span>
-                <span className="font-normal text-gray-900">
-                  {new Date(
-                    mealPlan?.createdDT || mealPlan.lastUpdatedDT
-                  ).toLocaleDateString("en-GB")}
-                </span>
-              </p>
-
-              {/* Category */}
-              <p className="px-3 py-2 text-lg">
-                <span className="font-semibold text-gray-900">Category: </span>
-                <span className="font-normal text-gray-900">
-                  {mealPlan.healthGoal
-                    ? mealPlan.healthGoal.subcategoryName
-                    : "Not specified"}
-                </span>
-              </p>
-
-              {/* Status */}
-              <p className="px-3 py-2 text-lg">
-                <span className="font-semibold text-gray-900 mr-2">
-                  Status:{" "}
-                </span>
-                <span
-                  className={`rounded-full px-3 py-1 text-base font-semibold ${
-                    mealPlan.active
-                      ? "text-white bg-green-500"
-                      : "text-white bg-red-500"
-                  }`}
-                >
-                  {mealPlan.active ? "Active" : "Inactive"}
-                </span>
-              </p>
-
-              {/* Ratings */}
-              <div className="px-3 py-2 text-lg">
-                <div
-                  className="rating-container flex flex-row gap-2"
-                  style={{ minWidth: "100px" }}
-                >
-                  <p className="font-semibold text-gray-900">Ratings: </p>
-
-                  {mealPlan.average !== null &&
-                  typeof mealPlan.average.averageRatings === "number" &&
-                  typeof mealPlan.average.totalNumber === "number" ? (
-                    <span
-                      className="rating-text"
-                      style={{ fontWeight: "bold", color: "#0a0a0a" }}
-                    >
-                      {mealPlan.average.averageRatings.toFixed(1)}
-                    </span>
-                  ) : (
-                    "No ratings yet"
-                  )}
-                  {mealPlan.average && mealPlan.average.totalNumber > 0 && (
-                    <span
-                      className="rating-count"
-                      style={{ fontSize: "0.8rem", color: "#666" }}
-                    >
-                      ({mealPlan.average.totalNumber} rating
-                      {mealPlan.average.totalNumber !== 1 ? "s" : ""})
-                    </span>
-                  )}
+                        {category.subcategoryName}
+                      </option>
+                    ))}
+                  </select>
                 </div>
               </div>
 
-              {/* Buttons */}
-              <div className="mt-2 flex flex-col space-y-3 items-center">
-                <button
-                  onClick={() => handleViewMealPlan(mealPlan.id)}
-                  className="text-white font-bold bg-blue-600 hover:bg-blue-700 rounded-lg text-base w-full px-5 py-2 ml-2 mr-2 text-center"
-                >
-                  View
-                </button>
-                <button
-                  onClick={() => handleUpdateMealPlan(mealPlan.id)}
-                  className="text-white font-bold bg-slate-700 hover:bg-slate-800 rounded-lg text-base w-full px-5 py-2 ml-2 mr-2 text-center"
-                >
-                  Edit
-                </button>
-                <button
-                  onClick={() =>
-                    handleToggleMealPlanStatus(mealPlan.id, mealPlan.active)
-                  }
-                  className={`text-white font-bold  ${
-                    mealPlan.active
-                      ? "bg-red-600 hover:bg-red-700"
-                      : "bg-stone-400 hover:bg-stone-500"
-                  } focus:ring-4 focus:outline-none focus:ring-blue-300 rounded-lg text-base px-5 py-2.5 w-full ml-2 mr-2 text-center`}
-                >
-                  {mealPlan.active ? "Suspend" : "Unsuspend"}
-                </button>
-                <button
-                  onClick={() => handleDeleteMealPlan(mealPlan.id)}
-                  className="text-white font-bold bg-red-600 hover:bg-red-700 rounded-lg text-base px-5 py-2.5 w-full ml-2 mr-2 text-center"
-                >
-                  Delete
-                </button>
+              {/* Hidden when in smaller screens */}
+              {/* Table of meal plans */}
+              <div className="overflow-x-auto rounded-lg hidden lg:block">
+                <table className="min-w-full rounded-lg border-zinc-200 border-2">
+                  <thead className="bg-zinc-700 font-normal text-white border-gray-800 border-2">
+                    <tr className="text-center text-lg">
+                      <th className="px-4 py-2">
+                        Meal Plan Title
+                        <button
+                          className="ml-1 focus:outline-none"
+                          onClick={handleSortAlphabetically}
+                        >
+                          <SwapVertIcon />
+                        </button>
+                      </th>
+                      <th className="px-4 py-2">
+                        Date Published
+                        <button
+                          className="ml-1 focus:outline-none"
+                          onClick={handleSortByDatePublished}
+                        >
+                          <SwapVertIcon />
+                        </button>
+                      </th>
+                      <th className="px-3 py-2">Category</th>
+                      <th className="px-3 py-2">
+                        Status{" "}
+                        <button
+                          className="ml-1 focus:outline-none"
+                          onClick={handleSortByStatus}
+                        >
+                          <SwapVertIcon />
+                        </button>
+                      </th>
+                      <th className="px-3 py-2">
+                        Ratings{" "}
+                        <button
+                          className="ml-1 focus:outline-none"
+                          onClick={handleSortByRatings}
+                        >
+                          <SwapVertIcon />
+                        </button>
+                      </th>
+                      <th className="px-3 py-2"></th>
+                      <th className="px-3 py-2"></th>
+                      <th className="px-3 py-2"></th>
+                      <th className="px-3 py-2"></th>
+                      <th className="px-3 py-2"></th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {displayedMealPlans.map((mealPlan, index) => (
+                      <tr key={index} className="bg-white border-b">
+                        <td className="px-3 py-2 text-base text-center">
+                          {mealPlan.title}
+                        </td>
+                        <td className="px-3 py-2 text-base text-center">
+                          {new Date(
+                            mealPlan?.createdDT || mealPlan.lastUpdatedDT
+                          ).toLocaleDateString("en-GB")}
+                        </td>
+                        <td className="px-3 py-2 text-base text-center">
+                          {mealPlan.healthGoal
+                            ? mealPlan.healthGoal.subcategoryName
+                            : "Not specified"}
+                        </td>
+
+                        <td className="px-3 py-2 text-base text-center">
+                          <span
+                            className={`rounded-full px-3 py-1 text-base font-semibold ${
+                              mealPlan.active
+                                ? "text-white bg-green-500"
+                                : "text-white bg-red-500"
+                            }`}
+                          >
+                            {mealPlan.active ? "Active" : "Inactive"}
+                          </span>
+                        </td>
+                        <td className="px-3 py-2 text-base text-center">
+                          <div
+                            className="rating-container"
+                            style={{ minWidth: "100px" }}
+                          >
+                            {mealPlan.average !== null &&
+                            typeof mealPlan.average.averageRatings ===
+                              "number" &&
+                            typeof mealPlan.average.totalNumber === "number" ? (
+                              <span
+                                className="rating-text"
+                                style={{ fontWeight: "bold", color: "#0a0a0a" }}
+                              >
+                                {mealPlan.average.averageRatings.toFixed(1)}
+                              </span>
+                            ) : (
+                              "No ratings yet"
+                            )}
+                            {mealPlan.average &&
+                              mealPlan.average.totalNumber > 0 && (
+                                <span
+                                  className="rating-count"
+                                  style={{ fontSize: "0.8rem", color: "#666" }}
+                                >
+                                  ({mealPlan.average.totalNumber} rating
+                                  {mealPlan.average.totalNumber !== 1
+                                    ? "s"
+                                    : ""}
+                                  )
+                                </span>
+                              )}
+                          </div>
+                        </td>
+                        <td className="px-3 py-2 text-base text-center"></td>
+                        <td className="px-3 py-2 justify-center sm:justify-start">
+                          <button
+                            onClick={() => handleViewMealPlan(mealPlan.id)}
+                            className="text-white font-bold bg-blue-600 hover:bg-blue-700 rounded-lg text-base px-5 py-2 ml-2 mr-2 text-center"
+                          >
+                            {" "}
+                            View
+                          </button>
+                        </td>
+                        <td className="px-3 py-2 justify-center sm:justify-start">
+                          <button
+                            onClick={() => handleUpdateMealPlan(mealPlan.id)}
+                            className="text-white font-bold bg-slate-700 hover:bg-slate-800 rounded-lg text-base px-5 py-2 ml-2 mr-2 text-center"
+                          >
+                            {" "}
+                            Edit
+                          </button>
+                        </td>
+                        <td className="px-3 py-2 justify-center sm:justify-start">
+                          <button
+                            onClick={() =>
+                              handleToggleMealPlanStatus(
+                                mealPlan.id,
+                                mealPlan.active
+                              )
+                            }
+                            className={`text-white font-bold ${
+                              mealPlan.active
+                                ? "bg-red-600 hover:bg-red-700"
+                                : "bg-stone-400 hover:bg-stone-500"
+                            } rounded-lg text-base px-5 py-2 text-center`}
+                          >
+                            {mealPlan.active ? "Suspend" : "Unsuspend"}
+                          </button>
+                        </td>
+                        <td className="px-3 py-2 justify-center sm:justify-start">
+                          <button
+                            onClick={() => handleDeleteMealPlan(mealPlan.id)}
+                            className="text-white font-bold bg-red-600 hover:bg-red-700 rounded-lg text-base px-5 py-2 ml-2 mr-2 text-center"
+                          >
+                            {" "}
+                            Delete
+                          </button>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
               </div>
-            </div>
-          ))}
-        </div>
-      </div>
+
+              {/* Mobile View for Tables */}
+              <div className="mx-auto items-center lg:hidden">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
+                  {displayedMealPlans.map((mealPlan, index) => (
+                    <div
+                      key={index}
+                      className="bg-white p-5 h-full flex flex-col border border-gray-300 rounded-2xl shadow"
+                    >
+                      {/* Title */}
+                      <p className="px-3 py-2 text-lg">
+                        <span className="font-semibold text-gray-900">
+                          Title:{" "}
+                        </span>
+                        <span className="font-normal text-gray-900">
+                          {mealPlan.title}
+                        </span>
+                      </p>
+
+                      {/* Date Published */}
+                      <p className="px-3 py-2 text-lg">
+                        <span className="font-semibold text-gray-900">
+                          Date Published:{" "}
+                        </span>
+                        <span className="font-normal text-gray-900">
+                          {new Date(
+                            mealPlan?.createdDT || mealPlan.lastUpdatedDT
+                          ).toLocaleDateString("en-GB")}
+                        </span>
+                      </p>
+
+                      {/* Category */}
+                      <p className="px-3 py-2 text-lg">
+                        <span className="font-semibold text-gray-900">
+                          Category:{" "}
+                        </span>
+                        <span className="font-normal text-gray-900">
+                          {mealPlan.healthGoal
+                            ? mealPlan.healthGoal.subcategoryName
+                            : "Not specified"}
+                        </span>
+                      </p>
+
+                      {/* Status */}
+                      <p className="px-3 py-2 text-lg">
+                        <span className="font-semibold text-gray-900 mr-2">
+                          Status:{" "}
+                        </span>
+                        <span
+                          className={`rounded-full px-3 py-1 text-base font-semibold ${
+                            mealPlan.active
+                              ? "text-white bg-green-500"
+                              : "text-white bg-red-500"
+                          }`}
+                        >
+                          {mealPlan.active ? "Active" : "Inactive"}
+                        </span>
+                      </p>
+
+                      {/* Ratings */}
+                      <div className="px-3 py-2 text-lg">
+                        <div
+                          className="rating-container flex flex-row gap-2"
+                          style={{ minWidth: "100px" }}
+                        >
+                          <p className="font-semibold text-gray-900">
+                            Ratings:{" "}
+                          </p>
+
+                          {mealPlan.average !== null &&
+                          typeof mealPlan.average.averageRatings === "number" &&
+                          typeof mealPlan.average.totalNumber === "number" ? (
+                            <span
+                              className="rating-text"
+                              style={{ fontWeight: "bold", color: "#0a0a0a" }}
+                            >
+                              {mealPlan.average.averageRatings.toFixed(1)}
+                            </span>
+                          ) : (
+                            "No ratings yet"
+                          )}
+                          {mealPlan.average &&
+                            mealPlan.average.totalNumber > 0 && (
+                              <span
+                                className="rating-count"
+                                style={{ fontSize: "0.8rem", color: "#666" }}
+                              >
+                                ({mealPlan.average.totalNumber} rating
+                                {mealPlan.average.totalNumber !== 1 ? "s" : ""})
+                              </span>
+                            )}
+                        </div>
+                      </div>
+
+                      {/* Buttons */}
+                      <div className="mt-2 flex flex-col space-y-3 items-center">
+                        <button
+                          onClick={() => handleViewMealPlan(mealPlan.id)}
+                          className="text-white font-bold bg-blue-600 hover:bg-blue-700 rounded-lg text-base w-full px-5 py-2 ml-2 mr-2 text-center"
+                        >
+                          View
+                        </button>
+                        <button
+                          onClick={() => handleUpdateMealPlan(mealPlan.id)}
+                          className="text-white font-bold bg-slate-700 hover:bg-slate-800 rounded-lg text-base w-full px-5 py-2 ml-2 mr-2 text-center"
+                        >
+                          Edit
+                        </button>
+                        <button
+                          onClick={() =>
+                            handleToggleMealPlanStatus(
+                              mealPlan.id,
+                              mealPlan.active
+                            )
+                          }
+                          className={`text-white font-bold  ${
+                            mealPlan.active
+                              ? "bg-red-600 hover:bg-red-700"
+                              : "bg-stone-400 hover:bg-stone-500"
+                          } focus:ring-4 focus:outline-none focus:ring-blue-300 rounded-lg text-base px-5 py-2.5 w-full ml-2 mr-2 text-center`}
+                        >
+                          {mealPlan.active ? "Suspend" : "Unsuspend"}
+                        </button>
+                        <button
+                          onClick={() => handleDeleteMealPlan(mealPlan.id)}
+                          className="text-white font-bold bg-red-600 hover:bg-red-700 rounded-lg text-base px-5 py-2.5 w-full ml-2 mr-2 text-center"
+                        >
+                          Delete
+                        </button>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </>
+          )}
+        </>
+      )}
     </div>
   );
 };

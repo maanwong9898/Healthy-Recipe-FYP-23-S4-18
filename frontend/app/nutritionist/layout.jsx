@@ -4,7 +4,7 @@ import { Inter } from "next/font/google";
 const inter = Inter({ subsets: ["latin"] });
 import NutritionistNavigation from "../components/navigation/nutritionistNavBar";
 import React from "react";
-import Footer from "../components/footer"
+import Footer from "../components/footer";
 
 function NutritionistLayout({ children }) {
   return (
@@ -18,7 +18,7 @@ function NutritionistLayout({ children }) {
         {/* Viewport meta tag */}
         {/* Other meta tags and links to stylesheets can be added here */}
       </Head>
-      <NutritionistNavigation />
+      {/* <NutritionistNavigation /> */}
       <div className="w-full overflow-x-hidden">{children}</div>
       <Footer />
     </>

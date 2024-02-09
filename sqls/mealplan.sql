@@ -240,6 +240,20 @@ VALUES
         'Designed by cleaneating',  -- img_title
         '1' -- userid
     );
+    (
+        17,
+        'Australianeggs',
+        'Weight Gain Meal Plan',
+        TRUE,
+        'Gaining weight can be just as challenging as losing weight. While the main focus is to increase energy and protein intakes, it is also important to maintain a healthy balanced diet without eating too many foods that might have high amounts of calories but little in the way of good nutrition. ',
+        'This meal plan includes recipes that will help you achieve a higher protein and higher calorie intake from healthy energy-giving foods, which will assist you to enjoy your food while working your way toward achieving your weight gain goals.',
+        'This are a few recommended recipes that you can include for gaining weight:',
+        '2023-11-09',
+        1, -- weight gain
+        'https://img.freepik.com/free-photo/close-up-hand-holding-pen_23-2148484639.jpg?w=996&t=st=1707464723~exp=1707465323~hmac=3a6c845c6261ec6be11455686c2ee1903582e1bd61aadc8a6f241772ad9754e1',
+        'Designed by Freepik',  -- img_title
+        '1' -- userid
+    );
     
     
 
@@ -297,3 +311,6 @@ values
     (16, 61),
     (16, 62),
     (16, 63);
+    (17, 31),
+    (17, 54),
+    (17, 55);

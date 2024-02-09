@@ -253,6 +253,20 @@ VALUES
         'https://img.freepik.com/free-photo/close-up-hand-holding-pen_23-2148484639.jpg?w=996&t=st=1707464723~exp=1707465323~hmac=3a6c845c6261ec6be11455686c2ee1903582e1bd61aadc8a6f241772ad9754e1',
         'Designed by Freepik',  -- img_title
         '1' -- userid
+    ),
+    (
+        18,
+        'Australianeggs',
+        'Weight Loss Meal Plan',
+        TRUE,
+        'The most effective long-term weight management strategy is a combination of healthy, balanced food and physical activity.',
+        'To make your meal plan more practical and sustainable, consider include an optional extra a couple times per week. A drink of wine, a tiny piece of chocolate, or a sugary pastry are a few examples.',
+        'This meal plan includes plenty of tasty and healthy recipes to help make the achievement of your weight loss goals enjoyable!',
+        '2023-10-02',
+        3, -- weight loss
+        'https://img.freepik.com/free-photo/background-food-bowl-workout-meal-space_1428-677.jpg?w=1060&t=st=1707494903~exp=1707495503~hmac=1415a8278f47334812ad1d009ce75734f4a06080f8cf366da00b29f288601067',
+        'Designed by Freepik',  -- img_title
+        '2' -- userid
     );
     
     
@@ -310,7 +324,10 @@ values
     (15, 56),
     (16, 61),
     (16, 62),
-    (16, 63);
+    (16, 63),
     (17, 31),
     (17, 54),
-    (17, 55);
+    (17, 55),
+    (18, 2),
+    (18, 7),
+    (18, 10);

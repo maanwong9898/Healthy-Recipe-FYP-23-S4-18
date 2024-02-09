@@ -163,6 +163,10 @@ const NutritionistHomePage = () => {
     router.push("/nutritionist/mealPlan");
   };
 
+  const handleExploreAllMealPlans = () => {
+    router.push("/nutritionist/mealPlan/exploreAllMealPlan");
+  };
+
   // The button under user account will redirect to corresponding page
   const handleViewUserAccount = () => {
     router.push("/nutritionist/myAccount/viewAccount");
@@ -264,10 +268,18 @@ const NutritionistHomePage = () => {
                           </div>
                           <div className="flex items-center justify-center">
                             <button
-                              className="px-6 py-2 mb-8 font-medium bg-indigo-500 text-white w-full transition-all shadow-[3px_3px_0px_black] hover:shadow-none hover:translate-x-[3px] hover:translate-y-[3px]"
+                              className="px-6 py-2 font-medium bg-indigo-500 text-white w-full transition-all shadow-[3px_3px_0px_black] hover:shadow-none hover:translate-x-[3px] hover:translate-y-[3px]"
                               onClick={handleViewMealPlans}
                             >
                               View All Meal Plans
+                            </button>
+                          </div>
+                          <div className="flex items-center justify-center">
+                            <button
+                              className="px-6 py-2 font-medium bg-indigo-500 text-white w-full transition-all shadow-[3px_3px_0px_black] hover:shadow-none hover:translate-x-[3px] hover:translate-y-[3px]"
+                              onClick={handleExploreAllMealPlans}
+                            >
+                              Explore All Meal Plans
                             </button>
                           </div>
                         </div>
@@ -289,7 +301,7 @@ const NutritionistHomePage = () => {
                           </div>
                           <div className="flex items-center justify-center">
                             <button
-                              className="px-6 py-2 mb-8 font-medium bg-indigo-500 text-white w-full transition-all shadow-[3px_3px_0px_black] hover:shadow-none hover:translate-x-[3px] hover:translate-y-[3px]"
+                              className="px-6 py-2 font-medium bg-indigo-500 text-white w-full transition-all shadow-[3px_3px_0px_black] hover:shadow-none hover:translate-x-[3px] hover:translate-y-[3px]"
                               onClick={handleChangePassword}
                             >
                               Change Password

@@ -2,8 +2,8 @@
 import { useRouter } from "next/navigation";
 import React from "react";
 import { useState, useEffect } from "react";
-import HomeNavbar from "@/app/components/navigation/homeNavBar";
-import axiosInterceptorInstance from "../../axiosInterceptorInstance.js";
+import axiosInterceptorInstance from "../../../axiosInterceptorInstance.js";
+import NutritionistNavBar from "../../../components/navigation/nutritionistNavBar";
 
 // rouuter path: /mealPlan
 
@@ -55,7 +55,7 @@ const fetchMealPlanAverage = async (mealPlanId) => {
   }
 };
 
-const MealPlanPage = () => {
+const ExploreMealPlanPage = () => {
   const router = useRouter();
   const [categoryFilter, setCategoryFilter] = useState("");
   const [AllMealPlan, setAllMealPlan] = useState([]);
@@ -326,7 +326,7 @@ const MealPlanPage = () => {
 
   const handleViewMealPlan = (id) => {
     console.log(`Meal plan Title: ${id}`);
-    let routePath = `/mealPlan/viewMealPlan/${id}`;
+    let routePath = `/nutritionist/mealPlan/exploreAllMealPlan/${id}`;
     router.push(routePath);
   };
 
@@ -424,7 +424,7 @@ const MealPlanPage = () => {
 
   return (
     <div>
-      <HomeNavbar />
+      <NutritionistNavBar />
       <div className="p-4 md:p-10">
         <h1 className="text-3xl text-center md:text-7xl font-extrabold font-sans text-gray-900 mb-4 md:mb-8">
           Meal Plans
@@ -548,4 +548,4 @@ const MealPlanPage = () => {
   );
 };
 
-export default MealPlanPage;
+export default ExploreMealPlanPage;

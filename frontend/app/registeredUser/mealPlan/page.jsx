@@ -8,6 +8,9 @@ import RegisteredUserNavBar from "../../components/navigation/registeredUserNavB
 
 // rouuter path: /mealPlan
 
+// To be Degugged:
+// Ratings not displaying for just for you
+
 // Sorting options
 const sortOptions = {
   LATEST: { key: "LATEST", label: "By Latest" },
@@ -56,6 +59,26 @@ const fetchMealPlanAverage = async (mealPlanId) => {
   }
 };
 
+//  Fetch meal plan based on health goals of user
+const fetchMealPlansByHealthGoals = async (healthGoalId) => {
+  try {
+    console.log("Fetching meal plan based on health goals...");
+    const response = await axiosInterceptorInstance.get(
+      `/registeredUsers/getMealPlans/${healthGoalId}`
+    );
+    console.log("Meal plan based on health goals:", response.data);
+    console.log("user Health Goal ID:", healthGoalId);
+
+    const filteredData = response.data.filter(
+      (mealPlan) => mealPlan.active === true
+    );
+    return filteredData;
+  } catch (error) {
+    console.error("Failed to fetch meal plan based on health goals:", error);
+    throw error;
+  }
+};
+
 const MealPlanPage = () => {
   const router = useRouter();
   const [categoryFilter, setCategoryFilter] = useState("");
@@ -68,6 +91,10 @@ const MealPlanPage = () => {
   const [displayedMealPlan, setDisplayedMealPlan] = useState([]);
   const [resultsCount, setResultsCount] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
+  const [mealPlansByHealthGoals, setMealPlansByHealthGoals] = useState([]);
+
+  const [displayPersonalisedSection, setDisplayPersonalisedSection] =
+    useState(true);
 
   // Additional state to track if search button has been clicked
   const [searchButtonClicked, setSearchButtonClicked] = useState(false);
@@ -85,10 +112,59 @@ const MealPlanPage = () => {
           return { ...mealPlan, average };
         })
       );
-      console.log("mealPlan with average:", mealPlansWithAverage);
 
       setAllMealPlan(mealPlansWithAverage);
       setDisplayedMealPlan(mealPlansWithAverage);
+    };
+
+    // Sepcifically for fetching meal plans based on health goals + ratings count display
+    const getMealPlansByHealthGoals = async (healthGoalId) => {
+      try {
+        const mealPlans = await fetchMealPlansByHealthGoals(healthGoalId);
+        const mealPlansWithRatings = await Promise.all(
+          mealPlans.map(async (healthGoalMP) => {
+            const average = await fetchMealPlanAverage(healthGoalMP.id);
+            return { ...healthGoalMP, average }; // Combine the plan with its ratings
+          })
+        );
+        //return mealPlansWithRatings;
+        setMealPlansByHealthGoals(mealPlansWithRatings);
+      } catch (error) {
+        console.error("Error fetching meal plans with ratings:", error);
+        throw error;
+      }
+    };
+
+    const viewUserDashboard = async () => {
+      try {
+        const userId = SecureStorage.getItem("userId");
+        const token = SecureStorage.getItem("token");
+
+        const config = {
+          headers: { Authorization: `Bearer ${token}` },
+        };
+
+        // Make the GET request to the userAndAdmin endpoint
+        const response = await axiosInterceptorInstance.get(
+          "/register/dashboard/" + userId,
+          config
+        );
+
+        console.log("User data fetched from backend:", response.data);
+
+        // Extract healthGoalId from user data
+        const healthGoalId = response.data.healthGoal?.id;
+        console.log("Health Goal ID:", healthGoalId);
+
+        // Fetch meal plans based on health goal only if healthGoalId is available
+        if (healthGoalId) {
+          await getMealPlansByHealthGoals(healthGoalId);
+        } else {
+          displayPersonalisedSection(false); // if user no health goal, hide the personalised section
+        }
+      } catch (error) {
+        console.error("Error fetching user data", error);
+      }
     };
 
     const fetchCategories = async () => {
@@ -101,7 +177,8 @@ const MealPlanPage = () => {
         console.error("Error fetching categories:", error);
       }
     };
-    Promise.all([getData(), fetchCategories()])
+
+    Promise.all([getData(), fetchCategories(), viewUserDashboard()])
       .catch((error) => {
         console.error("Error in fetchData or fetchCategories:", error);
       })
@@ -287,6 +364,43 @@ const MealPlanPage = () => {
     }
   };
 
+  const renderStarsAndCount = (post) => {
+    if (
+      !post.average ||
+      !post.average.averageRatings ||
+      !post.average.totalNumber
+    ) {
+      return <div>No ratings available</div>;
+    }
+
+    const { averageRatings, totalNumber } = post.average;
+
+    let stars = [];
+    // Render stars based on average rating
+    for (let i = 0; i < 5; i++) {
+      stars.push(
+        <span
+          key={i}
+          className={i < averageRatings ? "text-yellow-300" : "text-gray-300"}
+        >
+          ★
+        </span>
+      );
+    }
+    // Render total count of ratings
+    return (
+      <div className="flex items-center">
+        <span className="mr-1">{stars}</span>
+        <span>({totalNumber} ratings)</span>
+      </div>
+    );
+  };
+
+  const capitalizeFirstLetter = (string) => {
+    if (!string) return "";
+    return string.charAt(0).toUpperCase() + string.slice(1).toLowerCase();
+  };
+  
   const handleViewMealPlan = (id) => {
     console.log(`Meal plan Title: ${id}`);
     let routePath = `/registeredUser/mealPlan/viewMealPlan/${id}`;
@@ -297,57 +411,58 @@ const MealPlanPage = () => {
   const renderPostCard = (post) => (
     <div
       key={post.id}
-      className="rounded shadow-lg overflow-hidden flex flex-col"
+      className="max-w-xl bg-white border border-gray-200 rounded-lg shadow-md overflow-hidden flex flex-col cursor-pointer hover:shadow-stone-700 transition duration-300 ease-in-out"
       style={{
         border: "0.5px solid transparent",
-        background:
-          "linear-gradient(to right, #22d3ee 0%, #8b5cf6 100%), white",
+        background: "#48494B",
         backgroundOrigin: "border-box",
         backgroundClip: "content-box, border-box",
       }}
+      onClick={() => handleViewMealPlan(post.id)}
     >
+      {/* Image */}
       <img
         src={post.img}
         alt={post.img_title}
-        className="w-full object-cover rounded-sm"
+        className="w-full object-cover rounded-sm text-white text-center"
         style={{ height: "192px" }}
       />
       <div className="flex-grow flex flex-col justify-between p-4 bg-white">
-        <div>
-          <h2
-            className="text-2xl font-extrabold mb-2 hover:text-orange-600 cursor-pointer"
-            onClick={() => handleViewMealPlan(post.id)}
-          >
-            {post.title}
+        {/* Title */}
+        <div className="text-center">
+          <h2 className="text-2xl font-extrabold mb-4">
+            {post?.title || "Untitled Meal Plan"}
           </h2>
-          <p className="text-gray-700 text-base mb-4 line-clamp-3">
-            <div className="whitespace-pre-line">{post.introduction}</div>
-          </p>
-          {/* Publisher */}
-          <p
-            className="text-gray-900 text-base font-semibold"
-            style={{ height: "3.5rem" }}
-          >
-            Publisher:{" "}
-            <span className="text-orange-600 font-bold tracking-tight">
-              {post?.publisher || "Not Specified"}
-            </span>
+        </div>
+        {/* Description */}
+        <div className="flex-grow flex items-center justify-center mb-4">
+          <p className="text-gray-700 text-base line-clamp-3">
+            {post.introduction}
           </p>
         </div>
-        {/*to debug*/}
-        {/* <div className="flex flex-wrap">
-          <div className="flex-grow">
-            <p className="text-sm text-gray-500">
-              {post.healthGoal.subcategoryName}
-            </p>
-          </div>
+        {/* Publisher and Ratings */}
+        <div className="flex flex-col lg:flex-row items-center justify-center space-x-4 mb-4">
+          <p className="text-gray-700 text-sm font-semibold">
+            Publisher:{" "}
+            <span className="text-orange-600 font-semibold tracking-tight">
+              {capitalizeFirstLetter(post?.publisher) || "Not Specified"}
+            </span>
+          </p>
+          <p className="text-gray-700 text-sm font-semibold">
+            {renderStarsAndCount(post)}
+          </p>
+        </div>
+
+        {/* For testing  */}
+        {/* Display category */}
+        {/* <div className="flex justify-center mb-4">
+          <p className="text-gray-700 text-sm font-semibold">
+            Category:{" "}
+            <span className="text-orange-600 font-semibold tracking-tight">
+              {post.healthGoal.subcategoryName || "Not Specified"}
+            </span>
+          </p>
         </div> */}
-        {/* <button
-          onClick={() => handleViewMealPlan(post.id)}
-          className="text-white font-bold bg-gradient-to-br from-cyan-400 to-cyan-800 hover:bg-blue-950 border-2 border-black focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 rounded-lg text-sm mt-3 px-4 py-2 text-center"
-        >
-          Read more
-        </button> */}
       </div>
     </div>
   );
@@ -372,13 +487,13 @@ const MealPlanPage = () => {
         <h1 className="text-3xl text-center md:text-7xl font-extrabold font-sans text-gray-900 mb-4 md:mb-8">
           Meal Plans
         </h1>
-        <div className="flex sm:justify-between sm:items-center mb-4">
+        <div className="flex flex-col lg:flex-row mb-4">
           {/* Search Section */}
           <div className="flex-grow">
             <input
               type="text"
-              id="mealPlanSearch"
-              name="mealPlanSearch"
+              id="educationalContentSearch"
+              name="educationalContentSearch"
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
               onKeyDown={(e) => {
@@ -392,24 +507,24 @@ const MealPlanPage = () => {
             />
             <button
               onClick={handleSearchClick}
-              className="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-1.5 px-5 rounded-full mt-2 w-full lg:w-auto"
+              className="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-1.5 px-5 rounded-full mt-2 w-full md:w-auto lg:w-auto"
               style={{ flexShrink: 0 }}
             >
               Search
             </button>
             {/* Results count */}
             {searchButtonClicked && searchPerformed && (
-              <p className="text-left text-red-500 font-bold text-lg sm:ml-2">
+              <p className="text-left text-red-500 font-medium text-lg">
                 {resultsCount} results found.
               </p>
             )}
           </div>
 
           {/* Sort dropdown */}
-          <div className="mb-2 md:mb-0 md:mr-6">
+          <div className="flex flex-col lg:flex-row lg:items-center mt-4 lg:mt-0 lg:mr-3">
             <label
               htmlFor="sort"
-              className="text-xl text-black mb-2 sm:mb-0 sm:mr-2"
+              className="text-xl text-black mb-1 sm:mb-0 sm:mr-2"
             >
               Sort By:
             </label>
@@ -429,7 +544,7 @@ const MealPlanPage = () => {
           </div>
 
           {/* Filter Section - Adjusted to align to the right */}
-          <div className="flex flex-col sm:flex-row sm:items-center">
+          <div className="flex flex-col lg:flex-row lg:items-center mt-4 lg:mt-0">
             <label
               htmlFor="categoryFilter"
               className="text-xl text-black mb-2 sm:mb-0 sm:mr-2"
@@ -445,7 +560,7 @@ const MealPlanPage = () => {
                 style={{ maxWidth: "300px" }}
               >
                 <option value="">All Categories</option>
-                {categories.map((category) => (
+                {categories?.map((category) => (
                   <option key={category.id} value={category.id}>
                     {category.subcategoryName}
                   </option>
@@ -454,6 +569,7 @@ const MealPlanPage = () => {
             </div>
           </div>
         </div>
+
         {/* Display the meal plans */}
         {/* Display message while fetching data ftom backend */}
         {isLoading ? (
@@ -464,23 +580,47 @@ const MealPlanPage = () => {
           <>
             {!searchPerformed && !categoryFilter && !sortOption ? (
               <>
-                <div className="mb-5">
-                  <h2 className="text-3xl font-semibold mb-4 mt-4">
-                    Latest Meal Plan
-                  </h2>
-                  <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
-                    {latestMealPlan.map((post) => renderPostCard(post))}
+                {displayPersonalisedSection &&
+                mealPlansByHealthGoals.length > 0 ? (
+                  <div className="mb-5">
+                    <h2 className="text-3xl font-bold mb-4 mt-8">
+                      Just For You
+                    </h2>
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
+                      {mealPlansByHealthGoals.map((post) =>
+                        renderPostCard(post)
+                      )}
+                    </div>
                   </div>
-                </div>
-                <h2 className="text-3xl font-semibold mb-4 mt-4">
-                  Other Meal Plan
+                ) : (
+                  <div className="mb-5">
+                    <h2 className="text-3xl font-bold mb-4 mt-8">
+                      Just For You
+                    </h2>
+                    <p className="text-gray-500">
+                      No personal health goal selected. Set your health goal in
+                      your dietary preference to find meal plans most suitable
+                      for you!
+                    </p>
+                  </div>
+                )}
+
+                {/* <h2 className="text-3xl font-bold mb-4 mt-8">
+                  Latest Meal Plans
                 </h2>
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
+                  {latestMealPlan.map((post) => renderPostCard(post))}
+                </div> */}
+
+                <h2 className="text-3xl font-bold mb-4 mt-8">
+                  Other Meal Plans
+                </h2>
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
                   {otherMealPlan.map((post) => renderPostCard(post))}
                 </div>
               </>
             ) : (
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
                 {displayedMealPlan.map((post) => renderPostCard(post))}
               </div>
             )}

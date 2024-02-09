@@ -4,8 +4,8 @@ import React from "react";
 import Link from "next/link";
 import { useState, useEffect } from "react";
 import axiosInterceptorInstance from "../../../../axiosInterceptorInstance.js";
-import ArrowRightIcon from "@mui/icons-material/ArrowRight";
-import ArrowLeftIcon from "@mui/icons-material/ArrowLeft";
+import ChevronRightIcon from "@mui/icons-material/ChevronRight";
+import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import SecureStorage from "react-secure-storage";
 import RegisteredUserNavBar from "../../../../components/navigation/registeredUserNavBar";
 
@@ -39,51 +39,64 @@ const fetchMealPlanById = async (mealPlanId) => {
 
 const RecipeCard = ({ recipe, onViewRecipe }) => {
   return (
-    <div className="max-w-sm rounded overflow-hidden shadow-lg m-4 bg-white">
-      <div className="h-48 overflow-hidden">
-        {" "}
-        {/* Fixed height container */}
-        <img
-          className="w-full h-full object-cover"
-          src={recipe.img}
-          alt={"Image of " + recipe.title}
-        />
-      </div>
-      <div className="px-6 py-4">
-        <div
-          className="font-bold text-xl mb-2 cursor-pointer hover:text-orange-600"
-          onClick={() => onViewRecipe(recipe.id)}
-        >
-          {recipe.title}
-        </div>
-        <p
-          className="text-gray-700 text-base mb-4 line-clamp-3"
-          style={{ height: "4.5rem" }}
-        >
-          {recipe.description}
-        </p>
-      </div>
-      <div className="px-6 pt-4 pb-2">
-        {/* Nutritional Information */}
-        <div className="flex flex-wrap justify-center -mx-1">
-          <span className="inline-block bg-blue-100 text-blue-800 rounded-full px-3 py-1 text-sm font-semibold m-1">
-            Calories: {recipe.calories}kcal
-          </span>
-          <span className="inline-block bg-red-100 text-red-800 rounded-full px-3 py-1 text-sm font-semibold m-1">
-            Fat: {recipe.fat}g
-          </span>
-          <span className="inline-block bg-green-100 text-green-800 rounded-full px-3 py-1 text-sm font-semibold m-1">
-            Protein: {recipe.protein}g
-          </span>
-          <span className="inline-block bg-yellow-100 text-yellow-800 rounded-full px-3 py-1 text-sm font-semibold m-1">
-            Carbs: {recipe.carbs}g
-          </span>
-          <span className="inline-block bg-purple-100 text-purple-800 rounded-full px-3 py-1 text-sm font-semibold m-1">
-            Sodium: {recipe.sodium}mg
-          </span>
-          <span className="inline-block bg-orange-100 text-orange-800 rounded-full px-3 py-1 text-sm font-semibold m-1">
-            Fibre: {recipe.fibre}g
-          </span>
+    <div
+      className="max-w-xl bg-white border border-gray-200 rounded-lg shadow-md overflow-hidden flex flex-col cursor-pointer hover:shadow-stone-700 transition duration-300 ease-in-out"
+      style={{
+        border: "0.5px solid transparent",
+        background: "#48494B",
+        backgroundOrigin: "border-box",
+        backgroundClip: "content-box, border-box",
+      }}
+      onClick={() => onViewRecipe(recipe.id)}
+    >
+      {/* Image */}
+      <img
+        className="w-full h-48 object-cover rounded-sm text-white text-center"
+        src={recipe.img}
+        alt={"Image of " + recipe.title}
+      />
+      <div className="flex-grow flex flex-col justify-between p-4 bg-white">
+        {/* Title */}
+        <div className="grid grid-rows-3 items-center">
+          <div className="text-center">
+            <h2 className="text-2xl font-extrabold mb-2">
+              {recipe?.title || "Untitled Recipe Title"}
+            </h2>
+            {/* Publisher */}
+            <p className="text-gray-700 text-sm font-semibold">
+              Publisher:{" "}
+              <span className="text-orange-600 font-semibold tracking-tight">
+                {recipe.userID.fullName || "Not specified"}
+              </span>
+            </p>
+          </div>
+
+          {/* Description */}
+          <p className="text-gray-700 text-base mb-4 line-clamp-3">
+            {recipe.description}
+          </p>
+
+          {/* Nutritional Information */}
+          <div className="flex flex-wrap justify-center -mx-1">
+            <span className="inline-block bg-blue-100 text-blue-800 rounded-full px-3 py-1 text-sm font-semibold m-1">
+              Calories: {recipe.calories}kcal
+            </span>
+            <span className="inline-block bg-red-100 text-red-800 rounded-full px-3 py-1 text-sm font-semibold m-1">
+              Fat: {recipe.fat}g
+            </span>
+            <span className="inline-block bg-green-100 text-green-800 rounded-full px-3 py-1 text-sm font-semibold m-1">
+              Protein: {recipe.protein}g
+            </span>
+            <span className="inline-block bg-yellow-100 text-yellow-800 rounded-full px-3 py-1 text-sm font-semibold m-1">
+              Carbs: {recipe.carbs}g
+            </span>
+            <span className="inline-block bg-purple-100 text-purple-800 rounded-full px-3 py-1 text-sm font-semibold m-1">
+              Sodium: {recipe.sodium}mg
+            </span>
+            <span className="inline-block bg-orange-100 text-orange-800 rounded-full px-3 py-1 text-sm font-semibold m-1">
+              Fibre: {recipe.fibre}g
+            </span>
+          </div>
         </div>
       </div>
     </div>
@@ -96,7 +109,7 @@ const ViewMealPlan = ({ params }) => {
   const router = useRouter();
   // Add additional state for carousel index
   const [currentRecipeIndex, setCurrentRecipeIndex] = useState(0);
-  const [currentRecipeSetIndex, setCurrentRecipeSetIndex] = useState(0);
+
   const [newRating, setNewRating] = useState(0);
   const [newReview, setNewReview] = useState("");
   const [submitting, setSubmitting] = useState(false);
@@ -221,35 +234,75 @@ const ViewMealPlan = ({ params }) => {
     return stars;
   };
 
-  const nextRecipeSet = () => {
-    setCurrentRecipeSetIndex((prevIndex) => {
-      const nextIndex = prevIndex + 3;
-      if (nextIndex >= mealPlan.recipes.length) return 0;
-      return nextIndex;
-    });
+  const nextRecipe = () => {
+    setCurrentRecipeIndex((prevIndex) =>
+      prevIndex === mealPlan.recipes.length - 1 ? 0 : prevIndex + 1
+    );
   };
 
-  const prevRecipeSet = () => {
-    setCurrentRecipeSetIndex((prevIndex) => {
-      // Change the variable name to avoid conflict
-      const newIndex = prevIndex - 3;
-      if (newIndex < 0) return Math.max(0, mealPlan.recipes.length - 3);
-      return newIndex;
-    });
+  const prevRecipe = () => {
+    setCurrentRecipeIndex((prevIndex) =>
+      prevIndex === 0 ? mealPlan.recipes.length - 1 : prevIndex - 1
+    );
   };
 
-  const isMobileSize = window.innerWidth <= 480;
+  // Render the previous, current, and next recipe cards
+  const renderRecipeCards = () => {
+    if (!mealPlan || !mealPlan.recipes) return null;
 
-  // Determine the slice of recipes to display
-  const displayedRecipes = isMobileSize
-    ? [mealPlan?.recipes[currentRecipeSetIndex]]
-    : mealPlan?.recipes.slice(currentRecipeSetIndex, currentRecipeSetIndex + 3);
+    const prevIndex =
+      currentRecipeIndex === 0
+        ? mealPlan.recipes.length - 1
+        : currentRecipeIndex - 1;
+    const nextIndex =
+      currentRecipeIndex === mealPlan.recipes.length - 1
+        ? 0
+        : currentRecipeIndex + 1;
 
-  // // Determine the slice of recipes to display
-  // const displayedRecipes = mealPlan?.recipes.slice(
-  //   currentRecipeSetIndex,
-  //   currentRecipeSetIndex + 3
-  // );
+    return (
+      <>
+        <RecipeCard
+          recipe={mealPlan.recipes[prevIndex]}
+          onViewRecipe={handleViewRecipe}
+        />
+        <RecipeCard
+          recipe={mealPlan.recipes[currentRecipeIndex]}
+          onViewRecipe={handleViewRecipe}
+        />
+        <RecipeCard
+          recipe={mealPlan.recipes[nextIndex]}
+          onViewRecipe={handleViewRecipe}
+        />
+      </>
+    );
+  };
+  // Render the current recipe card for mobile
+  const renderMobileRecipeCards = () => {
+    if (!mealPlan || !mealPlan.recipes) return null;
+    const recipe = mealPlan.recipes[currentRecipeIndex];
+
+    return <RecipeCard recipe={recipe} onViewRecipe={handleViewRecipe} />;
+  };
+
+  // Paganiation buttons for the recipe carousel
+  const renderPaginationButtons = () => {
+    if (!mealPlan || !mealPlan.recipes) return null;
+
+    return mealPlan.recipes.map((recipe, index) => (
+      <button
+        key={index}
+        className={`w-3 h-3 rounded-full mx-1 bg-orange-300 cursor-pointer focus:outline-none ${
+          index === currentRecipeIndex ? "bg-orange-500" : ""
+        }`}
+        onClick={() => setCurrentRecipeIndex(index)}
+      />
+    ));
+  };
+
+  const capitalizeFirstLetter = (string) => {
+    if (!string) return "";
+    return string.charAt(0).toUpperCase() + string.slice(1).toLowerCase();
+  };
 
   return (
     <div>
@@ -257,15 +310,15 @@ const ViewMealPlan = ({ params }) => {
 
       <div className="pt-8 pb-16 lg:pt-16 lg:pb-24 bg-white">
         <div className="text-center font-semibold font-sans">
-          <h1 className="flex flex-wrap justify-center mb-4 text-2xl font-extrabold text-gray-900 lg:mb-6 lg:text-5xl">
-            {mealPlan.title || "No title"}
+          <h1 className="flex flex-wrap justify-center mb-4 text-2xl font-extrabold text-gray-900 lg:mb-6 lg:text-4xl">
+            {mealPlan.title || "Untitled Meal Plan"}
           </h1>
           {/* Publisher and published date section */}
           <div className="flex justify-center text-sm font-serif font-semibold lg:text-base text-gray-900 space-x-6 mx-auto max-w-screen-xl">
             <p>
               Published by:{" "}
               <span className="text-orange-600 font-bold tracking-tight">
-                {mealPlan?.userID.fullName || "Not specified"}
+                {capitalizeFirstLetter(mealPlan?.publisher) || "Not specified"}
               </span>
             </p>
             <p>
@@ -300,69 +353,130 @@ const ViewMealPlan = ({ params }) => {
               {mealPlan.introduction}
             </div>
           </section>
+
           {/* Image */}
-          <img
-            src={mealPlan.img}
-            alt="Credit to the source of the image"
-            className="max-w-xl mx-auto mt-8 mb-8 rounded-lg shadow-xl sm:mt-16 sm:mb-16"
-          />
+          {mealPlan?.imgBlob ? (
+            <img
+              src={getImageURLFromBlob(mealPlan?.imgBlob)}
+              alt={mealPlan.img_title || "Meal Plan Image"}
+              className="max-w-full mx-auto mt-8 mb-8 sm:max-w-xl sm:mt-16 sm:mb-16 rounded-lg shadow-xl"
+            />
+          ) : (
+            <img
+              src={mealPlan.img}
+              alt={mealPlan.img_title || "Meal Plan Image"}
+              className="max-w-full mx-auto mt-8 mb-8 sm:max-w-xl sm:mt-16 sm:mb-16 rounded-lg shadow-xl"
+            />
+          )}
+
           {/* Main content */}
           <section className="main-content mt-10 pl-9 pr-9 mx-auto max-w-screen-xl md:text-base text-left">
             <div className="w-full p-2 rounded-lg whitespace-pre-line">
               {mealPlan.mainContent}
             </div>
           </section>
-          {/* Recipes */}
-          <div className="mt-16 mx-auto max-w-screen-xl text-left border-t-2 border-gray-50">
-            <p className="font-sans font-bold text-2xl md:text-4xl text-gray-900 mb-4 md:mt-8 ml-4 lg:ml-0">
+
+          {/* Recipes Section*/}
+          <div className="mt-16 mx-auto max-w-screen-xl text-left border-t-2 border-gray-50 hidden lg:block p-6">
+            <p className="font-sans font-bold text-2xl md:text-4xl text-gray-900 mb-8 md:mt-8 ml-4 lg:ml-0">
               Suggested Recipes
             </p>
-            {/* Recipes Carousel Section */}
+
+            {/* Recipes Carousel Section - Large Screen */}
             {mealPlan?.recipes && mealPlan.recipes.length > 0 ? (
-              <div className="relative">
-                <div className="grid md:grid-cols-3 gap-4 justify-center">
-                  {displayedRecipes.map((recipe) => (
-                    <RecipeCard
-                      key={recipe.id}
-                      recipe={recipe}
-                      onViewRecipe={handleViewRecipe}
-                    />
-                  ))}
-                </div>
-                {mealPlan.recipes.length > 3 && (
-                  <>
-                    <button
-                      onClick={prevRecipeSet}
-                      className="absolute top-1/2 transform -translate-y-1/2 z-10"
-                      // style={{
-                      //   marginLeft: "0.5rem, // Adjust right margin to bring the arrow inside the viewport
-                      // }}
-                    >
-                      <ArrowLeftIcon
-                        style={{
-                          fontSize: "3rem",
-                          color: "blue",
-                        }} // 50% transparent blue
-                      />
-                    </button>
-                    <button
-                      onClick={nextRecipeSet}
-                      className="absolute top-1/2 right-0 transform -translate-y-1/2 z-10"
-                      style={{
-                        marginRight: "1rem", // Adjust right margin to bring the arrow inside the viewport
-                      }}
-                    >
-                      <ArrowRightIcon
-                        style={{ fontSize: "3rem", color: "blue" }} // Set the size and color here
-                      />
-                    </button>
-                  </>
-                )}
+              <div className="grid grid-cols-3 gap-4 relative">
+                {/* Render recipe cards here */}
+                {renderRecipeCards()}
+                {/* Position arrows */}
+                <button
+                  onClick={prevRecipe}
+                  className="absolute top-1/2 left-0 transform rounded-full bg-orange-400 hover:bg-orange-500 transition duration-300 ease-in-out"
+                  style={{ zIndex: 1 }}
+                >
+                  <ChevronLeftIcon
+                    style={{ fontSize: "2.5rem", color: "white" }}
+                  />
+                </button>
+                <button
+                  onClick={nextRecipe}
+                  className="absolute top-1/2 right-0 transform rounded-full bg-orange-400 hover:bg-orange-500 transition duration-300 ease-in-out"
+                  style={{ zIndex: 1 }}
+                >
+                  <ChevronRightIcon
+                    style={{ fontSize: "2.5rem", color: "white" }}
+                  />
+                </button>
               </div>
             ) : (
               <p className="text-center">No suggested recipes.</p>
             )}
+            <div className="flex justify-center mt-4">
+              {renderPaginationButtons()}
+            </div>
           </div>
+
+          {/* Recipes Carousel Section - Mobile Screen */}
+          <div className="mt-16 mx-auto max-w-screen-xl text-left border-t-2 border-gray-50 lg:hidden p-6 items-center">
+            <p className="font-sans font-bold text-4xl text-gray-900 mb-4 md:mt-8 ml-4">
+              Suggested Recipes
+            </p>
+            {/* <div className="flex justify-between items-center mb-4 md:mt-8 ml-4">
+              <div></div>
+              <div className="flex gap-4">
+                <button
+                  onClick={prevRecipe}
+                  className="rounded-md bg-orange-500 hover:bg-orange-600 transition duration-300 ease-in-out"
+                >
+                  <ChevronLeftIcon
+                    style={{ fontSize: "2.5rem", color: "white" }}
+                  />
+                </button>
+                <button
+                  onClick={nextRecipe}
+                  className="rounded-md bg-orange-500 hover:bg-orange-600 transition duration-300 ease-in-out"
+                  style={{
+                    marginRight: "1rem",
+                  }}
+                >
+                  <ChevronRightIcon
+                    style={{ fontSize: "2.5rem", color: "white" }}
+                  />
+                </button>
+              </div>
+            </div> */}
+            {mealPlan?.recipes && mealPlan.recipes.length > 0 ? (
+              <div className="grid grid-cols-1 gap-4 justify-center items-center relative">
+                {/* Render recipe cards here */}
+                {renderMobileRecipeCards()}
+
+                {/* Position arrows */}
+                <button
+                  onClick={prevRecipe}
+                  className="absolute top-1/2 left-0 transform rounded-full bg-orange-400 hover:bg-orange-500 transition duration-300 ease-in-out"
+                  style={{ zIndex: 1 }}
+                >
+                  <ChevronLeftIcon
+                    style={{ fontSize: "2.5rem", color: "white" }}
+                  />
+                </button>
+                <button
+                  onClick={nextRecipe}
+                  className="absolute top-1/2 right-0 transform rounded-full bg-orange-400 hover:bg-orange-500 transition duration-300 ease-in-out"
+                  style={{ zIndex: 1 }}
+                >
+                  <ChevronRightIcon
+                    style={{ fontSize: "2.5rem", color: "white" }}
+                  />
+                </button>
+              </div>
+            ) : (
+              <p className="text-center">No suggested recipes.</p>
+            )}
+            <div className="flex justify-center mt-4">
+              {renderPaginationButtons()}
+            </div>
+          </div>
+
           {/* Conclusion */}
           <section className="main-content mt-10 pl-9 pr-9 mx-auto max-w-screen-xl md:text-base text-left">
             <div className="w-full p-2 rounded-lg whitespace-pre-line">
@@ -454,7 +568,9 @@ const ViewMealPlan = ({ params }) => {
               </div>
             </footer>
           ) : (
-            <p>You have already submitted a review for this meal plan.</p>
+            <p className="p-4">
+              You have already submitted a review for this meal plan.
+            </p>
           )}
         </div>
       </div>

@@ -6,7 +6,7 @@ import { useState, useEffect } from "react";
 import axiosInterceptorInstance from "../../../../axiosInterceptorInstance.js";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
-import HomeNavbar from "@/app/components/navigation/homeNavBar/index.jsx";
+import NutritionistNavBar from "../../../../components/navigation/nutritionistNavBar";
 
 // this is to view particular meal plan
 // router path: /mealPlan/viewMealPlan/[id]
@@ -244,7 +244,7 @@ const ViewMealPlan = ({ params }) => {
 
   return (
     <div>
-      <HomeNavbar />
+      <NutritionistNavBar />
       <div className="pt-8 pb-16 lg:pt-16 lg:pb-24 bg-white">
         <div className="text-center font-semibold font-sans">
           <h1 className="flex flex-wrap justify-center mb-4 text-2xl font-extrabold text-gray-900 lg:mb-6 lg:text-4xl">

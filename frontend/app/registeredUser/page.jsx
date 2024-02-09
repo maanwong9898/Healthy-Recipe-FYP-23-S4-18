@@ -5,6 +5,8 @@ import { useRouter } from "next/navigation";
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import axiosInterceptorInstance from "../axiosInterceptorInstance";
+import RegisteredUserNavBar from "../components/navigation/registeredUserNavBar";
+import SecureStorage from "react-secure-storage";
 
 // Fetch most popular Recipes
 const fetchMostPopularRecipes = async () => {
@@ -80,59 +82,79 @@ const RegisteredUserHomepage = () => {
   const [AllEducationalContents, setAllEducationalContents] = useState([]);
   const [AllMealPlans, setAllMealPlans] = useState([]);
   const [MostPopularRecipes, setMostPopularRecipes] = useState([]);
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
+  const [isChecking, setIsChecking] = useState(true);
 
   useEffect(() => {
-    setIsLoading(true);
-    const fetchMostPopularRecipesData = async () => {
-      try {
-        const mostPopularRecipesData = await fetchMostPopularRecipes();
-        setMostPopularRecipes(mostPopularRecipesData);
-      } catch (error) {
-        console.log("Failed to fetch most popular recipes: ", error);
-      }
-    };
+    if (
+      !SecureStorage.getItem("token") ||
+      SecureStorage.getItem("role") !== "REGISTERED_USER"
+    ) {
+      // clear the secure storage
+      SecureStorage.clear();
+      console.log("Redirecting to home page");
+      router.push("/");
+    } else {
+      setIsChecking(false);
 
-    const fetchAllEducationalContents = async () => {
-      try {
-        const allEducationalContentsData = await fetchEducationalContents();
-        setAllEducationalContents(allEducationalContentsData);
-      } catch (error) {
-        console.log("Failed to fetch educational contents: ", error);
-      }
-    };
+      const fetchMostPopularRecipesData = async () => {
+        try {
+          const mostPopularRecipesData = await fetchMostPopularRecipes();
+          setMostPopularRecipes(mostPopularRecipesData);
+        } catch (error) {
+          console.log("Failed to fetch most popular recipes: ", error);
+        }
+      };
 
-    const fetchAllBlogPosts = async () => {
-      try {
-        const allBlogPosts = await fetchBlogPosts();
-        setAllBusinessBlogPosts(allBlogPosts);
-      } catch (error) {
-        console.log("Failed to fetch blog posts: ", error);
-      }
-    };
+      const fetchAllEducationalContents = async () => {
+        try {
+          const allEducationalContentsData = await fetchEducationalContents();
+          setAllEducationalContents(allEducationalContentsData);
+        } catch (error) {
+          console.log("Failed to fetch educational contents: ", error);
+        }
+      };
 
-    const fetchAllMealPlans = async () => {
-      try {
-        const allMealPlansData = await fetchMealPlans();
-        setAllMealPlans(allMealPlansData);
-      } catch (error) {
-        console.log("Failed to fetch meal plans: ", error);
-      }
-    };
+      const fetchAllBlogPosts = async () => {
+        try {
+          const allBlogPosts = await fetchBlogPosts();
+          setAllBusinessBlogPosts(allBlogPosts);
+        } catch (error) {
+          console.log("Failed to fetch blog posts: ", error);
+        }
+      };
 
-    Promise.all([
-      fetchMostPopularRecipesData(),
-      fetchAllEducationalContents(),
-      fetchAllBlogPosts(),
-      fetchAllMealPlans(),
-    ])
-      .catch((error) => {
-        console.error("Error in fetching data: ", error);
-      })
-      .finally(() => {
-        setIsLoading(false);
-      });
+      const fetchAllMealPlans = async () => {
+        try {
+          const allMealPlansData = await fetchMealPlans();
+          setAllMealPlans(allMealPlansData);
+        } catch (error) {
+          console.log("Failed to fetch meal plans: ", error);
+        }
+      };
+
+      Promise.all([
+        fetchMostPopularRecipesData(),
+        fetchAllEducationalContents(),
+        fetchAllBlogPosts(),
+        fetchAllMealPlans(),
+      ])
+        .catch((error) => {
+          console.error("Error in fetching data: ", error);
+        })
+        .finally(() => {
+          setIsLoading(false);
+        });
+    }
   }, []);
+
+  if (isChecking) {
+    return (
+      <div>
+        <p>Checking...</p>
+      </div>
+    );
+  }
 
   // RECIPE RELATED
   // const latestRecipes = [...AllRecipes]
@@ -370,13 +392,14 @@ const RegisteredUserHomepage = () => {
   return (
     <div>
       <div>
-        {isLoading ? (
+        {isLoading && isChecking ? (
           <div className="text-xl text-center p-4">
             <p>Please wait. It'll just take a moment.</p>
           </div>
         ) : (
           <>
             <div className="p-5">
+              <RegisteredUserNavBar />
               <h2 className="text-4xl font-extrabold font-serif mb-4 mt-4 text-black">
                 Most Popular Recipes
               </h2>

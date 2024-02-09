@@ -3,6 +3,8 @@ import { useRouter } from "next/navigation";
 import React from "react";
 import { useState, useEffect } from "react";
 import axiosInterceptorInstance from "../../axiosInterceptorInstance.js";
+import SecureStorage from "react-secure-storage";
+import RegisteredUserNavBar from "../../components/navigation/registeredUserNavBar";
 
 // rouuter path: /mealPlan
 
@@ -365,6 +367,7 @@ const MealPlanPage = () => {
 
   return (
     <div>
+      <RegisteredUserNavBar />
       <div className="p-4 md:p-10">
         <h1 className="text-3xl text-center md:text-7xl font-extrabold font-sans text-gray-900 mb-4 md:mb-8">
           Meal Plans

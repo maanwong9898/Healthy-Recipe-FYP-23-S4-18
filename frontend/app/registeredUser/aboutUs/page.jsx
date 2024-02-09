@@ -5,6 +5,8 @@ import Image from "next/image";
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
 import { Pie } from "react-chartjs-2";
 import axiosInterceptorInstance from "../../axiosInterceptorInstance";
+import SecureStorage from "react-secure-storage";
+import RegisteredUserNavBar from "../../components/navigation/registeredUserNavBar";
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
@@ -111,6 +113,7 @@ const AboutUs = () => {
 
   return (
     <div className="min-h-screen">
+      <RegisteredUserNavBar />
       <div className="w-full py-6 flex flex-col">
         {/* Banner section */}
         <div className="relative h-80">

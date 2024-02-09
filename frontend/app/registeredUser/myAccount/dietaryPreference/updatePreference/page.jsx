@@ -6,6 +6,7 @@ import Link from "next/link";
 import { useState, useEffect } from "react";
 import axiosInterceptorInstance from "../../../../axiosInterceptorInstance.js";
 import SecureStorage from "react-secure-storage";
+import RegisteredUserNavBar from "../../../../components/navigation/registeredUserNavBar";
 
 // router path: /registeredUser/dietaryPreference/updatePreference
 // cancel btn to redirect to dietary preference page
@@ -41,107 +42,220 @@ const UpdateDietaryPreference = () => {
   const [healthGoalsCategory, setHealthGoalsCategory] = useState([]);
   const [healthGoals, setHealthGoals] = useState("");
   const [allergiesLoaded, setAllergiesLoaded] = useState(false);
+  const [isChecking, setIsChecking] = useState(true);
+  const [isLoading, setIsLoading] = useState(true);
 
-  const viewUserDashboard = async () => {
-    try {
-      const userId = SecureStorage.getItem("userId");
-      const token = SecureStorage.getItem("token");
+  // const viewUserDashboard = async () => {
+  //   try {
+  //     const userId = SecureStorage.getItem("userId");
+  //     const token = SecureStorage.getItem("token");
 
-      const config = {
-        headers: { Authorization: `Bearer ${token}` },
+  //     const config = {
+  //       headers: { Authorization: `Bearer ${token}` },
+  //     };
+
+  //     // Make the GET request to the userAndAdmin endpoint
+  //     const response = await axiosInterceptorInstance.get(
+  //       "/register/dashboard/" + userId,
+  //       config
+  //     );
+
+  //     console.log("User data fetched from backend:", response.data);
+  //     console.log(response.data);
+  //     setUserAccount(response.data);
+  //   } catch (error) {
+  //     console.error("Error fetching user data", error);
+  //   }
+  // };
+
+  // useEffect(() => {
+  //   viewUserDashboard();
+  // }, []);
+
+  useEffect(() => {
+    const userId = SecureStorage.getItem("userId");
+    const token = SecureStorage.getItem("token");
+
+    if (!token || SecureStorage.getItem("role") !== "REGISTERED_USER") {
+      SecureStorage.clear();
+      router.push("/");
+      return;
+    } else {
+      setIsChecking(false);
+      const fetchUserData = async () => {
+        try {
+          const response = await axiosInterceptorInstance.get(
+            `/register/dashboard/${userId}`,
+            { headers: { Authorization: `Bearer ${token}` } }
+          );
+
+          // Assuming response.data contains user data
+          const userData = response.data || {};
+          // setAllergies(userData.allergies || []);
+          // setDietaryPreference(
+          //   userData.dietaryPreferences?.subcategoryName || "Not specified"
+          // );
+          // setHealthGoal(
+          //   userData.healthGoal?.subcategoryName || "Not specified"
+          // );
+
+          // Set dietary preferences if available
+          setFullName(userData.fullName);
+          setUsername(userData.username);
+          setEmail(userData.email);
+          setDOB(userData.dob);
+          setContactNumber(userData.contactNumber);
+          setCompanyName(userData.companyName);
+          setCompanyAddress(userData.companyAddress);
+          setUen(userData.uen);
+          if (userData.dietaryPreferences && userData.dietaryPreferences.id) {
+            setDietaryPreference(userData.dietaryPreferences.id);
+          }
+
+          // Set allergies if available
+          if (userData.allergies && userData.allergies.length > 0) {
+            setAllergyRestriction(
+              userData.allergies.map((allergy) => allergy.id)
+            );
+          }
+          setAllergiesLoaded(true); // Set the flag here
+
+          // Set health goal if available
+          if (userData.healthGoal && userData.healthGoal.id) {
+            setHealthGoals(userData.healthGoal.id);
+          }
+        } catch (error) {
+          console.error("Error fetching user data", error);
+        } finally {
+          setIsLoading(false);
+        }
       };
 
-      // Make the GET request to the userAndAdmin endpoint
-      const response = await axiosInterceptorInstance.get(
-        "/register/dashboard/" + userId,
-        config
-      );
+      const fetchHealthGoals = async () => {
+        console.log("Fetching health goals...");
+        try {
+          const response = await axiosInterceptorInstance.get(
+            "/category/getAllHealthGoals"
+          );
+          console.log("Health Goals Categories Fetched", response.data);
+          setHealthGoalsCategory(response.data);
+        } catch (error) {
+          console.log(error);
+        }
+      };
 
-      console.log("User data fetched from backend:", response.data);
-      console.log(response.data);
-      setUserAccount(response.data);
-    } catch (error) {
-      console.error("Error fetching user data", error);
+      // Fetch all dietary preferences categories from backend
+      const fetchDietaryPreferences = async () => {
+        console.log("Fetching dietary preferences...");
+        try {
+          const response = await axiosInterceptorInstance.get(
+            "/category/getAllDietaryPreferences"
+          );
+          console.log("Dietary Preferences Categories Fetched", response.data);
+          setDietaryPreferencesCategory(response.data);
+        } catch (error) {
+          console.log(error);
+        }
+      };
+
+      // Fetch all allergies categories from backend
+      const fetchAllergies = async () => {
+        console.log("Fetching allergies...");
+        try {
+          const response = await axiosInterceptorInstance.get(
+            "/category/getAllAllergies"
+          );
+          console.log("Allergies Categories Fetched", response.data);
+          setAllergyCategory(response.data);
+        } catch (error) {
+          console.log(error);
+        }
+      };
+
+      fetchUserData();
+      fetchHealthGoals();
+      fetchDietaryPreferences();
+      fetchAllergies();
     }
-  };
-
-  useEffect(() => {
-    viewUserDashboard();
   }, []);
 
-  useEffect(() => {
-    // Set the initial value when userAccount changes
-    setFullName(userAccount ? userAccount.fullName : "");
-    setUsername(userAccount ? userAccount.username : "");
-    setEmail(userAccount ? userAccount.email : "");
-    setDOB(userAccount ? userAccount.dob : "");
-    setContactNumber(userAccount ? userAccount.contactNumber : "");
-    setCompanyName(userAccount ? userAccount.companyName : "");
-    setCompanyAddress(userAccount ? userAccount.companyAddress : "");
-    setUen(userAccount ? userAccount.uen : "");
-    // Set dietary preferences if available
-    if (userAccount.dietaryPreferences && userAccount.dietaryPreferences.id) {
-      setDietaryPreference(userAccount.dietaryPreferences.id);
-    }
+  if (isChecking) {
+    return <div>Checking...</div>;
+  }
 
-    // Set allergies if available
-    if (userAccount.allergies && userAccount.allergies.length > 0) {
-      setAllergyRestriction(userAccount.allergies.map((allergy) => allergy.id));
-    }
-    setAllergiesLoaded(true); // Set the flag here
+  // useEffect(() => {
+  //   // Set the initial value when userAccount changes
+  //   setFullName(userAccount ? userAccount.fullName : "");
+  //   setUsername(userAccount ? userAccount.username : "");
+  //   setEmail(userAccount ? userAccount.email : "");
+  //   setDOB(userAccount ? userAccount.dob : "");
+  //   setContactNumber(userAccount ? userAccount.contactNumber : "");
+  //   setCompanyName(userAccount ? userAccount.companyName : "");
+  //   setCompanyAddress(userAccount ? userAccount.companyAddress : "");
+  //   setUen(userAccount ? userAccount.uen : "");
+  //   // Set dietary preferences if available
+  //   if (userAccount.dietaryPreferences && userAccount.dietaryPreferences.id) {
+  //     setDietaryPreference(userAccount.dietaryPreferences.id);
+  //   }
 
-    // Set health goal if available
-    if (userAccount.healthGoal && userAccount.healthGoal.id) {
-      setHealthGoals(userAccount.healthGoal.id);
-    }
-  }, [userAccount]);
+  //   // Set allergies if available
+  //   if (userAccount.allergies && userAccount.allergies.length > 0) {
+  //     setAllergyRestriction(userAccount.allergies.map((allergy) => allergy.id));
+  //   }
+  //   setAllergiesLoaded(true); // Set the flag here
 
-  useEffect(() => {
-    const fetchHealthGoals = async () => {
-      console.log("Fetching health goals...");
-      try {
-        const response = await axiosInterceptorInstance.get(
-          "/category/getAllHealthGoals"
-        );
-        console.log("Health Goals Categories Fetched", response.data);
-        setHealthGoalsCategory(response.data);
-      } catch (error) {
-        console.log(error);
-      }
-    };
+  //   // Set health goal if available
+  //   if (userAccount.healthGoal && userAccount.healthGoal.id) {
+  //     setHealthGoals(userAccount.healthGoal.id);
+  //   }
+  // }, [userAccount]);
 
-    // Fetch all dietary preferences categories from backend
-    const fetchDietaryPreferences = async () => {
-      console.log("Fetching dietary preferences...");
-      try {
-        const response = await axiosInterceptorInstance.get(
-          "/category/getAllDietaryPreferences"
-        );
-        console.log("Dietary Preferences Categories Fetched", response.data);
-        setDietaryPreferencesCategory(response.data);
-      } catch (error) {
-        console.log(error);
-      }
-    };
+  // useEffect(() => {
+  //   const fetchHealthGoals = async () => {
+  //     console.log("Fetching health goals...");
+  //     try {
+  //       const response = await axiosInterceptorInstance.get(
+  //         "/category/getAllHealthGoals"
+  //       );
+  //       console.log("Health Goals Categories Fetched", response.data);
+  //       setHealthGoalsCategory(response.data);
+  //     } catch (error) {
+  //       console.log(error);
+  //     }
+  //   };
 
-    // Fetch all allergies categories from backend
-    const fetchAllergies = async () => {
-      console.log("Fetching allergies...");
-      try {
-        const response = await axiosInterceptorInstance.get(
-          "/category/getAllAllergies"
-        );
-        console.log("Allergies Categories Fetched", response.data);
-        setAllergyCategory(response.data);
-      } catch (error) {
-        console.log(error);
-      }
-    };
+  //   // Fetch all dietary preferences categories from backend
+  //   const fetchDietaryPreferences = async () => {
+  //     console.log("Fetching dietary preferences...");
+  //     try {
+  //       const response = await axiosInterceptorInstance.get(
+  //         "/category/getAllDietaryPreferences"
+  //       );
+  //       console.log("Dietary Preferences Categories Fetched", response.data);
+  //       setDietaryPreferencesCategory(response.data);
+  //     } catch (error) {
+  //       console.log(error);
+  //     }
+  //   };
 
-    fetchHealthGoals();
-    fetchDietaryPreferences();
-    fetchAllergies();
-  }, []);
+  //   // Fetch all allergies categories from backend
+  //   const fetchAllergies = async () => {
+  //     console.log("Fetching allergies...");
+  //     try {
+  //       const response = await axiosInterceptorInstance.get(
+  //         "/category/getAllAllergies"
+  //       );
+  //       console.log("Allergies Categories Fetched", response.data);
+  //       setAllergyCategory(response.data);
+  //     } catch (error) {
+  //       console.log(error);
+  //     }
+  //   };
+
+  //   fetchHealthGoals();
+  //   fetchDietaryPreferences();
+  //   fetchAllergies();
+  // }, []);
 
   // Function to handle health goals category change
   const handleHealthCategoryChange = (e) => {
@@ -169,16 +283,16 @@ const UpdateDietaryPreference = () => {
   };
 
   // To check the state of dietary preference immediately after the state is updated(because of async nature of setState)
-  useEffect(() => {
-    console.log(
-      "Dietary preference being selected from user:",
-      dietaryPreference
-    );
+  // useEffect(() => {
+  //   console.log(
+  //     "Dietary preference being selected from user:",
+  //     dietaryPreference
+  //   );
 
-    console.log("Allergies being selected from user:", allergyRestriction);
+  //   console.log("Allergies being selected from user:", allergyRestriction);
 
-    console.log("Health goal being selected from user:", healthGoals);
-  }, [dietaryPreference, allergyRestriction, healthGoals]);
+  //   console.log("Health goal being selected from user:", healthGoals);
+  // }, [dietaryPreference, allergyRestriction, healthGoals]);
 
   // Function to handle update
   const handlePreferencesUpdate = async (event) => {
@@ -276,190 +390,197 @@ const UpdateDietaryPreference = () => {
 
   return (
     <div className="flex flex-col min-h-screen">
-      <div className="flex justify-center">
-        <div className="p-5 max-w-4xl w-full mx-5 items-center ">
-          <div className="bg-white border border-gray-100 rounded-lg shadow">
-            <ul className="flex flex-col text-sm font-medium text-left lg:text-center text-gray-500 border-b border-gray-200 rounded-t-lg bg-gray-50 lg:flex-row lg:gap-4 ">
-              <li className="me-2">
-                <button
-                  type="button"
-                  className={`inline-block p-4 rounded-ss-lg hover:bg-gray-100 ${
-                    isTabSelected === "myAccount"
-                      ? "text-blue-600"
-                      : "text-gray-500"
-                  }`}
-                  onClick={() => handleSelectTab("myAccount")}
-                >
-                  My Account
-                </button>
-              </li>
-              <li className="me-2">
-                <button
-                  type="button"
-                  className={`inline-block p-4 rounded-ss-lg hover:bg-gray-100 ${
-                    isTabSelected === "changePwd"
-                      ? "text-blue-600"
-                      : "text-gray-500"
-                  }`}
-                  onClick={() => handleSelectTab("changePwd")}
-                >
-                  Change Password
-                </button>
-              </li>
-              <li className="me-2">
-                <button
-                  type="button"
-                  className={`inline-block p-4 rounded-ss-lg hover:bg-gray-100 ${
-                    isTabSelected === "dietaryPreference"
-                      ? "text-blue-600"
-                      : "text-gray-500"
-                  }`}
-                  onClick={() => handleSelectTab("dietaryPreference")}
-                >
-                  Dietary Preference
-                </button>
-              </li>
-              <li className="me-2">
-                <button
-                  type="button"
-                  className={`inline-block p-4 rounded-ss-lg hover:bg-gray-100 ${
-                    isTabSelected === "trackWeight"
-                      ? "text-blue-600"
-                      : "text-gray-500"
-                  }`}
-                  onClick={() => handleSelectTab("trackWeight")}
-                >
-                  Track Weight Management
-                </button>
-              </li>
-              <li className="me-2">
-                <button
-                  type="button"
-                  className={`inline-block p-4 rounded-ss-lg hover:bg-gray-100 ${
-                    isTabSelected === "checkBMI"
-                      ? "text-blue-600"
-                      : "text-gray-500"
-                  }`}
-                  onClick={() => handleSelectTab("checkBMI")}
-                >
-                  Check BMI
-                </button>
-              </li>
-            </ul>
+      {isLoading && isChecking ? (
+        <div>Loading...</div>
+      ) : (
+        <>
+          <RegisteredUserNavBar />
+          <div className="flex justify-center">
+            <div className="p-5 max-w-4xl w-full mx-5 items-center ">
+              <div className="bg-white border border-gray-100 rounded-lg shadow">
+                <ul className="flex flex-col text-sm font-medium text-left lg:text-center text-gray-500 border-b border-gray-200 rounded-t-lg bg-gray-50 lg:flex-row lg:gap-4 ">
+                  <li className="me-2">
+                    <button
+                      type="button"
+                      className={`inline-block p-4 rounded-ss-lg hover:bg-gray-100 ${
+                        isTabSelected === "myAccount"
+                          ? "text-blue-600"
+                          : "text-gray-500"
+                      }`}
+                      onClick={() => handleSelectTab("myAccount")}
+                    >
+                      My Account
+                    </button>
+                  </li>
+                  <li className="me-2">
+                    <button
+                      type="button"
+                      className={`inline-block p-4 rounded-ss-lg hover:bg-gray-100 ${
+                        isTabSelected === "changePwd"
+                          ? "text-blue-600"
+                          : "text-gray-500"
+                      }`}
+                      onClick={() => handleSelectTab("changePwd")}
+                    >
+                      Change Password
+                    </button>
+                  </li>
+                  <li className="me-2">
+                    <button
+                      type="button"
+                      className={`inline-block p-4 rounded-ss-lg hover:bg-gray-100 ${
+                        isTabSelected === "dietaryPreference"
+                          ? "text-blue-600"
+                          : "text-gray-500"
+                      }`}
+                      onClick={() => handleSelectTab("dietaryPreference")}
+                    >
+                      Dietary Preference
+                    </button>
+                  </li>
+                  <li className="me-2">
+                    <button
+                      type="button"
+                      className={`inline-block p-4 rounded-ss-lg hover:bg-gray-100 ${
+                        isTabSelected === "trackWeight"
+                          ? "text-blue-600"
+                          : "text-gray-500"
+                      }`}
+                      onClick={() => handleSelectTab("trackWeight")}
+                    >
+                      Track Weight Management
+                    </button>
+                  </li>
+                  <li className="me-2">
+                    <button
+                      type="button"
+                      className={`inline-block p-4 rounded-ss-lg hover:bg-gray-100 ${
+                        isTabSelected === "checkBMI"
+                          ? "text-blue-600"
+                          : "text-gray-500"
+                      }`}
+                      onClick={() => handleSelectTab("checkBMI")}
+                    >
+                      Check BMI
+                    </button>
+                  </li>
+                </ul>
 
-            {/* Start of dietary preference card */}
-            <div className="p-8">
-              <h1 className="text-lg font-semibold mb-4">
-                Update My Dietary Preference
-              </h1>
-              <form>
-                {/* DIETARY PREFERENCE */}
-                <div className="flex flex-col mb-3.5">
-                  <label
-                    htmlFor="dietaryPreference"
-                    className="font-medium text-base mb-1"
-                  >
-                    Dietary Preference
-                  </label>
-                  <select
-                    id="dietaryPreference"
-                    name="dietaryPreference"
-                    value={dietaryPreference}
-                    onChange={handleDietaryPreferenceCategoryChange}
-                    className="bg-white border border-gray-300 text-gray-900 sm:text-sm rounded-lg p-2.5 w-full lg:w-72"
-                  >
-                    <option value="">Select Dietary Preference</option>
-                    {dietaryPreferencesCategory.map((cat, index) => (
-                      <option key={index} value={cat.id}>
-                        {cat.subcategoryName}
-                      </option>
-                    ))}
-                  </select>
-                </div>
+                {/* Start of dietary preference card */}
+                <div className="p-8">
+                  <h1 className="text-lg font-semibold mb-4">
+                    Update My Dietary Preference
+                  </h1>
+                  <form>
+                    {/* DIETARY PREFERENCE */}
+                    <div className="flex flex-col mb-3.5">
+                      <label
+                        htmlFor="dietaryPreference"
+                        className="font-medium text-base mb-1"
+                      >
+                        Dietary Preference
+                      </label>
+                      <select
+                        id="dietaryPreference"
+                        name="dietaryPreference"
+                        value={dietaryPreference}
+                        onChange={handleDietaryPreferenceCategoryChange}
+                        className="bg-white border border-gray-300 text-gray-900 sm:text-sm rounded-lg p-2.5 w-full lg:w-72"
+                      >
+                        <option value="">Select Dietary Preference</option>
+                        {dietaryPreferencesCategory.map((cat, index) => (
+                          <option key={index} value={cat.id}>
+                            {cat.subcategoryName}
+                          </option>
+                        ))}
+                      </select>
+                    </div>
 
-                {/* ALLERGIES AND RESTRICTIONS */}
-                <div className="flex flex-col mb-3.5">
-                  <p className="font-medium text-base mb-1">
-                    Allergies and Restrictions
-                  </p>
+                    {/* ALLERGIES AND RESTRICTIONS */}
+                    <div className="flex flex-col mb-3.5">
+                      <p className="font-medium text-base mb-1">
+                        Allergies and Restrictions
+                      </p>
 
-                  <div className="grid lg:grid-cols-4 grid-cols-3 gap-10 w-full lg:w-72">
-                    {allergyCategory.map((cat, index) => (
-                      <div className="flex items-center" key={index}>
-                        <input
-                          type="checkbox"
-                          name="allergies"
-                          value={cat.id}
-                          checked={allergyRestriction.includes(cat.id)}
-                          onChange={(e) =>
-                            handleAllergyCategoryChange(e, cat.id)
-                          }
-                          className="w-4 h-4 bg-gray-50 border-gray-300 rounded mr-2"
-                        />
-                        {cat.subcategoryName}
+                      <div className="grid lg:grid-cols-4 grid-cols-3 gap-10 w-full lg:w-72">
+                        {allergyCategory.map((cat, index) => (
+                          <div className="flex items-center" key={index}>
+                            <input
+                              type="checkbox"
+                              name="allergies"
+                              value={cat.id}
+                              checked={allergyRestriction.includes(cat.id)}
+                              onChange={(e) =>
+                                handleAllergyCategoryChange(e, cat.id)
+                              }
+                              className="w-4 h-4 bg-gray-50 border-gray-300 rounded mr-2"
+                            />
+                            {cat.subcategoryName}
+                          </div>
+                        ))}
                       </div>
-                    ))}
-                  </div>
+                    </div>
+
+                    {/* HEALTH GOAL */}
+                    <div className="flex flex-col mb-3.5">
+                      <label
+                        htmlFor="healthGoals"
+                        className="font-medium text-base mb-1"
+                      >
+                        Health Goal
+                      </label>
+                      <select
+                        id="healthGoals"
+                        name="healthGoals"
+                        value={healthGoals}
+                        onChange={handleHealthCategoryChange}
+                        className="bg-white border border-gray-300 text-gray-900 sm:text-sm rounded-lg p-2.5 w-full lg:w-72"
+                      >
+                        <option value="">Select Health Goal</option>
+                        {healthGoalsCategory.map((cat, index) => (
+                          <option key={index} value={cat.id}>
+                            {cat.subcategoryName}
+                          </option>
+                        ))}
+                      </select>
+                    </div>
+
+                    {/* ERROR MESSAGE */}
+                    {error && (
+                      <div className="text-red-500 text-base font-medium mt-3">
+                        {error}
+                      </div>
+                    )}
+
+                    {/* SUCCESS MESSAGE */}
+                    {success && (
+                      <div className="text-green-500 text-base font-medium mt-3">
+                        {success}
+                      </div>
+                    )}
+
+                    {/* BUTTON */}
+                    <div className="flex flex-row justify-start gap-4 mt-5">
+                      <button
+                        onClick={handleCancelUpdate}
+                        className="bg-gray-200 hover:bg-gray-300 text-gray-900 w-24 rounded-lg font-semibold py-2"
+                      >
+                        Cancel
+                      </button>
+                      <button
+                        onClick={handlePreferencesUpdate}
+                        className=" bg-blue-600 hover:bg-blue-700 text-white w-24 rounded-lg font-bold py-2"
+                      >
+                        Update
+                      </button>
+                    </div>
+                  </form>
                 </div>
-
-                {/* HEALTH GOAL */}
-                <div className="flex flex-col mb-3.5">
-                  <label
-                    htmlFor="healthGoals"
-                    className="font-medium text-base mb-1"
-                  >
-                    Health Goal
-                  </label>
-                  <select
-                    id="healthGoals"
-                    name="healthGoals"
-                    value={healthGoals}
-                    onChange={handleHealthCategoryChange}
-                    className="bg-white border border-gray-300 text-gray-900 sm:text-sm rounded-lg p-2.5 w-full lg:w-72"
-                  >
-                    <option value="">Select Health Goal</option>
-                    {healthGoalsCategory.map((cat, index) => (
-                      <option key={index} value={cat.id}>
-                        {cat.subcategoryName}
-                      </option>
-                    ))}
-                  </select>
-                </div>
-
-                {/* ERROR MESSAGE */}
-                {error && (
-                  <div className="text-red-500 text-base font-medium mt-3">
-                    {error}
-                  </div>
-                )}
-
-                {/* SUCCESS MESSAGE */}
-                {success && (
-                  <div className="text-green-500 text-base font-medium mt-3">
-                    {success}
-                  </div>
-                )}
-
-                {/* BUTTON */}
-                <div className="flex flex-row justify-start gap-4 mt-5">
-                  <button
-                    onClick={handleCancelUpdate}
-                    className="bg-gray-200 hover:bg-gray-300 text-gray-900 w-24 rounded-lg font-semibold py-2"
-                  >
-                    Cancel
-                  </button>
-                  <button
-                    onClick={handlePreferencesUpdate}
-                    className=" bg-blue-600 hover:bg-blue-700 text-white w-24 rounded-lg font-bold py-2"
-                  >
-                    Update
-                  </button>
-                </div>
-              </form>
+              </div>
             </div>
           </div>
-        </div>
-      </div>
+        </>
+      )}
     </div>
   );
 };

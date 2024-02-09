@@ -4,6 +4,7 @@ import React, { use } from "react";
 import { useState, useEffect } from "react";
 import axiosInterceptorInstance from "../../../../axiosInterceptorInstance.js";
 import SecureStorage from "react-secure-storage";
+import RegisteredUserNavBar from "../../../../components/navigation/registeredUserNavBar";
 
 // router path: /registeredUser/recipes/viewRecipe/[id]
 
@@ -225,68 +226,70 @@ const ViewRecipe = ({ params }) => {
   };
 
   return (
-    <div className="pt-8 pb-16 lg:pt-16 lg:pb-24 bg-white">
-      <div className="px-10 text-center font-semibold font-sans">
-        <h1 className="mb-4 text-2xl font-extrabold leading-tight text-gray-900 lg:mb-6 lg:text-6xl">
-          {recipe?.title || "Untitled Recipe"}
-        </h1>
+    <div>
+      <RegisteredUserNavBar />
+      <div className="pt-8 pb-16 lg:pt-16 lg:pb-24 bg-white">
+        <div className="px-10 text-center font-semibold font-sans">
+          <h1 className="mb-4 text-2xl font-extrabold leading-tight text-gray-900 lg:mb-6 lg:text-6xl">
+            {recipe?.title || "Untitled Recipe"}
+          </h1>
 
-        {/* Publisher and published date section */}
-        <div className="flex justify-center text-base font-serif font-semibold lg:text-base text-gray-900 space-x-6 mx-auto max-w-screen-xl">
-          <p>
-            Published by:{" "}
-            <span className="text-orange-600 font-bold tracking-tight">
-              {recipe?.userID?.fullName || "Not specified"}
-            </span>
-          </p>
-          <p>
-            Published on:{" "}
-            <span className="text-orange-600 font-bold tracking-tight">
+          {/* Publisher and published date section */}
+          <div className="flex justify-center text-base font-serif font-semibold lg:text-base text-gray-900 space-x-6 mx-auto max-w-screen-xl">
+            <p>
+              Published by:{" "}
+              <span className="text-orange-600 font-bold tracking-tight">
+                {recipe?.userID?.fullName || "Not specified"}
+              </span>
+            </p>
+            <p>
+              Published on:{" "}
+              <span className="text-orange-600 font-bold tracking-tight">
+                {recipe
+                  ? new Date(
+                      recipe.createdDT || recipe.lastUpdatedDT
+                    ).toLocaleDateString("en-GB", {
+                      day: "2-digit",
+                      month: "short",
+                      year: "numeric",
+                    })
+                  : "Not specified"}
+              </span>
+            </p>
+          </div>
+          {/* End of publisher and published date section  */}
+
+          {/* Combined Allergens and Dietary Preferences section */}
+          <div className="mt-14 flex justify-center space-x-4">
+            {/* Allergens section */}
+            <div className="flex-1 p-3" role="alert">
+              <p className="font-bold text-base lg:text-xl text-gray-900 mb-1">
+                Allergens Information:
+              </p>
+              {recipe ? renderAllergens(recipe.allergies) : "Not specified"}
+            </div>
+
+            {/* Dietary Preferences section */}
+            <div className="flex-1 p-3" role="alert">
+              <p className="font-bold text-base lg:text-xl text-gray-900 mb-1">
+                Dietary Preferences:
+              </p>
               {recipe
-                ? new Date(
-                    recipe.createdDT || recipe.lastUpdatedDT
-                  ).toLocaleDateString("en-GB", {
-                    day: "2-digit",
-                    month: "short",
-                    year: "numeric",
-                  })
+                ? renderDietaryPreferences(recipe.dietaryPreferences)
                 : "Not specified"}
-            </span>
-          </p>
-        </div>
-        {/* End of publisher and published date section  */}
+            </div>
 
-        {/* Combined Allergens and Dietary Preferences section */}
-        <div className="mt-14 flex justify-center space-x-4">
-          {/* Allergens section */}
-          <div className="flex-1 p-3" role="alert">
-            <p className="font-bold text-base lg:text-xl text-gray-900 mb-1">
-              Allergens Information:
-            </p>
-            {recipe ? renderAllergens(recipe.allergies) : "Not specified"}
+            {/* Meal Type section */}
+            <div className="flex-1 p-3" role="alert">
+              <p className="font-bold text-base lg:text-xl text-gray-900 mb-1">
+                Meal Type:
+              </p>
+              {recipe ? renderMealType(recipe.mealType) : "Not specified"}
+            </div>
           </div>
 
-          {/* Dietary Preferences section */}
-          <div className="flex-1 p-3" role="alert">
-            <p className="font-bold text-base lg:text-xl text-gray-900 mb-1">
-              Dietary Preferences:
-            </p>
-            {recipe
-              ? renderDietaryPreferences(recipe.dietaryPreferences)
-              : "Not specified"}
-          </div>
-
-          {/* Meal Type section */}
-          <div className="flex-1 p-3" role="alert">
-            <p className="font-bold text-base lg:text-xl text-gray-900 mb-1">
-              Meal Type:
-            </p>
-            {recipe ? renderMealType(recipe.mealType) : "Not specified"}
-          </div>
-        </div>
-
-        {/* Show ratings at the top of the title temporary no need*/}
-        {/* <div className="flex justify-left ml-3 text-base lg:text-base text-black space-x-6 mx-auto max-w-screen-xl">
+          {/* Show ratings at the top of the title temporary no need*/}
+          {/* <div className="flex justify-left ml-3 text-base lg:text-base text-black space-x-6 mx-auto max-w-screen-xl">
           <p>
             Rating: <span className="text-orange-600 font-bold">{recipe.ratings}</span>
           </p>
@@ -294,11 +297,11 @@ const ViewRecipe = ({ params }) => {
             Reviews: <span className="text-orange-600 font-bold">{recipe.reviews}</span>
           </p>
         </div> */}
-      </div>
+        </div>
 
-      {/* start of summary card */}
-      <div className="flex flex-col lg:flex-row mt-4 p-5 bg-slate-100 mx-auto">
-        {/* <img
+        {/* start of summary card */}
+        <div className="flex flex-col lg:flex-row mt-4 p-5 bg-slate-100 mx-auto">
+          {/* <img
           className="h-auto w-full lg:max-w-lg rounded-lg ml-0 lg:ml-5 shadow-md"
           src={recipe?.img || "Not specified"}
           alt="Not found"
@@ -308,210 +311,213 @@ const ViewRecipe = ({ params }) => {
           src={getImageUrlFromBlob(recipe?.imgBlob)}
           alt={recipe?.title || "Recipe Image"}
         /> */}
-        {recipe?.imgBlob ? (
-          // If imgBlob is available, display image from blob
-          <img
-            className="h-auto w-full lg:max-w-lg rounded-lg ml-0 lg:ml-5 shadow-md"
-            src={getImageUrlFromBlob(recipe?.imgBlob)}
-            alt={recipe?.title || "Recipe Image"}
-          />
-        ) : (
-          // If imgBlob is not available, display image from imgUrl
-          <img
-            className="h-auto w-full lg:max-w-lg rounded-lg ml-0 lg:ml-5 shadow-md"
-            src={recipe?.img || "Not specified"}
-            alt="Not found"
-          />
-        )}
-        <div className="flex flex-col ml-0 lg:ml-4 mt-4">
-          <div className="flex flex-row font-bold">
-            <p className="mr-4 text-bold text-lg tracking-tight">
-              Cooking Time:{" "}
-              <span className="text-orange-600 font-semibold text-base">
-                {recipe?.cookingTime
-                  ? `Approx. ${recipe.cookingTime} mins`
-                  : "Not specified"}
-              </span>
+          {recipe?.imgBlob ? (
+            // If imgBlob is available, display image from blob
+            <img
+              className="h-auto w-full lg:max-w-lg rounded-lg ml-0 lg:ml-5 shadow-md"
+              src={getImageUrlFromBlob(recipe?.imgBlob)}
+              alt={recipe?.title || "Recipe Image"}
+            />
+          ) : (
+            // If imgBlob is not available, display image from imgUrl
+            <img
+              className="h-auto w-full lg:max-w-lg rounded-lg ml-0 lg:ml-5 shadow-md"
+              src={recipe?.img || "Not specified"}
+              alt="Not found"
+            />
+          )}
+          <div className="flex flex-col ml-0 lg:ml-4 mt-4">
+            <div className="flex flex-row font-bold">
+              <p className="mr-4 text-bold text-lg tracking-tight">
+                Cooking Time:{" "}
+                <span className="text-orange-600 font-semibold text-base">
+                  {recipe?.cookingTime
+                    ? `Approx. ${recipe.cookingTime} mins`
+                    : "Not specified"}
+                </span>
+              </p>
+              <p className="mr-4 text-bold text-lg tracking-tight">
+                Total Serving:{" "}
+                <span className="text-orange-600 font-semibold text-base">
+                  {recipe?.servingSize || "Not specified"} pax
+                </span>
+              </p>
+            </div>
+            <p className="font-bold mt-4 lg:mt-8 text-2xl tracking-tight">
+              Description:
             </p>
-            <p className="mr-4 text-bold text-lg tracking-tight">
-              Total Serving:{" "}
-              <span className="text-orange-600 font-semibold text-base">
-                {recipe?.servingSize || "Not specified"} pax
-              </span>
+            <p className="mt-2 items-center whitespace-pre-line">
+              {recipe?.description || "Not specified"}
             </p>
-          </div>
-          <p className="font-bold mt-4 lg:mt-8 text-2xl tracking-tight">
-            Description:
-          </p>
-          <p className="mt-2 items-center whitespace-pre-line">
-            {recipe?.description || "Not specified"}
-          </p>
-          <p className="font-bold mt-4 lg:mt-8 text-2xl tracking-tight">
-            Dietary Information:
-          </p>
-          <p className="mt-2 items-center whitespace-pre-line">
-            {recipe?.info || "Not specified"}
-          </p>
+            <p className="font-bold mt-4 lg:mt-8 text-2xl tracking-tight">
+              Dietary Information:
+            </p>
+            <p className="mt-2 items-center whitespace-pre-line">
+              {recipe?.info || "Not specified"}
+            </p>
 
-          {/* I need to display the info divided by serving size in future  */}
+            {/* I need to display the info divided by serving size in future  */}
 
-          <div className="mt-4 lg:mt-28 mb-4">
-            <p className="font-bold text-2xl tracking-tight">
-              Nutrition Information:{" "}
-              <span className="font-medium text-sm ">(per serving)</span>
-            </p>
-          </div>
-          <div className="grid grid-cols-3 lg:grid-cols-3 xl:grid-cols-6 gap-6">
-            <div className="rounded-full bg-orange-100 w-20 h-20 flex flex-col items-center text-center justify-center">
-              <p className="text-sm">Calories</p>
-              <p className="text-orange-600 font-semibold">
-                {recipe?.calories ? `${recipe.calories} kcal` : "N/A"}
+            <div className="mt-4 lg:mt-28 mb-4">
+              <p className="font-bold text-2xl tracking-tight">
+                Nutrition Information:{" "}
+                <span className="font-medium text-sm ">(per serving)</span>
               </p>
             </div>
-            <div className="rounded-full bg-orange-100 w-20 h-20 flex flex-col items-center text-center justify-center">
-              <p className="text-sm">Carbs</p>
-              <p className="text-orange-600 font-semibold">
-                {recipe?.carbs ? `${recipe.carbs} g` : "N/A"}
-              </p>
-            </div>
-            <div className="rounded-full bg-orange-100 w-20 h-20 flex flex-col items-center text-center justify-center">
-              <p className="text-sm">Protein</p>
-              <p className="text-orange-600 font-semibold">
-                {recipe?.protein ? `${recipe.protein} g` : "N/A"}
-              </p>
-            </div>
-            <div className="rounded-full bg-orange-100 w-20 h-20 flex flex-col items-center text-center justify-center">
-              <p className="text-sm">Fat</p>
-              <p className="text-orange-600 font-semibold">
-                {recipe?.fat ? `${recipe.fat} g` : "N/A"}{" "}
-              </p>
-            </div>
-            <div className="rounded-full bg-orange-100 w-20 h-20 flex flex-col items-center text-center justify-center">
-              <p className="text-sm">Fibre</p>
-              <p className="text-orange-600 font-semibold">
-                {recipe?.fibre ? `${recipe.fibre} g` : "N/A"}
-              </p>
-            </div>
-            <div className="rounded-full bg-orange-100 w-20 h-20 flex flex-col items-center text-center justify-center">
-              <p className="text-sm">Sodium</p>
-              <p className="text-orange-600 font-semibold">
-                {recipe?.sodium ? `${recipe.sodium} mg` : "N/A"}
-              </p>
+            <div className="grid grid-cols-3 lg:grid-cols-3 xl:grid-cols-6 gap-6">
+              <div className="rounded-full bg-orange-100 w-20 h-20 flex flex-col items-center text-center justify-center">
+                <p className="text-sm">Calories</p>
+                <p className="text-orange-600 font-semibold">
+                  {recipe?.calories ? `${recipe.calories} kcal` : "N/A"}
+                </p>
+              </div>
+              <div className="rounded-full bg-orange-100 w-20 h-20 flex flex-col items-center text-center justify-center">
+                <p className="text-sm">Carbs</p>
+                <p className="text-orange-600 font-semibold">
+                  {recipe?.carbs ? `${recipe.carbs} g` : "N/A"}
+                </p>
+              </div>
+              <div className="rounded-full bg-orange-100 w-20 h-20 flex flex-col items-center text-center justify-center">
+                <p className="text-sm">Protein</p>
+                <p className="text-orange-600 font-semibold">
+                  {recipe?.protein ? `${recipe.protein} g` : "N/A"}
+                </p>
+              </div>
+              <div className="rounded-full bg-orange-100 w-20 h-20 flex flex-col items-center text-center justify-center">
+                <p className="text-sm">Fat</p>
+                <p className="text-orange-600 font-semibold">
+                  {recipe?.fat ? `${recipe.fat} g` : "N/A"}{" "}
+                </p>
+              </div>
+              <div className="rounded-full bg-orange-100 w-20 h-20 flex flex-col items-center text-center justify-center">
+                <p className="text-sm">Fibre</p>
+                <p className="text-orange-600 font-semibold">
+                  {recipe?.fibre ? `${recipe.fibre} g` : "N/A"}
+                </p>
+              </div>
+              <div className="rounded-full bg-orange-100 w-20 h-20 flex flex-col items-center text-center justify-center">
+                <p className="text-sm">Sodium</p>
+                <p className="text-orange-600 font-semibold">
+                  {recipe?.sodium ? `${recipe.sodium} mg` : "N/A"}
+                </p>
+              </div>
             </div>
           </div>
         </div>
-      </div>
-      {/* End of summary card */}
+        {/* End of summary card */}
 
-      {/* Ingredients and Instructions */}
-      <div className="flex flex-col md:flex-row mt-8 mx-4 md:mx-20">
-        <ul className="flex flex-col mt-4 md:w-1/2 md:mt-5 whitespace-pre-line leading-8 lg:ml-24">
-          <li className="font-bold text-2xl tracking-tight mb-2 text-gray-900">
-            Ingredients
-          </li>
-          {recipe?.ingredients.split("\n").map((ingredient, index) => (
-            <li key={index} className="list-disc ml-4">
-              {ingredient}
+        {/* Ingredients and Instructions */}
+        <div className="flex flex-col md:flex-row mt-8 mx-4 md:mx-20">
+          <ul className="flex flex-col mt-4 md:w-1/2 md:mt-5 whitespace-pre-line leading-8 lg:ml-24">
+            <li className="font-bold text-2xl tracking-tight mb-2 text-gray-900">
+              Ingredients
             </li>
-          )) || <li>Not specified</li>}
-        </ul>
+            {recipe?.ingredients.split("\n").map((ingredient, index) => (
+              <li key={index} className="list-disc ml-4">
+                {ingredient}
+              </li>
+            )) || <li>Not specified</li>}
+          </ul>
 
-        <ul className="flex flex-col mt-8 md:w-1/2 md:ml-0 md:mt-4 whitespace-pre-line leading-6">
-          <ol className="font-bold text-2xl tracking-tight mb-2 text-gray-900">
-            Instructions
-          </ol>
-          <ol>{recipe ? renderSteps(recipe.steps) : <li>Not specified</li>}</ol>
-        </ul>
-      </div>
+          <ul className="flex flex-col mt-8 md:w-1/2 md:ml-0 md:mt-4 whitespace-pre-line leading-6">
+            <ol className="font-bold text-2xl tracking-tight mb-2 text-gray-900">
+              Instructions
+            </ol>
+            <ol>
+              {recipe ? renderSteps(recipe.steps) : <li>Not specified</li>}
+            </ol>
+          </ul>
+        </div>
 
-      {/* reviews and ratings */}
-      <div className="blog-post-reviews mt-16 mx-auto max-w-screen-xl text-left border-t-2 border-gray-50">
-        <p className="font-sans font-bold text-2xl md:text-4xl text-gray-900 mb-4 md:mt-8 ml-4 lg:ml-0">
-          Rating and Reviews
-        </p>
-        {/* Check if reviews exist */}
-        {reviewsAndRatings.length > 0 ? (
-          reviewsAndRatings.map((review, index) => (
-            <div key={index} className="my-4 p-4 border-b border-gray-200">
-              <div className="flex items-center mb-2">
-                <span className="font-bold text-sm md:text-base mr-2">
-                  {review?.userDTO?.username || "Anonymous"}
-                </span>
-                <div className="flex">{renderStars(review.rating)}</div>
-                <span className="text-xs md:text-sm text-gray-500 ml-2">
-                  {new Date(review?.createdDateTime).toLocaleDateString(
-                    "en-GB",
-                    {
-                      day: "2-digit",
-                      month: "short",
-                      year: "numeric",
-                    }
-                  )}
-                </span>
-              </div>
-              <p>{review.review}</p>
-            </div>
-          ))
-        ) : (
-          <p className="text-center text-gray-600">
-            No ratings and reviews yet.
+        {/* reviews and ratings */}
+        <div className="blog-post-reviews mt-16 mx-auto max-w-screen-xl text-left border-t-2 border-gray-50">
+          <p className="font-sans font-bold text-2xl md:text-4xl text-gray-900 mb-4 md:mt-8 ml-4 lg:ml-0">
+            Rating and Reviews
           </p>
-        )}
-
-        {/* Ask to write reviews */}
-        {!hasAlreadyReviewed ? (
-          <div className="blog-post-reviews mt-10 px-9 mx-auto max-w-screen-xl text-left">
-            <p className="font-sans font-bold text-2xl text-gray-900">
-              Write a Review
-            </p>
-            <div className="my-4">
-              <textarea
-                value={newReview}
-                onChange={(e) => setNewReview(e.target.value)}
-                placeholder="Write your review here"
-                className="w-full p-2.5 border border-gray-300 bg-gray-50 rounded-lg"
-              />
-              <div className="flex my-2">
-                {[...Array(5)].map((_, index) => {
-                  const ratingValue = index + 1;
-                  return (
-                    <label key={ratingValue}>
-                      <input
-                        type="radio"
-                        name="rating"
-                        value={ratingValue}
-                        checked={newRating === ratingValue}
-                        onChange={() => handleRatingChange(ratingValue)}
-                        className="hidden"
-                      />
-                      <span
-                        className={
-                          ratingValue <= newRating
-                            ? "text-yellow-300 cursor-pointer"
-                            : "text-gray-300 cursor-pointer"
-                        }
-                      >
-                        ★
-                      </span>
-                    </label>
-                  );
-                })}
+          {/* Check if reviews exist */}
+          {reviewsAndRatings.length > 0 ? (
+            reviewsAndRatings.map((review, index) => (
+              <div key={index} className="my-4 p-4 border-b border-gray-200">
+                <div className="flex items-center mb-2">
+                  <span className="font-bold text-sm md:text-base mr-2">
+                    {review?.userDTO?.username || "Anonymous"}
+                  </span>
+                  <div className="flex">{renderStars(review.rating)}</div>
+                  <span className="text-xs md:text-sm text-gray-500 ml-2">
+                    {new Date(review?.createdDateTime).toLocaleDateString(
+                      "en-GB",
+                      {
+                        day: "2-digit",
+                        month: "short",
+                        year: "numeric",
+                      }
+                    )}
+                  </span>
+                </div>
+                <p>{review.review}</p>
               </div>
-              <p className="text-red-500 font-semibold text-sm">
-                {validationMessage}
+            ))
+          ) : (
+            <p className="text-center text-gray-600">
+              No ratings and reviews yet.
+            </p>
+          )}
+
+          {/* Ask to write reviews */}
+          {!hasAlreadyReviewed ? (
+            <div className="blog-post-reviews mt-10 px-9 mx-auto max-w-screen-xl text-left">
+              <p className="font-sans font-bold text-2xl text-gray-900">
+                Write a Review
               </p>
-              <button
-                onClick={submitReview}
-                disabled={submitting}
-                className="mt-3 bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg"
-              >
-                {submitting ? "Submitting..." : "Submit Review"}
-              </button>
+              <div className="my-4">
+                <textarea
+                  value={newReview}
+                  onChange={(e) => setNewReview(e.target.value)}
+                  placeholder="Write your review here"
+                  className="w-full p-2.5 border border-gray-300 bg-gray-50 rounded-lg"
+                />
+                <div className="flex my-2">
+                  {[...Array(5)].map((_, index) => {
+                    const ratingValue = index + 1;
+                    return (
+                      <label key={ratingValue}>
+                        <input
+                          type="radio"
+                          name="rating"
+                          value={ratingValue}
+                          checked={newRating === ratingValue}
+                          onChange={() => handleRatingChange(ratingValue)}
+                          className="hidden"
+                        />
+                        <span
+                          className={
+                            ratingValue <= newRating
+                              ? "text-yellow-300 cursor-pointer"
+                              : "text-gray-300 cursor-pointer"
+                          }
+                        >
+                          ★
+                        </span>
+                      </label>
+                    );
+                  })}
+                </div>
+                <p className="text-red-500 font-semibold text-sm">
+                  {validationMessage}
+                </p>
+                <button
+                  onClick={submitReview}
+                  disabled={submitting}
+                  className="mt-3 bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg"
+                >
+                  {submitting ? "Submitting..." : "Submit Review"}
+                </button>
+              </div>
             </div>
-          </div>
-        ) : (
-          <p>You have already submitted a review for this recipe.</p>
-        )}
+          ) : (
+            <p>You have already submitted a review for this recipe.</p>
+          )}
+        </div>
       </div>
     </div>
   );

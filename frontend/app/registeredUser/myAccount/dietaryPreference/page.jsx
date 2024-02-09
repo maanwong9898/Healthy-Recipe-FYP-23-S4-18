@@ -6,6 +6,7 @@ import Link from "next/link";
 import { useState, useEffect } from "react";
 import axiosInterceptorInstance from "../../../axiosInterceptorInstance.js";
 import SecureStorage from "react-secure-storage";
+import RegisteredUserNavBar from "../../../components/navigation/registeredUserNavBar";
 
 // router path = /registeredUser/myAccount/dietaryPreference
 
@@ -16,49 +17,84 @@ const ViewDietaryPreference = () => {
   const [allergies, setAllergies] = useState([]);
   const [healthGoal, setHealthGoal] = useState("");
   const [isTabSelected, setIsTabSelected] = useState("dietaryPreference");
+  const [isLoading, setIsLoading] = useState(true);
+  const [isChecking, setIsChecking] = useState(true);
 
-  const viewUserDashboard = async () => {
-    try {
-      const userId = SecureStorage.getItem("userId");
-      const token = SecureStorage.getItem("token");
+  // const viewUserDashboard = async () => {
+  //   try {
+  //     const userId = SecureStorage.getItem("userId");
+  //     const token = SecureStorage.getItem("token");
 
-      const config = {
-        headers: { Authorization: `Bearer ${token}` },
-      };
+  //     const config = {
+  //       headers: { Authorization: `Bearer ${token}` },
+  //     };
 
-      const response = await axiosInterceptorInstance.get(
-        "/register/dashboard/" + userId,
-        config
-      );
+  //     const response = await axiosInterceptorInstance.get(
+  //       "/register/dashboard/" + userId,
+  //       config
+  //     );
 
-      setUserAccount(response.data);
-      setDietaryPreference(
-        response.data.dietaryPreferences?.subcategoryName || "Not specified"
-      );
-      setAllergies(response.data.allergies || []);
-      // setAllergies(response.data.allergies || ["Not specified"]);
-      // Set the state to "Not specified" if the allergies array is empty
-      // setAllergies(
-      //   response.data.allergies?.length
-      //     ? response.data.allergies
-      //     : ["Not specified"]
-      // );
+  //     setUserAccount(response.data);
+  //     setDietaryPreference(
+  //       response.data.dietaryPreferences?.subcategoryName || "Not specified"
+  //     );
+  //     setAllergies(response.data.allergies || []);
+  //     // setAllergies(response.data.allergies || ["Not specified"]);
+  //     // Set the state to "Not specified" if the allergies array is empty
+  //     // setAllergies(
+  //     //   response.data.allergies?.length
+  //     //     ? response.data.allergies
+  //     //     : ["Not specified"]
+  //     // );
 
-      setHealthGoal(
-        response.data.healthGoal?.subcategoryName || "Not specified"
-      );
+  //     setHealthGoal(
+  //       response.data.healthGoal?.subcategoryName || "Not specified"
+  //     );
 
-      console.log(
-        "User data fetched from backend in view dietary :",
-        response.data
-      );
-    } catch (error) {
-      console.error("Error fetching user data", error);
-    }
-  };
+  //     console.log(
+  //       "User data fetched from backend in view dietary :",
+  //       response.data
+  //     );
+  //   } catch (error) {
+  //     console.error("Error fetching user data", error);
+  //   }
+  // };
 
   useEffect(() => {
-    viewUserDashboard();
+    const userId = SecureStorage.getItem("userId");
+    const token = SecureStorage.getItem("token");
+
+    if (!token || SecureStorage.getItem("role") !== "REGISTERED_USER") {
+      SecureStorage.clear();
+      router.push("/");
+      return;
+    } else {
+      setIsChecking(false);
+      const fetchUserData = async () => {
+        try {
+          const response = await axiosInterceptorInstance.get(
+            `/register/dashboard/${userId}`,
+            { headers: { Authorization: `Bearer ${token}` } }
+          );
+
+          // Assuming response.data contains user data
+          const userData = response.data || {};
+          setAllergies(userData.allergies || []);
+          setDietaryPreference(
+            userData.dietaryPreferences?.subcategoryName || "Not specified"
+          );
+          setHealthGoal(
+            userData.healthGoal?.subcategoryName || "Not specified"
+          );
+        } catch (error) {
+          console.error("Error fetching user data", error);
+        } finally {
+          setIsLoading(false);
+        }
+      };
+
+      fetchUserData();
+    }
   }, []);
 
   const handleUpdate = () => {
@@ -108,147 +144,157 @@ const ViewDietaryPreference = () => {
 
   return (
     <div className="flex flex-col min-h-screen">
-      <div className="flex justify-center">
-        <div className="p-5 max-w-4xl w-full mx-5 items-center ">
-          <div className="bg-white border border-gray-100 rounded-lg shadow">
-            <ul className="flex flex-wrap text-sm font-medium text-center text-gray-500 border-b border-gray-200 rounded-t-lg bg-gray-50">
-              <li className="me-2">
-                <button
-                  type="button"
-                  className={`inline-block p-4 rounded-ss-lg hover:bg-gray-100 ${
-                    isTabSelected === "myAccount"
-                      ? "text-blue-600"
-                      : "text-gray-500"
-                  }`}
-                  onClick={() => handleSelectTab("myAccount")}
-                >
-                  My Account
-                </button>
-              </li>
-              <li className="me-2">
-                <button
-                  type="button"
-                  className={`inline-block p-4 rounded-ss-lg hover:bg-gray-100 ${
-                    isTabSelected === "changePwd"
-                      ? "text-blue-600"
-                      : "text-gray-500"
-                  }`}
-                  onClick={() => handleSelectTab("changePwd")}
-                >
-                  Change Password
-                </button>
-              </li>
-              <li className="me-2">
-                <button
-                  type="button"
-                  className={`inline-block p-4 rounded-ss-lg hover:bg-gray-100 ${
-                    isTabSelected === "dietaryPreference"
-                      ? "text-blue-600"
-                      : "text-gray-500"
-                  }`}
-                  onClick={() => handleSelectTab("dietaryPreference")}
-                >
-                  Dietary Preference
-                </button>
-              </li>
-              <li className="me-2">
-                <button
-                  type="button"
-                  className={`inline-block p-4 rounded-ss-lg hover:bg-gray-100 ${
-                    isTabSelected === "trackWeight"
-                      ? "text-blue-600"
-                      : "text-gray-500"
-                  }`}
-                  onClick={() => handleSelectTab("trackWeight")}
-                >
-                  Track Weight Management
-                </button>
-              </li>
-              <li className="me-2">
-                <button
-                  type="button"
-                  className={`inline-block p-4 rounded-ss-lg hover:bg-gray-100 ${
-                    isTabSelected === "checkBMI"
-                      ? "text-blue-600"
-                      : "text-gray-500"
-                  }`}
-                  onClick={() => handleSelectTab("checkBMI")}
-                >
-                  Check BMI
-                </button>
-              </li>
-            </ul>
+      {isLoading && isChecking ? (
+        <div>Loading...</div>
+      ) : (
+        <>
+          <RegisteredUserNavBar />
+          <div className="flex justify-center">
+            <div className="p-5 max-w-4xl w-full mx-5 items-center ">
+              <div className="bg-white border border-gray-100 rounded-lg shadow">
+                <ul className="flex flex-wrap text-sm font-medium text-center text-gray-500 border-b border-gray-200 rounded-t-lg bg-gray-50">
+                  <li className="me-2">
+                    <button
+                      type="button"
+                      className={`inline-block p-4 rounded-ss-lg hover:bg-gray-100 ${
+                        isTabSelected === "myAccount"
+                          ? "text-blue-600"
+                          : "text-gray-500"
+                      }`}
+                      onClick={() => handleSelectTab("myAccount")}
+                    >
+                      My Account
+                    </button>
+                  </li>
+                  <li className="me-2">
+                    <button
+                      type="button"
+                      className={`inline-block p-4 rounded-ss-lg hover:bg-gray-100 ${
+                        isTabSelected === "changePwd"
+                          ? "text-blue-600"
+                          : "text-gray-500"
+                      }`}
+                      onClick={() => handleSelectTab("changePwd")}
+                    >
+                      Change Password
+                    </button>
+                  </li>
+                  <li className="me-2">
+                    <button
+                      type="button"
+                      className={`inline-block p-4 rounded-ss-lg hover:bg-gray-100 ${
+                        isTabSelected === "dietaryPreference"
+                          ? "text-blue-600"
+                          : "text-gray-500"
+                      }`}
+                      onClick={() => handleSelectTab("dietaryPreference")}
+                    >
+                      Dietary Preference
+                    </button>
+                  </li>
+                  <li className="me-2">
+                    <button
+                      type="button"
+                      className={`inline-block p-4 rounded-ss-lg hover:bg-gray-100 ${
+                        isTabSelected === "trackWeight"
+                          ? "text-blue-600"
+                          : "text-gray-500"
+                      }`}
+                      onClick={() => handleSelectTab("trackWeight")}
+                    >
+                      Track Weight Management
+                    </button>
+                  </li>
+                  <li className="me-2">
+                    <button
+                      type="button"
+                      className={`inline-block p-4 rounded-ss-lg hover:bg-gray-100 ${
+                        isTabSelected === "checkBMI"
+                          ? "text-blue-600"
+                          : "text-gray-500"
+                      }`}
+                      onClick={() => handleSelectTab("checkBMI")}
+                    >
+                      Check BMI
+                    </button>
+                  </li>
+                </ul>
 
-            {/* Start of dietary preference card */}
-            <div className="p-8">
-              <h1 className="text-lg font-semibold mb-4">
-                My Dietary Preference
-              </h1>
-              {/* Diet Preference */}
-              <div className="flex flex-col mb-3.5">
-                <label htmlFor="diet" className="font-medium text-base mb-1">
-                  Diet:
-                </label>
-                <div className="flex items-center rounded-full w-60">
-                  <label
-                    id="diet"
-                    className="border border-gray-400 rounded-full text-center p-2 w-full"
-                  >
-                    {dietaryPreference}
-                  </label>
-                </div>
-              </div>
-              {/* Allergies */}
-              <div className="flex flex-col mb-3.5">
-                <label className="font-medium text-base mb-1">
-                  Allergies and Restrictions:
-                </label>
-                <div className="flex flex-row flex-wrap gap-2 items-center">
-                  {allergies.length > 0 ? (
-                    allergies.map((allergy, index) => (
-                      <span
-                        key={index}
-                        className="flex items-center border border-gray-400 rounded-full px-4 py-2"
+                {/* Start of dietary preference card */}
+                <div className="p-8">
+                  <h1 className="text-lg font-semibold mb-4">
+                    My Dietary Preference
+                  </h1>
+                  {/* Diet Preference */}
+                  <div className="flex flex-col mb-3.5">
+                    <label
+                      htmlFor="diet"
+                      className="font-medium text-base mb-1"
+                    >
+                      Diet:
+                    </label>
+                    <div className="flex items-center rounded-full w-60">
+                      <label
+                        id="diet"
+                        className="border border-gray-400 rounded-full text-center p-2 w-full"
                       >
-                        {allergy.subcategoryName}
-                      </span>
-                    ))
-                  ) : (
-                    <span className="border border-gray-400 rounded-full text-center p-2 w-60">
-                      Not specified
-                    </span>
-                  )}
-                </div>
-              </div>
-              {/* Health Goal */}
-              <div className="flex flex-col mb-3.5">
-                <label className="font-medium text-base mb-1">
-                  Health Goal:
-                </label>
-                <div className="flex items-center rounded-full w-60">
-                  <label
-                    id="healthGoal"
-                    className="border border-gray-400 rounded-full text-center p-2 w-full"
-                  >
-                    {healthGoal}
-                  </label>
-                </div>
-              </div>
+                        {dietaryPreference}
+                      </label>
+                    </div>
+                  </div>
+                  {/* Allergies */}
+                  <div className="flex flex-col mb-3.5">
+                    <label className="font-medium text-base mb-1">
+                      Allergies and Restrictions:
+                    </label>
+                    <div className="flex flex-row flex-wrap gap-2 items-center">
+                      {allergies.length > 0 ? (
+                        allergies.map((allergy, index) => (
+                          <span
+                            key={index}
+                            className="flex items-center border border-gray-400 rounded-full px-4 py-2"
+                          >
+                            {allergy.subcategoryName}
+                          </span>
+                        ))
+                      ) : (
+                        <span className="border border-gray-400 rounded-full text-center p-2 w-60">
+                          Not specified
+                        </span>
+                      )}
+                    </div>
+                  </div>
+                  {/* Health Goal */}
+                  <div className="flex flex-col mb-3.5">
+                    <label className="font-medium text-base mb-1">
+                      Health Goal:
+                    </label>
+                    <div className="flex items-center rounded-full w-60">
+                      <label
+                        id="healthGoal"
+                        className="border border-gray-400 rounded-full text-center p-2 w-full"
+                      >
+                        {healthGoal}
+                      </label>
+                    </div>
+                  </div>
 
-              {/* UPDATE BTN */}
-              <div className="flex flex-row justify-start">
-                <button
-                  type="submit"
-                  onClick={handleUpdate}
-                  className="bg-blue-600 hover:bg-blue-700 text-white w-24 rounded-lg font-bold py-2"
-                >
-                  Update
-                </button>
+                  {/* UPDATE BTN */}
+                  <div className="flex flex-row justify-start">
+                    <button
+                      type="submit"
+                      onClick={handleUpdate}
+                      className="bg-blue-600 hover:bg-blue-700 text-white w-24 rounded-lg font-bold py-2"
+                    >
+                      Update
+                    </button>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
-        </div>
-      </div>
+        </>
+      )}
     </div>
   );
 };

@@ -322,7 +322,7 @@ const BusinessBlogPostsPage = () => {
 
   const handleViewBlogPost = (id) => {
     console.log(`Blog Title: ${id}`);
-    let routePath = `/businessUser/businessBlogPost/exploreAllBlogs/viewBlogPost/${id}`;
+    let routePath = `/businessUser/businessBlogPost/exploreAllBlogs/${id}`;
     router.push(routePath);
   };
 

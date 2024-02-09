@@ -3,8 +3,8 @@ import { useRouter } from "next/navigation";
 import React from "react";
 import Link from "next/link";
 import { useState, useEffect } from "react";
-import axiosInterceptorInstance from "../../../../../axiosInterceptorInstance.js";
-import BusinessUserNavBar from "../../../../../components/navigation/businessUserNavBar";
+import axiosInterceptorInstance from "../../../../axiosInterceptorInstance.js";
+import BusinessUserNavBar from "../../../../components/navigation/businessUserNavBar";
 
 // this is to view particular blog post from landing page
 // router path: /businessBlogPost

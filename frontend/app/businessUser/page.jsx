@@ -148,6 +148,12 @@ const BusinessUserHomePage = () => {
     router.push("/businessUser/educationalContent");
   };
 
+  const handleExploreAllEducationalContent = () => {
+    router.push(
+      "/businessUser/educationalContent/exploreAllEducationalContent"
+    );
+  };
+
   // The button under user account will redirect to corresponding page
   const handleViewUserAccount = () => {
     router.push("/businessUser/myAccount/viewAccount");
@@ -326,6 +332,14 @@ const BusinessUserHomePage = () => {
                           onClick={handleViewEducationalContent}
                         >
                           View All Educational Contents
+                        </button>
+                      </div>
+                      <div className="flex items-center justify-center">
+                        <button
+                          className="px-6 py-2 font-medium bg-indigo-500 text-white w-full transition-all shadow-[3px_3px_0px_black] hover:shadow-none hover:translate-x-[3px] hover:translate-y-[3px]"
+                          onClick={handleExploreAllEducationalContent}
+                        >
+                          Explore All Educational Contents
                         </button>
                       </div>
                     </div>

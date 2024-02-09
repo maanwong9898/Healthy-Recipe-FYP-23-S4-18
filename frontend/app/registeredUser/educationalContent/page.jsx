@@ -3,7 +3,6 @@ import { useRouter } from "next/navigation";
 import React from "react";
 import { useState, useEffect } from "react";
 import axiosInterceptorInstance from "../../axiosInterceptorInstance.js";
-import SecureStorage from "react-secure-storage";
 import RegisteredUserNavBar from "../../components/navigation/registeredUserNavBar";
 
 // rouuter path: /educationalContent
@@ -282,10 +281,58 @@ const EducationalContentPageForUser = () => {
     }
   };
 
+  function capitalizeFirstLetter(string) {
+    if (!string) return "";
+    return string.charAt(0).toUpperCase() + string.slice(1);
+  }
+
   const handleViewEduContent = (id) => {
     console.log(`Educational Content Title: ${id}`);
     let routePath = `/registeredUser/educationalContent/viewEducationalContent/${id}`;
     router.push(routePath);
+  };
+
+  // Render stars and count
+  const renderStarsAndCount = (post) => {
+    if (
+      !post.average ||
+      !post.average.averageRatings ||
+      !post.average.totalNumber
+    ) {
+      return <div>No ratings available</div>;
+    } else {
+      const { averageRatings, totalNumber } = post.average;
+
+      let stars = [];
+      // Render stars based on average rating
+      for (let i = 0; i < 5; i++) {
+        stars.push(
+          <span
+            key={i}
+            className={i < averageRatings ? "text-yellow-300" : "text-gray-300"}
+          >
+            ★
+          </span>
+        );
+      }
+      // Render total count of ratings
+      return (
+        <div className="flex items-center">
+          <span className="mr-1">{stars}</span>
+          <span>({totalNumber} ratings)</span>
+        </div>
+      );
+    }
+  };
+
+  const getImageUrlFromBlob = (imgBlob) => {
+    // Check if imgBlob is truthy
+    if (imgBlob) {
+      // Return the image URL created from the blob
+      return `data:image/jpeg;base64,${imgBlob}`;
+    }
+    // Return an empty string or a placeholder image URL if imgBlob is not available
+    return "";
   };
 
   // Render each educational content card
@@ -301,36 +348,56 @@ const EducationalContentPageForUser = () => {
       }}
       onClick={() => handleViewEduContent(post.id)}
     >
-      <img
+      {/* <img
         src={post.img}
         alt={post.img_title}
         className="w-full object-cover rounded-sm text-white text-center"
         style={{ height: "192px" }}
-      />
+      /> */}
+
+      {post?.imgBlob ? (
+        // If imgBlob is available, display image from blob
+        <img
+          className="w-full object-cover rounded-sm text-white text-center"
+          src={getImageUrlFromBlob(post?.imgBlob)}
+          alt={post.imgTitle}
+          style={{ height: "192px" }}
+        />
+      ) : (
+        // If imgBlob is not available, display image from imgUrl
+        <img
+          className="w-full object-cover rounded-sm text-white text-center"
+          src={post?.img || "Not specified"}
+          alt={post.imgTitle}
+          style={{ height: "192px" }}
+        />
+      )}
+      
       <div className="flex-grow flex flex-col justify-between p-4 bg-white">
-        <div className="grid grid-rows-3 items-center">
-          <h2
-            className="text-2xl font-extrabold mb-2"
-            //onClick={() => handleViewEduContent(post.id)}
-          >
+        {/* Title */}
+        <div className="text-center">
+          <h2 className="text-2xl font-extrabold mb-4">
             {post?.title || "Untitled Educational Content"}
           </h2>
-          <p className="text-gray-700 text-base mb-4 line-clamp-3">
-            <div className="whitespace-pre-line">{post.info}</div>
-          </p>
-          {/* Publisher */}
-          <p className="text-gray-900 text-base font-semibold">
+        </div>
+
+        {/* Description */}
+        <div className="flex-grow flex items-center justify-center mb-4">
+          <p className="text-gray-700 text-base line-clamp-3">{post.info}</p>
+        </div>
+
+        {/* Publisher and Ratings */}
+        <div className="flex flex-col lg:flex-row items-center justify-center space-x-4 mb-4">
+          <p className="text-gray-700 text-sm font-semibold">
             Publisher:{" "}
-            <span className="text-orange-600 font-bold tracking-tight">
-              {post?.publisher || "Not Specified"}
+            <span className="text-orange-600 font-semibold tracking-tight">
+              {capitalizeFirstLetter(post?.publisher) || "Not Specified"}
             </span>
           </p>
+          <p className="text-gray-700 text-sm font-semibold">
+            {renderStarsAndCount(post)}
+          </p>
         </div>
-        {/* <div className="flex justify-between items-center">
-          <div className="flex items-center text-red-700 font-semibold text-xl">
-            {post.educationalContentType.subcategoryName}
-          </div>
-        </div> */}
       </div>
     </div>
   );

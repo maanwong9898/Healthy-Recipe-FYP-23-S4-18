@@ -5,7 +5,6 @@ import Link from "next/link";
 import { useState, useEffect } from "react";
 import axiosInterceptorInstance from "../../../../axiosInterceptorInstance.js";
 import SecureStorage from "react-secure-storage";
-import SecureStorage from "react-secure-storage";
 import RegisteredUserNavBar from "../../../../components/navigation/registeredUserNavBar";
 
 // this is to view particular educational content
@@ -184,7 +183,7 @@ const ViewEducationalContent = ({ params }) => {
         ) : (
           <>
             <div className="text-center font-semibold font-sans p-4 lg:p-0">
-              <h1 className="flex flex-wrap justify-center mb-4 text-xl font-extrabold text-gray-900 lg:mb-6 lg:text-4xl">
+              <h1 className="flex flex-wrap justify-center mb-4 text-2xl font-extrabold text-gray-900 lg:mb-6 lg:text-5xl">
                 {eduContent.title || "Untitled Educational Content"}
               </h1>
               {/* Publisher and published date section */}
@@ -322,7 +321,10 @@ const ViewEducationalContent = ({ params }) => {
                   </div>
                 </footer>
               ) : (
-                <p>You have already submitted a review for this blog post.</p>
+                <p className="p-4">
+                  You have already submitted a review for this educational
+                  content.
+                </p>
               )}
             </div>
           </>

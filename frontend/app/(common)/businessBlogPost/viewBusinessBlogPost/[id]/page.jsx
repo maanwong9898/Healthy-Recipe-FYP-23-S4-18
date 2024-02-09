@@ -109,6 +109,16 @@ const ViewBusinessBlogPost = ({ params }) => {
     return <div>Please wait. It'll just take a moment</div>;
   }
 
+  const getImageUrlFromBlob = (imgBlob) => {
+    // Check if imgBlob is truthy
+    if (imgBlob) {
+      // Return the image URL created from the blob
+      return `data:image/jpeg;base64,${imgBlob}`;
+    }
+    // Return an empty string or a placeholder image URL if imgBlob is not available
+    return "";
+  };
+
   return (
     <div>
       <HomeNavbar />
@@ -159,11 +169,21 @@ const ViewBusinessBlogPost = ({ params }) => {
             </div>
             {/* Image section */}
             <article>
-              <img
-                src={businessBlogPost.img}
-                alt="Designed by Freepik"
-                className="max-w-full mx-auto mt-8 mb-8 sm:max-w-xl sm:mt-16 sm:mb-16 rounded-lg shadow-xl"
-              />
+              {businessBlogPost?.imgBlob ? (
+                // If imgBlob is available, display image from blob
+                <img
+                  className="max-w-full mx-auto mt-8 mb-8 sm:max-w-xl sm:mt-16 sm:mb-16 rounded-lg shadow-xl"
+                  src={getImageUrlFromBlob(businessBlogPost?.imgBlob)}
+                  alt={"Blog Image"}
+                />
+              ) : (
+                // If imgBlob is not available, display image from imgUrl
+                <img
+                  className="max-w-full mx-auto mt-8 mb-8 sm:max-w-xl sm:mt-16 sm:mb-16 rounded-lg shadow-xl"
+                  src={businessBlogPost?.img || "Not specified"}
+                  alt="Blog Image"
+                />
+              )}
               {/* Info*/}
               <section className="main-content mt-10 pl-9 pr-9 mx-auto max-w-screen-xl md:text-base text-left">
                 <div className="w-full p-2 rounded-lg whitespace-pre-line">

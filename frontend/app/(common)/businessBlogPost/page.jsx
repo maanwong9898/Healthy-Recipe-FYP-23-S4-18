@@ -763,6 +763,16 @@ const BusinessBlogPostsPage = () => {
     router.push(routePath);
   };
 
+  const getImageUrlFromBlob = (imgBlob) => {
+    // Check if imgBlob is truthy
+    if (imgBlob) {
+      // Return the image URL created from the blob
+      return `data:image/jpeg;base64,${imgBlob}`;
+    }
+    // Return an empty string or a placeholder image URL if imgBlob is not available
+    return "";
+  };
+
   // Render each blog post card
   const renderPostCard = (post) => (
     <div
@@ -776,12 +786,30 @@ const BusinessBlogPostsPage = () => {
       }}
       onClick={() => handleViewBlogPost(post.id)}
     >
-      <img
+      {/* <img
         src={post.img}
         alt={post.imgTitle}
         className="w-full object-cover rounded-sm text-white text-center"
         style={{ height: "192px" }}
-      />
+      /> */}
+
+      {post?.imgBlob ? (
+        // If imgBlob is available, display image from blob
+        <img
+          className="w-full object-cover rounded-sm text-white text-center"
+          src={getImageUrlFromBlob(post?.imgBlob)}
+          alt={post.imgTitle}
+          style={{ height: "192px" }}
+        />
+      ) : (
+        // If imgBlob is not available, display image from imgUrl
+        <img
+          className="w-full object-cover rounded-sm text-white text-center"
+          src={post?.img || "Not specified"}
+          alt={post.imgTitle}
+          style={{ height: "192px" }}
+        />
+      )}
 
       <div className="flex-grow flex flex-col justify-between p-4 bg-white">
         <div className="grid grid-rows-3 items-center">

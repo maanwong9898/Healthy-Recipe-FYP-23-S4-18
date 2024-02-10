@@ -26,7 +26,7 @@ const fetchRecipes = async () => {
     console.log("Fetching recipes...");
     const response = await axiosInterceptorInstance.get("/recipe/get");
     // console.log("All recipe:", response.data);
-    // Fetch average ratings for each blog post
+    // Fetch average ratings for each recipe
     const recipesWithAverage = await Promise.all(
       response.data.map(async (recipe) => {
         const average = await fetchRecipeAverage(recipe.id);
@@ -1087,6 +1087,47 @@ const RecipesPageForUser = () => {
     }
   };
 
+  const capitalizeFirstLetter = (name) => {
+    if (!name) return "";
+    return name
+      .split(" ")
+      .map((word) => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
+      .join(" ");
+  };
+
+  // Render stars and count
+  const renderStarsAndCount = (post) => {
+    if (
+      !post.average ||
+      !post.average.averageRatings ||
+      !post.average.totalNumber
+    ) {
+      return <div>No ratings available</div>;
+    } else {
+      const { averageRatings, totalNumber } = post.average;
+
+      let stars = [];
+      // Render stars based on average rating
+      for (let i = 0; i < 5; i++) {
+        stars.push(
+          <span
+            key={i}
+            className={i < averageRatings ? "text-yellow-300" : "text-gray-300"}
+          >
+            ★
+          </span>
+        );
+      }
+      // Render total count of ratings
+      return (
+        <div className="flex items-center">
+          <span className="mr-1">{stars}</span>
+          <span>({totalNumber} ratings)</span>
+        </div>
+      );
+    }
+  };
+
   const handleViewRecipe = (id) => {
     console.log(`Recipe Title: ${id}`);
     let routePath = `/recipes/viewRecipe/${id}`;
@@ -1107,14 +1148,14 @@ const RecipesPageForUser = () => {
   const renderPostCard = (post) => (
     <div
       key={post.id}
-      className="rounded-lg shadow-lg overflow-hidden flex flex-col"
+      className="bg-white border border-gray-200 rounded-lg shadow-md overflow-hidden flex flex-col cursor-pointer hover:shadow-stone-700 transition duration-300 ease-in-out"
       style={{
         border: "0.5px solid transparent",
-        background:
-          "linear-gradient(to right, #22d3ee 0%, #8b5cf6 100%), white",
+        background: "#48494B",
         backgroundOrigin: "border-box",
         backgroundClip: "content-box, border-box",
       }}
+      onClick={() => handleViewRecipe(post.id)}
     >
       {/* <img
         src={post.img}
@@ -1140,27 +1181,31 @@ const RecipesPageForUser = () => {
           style={{ height: "192px" }}
         />
       )}
+
       <div className="flex-grow flex flex-col justify-between p-4 bg-white">
-        <div>
-          <h2
-            className="text-2xl font-extrabold mb-2 hover:text-orange-600 cursor-pointer"
-            onClick={() => handleViewRecipe(post.id)}
-          >
-            {post.title}
+        {/* Title */}
+        <div className="text-center">
+          <h2 className="text-2xl font-extrabold mb-4">
+            {post?.title || "Untitled Recipe"}
           </h2>
-          {/* Description */}
-          <p className="text-gray-700 text-base mb-4 line-clamp-3">
+        </div>
+        {/* Description */}
+        <div className="flex-grow flex items-center justify-center mb-4">
+          <p className="text-gray-700 text-base line-clamp-3">
             {post.description}
           </p>
-          {/* Publisher */}
-          <p
-            className="text-gray-900 text-base font-semibold"
-            style={{ height: "3.5rem" }}
-          >
+        </div>
+
+        {/* Publisher and Ratings */}
+        <div className="flex flex-col lg:flex-row items-center justify-center space-x-4 mb-4">
+          <p className="text-gray-700 text-sm font-semibold">
             Publisher:{" "}
-            <span className="text-orange-600 font-bold tracking-tight">
-              {post?.publisher || "Not Specified"}
+            <span className="text-orange-600 font-semibold tracking-tight">
+              {capitalizeFirstLetter(post?.publisher) || "Not Specified"}
             </span>
+          </p>
+          <p className="text-gray-700 text-sm font-semibold">
+            {renderStarsAndCount(post)}
           </p>
         </div>
       </div>
@@ -1327,48 +1372,65 @@ const RecipesPageForUser = () => {
         <h1 className="text-3xl text-center md:text-7xl font-extrabold font-sans text-gray-900 mb-4 md:mb-8">
           Recipes
         </h1>
-        <div className="flex sm:justify-between sm:items-center mb-4">
-          {/* Search Section */}
-          <div className="flex-grow">
+        {/* Search Section */}
+        <div className="flex-grow mb-4">
+          <input
+            type="text"
+            id="titleSearch"
+            name="titleSearch"
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+            onKeyDown={(e) => e.key === "Enter" && handleSearchClick()}
+            placeholder={
+              ingredientSearchTerm.trim()
+                ? "Disabled"
+                : "Search recipe title..."
+            }
+            disabled={Boolean(ingredientSearchTerm.trim())}
+            className="mr-2 p-2 rounded-lg border w-full md:w-auto"
+          />
+          <button
+            onClick={handleSearchClick}
+            className="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-1.5 px-5 rounded-full mt-2 w-full md:w-auto lg:w-auto"
+          >
+            Search by title
+          </button>
+        </div>
+
+        {/* Ingredients search section */}
+        <div className="flex flex-col justify-between lg:flex-row mb-4">
+          <div className="flex-grow mb-4">
             <input
               type="text"
-              id="titleSearch"
-              name="titleSearch"
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
-              onKeyDown={(e) => {
-                if (e.key === "Enter") {
-                  handleSearchClick();
-                }
-              }}
+              id="ingredientSearch"
+              name="ingredientSearch"
+              value={ingredientSearchTerm}
+              onChange={(e) => setIngredientSearchTerm(e.target.value)}
+              onKeyDown={(e) =>
+                e.key === "Enter" && handleIngredientSearchClick()
+              }
               placeholder={
-                ingredientSearchTerm.trim() !== ""
-                  ? "Disabled"
-                  : "Search recipe title..."
+                searchTerm.trim() ? "Disabled" : "Search by ingredient..."
               }
-              disabled={ingredientSearchTerm.trim() !== ""}
-              data-tooltip-id="titleSearchTooltip"
-              data-tooltip-content={
-                ingredientSearchTerm.trim() !== ""
-                  ? "Search by title is disabled while using ingredient search"
-                  : ""
-              }
+              disabled={Boolean(searchTerm.trim())}
               className="mr-2 p-2 rounded-lg border w-full md:w-auto"
             />
-            {/* Tooltip component activated for the input field */}
-            {/* Tooltip Component */}
-            <Tooltip id="titleSearchTooltip" place="top" effect="solid" />
             <button
-              onClick={handleSearchClick}
-              className="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-1.5 px-5 rounded-full mt-2 w-full lg:w-auto"
-              style={{ flexShrink: 0 }}
+              onClick={handleIngredientSearchClick}
+              className="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-1.5 px-5 rounded-full mt-2 w-full md:w-auto lg:w-auto"
             >
-              Search by title
+              Search by ingredient
             </button>
+            {/* Results count */}
+            {searchButtonClicked && searchPerformed && (
+              <p className="text-left text-red-500 font-medium text-lg">
+                {resultsCount} results found.
+              </p>
+            )}
           </div>
 
-          {/* Sort dropdown */}
-          <div className="mb-2 md:mb-0 md:mr-6">
+          {/* Sort dropdown - Aligned next to the search bar on larger screens */}
+          <div className="flex flex-col lg:flex-row lg:items-center mt-4 lg:mt-0">
             <label
               htmlFor="sort"
               className="text-xl text-black mb-2 sm:mb-0 sm:mr-2"
@@ -1378,10 +1440,8 @@ const RecipesPageForUser = () => {
             <select
               id="sort"
               value={sortOption}
-              // onChange={(e) => setSortOption(e.target.value)}
-              onChange={handleSortOptionChange}
+              onChange={(e) => setSortOption(e.target.value)}
               className="mr-2 p-2 rounded-lg border w-full md:w-auto"
-              style={{ maxWidth: "300px" }}
             >
               {Object.values(sortOptions).map((option) => (
                 <option key={option.key} value={option.key}>
@@ -1391,50 +1451,6 @@ const RecipesPageForUser = () => {
             </select>
           </div>
         </div>
-        {/* Ingredient Search Section */}
-        <div className="flex sm:items-center mb-4">
-          <input
-            type="text"
-            id="ingredientSearch"
-            name="ingredientSearch"
-            value={ingredientSearchTerm}
-            onChange={(e) => setIngredientSearchTerm(e.target.value)}
-            onKeyDown={(e) => {
-              if (e.key === "Enter") {
-                handleIngredientSearchClick();
-              }
-            }}
-            placeholder={
-              searchTerm.trim() !== "" ? "Disabled" : "Search by ingredient..."
-            }
-            disabled={searchTerm.trim() !== ""}
-            data-tooltip-id="ingredientSearchTooltip"
-            data-tooltip-content={
-              searchTerm.trim() !== ""
-                ? "Ingredient search is disabled while using title search"
-                : ""
-            }
-            className="mr-2 p-2 rounded-lg border w-full md:w-auto"
-          />
-          {/* Tooltip component activated for the input field */}
-          {/* Tooltip Component */}
-          <Tooltip id="ingredientSearchTooltip" place="top" effect="solid" />
-          <button
-            onClick={handleIngredientSearchClick}
-            className="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-1.5 px-5 rounded-full mt-2 w-full lg:w-auto"
-            style={{ flexShrink: 0 }}
-          >
-            Search by ingredient
-          </button>
-        </div>
-
-        {/* Results count */}
-        {searchButtonClicked && searchPerformed && (
-          <p className="text-left text-red font-bold text-xl sm:ml-2">
-            {resultsCount} results found.
-          </p>
-        )}
-
         {/* Button to open filter option */}
         {/* Display message while fetching data ftom backend */}
         {isLoading ? (

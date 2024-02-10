@@ -12,7 +12,9 @@ VALUES
     ('Peanut'     ),
     ('Tree Nuts'  ),
     ('Gluten'     ),
-    ('Wheat'     );
+    ('Wheat'     ),
+    ('Dairy'),
+    ('Legume');
 
 -- 2. Dietary preferences
 Insert into dietary_preferences

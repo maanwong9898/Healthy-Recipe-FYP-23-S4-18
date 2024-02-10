@@ -1249,6 +1249,82 @@ VALUES
         2, -- dietary_preference
         20, -- cooking_time  
         9   -- meal type (cuisines)
+    ),
+    (
+        64,
+        'Australianeggs',
+        'Healthy Gallo Pinto',
+        'Not Specified',
+        315, 10.6, 19.2, 20.6, 5.6, 334, -- calories, carbs, protein, fat, fibre, sodium
+        2,
+        'Healthy Gallo Pinto is a nutritious and flavorful dish that combines the richness of beans, the freshness of vegetables, and the protein power of eggs.',
+        'Cook the garlic and cumin in olive oil over a medium heat until fragrant.\nStir in the chickpeas, cooking for 5 minutes.\nMeanwhile, make a salsa by quartering the tomato and mixing with 1/2 the lime juice and fresh herbs. Season with salt and pepper.\nFinely slice the spring onions and add into the chickpeas along with the paprika, stir and cook for 2 more minutes.\nSeparately, whisk the egg, season well, and cook in a non-stick frypan over a low-medium heat for a few minutes (or to your liking).\nServe the crispy chickpeas with a few spinach or kale leaves, topped with an egg and salsa.\nSqueeze over remaining lime and enjoy.',
+        '1 tbsp olive oil \n1 clove garlic \n1/2 teaspoon cumin seeds \n1/2 tsp smoked paprika \n1/2 can chickpeas (rinsed) \n2 spring onions \n4 large eggs \n1 cup cherry tomatoes \n1/4 bunch fresh herbs \n1/4 cup green leaves \n1 lime, half sliced, half juiced',
+        '2', -- UserID
+        TRUE,
+        '2023-04-12 14:00:00',
+        'https://www.australianeggs.org.au/assets/recipes/willowcreative_Aus-Eggs-_-316431-1__ScaleWidthWzEyMDBd.jpg',
+        'Author : Australianeggs, Designed by Australianeggs',  -- img_title
+        3, -- dietary_preference
+        20, -- cooking_time  
+        8   -- meal type (cuisines)
+    ),
+    (
+        65,
+        'Australianeggs',
+        'Roast Cauliflower & Egg Salad',
+        'Not Specified',
+        342, 21, 16.5, 19, 11.1, 384, -- calories, carbs, protein, fat, fibre, sodium
+        4,
+        'Roast Cauliflower and Egg Salad is a vibrant and nutritious dish combining roasted cauliflower, boiled eggs, chickpeas, fresh vegetables, and a creamy avocado dressing.',
+        'Preheat oven to 220°C/200°C fan forced. Line a large oven tray with baking paper.\nHalf fill a medium saucepan with cold water. Gently lower in eggs. Bring to a simmer over medium heat and cook for 5 minutes. Use a slotted spoon to transfer to iced water. Peel and set aside.\nToss cauliflower and chickpeas in oil and dukkah on prepared tray. Roast for 25 minutes, until cauliflower is tender and starting to brown around the edges.\nFor the avocado dressing, blend or process all ingredients in a small food processor or blender until smooth, adding 1/2 cup of water to make a thin dollop consistency. Season to taste.\nToss radish, mint and currants though roast cauliflower and chickpeas. Top with halved eggs and drizzle with dressing. Sprinkle with extra dukkah, if you like.',
+        '4 eggs \n1 head cauliflower, cut into florets, large florets halved \n400g can chickpeas, rinsed and drained \n2 tbs olive oil \n1 tbs dukkah, plus extra to sprinkle (optional) \n60g baby spinach leaves \n1/2 bunch radishes, thinly sliced \n1/2 bunch mint leaves \n1 tbs currants \n1 small ripe avocado \n1/2 bunch mint leaves \n1/2 cup baby spinach leaves \n1/4 cup apple cider vinegar \n1 small garlic clove, crushed',
+        '2', -- UserID
+        TRUE,
+        '2023-05-11 14:30:00',
+        'https://www.australianeggs.org.au/assets/recipes/Roast-Cauliflower-egg-salad-0169-__ScaleWidthWzEyMDBd.jpg',
+        'Author : Australianeggs, Designed by Australianeggs',  -- img_title
+        2, -- dietary_preference
+        50, -- cooking_time  
+        8   -- meal type (cuisines)
+    ),
+    (
+        66,
+        'Australianeggs',
+        'Easy “On-The-Go” Breakfast Muffins',
+        'Not Specified',
+        191, 3, 16.2, 12.4, 1.8, 227, -- calories, carbs, protein, fat, fibre, sodium
+        6,
+        'Take the stress out of a busy morning with these tasty breakfast muffins. Make a batch on Sunday and freeze in portions of two or three.',
+        'Preheat oven to 160°C fan-forced.\nSpray a 12 hole x 1/3-cup capacity with oil to grease.\nGrate the zucchini and firmly squeeze to get the excess moisture out. Wrap it in a paper towel and squeeze again to remove the remainder of the moisture.\nWhisk the eggs and milk in a large bowl and stir in the zucchini, carrot, green onions and frozen peas. Season and stir through cheese.\nEvenly spoon the mixture into a muffin pan and bake for 25-30 minutes or golden and until set.\nSet aside in the pan for 5 minutes to cool then turn onto a wire rack. Serve hot or cold.',
+        'Cooking oil spray \n1 medium zucchini \n8 eggs, at room temperature \n2 tbs milk \n1 medium carrot, coarsely grated \n3 green onions (shallots), thinly sliced \n1/3 cup frozen peas \n1 cup reduced fat grated tasty cheese',
+        '4', -- UserID
+        TRUE,
+        '2023-05-15 14:40:00',
+        'https://www.australianeggs.org.au/assets/recipes/Roast-Cauliflower-egg-salad-0169-__ScaleWidthWzEyMDBd.jpg',
+        'Author : Australianeggs, Designed by Australianeggs',  -- img_title
+        2, -- dietary_preference
+        40, -- cooking_time  
+        2   -- meal type (cuisines)
+    ),
+    (
+        67,
+        'Australianeggs',
+        'Spicy Chickpea and Egg Soup',
+        'Not Specified',
+        406, 41.5, 18.2, 16.4, 10.1, 449, -- calories, carbs, protein, fat, fibre, sodium
+        4,
+        'Take the stress out of a busy morning with these tasty breakfast muffins. Make a batch on Sunday and freeze in portions of two or three.',
+        'Preheat oven to 160°C fan-forced.\nSpray a 12 hole x 1/3-cup capacity with oil to grease.\nGrate the zucchini and firmly squeeze to get the excess moisture out. Wrap it in a paper towel and squeeze again to remove the remainder of the moisture.\nWhisk the eggs and milk in a large bowl and stir in the zucchini, carrot, green onions and frozen peas. Season and stir through cheese.\nEvenly spoon the mixture into a muffin pan and bake for 25-30 minutes or golden and until set.\nSet aside in the pan for 5 minutes to cool then turn onto a wire rack. Serve hot or cold.',
+        'Cooking oil spray \n1 medium zucchini \n8 eggs, at room temperature \n2 tbs milk \n1 medium carrot, coarsely grated \n3 green onions (shallots), thinly sliced \n1/3 cup frozen peas \n1 cup reduced fat grated tasty cheese',
+        '4', -- UserID
+        TRUE,
+        '2023-04-07 16:00:00',
+        'https://www.australianeggs.org.au/assets/recipes/Spicy-Chickpea-amp-3__ScaleWidthWzEyMDBd.jpg',
+        'Author : Australianeggs, Designed by Australianeggs',  -- img_title
+        2, -- dietary_preference
+        25, -- cooking_time  
+        8   -- meal type (cuisines)
     );
 
 
@@ -1297,7 +1373,66 @@ VALUES
     (17, 9),
     (18, 3),
     (19, ),
-    (20, 4);
+    (20, 4),
+    (21, 6),
+    (22, 1),
+    (22, 8),
+    (23, 10),
+    (24, 10),
+    (25, 8),
+    (26, 2),
+    (27, 11),
+    (28, 8),
+    (28, 9),
+    (29, 8),
+    (29, 9),
+    (29, 10),
+    (30, 11),
+    (31, 6),
+    (32, 2),
+    (32, 10),
+    (33, 7),
+    (33, 10),
+    (34, 7),
+    (34, 10),
+    (35, 2),
+    (36, ), --none
+    (37, 7),
+    (38, 5),
+    (39, 7),
+    (39, 10),
+    (40, ), --none
+    (41, 7),
+    (41, 10),
+    (42, 2),
+    (42, 3),
+    (43, 2),
+    (43, 10),
+    (44, 10),
+    (45, ), --none
+    (46, 7),
+    (47, 5),
+    (48, ), --none
+    (49, 10),
+    (50, ), --none
+    (51, ), --none
+    (52, 3),
+    (53, ), --none
+    (54, ), --none
+    (55, ), --none
+    (56, ), --none
+    (57, ), --none
+    (58, ), --none
+    (59, 7),
+    (60, ), --none
+    (61, 7),
+    (61, 10),
+    (62, ), --none
+    (63, 7),
+    (64, ), --none
+    (65, ),
+    (66, ),
+
     
 
 

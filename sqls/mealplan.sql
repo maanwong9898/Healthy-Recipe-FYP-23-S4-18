@@ -267,6 +267,34 @@ VALUES
         'https://img.freepik.com/free-photo/background-food-bowl-workout-meal-space_1428-677.jpg?w=1060&t=st=1707494903~exp=1707495503~hmac=1415a8278f47334812ad1d009ce75734f4a06080f8cf366da00b29f288601067',
         'Designed by Freepik',  -- img_title
         '2' -- userid
+    ),
+    (
+        19,
+        'Australianeggs',
+        'Lowering Cholesterol Meal Plan',
+        TRUE,
+        'Eating a nutritious diet can assist to lower and regulate cholesterol levels in the blood, lowering the chance of developing heart disease.',
+        'A low-cholesterol meal plan focuses on reducing the intake of foods high in cholesterol, saturated fats, and trans fats.',
+        'This meal plan includes a variety of ideas and dishes that make it simple to consume the correct sorts of healthy fats and receive enough of the fiber that helps regulate blood cholesterol levels. Eating a heart-healthy diet may be tasty and simple!',
+        '2023-08-11',
+        2, -- maintain health
+        'https://img.freepik.com/free-photo/high-angle-plate-with-keto-diet-food-nuts_23-2149260319.jpg?w=1060&t=st=1707554574~exp=1707555174~hmac=9c8cb27b64e0eb4bcc9268f982710877edf464c7e0034962429c7773c62dc9a6',
+        'Designed by Freepik',  -- img_title
+        '2' -- userid
+    ),
+    (
+        20,
+        'Australianeggs',
+        'Weight Gain Meal Plan For the Elderly',
+        TRUE,
+        'Both the physical impacts of aging and the impact of societal changes can have an impact on appetite and food intake at this age, making it more difficult to achieve daily nutritional requirements.',
+        'Being conscious of any weight fluctuations over time and making simple modifications to your eating habits, such as eating smaller meals more frequently, can help achieve your daily nutritional needs while lowering your risk of unintended weight loss.',
+        'This weight gain for the elderly meal plan provides easy and nutritious meal and snack options that will make it easy for you to meet your needs and enjoy the foods you are eating!',
+        '2023-07-20',
+        3, -- weight loss
+        'https://img.freepik.com/free-photo/mature-women-ready-cook-together_23-2148354958.jpg?w=1060&t=st=1707559390~exp=1707559990~hmac=372557b0b010ec7a8fd508f2ded1b3b106adaee27f2c083d9daa8fbd5bd169e6',
+        'Designed by Freepik',  -- img_title
+        '2' -- userid
     );
     
     
@@ -330,4 +358,11 @@ values
     (17, 55),
     (18, 2),
     (18, 7),
-    (18, 10);
+    (18, 10),
+    (19, 64),
+    (19, 65),
+    (19, 66),
+    (19, 67),
+    (20, 17),
+    (20, 51),
+    (20, 54);

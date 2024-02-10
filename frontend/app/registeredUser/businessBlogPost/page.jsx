@@ -2,7 +2,11 @@
 import { useRouter } from "next/navigation";
 import React from "react";
 import { useState, useEffect } from "react";
+// import HomeNavbar from "@/app/components/navigation/homeNavBar";
 import axiosInterceptorInstance from "../../axiosInterceptorInstance.js";
+import SearchIcon from "@mui/icons-material/Search";
+import { QueryClientProvider, useQuery } from "react-query"; // Added useQuery here
+import { queryClient } from "../../queryClient.js"; // Adjust the path as necessary
 import SecureStorage from "react-secure-storage";
 import RegisteredUserNavBar from "../../components/navigation/registeredUserNavBar";
 
@@ -13,7 +17,6 @@ const sortOptions = {
   LATEST: { key: "LATEST", label: "By Latest" },
   OLDEST: { key: "OLDEST", label: "By Oldest" },
   HIGHEST_RATINGS: { key: "HIGHEST_RATINGS", label: "Highest Ratings" },
-  // LOWEST_RATINGS: { key: "LOWEST_RATINGS", label: "Lowest Ratings" },
   ALPHABETICAL_AZ: { key: "ALPHABETICAL_AZ", label: "Alphabetically (A to Z)" },
   ALPHABETICAL_ZA: { key: "ALPHABETICAL_ZA", label: "Alphabetically (Z to A)" },
 };
@@ -24,8 +27,19 @@ const fetchBlogPosts = async () => {
     console.log("Fetching blog posts...");
     const response = await axiosInterceptorInstance.get("/blog/get");
     console.log("All blogs:", response.data);
-    const filteredData = response.data.filter((post) => post.active === true);
-    // console.log("Filtered data(educationContent == false) is:", filteredData);
+    // Fetch average ratings for each blog post
+    const blogsWithAverage = await Promise.all(
+      response.data.map(async (blog) => {
+        const average = await fetchBlogAverage(blog.id);
+        return { ...blog, average };
+      })
+    );
+
+    // Filter active blog posts
+    const filteredData = blogsWithAverage.filter(
+      (post) => post.active === true
+    );
+
     return filteredData;
   } catch (error) {
     console.error("Failed to fetch blog posts:", error);
@@ -46,74 +60,99 @@ const fetchBlogAverage = async (blogId) => {
   }
 };
 
+const fetchCategories = async () => {
+  try {
+    const response = await axiosInterceptorInstance.get(
+      "category/getAllBlogPostCategories"
+    );
+    return response.data; // Just return the data
+  } catch (error) {
+    throw new Error("Error fetching categories:", error);
+  }
+};
+
 const BusinessBlogPostsPage = () => {
   const router = useRouter();
   const [categoryFilter, setCategoryFilter] = useState("");
-  const [AllBusinessBlogPosts, setAllBusinessBlogPosts] = useState([]);
+  // const [AllBusinessBlogPosts, setAllBusinessBlogPosts] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [sortOption, setSortOption] = useState("");
   const [isSearchEmpty, setIsSearchEmpty] = useState(false);
   const [searchPerformed, setSearchPerformed] = useState(false);
-  const [categories, setCategories] = useState([]);
+  // const [categories, setCategories] = useState([]);
   const [displayedBlogPosts, setDisplayedBlogPosts] = useState([]);
   const [resultsCount, setResultsCount] = useState(0);
   // Additional state to track if search button has been clicked
   const [searchButtonClicked, setSearchButtonClicked] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
+  const [isAuthorized, setIsAuthorized] = useState(false);
+  const [isChecking, setIsChecking] = useState(true);
 
   useEffect(() => {
-    setIsLoading(true); // Start loading
+    // Perform your token and role check here
+    const token = SecureStorage.getItem("token");
+    const role = SecureStorage.getItem("role");
 
-    const getData = async () => {
-      const fetchedBlog = await fetchBlogPosts();
-      const blogsWithAverage = await Promise.all(
-        fetchedBlog.map(async (blog) => {
-          const average = await fetchBlogAverage(blog.id);
-          return { ...blog, average };
-        })
-      );
-      console.log("Blog with average:", blogsWithAverage);
-      setAllBusinessBlogPosts(blogsWithAverage);
-      setDisplayedBlogPosts(blogsWithAverage);
-    };
-
-    const fetchCategories = async () => {
-      try {
-        const response = await axiosInterceptorInstance.get(
-          "category/getAllBlogPostCategories"
-        );
-        setCategories(response.data);
-      } catch (error) {
-        console.error("Error fetching categories:", error);
-      }
-    };
-
-    Promise.all([getData(), fetchCategories()])
-      .catch((error) => {
-        console.error("Error in fetchData or fetchCategories:", error);
-      })
-      .finally(() => {
-        setIsLoading(false); // End loading after both operations are complete
-      });
+    // Replace 'REGISTERED_USER' with the actual role you're checking for
+    if (!token || role !== "REGISTERED_USER") {
+      // If the user is not authorized, redirect them
+      router.push("/"); // Adjust the route as needed
+    } else {
+      setIsChecking(false);
+      // If the user is authorized, allow the component to proceed
+      setIsAuthorized(true);
+    }
   }, []);
 
-  // Filter blog posts based on search term and category filter
-  useEffect(() => {
-    let filteredPosts = AllBusinessBlogPosts;
+  // if (isChecking) {
+  //   return <div>Checking...</div>;
+  // }
 
+  // Fetch blog posts
+  const {
+    data: AllBusinessBlogPosts,
+    isLoading,
+    isError,
+  } = useQuery("businessBlogPosts", fetchBlogPosts, {
+    enabled: isAuthorized, // Only run query if authorized
+  });
+
+  const {
+    data: categories,
+    isLoading: isCategoriesLoading,
+    isError: isCategoriesError,
+  } = useQuery("blogCategories", fetchCategories, {
+    enabled: isAuthorized, // Only run query if authorized
+  });
+
+  // Handle error state
+  if (isError) {
+    return <div>Error fetching data</div>;
+  }
+
+  useEffect(() => {
+    console.log("All in one useEffect triggered");
+    // Ensure AllBusinessBlogPosts is an array
+    let allPosts = Array.isArray(AllBusinessBlogPosts)
+      ? AllBusinessBlogPosts
+      : [];
+
+    // Filter blog posts
+    let filteredPosts = allPosts;
     if (categoryFilter) {
-      filteredPosts = filteredPosts.filter(
+      filteredPosts = allPosts.filter(
         (post) => post.blogType.subcategoryName === categoryFilter
       );
     }
 
-    if (searchTerm.trim()) {
-    } else {
+    // Search term logic
+    if (!searchTerm.trim()) {
       setSearchPerformed(false);
+    } else {
+      // Apply search logic here if needed
     }
 
+    // Sorting logic
     let sortedPosts = [...filteredPosts];
-    // Sorting
     switch (sortOption) {
       case "LATEST":
         sortedPosts.sort(
@@ -142,21 +181,14 @@ const BusinessBlogPostsPage = () => {
     }
 
     console.log("Filtered posts:", filteredPosts);
-
-    // setDisplayedBlogPosts(filteredPosts);
-    // setResultsCount(filteredPosts.length);  /// This is causing the issue
-    // setIsSearchEmpty(filteredPosts.length === 0);
     setDisplayedBlogPosts(sortedPosts);
     setIsSearchEmpty(sortedPosts.length === 0);
-
-    // filterPosts();
     // Reset searchButtonClicked when searchTerm changes
     setSearchButtonClicked(false);
-
-    console.log("Displayed blog posts:", displayedBlogPosts);
   }, [searchTerm, categoryFilter, AllBusinessBlogPosts, sortOption]);
 
   const handleSearchClick = async () => {
+    console.log("Search button clicked");
     setSearchButtonClicked(true); // Set flag when search is performed
     setIsSearchEmpty(false);
     setSearchPerformed(true);
@@ -323,6 +355,16 @@ const BusinessBlogPostsPage = () => {
     router.push(routePath);
   };
 
+  const getImageUrlFromBlob = (imgBlob) => {
+    // Check if imgBlob is truthy
+    if (imgBlob) {
+      // Return the image URL created from the blob
+      return `data:image/jpeg;base64,${imgBlob}`;
+    }
+    // Return an empty string or a placeholder image URL if imgBlob is not available
+    return "";
+  };
+
   // Render each blog post card
   const renderPostCard = (post) => (
     <div
@@ -336,13 +378,6 @@ const BusinessBlogPostsPage = () => {
       }}
       onClick={() => handleViewBlogPost(post.id)}
     >
-      {/* <img
-        src={post.img}
-        alt={post.imgTitle}
-        className="w-full object-cover rounded-sm text-white text-center"
-        style={{ height: "192px" }}
-      /> */}
-
       {post?.imgBlob ? (
         // If imgBlob is available, display image from blob
         <img
@@ -390,137 +425,180 @@ const BusinessBlogPostsPage = () => {
     </div>
   );
 
-  // Get the latest 3 posts
-  const latestPosts = [...AllBusinessBlogPosts]
-    .sort((a, b) => new Date(b.createdDateTime) - new Date(a.createdDateTime))
-    .slice(0, 3);
+  // Ensure AllBusinessBlogPosts is an array or default to empty array
+  const iterableBlogPosts = Array.isArray(AllBusinessBlogPosts)
+    ? AllBusinessBlogPosts
+    : [];
 
-  // Get the other posts that are not the latest 3
-  const otherBusinessBlogPosts = AllBusinessBlogPosts.filter(
-    (post) => !latestPosts.find((latestPost) => latestPost.id === post.id)
-  );
+  // Ensure iterable data for latest and other blog posts
+  const latestPosts = Array.isArray(iterableBlogPosts)
+    ? [...iterableBlogPosts]
+        .sort(
+          (a, b) => new Date(b.createdDateTime) - new Date(a.createdDateTime)
+        )
+        .slice(0, 3)
+    : [];
+
+  const otherBusinessBlogPosts = Array.isArray(iterableBlogPosts)
+    ? iterableBlogPosts.filter(
+        (post) => !latestPosts.find((latestPost) => latestPost.id === post.id)
+      )
+    : [];
 
   return (
-    <div className="p-4 md:p-10">
-      <RegisteredUserNavBar />
-      <h1 className="text-3xl text-center md:text-7xl font-extrabold font-sans text-gray-900 mb-4 md:mb-8">
-        Blog Posts
-      </h1>
-      <div className="flex flex-col lg:flex-row mb-4">
-        {/* Search Section */}
-        <div className="flex-grow">
-          <input
-            type="text"
-            id="blogPostSearch"
-            name="blogPostSearch"
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
-            onKeyDown={(e) => {
-              if (e.key === "Enter") {
-                handleSearchClick();
-              }
-            }}
-            placeholder="Search by title..."
-            className="mr-2 p-2 rounded-lg border w-full md:w-auto"
-            style={{ flex: 1 }}
-          />
-          <button
-            onClick={handleSearchClick}
-            className="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-1.5 px-5 rounded-full mt-2 w-full md:w-auto lg:w-auto"
-            style={{ flexShrink: 0 }}
-          >
-            Search
-          </button>
-          {/* Results count */}
-          {searchButtonClicked && searchPerformed && (
-            <p className="text-left text-red-500 font-medium text-lg">
-              {resultsCount} results found.
-            </p>
-          )}
-        </div>
-
-        {/* Sort dropdown */}
-        <div className="flex flex-col lg:flex-row lg:items-center mt-4 lg:mt-0">
-          <label
-            htmlFor="sort"
-            className="text-xl text-black mb-2 sm:mb-0 sm:mr-2"
-          >
-            Sort By:
-          </label>
-          <select
-            id="sort"
-            value={sortOption}
-            onChange={(e) => setSortOption(e.target.value)}
-            className="mr-2 p-2 rounded-lg border w-full md:w-auto"
-            style={{ maxWidth: "300px" }}
-          >
-            {Object.values(sortOptions).map((option) => (
-              <option key={option.key} value={option.key}>
-                {option.label}
-              </option>
-            ))}
-          </select>
-        </div>
-        {/* Filter Section - Adjusted to align to the right */}
-        <div className="flex flex-col lg:flex-row lg:items-center mt-4 lg:mt-0">
-          <label
-            htmlFor="categoryFilter"
-            className="text-xl text-black mb-2 sm:mb-0 sm:mr-2"
-          >
-            Filter By:
-          </label>
-          <div className="flex-grow-0">
-            <select
-              id="categoryFilter"
-              value={categoryFilter}
-              onChange={(e) => setCategoryFilter(e.target.value)}
-              className="mr-2 p-2 rounded-lg border w-full md:w-auto"
-              style={{ maxWidth: "300px" }}
-            >
-              <option value="">All Categories</option>
-              {categories?.map((category) => (
-                <option key={category.id} value={category.subcategoryName}>
-                  {category.subcategoryName}
-                </option>
-              )) || []}
-            </select>
-          </div>
-        </div>
-      </div>
-      {/* Display the blog posts */}
-      {/* Display message while fetching data ftom backend */}
-      {isLoading ? (
-        <div className="text-xl text-center p-4">
-          <p>Please wait. It'll just take a moment.</p>
-        </div>
-      ) : (
-        <>
-          {!searchPerformed && !categoryFilter && !sortOption ? (
-            <>
-              <div className="mb-5">
-                <h2 className="text-3xl font-bold mb-4 mt-4">
-                  Latest Business Blog Post
-                </h2>
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
-                  {latestPosts.map((post) => renderPostCard(post))}
+    <QueryClientProvider client={queryClient}>
+      <div>
+        {isChecking ? (
+          <div>Checking...</div>
+        ) : (
+          <>
+            <RegisteredUserNavBar />
+            <div className="p-4 md:p-10">
+              <h1 className="text-3xl text-center md:text-7xl font-extrabold font-sans text-gray-900 mb-4 md:mb-8">
+                Blog Posts
+              </h1>
+              {isLoading ? (
+                <div className="text-xl text-center p-4">
+                  <p>Please wait. It'll just take a moment.</p>
                 </div>
-              </div>
-              <h2 className="text-3xl font-bold mb-4 mt-4">
-                Other Business Blog Post
-              </h2>
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                {otherBusinessBlogPosts.map((post) => renderPostCard(post))}
-              </div>
-            </>
-          ) : (
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-              {displayedBlogPosts.map((post) => renderPostCard(post))}
+              ) : (
+                <>
+                  <div className="flex flex-col lg:flex-row mb-4">
+                    {/* Search Section */}
+                    <div className="flex-grow">
+                      <input
+                        type="text"
+                        id="blogPostSearch"
+                        name="blogPostSearch"
+                        value={searchTerm}
+                        onChange={(e) => setSearchTerm(e.target.value)}
+                        onKeyDown={(e) => {
+                          if (e.key === "Enter") {
+                            handleSearchClick();
+                          }
+                        }}
+                        placeholder="Search by title..."
+                        className="mr-2 p-2 rounded-lg border w-full md:w-auto"
+                        style={{ flex: 1 }}
+                      />
+                      <button
+                        onClick={handleSearchClick}
+                        className="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-1.5 px-5 rounded-full mt-2 w-full md:w-auto lg:w-auto"
+                        style={{ flexShrink: 0 }}
+                      >
+                        Search
+                      </button>
+                      {/* Results count */}
+                      {searchButtonClicked && searchPerformed && (
+                        <p className="text-left text-red-500 font-medium text-lg">
+                          {resultsCount} results found.
+                        </p>
+                      )}
+                    </div>
+
+                    {/* Sort dropdown */}
+                    <div className="flex flex-col lg:flex-row lg:items-center mt-4 lg:mt-0">
+                      <label
+                        htmlFor="sort"
+                        className="text-xl text-black mb-2 sm:mb-0 sm:mr-2"
+                      >
+                        Sort By:
+                      </label>
+                      <select
+                        id="sort"
+                        value={sortOption}
+                        onChange={(e) => setSortOption(e.target.value)}
+                        className="mr-2 p-2 rounded-lg border w-full md:w-auto"
+                        style={{ maxWidth: "300px" }}
+                      >
+                        {Object.values(sortOptions).map((option) => (
+                          <option key={option.key} value={option.key}>
+                            {option.label}
+                          </option>
+                        ))}
+                      </select>
+                    </div>
+                    {/* Filter Section - Adjusted to align to the right */}
+                    <div className="flex flex-col lg:flex-row lg:items-center mt-4 lg:mt-0">
+                      <label
+                        htmlFor="categoryFilter"
+                        className="text-xl text-black mb-2 sm:mb-0 sm:mr-2"
+                      >
+                        Filter By:
+                      </label>
+                      <div className="flex-grow-0">
+                        <select
+                          id="categoryFilter"
+                          value={categoryFilter}
+                          onChange={(e) => setCategoryFilter(e.target.value)}
+                          className="mr-2 p-2 rounded-lg border w-full md:w-auto"
+                          style={{ maxWidth: "300px" }}
+                        >
+                          <option value="">All Categories</option>
+                          {categories?.map((category) => (
+                            <option
+                              key={category.id}
+                              value={category.subcategoryName}
+                            >
+                              {category.subcategoryName}
+                            </option>
+                          )) || []}
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+                  {/* Display the blog posts */}
+                  {/* Display message while fetching data ftom backend */}
+                  {isLoading ? (
+                    <div className="text-xl text-center p-4">
+                      <p>Please wait. It'll just take a moment.</p>
+                    </div>
+                  ) : (
+                    <>
+                      {!searchPerformed && !categoryFilter && !sortOption ? (
+                        <>
+                          <div className="mb-5">
+                            <h2 className="text-3xl font-bold mb-4 mt-4">
+                              Latest Blog Posts
+                            </h2>
+                            <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
+                              {latestPosts.map((post) => renderPostCard(post))}
+                            </div>
+                          </div>
+                          <h2 className="text-3xl font-bold mb-4 mt-4">
+                            Other Blog Posts
+                          </h2>
+                          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                            {otherBusinessBlogPosts.map((post) =>
+                              renderPostCard(post)
+                            )}
+                          </div>
+                        </>
+                      ) : (
+                        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                          {displayedBlogPosts.map((post) =>
+                            renderPostCard(post)
+                          )}
+                        </div>
+                      )}
+                    </>
+                  )}
+                </>
+              )}
             </div>
-          )}
-        </>
-      )}
-    </div>
+          </>
+        )}
+      </div>
+    </QueryClientProvider>
   );
 };
 
-export default BusinessBlogPostsPage;
+const WrappedBusinessBlogPostsPage = () => {
+  return (
+    <QueryClientProvider client={queryClient}>
+      <BusinessBlogPostsPage />
+    </QueryClientProvider>
+  );
+};
+
+export default WrappedBusinessBlogPostsPage;

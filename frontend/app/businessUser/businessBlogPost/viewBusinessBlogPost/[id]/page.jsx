@@ -137,7 +137,7 @@ const ViewBusinessBlogPost = ({ params }) => {
   return (
     <div>
       {isLoading && isChecking ? (
-        <div>Loading...</div>
+        <div>Checking...</div>
       ) : (
         <>
           <BusinessUserNavBar />

@@ -295,6 +295,34 @@ VALUES
         'https://img.freepik.com/free-photo/mature-women-ready-cook-together_23-2148354958.jpg?w=1060&t=st=1707559390~exp=1707559990~hmac=372557b0b010ec7a8fd508f2ded1b3b106adaee27f2c083d9daa8fbd5bd169e6',
         'Designed by Freepik',  -- img_title
         '2' -- userid
+    ),
+    (
+        21,
+        'Australianeggs',
+        'Low carbohydrate Meal Plan',
+        TRUE,
+        'In recent years we have seen a growing and positive trend towards eating patterns significantly lower in carbohydrates, without eliminating the food group completely.',
+        'This eating style can be an excellent way to support health and wellbeing, while still consuming a well-balanced diet and meeting daily nutritional needs.',
+        'If you are looking for great low-carbohydrate ideas that provide sufficient energy and nutrition, this meal plan provides you with various great options.',
+        '2023-04-10',
+        3, -- weight loss
+        'https://img.freepik.com/free-photo/top-view-boiled-eggs-with-olives-breasts-fresh-vegetables-tomatoes-grey-vegetable-food-meal-breakfast_140725-18886.jpg?w=1060&t=st=1707559930~exp=1707560530~hmac=ab1891ed1eced001a2948ec254058a04b7c75f2be2ace362e350369897452ed9',
+        'Designed by Freepik',  -- img_title
+        '2' -- userid
+    ),
+    (
+        22,
+        'Australianeggs',
+        'Protein Rich Meal Plan',
+        TRUE,
+        'When we live a busy and chaotic lifestyle, it is easy to forget about the importance of our diet. But poor eating habits can also result in health problems, exhaustion, and difficulty concentrating.',
+        'Eating a well-balanced diet that contains whole grains, fruits, vegetables, and foods high in protein, healthy fats, and fiber can help improve energy levels and keep us going longer.',
+        'This high protein meal plan aims to keep you satisfied for longer by incorporating high fibre foods, protein-rich foods and low GI foods throughout each day.',
+        '2023-03-25',
+        1, -- weight gain
+        'https://img.freepik.com/free-photo/chicken-steak-topped-with-white-sesame-peas-tomatoes-broccoli-pumpkin-white-plate_1150-24770.jpg?w=1060&t=st=1707560531~exp=1707561131~hmac=e401d7d512d5669f917b593e36a1935fe06eba3259863cc7b63990a9a3189e8c',
+        'Designed by Freepik',  -- img_title
+        '4' -- userid
     );
     
     
@@ -365,4 +393,10 @@ values
     (19, 67),
     (20, 17),
     (20, 51),
-    (20, 54);
+    (20, 54),
+    (21, 4),
+    (21, 52),
+    (21, 56),
+    (22, 20),
+    (22, 53),
+    (22, 55);

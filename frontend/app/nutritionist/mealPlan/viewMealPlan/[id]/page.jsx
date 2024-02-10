@@ -14,6 +14,16 @@ import SecureStorage from "react-secure-storage";
 
 // TO DO: RESPONSIVENESS OF RECIPE CARD
 
+const getImageUrlFromBlob = (imgBlob) => {
+  // Check if imgBlob is truthy
+  if (imgBlob) {
+    // Return the image URL created from the blob
+    return `data:image/jpeg;base64,${imgBlob}`;
+  }
+  // Return an empty string or a placeholder image URL if imgBlob is not available
+  return "";
+};
+
 const fetchMealPlanById = async (mealPlanId) => {
   try {
     // Ensure mealPlanId is a string if the IDs in your URL need to be strings
@@ -45,11 +55,26 @@ const RecipeCard = ({ recipe, onViewRecipe }) => {
       <div className="h-48 overflow-hidden">
         {" "}
         {/* Fixed height container */}
-        <img
+        {/* <img
           className="w-full h-full object-cover"
           src={recipe.img}
           alt={"Image of " + recipe.title}
-        />
+        /> */}
+        {recipe?.imgBlob ? (
+          // If imgBlob is available, display image from blob
+          <img
+            className="w-full h-48 object-cover rounded-sm text-white text-center"
+            src={getImageUrlFromBlob(recipe?.imgBlob)}
+            alt={"Image of " + recipe.title}
+          />
+        ) : (
+          // If imgBlob is not available, display image from imgUrl
+          <img
+            className="w-full h-48 object-cover rounded-sm text-white text-center"
+            src={recipe?.img || "Not specified"}
+            alt={"Image of " + recipe.title}
+          />
+        )}
       </div>
       <div className="px-6 py-4">
         <div
@@ -223,15 +248,15 @@ const ViewMealPlan = ({ params }) => {
   //   currentRecipeSetIndex + 3
   // );
 
-  const getImageUrlFromBlob = (imgBlob) => {
-    // Check if imgBlob is truthy
-    if (imgBlob) {
-      // Return the image URL created from the blob
-      return `data:image/jpeg;base64,${imgBlob}`;
-    }
-    // Return an empty string or a placeholder image URL if imgBlob is not available
-    return "";
-  };
+  // const getImageUrlFromBlob = (imgBlob) => {
+  //   // Check if imgBlob is truthy
+  //   if (imgBlob) {
+  //     // Return the image URL created from the blob
+  //     return `data:image/jpeg;base64,${imgBlob}`;
+  //   }
+  //   // Return an empty string or a placeholder image URL if imgBlob is not available
+  //   return "";
+  // };
 
   return (
     <div>

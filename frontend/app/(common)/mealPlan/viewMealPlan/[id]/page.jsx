@@ -11,6 +11,16 @@ import HomeNavbar from "@/app/components/navigation/homeNavBar/index.jsx";
 // this is to view particular meal plan
 // router path: /mealPlan/viewMealPlan/[id]
 
+const getImageUrlFromBlob = (imgBlob) => {
+  // Check if imgBlob is truthy
+  if (imgBlob) {
+    // Return the image URL created from the blob
+    return `data:image/jpeg;base64,${imgBlob}`;
+  }
+  // Return an empty string or a placeholder image URL if imgBlob is not available
+  return "";
+};
+
 const fetchMealPlanById = async (mealPlanId) => {
   try {
     // Ensure mealPlanId is a string if the IDs in your URL need to be strings
@@ -49,11 +59,26 @@ const RecipeCard = ({ recipe, onViewRecipe }) => {
       onClick={() => onViewRecipe(recipe.id)}
     >
       {/* Image */}
-      <img
+      {recipe?.imgBlob ? (
+        // If imgBlob is available, display image from blob
+        <img
+          className="w-full h-48 object-cover rounded-sm text-white text-center"
+          src={getImageUrlFromBlob(recipe?.imgBlob)}
+          alt={"Image of " + recipe.title}
+        />
+      ) : (
+        // If imgBlob is not available, display image from imgUrl
+        <img
+          className="w-full h-48 object-cover rounded-sm text-white text-center"
+          src={recipe?.img || "Not specified"}
+          alt={"Image of " + recipe.title}
+        />
+      )}
+      {/* <img
         className="w-full h-48 object-cover rounded-sm text-white text-center"
         src={recipe.img}
         alt={"Image of " + recipe.title}
-      />
+      /> */}
       <div className="flex-grow flex flex-col justify-between p-4 bg-white">
         {/* Title */}
         <div className="grid grid-rows-3 items-center">
@@ -294,7 +319,7 @@ const ViewMealPlan = ({ params }) => {
           {/* Image */}
           {mealPlan?.imgBlob ? (
             <img
-              src={getImageURLFromBlob(mealPlan?.imgBlob)}
+              src={getImageUrlFromBlob(mealPlan?.imgBlob)}
               alt={mealPlan.img_title || "Meal Plan Image"}
               className="max-w-full mx-auto mt-8 mb-8 sm:max-w-xl sm:mt-16 sm:mb-16 rounded-lg shadow-xl"
             />

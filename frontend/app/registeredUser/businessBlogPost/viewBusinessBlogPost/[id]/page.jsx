@@ -317,7 +317,9 @@ const ViewBusinessBlogPost = ({ params }) => {
                   </div>
                 </footer>
               ) : (
-                <p>You have already submitted a review for this blog post.</p>
+                <p className="p-4">
+                  You have already submitted a review for this blog post.
+                </p>
               )}
             </div>
           </>

@@ -2,10 +2,8 @@
 import { useRouter } from "next/navigation";
 import React from "react";
 import { useState, useEffect } from "react";
-import HomeNavbar from "@/app/components/navigation/homeNavBar";
-import axiosInterceptorInstance from "../../axiosInterceptorInstance.js";
-import { QueryClientProvider, useQuery } from "react-query"; // Added useQuery here
-import { queryClient } from "../../queryClient.js"; // Adjust the path as necessary
+import axiosInterceptorInstance from "../../../axiosInterceptorInstance.js";
+import NutritionistNavBar from "../../../components/navigation/nutritionistNavBar";
 
 // rouuter path: /mealPlan
 
@@ -14,6 +12,7 @@ const sortOptions = {
   LATEST: { key: "LATEST", label: "By Latest" },
   OLDEST: { key: "OLDEST", label: "By Oldest" },
   HIGHEST_RATINGS: { key: "HIGHEST_RATINGS", label: "Highest Ratings" },
+  // LOWEST_RATINGS: { key: "LOWEST_RATINGS", label: "Lowest Ratings" },
   ALPHABETICAL_AZ: { key: "ALPHABETICAL_AZ", label: "Alphabetically (A to Z)" },
   ALPHABETICAL_ZA: { key: "ALPHABETICAL_ZA", label: "Alphabetically (Z to A)" },
 };
@@ -23,34 +22,14 @@ const fetchMealPlan = async () => {
   try {
     console.log("Fetching all meal plan...");
     const response = await axiosInterceptorInstance.get("/mealPlan/get");
-
-    const mealPlansWithAverage = await Promise.all(
-      response.data.map(async (mealPlan) => {
-        const average = await fetchMealPlanAverage(mealPlan.id);
-        return { ...mealPlan, average };
-      })
-    );
-
-    // Filter active blog posts
-    const filteredData = mealPlansWithAverage.filter(
+    console.log("All meal plan:", response.data);
+    const filteredData = response.data.filter(
       (mealPlan) => mealPlan.active === true
     );
-
     return filteredData;
   } catch (error) {
     console.error("Failed to fetch meal plan:", error);
     throw error;
-  }
-};
-
-const fetchCategories = async () => {
-  try {
-    const response = await axiosInterceptorInstance.get(
-      "category/getAllHealthGoals"
-    );
-    setCategories(response.data);
-  } catch (error) {
-    console.error("Error fetching categories:", error);
   }
 };
 
@@ -76,79 +55,63 @@ const fetchMealPlanAverage = async (mealPlanId) => {
   }
 };
 
-const MealPlanPage = () => {
+const ExploreMealPlanPage = () => {
   const router = useRouter();
   const [categoryFilter, setCategoryFilter] = useState("");
-  // const [AllMealPlan, setAllMealPlan] = useState([]);
+  const [AllMealPlan, setAllMealPlan] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [sortOption, setSortOption] = useState("");
   const [isSearchEmpty, setIsSearchEmpty] = useState(false);
   const [searchPerformed, setSearchPerformed] = useState(false);
-  // const [categories, setCategories] = useState([]);
+  const [categories, setCategories] = useState([]);
   const [displayedMealPlan, setDisplayedMealPlan] = useState([]);
   const [resultsCount, setResultsCount] = useState(0);
-  // const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   // Additional state to track if search button has been clicked
   const [searchButtonClicked, setSearchButtonClicked] = useState(false);
 
   // Fetch all meal plan and categories on page load
-  // useEffect(() => {
-  //   setIsLoading(true); // Set loading state to true
+  useEffect(() => {
+    setIsLoading(true); // Set loading state to true
 
-  //   const getData = async () => {
-  //     const fetchedMealPlan = await fetchMealPlan();
+    const getData = async () => {
+      const fetchedMealPlan = await fetchMealPlan();
 
-  //     const mealPlansWithAverage = await Promise.all(
-  //       fetchedMealPlan.map(async (mealPlan) => {
-  //         const average = await fetchMealPlanAverage(mealPlan.id);
-  //         return { ...mealPlan, average };
-  //       })
-  //     );
-  //     console.log("mealPlan with average:", mealPlansWithAverage);
+      const mealPlansWithAverage = await Promise.all(
+        fetchedMealPlan.map(async (mealPlan) => {
+          const average = await fetchMealPlanAverage(mealPlan.id);
+          return { ...mealPlan, average };
+        })
+      );
+      console.log("mealPlan with average:", mealPlansWithAverage);
 
-  //     setAllMealPlan(mealPlansWithAverage);
-  //     setDisplayedMealPlan(mealPlansWithAverage);
-  //   };
+      setAllMealPlan(mealPlansWithAverage);
+      setDisplayedMealPlan(mealPlansWithAverage);
+    };
 
-  //   const fetchCategories = async () => {
-  //     try {
-  //       const response = await axiosInterceptorInstance.get(
-  //         "category/getAllHealthGoals"
-  //       );
-  //       setCategories(response.data);
-  //     } catch (error) {
-  //       console.error("Error fetching categories:", error);
-  //     }
-  //   };
-  //   Promise.all([getData(), fetchCategories()])
-  //     .catch((error) => {
-  //       console.error("Error in fetchData or fetchCategories:", error);
-  //     })
-  //     .finally(() => {
-  //       setIsLoading(false); // End loading after both operations are complete
-  //     });
-  // }, []);
-
-  // Fetch all recipes
-  const {
-    data: AllMealPlan,
-    isLoading,
-    isError,
-  } = useQuery("mealPlans", fetchMealPlan);
-
-  const {
-    data: categories,
-    isLoading: isCategoriesLoading,
-    isError: isCategoriesError,
-  } = useQuery("healthGoalCategories", fetchCategories);
+    const fetchCategories = async () => {
+      try {
+        const response = await axiosInterceptorInstance.get(
+          "category/getAllHealthGoals"
+        );
+        setCategories(response.data);
+      } catch (error) {
+        console.error("Error fetching categories:", error);
+      }
+    };
+    Promise.all([getData(), fetchCategories()])
+      .catch((error) => {
+        console.error("Error in fetchData or fetchCategories:", error);
+      })
+      .finally(() => {
+        setIsLoading(false); // End loading after both operations are complete
+      });
+  }, []);
 
   // Filter meal plan based on search term and category filter
   useEffect(() => {
-    // Ensure AllMealPlan is an array
-    let allPosts = Array.isArray(AllMealPlan) ? AllMealPlan : [];
-
-    let filteredMealPlans = allPosts;
+    let filteredMealPlans = AllMealPlan;
 
     if (categoryFilter) {
       filteredMealPlans = filteredMealPlans.filter(
@@ -161,28 +124,17 @@ const MealPlanPage = () => {
       setSearchPerformed(false);
     }
 
-    // let sortedMealPlan = [...newFilteredRecipes];
-    let sortedMealPlan = [...(filteredMealPlans ?? [])];
-
-    // Helper function to get the date for comparison
-    const getDateForComparison = (mealPlan) => {
-      // Use createdDT if not null; otherwise, use updateDT
-      return new Date(mealPlan.createdDT || mealPlan.lastUpdatedDT);
-    };
-
-    // let sortedMealPlan = [...filteredMealPlans];
-    // Sorting
-
+    let sortedMealPlan = [...filteredMealPlans];
     // Sorting
     switch (sortOption) {
       case "LATEST":
         sortedMealPlan.sort(
-          (a, b) => getDateForComparison(b) - getDateForComparison(a)
+          (a, b) => new Date(b.createdDT) - new Date(a.createdDT)
         );
         break;
       case "OLDEST":
         sortedMealPlan.sort(
-          (a, b) => getDateForComparison(a) - getDateForComparison(b)
+          (a, b) => new Date(a.createdDT) - new Date(b.createdDT)
         );
         break;
       case "ALPHABETICAL_AZ":
@@ -196,38 +148,10 @@ const MealPlanPage = () => {
           const ratingDiff =
             (b.average?.averageRatings || 0) - (a.average?.averageRatings || 0);
           if (ratingDiff !== 0) return ratingDiff;
-          // Use getDateForComparison for tiebreaker date comparison
-          return getDateForComparison(b) - getDateForComparison(a); // Latest date first if tie
+          return new Date(b.createdDT) - new Date(a.createdDT); // Latest date first if tie
         });
         break;
     }
-
-    // switch (sortOption) {
-    //   case "LATEST":
-    //     sortedMealPlan.sort(
-    //       (a, b) => new Date(b.createdDT) - new Date(a.createdDT)
-    //     );
-    //     break;
-    //   case "OLDEST":
-    //     sortedMealPlan.sort(
-    //       (a, b) => new Date(a.createdDT) - new Date(b.createdDT)
-    //     );
-    //     break;
-    //   case "ALPHABETICAL_AZ":
-    //     sortedMealPlan.sort((a, b) => a.title.localeCompare(b.title));
-    //     break;
-    //   case "ALPHABETICAL_ZA":
-    //     sortedMealPlan.sort((a, b) => b.title.localeCompare(a.title));
-    //     break;
-    //   case "HIGHEST_RATINGS":
-    //     sortedMealPlan.sort((a, b) => {
-    //       const ratingDiff =
-    //         (b.average?.averageRatings || 0) - (a.average?.averageRatings || 0);
-    //       if (ratingDiff !== 0) return ratingDiff;
-    //       return new Date(b.createdDT) - new Date(a.createdDT); // Latest date first if tie
-    //     });
-    //     break;
-    // }
 
     console.log("Filtered meal plans:", filteredMealPlans);
 
@@ -254,26 +178,15 @@ const MealPlanPage = () => {
 
       // Sort the results
       let sortedResults = [...filteredMealPlans];
-
-      // Sort the results
-      //  let sortedResults = [...filteredResultsWithAverage];
-
-      // Helper function to get the date for comparison
-      const getDateForComparison = (mealPlan) => {
-        // Use createdDT if not null; otherwise, use updateDT
-        return new Date(mealPlan.createdDT || mealPlan.lastUpdatedDT);
-      };
-
-      // Sorting
       switch (sortOption) {
         case "LATEST":
           sortedResults.sort(
-            (a, b) => getDateForComparison(b) - getDateForComparison(a)
+            (a, b) => new Date(b.createdDT) - new Date(a.createdDT)
           );
           break;
         case "OLDEST":
           sortedResults.sort(
-            (a, b) => getDateForComparison(a) - getDateForComparison(b)
+            (a, b) => new Date(a.createdDT) - new Date(b.createdDT)
           );
           break;
         case "ALPHABETICAL_AZ":
@@ -288,8 +201,7 @@ const MealPlanPage = () => {
               (b.average?.averageRatings || 0) -
               (a.average?.averageRatings || 0);
             if (ratingDiff !== 0) return ratingDiff;
-            // Use getDateForComparison for tiebreaker date comparison
-            return getDateForComparison(b) - getDateForComparison(a); // Latest date first if tie
+            return new Date(b.createdDT) - new Date(a.createdDT); // Latest date first if tie
           });
           break;
       }
@@ -328,23 +240,15 @@ const MealPlanPage = () => {
 
         // Sort the results
         let sortedResults = [...filteredResultsWithAverage];
-
-        // Helper function to get the date for comparison
-        const getDateForComparison = (mealPlan) => {
-          // Use createdDT if not null; otherwise, use updateDT
-          return new Date(mealPlan.createdDT || mealPlan.lastUpdatedDT);
-        };
-
-        // Sorting
         switch (sortOption) {
           case "LATEST":
             sortedResults.sort(
-              (a, b) => getDateForComparison(b) - getDateForComparison(a)
+              (a, b) => new Date(b.createdDT) - new Date(a.createdDT)
             );
             break;
           case "OLDEST":
             sortedResults.sort(
-              (a, b) => getDateForComparison(a) - getDateForComparison(b)
+              (a, b) => new Date(a.createdDT) - new Date(b.createdDT)
             );
             break;
           case "ALPHABETICAL_AZ":
@@ -359,11 +263,11 @@ const MealPlanPage = () => {
                 (b.average?.averageRatings || 0) -
                 (a.average?.averageRatings || 0);
               if (ratingDiff !== 0) return ratingDiff;
-              // Use getDateForComparison for tiebreaker date comparison
-              return getDateForComparison(b) - getDateForComparison(a); // Latest date first if tie
+              return new Date(b.createdDT) - new Date(a.createdDT); // Latest date first if tie
             });
             break;
         }
+
         console.log("Sorted results:", sortedResults);
 
         if (sortedResults.length > 0) {
@@ -422,7 +326,7 @@ const MealPlanPage = () => {
 
   const handleViewMealPlan = (id) => {
     console.log(`Meal plan Title: ${id}`);
-    let routePath = `/mealPlan/viewMealPlan/${id}`;
+    let routePath = `/nutritionist/mealPlan/exploreAllMealPlan/${id}`;
     router.push(routePath);
   };
 
@@ -505,172 +409,143 @@ const MealPlanPage = () => {
     </div>
   );
 
-  // // Get the latest 3 meal plan
-  // const latestMealPlan = [...AllMealPlan]
-  //   .sort((a, b) => new Date(b.createdDT) - new Date(a.createdDT))
-  //   .slice(0, 3);
-
-  // // Get the other meal plans that are not the latest 3
-  // const otherMealPlan = AllMealPlan.filter(
-  //   (mealPlan) =>
-  //     !latestMealPlan.find(
-  //       (latestMealPlan) => latestMealPlan.id === mealPlan.id
-  //     )
-  // );
-
-  // Helper function to get the date for comparison
-  const getDateForComparison = (mealPlan) => {
-    // Use createdDT if not null; otherwise, use updateDT
-    return new Date(mealPlan.createdDT || mealPlan.lastUpdatedDT);
-  };
-
-  // Ensure AllMealPlan is an array or default to an empty array
-  const iterableMealPlans = Array.isArray(AllMealPlan) ? AllMealPlan : [];
-
-  // Sorting to get the latest recipes
-  const latestMealPlans = iterableMealPlans
-    .sort((a, b) => getDateForComparison(b) - getDateForComparison(a))
+  // Get the latest 3 meal plan
+  const latestMealPlan = [...AllMealPlan]
+    .sort((a, b) => new Date(b.createdDT) - new Date(a.createdDT))
     .slice(0, 3);
 
-  // Filtering out the latest recipes to get the other recipes
-  const otherMealPlans = iterableMealPlans.filter(
-    (post) => !latestMealPlans.find((latestPost) => latestPost.id === post.id)
+  // Get the other meal plans that are not the latest 3
+  const otherMealPlan = AllMealPlan.filter(
+    (mealPlan) =>
+      !latestMealPlan.find(
+        (latestMealPlan) => latestMealPlan.id === mealPlan.id
+      )
   );
 
   return (
-    <QueryClientProvider client={queryClient}>
-      <div>
-        <HomeNavbar />
-        <div className="p-4 md:p-10">
-          <h1 className="text-3xl text-center md:text-7xl font-extrabold font-sans text-gray-900 mb-4 md:mb-8">
-            Meal Plans
-          </h1>
-          <div className="flex flex-col lg:flex-row mb-4">
-            {/* Search Section */}
-            <div className="flex-grow">
-              <input
-                type="text"
-                id="mealPlanSearch"
-                name="mealPlanSearch"
-                value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
-                onKeyDown={(e) => {
-                  if (e.key === "Enter") {
-                    handleSearchClick();
-                  }
-                }}
-                placeholder="Search by title..."
-                className="mr-2 p-2 rounded-lg border w-full md:w-auto"
-                style={{ flex: 1 }}
-              />
-              <button
-                onClick={handleSearchClick}
-                className="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-1.5 px-5 rounded-full mt-2 w-full md:w-auto lg:w-auto"
-                style={{ flexShrink: 0 }}
-              >
-                Search
-              </button>
-              {/* Results count */}
-              {searchButtonClicked && searchPerformed && (
-                <p className="text-left text-red-500 font-medium text-lg">
-                  {resultsCount} results found.
-                </p>
-              )}
-            </div>
+    <div>
+      <NutritionistNavBar />
+      <div className="p-4 md:p-10">
+        <h1 className="text-3xl text-center md:text-7xl font-extrabold font-sans text-gray-900 mb-4 md:mb-8">
+          Meal Plans
+        </h1>
+        <div className="flex flex-col lg:flex-row mb-4">
+          {/* Search Section */}
+          <div className="flex-grow">
+            <input
+              type="text"
+              id="mealPlanSearch"
+              name="mealPlanSearch"
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+              onKeyDown={(e) => {
+                if (e.key === "Enter") {
+                  handleSearchClick();
+                }
+              }}
+              placeholder="Search by title..."
+              className="mr-2 p-2 rounded-lg border w-full md:w-auto"
+              style={{ flex: 1 }}
+            />
+            <button
+              onClick={handleSearchClick}
+              className="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-1.5 px-5 rounded-full mt-2 w-full md:w-auto lg:w-auto"
+              style={{ flexShrink: 0 }}
+            >
+              Search
+            </button>
+            {/* Results count */}
+            {searchButtonClicked && searchPerformed && (
+              <p className="text-left text-red-500 font-medium text-lg">
+                {resultsCount} results found.
+              </p>
+            )}
+          </div>
 
-            {/* Sort dropdown */}
-            <div className="flex flex-col lg:flex-row lg:items-center mt-4 lg:mt-0">
-              <label
-                htmlFor="sort"
-                className="text-xl text-black mb-2 sm:mb-0 sm:mr-2"
-              >
-                Sort By:
-              </label>
+          {/* Sort dropdown */}
+          <div className="flex flex-col lg:flex-row lg:items-center mt-4 lg:mt-0">
+            <label
+              htmlFor="sort"
+              className="text-xl text-black mb-2 sm:mb-0 sm:mr-2"
+            >
+              Sort By:
+            </label>
+            <select
+              id="sort"
+              value={sortOption}
+              onChange={(e) => setSortOption(e.target.value)}
+              className="mr-2 p-2 rounded-lg border w-full md:w-auto"
+              style={{ maxWidth: "300px" }}
+            >
+              {Object.values(sortOptions).map((option) => (
+                <option key={option.key} value={option.key}>
+                  {option.label}
+                </option>
+              ))}
+            </select>
+          </div>
+
+          {/* Filter Section - Adjusted to align to the right */}
+          <div className="flex flex-col lg:flex-row lg:items-center mt-4 lg:mt-0">
+            <label
+              htmlFor="categoryFilter"
+              className="text-xl text-black mb-2 sm:mb-0 sm:mr-2"
+            >
+              Filter By:
+            </label>
+            <div className="flex-grow-0">
               <select
-                id="sort"
-                value={sortOption}
-                onChange={(e) => setSortOption(e.target.value)}
+                id="categoryFilter"
+                value={categoryFilter}
+                onChange={(e) => setCategoryFilter(e.target.value)}
                 className="mr-2 p-2 rounded-lg border w-full md:w-auto"
                 style={{ maxWidth: "300px" }}
               >
-                {Object.values(sortOptions).map((option) => (
-                  <option key={option.key} value={option.key}>
-                    {option.label}
+                <option value="">All Categories</option>
+                {categories?.map((category) => (
+                  <option key={category.id} value={category.id}>
+                    {category.subcategoryName}
                   </option>
                 ))}
               </select>
             </div>
-
-            {/* Filter Section - Adjusted to align to the right */}
-            <div className="flex flex-col lg:flex-row lg:items-center mt-4 lg:mt-0">
-              <label
-                htmlFor="categoryFilter"
-                className="text-xl text-black mb-2 sm:mb-0 sm:mr-2"
-              >
-                Filter By:
-              </label>
-              <div className="flex-grow-0">
-                <select
-                  id="categoryFilter"
-                  value={categoryFilter}
-                  onChange={(e) => setCategoryFilter(e.target.value)}
-                  className="mr-2 p-2 rounded-lg border w-full md:w-auto"
-                  style={{ maxWidth: "300px" }}
-                >
-                  <option value="">All Categories</option>
-                  {categories?.map((category) => (
-                    <option key={category.id} value={category.id}>
-                      {category.subcategoryName}
-                    </option>
-                  ))}
-                </select>
-              </div>
-            </div>
           </div>
-          {/* Display the meal plans */}
-          {/* Display message while fetching data ftom backend */}
-          {isLoading ? (
-            <div className="text-xl text-center p-4">
-              <p>Please wait. It'll just take a moment.</p>
-            </div>
-          ) : (
-            <>
-              {!searchPerformed && !categoryFilter && !sortOption ? (
-                <>
-                  <div className="mb-5">
-                    <h2 className="text-3xl font-semibold mb-4 mt-4">
-                      Latest Meal Plan
-                    </h2>
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
-                      {latestMealPlans.map((post) => renderPostCard(post))}
-                    </div>
-                  </div>
-                  <h2 className="text-3xl font-semibold mb-4 mt-4">
-                    Other Meal Plan
-                  </h2>
-                  <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                    {otherMealPlans.map((post) => renderPostCard(post))}
-                  </div>
-                </>
-              ) : (
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                  {displayedMealPlan.map((post) => renderPostCard(post))}
-                </div>
-              )}
-            </>
-          )}
         </div>
+        {/* Display the meal plans */}
+        {/* Display message while fetching data ftom backend */}
+        {isLoading ? (
+          <div className="text-xl text-center p-4">
+            <p>Please wait. It'll just take a moment.</p>
+          </div>
+        ) : (
+          <>
+            {!searchPerformed && !categoryFilter && !sortOption ? (
+              <>
+                <div className="mb-5">
+                  <h2 className="text-3xl font-semibold mb-4 mt-4">
+                    Latest Meal Plan
+                  </h2>
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
+                    {latestMealPlan.map((post) => renderPostCard(post))}
+                  </div>
+                </div>
+                <h2 className="text-3xl font-semibold mb-4 mt-4">
+                  Other Meal Plan
+                </h2>
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                  {otherMealPlan.map((post) => renderPostCard(post))}
+                </div>
+              </>
+            ) : (
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                {displayedMealPlan.map((post) => renderPostCard(post))}
+              </div>
+            )}
+          </>
+        )}
       </div>
-    </QueryClientProvider>
+    </div>
   );
 };
 
-const WrappedMealPlansPage = () => {
-  return (
-    <QueryClientProvider client={queryClient}>
-      <MealPlanPage />
-    </QueryClientProvider>
-  );
-};
-
-export default WrappedMealPlansPage;
+export default ExploreMealPlanPage;

@@ -6,6 +6,8 @@ import axiosInterceptorInstance from "../../axiosInterceptorInstance.js";
 import Link from "next/link";
 import { Tooltip } from "react-tooltip";
 import HomeNavbar from "@/app/components/navigation/homeNavBar";
+import { QueryClientProvider, useQuery } from "react-query"; // Added useQuery here
+import { queryClient } from "../../queryClient.js"; // Adjust the path as necessary
 
 // rouuter path: /registeredUser/recipes
 
@@ -23,10 +25,20 @@ const fetchRecipes = async () => {
   try {
     console.log("Fetching recipes...");
     const response = await axiosInterceptorInstance.get("/recipe/get");
-    console.log("All recipe:", response.data);
-    const filteredData = response.data.filter(
+    // console.log("All recipe:", response.data);
+    // Fetch average ratings for each recipe
+    const recipesWithAverage = await Promise.all(
+      response.data.map(async (recipe) => {
+        const average = await fetchRecipeAverage(recipe.id);
+        return { ...recipe, average };
+      })
+    );
+
+    // Filter active blog posts
+    const filteredData = recipesWithAverage.filter(
       (recipe) => recipe.active === true
     );
+
     return filteredData;
   } catch (error) {
     console.error("Failed to fetch recipes:", error);
@@ -47,9 +59,58 @@ const fetchRecipeAverage = async (recipeId) => {
   }
 };
 
+// Fetch all categories
+// Fetch all dietary preferences categories from backend
+const fetchDietaryPreferences = async () => {
+  console.log("Fetching dietary preferences categories...");
+  try {
+    const response = await axiosInterceptorInstance.get(
+      "/category/getAllDietaryPreferences"
+    );
+    console.log(
+      "Dietary Preferences Categories Successfully Fetched :  ",
+      response.data
+    );
+    // setDietaryPreferencesCategory(response.data);
+    return response.data;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+// Fetch all meal type categories from backend
+const fetchMealTypes = async () => {
+  console.log("Fetching meal type categories...");
+  try {
+    const response = await axiosInterceptorInstance.get(
+      "/category/getAllMealTypes"
+    );
+    console.log("Meal Type Categories Successfully Fetched :  ", response.data);
+    // setMealTypeCategory(response.data);
+    return response.data;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+// Fetch all allergies categories from backend
+const fetchAllergies = async () => {
+  console.log("Fetching allergies categories...");
+  try {
+    const response = await axiosInterceptorInstance.get(
+      "/category/getAllAllergies"
+    );
+    console.log("Allergies Categories Successfully Fetched :  ", response.data);
+    // setAllergyCategory(response.data);
+    return response.data;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 const RecipesPageForUser = () => {
   const router = useRouter();
-  const [AllRecipes, setAllRecipes] = useState([]);
+  // const [AllRecipes, setAllRecipes] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [sortOption, setSortOption] = useState("");
   const [isSearchEmpty, setIsSearchEmpty] = useState(false);
@@ -58,11 +119,11 @@ const RecipesPageForUser = () => {
   const [resultsCount, setResultsCount] = useState(0);
   // Additional state to track if search button has been clicked
   const [searchButtonClicked, setSearchButtonClicked] = useState(false);
-  const [dietaryPreferencesCategory, setDietaryPreferencesCategory] = useState(
-    []
-  );
-  const [allergyCategory, setAllergyCategory] = useState([]);
-  const [mealTypeCategory, setMealTypeCategory] = useState([]);
+  // const [dietaryPreferencesCategory, setDietaryPreferencesCategory] = useState(
+  //   []
+  // );
+  // const [allergyCategory, setAllergyCategory] = useState([]);
+  // const [mealTypeCategory, setMealTypeCategory] = useState([]);
 
   // For filter by category
   const [selectedDietaryPreference, setSelectedDietaryPreference] =
@@ -104,93 +165,29 @@ const RecipesPageForUser = () => {
   const [isIngredientSearchActive, setIsIngredientSearchActive] =
     useState(false);
 
-  const [isLoading, setIsLoading] = useState(false);
+  // const [isLoading, setIsLoading] = useState(false);
 
   // Fetch all recipes
-  useEffect(() => {
-    setIsLoading(true); // Start loading
+  const {
+    data: AllRecipes,
+    isLoading,
+    isError,
+  } = useQuery("recipes", fetchRecipes);
 
-    const getData = async () => {
-      const fetchedRecipe = await fetchRecipes();
+  // Fetch dietary preferences categories
+  const { data: dietaryPreferencesCategory } = useQuery(
+    "dietaryPreferences",
+    fetchDietaryPreferences
+  );
 
-      const recipesWithAverage = await Promise.all(
-        fetchedRecipe.map(async (recipe) => {
-          const average = await fetchRecipeAverage(recipe.id);
-          return { ...recipe, average };
-        })
-      );
+  // Fetch meal types
+  const { data: mealTypeCategory } = useQuery("mealTypes", fetchMealTypes);
 
-      console.log("recipe with average:", recipesWithAverage);
+  // Fetch allergies
+  const { data: allergyCategory } = useQuery("allergies", fetchAllergies);
 
-      setAllRecipes(recipesWithAverage);
-      setDisplayedRecipes(recipesWithAverage);
-    };
-
-    // Fetch all categories
-    // Fetch all dietary preferences categories from backend
-    const fetchDietaryPreferences = async () => {
-      console.log("Fetching dietary preferences categories...");
-      try {
-        const response = await axiosInterceptorInstance.get(
-          "/category/getAllDietaryPreferences"
-        );
-        console.log(
-          "Dietary Preferences Categories Successfully Fetched :  ",
-          response.data
-        );
-        setDietaryPreferencesCategory(response.data);
-      } catch (error) {
-        console.log(error);
-      }
-    };
-
-    // Fetch all meal type categories from backend
-    const fetchMealTypes = async () => {
-      console.log("Fetching meal type categories...");
-      try {
-        const response = await axiosInterceptorInstance.get(
-          "/category/getAllMealTypes"
-        );
-        console.log(
-          "Meal Type Categories Successfully Fetched :  ",
-          response.data
-        );
-        setMealTypeCategory(response.data);
-      } catch (error) {
-        console.log(error);
-      }
-    };
-
-    // Fetch all allergies categories from backend
-    const fetchAllergies = async () => {
-      console.log("Fetching allergies categories...");
-      try {
-        const response = await axiosInterceptorInstance.get(
-          "/category/getAllAllergies"
-        );
-        console.log(
-          "Allergies Categories Successfully Fetched :  ",
-          response.data
-        );
-        setAllergyCategory(response.data);
-      } catch (error) {
-        console.log(error);
-      }
-    };
-
-    Promise.all([
-      getData(),
-      fetchDietaryPreferences(),
-      fetchAllergies(),
-      fetchMealTypes(),
-    ])
-      .catch((error) => {
-        console.error("Error in fetchData or fetchCategories:", error);
-      })
-      .finally(() => {
-        setIsLoading(false); // End loading after both operations are complete
-      });
-  }, []);
+  // if (isLoading) return <div>Loading...</div>;
+  // if (isError) return <div>Error occurred while fetching data.</div>;
 
   // Toggle function for filter section
   const toggleFilterSection = () => {
@@ -443,17 +440,25 @@ const RecipesPageForUser = () => {
       });
     }
 
-    let sortedRecipes = [...newFilteredRecipes];
+    // let sortedRecipes = [...newFilteredRecipes];
+    let sortedRecipes = [...(newFilteredRecipes ?? [])];
+
+    // Helper function to get the date for comparison
+    const getDateForComparison = (recipe) => {
+      // Use createdDT if not null; otherwise, use updateDT
+      return new Date(recipe.createdDT || recipe.lastUpdatedDT);
+    };
+
     // Sorting
     switch (sortOption) {
       case "LATEST":
         sortedRecipes.sort(
-          (a, b) => new Date(b.createdDT) - new Date(a.createdDT)
+          (a, b) => getDateForComparison(b) - getDateForComparison(a)
         );
         break;
       case "OLDEST":
         sortedRecipes.sort(
-          (a, b) => new Date(a.createdDT) - new Date(b.createdDT)
+          (a, b) => getDateForComparison(a) - getDateForComparison(b)
         );
         break;
       case "ALPHABETICAL_AZ":
@@ -467,10 +472,39 @@ const RecipesPageForUser = () => {
           const ratingDiff =
             (b.average?.averageRatings || 0) - (a.average?.averageRatings || 0);
           if (ratingDiff !== 0) return ratingDiff;
-          return new Date(b.createdDT) - new Date(a.createdDT); // Latest date first if tie
+          // Use getDateForComparison for tiebreaker date comparison
+          return getDateForComparison(b) - getDateForComparison(a); // Latest date first if tie
         });
         break;
     }
+
+    // // Sorting
+    // switch (sortOption) {
+    //   case "LATEST":
+    //     sortedRecipes.sort(
+    //       (a, b) => new Date(b.createdDT) - new Date(a.createdDT)
+    //     );
+    //     break;
+    //   case "OLDEST":
+    //     sortedRecipes.sort(
+    //       (a, b) => new Date(a.createdDT) - new Date(b.createdDT)
+    //     );
+    //     break;
+    //   case "ALPHABETICAL_AZ":
+    //     sortedRecipes.sort((a, b) => a.title.localeCompare(b.title));
+    //     break;
+    //   case "ALPHABETICAL_ZA":
+    //     sortedRecipes.sort((a, b) => b.title.localeCompare(a.title));
+    //     break;
+    //   case "HIGHEST_RATINGS":
+    //     sortedRecipes.sort((a, b) => {
+    //       const ratingDiff =
+    //         (b.average?.averageRatings || 0) - (a.average?.averageRatings || 0);
+    //       if (ratingDiff !== 0) return ratingDiff;
+    //       return new Date(b.createdDT) - new Date(a.createdDT); // Latest date first if tie
+    //     });
+    //     break;
+    // }
 
     console.log("Filtered recipes:", newFilteredRecipes);
 
@@ -484,7 +518,21 @@ const RecipesPageForUser = () => {
 
     console.log("The recipe after multiple filtering: ", newFilteredRecipes);
     console.log("End doing filtering...");
-    setFilteredRecipes(sortedRecipes);
+
+    if (searchTerm.trim()) {
+    } else {
+      setSearchPerformed(false); // To prevent results count from showing when no search is performed
+    }
+
+    if (ingredientSearchTerm.trim()) {
+    } else {
+      setSearchPerformed(false);
+    }
+
+    // setFilteredRecipes(sortedRecipes);
+    setDisplayedRecipes(sortedRecipes);
+    // setIsSearchEmpty(searchResults.length === 0);
+    setIsSearchEmpty(sortedRecipes.length === 0);
   }, [
     AllRecipes,
     selectedDietaryPreference,
@@ -506,24 +554,26 @@ const RecipesPageForUser = () => {
     cookingTimeMinFilter,
     cookingTimeMaxFilter,
     sortOption,
+    searchTerm,
+    ingredientSearchTerm,
   ]);
 
-  // Apply search on filtered recipes
-  useEffect(() => {
-    let searchResults = filteredRecipes;
-    if (searchTerm.trim()) {
-    } else {
-      setSearchPerformed(false); // To prevent results count from showing when no search is performed
-    }
+  // // Apply search on filtered recipes
+  // useEffect(() => {
+  //   let searchResults = filteredRecipes;
+  //   if (searchTerm.trim()) {
+  //   } else {
+  //     setSearchPerformed(false); // To prevent results count from showing when no search is performed
+  //   }
 
-    if (ingredientSearchTerm.trim()) {
-    } else {
-      setSearchPerformed(false);
-    }
+  //   if (ingredientSearchTerm.trim()) {
+  //   } else {
+  //     setSearchPerformed(false);
+  //   }
 
-    setDisplayedRecipes(searchResults);
-    setIsSearchEmpty(searchResults.length === 0);
-  }, [filteredRecipes, searchTerm, ingredientSearchTerm]);
+  //   setDisplayedRecipes(searchResults);
+  //   setIsSearchEmpty(searchResults.length === 0);
+  // }, [filteredRecipes, searchTerm, ingredientSearchTerm]);
 
   // Handler for changing allergies selection
   const handleAllergyChange = (event, allergy) => {
@@ -697,15 +747,23 @@ const RecipesPageForUser = () => {
 
           // Sort the results
           let sortedResults = [...filteredResultsWithAverage];
+
+          // Helper function to get the date for comparison
+          const getDateForComparison = (recipe) => {
+            // Use createdDT if not null; otherwise, use updateDT
+            return new Date(recipe.createdDT || recipe.lastUpdatedDT);
+          };
+
+          // Sorting
           switch (sortOption) {
             case "LATEST":
               sortedResults.sort(
-                (a, b) => new Date(b.createdDT) - new Date(a.createdDT)
+                (a, b) => getDateForComparison(b) - getDateForComparison(a)
               );
               break;
             case "OLDEST":
               sortedResults.sort(
-                (a, b) => new Date(a.createdDT) - new Date(b.createdDT)
+                (a, b) => getDateForComparison(a) - getDateForComparison(b)
               );
               break;
             case "ALPHABETICAL_AZ":
@@ -720,10 +778,38 @@ const RecipesPageForUser = () => {
                   (b.average?.averageRatings || 0) -
                   (a.average?.averageRatings || 0);
                 if (ratingDiff !== 0) return ratingDiff;
-                return new Date(b.createdDT) - new Date(a.createdDT); // Latest date first if tie
+                // Use getDateForComparison for tiebreaker date comparison
+                return getDateForComparison(b) - getDateForComparison(a); // Latest date first if tie
               });
               break;
           }
+          // switch (sortOption) {
+          //   case "LATEST":
+          //     sortedResults.sort(
+          //       (a, b) => new Date(b.createdDT) - new Date(a.createdDT)
+          //     );
+          //     break;
+          //   case "OLDEST":
+          //     sortedResults.sort(
+          //       (a, b) => new Date(a.createdDT) - new Date(b.createdDT)
+          //     );
+          //     break;
+          //   case "ALPHABETICAL_AZ":
+          //     sortedResults.sort((a, b) => a.title.localeCompare(b.title));
+          //     break;
+          //   case "ALPHABETICAL_ZA":
+          //     sortedResults.sort((a, b) => b.title.localeCompare(a.title));
+          //     break;
+          //   case "HIGHEST_RATINGS":
+          //     sortedResults.sort((a, b) => {
+          //       const ratingDiff =
+          //         (b.average?.averageRatings || 0) -
+          //         (a.average?.averageRatings || 0);
+          //       if (ratingDiff !== 0) return ratingDiff;
+          //       return new Date(b.createdDT) - new Date(a.createdDT); // Latest date first if tie
+          //     });
+          //     break;
+          // }
 
           console.log("Sorted results:", sortedResults);
 
@@ -914,15 +1000,23 @@ const RecipesPageForUser = () => {
 
           // Sort the results
           let sortedResults = [...filteredResultsWithAverage];
+
+          // Helper function to get the date for comparison
+          const getDateForComparison = (recipe) => {
+            // Use createdDT if not null; otherwise, use updateDT
+            return new Date(recipe.createdDT || recipe.lastUpdatedDT);
+          };
+
+          // Sorting
           switch (sortOption) {
             case "LATEST":
               sortedResults.sort(
-                (a, b) => new Date(b.createdDT) - new Date(a.createdDT)
+                (a, b) => getDateForComparison(b) - getDateForComparison(a)
               );
               break;
             case "OLDEST":
               sortedResults.sort(
-                (a, b) => new Date(a.createdDT) - new Date(b.createdDT)
+                (a, b) => getDateForComparison(a) - getDateForComparison(b)
               );
               break;
             case "ALPHABETICAL_AZ":
@@ -937,10 +1031,39 @@ const RecipesPageForUser = () => {
                   (b.average?.averageRatings || 0) -
                   (a.average?.averageRatings || 0);
                 if (ratingDiff !== 0) return ratingDiff;
-                return new Date(b.createdDT) - new Date(a.createdDT); // Latest date first if tie
+                // Use getDateForComparison for tiebreaker date comparison
+                return getDateForComparison(b) - getDateForComparison(a); // Latest date first if tie
               });
               break;
           }
+
+          // switch (sortOption) {
+          //   case "LATEST":
+          //     sortedResults.sort(
+          //       (a, b) => new Date(b.createdDT) - new Date(a.createdDT)
+          //     );
+          //     break;
+          //   case "OLDEST":
+          //     sortedResults.sort(
+          //       (a, b) => new Date(a.createdDT) - new Date(b.createdDT)
+          //     );
+          //     break;
+          //   case "ALPHABETICAL_AZ":
+          //     sortedResults.sort((a, b) => a.title.localeCompare(b.title));
+          //     break;
+          //   case "ALPHABETICAL_ZA":
+          //     sortedResults.sort((a, b) => b.title.localeCompare(a.title));
+          //     break;
+          //   case "HIGHEST_RATINGS":
+          //     sortedResults.sort((a, b) => {
+          //       const ratingDiff =
+          //         (b.average?.averageRatings || 0) -
+          //         (a.average?.averageRatings || 0);
+          //       if (ratingDiff !== 0) return ratingDiff;
+          //       return new Date(b.createdDT) - new Date(a.createdDT); // Latest date first if tie
+          //     });
+          //     break;
+          // }
 
           console.log("Sorted results:", sortedResults);
 
@@ -964,59 +1087,132 @@ const RecipesPageForUser = () => {
     }
   };
 
+  const capitalizeFirstLetter = (name) => {
+    if (!name) return "";
+    return name
+      .split(" ")
+      .map((word) => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
+      .join(" ");
+  };
+
+  // Render stars and count
+  const renderStarsAndCount = (post) => {
+    if (
+      !post.average ||
+      !post.average.averageRatings ||
+      !post.average.totalNumber
+    ) {
+      return <div>No ratings available</div>;
+    } else {
+      const { averageRatings, totalNumber } = post.average;
+
+      let stars = [];
+      // Render stars based on average rating
+      for (let i = 0; i < 5; i++) {
+        stars.push(
+          <span
+            key={i}
+            className={i < averageRatings ? "text-yellow-300" : "text-gray-300"}
+          >
+            ★
+          </span>
+        );
+      }
+      // Render total count of ratings
+      return (
+        <div className="flex items-center">
+          <span className="mr-1">{stars}</span>
+          <span>({totalNumber} ratings)</span>
+        </div>
+      );
+    }
+  };
+
   const handleViewRecipe = (id) => {
     console.log(`Recipe Title: ${id}`);
     let routePath = `/recipes/viewRecipe/${id}`;
     router.push(routePath);
   };
 
+  const getImageUrlFromBlob = (imgBlob) => {
+    // Check if imgBlob is truthy
+    if (imgBlob) {
+      // Return the image URL created from the blob
+      return `data:image/jpeg;base64,${imgBlob}`;
+    }
+    // Return an empty string or a placeholder image URL if imgBlob is not available
+    return "";
+  };
+
   // Render each recipe post card
   const renderPostCard = (post) => (
     <div
       key={post.id}
-      className="rounded-lg shadow-lg overflow-hidden flex flex-col"
+      className="bg-white border border-gray-200 rounded-lg shadow-md overflow-hidden flex flex-col cursor-pointer hover:shadow-stone-700 transition duration-300 ease-in-out"
       style={{
         border: "0.5px solid transparent",
-        background:
-          "linear-gradient(to right, #22d3ee 0%, #8b5cf6 100%), white",
+        background: "#48494B",
         backgroundOrigin: "border-box",
         backgroundClip: "content-box, border-box",
       }}
+      onClick={() => handleViewRecipe(post.id)}
     >
-      <img
+      {/* <img
         src={post.img}
         alt={post.img_title}
         className="w-full object-cover rounded-sm"
         style={{ height: "192px" }}
-      />
+      /> */}
+
+      {post?.imgBlob ? (
+        // If imgBlob is available, display image from blob
+        <img
+          className="w-full object-cover rounded-sm text-white text-center"
+          src={getImageUrlFromBlob(post?.imgBlob)}
+          alt={post.imgTitle}
+          style={{ height: "192px" }}
+        />
+      ) : (
+        // If imgBlob is not available, display image from imgUrl
+        <img
+          className="w-full object-cover rounded-sm text-white text-center"
+          src={post?.img || "Not specified"}
+          alt={post.imgTitle}
+          style={{ height: "192px" }}
+        />
+      )}
+
       <div className="flex-grow flex flex-col justify-between p-4 bg-white">
-        <div>
-          <h2
-            className="text-2xl font-extrabold mb-2 hover:text-orange-600 cursor-pointer"
-            onClick={() => handleViewRecipe(post.id)}
-          >
-            {post.title}
+        {/* Title */}
+        <div className="text-center">
+          <h2 className="text-2xl font-extrabold mb-4">
+            {post?.title || "Untitled Recipe"}
           </h2>
-          {/* Description */}
-          <p className="text-gray-700 text-base mb-4 line-clamp-3">
+        </div>
+        {/* Description */}
+        <div className="flex-grow flex items-center justify-center mb-4">
+          <p className="text-gray-700 text-base line-clamp-3">
             {post.description}
           </p>
-          {/* Publisher */}
-          <p
-            className="text-gray-900 text-base font-semibold"
-            style={{ height: "3.5rem" }}
-          >
+        </div>
+
+        {/* Publisher and Ratings */}
+        <div className="flex flex-col lg:flex-row items-center justify-center space-x-4 mb-4">
+          <p className="text-gray-700 text-sm font-semibold">
             Publisher:{" "}
-            <span className="text-orange-600 font-bold tracking-tight">
-              {post?.publisher || "Not Specified"}
+            <span className="text-orange-600 font-semibold tracking-tight">
+              {capitalizeFirstLetter(post?.publisher) || "Not Specified"}
             </span>
+          </p>
+          <p className="text-gray-700 text-sm font-semibold">
+            {renderStarsAndCount(post)}
           </p>
         </div>
       </div>
     </div>
   );
 
-  // For debugging filtering and searching
+  // // For debugging filtering and searching
   // const renderPostCard = (post) => (
   //   <div
   //     key={post.id}
@@ -1098,6 +1294,18 @@ const RecipesPageForUser = () => {
   //           </div>
   //         </div>
 
+  //         <div className="flex justify-between items-center">
+  //           <div className="flex items-center text-blue-900 font-semibold text-xl">
+  //             {post.createdDT || "No Date"}
+  //           </div>
+  //         </div>
+
+  //         <div className="flex justify-between items-center">
+  //           <div className="flex items-center text-blue-900 font-semibold text-xl">
+  //             {post.lastUpdatedDT || "No Date"}
+  //           </div>
+  //         </div>
+
   //         {/* Displaying Ingredients */}
   //         <div className="mb-4">
   //           <strong>Ingredients:</strong>
@@ -1115,13 +1323,22 @@ const RecipesPageForUser = () => {
   //   </div>
   // );
 
-  // Get the latest 3 recipes
-  const latestRecipes = [...AllRecipes]
-    .sort((a, b) => new Date(b.createdDT) - new Date(a.createdDT))
+  // Helper function to get the date for comparison
+  const getDateForComparison = (recipe) => {
+    // Use createdDT if not null; otherwise, use updateDT
+    return new Date(recipe.createdDT || recipe.lastUpdatedDT);
+  };
+
+  // Ensure AllRecipes is an array or default to an empty array
+  const iterableRecipes = Array.isArray(AllRecipes) ? AllRecipes : [];
+
+  // Sorting to get the latest recipes
+  const latestRecipes = iterableRecipes
+    .sort((a, b) => getDateForComparison(b) - getDateForComparison(a))
     .slice(0, 3);
 
-  // Get the other recipes that are not the latest 3
-  const otherRecipes = AllRecipes.filter(
+  // Filtering out the latest recipes to get the other recipes
+  const otherRecipes = iterableRecipes.filter(
     (post) => !latestRecipes.find((latestPost) => latestPost.id === post.id)
   );
 
@@ -1149,537 +1366,520 @@ const RecipesPageForUser = () => {
     sortOption !== "";
 
   return (
-    <div className="p-4 md:p-10">
-      <HomeNavbar />
-      <h1 className="text-3xl text-center md:text-7xl font-extrabold font-sans text-gray-900 mb-4 md:mb-8">
-        Recipes
-      </h1>
-      <div className="flex sm:justify-between sm:items-center mb-4">
+    <QueryClientProvider client={queryClient}>
+      <div className="p-4 md:p-10">
+        <HomeNavbar />
+        <h1 className="text-3xl text-center md:text-7xl font-extrabold font-sans text-gray-900 mb-4 md:mb-8">
+          Recipes
+        </h1>
         {/* Search Section */}
-        <div className="flex-grow">
+        <div className="flex-grow mb-4">
           <input
             type="text"
             id="titleSearch"
             name="titleSearch"
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
-            onKeyDown={(e) => {
-              if (e.key === "Enter") {
-                handleSearchClick();
-              }
-            }}
+            onKeyDown={(e) => e.key === "Enter" && handleSearchClick()}
             placeholder={
-              ingredientSearchTerm.trim() !== ""
+              ingredientSearchTerm.trim()
                 ? "Disabled"
                 : "Search recipe title..."
             }
-            disabled={ingredientSearchTerm.trim() !== ""}
-            data-tooltip-id="titleSearchTooltip"
-            data-tooltip-content={
-              ingredientSearchTerm.trim() !== ""
-                ? "Search by title is disabled while using ingredient search"
-                : ""
-            }
+            disabled={Boolean(ingredientSearchTerm.trim())}
             className="mr-2 p-2 rounded-lg border w-full md:w-auto"
           />
-          {/* Tooltip component activated for the input field */}
-          {/* Tooltip Component */}
-          <Tooltip id="titleSearchTooltip" place="top" effect="solid" />
           <button
             onClick={handleSearchClick}
-            className="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-1.5 px-5 rounded-full mt-2 w-full lg:w-auto"
-            style={{ flexShrink: 0 }}
+            className="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-1.5 px-5 rounded-full mt-2 w-full md:w-auto lg:w-auto"
           >
             Search by title
           </button>
         </div>
 
-        {/* Sort dropdown */}
-        <div className="mb-2 md:mb-0 md:mr-6">
-          <label
-            htmlFor="sort"
-            className="text-xl text-black mb-2 sm:mb-0 sm:mr-2"
-          >
-            Sort By:
-          </label>
-          <select
-            id="sort"
-            value={sortOption}
-            // onChange={(e) => setSortOption(e.target.value)}
-            onChange={handleSortOptionChange}
-            className="mr-2 p-2 rounded-lg border w-full md:w-auto"
-            style={{ maxWidth: "300px" }}
-          >
-            {Object.values(sortOptions).map((option) => (
-              <option key={option.key} value={option.key}>
-                {option.label}
-              </option>
-            ))}
-          </select>
-        </div>
-      </div>
-      {/* Ingredient Search Section */}
-      <div className="flex sm:items-center mb-4">
-        <input
-          type="text"
-          id="ingredientSearch"
-          name="ingredientSearch"
-          value={ingredientSearchTerm}
-          onChange={(e) => setIngredientSearchTerm(e.target.value)}
-          onKeyDown={(e) => {
-            if (e.key === "Enter") {
-              handleIngredientSearchClick();
-            }
-          }}
-          placeholder={
-            searchTerm.trim() !== "" ? "Disabled" : "Search by ingredient..."
-          }
-          disabled={searchTerm.trim() !== ""}
-          data-tooltip-id="ingredientSearchTooltip"
-          data-tooltip-content={
-            searchTerm.trim() !== ""
-              ? "Ingredient search is disabled while using title search"
-              : ""
-          }
-          className="mr-2 p-2 rounded-lg border w-full md:w-auto"
-        />
-        {/* Tooltip component activated for the input field */}
-        {/* Tooltip Component */}
-        <Tooltip id="ingredientSearchTooltip" place="top" effect="solid" />
-        <button
-          onClick={handleIngredientSearchClick}
-          className="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-1.5 px-5 rounded-full mt-2 w-full lg:w-auto"
-          style={{ flexShrink: 0 }}
-        >
-          Search by ingredient
-        </button>
-      </div>
-
-      {/* Results count */}
-      {searchButtonClicked && searchPerformed && (
-        <p className="text-left text-red font-bold text-xl sm:ml-2">
-          {resultsCount} results found.
-        </p>
-      )}
-
-      {/* Button to open filter option */}
-      {/* Display message while fetching data ftom backend */}
-      {isLoading ? (
-        <div className="text-xl text-center p-4">
-          <p>Please wait. It'll just take a moment.</p>
-        </div>
-      ) : (
-        <>
-          <div className="mb-5 mr-3">
+        {/* Ingredients search section */}
+        <div className="flex flex-col justify-between lg:flex-row mb-4">
+          <div className="flex-grow mb-4">
+            <input
+              type="text"
+              id="ingredientSearch"
+              name="ingredientSearch"
+              value={ingredientSearchTerm}
+              onChange={(e) => setIngredientSearchTerm(e.target.value)}
+              onKeyDown={(e) =>
+                e.key === "Enter" && handleIngredientSearchClick()
+              }
+              placeholder={
+                searchTerm.trim() ? "Disabled" : "Search by ingredient..."
+              }
+              disabled={Boolean(searchTerm.trim())}
+              className="mr-2 p-2 rounded-lg border w-full md:w-auto"
+            />
             <button
-              onClick={toggleFilterSection}
-              className="text-gray-900 p-2 hover:text-orange-400 rounded-lg text-xl font-bold px-5 py-2.5 text-center"
-              style={{ flexShrink: 0, textDecoration: "underline" }}
+              onClick={handleIngredientSearchClick}
+              className="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-1.5 px-5 rounded-full mt-2 w-full md:w-auto lg:w-auto"
             >
-              {isFilterSectionOpen ? "Hide Filters" : "Show Filters"}
+              Search by ingredient
             </button>
+            {/* Results count */}
+            {searchButtonClicked && searchPerformed && (
+              <p className="text-left text-red-500 font-medium text-lg">
+                {resultsCount} results found.
+              </p>
+            )}
           </div>
-          {/*Main Content including the filter and recipe display*/}
-          <div className="flex flex-col md:flex-row">
-            {" "}
-            {/* Flex container for sidebar and main content */}
-            {/* Sidebar for Filters */}
-            <div className="w-full lg:w-1/4 md:pr-4 mb-4 md:mb-0">
+
+          {/* Sort dropdown - Aligned next to the search bar on larger screens */}
+          <div className="flex flex-col lg:flex-row lg:items-center mt-4 lg:mt-0">
+            <label
+              htmlFor="sort"
+              className="text-xl text-black mb-2 sm:mb-0 sm:mr-2"
+            >
+              Sort By:
+            </label>
+            <select
+              id="sort"
+              value={sortOption}
+              onChange={(e) => setSortOption(e.target.value)}
+              className="mr-2 p-2 rounded-lg border w-full md:w-auto"
+            >
+              {Object.values(sortOptions).map((option) => (
+                <option key={option.key} value={option.key}>
+                  {option.label}
+                </option>
+              ))}
+            </select>
+          </div>
+        </div>
+        {/* Button to open filter option */}
+        {/* Display message while fetching data ftom backend */}
+        {isLoading ? (
+          <div className="text-xl text-center p-4">
+            <p>Please wait. It'll just take a moment.</p>
+          </div>
+        ) : (
+          <>
+            <div className="mb-5 mr-3">
+              <button
+                onClick={toggleFilterSection}
+                className="text-gray-900 p-2 hover:text-orange-400 rounded-lg text-xl font-bold px-5 py-2.5 text-center"
+                style={{ flexShrink: 0, textDecoration: "underline" }}
+              >
+                {isFilterSectionOpen ? "Hide Filters" : "Show Filters"}
+              </button>
+            </div>
+            {/*Main Content including the filter and recipe display*/}
+            <div className="flex flex-col md:flex-row">
               {" "}
-              {/* Full width on small screens, 1/4 width on larger screens */}
-              {/* Conditional rendering of the filter section */}
-              {isFilterSectionOpen && (
-                <div className="flex flex-col gap-4 mb-4 p-4 bg-gray-50 border rounded-lg text-xl">
-                  {/* Dietary Preferences */}
-                  <div className="flex-1 min-w-[200px]">
-                    <label
-                      htmlFor="dietaryPreferences"
-                      className="text-2xl text-black font-bold mb-2 sm:mb-0 sm:mr-2"
-                    >
-                      Dietary Preferences:
-                    </label>
-                    <select
-                      value={selectedDietaryPreference}
-                      // onChange={(e) =>
-                      //   setSelectedDietaryPreference(e.target.value)
-                      // }
-                      onChange={handleDietaryPreferenceChange}
-                      className="form-select mr-2 p-2 rounded-lg border w-full md:w-auto"
-                    >
-                      <option value="">All Dietary Preferences</option>
-                      {dietaryPreferencesCategory.map((dp) => (
-                        <option key={dp.id} value={dp.subcategoryName}>
-                          {dp.subcategoryName}
-                        </option>
-                      ))}
-                    </select>
-                  </div>
+              {/* Flex container for sidebar and main content */}
+              {/* Sidebar for Filters */}
+              <div className="w-full lg:w-1/4 md:pr-4 mb-4 md:mb-0">
+                {" "}
+                {/* Full width on small screens, 1/4 width on larger screens */}
+                {/* Conditional rendering of the filter section */}
+                {isFilterSectionOpen && (
+                  <div className="flex flex-col gap-4 mb-4 p-4 bg-gray-50 border rounded-lg text-xl">
+                    {/* Dietary Preferences */}
+                    <div className="flex-1 min-w-[200px]">
+                      <label
+                        htmlFor="dietaryPreferences"
+                        className="text-2xl text-black font-bold mb-2 sm:mb-0 sm:mr-2"
+                      >
+                        Dietary Preferences:
+                      </label>
+                      <select
+                        value={selectedDietaryPreference}
+                        // onChange={(e) =>
+                        //   setSelectedDietaryPreference(e.target.value)
+                        // }
+                        onChange={handleDietaryPreferenceChange}
+                        className="form-select mr-2 p-2 rounded-lg border w-full md:w-auto"
+                      >
+                        <option value="">All Dietary Preferences</option>
+                        {dietaryPreferencesCategory.map((dp) => (
+                          <option key={dp.id} value={dp.subcategoryName}>
+                            {dp.subcategoryName}
+                          </option>
+                        ))}
+                      </select>
+                    </div>
 
-                  {/* Meal Type */}
-                  <div className="flex-1 min-w-[200px]">
-                    <label
-                      htmlFor="mealType"
-                      className="text-2xl text-black font-bold mb-2 sm:mb-0 sm:mr-2"
-                    >
-                      Meal Type:
-                    </label>
-                    <select
-                      value={selectedMealType}
-                      onChange={handleMealTypeChange}
-                      className="form-select mr-2 p-2 rounded-lg border w-full md:w-auto"
-                    >
-                      <option value="">All Meal Types</option>
-                      {mealTypeCategory.map((mt) => (
-                        <option key={mt.id} value={mt.subcategoryName}>
-                          {mt.subcategoryName}
-                        </option>
-                      ))}
-                    </select>
-                  </div>
+                    {/* Meal Type */}
+                    <div className="flex-1 min-w-[200px]">
+                      <label
+                        htmlFor="mealType"
+                        className="text-2xl text-black font-bold mb-2 sm:mb-0 sm:mr-2"
+                      >
+                        Meal Type:
+                      </label>
+                      <select
+                        value={selectedMealType}
+                        onChange={handleMealTypeChange}
+                        className="form-select mr-2 p-2 rounded-lg border w-full md:w-auto"
+                      >
+                        <option value="">All Meal Types</option>
+                        {mealTypeCategory.map((mt) => (
+                          <option key={mt.id} value={mt.subcategoryName}>
+                            {mt.subcategoryName}
+                          </option>
+                        ))}
+                      </select>
+                    </div>
 
-                  {/* Allergies */}
-                  <div className="flex-1 min-w-[200px]">
-                    <label
-                      htmlFor="allergies"
-                      className="text-2xl text-black font-bold mb-2 sm:mb-0 sm:mr-2"
-                    >
-                      Allergies:
-                    </label>
-                    <div>
-                      {allergyCategory.map((allergy) => (
-                        <div
-                          key={allergy.id}
-                          className="flex items-center mt-1"
-                        >
-                          <input
-                            type="checkbox"
-                            id={`allergy-${allergy.id}`}
-                            checked={selectedAllergies.includes(
-                              allergy.subcategoryName
-                            )}
-                            onChange={(e) =>
-                              handleAllergyChange(e, allergy.subcategoryName)
-                            }
-                            className="w-4 h-4 bg-white border-gray-300 rounded mr-2"
-                          />
-                          <label htmlFor={`allergy-${allergy.id}`}>
-                            {allergy.subcategoryName}
+                    {/* Allergies */}
+                    <div className="flex-1 min-w-[200px]">
+                      <label
+                        htmlFor="allergies"
+                        className="text-2xl text-black font-bold mb-2 sm:mb-0 sm:mr-2"
+                      >
+                        Allergies:
+                      </label>
+                      <div>
+                        {allergyCategory.map((allergy) => (
+                          <div
+                            key={allergy.id}
+                            className="flex items-center mt-1"
+                          >
+                            <input
+                              type="checkbox"
+                              id={`allergy-${allergy.id}`}
+                              checked={selectedAllergies.includes(
+                                allergy.subcategoryName
+                              )}
+                              onChange={(e) =>
+                                handleAllergyChange(e, allergy.subcategoryName)
+                              }
+                              className="w-4 h-4 bg-white border-gray-300 rounded mr-2"
+                            />
+                            <label htmlFor={`allergy-${allergy.id}`}>
+                              {allergy.subcategoryName}
+                            </label>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+
+                    {/* Nutrient Filters */}
+                    <div className="flex flex-col min-w-[200px]">
+                      <label
+                        htmlFor="nutrientFilters"
+                        className="text-2xl text-black font-bold mb-2 sm:mb-0 sm:mr-2"
+                      >
+                        Nutrient Filters:
+                      </label>
+
+                      <div className="flex-col min-w-[200px] mt-3">
+                        {/* Calories */}
+                        <p className="text-orange-600 text-xl font-semibold mb-2">
+                          Calories:
+                        </p>
+                        <div className="flex items-center">
+                          <label
+                            htmlFor="caloriesMinFilter"
+                            style={{ marginRight: "8px" }}
+                          >
+                            Min
                           </label>
+                          <input
+                            type="number"
+                            id="caloriesMinFilter"
+                            value={caloriesMinFilter}
+                            onChange={handleCaloriesMinFilterChange}
+                            className="form-control block rounded-lg border border-gray-400"
+                            style={{ width: "80px", marginRight: "8px" }} // adjust the width as needed
+                          />
+
+                          <label
+                            htmlFor="caloriesMaxFilter"
+                            style={{ marginRight: "8px" }}
+                          >
+                            Max
+                          </label>
+                          <input
+                            type="number"
+                            id="caloriesMaxFilter"
+                            value={caloriesMaxFilter}
+                            onChange={handleCaloriesMaxFilterChange}
+                            className="form-control block rounded-lg border border-gray-400"
+                            style={{ width: "80px" }} // adjust the width as needed
+                          />
                         </div>
-                      ))}
-                    </div>
-                  </div>
 
-                  {/* Nutrient Filters */}
-                  <div className="flex flex-col min-w-[200px]">
-                    <label
-                      htmlFor="nutrientFilters"
-                      className="text-2xl text-black font-bold mb-2 sm:mb-0 sm:mr-2"
-                    >
-                      Nutrient Filters:
-                    </label>
+                        {/* Carbs */}
+                        <p className="text-orange-600 text-xl font-semibold mb-2">
+                          Carbs:
+                        </p>
+                        <div className="flex items-center">
+                          <label
+                            htmlFor="carbsMinFilter"
+                            style={{ marginRight: "8px" }}
+                          >
+                            Min
+                          </label>
+                          <input
+                            type="number"
+                            id="carbsMinFilter"
+                            value={carbsMinFilter}
+                            onChange={handleCarbsMinFilterChange}
+                            className="form-control block rounded-lg border border-gray-400"
+                            style={{ width: "80px", marginRight: "8px" }} // adjust the width as needed
+                          />
 
-                    <div className="flex-col min-w-[200px] mt-3">
-                      {/* Calories */}
-                      <p className="text-orange-600 text-xl font-semibold mb-2">
-                        Calories:
-                      </p>
-                      <div className="flex items-center">
-                        <label
-                          htmlFor="caloriesMinFilter"
-                          style={{ marginRight: "8px" }}
-                        >
-                          Min
-                        </label>
-                        <input
-                          type="number"
-                          id="caloriesMinFilter"
-                          value={caloriesMinFilter}
-                          onChange={handleCaloriesMinFilterChange}
-                          className="form-control block rounded-lg border border-gray-400"
-                          style={{ width: "80px", marginRight: "8px" }} // adjust the width as needed
-                        />
+                          <label
+                            htmlFor="carbsMaxFilter"
+                            style={{ marginRight: "8px" }}
+                          >
+                            Max
+                          </label>
+                          <input
+                            type="number"
+                            id="carbsMaxFilter"
+                            value={carbsMaxFilter}
+                            onChange={handleCarbsMaxFilterChange}
+                            className="form-control block rounded-lg border border-gray-400"
+                            style={{ width: "80px" }} // adjust the width as needed
+                          />
+                        </div>
 
-                        <label
-                          htmlFor="caloriesMaxFilter"
-                          style={{ marginRight: "8px" }}
-                        >
-                          Max
-                        </label>
-                        <input
-                          type="number"
-                          id="caloriesMaxFilter"
-                          value={caloriesMaxFilter}
-                          onChange={handleCaloriesMaxFilterChange}
-                          className="form-control block rounded-lg border border-gray-400"
-                          style={{ width: "80px" }} // adjust the width as needed
-                        />
-                      </div>
+                        {/* Protein */}
+                        <p className="text-orange-600 text-xl font-semibold mb-2">
+                          Protein:
+                        </p>
+                        <div className="flex items-center">
+                          <label
+                            htmlFor="proteinMinFilter"
+                            style={{ marginRight: "8px" }}
+                          >
+                            Min
+                          </label>
+                          <input
+                            type="number"
+                            id="proteinMinFilter"
+                            value={proteinMinFilter}
+                            onChange={handleProteinMinFilterChange}
+                            className="form-control block rounded-lg border border-gray-400"
+                            style={{ width: "80px", marginRight: "8px" }} // adjust the width as needed
+                          />
 
-                      {/* Carbs */}
-                      <p className="text-orange-600 text-xl font-semibold mb-2">
-                        Carbs:
-                      </p>
-                      <div className="flex items-center">
-                        <label
-                          htmlFor="carbsMinFilter"
-                          style={{ marginRight: "8px" }}
-                        >
-                          Min
-                        </label>
-                        <input
-                          type="number"
-                          id="carbsMinFilter"
-                          value={carbsMinFilter}
-                          onChange={handleCarbsMinFilterChange}
-                          className="form-control block rounded-lg border border-gray-400"
-                          style={{ width: "80px", marginRight: "8px" }} // adjust the width as needed
-                        />
+                          <label
+                            htmlFor="proteinMaxFilter"
+                            style={{ marginRight: "8px" }}
+                          >
+                            Max
+                          </label>
+                          <input
+                            type="number"
+                            id="proteinMaxFilter"
+                            value={proteinMaxFilter}
+                            onChange={handleProteinMaxFilterChange}
+                            className="form-control block rounded-lg border border-gray-400"
+                            style={{ width: "80px" }} // adjust the width as needed
+                          />
+                        </div>
 
-                        <label
-                          htmlFor="carbsMaxFilter"
-                          style={{ marginRight: "8px" }}
-                        >
-                          Max
-                        </label>
-                        <input
-                          type="number"
-                          id="carbsMaxFilter"
-                          value={carbsMaxFilter}
-                          onChange={handleCarbsMaxFilterChange}
-                          className="form-control block rounded-lg border border-gray-400"
-                          style={{ width: "80px" }} // adjust the width as needed
-                        />
-                      </div>
+                        {/* Fat */}
+                        <p className="text-orange-600 text-xl font-semibold mb-2">
+                          Fat:
+                        </p>
+                        <div className="flex items-center">
+                          <label
+                            htmlFor="fatMinFilter"
+                            style={{ marginRight: "8px" }}
+                          >
+                            Min
+                          </label>
+                          <input
+                            type="number"
+                            id="fatMinFilter"
+                            value={fatMinFilter}
+                            onChange={handleFatMinFilterChange}
+                            className="form-control block rounded-lg border border-gray-400"
+                            style={{ width: "80px", marginRight: "8px" }} // adjust the width as needed
+                          />
 
-                      {/* Protein */}
-                      <p className="text-orange-600 text-xl font-semibold mb-2">
-                        Protein:
-                      </p>
-                      <div className="flex items-center">
-                        <label
-                          htmlFor="proteinMinFilter"
-                          style={{ marginRight: "8px" }}
-                        >
-                          Min
-                        </label>
-                        <input
-                          type="number"
-                          id="proteinMinFilter"
-                          value={proteinMinFilter}
-                          onChange={handleProteinMinFilterChange}
-                          className="form-control block rounded-lg border border-gray-400"
-                          style={{ width: "80px", marginRight: "8px" }} // adjust the width as needed
-                        />
+                          <label
+                            htmlFor="fatMaxFilter"
+                            style={{ marginRight: "8px" }}
+                          >
+                            Max
+                          </label>
+                          <input
+                            type="number"
+                            id="fatMaxFilter"
+                            value={fatMaxFilter}
+                            onChange={handleFatMaxFilterChange}
+                            className="form-control block rounded-lg border border-gray-400"
+                            style={{ width: "80px" }} // adjust the width as needed
+                          />
+                        </div>
 
-                        <label
-                          htmlFor="proteinMaxFilter"
-                          style={{ marginRight: "8px" }}
-                        >
-                          Max
-                        </label>
-                        <input
-                          type="number"
-                          id="proteinMaxFilter"
-                          value={proteinMaxFilter}
-                          onChange={handleProteinMaxFilterChange}
-                          className="form-control block rounded-lg border border-gray-400"
-                          style={{ width: "80px" }} // adjust the width as needed
-                        />
-                      </div>
+                        {/* Sodium */}
+                        <p className="text-orange-600 text-xl font-semibold mb-2">
+                          Sodium:
+                        </p>
+                        <div className="flex items-center">
+                          <label
+                            htmlFor="sodiumMinFilter"
+                            style={{ marginRight: "8px" }}
+                          >
+                            Min
+                          </label>
+                          <input
+                            type="number"
+                            id="sodiumMinFilter"
+                            value={sodiumMinFilter}
+                            onChange={handleSodiumMinFilterChange}
+                            className="form-control block rounded-lg border border-gray-400"
+                            style={{ width: "80px", marginRight: "8px" }} // adjust the width as needed
+                          />
 
-                      {/* Fat */}
-                      <p className="text-orange-600 text-xl font-semibold mb-2">
-                        Fat:
-                      </p>
-                      <div className="flex items-center">
-                        <label
-                          htmlFor="fatMinFilter"
-                          style={{ marginRight: "8px" }}
-                        >
-                          Min
-                        </label>
-                        <input
-                          type="number"
-                          id="fatMinFilter"
-                          value={fatMinFilter}
-                          onChange={handleFatMinFilterChange}
-                          className="form-control block rounded-lg border border-gray-400"
-                          style={{ width: "80px", marginRight: "8px" }} // adjust the width as needed
-                        />
+                          <label
+                            htmlFor="sodiumMaxFilter"
+                            style={{ marginRight: "8px" }}
+                          >
+                            Max
+                          </label>
+                          <input
+                            type="number"
+                            id="sodiumMaxFilter"
+                            value={sodiumMaxFilter}
+                            onChange={handleSodiumMaxFilterChange}
+                            className="form-control block rounded-lg border border-gray-400"
+                            style={{ width: "80px" }} // adjust the width as needed
+                          />
+                        </div>
 
-                        <label
-                          htmlFor="fatMaxFilter"
-                          style={{ marginRight: "8px" }}
-                        >
-                          Max
-                        </label>
-                        <input
-                          type="number"
-                          id="fatMaxFilter"
-                          value={fatMaxFilter}
-                          onChange={handleFatMaxFilterChange}
-                          className="form-control block rounded-lg border border-gray-400"
-                          style={{ width: "80px" }} // adjust the width as needed
-                        />
-                      </div>
+                        {/* Fibre */}
+                        <p className="text-orange-600 text-xl font-semibold mb-2">
+                          Fibre:
+                        </p>
+                        <div className="flex items-center">
+                          <label
+                            htmlFor="fibreMinFilter"
+                            style={{ marginRight: "8px" }}
+                          >
+                            Min
+                          </label>
+                          <input
+                            type="number"
+                            id="fibreMinFilter"
+                            value={fibreMinFilter}
+                            onChange={handleFibreMinFilterChange}
+                            className="form-control block rounded-lg border border-gray-400"
+                            style={{ width: "80px", marginRight: "8px" }} // adjust the width as needed
+                          />
 
-                      {/* Sodium */}
-                      <p className="text-orange-600 text-xl font-semibold mb-2">
-                        Sodium:
-                      </p>
-                      <div className="flex items-center">
-                        <label
-                          htmlFor="sodiumMinFilter"
-                          style={{ marginRight: "8px" }}
-                        >
-                          Min
-                        </label>
-                        <input
-                          type="number"
-                          id="sodiumMinFilter"
-                          value={sodiumMinFilter}
-                          onChange={handleSodiumMinFilterChange}
-                          className="form-control block rounded-lg border border-gray-400"
-                          style={{ width: "80px", marginRight: "8px" }} // adjust the width as needed
-                        />
-
-                        <label
-                          htmlFor="sodiumMaxFilter"
-                          style={{ marginRight: "8px" }}
-                        >
-                          Max
-                        </label>
-                        <input
-                          type="number"
-                          id="sodiumMaxFilter"
-                          value={sodiumMaxFilter}
-                          onChange={handleSodiumMaxFilterChange}
-                          className="form-control block rounded-lg border border-gray-400"
-                          style={{ width: "80px" }} // adjust the width as needed
-                        />
-                      </div>
-
-                      {/* Fibre */}
-                      <p className="text-orange-600 text-xl font-semibold mb-2">
-                        Fibre:
-                      </p>
-                      <div className="flex items-center">
-                        <label
-                          htmlFor="fibreMinFilter"
-                          style={{ marginRight: "8px" }}
-                        >
-                          Min
-                        </label>
-                        <input
-                          type="number"
-                          id="fibreMinFilter"
-                          value={fibreMinFilter}
-                          onChange={handleFibreMinFilterChange}
-                          className="form-control block rounded-lg border border-gray-400"
-                          style={{ width: "80px", marginRight: "8px" }} // adjust the width as needed
-                        />
-
-                        <label
-                          htmlFor="fibreMaxFilter"
-                          style={{ marginRight: "8px" }}
-                        >
-                          Max
-                        </label>
-                        <input
-                          type="number"
-                          id="fibreMaxFilter"
-                          value={fibreMaxFilter}
-                          onChange={handleFibreMaxFilterChange}
-                          className="form-control block rounded-lg border border-gray-400"
-                          style={{ width: "80px" }} // adjust the width as needed
-                        />
+                          <label
+                            htmlFor="fibreMaxFilter"
+                            style={{ marginRight: "8px" }}
+                          >
+                            Max
+                          </label>
+                          <input
+                            type="number"
+                            id="fibreMaxFilter"
+                            value={fibreMaxFilter}
+                            onChange={handleFibreMaxFilterChange}
+                            className="form-control block rounded-lg border border-gray-400"
+                            style={{ width: "80px" }} // adjust the width as needed
+                          />
+                        </div>
                       </div>
                     </div>
-                  </div>
 
-                  {/* Cooking Time */}
-                  <div className="flex-1 min-w-[200px]">
-                    <label
-                      htmlFor="cookingTimeFilter"
-                      className="text-2xl text-black font-bold mb-2 sm:mb-0 sm:mr-2"
-                    >
-                      Cooking Time:
-                    </label>
-                    <div className="flex items-center">
+                    {/* Cooking Time */}
+                    <div className="flex-1 min-w-[200px]">
                       <label
-                        htmlFor="cookingTimeMinFilter"
-                        style={{ marginRight: "8px" }}
+                        htmlFor="cookingTimeFilter"
+                        className="text-2xl text-black font-bold mb-2 sm:mb-0 sm:mr-2"
                       >
-                        Min
+                        Cooking Time:
                       </label>
-                      <input
-                        type="number"
-                        id="cookingTimeMinFilter"
-                        value={cookingTimeMinFilter}
-                        onChange={handleCookingTimeMinFilterChange}
-                        className="form-control block rounded-lg border border-gray-400"
-                        style={{ width: "80px", marginRight: "8px" }} // adjust the width as needed
-                      />
+                      <div className="flex items-center">
+                        <label
+                          htmlFor="cookingTimeMinFilter"
+                          style={{ marginRight: "8px" }}
+                        >
+                          Min
+                        </label>
+                        <input
+                          type="number"
+                          id="cookingTimeMinFilter"
+                          value={cookingTimeMinFilter}
+                          onChange={handleCookingTimeMinFilterChange}
+                          className="form-control block rounded-lg border border-gray-400"
+                          style={{ width: "80px", marginRight: "8px" }} // adjust the width as needed
+                        />
 
-                      <label
-                        htmlFor="cookingTimeMaxFilter"
-                        style={{ marginRight: "8px" }}
-                      >
-                        Max
-                      </label>
-                      <input
-                        type="number"
-                        id="cookingTimeMaxFilter"
-                        value={cookingTimeMaxFilter}
-                        onChange={handleCookingTimeMaxFilterChange}
-                        className="form-control block rounded-lg border border-gray-400"
-                        style={{ width: "80px" }} // adjust the width as needed
-                      />
+                        <label
+                          htmlFor="cookingTimeMaxFilter"
+                          style={{ marginRight: "8px" }}
+                        >
+                          Max
+                        </label>
+                        <input
+                          type="number"
+                          id="cookingTimeMaxFilter"
+                          value={cookingTimeMaxFilter}
+                          onChange={handleCookingTimeMaxFilterChange}
+                          className="form-control block rounded-lg border border-gray-400"
+                          style={{ width: "80px" }} // adjust the width as needed
+                        />
+                      </div>
                     </div>
                   </div>
-                </div>
-              )}
-            </div>
-            {/* All recipe content */}
-            <div className="flex-grow">
-              {/* Check if search or filters have been applied */}
-              {hasSearchOrFilterBeenApplied ? (
-                // If search/filter has been performed
-                displayedRecipes.length > 0 ? (
-                  <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                    {displayedRecipes.map((post) => renderPostCard(post))}
-                  </div>
-                ) : (
-                  <p>No recipes found. Please adjust your search or filters.</p>
-                )
-              ) : (
-                // If no search/filter has been performed, display latest and other recipes
-                <>
-                  <div className="mb-5">
-                    <h2 className="text-4xl font-bold mb-4 mt-4">
-                      Latest Recipes
-                    </h2>
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
-                      {latestRecipes.map((post) => renderPostCard(post))}
-                    </div>
-                  </div>
-                  <div className="mb-5">
-                    <h2 className="text-4xl font-bold mb-4 mt-4">
-                      Other Recipes
-                    </h2>
+                )}
+              </div>
+              {/* All recipe content */}
+              <div className="flex-grow">
+                {/* Check if search or filters have been applied */}
+                {hasSearchOrFilterBeenApplied ? (
+                  // If search/filter has been performed
+                  displayedRecipes.length > 0 ? (
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                      {otherRecipes.map((post) => renderPostCard(post))}
+                      {displayedRecipes.map((post) => renderPostCard(post))}
                     </div>
-                  </div>
-                </>
-              )}
+                  ) : (
+                    <p>
+                      No recipes found. Please adjust your search or filters.
+                    </p>
+                  )
+                ) : (
+                  // If no search/filter has been performed, display latest and other recipes
+                  <>
+                    <div className="mb-5">
+                      <h2 className="text-4xl font-bold mb-4 mt-4">
+                        Latest Recipes
+                      </h2>
+                      <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
+                        {latestRecipes.map((post) => renderPostCard(post))}
+                      </div>
+                    </div>
+                    <div className="mb-5">
+                      <h2 className="text-4xl font-bold mb-4 mt-4">
+                        Other Recipes
+                      </h2>
+                      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                        {otherRecipes.map((post) => renderPostCard(post))}
+                      </div>
+                    </div>
+                  </>
+                )}
+              </div>
             </div>
-          </div>
-        </>
-      )}
-    </div>
+          </>
+        )}
+      </div>
+    </QueryClientProvider>
   );
 };
 
-export default RecipesPageForUser;
+const WrappedRecipesPage = () => {
+  return (
+    <QueryClientProvider client={queryClient}>
+      <RecipesPageForUser />
+    </QueryClientProvider>
+  );
+};
+
+export default WrappedRecipesPage;

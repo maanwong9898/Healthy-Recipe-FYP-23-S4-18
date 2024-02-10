@@ -3,9 +3,8 @@ import { useRouter } from "next/navigation";
 import React from "react";
 import Link from "next/link";
 import { useState, useEffect } from "react";
-import axiosInterceptorInstance from "../../../../axiosInterceptorInstance.js";
-import HomeNavbar from "@/app/components/navigation/homeNavBar/index.jsx";
-import Footer from "@/app/components/footer/index.jsx";
+import axiosInterceptorInstance from "../../../../axiosInterceptorInstance";
+import BusinessUserNavBar from "../../../../components/navigation/businessUserNavBar";
 
 // this is to view particular educational content from landing page
 // router path: /educationalContent/viewEducationalContent/[id]
@@ -112,7 +111,7 @@ const ViewEducationalContent = ({ params }) => {
 
   return (
     <div>
-      <HomeNavbar />
+      <BusinessUserNavBar />
       <div className="pt-8 pb-16 lg:pt-16 lg:pb-24 bg-white">
         {/* Conditional rendering based on isLoading state */}
         {isLoading ? (
@@ -224,7 +223,6 @@ const ViewEducationalContent = ({ params }) => {
           </>
         )}
       </div>
-      <Footer />
     </div>
   );
 };

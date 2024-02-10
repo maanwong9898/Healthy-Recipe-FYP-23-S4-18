@@ -11,6 +11,16 @@ import HomeNavbar from "@/app/components/navigation/homeNavBar/index.jsx";
 // this is to view particular meal plan
 // router path: /mealPlan/viewMealPlan/[id]
 
+const getImageUrlFromBlob = (imgBlob) => {
+  // Check if imgBlob is truthy
+  if (imgBlob) {
+    // Return the image URL created from the blob
+    return `data:image/jpeg;base64,${imgBlob}`;
+  }
+  // Return an empty string or a placeholder image URL if imgBlob is not available
+  return "";
+};
+
 const fetchMealPlanById = async (mealPlanId) => {
   try {
     // Ensure mealPlanId is a string if the IDs in your URL need to be strings
@@ -49,11 +59,26 @@ const RecipeCard = ({ recipe, onViewRecipe }) => {
       onClick={() => onViewRecipe(recipe.id)}
     >
       {/* Image */}
-      <img
+      {recipe?.imgBlob ? (
+        // If imgBlob is available, display image from blob
+        <img
+          className="w-full h-48 object-cover rounded-sm text-white text-center"
+          src={getImageUrlFromBlob(recipe?.imgBlob)}
+          alt={"Image of " + recipe.title}
+        />
+      ) : (
+        // If imgBlob is not available, display image from imgUrl
+        <img
+          className="w-full h-48 object-cover rounded-sm text-white text-center"
+          src={recipe?.img || "Not specified"}
+          alt={"Image of " + recipe.title}
+        />
+      )}
+      {/* <img
         className="w-full h-48 object-cover rounded-sm text-white text-center"
         src={recipe.img}
         alt={"Image of " + recipe.title}
-      />
+      /> */}
       <div className="flex-grow flex flex-col justify-between p-4 bg-white">
         {/* Title */}
         <div className="grid grid-rows-3 items-center">
@@ -237,12 +262,17 @@ const ViewMealPlan = ({ params }) => {
     ));
   };
 
+  const capitalizeFirstLetter = (string) => {
+    if (!string) return "";
+    return string.charAt(0).toUpperCase() + string.slice(1).toLowerCase();
+  };
+
   return (
     <div>
       <HomeNavbar />
       <div className="pt-8 pb-16 lg:pt-16 lg:pb-24 bg-white">
         <div className="text-center font-semibold font-sans">
-          <h1 className="flex flex-wrap justify-center mb-4 text-xl font-extrabold text-gray-900 lg:mb-6 lg:text-4xl">
+          <h1 className="flex flex-wrap justify-center mb-4 text-2xl font-extrabold text-gray-900 lg:mb-6 lg:text-4xl">
             {mealPlan.title || "Untitled Meal Plan"}
           </h1>
           {/* Publisher and published date section */}
@@ -250,7 +280,7 @@ const ViewMealPlan = ({ params }) => {
             <p>
               Published by:{" "}
               <span className="text-orange-600 font-bold tracking-tight">
-                {mealPlan?.userID.fullName || "Not specified"}
+                {capitalizeFirstLetter(mealPlan?.publisher) || "Not specified"}
               </span>
             </p>
             <p>
@@ -285,12 +315,22 @@ const ViewMealPlan = ({ params }) => {
               {mealPlan.introduction}
             </div>
           </section>
+
           {/* Image */}
-          <img
-            src={mealPlan.img}
-            alt={mealPlan.img_title || "Meal Plan Image"}
-            className="max-w-full mx-auto mt-8 mb-8 sm:max-w-xl sm:mt-16 sm:mb-16 rounded-lg shadow-xl"
-          />
+          {mealPlan?.imgBlob ? (
+            <img
+              src={getImageUrlFromBlob(mealPlan?.imgBlob)}
+              alt={mealPlan.img_title || "Meal Plan Image"}
+              className="max-w-full mx-auto mt-8 mb-8 sm:max-w-xl sm:mt-16 sm:mb-16 rounded-lg shadow-xl"
+            />
+          ) : (
+            <img
+              src={mealPlan.img}
+              alt={mealPlan.img_title || "Meal Plan Image"}
+              className="max-w-full mx-auto mt-8 mb-8 sm:max-w-xl sm:mt-16 sm:mb-16 rounded-lg shadow-xl"
+            />
+          )}
+
           {/* Main content */}
           <section className="main-content mt-10 pl-9 pr-9 mx-auto max-w-screen-xl md:text-base text-left">
             <div className="w-full p-2 rounded-lg whitespace-pre-line">
@@ -312,7 +352,7 @@ const ViewMealPlan = ({ params }) => {
                 {/* Position arrows */}
                 <button
                   onClick={prevRecipe}
-                  className="absolute top-1/2 left-0 transform rounded-full bg-orange-500 hover:bg-orange-700 transition duration-300 ease-in-out"
+                  className="absolute top-1/2 left-0 transform rounded-full bg-orange-400 hover:bg-orange-500 transition duration-300 ease-in-out"
                   style={{ zIndex: 1 }}
                 >
                   <ChevronLeftIcon
@@ -321,7 +361,7 @@ const ViewMealPlan = ({ params }) => {
                 </button>
                 <button
                   onClick={nextRecipe}
-                  className="absolute top-1/2 right-0 transform rounded-full bg-orange-500 hover:bg-orange-700 transition duration-300 ease-in-out"
+                  className="absolute top-1/2 right-0 transform rounded-full bg-orange-400 hover:bg-orange-500 transition duration-300 ease-in-out"
                   style={{ zIndex: 1 }}
                 >
                   <ChevronRightIcon
@@ -338,12 +378,12 @@ const ViewMealPlan = ({ params }) => {
           </div>
 
           {/* Recipes Carousel Section - Mobile Screen */}
-          <div className="mt-16 mx-auto max-w-screen-xl text-left border-t-2 border-gray-50 lg:hidden p-6">
+          <div className="mt-16 mx-auto max-w-screen-xl text-left border-t-2 border-gray-50 lg:hidden p-6 items-center">
             <p className="font-sans font-bold text-4xl text-gray-900 mb-4 md:mt-8 ml-4">
               Suggested Recipes
             </p>
             {/* <div className="flex justify-between items-center mb-4 md:mt-8 ml-4">
-              <div></div> 
+              <div></div>
               <div className="flex gap-4">
                 <button
                   onClick={prevRecipe}
@@ -374,7 +414,7 @@ const ViewMealPlan = ({ params }) => {
                 {/* Position arrows */}
                 <button
                   onClick={prevRecipe}
-                  className="absolute top-1/2 left-0 transform rounded-full bg-orange-500 hover:bg-orange-700 transition duration-300 ease-in-out"
+                  className="absolute top-1/2 left-0 transform rounded-full bg-orange-400 hover:bg-orange-500 transition duration-300 ease-in-out"
                   style={{ zIndex: 1 }}
                 >
                   <ChevronLeftIcon
@@ -383,7 +423,7 @@ const ViewMealPlan = ({ params }) => {
                 </button>
                 <button
                   onClick={nextRecipe}
-                  className="absolute top-1/2 right-0 transform rounded-full bg-orange-500 hover:bg-orange-700 transition duration-300 ease-in-out"
+                  className="absolute top-1/2 right-0 transform rounded-full bg-orange-400 hover:bg-orange-500 transition duration-300 ease-in-out"
                   style={{ zIndex: 1 }}
                 >
                   <ChevronRightIcon

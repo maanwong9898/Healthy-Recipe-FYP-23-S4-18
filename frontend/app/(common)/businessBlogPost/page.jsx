@@ -757,6 +757,44 @@ const BusinessBlogPostsPage = () => {
     }
   };
 
+  function capitalizeFirstLetter(string) {
+    if (!string) return "";
+    return string.charAt(0).toUpperCase() + string.slice(1);
+  }
+
+  // Render stars and count
+  const renderStarsAndCount = (post) => {
+    if (
+      !post.average ||
+      !post.average.averageRatings ||
+      !post.average.totalNumber
+    ) {
+      return <div>No ratings available</div>;
+    } else {
+      const { averageRatings, totalNumber } = post.average;
+
+      let stars = [];
+      // Render stars based on average rating
+      for (let i = 0; i < 5; i++) {
+        stars.push(
+          <span
+            key={i}
+            className={i < averageRatings ? "text-yellow-300" : "text-gray-300"}
+          >
+            ★
+          </span>
+        );
+      }
+      // Render total count of ratings
+      return (
+        <div className="flex items-center">
+          <span className="mr-1">{stars}</span>
+          <span>({totalNumber} ratings)</span>
+        </div>
+      );
+    }
+  };
+
   const handleViewBlogPost = (id) => {
     console.log(`Blog Title: ${id}`);
     let routePath = `/businessBlogPost/viewBusinessBlogPost/${id}`;
@@ -812,29 +850,29 @@ const BusinessBlogPostsPage = () => {
       )}
 
       <div className="flex-grow flex flex-col justify-between p-4 bg-white">
-        <div className="grid grid-rows-3 items-center">
-          <h2
-            className="text-2xl font-extrabold mb-2"
-            //onClick={() => handleViewBlogPost(post.id)}
-          >
+        {/* Title */}
+        <div className="text-center">
+          <h2 className="text-2xl font-extrabold mb-4">
             {post?.title || "Untitled Blog Post"}
           </h2>
-          <p className="text-gray-700 text-base mb-4 line-clamp-3">
-            <div className="whitespace-pre-line">{post.info}</div>
-          </p>
-          {/* Publisher */}
-          <p className="text-gray-900 text-base font-semibold">
+        </div>
+
+        {/* Description */}
+        <div className="flex-grow flex items-center justify-center mb-4">
+          <p className="text-gray-700 text-base line-clamp-3">{post.info}</p>
+        </div>
+
+        {/* Publisher and Ratings */}
+        <div className="flex flex-col lg:flex-row items-center justify-center space-x-4 mb-4">
+          <p className="text-gray-700 text-sm font-semibold">
             Publisher:{" "}
-            <span className="text-orange-600 font-bold tracking-tight">
-              {post?.publisher || "Not Specified"}
+            <span className="text-orange-600 font-semibold tracking-tight">
+              {capitalizeFirstLetter(post?.publisher) || "Not Specified"}
             </span>
           </p>
-
-          {/* <div className="flex justify-between items-center">
-              <div className="flex items-center text-red-700 font-semibold text-xl">
-                {post.blogType.subcategoryName}
-              </div>
-            </div> */}
+          <p className="text-gray-700 text-sm font-semibold">
+            {renderStarsAndCount(post)}
+          </p>
         </div>
       </div>
     </div>
@@ -961,14 +999,14 @@ const BusinessBlogPostsPage = () => {
                 <>
                   <div className="mb-5">
                     <h2 className="text-3xl font-bold mb-4 mt-4">
-                      Latest Business Blog Post
+                      Latest Blog Posts
                     </h2>
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
                       {latestPosts.map((post) => renderPostCard(post))}
                     </div>
                   </div>
                   <h2 className="text-3xl font-bold mb-4 mt-4">
-                    Other Business Blog Post
+                    Other Blog Posts
                   </h2>
                   <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                     {otherBusinessBlogPosts.map((post) => renderPostCard(post))}

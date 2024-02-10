@@ -2,12 +2,11 @@
 import { useRouter } from "next/navigation";
 import React from "react";
 import { useState, useEffect } from "react";
-import HomeNavbar from "@/app/components/navigation/homeNavBar";
-import axiosInterceptorInstance from "../../axiosInterceptorInstance.js";
+import BusinessNavBar from "../../../components/navigation/businessUserNavBar";
+import axiosInterceptorInstance from "../../../axiosInterceptorInstance.js";
 import { QueryClientProvider, useQuery } from "react-query"; // Added useQuery here
-import { queryClient } from "../../queryClient.js"; // Adjust the path as necessary
-
-// rouuter path: /educationalContent
+import { queryClient } from "../../../queryClient"; // Adjust the path as necessary
+// rouuter path: /businessBlogPost
 
 // Sorting options
 const sortOptions = {
@@ -18,53 +17,41 @@ const sortOptions = {
   ALPHABETICAL_ZA: { key: "ALPHABETICAL_ZA", label: "Alphabetically (Z to A)" },
 };
 
-// Fetch all educational content
-const fetchEducationalContent = async () => {
+// Fetch all blog posts
+const fetchBlogPosts = async () => {
   try {
-    console.log("Fetching educational Content...");
-    const response = await axiosInterceptorInstance.get(
-      "/educationalContent/get"
-    );
-    console.log("All Edu:", response.data);
-
-    ///////////////////////////////////////////////////////////////
-    // Fetch average ratings for each educational content
-    const eduContentWithAverage = await Promise.all(
-      response.data.map(async (eduContent) => {
-        const average = await fetchEduContentAverage(eduContent.id);
-        return { ...eduContent, average };
+    console.log("Fetching blog posts...");
+    const response = await axiosInterceptorInstance.get("/blog/get");
+    console.log("All blogs:", response.data);
+    // Fetch average ratings for each blog post
+    const blogsWithAverage = await Promise.all(
+      response.data.map(async (blog) => {
+        const average = await fetchBlogAverage(blog.id);
+        return { ...blog, average };
       })
     );
 
     // Filter active blog posts
-    const filteredData = eduContentWithAverage.filter(
+    const filteredData = blogsWithAverage.filter(
       (post) => post.active === true
     );
 
     return filteredData;
   } catch (error) {
-    console.error("Failed to fetch educationalContent:", error);
+    console.error("Failed to fetch blog posts:", error);
     throw error;
   }
 };
 
-const fetchEduContentAverage = async (eduContentId) => {
+const fetchBlogAverage = async (blogId) => {
   try {
     const response = await axiosInterceptorInstance.get(
-      `/educationalContent/getAverage/${eduContentId}`
+      `/blog/getAverage/${blogId}`
     );
-    console.log(
-      "Average rating for edu content",
-      eduContentId,
-      "is:",
-      response.data
-    );
+    console.log("Average rating for blog post", blogId, "is:", response.data);
     return response.data; // Assuming this returns the average data for the blog
   } catch (error) {
-    console.error(
-      `Failed to fetch average for edu content ${eduContentId}:`,
-      error
-    );
+    console.error(`Failed to fetch average for blog post ${blogId}:`, error);
     return null; // or handle the error as you see fit
   }
 };
@@ -72,25 +59,24 @@ const fetchEduContentAverage = async (eduContentId) => {
 const fetchCategories = async () => {
   try {
     const response = await axiosInterceptorInstance.get(
-      "category/getAllEducationalContentCategories"
+      "category/getAllBlogPostCategories"
     );
-    // setCategories(response.data);
-    return response.data;
+    return response.data; // Just return the data
   } catch (error) {
-    console.error("Error fetching categories:", error);
+    throw new Error("Error fetching categories:", error);
   }
 };
 
-const EducationalContentPageForUser = () => {
+const BusinessBlogPostsPage = () => {
   const router = useRouter();
   const [categoryFilter, setCategoryFilter] = useState("");
-  // const [AllEduContent, setAllEduContent] = useState([]);
+  // const [AllBusinessBlogPosts, setAllBusinessBlogPosts] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [sortOption, setSortOption] = useState("");
   const [isSearchEmpty, setIsSearchEmpty] = useState(false);
   const [searchPerformed, setSearchPerformed] = useState(false);
   // const [categories, setCategories] = useState([]);
-  const [displayedEduContent, setDisplayedEduContent] = useState([]);
+  const [displayedBlogPosts, setDisplayedBlogPosts] = useState([]);
   const [resultsCount, setResultsCount] = useState(0);
   // Additional state to track if search button has been clicked
   const [searchButtonClicked, setSearchButtonClicked] = useState(false);
@@ -98,41 +84,46 @@ const EducationalContentPageForUser = () => {
 
   // Fetch blog posts
   const {
-    data: AllEduContent,
+    data: AllBusinessBlogPosts,
     isLoading,
     isError,
-  } = useQuery("educationalContent", fetchEducationalContent);
+  } = useQuery("businessBlogPosts", fetchBlogPosts);
 
   const {
     data: categories,
     isLoading: isCategoriesLoading,
     isError: isCategoriesError,
-  } = useQuery("eduContentCategories", fetchCategories);
+  } = useQuery("blogCategories", fetchCategories);
 
   // Handle error state
   if (isError) {
     return <div>Error fetching data</div>;
   }
 
-  // Filter blog posts based on search term and category filter
   useEffect(() => {
-    let allPosts = Array.isArray(AllEduContent) ? AllEduContent : [];
+    console.log("All in one useEffect triggered");
+    // Ensure AllBusinessBlogPosts is an array
+    let allPosts = Array.isArray(AllBusinessBlogPosts)
+      ? AllBusinessBlogPosts
+      : [];
 
+    // Filter blog posts
     let filteredPosts = allPosts;
-
     if (categoryFilter) {
-      filteredPosts = filteredPosts.filter(
-        (post) => post.educationalContentType.subcategoryName === categoryFilter
+      filteredPosts = allPosts.filter(
+        (post) => post.blogType.subcategoryName === categoryFilter
       );
     }
 
-    if (searchTerm.trim()) {
-    } else {
+    // Search term logic
+    if (!searchTerm.trim()) {
       setSearchPerformed(false);
+    } else {
+      // Apply search logic here if needed
     }
 
+    // Sorting logic
     let sortedPosts = [...filteredPosts];
-    // Sorting
     switch (sortOption) {
       case "LATEST":
         sortedPosts.sort(
@@ -161,13 +152,11 @@ const EducationalContentPageForUser = () => {
     }
 
     console.log("Filtered posts:", filteredPosts);
-
-    setDisplayedEduContent(sortedPosts);
+    setDisplayedBlogPosts(sortedPosts);
     setIsSearchEmpty(sortedPosts.length === 0);
-
     // Reset searchButtonClicked when searchTerm changes
     setSearchButtonClicked(false);
-  }, [searchTerm, categoryFilter, AllEduContent, sortOption]);
+  }, [searchTerm, categoryFilter, AllBusinessBlogPosts, sortOption]);
 
   const handleSearchClick = async () => {
     console.log("Search button clicked");
@@ -177,11 +166,10 @@ const EducationalContentPageForUser = () => {
 
     if (!searchTerm.trim()) {
       const filteredPosts = categoryFilter
-        ? AllEduContent.filter(
-            (post) =>
-              post.educationalContentType.subcategoryName === categoryFilter
+        ? AllBusinessBlogPosts.filter(
+            (post) => post.blogType.subcategoryName === categoryFilter
           )
-        : AllEduContent;
+        : AllBusinessBlogPosts;
 
       // Sort the results
       let sortedResults = [...filteredPosts];
@@ -213,33 +201,34 @@ const EducationalContentPageForUser = () => {
           break;
       }
 
-      setDisplayedEduContent(sortedResults);
+      setDisplayedBlogPosts(sortedResults);
       setResultsCount(sortedResults.length);
       setIsSearchEmpty(false);
       setSearchPerformed(false);
+
+      console.log("Displayed blog posts after click:", displayedBlogPosts);
     } else {
       // Search for blog posts
       try {
         const formattedSearchTerm = searchTerm.trim().replace(/\s+/g, "+");
         const response = await axiosInterceptorInstance.get(
-          `/educationalContent/find?keyword=${formattedSearchTerm}`
+          `/blog/find?keyword=${formattedSearchTerm}`
         );
         let filteredResults = response.data.filter(
           (post) => post.active === true
         );
 
-        // Fetch average ratings for each edu content
+        // Fetch average ratings for each blog post
         let filteredResultsWithAverage = await Promise.all(
           filteredResults.map(async (post) => {
-            const average = await fetchEduContentAverage(post.id);
+            const average = await fetchBlogAverage(post.id);
             return { ...post, average }; // Augment each blog post with its average
           })
         );
 
         if (categoryFilter) {
           filteredResultsWithAverage = filteredResultsWithAverage.filter(
-            (post) =>
-              post.educationalContentType.subcategoryName === categoryFilter
+            (post) => post.blogType.subcategoryName === categoryFilter
           );
         }
 
@@ -278,17 +267,17 @@ const EducationalContentPageForUser = () => {
         console.log("Sorted results:", sortedResults);
 
         if (sortedResults.length > 0) {
-          setDisplayedEduContent(sortedResults);
+          setDisplayedBlogPosts(sortedResults);
           setResultsCount(sortedResults.length);
           setIsSearchEmpty(false);
         } else {
           setIsSearchEmpty(true);
-          setDisplayedEduContent([]);
+          setDisplayedBlogPosts([]);
           setResultsCount(0);
         }
         setSearchPerformed(true);
       } catch (error) {
-        console.error("Error searching edu content:", error);
+        console.error("Error searching blog posts:", error);
       }
     }
   };
@@ -331,9 +320,9 @@ const EducationalContentPageForUser = () => {
     }
   };
 
-  const handleViewEduContent = (id) => {
-    console.log(`Educational Content Title: ${id}`);
-    let routePath = `/educationalContent/viewEducationalContent/${id}`;
+  const handleViewBlogPost = (id) => {
+    console.log(`Blog Title: ${id}`);
+    let routePath = `/businessUser/businessBlogPost/exploreAllBlogs/${id}`;
     router.push(routePath);
   };
 
@@ -347,7 +336,7 @@ const EducationalContentPageForUser = () => {
     return "";
   };
 
-  // Render each educational content card
+  // Render each blog post card
   const renderPostCard = (post) => (
     <div
       key={post.id}
@@ -358,14 +347,15 @@ const EducationalContentPageForUser = () => {
         backgroundOrigin: "border-box",
         backgroundClip: "content-box, border-box",
       }}
-      onClick={() => handleViewEduContent(post.id)}
+      onClick={() => handleViewBlogPost(post.id)}
     >
       {/* <img
         src={post.img}
-        alt={post.img_title}
+        alt={post.imgTitle}
         className="w-full object-cover rounded-sm text-white text-center"
         style={{ height: "192px" }}
       /> */}
+
       {post?.imgBlob ? (
         // If imgBlob is available, display image from blob
         <img
@@ -388,7 +378,7 @@ const EducationalContentPageForUser = () => {
         {/* Title */}
         <div className="text-center">
           <h2 className="text-2xl font-extrabold mb-4">
-            {post?.title || "Untitled Educational Content"}
+            {post?.title || "Untitled Blog Post"}
           </h2>
         </div>
 
@@ -413,39 +403,41 @@ const EducationalContentPageForUser = () => {
     </div>
   );
 
-  const iterableEduContent = Array.isArray(AllEduContent) ? AllEduContent : [];
+  // Ensure AllBusinessBlogPosts is an array or default to empty array
+  const iterableBlogPosts = Array.isArray(AllBusinessBlogPosts)
+    ? AllBusinessBlogPosts
+    : [];
 
-  // Ensure iterable data for latest and other educational content
-  const latestEduContent = Array.isArray(iterableEduContent)
-    ? [...iterableEduContent]
+  // Ensure iterable data for latest and other blog posts
+  const latestPosts = Array.isArray(iterableBlogPosts)
+    ? [...iterableBlogPosts]
         .sort(
           (a, b) => new Date(b.createdDateTime) - new Date(a.createdDateTime)
         )
         .slice(0, 3)
     : [];
 
-  const otherEduContent = Array.isArray(iterableEduContent)
-    ? iterableEduContent.filter(
-        (post) =>
-          !latestEduContent.find((latestPost) => latestPost.id === post.id)
+  const otherBusinessBlogPosts = Array.isArray(iterableBlogPosts)
+    ? iterableBlogPosts.filter(
+        (post) => !latestPosts.find((latestPost) => latestPost.id === post.id)
       )
     : [];
 
   return (
     <QueryClientProvider client={queryClient}>
       <div>
-        <HomeNavbar />
+        <BusinessNavBar />
         <div className="p-4 md:p-10">
           <h1 className="text-3xl text-center md:text-7xl font-extrabold font-sans text-gray-900 mb-4 md:mb-8">
-            Educational Content
+            Blog Posts
           </h1>
           <div className="flex flex-col lg:flex-row mb-4">
             {/* Search Section */}
             <div className="flex-grow">
               <input
                 type="text"
-                id="educationalContentSearch"
-                name="educationalContentSearch"
+                id="blogPostSearch"
+                name="blogPostSearch"
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
                 onKeyDown={(e) => {
@@ -476,7 +468,7 @@ const EducationalContentPageForUser = () => {
             <div className="flex flex-col lg:flex-row lg:items-center mt-4 lg:mt-0">
               <label
                 htmlFor="sort"
-                className="text-xl text-black mb-1 sm:mb-0 sm:mr-2"
+                className="text-xl text-black mb-2 sm:mb-0 sm:mr-2"
               >
                 Sort By:
               </label>
@@ -498,7 +490,7 @@ const EducationalContentPageForUser = () => {
             <div className="flex flex-col lg:flex-row lg:items-center mt-4 lg:mt-0">
               <label
                 htmlFor="categoryFilter"
-                className="text-xl text-black mb-1 sm:mb-0 sm:mr-2"
+                className="text-xl text-black mb-2 sm:mb-0 sm:mr-2"
               >
                 Filter By:
               </label>
@@ -520,7 +512,7 @@ const EducationalContentPageForUser = () => {
               </div>
             </div>
           </div>
-          {/* Display the education content */}
+          {/* Display the blog posts */}
           {/* Display message while fetching data ftom backend */}
           {isLoading ? (
             <div className="text-xl text-center p-4">
@@ -532,22 +524,22 @@ const EducationalContentPageForUser = () => {
                 <>
                   <div className="mb-5">
                     <h2 className="text-3xl font-bold mb-4 mt-4">
-                      Latest Educational Content
+                      Latest Blog Posts
                     </h2>
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
-                      {latestEduContent.map((post) => renderPostCard(post))}
+                      {latestPosts.map((post) => renderPostCard(post))}
                     </div>
                   </div>
                   <h2 className="text-3xl font-bold mb-4 mt-4">
-                    Other Educational Content
+                    Other Blog Posts
                   </h2>
                   <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                    {otherEduContent.map((post) => renderPostCard(post))}
+                    {otherBusinessBlogPosts.map((post) => renderPostCard(post))}
                   </div>
                 </>
               ) : (
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                  {displayedEduContent.map((post) => renderPostCard(post))}
+                  {displayedBlogPosts.map((post) => renderPostCard(post))}
                 </div>
               )}
             </>
@@ -558,12 +550,12 @@ const EducationalContentPageForUser = () => {
   );
 };
 
-const WrappedEducationalContentPage = () => {
+const WrappedBusinessBlogPostsPage = () => {
   return (
     <QueryClientProvider client={queryClient}>
-      <EducationalContentPageForUser />
+      <BusinessBlogPostsPage />
     </QueryClientProvider>
   );
 };
 
-export default WrappedEducationalContentPage;
+export default WrappedBusinessBlogPostsPage;

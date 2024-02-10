@@ -2,10 +2,10 @@
 import { useRouter } from "next/navigation";
 import React from "react";
 import { useState, useEffect } from "react";
-import HomeNavbar from "@/app/components/navigation/homeNavBar";
-import axiosInterceptorInstance from "../../axiosInterceptorInstance.js";
+import BusinessNavBar from "../../../components/navigation/businessUserNavBar";
+import axiosInterceptorInstance from "../../../axiosInterceptorInstance.js";
 import { QueryClientProvider, useQuery } from "react-query"; // Added useQuery here
-import { queryClient } from "../../queryClient.js"; // Adjust the path as necessary
+import { queryClient } from "../../../queryClient"; // Adjust the path as necessary
 
 // rouuter path: /educationalContent
 
@@ -333,7 +333,7 @@ const EducationalContentPageForUser = () => {
 
   const handleViewEduContent = (id) => {
     console.log(`Educational Content Title: ${id}`);
-    let routePath = `/educationalContent/viewEducationalContent/${id}`;
+    let routePath = `/businessUser/educationalContent/exploreAllEducationalContent/${id}`;
     router.push(routePath);
   };
 
@@ -434,7 +434,7 @@ const EducationalContentPageForUser = () => {
   return (
     <QueryClientProvider client={queryClient}>
       <div>
-        <HomeNavbar />
+        <BusinessNavBar />
         <div className="p-4 md:p-10">
           <h1 className="text-3xl text-center md:text-7xl font-extrabold font-sans text-gray-900 mb-4 md:mb-8">
             Educational Content

@@ -478,43 +478,7 @@ const RecipesPageForUser = () => {
         break;
     }
 
-    // // Sorting
-    // switch (sortOption) {
-    //   case "LATEST":
-    //     sortedRecipes.sort(
-    //       (a, b) => new Date(b.createdDT) - new Date(a.createdDT)
-    //     );
-    //     break;
-    //   case "OLDEST":
-    //     sortedRecipes.sort(
-    //       (a, b) => new Date(a.createdDT) - new Date(b.createdDT)
-    //     );
-    //     break;
-    //   case "ALPHABETICAL_AZ":
-    //     sortedRecipes.sort((a, b) => a.title.localeCompare(b.title));
-    //     break;
-    //   case "ALPHABETICAL_ZA":
-    //     sortedRecipes.sort((a, b) => b.title.localeCompare(a.title));
-    //     break;
-    //   case "HIGHEST_RATINGS":
-    //     sortedRecipes.sort((a, b) => {
-    //       const ratingDiff =
-    //         (b.average?.averageRatings || 0) - (a.average?.averageRatings || 0);
-    //       if (ratingDiff !== 0) return ratingDiff;
-    //       return new Date(b.createdDT) - new Date(a.createdDT); // Latest date first if tie
-    //     });
-    //     break;
-    // }
-
     console.log("Filtered recipes:", newFilteredRecipes);
-
-    // setDisplayedBlogPosts(sortedRecipes);
-    // setIsSearchEmpty(sortedRecipes.length === 0);
-
-    // // Reset searchButtonClicked when searchTerm changes
-    // setSearchButtonClicked(false);
-
-    // console.log("Displayed blog posts:", displayedBlogPosts);
 
     console.log("The recipe after multiple filtering: ", newFilteredRecipes);
     console.log("End doing filtering...");
@@ -557,23 +521,6 @@ const RecipesPageForUser = () => {
     searchTerm,
     ingredientSearchTerm,
   ]);
-
-  // // Apply search on filtered recipes
-  // useEffect(() => {
-  //   let searchResults = filteredRecipes;
-  //   if (searchTerm.trim()) {
-  //   } else {
-  //     setSearchPerformed(false); // To prevent results count from showing when no search is performed
-  //   }
-
-  //   if (ingredientSearchTerm.trim()) {
-  //   } else {
-  //     setSearchPerformed(false);
-  //   }
-
-  //   setDisplayedRecipes(searchResults);
-  //   setIsSearchEmpty(searchResults.length === 0);
-  // }, [filteredRecipes, searchTerm, ingredientSearchTerm]);
 
   // Handler for changing allergies selection
   const handleAllergyChange = (event, allergy) => {
@@ -783,44 +730,12 @@ const RecipesPageForUser = () => {
               });
               break;
           }
-          // switch (sortOption) {
-          //   case "LATEST":
-          //     sortedResults.sort(
-          //       (a, b) => new Date(b.createdDT) - new Date(a.createdDT)
-          //     );
-          //     break;
-          //   case "OLDEST":
-          //     sortedResults.sort(
-          //       (a, b) => new Date(a.createdDT) - new Date(b.createdDT)
-          //     );
-          //     break;
-          //   case "ALPHABETICAL_AZ":
-          //     sortedResults.sort((a, b) => a.title.localeCompare(b.title));
-          //     break;
-          //   case "ALPHABETICAL_ZA":
-          //     sortedResults.sort((a, b) => b.title.localeCompare(a.title));
-          //     break;
-          //   case "HIGHEST_RATINGS":
-          //     sortedResults.sort((a, b) => {
-          //       const ratingDiff =
-          //         (b.average?.averageRatings || 0) -
-          //         (a.average?.averageRatings || 0);
-          //       if (ratingDiff !== 0) return ratingDiff;
-          //       return new Date(b.createdDT) - new Date(a.createdDT); // Latest date first if tie
-          //     });
-          //     break;
-          // }
 
           console.log("Sorted results:", sortedResults);
 
           setDisplayedRecipes(sortedResults);
           setResultsCount(sortedResults.length);
           setIsSearchEmpty(sortedResults.length === 0);
-
-          // Update displayed recipes
-          // setDisplayedRecipes(finalResults);
-          // setResultsCount(finalResults.length);
-          // setIsSearchEmpty(finalResults.length === 0);
         } else {
           setIsSearchEmpty(true);
           setDisplayedRecipes([]);
@@ -832,8 +747,6 @@ const RecipesPageForUser = () => {
       }
     }
   };
-
-  ///////////////////////////////////////////////////////////////////////
 
   const handleIngredientSearchClick = async () => {
     setSearchButtonClicked(true); // Set flag when search is performed
@@ -1037,44 +950,11 @@ const RecipesPageForUser = () => {
               break;
           }
 
-          // switch (sortOption) {
-          //   case "LATEST":
-          //     sortedResults.sort(
-          //       (a, b) => new Date(b.createdDT) - new Date(a.createdDT)
-          //     );
-          //     break;
-          //   case "OLDEST":
-          //     sortedResults.sort(
-          //       (a, b) => new Date(a.createdDT) - new Date(b.createdDT)
-          //     );
-          //     break;
-          //   case "ALPHABETICAL_AZ":
-          //     sortedResults.sort((a, b) => a.title.localeCompare(b.title));
-          //     break;
-          //   case "ALPHABETICAL_ZA":
-          //     sortedResults.sort((a, b) => b.title.localeCompare(a.title));
-          //     break;
-          //   case "HIGHEST_RATINGS":
-          //     sortedResults.sort((a, b) => {
-          //       const ratingDiff =
-          //         (b.average?.averageRatings || 0) -
-          //         (a.average?.averageRatings || 0);
-          //       if (ratingDiff !== 0) return ratingDiff;
-          //       return new Date(b.createdDT) - new Date(a.createdDT); // Latest date first if tie
-          //     });
-          //     break;
-          // }
-
           console.log("Sorted results:", sortedResults);
 
           setDisplayedRecipes(sortedResults);
           setResultsCount(sortedResults.length);
           setIsSearchEmpty(sortedResults.length === 0);
-
-          // Update displayed recipes
-          // setDisplayedRecipes(finalResults);
-          // setResultsCount(finalResults.length);
-          // setIsSearchEmpty(finalResults.length === 0);
         } else {
           setIsSearchEmpty(true);
           setDisplayedRecipes([]);

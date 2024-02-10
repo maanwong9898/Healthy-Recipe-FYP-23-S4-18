@@ -39,11 +39,10 @@ const ViewEducationalContent = ({ params }) => {
   const [eduContent, setEduContent] = useState(null);
   const [reviewsAndRatings, setReviewsAndRatings] = useState([]);
   const router = useRouter();
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
+  const [isChecking, setIsChecking] = useState(true);
 
   useEffect(() => {
-    setIsLoading(true); // Set loading state to true
-
     const postId = decodeURIComponent(params.id); // Make sure to decode the ID
     fetchEduContentById(postId)
       .then((data) => {
@@ -96,9 +95,9 @@ const ViewEducationalContent = ({ params }) => {
   };
 
   // Check if the educational content has been fetched yet
-  if (!eduContent) {
-    return <div className="text-xl">Please wait. It'll just take a moment</div>;
-  }
+  // if (!eduContent) {
+  //   return <div className="text-xl">Please wait. It'll just take a moment</div>;
+  // }
 
   const getImageUrlFromBlob = (imgBlob) => {
     // Check if imgBlob is truthy

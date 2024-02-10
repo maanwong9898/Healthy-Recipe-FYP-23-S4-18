@@ -243,7 +243,7 @@ const ViewRecipe = ({ params }) => {
           <div className="pt-8 pb-16 lg:pt-16 lg:pb-24 bg-white">
             {isLoading ? (
               <div className="loading-indicator text-center">
-                <p>Loading meal plan...</p>
+                <p>Loading recipe...</p>
                 {/* You can replace this with a spinner or any other visual indicator */}
               </div>
             ) : (

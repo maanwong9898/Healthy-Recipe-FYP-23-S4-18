@@ -49,10 +49,9 @@ const ViewBusinessBlogPost = ({ params }) => {
   const [businessBlogPost, setBusinessBlogPost] = useState(null);
   const [reviewsAndRatings, setReviewsAndRatings] = useState([]);
   const router = useRouter();
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    setIsLoading(true); // Set loading state to true
     const postId = decodeURIComponent(params.id); // Make sure to decode the ID
     fetchBlogPostById(postId)
       .then((data) => {
@@ -105,9 +104,9 @@ const ViewBusinessBlogPost = ({ params }) => {
   };
 
   // Check if the blog post has been fetched
-  if (!businessBlogPost) {
-    return <div>Please wait. It'll just take a moment</div>;
-  }
+  // if (!businessBlogPost) {
+  //   return <div>Please wait. It'll just take a moment</div>;
+  // }
 
   const getImageUrlFromBlob = (imgBlob) => {
     // Check if imgBlob is truthy

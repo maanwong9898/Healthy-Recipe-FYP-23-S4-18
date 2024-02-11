@@ -253,7 +253,9 @@ const AdminHomePage = () => {
               Dashboard
             </h2>
             {isLoading ? (
-              <div>Loading...</div>
+              <div className="text-xl text-center p-4">
+                <p>Please wait. It'll just take a moment.</p>
+              </div>
             ) : (
               <>
                 {/* Start of Card -- number of recipes, blogs, educational content created */}

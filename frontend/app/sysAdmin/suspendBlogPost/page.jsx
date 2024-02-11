@@ -286,7 +286,9 @@ const SuspendBusinessBlogs = () => {
                 All Blog Posts
               </h1>
               {isLoading ? (
-                <div>Loading...</div>
+                <div className="text-xl text-center p-4">
+                  <p>Please wait. It'll just take a moment.</p>
+                </div>
               ) : (
                 <>
                   <div className="flex flex-col mb-4 md:flex-row md:mr-2">

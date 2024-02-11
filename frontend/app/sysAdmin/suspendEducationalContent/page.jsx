@@ -251,39 +251,6 @@ const SuspendEducationalContent = () => {
     mutation.mutate({ id: eduContentId, active: !isActive });
   };
 
-  // Combined Function to toggle a educational contnet active status
-  // const handleToggleEduContentStatus = async (eduContentId, isActive) => {
-  //   const newStatus = !isActive;
-
-  //   try {
-  //     const response = await axiosInterceptorInstance.put(
-  //       "/educationalContent/suspend",
-  //       {
-  //         id: eduContentId,
-  //         active: newStatus,
-  //       }
-  //     );
-
-  //     // Check if the response is successful before updating the state
-  //     if (response.status === 200) {
-  //       const updatedEduContent = educationalContent.map((eduContent) => {
-  //         if (eduContent.id === eduContentId) {
-  //           return { ...eduContent, active: newStatus };
-  //         }
-  //         return eduContent;
-  //       });
-  //       setEducationalContent(updatedEduContent);
-  //     } else {
-  //       console.error(
-  //         "Failed to update the educational content status:",
-  //         response
-  //       );
-  //     }
-  //   } catch (error) {
-  //     console.error("Error updating educational content status", error);
-  //   }
-  // };
-
   const mutation = useMutation(
     (newStatus) =>
       axiosInterceptorInstance.put("/educationalContent/suspend", newStatus),
@@ -334,7 +301,9 @@ const SuspendEducationalContent = () => {
                 All Educational Content
               </h1>
               {isLoading ? (
-                <div>Loading...</div>
+                <div className="text-xl text-center p-4">
+                  <p>Please wait. It'll just take a moment.</p>
+                </div>
               ) : (
                 <>
                   {/* Search Section */}

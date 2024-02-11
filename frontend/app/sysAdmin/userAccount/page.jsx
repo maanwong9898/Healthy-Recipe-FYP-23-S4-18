@@ -10,10 +10,24 @@ import SysAdminNavBar from "../../components/navigation/sysAdminNavBar";
 // this is the user account list page under sysAdmin
 // router path: /sysAdmin/userAccount
 
+const sortOptions = {
+  LATEST: { key: "LATEST", label: "By Latest" },
+  OLDEST: { key: "OLDEST", label: "By Oldest" },
+  ALPHABETICAL_AZ: { key: "ALPHABETICAL_AZ", label: "Alphabetically (A to Z)" },
+  ALPHABETICAL_ZA: { key: "ALPHABETICAL_ZA", label: "Alphabetically (Z to A)" },
+  ROLE_AZ: { key: "ROLE_AZ", label: "Role (A to Z)" },
+  ROLE_ZA: { key: "ROLE_ZA", label: "Role (Z to A)" },
+};
+
 const UserAccount = () => {
   const router = useRouter();
   const [userAccounts, setUserAccounts] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+  const [sortOption, setSortOption] = useState(sortOptions.LATEST.key);
+  const [sortOrder, setSortOrder] = useState("Ascending");
+  const [alphabeticalOrder, setAlphabeticalOrder] = useState("AZ");
+  const [createdDateOrder, setCreatedDateOrder] = useState("LATEST");
+  const [selectedRole, setSelectedRole] = useState("All");
 
   // get all the user from the backend
   const fetchAllUsers = async () => {
@@ -62,22 +76,6 @@ const UserAccount = () => {
     fetchAllUsers();
   }, []);
 
-  // set loading function for getching user account
-  // useEffect(() => {
-  //   const getData = async () => {
-  //     setIsLoading(true);
-  //     try {
-  //       const fetchedUserAccounts = await fetchAllUsers();
-  //       setUserAccounts(fetchedUserAccounts);
-  //     } catch (error) {
-  //       console.error("Error fetching user accounts", error);
-  //     } finally {
-  //       setIsLoading(false);
-  //     }
-  //   };
-  //   getData();
-  // }, []);
-
   // this function is to view particular user account (the route will be vary based on the user profile type)
   const handleViewAccount = (viewId, profileType) => {
     // Check the profile type
@@ -111,6 +109,68 @@ const UserAccount = () => {
     }
   };
 
+  const filteredAndSortedAccounts = userAccounts
+    .filter((user) => selectedRole === "All" || user.role === selectedRole)
+    .sort((a, b) => {
+      let comparison = 0;
+
+      if (
+        sortOption === sortOptions.ALPHABETICAL_AZ.key ||
+        sortOption === sortOptions.ALPHABETICAL_ZA.key
+      ) {
+        // Alphabetical sorting
+        const nameA = a.username.toUpperCase(); // ignore upper and lowercase
+        const nameB = b.username.toUpperCase(); // ignore upper and lowercase
+        if (nameA < nameB) {
+          comparison = -1;
+        } else if (nameA > nameB) {
+          comparison = 1;
+        }
+        // If sorting order is ZA, reverse the comparison
+        return sortOption === sortOptions.ALPHABETICAL_ZA.key
+          ? comparison * -1
+          : comparison;
+      } else {
+        // Date sorting
+        const dateA = new Date(a.createdDate);
+        const dateB = new Date(b.createdDate);
+        comparison = dateA - dateB;
+        if (sortOption === sortOptions.OLDEST.key) {
+          return comparison;
+        } else {
+          return -comparison; // For LATEST or descending order
+        }
+      }
+    });
+
+  // Sort by alphabetical order
+  const handleSortAlphabetically = () => {
+    if (alphabeticalOrder === "AZ") {
+      setSortOption("ALPHABETICAL_AZ");
+      setAlphabeticalOrder("ZA");
+    } else {
+      setSortOption("ALPHABETICAL_ZA");
+      setAlphabeticalOrder("AZ");
+    }
+  };
+
+  const handleSortCreatedDateOrder = () => {
+    if (createdDateOrder === "LATEST") {
+      setSortOption(sortOptions.OLDEST.key);
+      setCreatedDateOrder("OLDEST");
+      setSortOrder("Descending");
+    } else {
+      setSortOption(sortOptions.LATEST.key);
+      setCreatedDateOrder("LATEST");
+      setSortOrder("Ascending");
+    }
+  };
+
+  // Function to handle role filter change
+  const handleRoleFilterChange = (role) => {
+    setSelectedRole(role);
+  };
+
   return (
     <div className="px-2 sm:px-5 min-h-screen flex flex-col py-5">
       <SysAdminNavBar />
@@ -124,29 +184,69 @@ const UserAccount = () => {
           <h1 className="text-6xl text-gray-900 p-3 mb-4 font-bold text-center sm:text-center">
             User Account List
           </h1>
-          <div>
-            <button className="text-white bg-blue-600 hover:bg-blue-700 rounded-lg text-base font-semibold px-5 py-2.5 mr-7 mb-4 text-center">
-              <Link href="/sysAdmin/userAccount/createUserAccount">
-                Create User Account
-              </Link>
-            </button>
+
+          <div className="flex flex-col mb-4 md:flex-row md:mr-2">
+            {/* Filter dropdown */}
+            <div>
+              <button className="text-white bg-blue-600 hover:bg-blue-700 rounded-lg text-base font-semibold px-5 py-2.5 mr-7 mb-4 text-center">
+                <Link href="/sysAdmin/userAccount/createUserAccount">
+                  Create User Account
+                </Link>
+              </button>
+            </div>
+            <div className="relative md:ml-auto">
+              <label
+                htmlFor="categoryFilter"
+                className="ml-2 mr-2 font-2xl text-gray-900"
+              >
+                Filter By:
+              </label>
+              <select
+                id="categoryFilter"
+                onChange={(e) => handleRoleFilterChange(e.target.value)}
+                className="p-2 rounded-lg border"
+              >
+                <option value="All">All Roles</option>
+                <option value="ADMIN">System Admin</option>
+                <option value="REGISTERED_USER">Registered User</option>
+                <option value="BUSINESS_USER">Business User</option>
+                <option value="NUTRITIONIST">Nutritionist</option>
+              </select>
+            </div>
           </div>
           {/* Start of table */}
           <div className="overflow-x-auto rounded-lg hidden lg:block">
             <table className="min-w-full rounded-lg border-zinc-200 border-2">
               <thead className="bg-zinc-700 font-normal text-white border-gray-800 border-2">
                 <tr className="text-center text-lg">
-                  <th className="px-3 py-2">Username</th>
+                  <th className="px-3 py-2">
+                    Username
+                    <button
+                      className="ml-1 focus:outline-none"
+                      onClick={handleSortAlphabetically}
+                    >
+                      <SwapVertIcon />
+                    </button>
+                  </th>
                   <th className="px-3 py-2">Profile Type</th>
                   <th className="px-3 py-2">Email</th>
-                  <th className="px-3 py-2">Created Date</th>
+                  <th className="px-3 py-2">
+                    {" "}
+                    Created Date
+                    <button
+                      className="ml-1 focus:outline-none"
+                      onClick={handleSortCreatedDateOrder}
+                    >
+                      <SwapVertIcon />
+                    </button>
+                  </th>
                   <th className="px-3 py-2">Status</th>
                   <th className="px-3 py-2"></th>
                   <th className="px-3 py-2"></th>
                 </tr>
               </thead>
               <tbody>
-                {userAccounts.map((user, index) => (
+                {filteredAndSortedAccounts.map((user, index) => (
                   <tr key={index} className="bg-white border-b">
                     <td className="px-3 py-2 text-base text-center">
                       {user.username}
@@ -221,7 +321,7 @@ const UserAccount = () => {
           {/* Mobile View for Tables */}
           <div className="mx-auto items-center lg:hidden">
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
-              {userAccounts.map((user, index) => (
+              {filteredAndSortedAccounts.map((user, index) => (
                 <div
                   key={index}
                   className="bg-white p-5 h-full flex flex-col border border-gray-300 rounded-2xl shadow"

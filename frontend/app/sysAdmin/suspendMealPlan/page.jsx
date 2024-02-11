@@ -7,6 +7,9 @@ import SearchIcon from "@mui/icons-material/Search";
 import SwapVertIcon from "@mui/icons-material/SwapVert";
 import SysAdminNavBar from "../../components/navigation/sysAdminNavBar";
 import SecureStorage from "react-secure-storage";
+import { QueryClientProvider, useQuery } from "react-query"; // Added useQuery here
+import { queryClient } from "../../queryClient.js"; // Adjust the path as necessary
+import { useMutation } from "react-query";
 
 // router path is /sysAdmin/suspendMealPlan
 
@@ -27,7 +30,15 @@ const fetchMealPlans = async () => {
 
     console.log("All meal plans:", response.data);
 
-    return response.data;
+    // return response.data;
+    const mealPlansWithAverage = await Promise.all(
+      response.data.map(async (mealPlan) => {
+        const average = await fetchMealPlanAverage(mealPlan.id);
+        return { ...mealPlan, average };
+      })
+    );
+
+    return mealPlansWithAverage;
   } catch (error) {
     console.error("Failed to fetch meal plans:", error);
     throw error;
@@ -56,16 +67,36 @@ const fetchMealPlanAverage = async (mealPlanId) => {
   }
 };
 
+const fetchCategories = async () => {
+  try {
+    const response = await axiosInterceptorInstance.get(
+      "category/getAllHealthGoals"
+    );
+    // setCategories(response.data);
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching categories:", error);
+  }
+};
+
+// Assuming axiosInterceptorInstance is correctly set up
+const toggleMealPlanActiveStatus = async ({ mealPlanId, active }) => {
+  return axiosInterceptorInstance.put("/mealPlan/updateActivity", {
+    id: mealPlanId,
+    active,
+  });
+};
+
 const SuspendMealPlan = () => {
   const router = useRouter();
-  const [mealPlans, setMealPlans] = useState([]);
+  // const [mealPlans, setMealPlans] = useState([]);
   const [displayedMealPlans, setDisplayedMealPlans] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [sortOption, setSortOption] = useState("LATEST");
   const [isSearchEmpty, setIsSearchEmpty] = useState(false);
   const [searchPerformed, setSearchPerformed] = useState(false);
   const [searchResultsCount, setSearchResultsCount] = useState(0);
-  const [categories, setCategories] = useState([]);
+  // const [categories, setCategories] = useState([]);
   const [categoryFilter, setCategoryFilter] = useState("ALL");
   const [alphabeticalOrder, setAlphabeticalOrder] = useState("AZ");
   const [datePublishedOrder, setDatePublishedOrder] = useState("LATEST");
@@ -73,134 +104,116 @@ const SuspendMealPlan = () => {
   const [statusOrder, setStatusOrder] = useState("ACTIVE");
   const [isLoading, setIsLoading] = useState(true);
   const [isChecking, setIsChecking] = useState(true);
-  const [isAuthenticated, setIsAuthenticated] = useState(true); // New state variable
+  const [isAuthorized, setIsAuthorized] = useState(false);
 
-  // fetch all business blog posts and categories from backend
   useEffect(() => {
+    // Perform your token and role check here
     const token = SecureStorage.getItem("token");
     const role = SecureStorage.getItem("role");
 
+    // Replace 'ADMIN' with the actual role you're checking for
     if (!token || role !== "ADMIN") {
-      // If token is invalid or role is not ADMIN
-      SecureStorage.clear();
-      router.push("/");
-      return;
+      // If the user is not authorized, redirect them
+      router.push("/"); // Adjust the route as needed
     } else {
       setIsChecking(false);
-      const fetchData = async () => {
-        try {
-          const fetchedMealPlan = await fetchMealPlans();
-          const mealPlansWithAverage = await Promise.all(
-            fetchedMealPlan.map(async (mealPlan) => {
-              const average = await fetchMealPlanAverage(mealPlan.id);
-              return { ...mealPlan, average }; // Augment each meal plan with its average
-            })
-          );
-          console.log("mealPlan with average:", mealPlansWithAverage);
-          setMealPlans(mealPlansWithAverage);
-        } catch (error) {
-          console.error("Error while fetching data:", error);
-        }
-      };
-
-      // Fetch all meal plan categories from backend
-      const fetchCategories = async () => {
-        console.log("Fetching meal plan categories...");
-        try {
-          const response = await axiosInterceptorInstance.get(
-            "category/getAllHealthGoals"
-          );
-          console.log("Categories fetched:", response.data);
-          setCategories(response.data);
-        } catch (error) {
-          console.error("Error fetching categories:", error);
-        }
-      };
-
-      const fetchDataAndCategories = async () => {
-        await Promise.all([fetchData(), fetchCategories()]);
-        setIsLoading(false);
-      };
-
-      fetchDataAndCategories();
+      // If the user is authorized, allow the component to proceed
+      setIsAuthorized(true);
     }
   }, []);
 
+  // Fetch all meal plans
+  const { data: mealPlans, isLoading: mealPlansLoading } = useQuery(
+    "mealPlans",
+    fetchMealPlans
+  );
+
+  // Fetch categorieg
+  const { data: categories, isLoading: isCategoriesLoading } = useQuery(
+    "categories",
+    fetchCategories
+  );
+
   // All in 1 -- sort, filter, search
   useEffect(() => {
-    // Start with the full list of meal plans
-    let processedMealPlans = [...mealPlans];
+    // Ensure mealPlans is loaded and is an array before processing
+    if (mealPlans && Array.isArray(mealPlans)) {
+      // Start with the full list of meal plans
+      let processedMealPlans = [...mealPlans];
 
-    // Search filter
-    if (searchTerm) {
-      processedMealPlans = processedMealPlans.filter((mealPlan) =>
-        mealPlan.title.toLowerCase().includes(searchTerm.toLowerCase())
-      );
-    }
-
-    // Category filter
-    if (categoryFilter !== "ALL") {
-      processedMealPlans = processedMealPlans.filter(
-        (mealPlan) => mealPlan.healthGoalCategoryId === Number(categoryFilter)
-      );
-    }
-
-    // Utility function to get the date, preferring createdDT and falling back to lastUpdatedDT
-    function getDateOrFallback(mealPlan) {
-      return new Date(mealPlan.createdDT || mealPlan.lastUpdatedDT);
-    }
-
-    // Sorting
-    switch (sortOption) {
-      case "LATEST":
-        processedMealPlans.sort(
-          (a, b) => getDateOrFallback(b) - getDateOrFallback(a)
+      // Search filter
+      if (searchTerm) {
+        processedMealPlans = processedMealPlans.filter((mealPlan) =>
+          mealPlan.title.toLowerCase().includes(searchTerm.toLowerCase())
         );
-        break;
-      case "OLDEST":
-        processedMealPlans.sort(
-          (a, b) => getDateOrFallback(a) - getDateOrFallback(b)
+      }
+
+      // Category filter
+      if (categoryFilter !== "ALL") {
+        processedMealPlans = processedMealPlans.filter(
+          (mealPlan) => mealPlan.healthGoalCategoryId === Number(categoryFilter)
         );
-        break;
-      case "ALPHABETICAL_AZ":
-        processedMealPlans.sort((a, b) => a.title.localeCompare(b.title));
-        break;
-      case "ALPHABETICAL_ZA":
-        processedMealPlans.sort((a, b) => b.title.localeCompare(a.title));
-        break;
-      case "HIGHEST_RATINGS":
-        processedMealPlans.sort((a, b) => {
-          const ratingDiff =
-            (b.average?.averageRatings || 0) - (a.average?.averageRatings || 0);
-          if (ratingDiff !== 0) return ratingDiff;
-          return getDateOrFallback(b) - getDateOrFallback(a); // Latest date first if tie
-        });
-        break;
-      case "LOWEST_RATINGS":
-        processedMealPlans.sort((a, b) => {
-          const ratingDiff =
-            (a.average?.averageRatings || 0) - (b.average?.averageRatings || 0);
-          if (ratingDiff !== 0) return ratingDiff;
-          return getDateOrFallback(b) - getDateOrFallback(a); // Latest date first if tie
-        });
-        break;
-      case "STATUS_ACTIVE":
-        processedMealPlans.sort((a, b) => {
-          const statusDiff = b.active - a.active;
-          if (statusDiff !== 0) return statusDiff;
-        });
-        break;
+      }
 
-      case "STATUS_INACTIVE":
-        processedMealPlans.sort((a, b) => {
-          const statusDiff = a.active - b.active;
-          if (statusDiff !== 0) return statusDiff;
-        });
-        break;
+      // Utility function to get the date, preferring createdDT and falling back to lastUpdatedDT
+      function getDateOrFallback(mealPlan) {
+        return new Date(mealPlan.createdDT || mealPlan.lastUpdatedDT);
+      }
+
+      // Sorting
+      switch (sortOption) {
+        case "LATEST":
+          processedMealPlans.sort(
+            (a, b) => getDateOrFallback(b) - getDateOrFallback(a)
+          );
+          break;
+        case "OLDEST":
+          processedMealPlans.sort(
+            (a, b) => getDateOrFallback(a) - getDateOrFallback(b)
+          );
+          break;
+        case "ALPHABETICAL_AZ":
+          processedMealPlans.sort((a, b) => a.title.localeCompare(b.title));
+          break;
+        case "ALPHABETICAL_ZA":
+          processedMealPlans.sort((a, b) => b.title.localeCompare(a.title));
+          break;
+        case "HIGHEST_RATINGS":
+          processedMealPlans.sort((a, b) => {
+            const ratingDiff =
+              (b.average?.averageRatings || 0) -
+              (a.average?.averageRatings || 0);
+            if (ratingDiff !== 0) return ratingDiff;
+            return getDateOrFallback(b) - getDateOrFallback(a); // Latest date first if tie
+          });
+          break;
+        case "LOWEST_RATINGS":
+          processedMealPlans.sort((a, b) => {
+            const ratingDiff =
+              (a.average?.averageRatings || 0) -
+              (b.average?.averageRatings || 0);
+            if (ratingDiff !== 0) return ratingDiff;
+            return getDateOrFallback(b) - getDateOrFallback(a); // Latest date first if tie
+          });
+          break;
+        case "STATUS_ACTIVE":
+          processedMealPlans.sort((a, b) => {
+            const statusDiff = b.active - a.active;
+            if (statusDiff !== 0) return statusDiff;
+          });
+          break;
+
+        case "STATUS_INACTIVE":
+          processedMealPlans.sort((a, b) => {
+            const statusDiff = a.active - b.active;
+            if (statusDiff !== 0) return statusDiff;
+          });
+          break;
+      }
+
+      // Update the displayed meal plans
+      setDisplayedMealPlans(processedMealPlans);
     }
-
-    // Update the displayed meal plans
-    setDisplayedMealPlans(processedMealPlans);
   }, [mealPlans, searchTerm, categoryFilter, sortOption]);
 
   // Sort by alphabetical order
@@ -247,35 +260,50 @@ const SuspendMealPlan = () => {
     }
   };
 
-  // Combined Function to toggle a meal plan active status
-  const handleToggleMealPlanStatus = async (mealPlanId, isActive) => {
-    const newStatus = !isActive;
+  // Adjust this mutation setup
+  const mutation = useMutation(toggleMealPlanActiveStatus, {
+    onSuccess: () => {
+      queryClient.invalidateQueries("mealPlans");
+    },
+    onError: (error) => {
+      console.error("Mutation error:", error);
+    },
+  });
 
-    try {
-      const response = await axiosInterceptorInstance.put(
-        "/mealPlan/updateActivity",
-        {
-          id: mealPlanId,
-          active: newStatus,
-        }
-      );
-
-      // Check if the response is successful before updating the state
-      if (response.status === 200) {
-        const updatedMealPlans = mealPlans.map((mealPlan) => {
-          if (mealPlan.id === mealPlanId) {
-            return { ...mealPlan, active: newStatus };
-          }
-          return mealPlan;
-        });
-        setMealPlans(updatedMealPlans);
-      } else {
-        console.error("Failed to update the meal plan status:", response);
-      }
-    } catch (error) {
-      console.error("Error updating meal plan status", error);
-    }
+  // This is your event handler to toggle the status
+  const handleToggleMealPlanStatus = (mealPlanId, isActive) => {
+    mutation.mutate({ mealPlanId, active: !isActive });
   };
+
+  // Combined Function to toggle a meal plan active status
+  // const handleToggleMealPlanStatus = async (mealPlanId, isActive) => {
+  //   const newStatus = !isActive;
+
+  //   try {
+  //     const response = await axiosInterceptorInstance.put(
+  //       "/mealPlan/updateActivity",
+  //       {
+  //         id: mealPlanId,
+  //         active: newStatus,
+  //       }
+  //     );
+
+  //     // Check if the response is successful before updating the state
+  //     if (response.status === 200) {
+  //       const updatedMealPlans = mealPlans.map((mealPlan) => {
+  //         if (mealPlan.id === mealPlanId) {
+  //           return { ...mealPlan, active: newStatus };
+  //         }
+  //         return mealPlan;
+  //       });
+  //       setMealPlans(updatedMealPlans);
+  //     } else {
+  //       console.error("Failed to update the meal plan status:", response);
+  //     }
+  //   } catch (error) {
+  //     console.error("Error updating meal plan status", error);
+  //   }
+  // };
 
   // Function to handle search when user clicks the search button
   const handleSearchClick = () => {
@@ -292,135 +320,267 @@ const SuspendMealPlan = () => {
   };
 
   return (
-    <div>
-      {isLoading && isChecking ? (
-        <div>Loading...</div>
-      ) : (
-        <>
-          <div className="px-2 sm:px-5 min-h-screen flex flex-col py-5">
-            <SysAdminNavBar />
-            <h1 className="text-6xl text-gray-900 p-3 mb-4 font-bold text-center sm:text-center">
-              All Meal Plans
-            </h1>
-            {/* Search Section */}
-            <div className="flex flex-col mb-4 md:flex-row md:mr-2">
-              {/* Search bar */}
-              <div className="relative mb-3 md:mb-8 md:mr-2">
-                <input
-                  type="text"
-                  id="mealPlanSearch"
-                  name="mealPlanSearch"
-                  value={searchTerm}
-                  onChange={(e) => setSearchTerm(e.target.value)}
-                  placeholder="Search by title"
-                  className="mr-2 p-2 rounded-lg border w-full md:w-auto pl-10"
-                />
-                {/* Search icon */}
-                <span className="absolute inset-y-0 left-0 flex items-center pl-2">
-                  <SearchIcon />
-                </span>
+    <QueryClientProvider client={queryClient}>
+      <div>
+        {isLoading && isChecking ? (
+          <div>Loading...</div>
+        ) : (
+          <>
+            <div className="px-2 sm:px-5 min-h-screen flex flex-col py-5">
+              <SysAdminNavBar />
+              <h1 className="text-6xl text-gray-900 p-3 mb-4 font-bold text-center sm:text-center">
+                All Meal Plans
+              </h1>
+              {/* Search Section */}
+              <div className="flex flex-col mb-4 md:flex-row md:mr-2">
+                {/* Search bar */}
+                <div className="relative mb-3 md:mb-8 md:mr-2">
+                  <input
+                    type="text"
+                    id="mealPlanSearch"
+                    name="mealPlanSearch"
+                    value={searchTerm}
+                    onChange={(e) => setSearchTerm(e.target.value)}
+                    placeholder="Search by title"
+                    className="mr-2 p-2 rounded-lg border w-full md:w-auto pl-10"
+                  />
+                  {/* Search icon */}
+                  <span className="absolute inset-y-0 left-0 flex items-center pl-2">
+                    <SearchIcon />
+                  </span>
+                </div>
+
+                {/* Filter dropdown */}
+                <div className="relative md:ml-auto">
+                  <label
+                    htmlFor="categoryFilter"
+                    className="ml-2 mr-2 font-2xl text-gray-900"
+                  >
+                    Filter By:
+                  </label>
+                  <select
+                    id="categoryFilter"
+                    onChange={(e) => setCategoryFilter(e.target.value)}
+                    className="p-2 rounded-lg border"
+                  >
+                    <option value="ALL">All Categories</option>
+                    {categories.map((category, index) => (
+                      <option
+                        key={index}
+                        value={category.id}
+                        className="text-black"
+                      >
+                        {category.subcategoryName}
+                      </option>
+                    ))}
+                  </select>
+                </div>
               </div>
 
-              {/* Filter dropdown */}
-              <div className="relative md:ml-auto">
-                <label
-                  htmlFor="categoryFilter"
-                  className="ml-2 mr-2 font-2xl text-gray-900"
-                >
-                  Filter By:
-                </label>
-                <select
-                  id="categoryFilter"
-                  onChange={(e) => setCategoryFilter(e.target.value)}
-                  className="p-2 rounded-lg border"
-                >
-                  <option value="ALL">All Categories</option>
-                  {categories.map((category, index) => (
-                    <option
-                      key={index}
-                      value={category.id}
-                      className="text-black"
-                    >
-                      {category.subcategoryName}
-                    </option>
-                  ))}
-                </select>
+              {/* Table of meal plans */}
+
+              <div className="overflow-x-auto rounded-lg hidden lg:block">
+                <table className="min-w-full rounded-lg border-zinc-200 border-2">
+                  <thead className="bg-zinc-700 font-normal text-white border-gray-800 border-2">
+                    <tr className="text-center text-lg">
+                      <th className="px-3 py-2">
+                        Meal Plan Title
+                        <button
+                          className="ml-1 focus:outline-none"
+                          onClick={handleSortAlphabetically}
+                        >
+                          <SwapVertIcon />
+                        </button>
+                      </th>
+                      <th className="px-3 py-2">Publisher</th>
+                      <th className="px-3 py-2">Company</th>
+                      <th className="px-3 py-2">
+                        Date Published
+                        <button
+                          className="ml-1 focus:outline-none"
+                          onClick={handleSortByDatePublished}
+                        >
+                          <SwapVertIcon />
+                        </button>
+                      </th>
+                      <th className="px-3 py-2">Category</th>
+                      <th className="px-3 py-2">
+                        Status
+                        <button
+                          className="ml-1 focus:outline-none"
+                          onClick={handleSortByStatus}
+                        >
+                          <SwapVertIcon />
+                        </button>
+                      </th>
+                      <th className="px-3 py-2">
+                        Ratings
+                        <button
+                          className="ml-1 focus:outline-none"
+                          onClick={handleSortByRatings}
+                        >
+                          <SwapVertIcon />
+                        </button>
+                      </th>
+                      <th className="px-3 py-2"></th>
+                      <th className="px-3 py-2"></th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {displayedMealPlans.map((mealPlan, index) => (
+                      <tr key={index} className="bg-white border-b">
+                        <td className="px-3 py-2 text-base text-center">
+                          {mealPlan.title}
+                        </td>
+                        <td className="px-3 py-2 text-base text-center">
+                          {mealPlan.userID?.fullName || "nil"}
+                        </td>
+                        <td className="px-3 py-2 text-base text-center">
+                          {mealPlan.userID?.companyName || "nil"}
+                        </td>
+                        <td className="px-3 py-2 text-base text-center">
+                          {new Date(
+                            mealPlan?.createdDT || mealPlan.lastUpdatedDT
+                          ).toLocaleDateString("en-GB")}
+                        </td>
+                        <td className="px-3 py-2 text-base text-center">
+                          {mealPlan.healthGoal
+                            ? mealPlan.healthGoal.subcategoryName
+                            : "Not specified"}
+                        </td>
+
+                        <td className="px-3 py-2 text-base text-center">
+                          <span
+                            className={`rounded-full px-3 py-1 text-base font-semibold ${
+                              mealPlan.active
+                                ? "text-white bg-green-500"
+                                : "text-white bg-red-500"
+                            }`}
+                          >
+                            {mealPlan.active ? "Active" : "Inactive"}
+                          </span>
+                        </td>
+                        <td className="px-3 py-2 text-base text-center">
+                          <div
+                            className="rating-container flex flex-col"
+                            style={{ minWidth: "100px" }}
+                          >
+                            {mealPlan.average !== null &&
+                            typeof mealPlan.average.averageRatings ===
+                              "number" &&
+                            typeof mealPlan.average.totalNumber === "number" ? (
+                              <span
+                                className="rating-text"
+                                style={{ fontWeight: "bold", color: "#0a0a0a" }}
+                              >
+                                {mealPlan.average.averageRatings.toFixed(1)}
+                              </span>
+                            ) : (
+                              "No ratings yet"
+                            )}
+                            {mealPlan.average &&
+                              mealPlan.average.totalNumber > 0 && (
+                                <span
+                                  className="rating-count"
+                                  style={{ fontSize: "0.8rem", color: "#666" }}
+                                >
+                                  ({mealPlan.average.totalNumber} rating
+                                  {mealPlan.average.totalNumber !== 1
+                                    ? "s"
+                                    : ""}
+                                  )
+                                </span>
+                              )}
+                          </div>
+                        </td>
+                        <td className="px-3 py-2 text-base text-center"></td>
+                        <td className="px-3 py-2 justify-center sm:justify-start">
+                          <button
+                            onClick={() =>
+                              handleToggleMealPlanStatus(
+                                mealPlan.id,
+                                mealPlan.active
+                              )
+                            }
+                            className={`text-white font-bold ${
+                              mealPlan.active
+                                ? "bg-red-600 hover:bg-red-700"
+                                : "bg-stone-400 hover:bg-stone-500"
+                            } rounded-lg text-base px-5 py-2 text-center`}
+                          >
+                            {mealPlan.active ? "Suspend" : "Unsuspend"}
+                          </button>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
               </div>
-            </div>
 
-            {/* Table of meal plans */}
-
-            <div className="overflow-x-auto rounded-lg hidden lg:block">
-              <table className="min-w-full rounded-lg border-zinc-200 border-2">
-                <thead className="bg-zinc-700 font-normal text-white border-gray-800 border-2">
-                  <tr className="text-center text-lg">
-                    <th className="px-3 py-2">
-                      Meal Plan Title
-                      <button
-                        className="ml-1 focus:outline-none"
-                        onClick={handleSortAlphabetically}
-                      >
-                        <SwapVertIcon />
-                      </button>
-                    </th>
-                    <th className="px-3 py-2">Publisher</th>
-                    <th className="px-3 py-2">Company</th>
-                    <th className="px-3 py-2">
-                      Date Published
-                      <button
-                        className="ml-1 focus:outline-none"
-                        onClick={handleSortByDatePublished}
-                      >
-                        <SwapVertIcon />
-                      </button>
-                    </th>
-                    <th className="px-3 py-2">Category</th>
-                    <th className="px-3 py-2">
-                      Status
-                      <button
-                        className="ml-1 focus:outline-none"
-                        onClick={handleSortByStatus}
-                      >
-                        <SwapVertIcon />
-                      </button>
-                    </th>
-                    <th className="px-3 py-2">
-                      Ratings
-                      <button
-                        className="ml-1 focus:outline-none"
-                        onClick={handleSortByRatings}
-                      >
-                        <SwapVertIcon />
-                      </button>
-                    </th>
-                    <th className="px-3 py-2"></th>
-                    <th className="px-3 py-2"></th>
-                  </tr>
-                </thead>
-                <tbody>
+              {/* Mobile View for Tables */}
+              <div className="mx-auto items-center lg:hidden">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
                   {displayedMealPlans.map((mealPlan, index) => (
-                    <tr key={index} className="bg-white border-b">
-                      <td className="px-3 py-2 text-base text-center">
-                        {mealPlan.title}
-                      </td>
-                      <td className="px-3 py-2 text-base text-center">
-                        {mealPlan.userID?.fullName || "nil"}
-                      </td>
-                      <td className="px-3 py-2 text-base text-center">
-                        {mealPlan.userID?.companyName || "nil"}
-                      </td>
-                      <td className="px-3 py-2 text-base text-center">
-                        {new Date(
-                          mealPlan?.createdDT || mealPlan.lastUpdatedDT
-                        ).toLocaleDateString("en-GB")}
-                      </td>
-                      <td className="px-3 py-2 text-base text-center">
-                        {mealPlan.healthGoal
-                          ? mealPlan.healthGoal.subcategoryName
-                          : "Not specified"}
-                      </td>
+                    <div
+                      key={index}
+                      className="bg-white p-5 h-full flex flex-col border border-gray-300 rounded-2xl shadow"
+                    >
+                      {/* Title */}
+                      <p className="px-3 py-2 text-lg">
+                        <span className="font-semibold text-gray-900">
+                          Title:{" "}
+                        </span>
+                        <span className="font-normal text-gray-900">
+                          {mealPlan.title}
+                        </span>
+                      </p>
 
-                      <td className="px-3 py-2 text-base text-center">
+                      {/* Name */}
+                      <p className="px-3 py-2 text-lg">
+                        <span className="font-semibold text-gray-900">
+                          Publisher:{" "}
+                        </span>
+                        <span className="font-normal text-gray-900">
+                          {mealPlan.userID?.fullName || "nil"}
+                        </span>
+                      </p>
+
+                      {/* Company Name */}
+                      <p className="px-3 py-2 text-lg">
+                        <span className="font-semibold text-gray-900">
+                          Company Name:{" "}
+                        </span>
+                        <span className="font-normal text-gray-900">
+                          {mealPlan.userID?.companyName || "nil"}
+                        </span>
+                      </p>
+                      {/* Date Published */}
+                      <p className="px-3 py-2 text-lg">
+                        <span className="font-semibold text-gray-900">
+                          Date Published:{" "}
+                        </span>
+                        <span className="font-normal text-gray-900">
+                          {new Date(
+                            mealPlan?.createdDT || mealPlan.lastUpdatedDT
+                          ).toLocaleDateString("en-GB")}
+                        </span>
+                      </p>
+                      {/* Category */}
+                      <p className="px-3 py-2 text-lg">
+                        <span className="font-semibold text-gray-900">
+                          Category:{" "}
+                        </span>
+                        <span className="font-normal text-gray-900">
+                          {mealPlan.healthGoal
+                            ? mealPlan.healthGoal.subcategoryName
+                            : "Not specified"}
+                        </span>
+                      </p>
+                      {/* Status */}
+                      <p className="px-3 py-2 text-lg">
+                        <span className="font-semibold text-gray-900 mr-2">
+                          Status:{" "}
+                        </span>
                         <span
                           className={`rounded-full px-3 py-1 text-base font-semibold ${
                             mealPlan.active
@@ -430,12 +590,17 @@ const SuspendMealPlan = () => {
                         >
                           {mealPlan.active ? "Active" : "Inactive"}
                         </span>
-                      </td>
-                      <td className="px-3 py-2 text-base text-center">
+                      </p>
+                      {/* Ratings */}
+                      <div className="px-3 py-2 text-lg">
                         <div
-                          className="rating-container flex flex-col"
+                          className="rating-container flex flex-row gap-2"
                           style={{ minWidth: "100px" }}
                         >
+                          <p className="font-semibold text-gray-900">
+                            Ratings:{" "}
+                          </p>
+
                           {mealPlan.average !== null &&
                           typeof mealPlan.average.averageRatings === "number" &&
                           typeof mealPlan.average.totalNumber === "number" ? (
@@ -459,9 +624,9 @@ const SuspendMealPlan = () => {
                               </span>
                             )}
                         </div>
-                      </td>
-                      <td className="px-3 py-2 text-base text-center"></td>
-                      <td className="px-3 py-2 justify-center sm:justify-start">
+                      </div>
+                      {/* Buttons */}
+                      <div className="mt-2 flex flex-col space-y-3 items-center">
                         <button
                           onClick={() =>
                             handleToggleMealPlanStatus(
@@ -469,154 +634,33 @@ const SuspendMealPlan = () => {
                               mealPlan.active
                             )
                           }
-                          className={`text-white font-bold ${
+                          className={`text-white font-bold  ${
                             mealPlan.active
                               ? "bg-red-600 hover:bg-red-700"
                               : "bg-stone-400 hover:bg-stone-500"
-                          } rounded-lg text-base px-5 py-2 text-center`}
+                          } focus:ring-4 focus:outline-none focus:ring-blue-300 rounded-lg text-base px-5 py-2.5 w-full ml-2 mr-2 text-center`}
                         >
                           {mealPlan.active ? "Suspend" : "Unsuspend"}
                         </button>
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-
-            {/* Mobile View for Tables */}
-            <div className="mx-auto items-center lg:hidden">
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
-                {displayedMealPlans.map((mealPlan, index) => (
-                  <div
-                    key={index}
-                    className="bg-white p-5 h-full flex flex-col border border-gray-300 rounded-2xl shadow"
-                  >
-                    {/* Title */}
-                    <p className="px-3 py-2 text-lg">
-                      <span className="font-semibold text-gray-900">
-                        Title:{" "}
-                      </span>
-                      <span className="font-normal text-gray-900">
-                        {mealPlan.title}
-                      </span>
-                    </p>
-
-                    {/* Name */}
-                    <p className="px-3 py-2 text-lg">
-                      <span className="font-semibold text-gray-900">
-                        Publisher:{" "}
-                      </span>
-                      <span className="font-normal text-gray-900">
-                        {mealPlan.userID?.fullName || "nil"}
-                      </span>
-                    </p>
-
-                    {/* Company Name */}
-                    <p className="px-3 py-2 text-lg">
-                      <span className="font-semibold text-gray-900">
-                        Company Name:{" "}
-                      </span>
-                      <span className="font-normal text-gray-900">
-                        {mealPlan.userID?.companyName || "nil"}
-                      </span>
-                    </p>
-                    {/* Date Published */}
-                    <p className="px-3 py-2 text-lg">
-                      <span className="font-semibold text-gray-900">
-                        Date Published:{" "}
-                      </span>
-                      <span className="font-normal text-gray-900">
-                        {new Date(
-                          mealPlan?.createdDT || mealPlan.lastUpdatedDT
-                        ).toLocaleDateString("en-GB")}
-                      </span>
-                    </p>
-                    {/* Category */}
-                    <p className="px-3 py-2 text-lg">
-                      <span className="font-semibold text-gray-900">
-                        Category:{" "}
-                      </span>
-                      <span className="font-normal text-gray-900">
-                        {mealPlan.healthGoal
-                          ? mealPlan.healthGoal.subcategoryName
-                          : "Not specified"}
-                      </span>
-                    </p>
-                    {/* Status */}
-                    <p className="px-3 py-2 text-lg">
-                      <span className="font-semibold text-gray-900 mr-2">
-                        Status:{" "}
-                      </span>
-                      <span
-                        className={`rounded-full px-3 py-1 text-base font-semibold ${
-                          mealPlan.active
-                            ? "text-white bg-green-500"
-                            : "text-white bg-red-500"
-                        }`}
-                      >
-                        {mealPlan.active ? "Active" : "Inactive"}
-                      </span>
-                    </p>
-                    {/* Ratings */}
-                    <div className="px-3 py-2 text-lg">
-                      <div
-                        className="rating-container flex flex-row gap-2"
-                        style={{ minWidth: "100px" }}
-                      >
-                        <p className="font-semibold text-gray-900">Ratings: </p>
-
-                        {mealPlan.average !== null &&
-                        typeof mealPlan.average.averageRatings === "number" &&
-                        typeof mealPlan.average.totalNumber === "number" ? (
-                          <span
-                            className="rating-text"
-                            style={{ fontWeight: "bold", color: "#0a0a0a" }}
-                          >
-                            {mealPlan.average.averageRatings.toFixed(1)}
-                          </span>
-                        ) : (
-                          "No ratings yet"
-                        )}
-                        {mealPlan.average &&
-                          mealPlan.average.totalNumber > 0 && (
-                            <span
-                              className="rating-count"
-                              style={{ fontSize: "0.8rem", color: "#666" }}
-                            >
-                              ({mealPlan.average.totalNumber} rating
-                              {mealPlan.average.totalNumber !== 1 ? "s" : ""})
-                            </span>
-                          )}
                       </div>
                     </div>
-                    {/* Buttons */}
-                    <div className="mt-2 flex flex-col space-y-3 items-center">
-                      <button
-                        onClick={() =>
-                          handleToggleMealPlanStatus(
-                            mealPlan.id,
-                            mealPlan.active
-                          )
-                        }
-                        className={`text-white font-bold  ${
-                          mealPlan.active
-                            ? "bg-red-600 hover:bg-red-700"
-                            : "bg-stone-400 hover:bg-stone-500"
-                        } focus:ring-4 focus:outline-none focus:ring-blue-300 rounded-lg text-base px-5 py-2.5 w-full ml-2 mr-2 text-center`}
-                      >
-                        {mealPlan.active ? "Suspend" : "Unsuspend"}
-                      </button>
-                    </div>
-                  </div>
-                ))}
+                  ))}
+                </div>
               </div>
             </div>
-          </div>
-        </>
-      )}
-    </div>
+          </>
+        )}
+      </div>
+    </QueryClientProvider>
   );
 };
 
-export default SuspendMealPlan;
+const WrappedSuspendMealPlansPage = () => {
+  return (
+    <QueryClientProvider client={queryClient}>
+      <SuspendMealPlan />
+    </QueryClientProvider>
+  );
+};
+
+export default WrappedSuspendMealPlansPage;

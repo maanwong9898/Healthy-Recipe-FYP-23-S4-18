@@ -49,7 +49,8 @@ const fetchCategories = async () => {
     const response = await axiosInterceptorInstance.get(
       "category/getAllHealthGoals"
     );
-    setCategories(response.data);
+    // setCategories(response.data);
+    return response.data;
   } catch (error) {
     console.error("Error fetching categories:", error);
   }

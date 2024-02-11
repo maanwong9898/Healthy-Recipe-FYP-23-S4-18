@@ -48,7 +48,8 @@ const fetchCategories = async () => {
     const response = await axiosInterceptorInstance.get(
       "category/getAllHealthGoals"
     );
-    setCategories(response.data);
+    // setCategories(response.data);
+    return response.data;
   } catch (error) {
     console.error("Error fetching categories:", error);
   }
@@ -91,44 +92,6 @@ const MealPlanPage = () => {
 
   // Additional state to track if search button has been clicked
   const [searchButtonClicked, setSearchButtonClicked] = useState(false);
-
-  // Fetch all meal plan and categories on page load
-  // useEffect(() => {
-  //   setIsLoading(true); // Set loading state to true
-
-  //   const getData = async () => {
-  //     const fetchedMealPlan = await fetchMealPlan();
-
-  //     const mealPlansWithAverage = await Promise.all(
-  //       fetchedMealPlan.map(async (mealPlan) => {
-  //         const average = await fetchMealPlanAverage(mealPlan.id);
-  //         return { ...mealPlan, average };
-  //       })
-  //     );
-  //     console.log("mealPlan with average:", mealPlansWithAverage);
-
-  //     setAllMealPlan(mealPlansWithAverage);
-  //     setDisplayedMealPlan(mealPlansWithAverage);
-  //   };
-
-  //   const fetchCategories = async () => {
-  //     try {
-  //       const response = await axiosInterceptorInstance.get(
-  //         "category/getAllHealthGoals"
-  //       );
-  //       setCategories(response.data);
-  //     } catch (error) {
-  //       console.error("Error fetching categories:", error);
-  //     }
-  //   };
-  //   Promise.all([getData(), fetchCategories()])
-  //     .catch((error) => {
-  //       console.error("Error in fetchData or fetchCategories:", error);
-  //     })
-  //     .finally(() => {
-  //       setIsLoading(false); // End loading after both operations are complete
-  //     });
-  // }, []);
 
   // Fetch all recipes
   const {

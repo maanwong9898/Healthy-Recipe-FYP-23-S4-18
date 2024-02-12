@@ -5,6 +5,7 @@ import Link from "next/link";
 import { useState, useEffect } from "react";
 import axiosInterceptorInstance from "../../../../axiosInterceptorInstance";
 import BusinessUserNavBar from "../../../../components/navigation/businessUserNavBar";
+import SecureStorage from "react-secure-storage";
 
 // this is to view particular educational content from landing page
 // router path: /educationalContent/viewEducationalContent/[id]
@@ -38,24 +39,40 @@ const ViewEducationalContent = ({ params }) => {
   const [eduContent, setEduContent] = useState(null);
   const [reviewsAndRatings, setReviewsAndRatings] = useState([]);
   const router = useRouter();
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
+  const [isChecking, setIsChecking] = useState(true);
 
   useEffect(() => {
-    setIsLoading(true); // Set loading state to true
+    const token = SecureStorage.getItem("token");
+    const role = SecureStorage.getItem("role");
+    const tokenExpiration = SecureStorage.getItem("token_expiration");
+    const now = new Date().getTime(); // Current time in milliseconds
 
-    const postId = decodeURIComponent(params.id); // Make sure to decode the ID
-    fetchEduContentById(postId)
-      .then((data) => {
-        setEduContent(data);
-        // Assuming the educational content id is needed to fetch the reviews
-        fetchEduContentRatingsAndReviews(data.id);
-      })
-      .catch((error) => {
-        console.error("Error fetching educational content:", error);
-      })
-      .finally(() => {
-        setIsLoading(false); // Set loading to false when operation is complete
-      });
+    if (
+      !token ||
+      role !== "BUSINESS_USER" ||
+      now >= parseInt(tokenExpiration)
+    ) {
+      // If token is invalid or role is not business user, redirect to login
+      SecureStorage.clear();
+      router.push("/");
+      return;
+    } else {
+      setIsChecking(false);
+      const postId = decodeURIComponent(params.id); // Make sure to decode the ID
+      fetchEduContentById(postId)
+        .then((data) => {
+          setEduContent(data);
+          // Assuming the educational content id is needed to fetch the reviews
+          fetchEduContentRatingsAndReviews(data.id);
+        })
+        .catch((error) => {
+          console.error("Error fetching educational content:", error);
+        })
+        .finally(() => {
+          setIsLoading(false); // Set loading to false when operation is complete
+        });
+    }
   }, [params.id]);
 
   const fetchEduContentRatingsAndReviews = async (educationalContentId) => {
@@ -109,6 +126,14 @@ const ViewEducationalContent = ({ params }) => {
     return "";
   };
 
+  const capitalizeFirstLetter = (name) => {
+    if (!name) return "";
+    return name
+      .split(" ")
+      .map((word) => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
+      .join(" ");
+  };
+
   return (
     <div>
       <BusinessUserNavBar />
@@ -129,7 +154,8 @@ const ViewEducationalContent = ({ params }) => {
                 <p>
                   Published by:{" "}
                   <span className="text-orange-600 font-bold tracking-tight">
-                    {eduContent.publisher || "Not Specified"}
+                    {capitalizeFirstLetter(eduContent.publisher) ||
+                      "Not Specified"}
                   </span>
                 </p>
                 <p>

@@ -122,6 +122,14 @@ const ViewEducationalContent = ({ params }) => {
     return "";
   };
 
+  const capitalizeFirstLetter = (name) => {
+    if (!name) return "";
+    return name
+      .split(" ")
+      .map((word) => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
+      .join(" ");
+  };
+
   return (
     <div>
       <HomeNavbar />
@@ -142,7 +150,8 @@ const ViewEducationalContent = ({ params }) => {
                 <p>
                   Published by:{" "}
                   <span className="text-orange-600 font-bold tracking-tight">
-                    {eduContent.publisher || "Not Specified"}
+                    {capitalizeFirstLetter(eduContent.publisher) ||
+                      "Not Specified"}
                   </span>
                 </p>
                 <p>

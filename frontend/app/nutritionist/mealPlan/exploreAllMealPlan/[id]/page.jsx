@@ -7,6 +7,7 @@ import axiosInterceptorInstance from "../../../../axiosInterceptorInstance.js";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import NutritionistNavBar from "../../../../components/navigation/nutritionistNavBar";
+import SecureStorage from "react-secure-storage";
 
 // this is to view particular meal plan
 // router path: /mealPlan/viewMealPlan/[id]
@@ -108,18 +109,37 @@ const ViewMealPlan = ({ params }) => {
   const router = useRouter();
   // Add additional state for carousel index
   const [currentRecipeIndex, setCurrentRecipeIndex] = useState(0);
+  const [isLoading, setIsLoading] = useState(true);
+  const [isChecking, setIsChecking] = useState(true);
 
   useEffect(() => {
-    const mealPlanId = decodeURIComponent(params.id); // Make sure to decode the ID
-    fetchMealPlanById(mealPlanId)
-      .then((data) => {
-        setMealPlan(data);
-        // Assuming the meal plan ID is needed to fetch the reviews
-        fetchMealPlanRatingsAndReviews(data.id);
-      })
-      .catch((error) => {
-        console.error("Error fetching meal plan:", error);
-      });
+    const token = SecureStorage.getItem("token");
+    const role = SecureStorage.getItem("role");
+    const tokenExpiration = SecureStorage.getItem("token_expiration");
+    const now = new Date().getTime(); // Current time in milliseconds
+
+    if (!token || role !== "NUTRITIONIST" || now >= parseInt(tokenExpiration)) {
+      // If token is invalid or role is not business user, redirect to login
+      SecureStorage.clear();
+      router.push("/");
+      return;
+    } else {
+      setIsChecking(false);
+
+      const mealPlanId = decodeURIComponent(params.id); // Make sure to decode the ID
+      fetchMealPlanById(mealPlanId)
+        .then((data) => {
+          setMealPlan(data);
+          // Assuming the meal plan ID is needed to fetch the reviews
+          fetchMealPlanRatingsAndReviews(data.id);
+        })
+        .catch((error) => {
+          console.error("Error fetching meal plan:", error);
+        })
+        .finally(() => {
+          setIsLoading(false); // Set loading to false when operation is complete
+        });
+    }
   }, [params.id]);
 
   const fetchMealPlanRatingsAndReviews = async (mealPlanId) => {
@@ -237,9 +257,12 @@ const ViewMealPlan = ({ params }) => {
     ));
   };
 
-  const capitalizeFirstLetter = (string) => {
-    if (!string) return "";
-    return string.charAt(0).toUpperCase() + string.slice(1).toLowerCase();
+  const capitalizeFirstLetter = (name) => {
+    if (!name) return "";
+    return name
+      .split(" ")
+      .map((word) => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
+      .join(" ");
   };
 
   return (

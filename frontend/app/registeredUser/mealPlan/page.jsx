@@ -1,6 +1,6 @@
 "use client";
 import { useRouter } from "next/navigation";
-import React from "react";
+import React, { use } from "react";
 import { useState, useEffect } from "react";
 import axiosInterceptorInstance from "../../axiosInterceptorInstance.js";
 import { QueryClientProvider, useQuery } from "react-query"; // Added useQuery here
@@ -62,12 +62,12 @@ const fetchMealPlanAverage = async (mealPlanId) => {
     const response = await axiosInterceptorInstance.get(
       `/mealPlan/getAverage/${mealPlanId}`
     );
-    console.log(
-      "Average rating for meal plan",
-      mealPlanId,
-      "is:",
-      response.data
-    );
+    // console.log(
+    //   "Average rating for meal plan",
+    //   mealPlanId,
+    //   "is:",
+    //   response.data
+    // );
     return response.data; // Assuming this returns the average data for the meal plan
   } catch (error) {
     console.error(
@@ -75,6 +75,26 @@ const fetchMealPlanAverage = async (mealPlanId) => {
       error
     );
     return null; // or handle the error as you see fit
+  }
+};
+
+//  Fetch meal plan based on health goals of user
+const fetchMealPlansByHealthGoals = async (healthGoalId) => {
+  try {
+    console.log("Fetching meal plan based on health goals...");
+    const response = await axiosInterceptorInstance.get(
+      `/registeredUsers/getMealPlans/${healthGoalId}`
+    );
+    console.log("Meal plan based on health goals:", response.data);
+    console.log("user Health Goal ID:", healthGoalId);
+
+    const filteredData = response.data.filter(
+      (mealPlan) => mealPlan.active === true
+    );
+    return filteredData;
+  } catch (error) {
+    console.error("Failed to fetch meal plan based on health goals:", error);
+    throw error;
   }
 };
 
@@ -92,6 +112,10 @@ const MealPlanPage = () => {
   const [searchButtonClicked, setSearchButtonClicked] = useState(false);
   const [isAuthorized, setIsAuthorized] = useState(false);
   const [isChecking, setIsChecking] = useState(true);
+
+  const [mealPlansByHealthGoals, setMealPlansByHealthGoals] = useState([]);
+  const [displayPersonalisedSection, setDisplayPersonalisedSection] =
+    useState(true);
 
   useEffect(() => {
     // Perform your token and role check here
@@ -113,7 +137,67 @@ const MealPlanPage = () => {
       // If the user is authorized, allow the component to proceed
       setIsAuthorized(true);
     }
+
+    // Sepcifically for fetching meal plans based on health goals + ratings count display
+    const getMealPlansByHealthGoals = async (healthGoalId) => {
+      try {
+        const mealPlans = await fetchMealPlansByHealthGoals(healthGoalId);
+        const mealPlansWithRatings = await Promise.all(
+          mealPlans.map(async (healthGoalMP) => {
+            const average = await fetchMealPlanAverage(healthGoalMP.id);
+            return { ...healthGoalMP, average }; // Combine the plan with its ratings
+          })
+        );
+        //return mealPlansWithRatings;
+        setMealPlansByHealthGoals(mealPlansWithRatings);
+      } catch (error) {
+        console.error("Error fetching meal plans with ratings:", error);
+        throw error;
+      }
+    };
+
+    const viewUserDashboard = async () => {
+      try {
+        const userId = SecureStorage.getItem("userId");
+        const token = SecureStorage.getItem("token");
+
+        const config = {
+          headers: { Authorization: `Bearer ${token}` },
+        };
+
+        // Make the GET request to the userAndAdmin endpoint
+        const response = await axiosInterceptorInstance.get(
+          "/register/dashboard/" + userId,
+          config
+        );
+
+        console.log("User data fetched from backend:", response.data);
+
+        // Extract healthGoalId from user data
+        const healthGoalId = response.data.healthGoal?.id;
+        console.log("Health Goal ID:", healthGoalId);
+
+        // Fetch meal plans based on health goal only if healthGoalId is available
+        if (healthGoalId) {
+          await getMealPlansByHealthGoals(healthGoalId);
+        } else {
+          displayPersonalisedSection(false); // if user no health goal, hide the personalised section
+        }
+      } catch (error) {
+        console.error("Error fetching user data", error);
+      }
+    };
+    viewUserDashboard();
   }, []);
+
+  // Fetch meal plan based on health goals of user
+  // const {
+  //   data: personalizedMealPlans = [],
+  //   isLoading: isPersonalizedLoading,
+  //   isError: isPersonalizedError,
+  // } = useQuery(["mealPlansByHealthGoals", healthGoalId], () =>
+  //   fetchMealPlansByHealthGoals(healthGoalId)
+  // );
 
   // Fetch all meal plan
   const {
@@ -337,10 +421,13 @@ const MealPlanPage = () => {
     }
   };
 
-  function capitalizeFirstLetter(string) {
-    if (!string) return "";
-    return string.charAt(0).toUpperCase() + string.slice(1);
-  }
+  const capitalizeFirstLetter = (name) => {
+    if (!name) return "";
+    return name
+      .split(" ")
+      .map((word) => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
+      .join(" ");
+  };
 
   // Render stars and count
   const renderStarsAndCount = (post) => {
@@ -449,6 +536,17 @@ const MealPlanPage = () => {
             {renderStarsAndCount(post)}
           </p>
         </div>
+
+        {/* For testing  */}
+        {/* Display category */}
+        {/* <div className="flex justify-center mb-4">
+          <p className="text-gray-700 text-sm font-semibold">
+            Category:{" "}
+            <span className="text-orange-600 font-semibold tracking-tight">
+              {post.healthGoal.subcategoryName || "Not Specified"}
+            </span>
+          </p>
+        </div> */}
       </div>
     </div>
   );
@@ -525,10 +623,10 @@ const MealPlanPage = () => {
                     </div>
 
                     {/* Sort dropdown */}
-                    <div className="flex flex-col lg:flex-row lg:items-center mt-4 lg:mt-0">
+                    <div className="flex flex-col lg:flex-row lg:items-center mt-4 lg:mt-0 lg:mr-3">
                       <label
                         htmlFor="sort"
-                        className="text-xl text-black mb-2 sm:mb-0 sm:mr-2"
+                        className="text-xl text-black mb-1 sm:mb-0 sm:mr-2"
                       >
                         Sort By:
                       </label>
@@ -583,25 +681,53 @@ const MealPlanPage = () => {
                     <>
                       {!searchPerformed && !categoryFilter && !sortOption ? (
                         <>
-                          <div className="mb-5">
+                          {/* Display personalised meal plans */}
+                          {displayPersonalisedSection &&
+                          mealPlansByHealthGoals.length > 0 ? (
+                            <div className="mb-5">
+                              <h2 className="text-3xl font-bold mb-4 mt-8">
+                                Just For You
+                              </h2>
+                              <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
+                                {mealPlansByHealthGoals.map((post) =>
+                                  renderPostCard(post)
+                                )}
+                              </div>
+                            </div>
+                          ) : (
+                            // If user did not set health goal, display message
+                            <div className="mb-5">
+                              <h2 className="text-3xl font-bold mb-4 mt-8">
+                                Just For You
+                              </h2>
+                              <p className="text-gray-500">
+                                No personal health goal selected. Set your
+                                health goal in your dietary preference to find
+                                meal plans most suitable for you!
+                              </p>
+                            </div>
+                          )}
+
+                          {/* <div className="mb-5">
                             <h2 className="text-3xl font-semibold mb-4 mt-4">
-                              Latest Meal Plan
+                              Just For You
                             </h2>
                             <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
-                              {latestMealPlans.map((post) =>
+                              {mealPlansByHealthGoals.map((post) =>
                                 renderPostCard(post)
                               )}
                             </div>
-                          </div>
+                          </div> */}
+
                           <h2 className="text-3xl font-semibold mb-4 mt-4">
                             Other Meal Plan
                           </h2>
-                          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                          <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
                             {otherMealPlans.map((post) => renderPostCard(post))}
                           </div>
                         </>
                       ) : (
-                        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                        <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
                           {displayedMealPlan.map((post) =>
                             renderPostCard(post)
                           )}

@@ -217,14 +217,10 @@ const RecipesPageForUser = () => {
     data: personalizedRecipes,
     isLoading: isLoadingPersonalizedRecipes,
     isError: isErrorPersonalizedRecipes,
-  } = useQuery(
-    ["recipesByDPandAllergies", userId],
-    () => fetchRecipesByDPandAllergies(userId),
-    {
-      // The query will not execute until the userId exists
-      enabled: !!userId,
-    }
+  } = useQuery(["recipesByDPandAllergies", userId], () =>
+    fetchRecipesByDPandAllergies(userId)
   );
+
   // Fetch all recipes
   const {
     data: AllRecipes,
@@ -243,12 +239,6 @@ const RecipesPageForUser = () => {
 
   // Fetch allergies
   const { data: allergyCategory } = useQuery("allergies", fetchAllergies);
-
-  // Fetch Recipes with dietary preferences and allergies
-  const { data: recipesByDPandAllergies } = useQuery(
-    "recipesByDPandAllergies",
-    fetchRecipesByDPandAllergies
-  );
 
   // if (isLoading) return <div>Loading...</div>;
   // if (isError) return <div>Error occurred while fetching data.</div>;

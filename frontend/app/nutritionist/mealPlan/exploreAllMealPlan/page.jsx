@@ -4,6 +4,7 @@ import React from "react";
 import { useState, useEffect } from "react";
 import axiosInterceptorInstance from "../../../axiosInterceptorInstance.js";
 import NutritionistNavBar from "../../../components/navigation/nutritionistNavBar";
+import SecureStorage from "react-secure-storage";
 
 // rouuter path: /mealPlan
 
@@ -66,13 +67,31 @@ const ExploreMealPlanPage = () => {
   const [categories, setCategories] = useState([]);
   const [displayedMealPlan, setDisplayedMealPlan] = useState([]);
   const [resultsCount, setResultsCount] = useState(0);
+  const [isChecking, setIsChecking] = useState(true);
   const [isLoading, setIsLoading] = useState(false);
+  const [isAuthorized, setIsAuthorized] = useState(false);
 
   // Additional state to track if search button has been clicked
   const [searchButtonClicked, setSearchButtonClicked] = useState(false);
 
   // Fetch all meal plan and categories on page load
   useEffect(() => {
+    // Perform your token and role check here
+    const token = SecureStorage.getItem("token");
+    const role = SecureStorage.getItem("role");
+    const tokenExpiration = SecureStorage.getItem("token_expiration");
+    const now = new Date().getTime(); // Current time in milliseconds
+
+    // Replace 'REGISTERED_USER' with the actual role you're checking for
+    if (!token || role !== "NUTRITIONIST" || now >= parseInt(tokenExpiration)) {
+      // If the user is not authorized, redirect them
+      router.push("/"); // Adjust the route as needed
+    } else {
+      setIsChecking(false);
+      // If the user is authorized, allow the component to proceed
+      setIsAuthorized(true);
+    }
+
     setIsLoading(true); // Set loading state to true
 
     const getData = async () => {
@@ -286,11 +305,13 @@ const ExploreMealPlanPage = () => {
     }
   };
 
-  function capitalizeFirstLetter(string) {
-    if (!string) return "";
-    return string.charAt(0).toUpperCase() + string.slice(1);
-  }
-
+  const capitalizeFirstLetter = (name) => {
+    if (!name) return "";
+    return name
+      .split(" ")
+      .map((word) => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
+      .join(" ");
+  };
   // Render stars and count
   const renderStarsAndCount = (post) => {
     if (
@@ -463,7 +484,7 @@ const ExploreMealPlanPage = () => {
           </div>
 
           {/* Sort dropdown */}
-          <div className="flex flex-col lg:flex-row lg:items-center mt-4 lg:mt-0">
+          <div className="flex flex-col lg:flex-row lg:items-center mt-4 lg:mt-0 lg:mr-3">
             <label
               htmlFor="sort"
               className="text-xl text-black mb-2 sm:mb-0 sm:mr-2"
@@ -532,12 +553,12 @@ const ExploreMealPlanPage = () => {
                 <h2 className="text-3xl font-semibold mb-4 mt-4">
                   Other Meal Plan
                 </h2>
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
                   {otherMealPlan.map((post) => renderPostCard(post))}
                 </div>
               </>
             ) : (
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
                 {displayedMealPlan.map((post) => renderPostCard(post))}
               </div>
             )}

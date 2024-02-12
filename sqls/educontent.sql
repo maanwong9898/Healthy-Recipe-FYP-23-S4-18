@@ -743,6 +743,48 @@ VALUES
         'Designed by Freepik',  -- img_title
         1 -- educational_content_type_id
     ),
+    (
+        '51',
+        '2023-02-01 15:30:00',  -- CreatedDT
+        'helpguide',  -- Publisher
+        'Mindful Eating',  -- Title
+        'Paying attention to the moment-to-moment experience of eating can help you improve your diet, manage food cravings, and even lose weight. Here’s how to start eating mindfully.
+        \nWhat is mindful eating? \nMindful eating is maintaining an in-the-moment awareness of the food and drink you put into your body. It involves observing how the food makes you feel and the signals your body sends about taste, satisfaction, and fullness. Mindful eating requires you to simply acknowledge and accept rather than judge the feelings, thoughts, and bodily sensations you observe. It can extend to the process of buying, preparing, and serving your food as well as consuming it.
+        \nBenefits of mindful eating \nBy paying close attention to how you feel as you eat—the texture and tastes of each mouthful, your body’s hunger and fullness signals, how different foods affect your energy and mood—you can learn to savor both your food and the experience of eating. Being mindful of the food you eat can promote better digestion, keep you full with less food, and influence wiser choices about what you eat in the future. It can also help you free yourself from unhealthy habits around food and eating.',
+        3,
+        'https://img.freepik.com/free-vector/woman-thinking-healthy-unhealthy-snacks-choice_74855-15577.jpg?w=996&t=st=1707735062~exp=1707735662~hmac=b5cf4ba56196943016394e1d82cd5603e13ad30d0f299b06e8a7cc99a4538834',
+        'Author: pch.vector, Designed by Freepik',  -- img_title
+        1 -- educational_content_type_id
+    ),
+    (
+        '52',
+        '2023-02-01 15:30:00',  -- CreatedDT
+        'helpguide',  -- Publisher
+        'Heart-Healthy Diet Tips',  -- Title
+        'What is a heart-healthy diet? \nHeart disease is a leading killer—and claims more lives than all forms of cancer combined. Being diagnosed with cardiovascular disease can also take an emotional toll, affecting your mood and quality of life. A heart-healthy diet may reduce your risk of heart disease or stroke by 80%.
+        \nThree keys to a heart-healthy diet \n1. Be smart about fats \nIf you are concerned about your heart health, rather than avoiding fat in your diet, try replacing saturated fats with unsaturated fats. Cut out artificial trans fats, Limit saturated fats.
+        \n2. Do not replace fat with sugar or refined carbs \nWhen cutting back on heart-risky foods, it is important to replace them with healthy alternatives. Replacing processed meats with fish or chicken, for example, can make a positive difference to your health. Your body benefits from having a balanced diet of protein, carbohydrates, and fat. Choosing foods with higher fiber and lower saturated fat can help provide you with the energy you need during the day.
+        \n3. Focus on high-fiber food \nA diet high in fiber can lower “bad” cholesterol and provide nutrients that help protect against heart disease. It may also help you to lose weight. Since fiber stays in the stomach longer than other foods, the feeling of fullness will stay with you much longer. Fiber also moves fat through your digestive system quicker so less of it is absorbed. And when you fill up on fiber, you will also have more energy for exercising.',
+        3,
+        'https://img.freepik.com/free-vector/world-health-day_24908-56242.jpg?w=740&t=st=1707735993~exp=1707736593~hmac=17dcc577460bec6cf2c10926c520ac8db1c02cfb94fe1b6e34969aaf4fcb96de',
+        'Author: gstudioimagen, Designed by Freepik',  -- img_title
+        1 -- educational_content_type_id
+    ),
+    (
+        '53',
+        '2023-02-01 15:30:00',  -- CreatedDT
+        'helpguide',  -- Publisher
+        'Choosing Healthy Protein',  -- Title
+        'When it comes to making protein choices in your diet, quality is just as important as quantity. \nWhat is protein? \nProtein in your diet provides energy and supports your mood and cognitive function. It’s a vital nutrient required for building, maintaining, and repairing tissues, cells, and organs throughout the body. Most animal sources of protein deliver all the amino acids your body needs, while plant-based protein sources often lack one or more of the essential amino acids. 
+        \nThe health benefits of protein \nProtein gives you the energy to get up and go—and keep going. While too much protein can be harmful to people with kidney disease, eating the right amount of high-quality protein: Keeps your immune system functioning properly, maintains heart health and your respiratory system, and speeds recovery after exercise. It is vital to the growth and development of children and for maintaining health in your senior years, can help reduce your risk for diabetes and cardiovascular disease.
+        \nHigh-quality vs. low-quality protein \nDistinguishing between industrially raised meat and organic, grass-fed meat is only part of separating low- and high-quality sources of protein. While some processed or lunch meats, for example, can be a good source of protein, many are loaded with salt, which can cause high blood pressure and lead to other health problems. Processed meats have also been linked with an increased risk of cancer, likely due to the substances used in the processing of the meat.',
+        3,
+        'https://img.freepik.com/free-vector/protein-food-concept-card-set_1284-9928.jpg?w=740&t=st=1707736764~exp=1707737364~hmac=65a5f0b5d04bbb72d039fdd158d63acab57d56a517cc32c702fc4a05ab4e3f33',
+        'Author: macrovector, Designed by Freepik',  -- img_title
+        1 -- educational_content_type_id
+    ),
+    
+    
     
     
 
@@ -803,4 +845,7 @@ VALUES
     ('The content is very informative!',                5.0, '8', 47),
     ('The content is very detailed',                    5.0, '8', 48),
     ('This is awesome!',                                5.0, '7', 49),
-    ('The content is very insightful.',                 5.0, '8', 50);
+    ('The content is very insightful.',                 5.0, '8', 50),
+    ('This is awesome!',                                5.0, '7', 51),
+    ('The content is very insightful.',                 5.0, '8', 52),
+    ('The content is very insightful.',                 5.0, '8', 53);

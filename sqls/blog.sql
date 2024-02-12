@@ -563,6 +563,41 @@ VALUES
         'Author: pch.vector, Designed by Freepik',
         3 -- blog_type_id for miscellaneous                                                                                                                                                      
     ),
+    ( 
+        '51'
+        '2023-01-29 12:00:00',
+        'Le Creuset',
+        'Clever Kitchen Hacks Every Home Chef Should Know',
+        'Discover the artistry of cooking with our premium cookware collection. From iconic Dutch ovens to versatile skillets, each piece is meticulously crafted to elevate your culinary creations. Explore our vibrant range of colors and timeless designs, and unlock a world of culinary possibilities in your kitchen.',
+        1, -- userId 
+        'https://img.freepik.com/free-vector/kitchenware-collection_1308-900.jpg?w=740&t=st=1707736917~exp=1707737517~hmac=1a306a740d5cc62999acf5386e93b966089ee64d96527fbc5a387585acf2ab51',
+        'Author: brgfx, Designed by Freepik',
+        2 -- blog_type_id kitchenware                                                                                                                                                       
+    ),
+    ( 
+        '52'
+        '2023-01-29 12:00:00',
+        'NutriBullet',
+        'Wholesome Cooking Made Easy with NutriBullet Blenders',
+        'Blend your way to healthier meals with NutriBullet blenders. Whether you are whipping up nutrient-packed smoothies or creamy soups, our powerful blenders make meal preparation effortless. Join the NutriBullet community and embark on a journey towards a healthier, happier you.',
+        1, -- userId 
+        'https://img.freepik.com/free-photo/young-woman-preparing-her-nutrition-diet_23-2149297645.jpg?w=996&t=st=1707737064~exp=1707737664~hmac=f794636e159f17f177d343407ce9b29bce0281e98302095a9699e6b342a5bea2',
+        'Designed by Freepik',
+        2 -- blog_type_id kitchenware                                                                                                                                                       
+    ),
+    ( 
+        '53'
+        '2023-01-29 12:00:00',
+        'Test Kitchen',
+        'Master the Art of Baking with Test Kitchen Cookbooks',
+        'Delve into the world of baking with Test Kitchen cookbooks, renowned for their meticulous recipe testing and foolproof techniques. Whether you are a novice baker or a seasoned pastry chef, our comprehensive collection offers something for everyone. From decadent desserts to savory breads, each recipe is expertly crafted to ensure success in the kitchen. Join the Test Kitchen community and elevate your baking skills to new heights.',
+        1, -- userId 
+        'https://img.freepik.com/free-vector/flat-icon-pastry-set_1284-14768.jpg?w=740&t=st=1707737206~exp=1707737806~hmac=c92a8f9091ef7abe1d8e5502febc215b6f29dda94906a899d75ab6790fb4ce9c',
+        'Author: macrovector, Designed by Freepik',
+        1 -- blog_type_id cookbook                                                                                                                                                         
+    ),
+
+
 
 
 

@@ -23,8 +23,14 @@ const changeUserPwd = () => {
   useEffect(() => {
     const userId = SecureStorage.getItem("userId");
     const token = SecureStorage.getItem("token");
+    const tokenExpiration = SecureStorage.getItem("token_expiration");
+    const now = new Date().getTime(); // Current time in milliseconds
 
-    if (!token || SecureStorage.getItem("role") !== "NUTRITIONIST") {
+    if (
+      !token ||
+      SecureStorage.getItem("role") !== "NUTRITIONIST" ||
+      now >= parseInt(tokenExpiration)
+    ) {
       SecureStorage.clear();
       router.push("/");
       return;

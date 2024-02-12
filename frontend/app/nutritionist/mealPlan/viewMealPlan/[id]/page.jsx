@@ -148,9 +148,12 @@ const ViewMealPlan = ({ params }) => {
   };
 
   useEffect(() => {
+    const tokenExpiration = SecureStorage.getItem("token_expiration");
+    const now = new Date().getTime(); // Current time in milliseconds
     if (
       !SecureStorage.getItem("token") ||
-      SecureStorage.getItem("role") !== "NUTRITIONIST"
+      SecureStorage.getItem("role") !== "NUTRITIONIST" ||
+      now >= parseInt(tokenExpiration)
     ) {
       // clear the secure storage
       SecureStorage.clear();

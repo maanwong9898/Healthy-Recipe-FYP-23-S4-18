@@ -30,9 +30,13 @@ const BusinessUserHomePage = () => {
   const [isChecking, setIsChecking] = useState(true);
 
   useEffect(() => {
+    const tokenExpiration = SecureStorage.getItem("token_expiration");
+    const now = new Date().getTime(); // Current time in milliseconds
+
     if (
       !SecureStorage.getItem("token") ||
-      SecureStorage.getItem("role") !== "BUSINESS_USER"
+      SecureStorage.getItem("role") !== "BUSINESS_USER" ||
+      now >= parseInt(tokenExpiration)
     ) {
       // clear the storage and redirect to login page
       SecureStorage.clear();

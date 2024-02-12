@@ -71,8 +71,14 @@ const MyRecipes = () => {
   useEffect(() => {
     const token = SecureStorage.getItem("token");
     const role = SecureStorage.getItem("role");
+    const tokenExpiration = SecureStorage.getItem("token_expiration");
+    const now = new Date().getTime(); // Current time in milliseconds
 
-    if (!token || role !== "BUSINESS_USER") {
+    if (
+      !token ||
+      role !== "BUSINESS_USER" ||
+      now >= parseInt(tokenExpiration)
+    ) {
       // If token is invalid or role is not business user, redirect to login
       SecureStorage.clear();
       router.push("/");

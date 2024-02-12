@@ -10,6 +10,7 @@ import BusinessUserNavBar from "../../../../components/navigation/businessUserNa
 // this is the page to update a recipe
 
 const UpdateRecipePage = ({ params }) => {
+  const router = useRouter();
   const [title, setTitle] = useState("");
   const [publisher, setPublisher] = useState("");
   const [category, setCategory] = useState("");
@@ -52,18 +53,21 @@ const UpdateRecipePage = ({ params }) => {
 
   const [imageBlob, setImageBlob] = useState(""); // Original image
   const [newImageBlob, setNewImageBlob] = useState(null); // New uploaded image
-
-  // useEffect(() => {
-  //   console.log("useEffect newImageBlob");
-  //   console.log("New Image Blob:", newImageBlob);
-  // }, [newImageBlob]);
+  const [isLoading, setLoading] = useState(true);
+  const [isChecking, setIsChecking] = useState(true);
 
   // useEffect to fetch all the categories needed for user registration
   useEffect(() => {
     const token = SecureStorage.getItem("token");
     const role = SecureStorage.getItem("role");
+    const tokenExpiration = SecureStorage.getItem("token_expiration");
+    const now = new Date().getTime(); // Current time in milliseconds
 
-    if (!token || role !== "BUSINESS_USER") {
+    if (
+      !token ||
+      role !== "BUSINESS_USER" ||
+      now >= parseInt(tokenExpiration)
+    ) {
       // If token is invalid or role is not business user, redirect to login
       SecureStorage.clear();
       router.push("/");
@@ -421,7 +425,7 @@ const UpdateRecipePage = ({ params }) => {
   return (
     <div className="min-h-screen flex flex-col justify-center px-6 lg:px-8">
       {isLoading && isChecking ? (
-        <div>Loading...</div>
+        <div>Checking...</div>
       ) : (
         <>
           <BusinessUserNavBar />
@@ -466,7 +470,6 @@ const UpdateRecipePage = ({ params }) => {
                           className="block text-xl mb-1 font-bold text-gray-900"
                         >
                           Dietary Preference
-                          <span className="text-red-500">*</span>
                         </label>
                         <select
                           id="dietaryPreference"
@@ -490,7 +493,7 @@ const UpdateRecipePage = ({ params }) => {
                           htmlFor="mealType"
                           className="block text-xl mb-1 font-bold text-gray-900"
                         >
-                          Meal Type<span className="text-red-500">*</span>
+                          Meal Type
                         </label>
                         <select
                           id="mealType"

@@ -34,8 +34,14 @@ const UpdateAccount = () => {
   useEffect(() => {
     const userId = SecureStorage.getItem("userId");
     const token = SecureStorage.getItem("token");
+    const tokenExpiration = SecureStorage.getItem("token_expiration");
+    const now = new Date().getTime(); // Current time in milliseconds
 
-    if (!token || SecureStorage.getItem("role") !== "BUSINESS_USER") {
+    if (
+      !token ||
+      SecureStorage.getItem("role") !== "BUSINESS_USER" ||
+      now >= parseInt(tokenExpiration)
+    ) {
       SecureStorage.clear();
       router.push("/");
       return;

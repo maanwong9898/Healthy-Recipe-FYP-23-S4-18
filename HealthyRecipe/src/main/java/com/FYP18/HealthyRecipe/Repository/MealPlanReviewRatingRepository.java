@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -35,7 +36,12 @@ public interface MealPlanReviewRatingRepository extends JpaRepository<MealPlanRe
     @Query("SELECT COUNT(b) as totalNumber, AVG(b.rating) as averageRatings  FROM MealPlanReviewRating b WHERE b.mealPlanReviewRatingId.MealPlanID = :mealPlanId")
     ReviewRatingDTO findAverageDTOByMealPlanId (Long mealPlanId);
 
-    @Query("SELECT COUNT(rr) as totalNumber, rr.mealPlanReviewRatingId.MealPlanID as id, AVG(rr.rating) AS averageRatings, AVG(LENGTH(COALESCE(rr.review, ''))) AS averageReviewSize FROM MealPlanReviewRating rr GROUP BY id")
+    // @Query("SELECT COUNT(rr) as totalNumber, rr.mealPlanReviewRatingId.MealPlanID as id, AVG(rr.rating) AS averageRatings, AVG(LENGTH(COALESCE(rr.review, ''))) AS averageReviewSize FROM MealPlanReviewRating rr GROUP BY id")
+    // List<PopularReviewRatingDTO> getMostPopularMealPlans(); 
+
+    @Query("SELECT COUNT(rr) as totalNumber, rr.mealPlanReviewRatingId.MealPlanID as id, AVG(rr.rating) AS averageRatings, AVG(LENGTH(COALESCE(rr.review, ''))) AS averageReviewSize FROM MealPlanReviewRating rr GROUP BY id ORDER BY averageRatings DESC, averageReviewSize DESC, totalNumber DESC")
     List<PopularReviewRatingDTO> getMostPopularMealPlans(); 
 
+    @Query("SELECT COUNT(rr) as totalNumber, rr.mealPlanReviewRatingId.MealPlanID as id, AVG(rr.rating) AS averageRatings, AVG(LENGTH(COALESCE(rr.review, ''))) AS averageReviewSize FROM MealPlanReviewRating rr GROUP BY id ORDER BY averageRatings DESC, averageReviewSize DESC, totalNumber DESC LIMIT :count")
+    List<PopularReviewRatingDTO> getMostPopularMealPlans(@Param("count") Integer count); 
 }

@@ -8,6 +8,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.FYP18.HealthyRecipe.DTO.MealPlanDTO;
+import com.FYP18.HealthyRecipe.DTO.RecipeDTO;
 import com.FYP18.HealthyRecipe.Entity.MealPlan;
 import java.util.List;
 
@@ -24,10 +25,10 @@ public interface MealPlanRepository extends JpaRepository<MealPlan,Long> {
     List<MealPlan> findByUserID(String userId);
 
 
-    @Query(value ="SELECT r.title AS title, r.introduction AS introduction, r.id AS id, r.img AS img FROM MealPlan r", nativeQuery = false)
+    @Query(value ="SELECT r.title AS title, r.introduction AS introduction, r.id AS id, r.img AS img, r.publisher AS publisher FROM MealPlan r", nativeQuery = false)
     List<MealPlanDTO> findMealPlanDTOs();
 
-    @Query(value ="SELECT r.title AS title, r.introduction AS introduction, r.id AS id, r.img AS img FROM MealPlan r WHERE r.title LIKE %:keyword%", nativeQuery = false)
+    @Query(value ="SELECT r.title AS title, r.introduction AS introduction, r.id AS id, r.img AS img, r.publisher AS publisher FROM MealPlan r WHERE r.title LIKE %:keyword%", nativeQuery = false)
     List<MealPlanDTO> findMealPlanDTOsWithKeyword(@Param("keyword") String keyword);
 
     @Modifying 
@@ -41,10 +42,24 @@ public interface MealPlanRepository extends JpaRepository<MealPlan,Long> {
     @Query(value="SELECT COUNT(r) AS count FROM MealPlan r")
     Integer findTotalMealPlanCount();
     
-    @Query(value ="SELECT r.title AS title, r.id AS id, r.img AS img, r.introduction AS introduction FROM MealPlan r WHERE r.id IN :ids", nativeQuery = false)
+    final String getDTOQuery = "SELECT r.title AS title, r.id AS id, r.img AS img, r.introduction AS introduction, r.publisher AS publisher FROM MealPlan r ";
+
+    @Query(value =getDTOQuery + " WHERE r.id IN :ids", nativeQuery = false)
     List<MealPlanDTO> findMealPlanDTOsByIds(@Param("ids") List<Long> ids);
+
+    @Query(value =getDTOQuery + " WHERE r.id NOT IN :ids ORDER BY r.createdDT LIMIT :count", nativeQuery = false)
+    List<MealPlanDTO> findMealPlanDTOsExceptIds(@Param("ids") List<Long> ids, @Param("count") Integer count);
+
+    @Query(value =getDTOQuery +" ORDER BY r.createdDT LIMIT 3", nativeQuery = false)
+    List<MealPlanDTO> findLatestMealPlanDTO();
+
+    @Query(value= getDTOQuery + " WHERE r.id NOT IN (:ids) ORDER BY r.createdDT LIMIT :count")
+    List<MealPlanDTO> findLatestMealPlanDTO(@Param("ids") List<Long> ids,@Param("count") Integer count);
+ 
+    @Query(value= getDTOQuery + " ORDER BY r.createdDT")
+    List<MealPlanDTO> findLatestMealPlanDTO(@Param("count") Integer count);
 
     @Query(value= "SELECT r FROM MealPlan r WHERE r.healthGoalCategoryId = :healthGoalCategoryId")
     List<MealPlan> getMealPlansWithHealthGoal(Long healthGoalCategoryId);
-
+ 
 }

@@ -6,6 +6,9 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.FYP18.HealthyRecipe.DTO.BlogDTO;
+import com.FYP18.HealthyRecipe.DTO.EduCoDTO;
+import com.FYP18.HealthyRecipe.DTO.MealPlanDTO;
 import com.FYP18.HealthyRecipe.Entity.EducationalContent;
 import com.FYP18.HealthyRecipe.Entity.Recipe;
 import com.FYP18.HealthyRecipe.Entity.User;
@@ -49,8 +52,23 @@ public interface EducationalContentRepository extends JpaRepository<EducationalC
     @Transactional
     @Query("SELECT b FROM EducationalContent b WHERE b.userID.id = :userId")
     List<EducationalContent> findByUserID(String userId);
-}
 
-// Validation failed for query for method public abstract
-// com.FYP18.HealthyRecipe.Entity.Blog
-// com.FYP18.HealthyRecipe.Repository.BlogRepository.findByUserId(java.lang.Long)
+    final String getDTO = "SELECT r.title AS title, r.id AS id, r.img AS img, SUBSTRING_INDEX(SUBSTRING_INDEX(r.info, ' ', 500), ' ', 50) AS introduction, r.publisher AS publisher FROM EducationalContent r ";
+
+    @Query(value= getDTO 
+    + "ORDER BY r.createdDateTime LIMIT 3", nativeQuery = false)
+    List<EduCoDTO> findLatestEduCoDTO();
+
+    @Query(value= getDTO 
+    + "WHERE r.id NOT IN (:ids) ORDER BY r.createdDateTime LIMIT :count")
+    List<EduCoDTO> findLatestEduCoDTO(@Param("ids") List<Long> ids,@Param("count") Integer count);
+ 
+    @Query(value= getDTO
+     + "ORDER BY r.createdDateTime")
+    List<EduCoDTO> findLatestEduCoDTO(@Param("count") Integer count);
+
+    @Query(value= getDTO 
+    + "WHERE r.id IN :ids")
+    List<EduCoDTO> findEduCoDTOsByIds(@Param("ids") List<Long> ids);
+}
+ 

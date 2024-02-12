@@ -6,6 +6,7 @@ import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.FYP18.HealthyRecipe.DTO.PopularReviewRatingDTO;
@@ -40,9 +41,15 @@ public interface EducationalContentReviewRatingRepository extends JpaRepository<
     ReviewRatingDTO findAverageDTOByEducationalContentId (Long educationalContentId);
     // List<ReviewRatingDTO> findAverageByEducationalContentIds(List<EducationalContent> id);
     
-     @Query("SELECT COUNT(rr) as totalNumber, rr.educationalContentReviewRatingId.educationalContentID as id, AVG(rr.rating) AS averageRatings, AVG(LENGTH(COALESCE(rr.review, ''))) AS averageReviewSize FROM EducationalContentReviewRating rr GROUP BY id")
+    // @Query("SELECT COUNT(rr) as totalNumber, rr.educationalContentReviewRatingId.educationalContentID as id, AVG(rr.rating) AS averageRatings, AVG(LENGTH(COALESCE(rr.review, ''))) AS averageReviewSize FROM EducationalContentReviewRating rr GROUP BY id")
+    // List<PopularReviewRatingDTO> getMostPopularEducationalContents(); 
+
+ // @Query("SELECT COUNT(rr) as totalNumber, rr.educationalContentReviewRatingId.educationalContentID as id, AVG(rr.rating) AS averageRatings, AVG(LENGTH(COALESCE(rr.review, ''))) AS averageReviewSize FROM EducationalContentReviewRating rr GROUP BY id")
+    @Query("SELECT COUNT(rr) as totalNumber, rr.educationalContentReviewRatingId.educationalContentID as id, AVG(rr.rating) AS averageRatings, AVG(LENGTH(COALESCE(rr.review, ''))) AS averageReviewSize FROM EducationalContentReviewRating rr GROUP BY id ORDER BY averageRatings DESC, averageReviewSize DESC, totalNumber DESC")
     List<PopularReviewRatingDTO> getMostPopularEducationalContents(); 
 
+    @Query("SELECT COUNT(rr) as totalNumber, rr.educationalContentReviewRatingId.educationalContentID as id, AVG(rr.rating) AS averageRatings, AVG(LENGTH(COALESCE(rr.review, ''))) AS averageReviewSize FROM EducationalContentReviewRating rr GROUP BY id ORDER BY averageRatings DESC, averageReviewSize DESC, totalNumber DESC LIMIT :count")
+    List<PopularReviewRatingDTO> getMostPopularEducationalContents(@Param("count") Integer count); 
     // List<EducationalContentReviewRating> findByEducationalContentReviewRatingId(EducationalContentReviewRatingId educationalContentReviewRatingId);
     // List<EducationalContent> findByUserID(User userID);
 }

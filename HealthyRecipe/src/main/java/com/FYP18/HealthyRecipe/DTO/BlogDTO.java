@@ -1,7 +1,6 @@
 package com.FYP18.HealthyRecipe.DTO;
 
-public interface MealPlanDTO {
-    
+public interface BlogDTO {
     Long getId();
     String getTitle();
     String getIntroduction();

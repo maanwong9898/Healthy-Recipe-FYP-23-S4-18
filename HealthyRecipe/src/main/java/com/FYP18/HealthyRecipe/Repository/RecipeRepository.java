@@ -1,5 +1,7 @@
 package com.FYP18.HealthyRecipe.Repository;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -48,15 +50,15 @@ public interface RecipeRepository extends JpaRepository<Recipe, Long> {
     @Query("SELECT r FROM Recipe r WHERE r.ingredients LIKE %:keyword%")
     List<Recipe> findRecipesByIngredients(@Param("keyword") String keyword);
 
+    final String getDTOQuery         = "SELECT r.title AS title, r.publisher AS publisher, r.description AS description, r.id AS id, r.img AS img, r.calories AS calories, r.protein AS protein, r.fat AS fat, r.fibre AS fibre, r.sodium AS sodium, r.carbs AS carbs FROM Recipe r ";
+    final String getDistinctDTOQuery = "SELECT DISTINCT r.title as title, r.publisher AS publisher, r.description AS description, r.id AS id, r.img AS img, r.calories AS calories, r.protein AS protein, r.fat AS fat, r.fibre AS fibre, r.sodium AS sodium, r.carbs AS carbs FROM Recipe r ";
+
+
     @Transactional
-    @Query(value = "SELECT r.title AS title, r.description AS description, r.id AS id, r.img AS img, r.calories AS calories, r.protein AS protein, r.fat AS fat, r.fibre AS fibre, r.sodium AS sodium, r.carbs AS carbs FROM Recipe r WHERE r.title LIKE %:keyword%", nativeQuery = false)
-    // @Query(value ="SELECT r.title AS title, r.description AS description FROM
-    // Recipe r WHERE r.title LIKE %:keyword%", nativeQuery = false)
+    @Query(value =  getDTOQuery + " WHERE r.title LIKE %:keyword%", nativeQuery = false) 
     List<RecipeDTO> findRecipeDTOsByKeyword(@Param("keyword") String keyword);
 
-    @Query(value = "SELECT r.title AS title, r.publisher AS publisher, r.description AS description, r.id AS id, r.img AS img, r.calories AS calories, r.protein AS protein, r.fat AS fat, r.fibre AS fibre, r.sodium AS sodium, r.carbs AS carbs FROM Recipe r WHERE r.id IN :ids", nativeQuery = false)
-    // @Query(value ="SELECT r.title AS title, r.description AS description FROM
-    // Recipe r WHERE r.title LIKE %:keyword%", nativeQuery = false)
+    @Query(value = getDTOQuery + " WHERE r.id IN :ids", nativeQuery = false)
     List<RecipeDTO> findRecipeDTOsByIds(@Param("ids") List<Long> ids);
 
     @Query(value = "SELECT COUNT(r) AS count FROM Recipe r WHERE r.userID.id = :id")
@@ -65,25 +67,18 @@ public interface RecipeRepository extends JpaRepository<Recipe, Long> {
     @Query(value="SELECT COUNT(r) AS count FROM Recipe r")
     Integer findTotalRecipeCount();
     
-
-    @Query(value = "SELECT r.title AS title, r.publisher AS publisher, r.description AS description, r.id AS id, r.img AS img, r.calories AS calories, r.protein AS protein, r.fat AS fat, r.fibre AS fibre, r.sodium AS sodium, r.carbs AS carbs FROM Recipe r WHERE r.dietaryPreferencesId = :dp")
+    
+    @Query(value =  getDTOQuery + " WHERE r.dietaryPreferencesId = :dp")
     List<RecipeDTO> findRecipeDTOsByDietaryPreferences(Long dp);
     
-    @Query(value = "SELECT r.title AS title, r.publisher AS publisher, r.description AS description, r.id AS id, r.img AS img, r.calories AS calories, r.protein AS protein, r.fat AS fat, r.fibre AS fibre, r.sodium AS sodium, r.carbs AS carbs FROM Recipe r WHERE r.mealTypeId = :mealType")
+    @Query(value = getDTOQuery + " WHERE r.mealTypeId = :mealType")
     List<RecipeDTO> findRecipeDTOsByMealType(Long mealType);
-    
-    // @Query("SELECT r.title AS title FROM Recipe r JOIN r.mealTypes mt WHERE mt.id IN (:mealTypes)")
-    // List<RecipeDTO> findRecipeDTOsByMealTypes(@Param("mealTypes") List<Long> mealTypes);
-    
-    // @Query(value = "SELECT r.title as title FROM Recipe r JOIN Allergies al ON al.id = r.allergies.id WHERE al.id NOT IN (:allergies) AND r.dietaryPreferencesId = :dp ORDER BY title")
- 
-    @Query(value = "SELECT DISTINCT r.title as title, r.publisher AS publisher, r.description AS description, r.id AS id, r.img AS img, r.calories AS calories, r.protein AS protein, r.fat AS fat, r.fibre AS fibre, r.sodium AS sodium, r.carbs AS carbs "
-    + "FROM Recipe r JOIN r.allergies al WHERE al.id NOT IN (:allergies) AND r.dietaryPreferencesId = :dp")
+     
+    @Query(value =  getDTOQuery + " JOIN r.allergies al WHERE al.id NOT IN (:allergies) AND r.dietaryPreferencesId = :dp")
     List<RecipeDTO> findRecipeDTOsByAllergiesAndDP(@Param("allergies") Set<Long> allergies, @Param("dp") Long dp);
 
 
-    @Query(value = "SELECT DISTINCT r.title as title, r.publisher AS publisher, r.description AS description, r.id AS id, r.img AS img, r.calories AS calories, r.protein AS protein, r.fat AS fat, r.fibre AS fibre, r.sodium AS sodium, r.carbs AS carbs "
-    + "FROM Recipe r JOIN r.allergies al WHERE al.id NOT IN (:allergies)")
+    @Query(value = getDistinctDTOQuery + " JOIN r.allergies al WHERE al.id NOT IN (:allergies)")
     List<RecipeDTO> findRecipeDTOsByAllergies(@Param("allergies") Set<Long> allergies);
 
     // @Query(value = "SELECT DISTINCT r.title as title, r.publisher AS publisher, r.description AS description, r.id AS id, r.img AS img, r.calories AS calories, r.protein AS protein, r.fat AS fat, r.fibre AS fibre, r.sodium AS sodium, r.carbs AS carbs "
@@ -92,23 +87,19 @@ public interface RecipeRepository extends JpaRepository<Recipe, Long> {
 
     // SELECT id FROM RECIPE WHERE id NOT IN (1) ORDER BY RAND() LIMIT 3;
 
-    @Query(value= "SELECT DISTINCT r.title as title, r.publisher AS publisher, r.description AS description, r.id AS id, r.img AS img, r.calories AS calories, r.protein AS protein, r.fat AS fat, r.fibre AS fibre, r.sodium AS sodium, r.carbs AS carbs " 
-     + "FROM Recipe r WHERE r.id NOT IN (:ids) ORDER BY RAND() LIMIT :count")
+    @Query(value= getDistinctDTOQuery + " WHERE r.id NOT IN (:ids) ORDER BY RAND() LIMIT :count")
     List<RecipeDTO> findRandomRecipes(@Param("ids") List<Long> ids, Integer count);
  
-    @Query(value= "SELECT DISTINCT r.title as title, r.publisher AS publisher, r.description AS description, r.id AS id, r.img AS img, r.calories AS calories, r.protein AS protein, r.fat AS fat, r.fibre AS fibre, r.sodium AS sodium, r.carbs AS carbs " 
-     + "FROM Recipe r ORDER BY RAND() LIMIT :count")
+    @Query(value= getDistinctDTOQuery + " ORDER BY RAND() LIMIT :count")
     List<RecipeDTO> findRandomRecipes(Integer count);
-    // @Column(name = "dietaryPreference", nullable = true)
-    // private Long dietaryPreferencesId;
+
+    @Query(value= getDistinctDTOQuery + " WHERE r.id NOT IN (:ids) ORDER BY r.createdDT LIMIT :count")
+    List<RecipeDTO> findLatestRecipe(@Param("ids") List<Long> ids,@Param("count") Integer count);
+ 
+    @Query(value= getDistinctDTOQuery + " ORDER BY r.createdDT")
+    List<RecipeDTO> findLatestRecipe(@Param("count") Integer count);
     
-    // @ManyToOne(fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH})
-    // @JoinColumn(name="dietaryPreference", insertable = false, updatable = false)  
-    // private DietaryPreferences dietaryPreferences;
 
-    // @Query(value="SELECT r.userID.id AS id, COUNT(r) AS count, 'Recipe' AS type
-    // FROM Recipe r WHERE r.userID.id = :id")
-    // List<TypeCountIdRequest> findCountById(@Param("id") String id);
-
-    // SELECT userId, COUNT(userid) FROM RECIPE GROUP BY USERID;;
+    @Query(value = getDTOQuery)
+    Page<RecipeDTO> findRecipesOfPage(Pageable pageable); 
 }

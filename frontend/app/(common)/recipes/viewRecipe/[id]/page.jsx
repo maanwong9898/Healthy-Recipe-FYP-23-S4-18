@@ -5,6 +5,7 @@ import Link from "next/link";
 import { useState, useEffect } from "react";
 import axiosInterceptorInstance from "../../../../axiosInterceptorInstance.js";
 import HomeNavbar from "../../../../components/navigation/homeNavBar";
+import SecureStorage from "react-secure-storage";
 import Footer from "../../../../components/footer";
 
 // router path: /recipes/viewRecipe/[id]
@@ -59,6 +60,18 @@ const ViewRecipe = ({ params }) => {
   const [isChecking, setIsChecking] = useState(true);
 
   useEffect(() => {
+    if (SecureStorage.getItem("token")) {
+      if (SecureStorage.getItem("role") == "ADMIN") {
+        router.push("/sysAdmin");
+      } else if (SecureStorage.getItem("role") == "REGISTERED_USER") {
+        router.push("/registeredUser/recipes");
+      } else if (SecureStorage.getItem("role") == "NUTRITIONIST") {
+        router.push("/nutritionist");
+      } else if (SecureStorage.getItem("role") == "BUSINESS_USER") {
+        router.push("/businessUser");
+      }
+    }
+
     const recipeId = decodeURIComponent(params.id); // Make sure to decode the ID
     fetchRecipesById(recipeId)
       .then((data) => {

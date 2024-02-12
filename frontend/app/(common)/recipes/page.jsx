@@ -8,6 +8,7 @@ import { Tooltip } from "react-tooltip";
 import HomeNavbar from "@/app/components/navigation/homeNavBar";
 import { QueryClientProvider, useQuery } from "react-query"; // Added useQuery here
 import { queryClient } from "../../queryClient.js"; // Adjust the path as necessary
+import SecureStorage from "react-secure-storage";
 
 // rouuter path: /registeredUser/recipes
 
@@ -322,208 +323,20 @@ const RecipesPageForUser = () => {
     clearIngredientSearchTerm();
   };
 
-  // // Apply filters (without search term)
-  // useEffect(() => {
-  //   let newFilteredRecipes = AllRecipes;
-
-  //   console.log("Start doing filtering...");
-  //   // Filter by dietary preference
-  //   if (selectedDietaryPreference) {
-  //     newFilteredRecipes = newFilteredRecipes.filter(
-  //       (recipe) =>
-  //         recipe.dietaryPreferences?.subcategoryName ===
-  //         selectedDietaryPreference
-  //     );
-  //   }
-
-  //   // Filter by meal type
-  //   if (selectedMealType) {
-  //     newFilteredRecipes = newFilteredRecipes.filter(
-  //       (recipe) => recipe.mealType?.subcategoryName === selectedMealType
-  //     );
-  //   }
-
-  //   // Filter by allergies
-  //   if (selectedAllergies.length > 0) {
-  //     newFilteredRecipes = newFilteredRecipes.filter(
-  //       (recipe) =>
-  //         !selectedAllergies.some((allergy) =>
-  //           recipe.allergies.some((a) => a.subcategoryName === allergy)
-  //         )
-  //     );
-  //   }
-
-  //   // Filter all nutrion values
-  //   // Filter by calories
-  //   if (caloriesMinFilter || caloriesMaxFilter) {
-  //     newFilteredRecipes = newFilteredRecipes.filter((recipe) => {
-  //       const calories = recipe.calories;
-  //       const min = caloriesMinFilter
-  //         ? parseFloat(caloriesMinFilter, 10)
-  //         : -Infinity;
-  //       const max = caloriesMaxFilter
-  //         ? parseFloat(caloriesMaxFilter, 10)
-  //         : Infinity;
-  //       return calories >= min && calories <= max;
-  //     });
-  //   }
-
-  //   // Filter by carbs
-  //   if (carbsMinFilter || carbsMaxFilter) {
-  //     newFilteredRecipes = newFilteredRecipes.filter((recipe) => {
-  //       const carbs = recipe.carbs;
-  //       const min = carbsMinFilter ? parseFloat(carbsMinFilter, 10) : -Infinity;
-  //       const max = carbsMaxFilter ? parseFloat(carbsMaxFilter, 10) : Infinity;
-  //       return carbs >= min && carbs <= max;
-  //     });
-  //   }
-
-  //   // Filter by protein
-  //   if (proteinMinFilter || proteinMaxFilter) {
-  //     newFilteredRecipes = newFilteredRecipes.filter((recipe) => {
-  //       const protein = recipe.protein;
-  //       const min = proteinMinFilter
-  //         ? parseFloat(proteinMinFilter, 10)
-  //         : -Infinity;
-  //       const max = proteinMaxFilter
-  //         ? parseFloat(proteinMaxFilter, 10)
-  //         : Infinity;
-  //       return protein >= min && protein <= max;
-  //     });
-  //   }
-
-  //   // Filter by fat
-  //   if (fatMinFilter || fatMaxFilter) {
-  //     newFilteredRecipes = newFilteredRecipes.filter((recipe) => {
-  //       const fat = recipe.fat;
-  //       const min = fatMinFilter ? parseFloat(fatMinFilter, 10) : -Infinity;
-  //       const max = fatMaxFilter ? parseFloat(fatMaxFilter, 10) : Infinity;
-  //       return fat >= min && fat <= max;
-  //     });
-  //   }
-
-  //   // Filter by sodium
-  //   if (sodiumMinFilter || sodiumMaxFilter) {
-  //     newFilteredRecipes = newFilteredRecipes.filter((recipe) => {
-  //       const sodium = recipe.sodium;
-  //       const min = sodiumMinFilter
-  //         ? parseFloat(sodiumMinFilter, 10)
-  //         : -Infinity;
-  //       const max = sodiumMaxFilter
-  //         ? parseFloat(sodiumMaxFilter, 10)
-  //         : Infinity;
-  //       return sodium >= min && sodium <= max;
-  //     });
-  //   }
-
-  //   // Filter by fibre
-  //   if (fibreMinFilter || fibreMaxFilter) {
-  //     newFilteredRecipes = newFilteredRecipes.filter((recipe) => {
-  //       const fibre = recipe.fibre;
-  //       const min = fibreMinFilter ? parseFloat(fibreMinFilter, 10) : -Infinity;
-  //       const max = fibreMaxFilter ? parseFloat(fibreMaxFilter, 10) : Infinity;
-  //       return fibre >= min && fibre <= max;
-  //     });
-  //   }
-
-  //   // Filter by cooking time
-  //   if (cookingTimeMinFilter || cookingTimeMaxFilter) {
-  //     newFilteredRecipes = newFilteredRecipes.filter((recipe) => {
-  //       const cookingTime = recipe.cookingTime;
-  //       const min = cookingTimeMinFilter
-  //         ? parseFloat(cookingTimeMinFilter, 10)
-  //         : -Infinity;
-  //       const max = cookingTimeMaxFilter
-  //         ? parseFloat(cookingTimeMaxFilter, 10)
-  //         : Infinity;
-  //       return cookingTime >= min && cookingTime <= max;
-  //     });
-  //   }
-
-  //   // let sortedRecipes = [...newFilteredRecipes];
-  //   let sortedRecipes = [...(newFilteredRecipes ?? [])];
-
-  //   // Helper function to get the date for comparison
-  //   const getDateForComparison = (recipe) => {
-  //     // Use createdDT if not null; otherwise, use updateDT
-  //     return new Date(recipe.createdDT || recipe.lastUpdatedDT);
-  //   };
-
-  //   // Sorting
-  //   switch (sortOption) {
-  //     case "LATEST":
-  //       sortedRecipes.sort(
-  //         (a, b) => getDateForComparison(b) - getDateForComparison(a)
-  //       );
-  //       break;
-  //     case "OLDEST":
-  //       sortedRecipes.sort(
-  //         (a, b) => getDateForComparison(a) - getDateForComparison(b)
-  //       );
-  //       break;
-  //     case "ALPHABETICAL_AZ":
-  //       sortedRecipes.sort((a, b) => a.title.localeCompare(b.title));
-  //       break;
-  //     case "ALPHABETICAL_ZA":
-  //       sortedRecipes.sort((a, b) => b.title.localeCompare(a.title));
-  //       break;
-  //     case "HIGHEST_RATINGS":
-  //       sortedRecipes.sort((a, b) => {
-  //         const ratingDiff =
-  //           (b.average?.averageRatings || 0) - (a.average?.averageRatings || 0);
-  //         if (ratingDiff !== 0) return ratingDiff;
-  //         // Use getDateForComparison for tiebreaker date comparison
-  //         return getDateForComparison(b) - getDateForComparison(a); // Latest date first if tie
-  //       });
-  //       break;
-  //   }
-
-  //   console.log("Filtered recipes:", newFilteredRecipes);
-
-  //   console.log("The recipe after multiple filtering: ", newFilteredRecipes);
-  //   console.log("End doing filtering...");
-
-  //   if (searchTerm.trim()) {
-  //   } else {
-  //     setSearchPerformed(false); // To prevent results count from showing when no search is performed
-  //   }
-
-  //   if (ingredientSearchTerm.trim()) {
-  //   } else {
-  //     setSearchPerformed(false);
-  //   }
-
-  //   // setFilteredRecipes(sortedRecipes);
-  //   setDisplayedRecipes(sortedRecipes);
-  //   // setIsSearchEmpty(searchResults.length === 0);
-  //   setIsSearchEmpty(sortedRecipes.length === 0);
-  // }, [
-  //   AllRecipes,
-  //   selectedDietaryPreference,
-  //   selectedMealType,
-  //   selectedAllergies,
-  //   caloriesMinFilter,
-  //   caloriesMaxFilter,
-  //   carbsMinFilter,
-  //   carbsMaxFilter,
-  //   proteinMinFilter,
-  //   proteinMaxFilter,
-  //   fatMinFilter,
-  //   fatMaxFilter,
-  //   sodiumMinFilter,
-  //   sodiumMaxFilter,
-  //   fibreMinFilter,
-  //   fibreMaxFilter,
-  //   cookingTimeFilter,
-  //   cookingTimeMinFilter,
-  //   cookingTimeMaxFilter,
-  //   sortOption,
-  //   searchTerm,
-  //   ingredientSearchTerm,
-  // ]);
-
   // Apply filters (without search term)
   useEffect(() => {
+    if (SecureStorage.getItem("token")) {
+      if (SecureStorage.getItem("role") == "ADMIN") {
+        router.push("/sysAdmin");
+      } else if (SecureStorage.getItem("role") == "REGISTERED_USER") {
+        router.push("/registeredUser/recipes");
+      } else if (SecureStorage.getItem("role") == "NUTRITIONIST") {
+        router.push("/nutritionist");
+      } else if (SecureStorage.getItem("role") == "BUSINESS_USER") {
+        router.push("/businessUser");
+      }
+    }
+
     let newFilteredRecipes = AllRecipes;
 
     console.log("Start doing filtering...");

@@ -6,6 +6,7 @@ import { useState, useEffect } from "react";
 import axiosInterceptorInstance from "../../../../axiosInterceptorInstance.js";
 import HomeNavbar from "@/app/components/navigation/homeNavBar/index.jsx";
 import Footer from "@/app/components/footer/index.jsx";
+import SecureStorage from "react-secure-storage";
 
 // this is to view particular educational content from landing page
 // router path: /educationalContent/viewEducationalContent/[id]
@@ -43,6 +44,18 @@ const ViewEducationalContent = ({ params }) => {
   const [isChecking, setIsChecking] = useState(true);
 
   useEffect(() => {
+    if (SecureStorage.getItem("token")) {
+      if (SecureStorage.getItem("role") == "ADMIN") {
+        router.push("/sysAdmin");
+      } else if (SecureStorage.getItem("role") == "REGISTERED_USER") {
+        router.push("/registeredUser/educationalContent");
+      } else if (SecureStorage.getItem("role") == "NUTRITIONIST") {
+        router.push("/nutritionist");
+      } else if (SecureStorage.getItem("role") == "BUSINESS_USER") {
+        router.push("/businessUser");
+      }
+    }
+
     const postId = decodeURIComponent(params.id); // Make sure to decode the ID
     fetchEduContentById(postId)
       .then((data) => {

@@ -6,6 +6,7 @@ import HomeNavbar from "@/app/components/navigation/homeNavBar";
 import axiosInterceptorInstance from "../../axiosInterceptorInstance.js";
 import { QueryClientProvider, useQuery } from "react-query"; // Added useQuery here
 import { queryClient } from "../../queryClient.js"; // Adjust the path as necessary
+import SecureStorage from "react-secure-storage";
 
 // rouuter path: /mealPlan
 
@@ -108,6 +109,18 @@ const MealPlanPage = () => {
 
   // Filter meal plan based on search term and category filter
   useEffect(() => {
+    if (SecureStorage.getItem("token")) {
+      if (SecureStorage.getItem("role") == "ADMIN") {
+        router.push("/sysAdmin");
+      } else if (SecureStorage.getItem("role") == "REGISTERED_USER") {
+        router.push("/registeredUser/mealPlan");
+      } else if (SecureStorage.getItem("role") == "NUTRITIONIST") {
+        router.push("/nutritionist");
+      } else if (SecureStorage.getItem("role") == "BUSINESS_USER") {
+        router.push("/businessUser");
+      }
+    }
+
     // Ensure AllMealPlan is an array
     let allPosts = Array.isArray(AllMealPlan) ? AllMealPlan : [];
 

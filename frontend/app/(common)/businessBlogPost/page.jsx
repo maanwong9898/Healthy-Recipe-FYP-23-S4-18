@@ -7,6 +7,8 @@ import axiosInterceptorInstance from "../../axiosInterceptorInstance.js";
 import SearchIcon from "@mui/icons-material/Search";
 import { QueryClientProvider, useQuery } from "react-query"; // Added useQuery here
 import { queryClient } from "../../queryClient.js"; // Adjust the path as necessary
+import SecureStorage from "react-secure-storage";
+
 // rouuter path: /businessBlogPost
 
 // Sorting options
@@ -102,6 +104,18 @@ const BusinessBlogPostsPage = () => {
   }
 
   useEffect(() => {
+    if (SecureStorage.getItem("token")) {
+      if (SecureStorage.getItem("role") == "ADMIN") {
+        router.push("/sysAdmin");
+      } else if (SecureStorage.getItem("role") == "REGISTERED_USER") {
+        router.push("/registeredUser/businessBlogPost");
+      } else if (SecureStorage.getItem("role") == "NUTRITIONIST") {
+        router.push("/nutritionist");
+      } else if (SecureStorage.getItem("role") == "BUSINESS_USER") {
+        router.push("/businessUser");
+      }
+    }
+
     console.log("All in one useEffect triggered");
     // Ensure AllBusinessBlogPosts is an array
     let allPosts = Array.isArray(AllBusinessBlogPosts)

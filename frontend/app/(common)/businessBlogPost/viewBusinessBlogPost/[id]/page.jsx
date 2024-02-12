@@ -6,9 +6,10 @@ import { useState, useEffect } from "react";
 import axiosInterceptorInstance from "../../../../axiosInterceptorInstance.js";
 import HomeNavbar from "../../../../components/navigation/homeNavBar";
 import Footer from "../../../../components/footer";
+import SecureStorage from "react-secure-storage";
 
 // this is to view particular blog post from landing page
-// router path: /businessBlogPost
+// router path: /businessBlogPost/viewBusinessBlogPost/[id]
 
 // Slugify utility function
 const slugify = (text) =>
@@ -52,6 +53,18 @@ const ViewBusinessBlogPost = ({ params }) => {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
+    if (SecureStorage.getItem("token")) {
+      if (SecureStorage.getItem("role") == "ADMIN") {
+        router.push("/sysAdmin");
+      } else if (SecureStorage.getItem("role") == "REGISTERED_USER") {
+        router.push("/registeredUser/businessBlogPost");
+      } else if (SecureStorage.getItem("role") == "NUTRITIONIST") {
+        router.push("/nutritionist");
+      } else if (SecureStorage.getItem("role") == "BUSINESS_USER") {
+        router.push("/businessUser");
+      }
+    }
+
     const postId = decodeURIComponent(params.id); // Make sure to decode the ID
     fetchBlogPostById(postId)
       .then((data) => {

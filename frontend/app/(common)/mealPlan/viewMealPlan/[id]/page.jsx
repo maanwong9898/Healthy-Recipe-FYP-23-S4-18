@@ -7,6 +7,7 @@ import axiosInterceptorInstance from "../../../../axiosInterceptorInstance.js";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import HomeNavbar from "@/app/components/navigation/homeNavBar/index.jsx";
+import SecureStorage from "react-secure-storage";
 
 // this is to view particular meal plan
 // router path: /mealPlan/viewMealPlan/[id]
@@ -137,6 +138,18 @@ const ViewMealPlan = ({ params }) => {
   const [isChecking, setIsChecking] = useState(true);
 
   useEffect(() => {
+    if (SecureStorage.getItem("token")) {
+      if (SecureStorage.getItem("role") == "ADMIN") {
+        router.push("/sysAdmin");
+      } else if (SecureStorage.getItem("role") == "REGISTERED_USER") {
+        router.push("/registeredUser/mealPlan");
+      } else if (SecureStorage.getItem("role") == "NUTRITIONIST") {
+        router.push("/nutritionist");
+      } else if (SecureStorage.getItem("role") == "BUSINESS_USER") {
+        router.push("/businessUser");
+      }
+    }
+
     const mealPlanId = decodeURIComponent(params.id); // Make sure to decode the ID
     fetchMealPlanById(mealPlanId)
       .then((data) => {

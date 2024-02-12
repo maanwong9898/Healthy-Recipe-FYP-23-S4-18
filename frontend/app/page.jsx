@@ -10,6 +10,7 @@ import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import axiosInterceptorInstance from "./axiosInterceptorInstance";
 import Footer from "./components/footer";
+import SecureStorage from "react-secure-storage";
 
 // fetch most popular educational contents
 const fetchMostPopularEduContent = async () => {
@@ -171,83 +172,95 @@ const Home = () => {
   const [totalUserCount, setTotalUserCount] = useState([]);
 
   useEffect(() => {
-    setIsLoading(true);
-
-    const getMostPopularRecipe = async () => {
-      try {
-        const recipeData = await fetchMostPopularRecipes();
-        const recipetWithAvgRating = await Promise.all(
-          recipeData.map(async (recipe) => {
-            const average = await fetchAvgRatingForEduContent(recipe.id);
-            return { ...recipe, average };
-          })
-        );
-        setMostPopularRecipes(recipetWithAvgRating);
-      } catch (error) {
-        console.log("Failed to fetch most popular recipes: ", error);
+    if (SecureStorage.getItem("token")) {
+      if (SecureStorage.getItem("role") == "ADMIN") {
+        router.push("/sysAdmin");
+      } else if (SecureStorage.getItem("role") == "REGISTERED_USER") {
+        router.push("/registeredUser");
+      } else if (SecureStorage.getItem("role") == "NUTRITIONIST") {
+        router.push("/nutritionist");
+      } else if (SecureStorage.getItem("role") == "BUSINESS_USER") {
+        router.push("/businessUser");
       }
-    };
+    } else {
+      setIsLoading(true);
 
-    const getMostPopularEduContents = async () => {
-      try {
-        const eduContentData = await fetchMostPopularEduContent();
+      const getMostPopularRecipe = async () => {
+        try {
+          const recipeData = await fetchMostPopularRecipes();
+          const recipetWithAvgRating = await Promise.all(
+            recipeData.map(async (recipe) => {
+              const average = await fetchAvgRatingForEduContent(recipe.id);
+              return { ...recipe, average };
+            })
+          );
+          setMostPopularRecipes(recipetWithAvgRating);
+        } catch (error) {
+          console.log("Failed to fetch most popular recipes: ", error);
+        }
+      };
 
-        const eduContentWithAvgRating = await Promise.all(
-          eduContentData.map(async (eduContent) => {
-            const average = await fetchAvgRatingForEduContent(eduContent.id);
-            return { ...eduContent, average };
-          })
-        );
-        setMostPopularEduContents(eduContentWithAvgRating);
-      } catch (error) {
-        console.log("Failed to fetch educational contents: ", error);
-      }
-    };
+      const getMostPopularEduContents = async () => {
+        try {
+          const eduContentData = await fetchMostPopularEduContent();
 
-    const getMostPopularBlogs = async () => {
-      try {
-        const blogPostData = await fetchMostPopularBlogPosts();
+          const eduContentWithAvgRating = await Promise.all(
+            eduContentData.map(async (eduContent) => {
+              const average = await fetchAvgRatingForEduContent(eduContent.id);
+              return { ...eduContent, average };
+            })
+          );
+          setMostPopularEduContents(eduContentWithAvgRating);
+        } catch (error) {
+          console.log("Failed to fetch educational contents: ", error);
+        }
+      };
 
-        const blogPostsWithAvgRating = await Promise.all(
-          blogPostData.map(async (blogPost) => {
-            const average = await fetchAverageRatingForBlogPost(blogPost.id);
-            return { ...blogPost, average };
-          })
-        );
-        setMostPopularBlogPosts(blogPostsWithAvgRating);
-      } catch (error) {
-        console.log("Failed to fetch blog posts: ", error);
-      }
-    };
+      const getMostPopularBlogs = async () => {
+        try {
+          const blogPostData = await fetchMostPopularBlogPosts();
 
-    const getMostPopularMealPlans = async () => {
-      try {
-        const mealPlanData = await fetchMostPopularMealPlans();
-        const mealPlansWithAvgRating = await Promise.all(
-          mealPlanData.map(async (mealPlan) => {
-            const average = await fetchAverageRatingForBlogPost(mealPlan.id);
-            return { ...mealPlan, average };
-          })
-        );
+          const blogPostsWithAvgRating = await Promise.all(
+            blogPostData.map(async (blogPost) => {
+              const average = await fetchAverageRatingForBlogPost(blogPost.id);
+              return { ...blogPost, average };
+            })
+          );
+          setMostPopularBlogPosts(blogPostsWithAvgRating);
+        } catch (error) {
+          console.log("Failed to fetch blog posts: ", error);
+        }
+      };
 
-        setMostPopularMealPlans(mealPlansWithAvgRating);
-      } catch (error) {
-        console.log("Failed to fetch most popular meal plans: ", error);
-      }
-    };
+      const getMostPopularMealPlans = async () => {
+        try {
+          const mealPlanData = await fetchMostPopularMealPlans();
+          const mealPlansWithAvgRating = await Promise.all(
+            mealPlanData.map(async (mealPlan) => {
+              const average = await fetchAverageRatingForBlogPost(mealPlan.id);
+              return { ...mealPlan, average };
+            })
+          );
 
-    Promise.all([
-      getMostPopularRecipe(),
-      getMostPopularEduContents(),
-      getMostPopularBlogs(),
-      getMostPopularMealPlans(),
-    ])
-      .catch((error) => {
-        console.error("Error in fetching data: ", error);
-      })
-      .finally(() => {
-        setIsLoading(false);
-      });
+          setMostPopularMealPlans(mealPlansWithAvgRating);
+        } catch (error) {
+          console.log("Failed to fetch most popular meal plans: ", error);
+        }
+      };
+
+      Promise.all([
+        getMostPopularRecipe(),
+        getMostPopularEduContents(),
+        getMostPopularBlogs(),
+        getMostPopularMealPlans(),
+      ])
+        .catch((error) => {
+          console.error("Error in fetching data: ", error);
+        })
+        .finally(() => {
+          setIsLoading(false);
+        });
+    }
   }, []);
 
   const capitalizeFirstLetter = (name) => {

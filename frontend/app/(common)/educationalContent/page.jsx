@@ -6,6 +6,7 @@ import HomeNavbar from "@/app/components/navigation/homeNavBar";
 import axiosInterceptorInstance from "../../axiosInterceptorInstance.js";
 import { QueryClientProvider, useQuery } from "react-query"; // Added useQuery here
 import { queryClient } from "../../queryClient.js"; // Adjust the path as necessary
+import SecureStorage from "react-secure-storage";
 
 // rouuter path: /educationalContent
 
@@ -27,7 +28,6 @@ const fetchEducationalContent = async () => {
     );
     console.log("All Edu:", response.data);
 
-    ///////////////////////////////////////////////////////////////
     // Fetch average ratings for each educational content
     const eduContentWithAverage = await Promise.all(
       response.data.map(async (eduContent) => {
@@ -116,6 +116,18 @@ const EducationalContentPageForUser = () => {
 
   // Filter blog posts based on search term and category filter
   useEffect(() => {
+    if (SecureStorage.getItem("token")) {
+      if (SecureStorage.getItem("role") == "ADMIN") {
+        router.push("/sysAdmin");
+      } else if (SecureStorage.getItem("role") == "REGISTERED_USER") {
+        router.push("/registeredUser/educationalContent");
+      } else if (SecureStorage.getItem("role") == "NUTRITIONIST") {
+        router.push("/nutritionist");
+      } else if (SecureStorage.getItem("role") == "BUSINESS_USER") {
+        router.push("/businessUser");
+      }
+    }
+
     let allPosts = Array.isArray(AllEduContent) ? AllEduContent : [];
 
     let filteredPosts = allPosts;

@@ -7,6 +7,7 @@ import { Pie } from "react-chartjs-2";
 import axiosInterceptorInstance from "../../axiosInterceptorInstance";
 import SecureStorage from "react-secure-storage";
 import RegisteredUserNavBar from "../../components/navigation/registeredUserNavBar";
+import { useRouter } from "next/navigation";
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 

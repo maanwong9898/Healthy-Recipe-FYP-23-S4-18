@@ -1,11 +1,13 @@
 "use client";
 
 import React, { use, useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 import Image from "next/image";
 import HomeNavbar from "@/app/components/navigation/homeNavBar";
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
 import { Pie } from "react-chartjs-2";
 import axiosInterceptorInstance from "../../axiosInterceptorInstance";
+import SecureStorage from "react-secure-storage";
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
@@ -14,6 +16,7 @@ const AboutUs = () => {
   const [userDietaryPreferenceCount, setUserDietaryPreferenceCount] = useState(
     []
   );
+  const router = useRouter();
 
   const fetchDietaryPreferences = async () => {
     try {
@@ -42,8 +45,20 @@ const AboutUs = () => {
   };
 
   useEffect(() => {
-    fetchDietaryPreferences();
-    fetchUserAgeGroup();
+    if (SecureStorage.getItem("token")) {
+      if (SecureStorage.getItem("role") == "ADMIN") {
+        router.push("/sysAdmin");
+      } else if (SecureStorage.getItem("role") == "REGISTERED_USER") {
+        router.push("/registeredUser/aboutUs");
+      } else if (SecureStorage.getItem("role") == "NUTRITIONIST") {
+        router.push("/nutritionist");
+      } else if (SecureStorage.getItem("role") == "BUSINESS_USER") {
+        router.push("/businessUser");
+      }
+    } else {
+      fetchDietaryPreferences();
+      fetchUserAgeGroup();
+    }
   }, []);
 
   // Group raw age data into age groups

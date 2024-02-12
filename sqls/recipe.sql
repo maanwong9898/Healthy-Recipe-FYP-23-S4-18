@@ -11,8 +11,10 @@ VALUES
 ("Fish"),
 ("Peanut"),
 ("Tree Nuts"),
-("Gluten");
-
+("Gluten"),
+('Wheat'),
+('Dairy'),
+('Legume');
 -- 2. Dietary preferences
 Insert into dietary_preferences 
  (subcategory_name) 
@@ -1325,6 +1327,158 @@ VALUES
         2, -- dietary_preference
         25, -- cooking_time  
         8   -- meal type (cuisines)
+    ),
+    (
+        68,
+        'Gina',
+        'Apple Pie Overnight Oats',
+        'Not Specified',
+        361, 59, 8, 11, 10, 154, -- calories, carbs, protein, fat, fibre, sodium
+        2,
+        'With apples, walnuts, chia seeds, maple syrup, oats, and cinnamon, this comforting overnight oat meal tastes just like apple pie!',
+        'Add the apples, cinnamon, maple syrup and a pinch of sea salt to small sauce pan over low heat.\nMix to combine then cover and cook for about 10 minutes, stirring occasionally, until the apples are tender.\nRemove the lid, increase the heat to medium and cook an additional 2-3 minutes or until the sauce thickens slightly and coats the apples and excess liquid evaporates.\nRemove from the heat and set aside while you make the oats.\nFor the oats: In a small bowl, add the milk, chia seeds, vanilla, cinnamon, nutmeg, and maple syrup.\nAdd the oats and mix to combine.\nAdd 1/4 of the oat mixture to 2 mason jars (8oz) or airtight containers (with lids).\nLayer each evenly with ¼ of the apples then top each with an equal amount of the remaining oats and 1 tablespoon walnuts.\nCover and refrigerate overnight.\nOats may be eaten cold, at room temperature or warm.',
+        '1 medium apple, chopped \n2 teaspoons ground cinnamon \n1 tablespoon pure maple syrup \nSea salt \n1 1/2 cups unsweetened almond milk, or milk of your choice \n2 teaspoons chia seeds \n1 teaspoon vanilla extract \n1 teaspoon ground cinnamon \n1/8 teaspoon ground nutmeg \n1/2 tablespoon pure maple syrup \n1 cup old fashioned oats, or gluten-free oats \n2 tablespoons chopped walnuts, for topping',
+        '4', -- UserID
+        TRUE,
+        '2023-10-29 14:00:00',
+        'https://www.skinnytaste.com/wp-content/uploads/2022/10/Apple-Pie-Overnight-Oats-3.jpg',
+        'Author : skinnytaste, Designed by skinnytaste',  -- img_title
+        1, -- dietary_preference
+        25, -- cooking_time  
+        2   -- meal type (cuisines)
+    ),
+    (
+        69,
+        'Gina',
+        'Classic Egg Salad',
+        'Not Specified',
+        185, 1, 9.5, 15.5, 3.5, 215.5, -- calories, carbs, protein, fat, fibre, sodium
+        4,
+        'This classic egg salad recipe is the perfect make-ahead dish for breakfast on toast, for lunch in a wrap, lettuce wrap, over salad or in a sandwich.',
+        'Combine all the ingredients and refrigerate until ready to eat.',
+        '6 hard boiled eggs, peeled and chopped \n3 tablespoons mayonnaise \n1 teaspoon finely chopped red onion \n1/8 teaspoon kosher salt \nfresh black pepper, to taste \n1/8 teaspoon sweet paprika, for garnish \nchopped chives, for garnish',
+        '4', -- UserID
+        TRUE,
+        '2023-09-11 13:00:00',
+        'https://www.skinnytaste.com/wp-content/uploads/2019/01/Egg-Salad-Finals-9.jpg',
+        'Author : skinnytaste, Designed by skinnytaste',  -- img_title
+        2, -- dietary_preference
+        25, -- cooking_time  
+        2   -- meal type (cuisines)
+    ),
+    (
+        70,
+        'Gina',
+        'Spicy Gochujang Tofu Bowl',
+        'Not Specified',
+        473, 50, 26, 19, 6, 942, -- calories, carbs, protein, fat, fibre, sodium
+        2,
+        'Crumble it up to win over a non-tofu lover. These plant-based Spicy Gochujang Tofu Bowls are bursting with flavor, protein, and vegetables!',
+        'Place tofu on a paper towel or tea towel lined plate.  Cover with another towel and place a heavy pan on top to press out excess water from tofu.\nCrumble the tofu into small bowl with your fingers into small (ground meat-size) pieces. Set aside.\nIn a small bowl or measuring cup, whisk together the Gochujang with the soy sauce and 1 tablespoon vinegar.\nHeat a large skillet over medium high heat.\nAdd 1/2 tablespoon of the sesame oil, swirling to coat the bottom of the pan.\nAdd the garlic and ginger and sauté for 30 seconds.  Add the crumbled tofu and cook, stirring often, for 5 minutes, or until some of the pieces just start to brown.\nAdd the gochujang sauce and mix to evenly coat. Cook an additional 4-5 minutes, stirring often, until the pieces brown a little on the edges.\nMeanwhile, prepare the slaw: In a small mixing bowl, combine the remaining 2 tablespoons vinegar, 2 teaspoons sesame oil and 1 teaspoon honey with 1/4 teaspoon salt. Whisk to combine until smooth and combined.  Add the coleslaw mix and scallion whites and toss to evenly coat with dressing.\nDivide the rice into 2 medium serving bowls.\nAdd 1 1/2 cups slaw and 1 cup tofu to each bowl. Top each with scallion greens and serve immediately.',
+        '1 14-ounce package extra firm tofu, drained \n2 tablespoons Gochujang \n2 tablespoons reduced sodium soy sauce \n3 tablespoons unseasoned rice vinegar \n3 1/2 teaspoons sesame oil \n2 garlic cloves, minced \n1 teaspoon grated fresh ginger \n1 teaspoon honey \n1/4 teaspoon kosher salt \n3 cups tri-color coleslaw mix, red and green cabbage and carrots \n2 scallions, chopped, white and green separated \n1 cup cooked brown rice \nlime wedges, for serving',
+        '4', -- UserID
+        TRUE,
+        '2023-02-21 13:00:00',
+        'https://www.skinnytaste.com/wp-content/uploads/2023/02/Spicy-Gochujang-Tofu-Bowls-7.jpg',
+        'Author : skinnytaste, Designed by skinnytaste',  -- img_title
+        1, -- dietary_preference
+        25, -- cooking_time  
+        12   -- meal type (cuisines)
+    ),
+    (
+        71,
+        'Gina',
+        'Protein PB & J Smoothie Bowl',
+        'Not Specified',
+        268, 30.5, 14.5, 11, 6.5, 278, -- calories, carbs, protein, fat, fibre, sodium
+        1,
+        'The flavor of this protein PB & J smoothie bowl is similar to peanut butter and jelly combined. Rich in protein, definitely the ideal way to start the day!',
+        'Place your milk into the blender.\nAdd frozen fruit, protein powder and 1 tablespoon peanut butter. Seal and blend until smooth.\nPour out into a bowl.\nIf using, melt the remaining peanut butter in the microwave 30 to 45 seconds and drizzle over the bowl.\nAdd desired toppings. Eat right away with a spoon!',
+        '1/4 cup almond, oat or milk of your choice \n2/3 cup frozen blueberries, put your blueberries in the freezer! \n2/3 cup sliced strawberries, frozen \n1 scoop vanilla protein powder \n1 tbsp peanut butter \nOptional toppings: 1 tablespoon melted peanut butter for drizzling,, blueberries, chia seeds',
+        '4', -- UserID
+        TRUE,
+        '2023-03-25 13:20:00',
+        'https://www.skinnytaste.com/wp-content/uploads/2021/03/PB-_-J-Smoothie-Bowl-7.jpg',
+        'Author : skinnytaste, Designed by skinnytaste',  -- img_title
+        2, -- dietary_preference
+        5, -- cooking_time  
+        2   -- meal type (cuisines)
+    ),
+    (
+        72,
+        'Gina',
+        'Chipotle Chicken',
+        'Not Specified',
+        216, 2, 34, 7, 0.5, 561, -- calories, carbs, protein, fat, fibre, sodium
+        4,
+        'Skinless, boneless chicken thighs (or breasts) are used in this simple and quick recipe for chipotle chicken. It is great for tacos, quesadillas, handmade burrito bowls, and more. It is spicy and smokey.',
+        'Season Chicken: Season the chicken thighs with salt and pepper on both sides.\nIn a mixing bowl, combine the minced garlic, chipotle in adobo sauce, ancho chile powder, ground cumin, and dried oregano. Rub the spice mixture evenly over the chicken thighs, making sure they are thoroughly coated. Let them sit a few minutes to let the flavor set in. You can cook right away or refrigerate as long as overnight, the longer the more flavorful!\nPreheat your grill or grill pan to medium-high heat. Grease the grill grates or grill pan with oil to prevent sticking.\nPlace the chicken thighs on the grill or grill pan and cook for approximately 6-8 minutes per side, or until they are fully cooked and reach an internal temperature of 165°F.\nOnce cooked, remove the chicken from the heat and let it rest for a few minutes before serving. Resting allows the flavors to meld together and the juices to redistribute. Slice it up and serve in tacos, rice bowls, etc.',
+        '1 1/2 pounds boneless skinless chicken thighs, trimmed of fat (about 8 thighs) \n1 1/4 teaspoons kosher salt, and fresh ground black pepper, to taste \n2 cloves garlic, minced or crushed \n1/2 to 1 tablespoon chipotle in adobo sauce, from 1 can, you can freeze the rest for future use \n1 teaspoon ancho chile powder \n1 teaspoon ground cumin \n1 teaspoon dried oregano',
+        '4', -- UserID
+        TRUE,
+        '2023-03-25 13:20:00',
+        'https://www.skinnytaste.com/wp-content/uploads/2023/06/Chipotle-Chicken-Thighs-7.jpg',
+        'Author : skinnytaste, Designed by skinnytaste',  -- img_title
+        4, -- dietary_preference
+        30, -- cooking_time  
+        6   -- meal type (cuisines)
+    ),
+    (
+        73,
+        'Gina',
+        'One Pan Roasted Potatoes, Sausage and Peppers',
+        'Not Specified',
+        325, 33, 22.5, 11.5, 4, 587, -- calories, carbs, protein, fat, fibre, sodium
+        4,
+        'One of my favorite fuss-free sheet pan dinners is One Pan Roasted Potatoes with Sausage & Peppers. Ideal for weeknights, plus points for being simple to clean up!',
+        'Cut the potatoes into small 1" x 1/2 inch pieces. These take the longest to cook so cutting them small ensures everything cooks evenly.\nPreheat oven to 375°F.\nSpray one large non-stick baking sheet, or two small ones with olive oil spray to prevent the potatoes from sticking.\nIn a large bowl, combine potatoes, onions, peppers, olive oil, salt, pepper, rosemary and garlic powder. Mix well to be sure everything is coated with oil and seasoned evenly. Pour onto the prepared baking sheet and place in the center of the oven; bake for 15 minutes.\nUse a spoon to toss so nothing sticks or burns.\nAdd the sausage to the baking sheet with the potatoes and vegetables and bake, tossing once or twice for 25-35 minutes, or until your potatoes are cooked through.\nCooking time will vary depending on the thickness of your potatoes and sausage, keep an eye so they do not burn.',
+        '1.5 lb about 3 large potatoes, russet or new \n1 medium onion, peeled and quartered, layers separated \n2 red bell peppers, seeds removed and cut into 1 inch pieces \n2 tsp extra virgin olive oil \nkosher salt and fresh cracked pepper to taste \n1 tsp chopped rosemary, fresh or dry \n1/2 tsp garlic powder \nolive oil spray \n1 lb Italian chicken sausage, each link into 6-7 slices',
+        '3', -- UserID
+        TRUE,
+        '2023-12-13 12:00:00',
+        'https://www.skinnytaste.com/wp-content/uploads/2011/10/One-Pan-Roasted-Potatoes-Sausage-and-Peppers-5.jpg',
+        'Author : skinnytaste, Designed by skinnytaste',  -- img_title
+        4, -- dietary_preference
+        55, -- cooking_time  
+        4   -- meal type (cuisines)
+    ),
+    (
+        74,
+        'Gina',
+        'High-Protein Scrambled Eggs with Cottage Cheese',
+        'Not Specified',
+        173, 1.5, 17.5, 10.5, 4, 327, -- calories, carbs, protein, fat, fibre, sodium
+        2,
+        'Add some cottage cheese to your scrambled eggs for an easy high-protein breakfast.',
+        'In a medium bowl, whisk the eggs, cottage cheese, kosher salt and black pepper, to taste with a fork.\nHeat a medium nonstick skillet over medium-low heat and spray with oil. When warm, pour the eggs in.\nUsing a rubber spatula, slowly scrape sections of eggs to the center of the pan as the bottom starts to set, creating soft folds for about 1 1/2 to 2 minutes total until just set.\nRemove from the heat and serve.',
+        '4 large eggs \n1/2 cup 2% cottage cheese, I like Good Culture \n1/8 teaspoon kosher salt \nfresh ground black pepper \nolive oil spray',
+        '3', -- UserID
+        TRUE,
+        '2023-03-13 12:00:00',
+        'https://www.skinnytaste.com/wp-content/uploads/2022/03/High-Protein-Scrambled-Eggs-7.jpg',
+        'Author : skinnytaste, Designed by skinnytaste',  -- img_title
+        4, -- dietary_preference
+        6, -- cooking_time  
+        4   -- meal type (cuisines)
+    ),
+    (
+        75,
+        'Gina',
+        'Slow Cooker Pork and Green Chili Stew',
+        'Not Specified',
+        253, 5.5, 33, 9, 0.5, 836, -- calories, carbs, protein, fat, fibre, sodium
+        6,
+        'Lean pork chunks slow-cooked in a crock pot with tomatoes, jalapeño, and green chilies make for a tasty, slightly spicy midweek dinner!',
+        'Cut pork into 2-inch pieces. Season with salt and pepper.\nHeat a large non-stick skillet on high heat; when hot lightly spray the pan with oil and brown the pork over medium heat on all sides, about 3 - 4 minutes total.\nSprinkle 1 tbsp of flour over pork and stir to cook 30 seconds, sprinkle remaining flour over pork and cook an additional 30 seconds.\nAdd browned pork to the crock pot, along with the remaining ingredients.\nCook on LOW for 6 to 8 hours or HIGH for 4 hours.\nWhen done, adjust salt and pepper to taste if needed.',
+        '2 lbs pork tenderloin \nsalt and pepper to taste \ncooking spray \n2 tbsp unbleached all-purpose flour \n3/4 cup diced onion \n2 cans, 4.25 oz each whole green chiles, sliced into thick rounds \n2 tbsp chopped jalapeño, or more to taste \n10 oz can diced tomatoes and green chilies \n1/2 cup fat-free low-sodium chicken broth \n1 tbsp cumin \n1/2 tsp garlic powder \nsalt and fresh ground black pepper, to taste',
+        '3', -- UserID
+        TRUE,
+        '2023-10-02 11:00:00',
+        'https://www.skinnytaste.com/wp-content/uploads/2012/10/slow-cooker-pork-and-green-chile-stew-550x798.jpg',
+        'Author : skinnytaste, Designed by skinnytaste',  -- img_title
+        4, -- dietary_preference
+        320, -- cooking_time  
+        6   -- meal type (cuisines)
     );
 
 
@@ -1430,20 +1584,24 @@ VALUES
     (62, ), --none
     (63, 7),
     (64, ), --none
-    (65, ),
-    (66, ),
-
-    
-
-
-
-
-
-
-
-
-
-
+    (65, 2),
+    (66, 2),
+    (66, 10),
+    (67, 2),
+    (68, 3),
+    (68, 7),
+    (68, 8),
+    (69, 2),
+    (70, 3),
+    (71, 1),
+    (71, 6),
+    (71, 7),
+    (72, ), --none
+    (73, ), --none
+    (74, 2),
+    (74, 10),
+    (75, ), --none
+    (76, ),
 
 -- second set of recipes
 INSERT INTO recipe

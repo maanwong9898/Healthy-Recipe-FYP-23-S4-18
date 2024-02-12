@@ -255,7 +255,7 @@ const ViewRecipe = ({ params }) => {
             ) : (
               <>
                 <div className="px-10 text-center font-semibold font-sans">
-                  <h1 className="mb-4 text-2xl font-extrabold leading-tight text-gray-900 lg:mb-6 lg:text-6xl">
+                  <h1 className="flex flex-wrap justify-center mb-4 text-2xl font-extrabold text-gray-900 lg:mb-6 lg:text-4xl">
                     {recipe?.title || "Untitled Recipe"}
                   </h1>
 
@@ -285,7 +285,7 @@ const ViewRecipe = ({ params }) => {
                   {/* End of publisher and published date section  */}
 
                   {/* Combined Allergens and Dietary Preferences section */}
-                  <div className="mt-14 flex justify-center space-x-4">
+                  <div className="mt-10 lg:mt-14 grid grid-cols-2 lg:grid-cols-3 gap-4 justify-center">
                     {/* Allergens section */}
                     <div className="flex-1 p-3" role="alert">
                       <p className="font-bold text-base lg:text-xl text-gray-900 mb-1">
@@ -330,16 +330,6 @@ const ViewRecipe = ({ params }) => {
 
                 {/* start of summary card */}
                 <div className="flex flex-col lg:flex-row mt-4 p-5 bg-slate-100 mx-auto">
-                  {/* <img
-          className="h-auto w-full lg:max-w-lg rounded-lg ml-0 lg:ml-5 shadow-md"
-          src={recipe?.img || "Not specified"}
-          alt="Not found"
-        />
-        <img
-          className="h-auto w-full lg:max-w-lg rounded-lg ml-0 lg:ml-5 shadow-md"
-          src={getImageUrlFromBlob(recipe?.imgBlob)}
-          alt={recipe?.title || "Recipe Image"}
-        /> */}
                   {recipe?.imgBlob ? (
                     // If imgBlob is available, display image from blob
                     <img
@@ -356,7 +346,7 @@ const ViewRecipe = ({ params }) => {
                     />
                   )}
                   <div className="flex flex-col ml-0 lg:ml-4 mt-4">
-                    <div className="flex flex-row font-bold">
+                    <div className="flex lg:flex-row lg:space-x-8 lg:space-y-0 flex-col space-y-4 font-bold">
                       <p className="mr-4 text-bold text-lg tracking-tight">
                         Cooking Time:{" "}
                         <span className="text-orange-600 font-semibold text-base">
@@ -467,7 +457,7 @@ const ViewRecipe = ({ params }) => {
                 </div>
 
                 {/* reviews and ratings */}
-                <div className="blog-post-reviews mt-16 mx-auto max-w-screen-xl text-left border-t-2 border-gray-50">
+                <div className="mt-16 mx-auto max-w-screen-xl text-left border-t-2 border-gray-50">
                   <p className="font-sans font-bold text-2xl md:text-4xl text-gray-900 mb-4 md:mt-8 ml-4 lg:ml-0">
                     Rating and Reviews
                   </p>
@@ -558,7 +548,9 @@ const ViewRecipe = ({ params }) => {
                       </div>
                     </div>
                   ) : (
-                    <p>You have already submitted a review for this recipe.</p>
+                    <p className="p-4">
+                      You have already submitted a review for this recipe.
+                    </p>
                   )}
                 </div>
               </>

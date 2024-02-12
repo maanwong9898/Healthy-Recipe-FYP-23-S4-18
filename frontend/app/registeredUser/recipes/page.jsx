@@ -60,7 +60,6 @@ const fetchRecipeAverage = async (recipeId) => {
   }
 };
 
-// Fetch all categories
 // Fetch all dietary preferences categories from backend
 const fetchDietaryPreferences = async () => {
   console.log("Fetching dietary preferences categories...");
@@ -106,6 +105,27 @@ const fetchAllergies = async () => {
     return response.data;
   } catch (error) {
     console.log(error);
+  }
+};
+
+// Fetch recipes by dietary preferences and allergies
+const fetchRecipesByDPandAllergies = async (userId) => {
+  try {
+    const response = await axiosInterceptorInstance.get(
+      `/registeredUsers/findRecipeDTOsByAllergiesAndDP/${userId}`
+    );
+    console.log("Fetched recipe data is:", response.data);
+    console.log("User ID: ", userId);
+    const recipesWithAverage = await Promise.all(
+      response.data.map(async (recipe) => {
+        const average = await fetchRecipeAverage(recipe.id);
+        return { ...recipe, average };
+      })
+    );
+    return recipesWithAverage;
+  } catch (error) {
+    console.error("Failed to fetch recipe:", error);
+    throw error;
   }
 };
 
@@ -190,6 +210,21 @@ const RecipesPageForUser = () => {
     }
   }, []);
 
+  const userId = SecureStorage.getItem("userId");
+
+  // Fetch Recipes with dietary preferences and allergies
+  const {
+    data: personalizedRecipes,
+    isLoading: isLoadingPersonalizedRecipes,
+    isError: isErrorPersonalizedRecipes,
+  } = useQuery(
+    ["recipesByDPandAllergies", userId],
+    () => fetchRecipesByDPandAllergies(userId),
+    {
+      // The query will not execute until the userId exists
+      enabled: !!userId,
+    }
+  );
   // Fetch all recipes
   const {
     data: AllRecipes,
@@ -208,6 +243,12 @@ const RecipesPageForUser = () => {
 
   // Fetch allergies
   const { data: allergyCategory } = useQuery("allergies", fetchAllergies);
+
+  // Fetch Recipes with dietary preferences and allergies
+  const { data: recipesByDPandAllergies } = useQuery(
+    "recipesByDPandAllergies",
+    fetchRecipesByDPandAllergies
+  );
 
   // if (isLoading) return <div>Loading...</div>;
   // if (isError) return <div>Error occurred while fetching data.</div>;
@@ -990,6 +1031,47 @@ const RecipesPageForUser = () => {
     }
   };
 
+  const capitalizeFirstLetter = (name) => {
+    if (!name) return "";
+    return name
+      .split(" ")
+      .map((word) => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
+      .join(" ");
+  };
+
+  // Render stars and count
+  const renderStarsAndCount = (post) => {
+    if (
+      !post.average ||
+      !post.average.averageRatings ||
+      !post.average.totalNumber
+    ) {
+      return <div>No ratings available</div>;
+    } else {
+      const { averageRatings, totalNumber } = post.average;
+
+      let stars = [];
+      // Render stars based on average rating
+      for (let i = 0; i < 5; i++) {
+        stars.push(
+          <span
+            key={i}
+            className={i < averageRatings ? "text-yellow-300" : "text-gray-300"}
+          >
+            ★
+          </span>
+        );
+      }
+      // Render total count of ratings
+      return (
+        <div className="flex items-center">
+          <span className="mr-1">{stars}</span>
+          <span>({totalNumber} ratings)</span>
+        </div>
+      );
+    }
+  };
+
   const handleViewRecipe = (id) => {
     console.log(`Recipe Title: ${id}`);
     let routePath = `/registeredUser/recipes/viewRecipe/${id}`;
@@ -1010,14 +1092,14 @@ const RecipesPageForUser = () => {
   const renderPostCard = (post) => (
     <div
       key={post.id}
-      className="rounded-lg shadow-lg overflow-hidden flex flex-col"
+      className="bg-white border border-gray-200 rounded-lg shadow-md overflow-hidden flex flex-col cursor-pointer hover:shadow-stone-700 transition duration-300 ease-in-out"
       style={{
         border: "0.5px solid transparent",
-        background:
-          "linear-gradient(to right, #22d3ee 0%, #8b5cf6 100%), white",
+        background: "#48494B",
         backgroundOrigin: "border-box",
         backgroundClip: "content-box, border-box",
       }}
+      onClick={() => handleViewRecipe(post.id)}
     >
       {post?.imgBlob ? (
         // If imgBlob is available, display image from blob
@@ -1037,26 +1119,29 @@ const RecipesPageForUser = () => {
         />
       )}
       <div className="flex-grow flex flex-col justify-between p-4 bg-white">
-        <div>
-          <h2
-            className="text-2xl font-extrabold mb-2 hover:text-orange-600 cursor-pointer"
-            onClick={() => handleViewRecipe(post.id)}
-          >
-            {post.title}
+        {/* Title */}
+        <div className="text-center">
+          <h2 className="text-2xl font-extrabold mb-4">
+            {post?.title || "Untitled Recipe"}
           </h2>
-          {/* Description */}
-          <p className="text-gray-700 text-base mb-4 line-clamp-3">
+        </div>
+        {/* Description */}
+        <div className="flex-grow flex items-center justify-center mb-4">
+          <p className="text-gray-700 text-base line-clamp-3">
             {post.description}
           </p>
-          {/* Publisher */}
-          <p
-            className="text-gray-900 text-base font-semibold"
-            style={{ height: "3.5rem" }}
-          >
+        </div>
+
+        {/* Publisher and Ratings */}
+        <div className="flex flex-col lg:flex-row items-center justify-center space-x-4 mb-4">
+          <p className="text-gray-700 text-sm font-semibold">
             Publisher:{" "}
-            <span className="text-orange-600 font-bold tracking-tight">
-              {post?.publisher || "Not Specified"}
+            <span className="text-orange-600 font-semibold tracking-tight">
+              {capitalizeFirstLetter(post?.publisher) || "Not Specified"}
             </span>
+          </p>
+          <p className="text-gray-700 text-sm font-semibold">
+            {renderStarsAndCount(post)}
           </p>
         </div>
       </div>
@@ -1347,7 +1432,7 @@ const RecipesPageForUser = () => {
 
                   {/* Results count */}
                   {searchButtonClicked && searchPerformed && (
-                    <p className="text-left text-red font-bold text-xl sm:ml-2">
+                    <p className="text-left text-red-500 font-medium text-lg">
                       {resultsCount} results found.
                     </p>
                   )}
@@ -1785,17 +1870,17 @@ const RecipesPageForUser = () => {
                           ) : (
                             // If no search/filter has been performed, display latest and other recipes
                             <>
-                              <div className="mb-5">
+                              <div className="mb-14 bg-orange-100 rounded-lg p-6">
                                 <h2 className="text-4xl font-bold mb-4 mt-4">
-                                  Latest Recipes
+                                  Just For You
                                 </h2>
                                 <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
-                                  {latestRecipes.map((post) =>
+                                  {personalizedRecipes.map((post) =>
                                     renderPostCard(post)
                                   )}
                                 </div>
                               </div>
-                              <div className="mb-5">
+                              <div className="mt-14 mb-5">
                                 <h2 className="text-4xl font-bold mb-4 mt-4">
                                   Other Recipes
                                 </h2>

@@ -8,80 +8,170 @@ import axiosInterceptorInstance from "../axiosInterceptorInstance";
 import RegisteredUserNavBar from "../components/navigation/registeredUserNavBar";
 import SecureStorage from "react-secure-storage";
 
-// Fetch most popular Recipes
-const fetchMostPopularRecipes = async () => {
+// NEED TO PASS DASHABORD TO GET USER ID AND HEALTH GOALS /register/dashboard
+
+// fetch most popular educational contents
+const fetchMostPopularEduContent = async () => {
   try {
-    console.log("Fetching most popular recipes...");
+    console.log("Fetching most popular educational contents...");
     const response = await axiosInterceptorInstance.get(
-      "/recipe/getPopularRecipes"
+      "/landingPage/getMostPopularEducationalContents"
     );
-    console.log("Most Popular Recipes: ", response.data);
+    console.log("Most Popular Educational Contents: ", response.data);
     return response.data;
   } catch (error) {
-    console.log("Failed to fetch most popular recipes: ", error);
+    console.log("Failed to fetch most popular educational contents: ", error);
     throw error;
   }
 };
 
-// fetch all recipes
-// const fetchRecipes = async () => {
-//   try {
-//     console.log("Fetching recipes...");
-//     const response = await axiosInterceptorInstance.get("/recipe/get");
-//     console.log("All Recipes: ", response.data);
-//     return response.data;
-//   } catch (error) {
-//     console.log("Failed to fetch recipes: ", error);
-//     throw error;
-//   }
-// };
-
-// fetch all educational contents
-const fetchEducationalContents = async () => {
+// Fetch average rating for each single educational content
+const fetchAvgRatingForEduContent = async (educationalContentId) => {
   try {
-    console.log("Fetching educational contents...");
+    console.log(
+      "Fetching average rating for each single educational content..."
+    );
     const response = await axiosInterceptorInstance.get(
-      "/educationalContent/get"
+      `/educationalContent/getAverage/${educationalContentId}`
     );
-    console.log("Educational Contents: ", response.data);
+    // console.log(
+    //   "Average rating for Educational Content",
+    //   educationalContentId,
+    //   "is:",
+    //   response.data
+    // );
     return response.data;
   } catch (error) {
-    console.log("Failed to fetch educational contents: ", error);
+    console.log(
+      "Failed to fetch average rating for each single educational content: ",
+      error
+    );
     throw error;
   }
 };
 
-// Fetch all blog posts
-const fetchBlogPosts = async () => {
+// Fetch most popular blog posts
+const fetchMostPopularBlogPosts = async () => {
   try {
-    console.log("Fetching blog posts...");
-    const response = await axiosInterceptorInstance.get("/blog/get");
-    console.log("All blogs:", response.data);
+    console.log("Fetching most popular blog posts...");
+    const response = await axiosInterceptorInstance.get(
+      "/landingPage/getMostPopularBlogs"
+    );
+    console.log("Most Popular Blog Posts:", response.data);
     return response.data;
   } catch (error) {
-    console.error("Failed to fetch blog posts:", error);
+    console.error("Failed to fetch most popular blog posts:", error);
     throw error;
   }
 };
 
-const fetchMealPlans = async () => {
+// Fetch average rating for each single blog post
+const fetchAverageRatingForBlogPost = async (blogPostId) => {
   try {
-    console.log("Fetching meal plans...");
-    const response = await axiosInterceptorInstance.get("/mealPlan/get");
-    console.log("Meal Plans: ", response.data);
+    console.log("Fetching average rating for each single blog post...");
+    const response = await axiosInterceptorInstance.get(
+      `/blog/getAverage/${blogPostId}`
+    );
+
+    // console.log(
+    //   "Average rating for Blog Post",
+    //   blogPostId,
+    //   "is:",
+    //   response.data
+    // );
     return response.data;
   } catch (error) {
-    console.log("Failed to fetch meal plans: ", error);
+    console.log(
+      "Failed to fetch average rating for each single blog post: ",
+      error
+    );
+    throw error;
+  }
+};
+
+//  Fetch meal plan based on health goals of user
+const fetchMealPlansByHealthGoals = async (healthGoalId) => {
+  try {
+    console.log("Fetching meal plan based on health goals...");
+    const response = await axiosInterceptorInstance.get(
+      `/registeredUsers/getMealPlans/${healthGoalId}`
+    );
+    console.log("Meal plan based on health goals:", response.data);
+    console.log("user Health Goal ID:", healthGoalId);
+
+    const filteredData = response.data.filter(
+      (mealPlan) => mealPlan.active === true
+    );
+    return filteredData;
+  } catch (error) {
+    console.error("Failed to fetch meal plan based on health goals:", error);
+    throw error;
+  }
+};
+
+// Fetch the average rating for each single meal plan
+const fetchMealPlanAverage = async (mealPlanId) => {
+  try {
+    const response = await axiosInterceptorInstance.get(
+      `/mealPlan/getAverage/${mealPlanId}`
+    );
+    // console.log(
+    //   "Average rating for meal plan",
+    //   mealPlanId,
+    //   "is:",
+    //   response.data
+    // );
+    return response.data; // Assuming this returns the average data for the meal plan
+  } catch (error) {
+    console.error(
+      `Failed to fetch average for meal plan ${mealPlanId}:`,
+      error
+    );
+    return null; // or handle the error as you see fit
+  }
+};
+
+// Fetch recipes by dietary preferences and allergies
+const fetchRecipesByDPandAllergies = async (userId) => {
+  try {
+    const response = await axiosInterceptorInstance.get(
+      `/registeredUsers/findRecipeDTOsByAllergiesAndDP/${userId}`
+    );
+    console.log("Fetched recipe data is:", response.data);
+    console.log("User ID: ", userId);
+
+    return response.data;
+  } catch (error) {
+    console.error("Failed to fetch recipe:", error);
+    throw error;
+  }
+};
+
+// Fetch average rating for each single recipe
+const fetchAvgRatingForRecipe = async (recipeId) => {
+  try {
+    console.log("Fetching average rating for each single recipe...");
+    const response = await axiosInterceptorInstance.get(
+      `/recipe/getAverage/${recipeId}`
+    );
+
+    //console.log("Average rating for recipe", recipeId, "is:", response.data);
+    return response.data;
+  } catch (error) {
+    console.log(
+      "Failed to fetch average rating for each single recipe: ",
+      error
+    );
     throw error;
   }
 };
 
 const RegisteredUserHomepage = () => {
   const router = useRouter();
-  const [AllBusinessBlogPosts, setAllBusinessBlogPosts] = useState([]);
-  const [AllEducationalContents, setAllEducationalContents] = useState([]);
-  const [AllMealPlans, setAllMealPlans] = useState([]);
-  const [MostPopularRecipes, setMostPopularRecipes] = useState([]);
+  const [recipesByDP, setRecipesByDP] = useState([]);
+  const [mealPlansByHealthGoals, setMealPlansByHealthGoals] = useState([]);
+  const [mostPopularEduContent, setMostPopularEduContent] = useState([]);
+  const [mostPopularBlogPosts, setMostPopularBlogPosts] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [isChecking, setIsChecking] = useState(true);
 
@@ -101,47 +191,105 @@ const RegisteredUserHomepage = () => {
     } else {
       setIsChecking(false);
 
-      const fetchMostPopularRecipesData = async () => {
+      const getMostPopularEduContents = async () => {
         try {
-          const mostPopularRecipesData = await fetchMostPopularRecipes();
-          setMostPopularRecipes(mostPopularRecipesData);
-        } catch (error) {
-          console.log("Failed to fetch most popular recipes: ", error);
-        }
-      };
+          const eduContentData = await fetchMostPopularEduContent();
 
-      const fetchAllEducationalContents = async () => {
-        try {
-          const allEducationalContentsData = await fetchEducationalContents();
-          setAllEducationalContents(allEducationalContentsData);
+          const eduContentWithAvgRating = await Promise.all(
+            eduContentData.map(async (eduContent) => {
+              const average = await fetchAvgRatingForEduContent(eduContent.id);
+              return { ...eduContent, average };
+            })
+          );
+          setMostPopularEduContent(eduContentWithAvgRating);
         } catch (error) {
           console.log("Failed to fetch educational contents: ", error);
         }
       };
 
-      const fetchAllBlogPosts = async () => {
+      const getMostPopularBlogs = async () => {
         try {
-          const allBlogPosts = await fetchBlogPosts();
-          setAllBusinessBlogPosts(allBlogPosts);
+          const blogPostData = await fetchMostPopularBlogPosts();
+
+          const blogPostsWithAvgRating = await Promise.all(
+            blogPostData.map(async (blogPost) => {
+              const average = await fetchAverageRatingForBlogPost(blogPost.id);
+              return { ...blogPost, average };
+            })
+          );
+          setMostPopularBlogPosts(blogPostsWithAvgRating);
         } catch (error) {
           console.log("Failed to fetch blog posts: ", error);
         }
       };
 
-      const fetchAllMealPlans = async () => {
+      // Sepcifically for fetching meal plans based on health goals + ratings count display
+      const getMealPlansByHealthGoals = async (healthGoalId) => {
         try {
-          const allMealPlansData = await fetchMealPlans();
-          setAllMealPlans(allMealPlansData);
+          const mealPlans = await fetchMealPlansByHealthGoals(healthGoalId);
+          const mealPlansWithRatings = await Promise.all(
+            mealPlans.map(async (healthGoalMP) => {
+              const average = await fetchMealPlanAverage(healthGoalMP.id);
+              return { ...healthGoalMP, average }; // Combine the plan with its ratings
+            })
+          );
+          //return mealPlansWithRatings;
+          setMealPlansByHealthGoals(mealPlansWithRatings);
         } catch (error) {
-          console.log("Failed to fetch meal plans: ", error);
+          console.error("Error fetching meal plans with ratings:", error);
+          throw error;
+        }
+      };
+
+      // Sepcifically for fetching recipes based on DP and Allergies + ratings count display
+      const getRecipesByDPandAllergies = async (userId) => {
+        try {
+          const recipes = await fetchRecipesByDPandAllergies(userId);
+          const recipesWithRatings = await Promise.all(
+            recipes.map(async (recipe) => {
+              const average = await fetchAvgRatingForRecipe(recipe.id);
+              return { ...recipe, average }; // Correctly combine the recipe with its ratings
+            })
+          );
+          setRecipesByDP(recipesWithRatings); // Update state with fetched recipes
+        } catch (error) {
+          console.error(
+            "Failed to fetch recipes based on dietary preferences and allergies:",
+            error
+          );
+        }
+      };
+
+      const viewUserDashboard = async () => {
+        try {
+          const userId = SecureStorage.getItem("userId");
+          const token = SecureStorage.getItem("token");
+          const config = { headers: { Authorization: `Bearer ${token}` } };
+
+          // Fetch user dashboard data
+          const response = await axiosInterceptorInstance.get(
+            "/register/dashboard/" + userId,
+            config
+          );
+          console.log("User data fetched from backend:", response.data);
+
+          // Fetch recipes based on dietary preferences and allergies
+          await getRecipesByDPandAllergies(userId);
+
+          // Fetch meal plans based on health goal if available
+          const healthGoalId = response.data.healthGoal?.id;
+          if (healthGoalId) {
+            await getMealPlansByHealthGoals(healthGoalId);
+          }
+        } catch (error) {
+          console.error("Error fetching user data", error);
         }
       };
 
       Promise.all([
-        fetchMostPopularRecipesData(),
-        fetchAllEducationalContents(),
-        fetchAllBlogPosts(),
-        fetchAllMealPlans(),
+        getMostPopularEduContents(),
+        getMostPopularBlogs(),
+        viewUserDashboard(),
       ])
         .catch((error) => {
           console.error("Error in fetching data: ", error);
@@ -160,12 +308,63 @@ const RegisteredUserHomepage = () => {
     );
   }
 
+  const capitalizeFirstLetter = (name) => {
+    if (!name) return "";
+    return name
+      .split(" ")
+      .map((word) => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
+      .join(" ");
+  };
+
+  const getImageUrlFromBlob = (imgBlob) => {
+    // Check if imgBlob is truthy
+    if (imgBlob) {
+      // Return the image URL created from the blob
+      return `data:image/jpeg;base64,${imgBlob}`;
+    }
+    // Return an empty string or a placeholder image URL if imgBlob is not available
+    return "";
+  };
+
+  // Function to render stars for ratings display
+  const renderStarsAndCount = (post) => {
+    if (
+      !post.average ||
+      !post.average.averageRatings ||
+      !post.average.totalNumber
+    ) {
+      return <div>No ratings available</div>;
+    } else {
+      const { averageRatings, totalNumber } = post.average;
+
+      let stars = [];
+      // Render stars based on average rating
+      for (let i = 0; i < 5; i++) {
+        stars.push(
+          <span
+            key={i}
+            className={i < averageRatings ? "text-yellow-300" : "text-gray-300"}
+          >
+            ★
+          </span>
+        );
+      }
+      // Render total count of ratings
+      return (
+        <div className="flex items-center">
+          <span className="mr-1">{stars}</span>
+          <span>({totalNumber} ratings)</span>
+        </div>
+      );
+    }
+  };
+
   // RECIPE RELATED
   // const latestRecipes = [...AllRecipes]
   //   .sort((a, b) => new Date(b.createdDateTime) - new Date(a.createdDateTime))
   //   .slice(0, 3);
 
-  const recipeLimit = [...MostPopularRecipes].slice(0, 3);
+  const recipeLimit = [...recipesByDP].slice(0, 3);
 
   // Redirect to the specific recipe page
   const handleViewRecipes = (id) => {
@@ -180,37 +379,66 @@ const RegisteredUserHomepage = () => {
   const renderRecipePostCard = (post) => (
     <div
       key={post.id}
-      className="max-w-xl bg-white border border-gray-200 rounded-lg shadow-md overflow-hidden flex flex-col"
+      className="max-w-xl bg-white border border-gray-200 rounded-lg shadow-md overflow-hidden flex flex-col cursor-pointer hover:shadow-stone-700 transition duration-300 ease-in-out"
+      style={{
+        border: "0.5px solid transparent",
+        background: "#48494B",
+        backgroundOrigin: "border-box",
+        backgroundClip: "content-box, border-box",
+      }}
+      onClick={() => handleViewRecipes(post.id)}
     >
       {/* Image */}
-      <img
+      {/* <img
         src={post.img}
         alt={post.img_title}
-        className="w-full h-48 rounded-t-lg object-cover"
+        className="w-full object-cover rounded-sm text-white text-center"
         style={{ height: "192px" }}
-      />
-      <div className="flex flex-grow flex-col justify-between p-5">
-        <div>
-          {/* Title */}
-          <h2
-            className="text-2xl font-extrabold mb-2 hover:text-orange-600 cursor-pointer"
-            onClick={() => handleViewRecipes(post.id)}
-          >
-            {post.title}
+      /> */}
+
+      {post?.imgBlob ? (
+        // If imgBlob is available, display image from blob
+        <img
+          className="w-full object-cover rounded-sm text-white text-center"
+          src={getImageUrlFromBlob(post?.imgBlob)}
+          alt={post.imgTitle}
+          style={{ height: "192px" }}
+        />
+      ) : (
+        // If imgBlob is not available, display image from imgUrl
+        <img
+          className="w-full object-cover rounded-sm text-white text-center"
+          src={post?.img || "Not specified"}
+          alt={post.imgTitle}
+          style={{ height: "192px" }}
+        />
+      )}
+
+      <div className="flex-grow flex flex-col justify-between p-4 bg-white">
+        {/* Title */}
+        <div className="text-center">
+          <h2 className="text-2xl font-extrabold mb-4">
+            {post.title || "Untitled Recipe"}
           </h2>
-          {/* Description */}
-          <p className="text-gray-700 text-base mb-4 line-clamp-3">
-            {post.description}
+        </div>
+
+        {/* Description */}
+        <div className="flex-grow flex items-center justify-center mb-4">
+          <p className="text-gray-700 text-base line-clamp-3">
+            {post.description || "No description available"}
           </p>
-          {/* Publisher */}
-          <p
-            className="text-gray-900 text-base font-semibold"
-            style={{ height: "3.5rem" }}
-          >
+        </div>
+
+        {/* Publisher and Ratings */}
+        <div className="flex flex-col lg:flex-row items-center justify-center space-x-4 mb-4">
+          <p className="text-gray-700 text-sm font-semibold">
             Publisher:{" "}
-            <span className="text-orange-600 font-bold tracking-tight">
+            <span className="text-orange-600 font-semibold tracking-tight">
               {post?.publisher || "Not Specified"}
             </span>
+          </p>
+          <p className="text-gray-700 text-sm font-semibold">
+            {renderStarsAndCount(post)}
           </p>
         </div>
       </div>
@@ -220,9 +448,11 @@ const RegisteredUserHomepage = () => {
   // END OF RECIPE RELATED
 
   // BLOG POSTS RELATED
-  const latestBlogs = [...AllBusinessBlogPosts]
-    .sort((a, b) => new Date(b.createdDateTime) - new Date(a.createdDateTime))
-    .slice(0, 3);
+  // const latestBlogs = [...AllBusinessBlogPosts]
+  //   .sort((a, b) => new Date(b.createdDateTime) - new Date(a.createdDateTime))
+  //   .slice(0, 3);
+
+  const blogPostLimit = [...mostPopularBlogPosts].slice(0, 3);
 
   const handleViewBlogPost = (id) => {
     // Make sure the Blog title
@@ -245,37 +475,55 @@ const RegisteredUserHomepage = () => {
       }}
       onClick={() => handleViewBlogPost(post.id)}
     >
-      <img
+      {/* <img
         src={post.img}
-        alt={post.imgTitle}
+        alt={post.img_title}
         className="w-full object-cover rounded-sm text-white text-center"
         style={{ height: "192px" }}
-      />
+      /> */}
+
+      {post?.imgBlob ? (
+        // If imgBlob is available, display image from blob
+        <img
+          className="w-full object-cover rounded-sm text-white text-center"
+          src={getImageUrlFromBlob(post?.imgBlob)}
+          alt={post.imgTitle}
+          style={{ height: "192px" }}
+        />
+      ) : (
+        // If imgBlob is not available, display image from imgUrl
+        <img
+          className="w-full object-cover rounded-sm text-white text-center"
+          src={post?.img || "Not specified"}
+          alt={post.imgTitle}
+          style={{ height: "192px" }}
+        />
+      )}
 
       <div className="flex-grow flex flex-col justify-between p-4 bg-white">
-        <div className="grid grid-rows-3 items-center">
-          <h2
-            className="text-2xl font-extrabold mb-2"
-            //onClick={() => handleViewBlogPost(post.id)}
-          >
-            {post?.title || "Untitled Blog Post"}
+        {/* Title */}
+        <div className="text-center">
+          <h2 className="text-2xl font-extrabold mb-4">
+            {post.title || "Untitled Blog Post"}
           </h2>
-          <p className="text-gray-700 text-base mb-4 line-clamp-3">
-            <div className="whitespace-pre-line">{post.info}</div>
-          </p>
-          {/* Publisher */}
-          <p className="text-gray-900 text-base font-semibold">
+        </div>
+
+        {/* Description */}
+        <div className="flex-grow flex items-center justify-center mb-4">
+          <p className="text-gray-700 text-base line-clamp-3">{post.info}</p>
+        </div>
+
+        {/* Publisher and Ratings */}
+        <div className="flex flex-col lg:flex-row items-center justify-center space-x-4 mb-4">
+          <p className="text-gray-700 text-sm font-semibold">
             Publisher:{" "}
-            <span className="text-orange-600 font-bold tracking-tight">
+            <span className="text-orange-600 font-semibold tracking-tight">
               {post?.publisher || "Not Specified"}
             </span>
           </p>
-
-          {/* <div className="flex justify-between items-center">
-              <div className="flex items-center text-red-700 font-semibold text-xl">
-                {post.blogType.subcategoryName}
-              </div>
-            </div> */}
+          <p className="text-gray-700 text-sm font-semibold">
+            {renderStarsAndCount(post)}
+          </p>
         </div>
       </div>
     </div>
@@ -283,9 +531,9 @@ const RegisteredUserHomepage = () => {
   // END OF BLOG POST RELATED
 
   // MEAL PLAN RELATED
-  const latestMealPlans = [...AllMealPlans]
-    .sort((a, b) => new Date(b.createdDateTime) - new Date(a.createdDateTime))
-    .slice(0, 3);
+  // const latestMealPlans = [...AllMealPlans]
+  //   .sort((a, b) => new Date(b.createdDateTime) - new Date(a.createdDateTime))
+  //   .slice(0, 3);
 
   const handleViewMealPlan = (id) => {
     // Make sure the Meal Plan title
@@ -299,49 +547,85 @@ const RegisteredUserHomepage = () => {
   const renderMealPlanCard = (post) => (
     <div
       key={post.id}
-      className="max-w-xl bg-white border border-gray-200 rounded-lg shadow-md overflow-hidden flex flex-col"
+      className="max-w-xl bg-white border border-gray-200 rounded-lg shadow-md overflow-hidden flex flex-col cursor-pointer hover:shadow-stone-700 transition duration-300 ease-in-out"
+      style={{
+        border: "0.5px solid transparent",
+        background: "#48494B",
+        backgroundOrigin: "border-box",
+        backgroundClip: "content-box, border-box",
+      }}
+      onClick={() => handleViewMealPlan(post.id)}
     >
       {/* Image */}
-      <img
+      {/* <img
         src={post.img}
         alt={post.img_title}
-        className="w-full h-48 rounded-t-lg object-cover"
+        className="w-full object-cover rounded-sm text-white text-center"
         style={{ height: "192px" }}
-      />
-      <div className="flex flex-grow flex-col justify-between p-5">
-        <div>
-          {/* Title */}
-          <h2
-            className="text-2xl font-extrabold mb-2 hover:text-orange-600 cursor-pointer"
-            onClick={() => handleViewMealPlan(post.id)}
-          >
-            {post.title}
+      /> */}
+
+      {post?.imgBlob ? (
+        // If imgBlob is available, display image from blob
+        <img
+          className="w-full object-cover rounded-sm text-white text-center"
+          src={getImageUrlFromBlob(post?.imgBlob)}
+          alt={post.imgTitle}
+          style={{ height: "192px" }}
+        />
+      ) : (
+        // If imgBlob is not available, display image from imgUrl
+        <img
+          className="w-full object-cover rounded-sm text-white text-center"
+          src={post?.img || "Not specified"}
+          alt={post.imgTitle}
+          style={{ height: "192px" }}
+        />
+      )}
+
+      <div className="flex-grow flex flex-col justify-between p-4 bg-white">
+        {/* Title */}
+        <div className="text-center">
+          <h2 className="text-2xl font-extrabold mb-4">
+            {post?.title || "Untitled Meal Plan"}
           </h2>
-          {/* Description */}
-          <p className="text-gray-700 text-base mb-4 line-clamp-3">
+        </div>
+        {/* Description */}
+        <div className="flex-grow flex items-center justify-center mb-4">
+          <p className="text-gray-700 text-base line-clamp-3">
             {post.introduction}
           </p>
-
-          {/* Publisher */}
-          <p
-            className="text-gray-900 text-base font-semibold"
-            style={{ height: "3.5rem" }}
-          >
+        </div>
+        {/* Publisher and Ratings */}
+        <div className="flex flex-col lg:flex-row items-center justify-center space-x-4 mb-4">
+          <p className="text-gray-700 text-sm font-semibold">
             Publisher:{" "}
-            <span className="text-orange-600 font-bold tracking-tight">
-              {post?.publisher || "Not Specified"}
+            <span className="text-orange-600 font-semibold tracking-tight">
+              {capitalizeFirstLetter(post?.publisher) || "Not Specified"}
             </span>
           </p>
+          <p className="text-gray-700 text-sm font-semibold">
+            {renderStarsAndCount(post)}
+          </p>
         </div>
+        {/* For testing  */}
+        {/* Display category  */}
+        {/* <div className="flex justify-center mb-4">
+          <p className="text-gray-700 text-sm font-semibold">
+            Category:{" "}
+            <span className="text-orange-600 font-semibold tracking-tight">
+              {post.healthGoal.subcategoryName || "Not Specified"}
+            </span>
+          </p>
+        </div> */}
       </div>
     </div>
   );
   // END OF MEAL PLAN RELATED
 
   // EDUCATIONAL CONTENTS RELATED
-  const latestEducationalContents = [...AllEducationalContents]
-    .sort((a, b) => new Date(b.createdDateTime) - new Date(a.createdDateTime))
-    .slice(0, 3);
+  // const latestEducationalContents = [...AllEducationalContents]
+  //   .sort((a, b) => new Date(b.createdDateTime) - new Date(a.createdDateTime))
+  //   .slice(0, 3);
 
   const handleViewEducationalContent = (id) => {
     // Make sure the Educational Content title
@@ -361,31 +645,56 @@ const RegisteredUserHomepage = () => {
         backgroundOrigin: "border-box",
         backgroundClip: "content-box, border-box",
       }}
-      onClick={() => handleViewEduContent(post.id)}
+      onClick={() => handleViewEducationalContent(post.id)}
     >
-      <img
+      {/* <img
         src={post.img}
         alt={post.img_title}
         className="w-full object-cover rounded-sm text-white text-center"
         style={{ height: "192px" }}
-      />
+      /> */}
+
+      {post?.imgBlob ? (
+        // If imgBlob is available, display image from blob
+        <img
+          className="w-full object-cover rounded-sm text-white text-center"
+          src={getImageUrlFromBlob(post?.imgBlob)}
+          alt={post.imgTitle}
+          style={{ height: "192px" }}
+        />
+      ) : (
+        // If imgBlob is not available, display image from imgUrl
+        <img
+          className="w-full object-cover rounded-sm text-white text-center"
+          src={post?.img || "Not specified"}
+          alt={post.imgTitle}
+          style={{ height: "192px" }}
+        />
+      )}
+
       <div className="flex-grow flex flex-col justify-between p-4 bg-white">
-        <div className="grid grid-rows-3 items-center">
-          <h2
-            className="text-2xl font-extrabold mb-2"
-            //onClick={() => handleViewEduContent(post.id)}
-          >
-            {post?.title || "Untitled Educational Content"}
+        {/* Title */}
+        <div className="text-center">
+          <h2 className="text-2xl font-extrabold mb-4">
+            {post.title || "Untitled Educational Content"}
           </h2>
-          <p className="text-gray-700 text-base mb-4 line-clamp-3">
-            <div className="whitespace-pre-line">{post.info}</div>
-          </p>
-          {/* Publisher */}
-          <p className="text-gray-900 text-base font-semibold">
+        </div>
+
+        {/* Description */}
+        <div className="flex-grow flex items-center justify-center mb-4">
+          <p className="text-gray-700 text-base line-clamp-3">{post.info}</p>
+        </div>
+
+        {/* Publisher and Ratings */}
+        <div className="flex flex-col lg:flex-row items-center justify-center space-x-4 mb-4">
+          <p className="text-gray-700 text-sm font-semibold">
             Publisher:{" "}
-            <span className="text-orange-600 font-bold tracking-tight">
+            <span className="text-orange-600 font-semibold tracking-tight">
               {post?.publisher || "Not Specified"}
             </span>
+          </p>
+          <p className="text-gray-700 text-sm font-semibold">
+            {renderStarsAndCount(post)}
           </p>
         </div>
       </div>
@@ -405,7 +714,7 @@ const RegisteredUserHomepage = () => {
             <div className="p-5">
               <RegisteredUserNavBar />
               <h2 className="text-4xl font-extrabold font-serif mb-4 mt-4 text-black">
-                Most Popular Recipes
+                Recipes
               </h2>
               <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
                 {recipeLimit.map((post) => renderRecipePostCard(post))}
@@ -426,10 +735,10 @@ const RegisteredUserHomepage = () => {
           <>
             <div className="p-5">
               <h2 className="text-4xl font-extrabold font-serif mb-4 mt-4 text-black">
-                Latest Meal Plans
+                Meal Plans
               </h2>
               <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
-                {latestMealPlans.map((post) => renderMealPlanCard(post))}
+                {mealPlansByHealthGoals.map((post) => renderMealPlanCard(post))}
               </div>
             </div>
           </>
@@ -451,7 +760,7 @@ const RegisteredUserHomepage = () => {
                 Blogs
               </h2>
               <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
-                {latestBlogs.map((post) => renderBlogPost(post))}
+                {blogPostLimit.map((post) => renderBlogPost(post))}
               </div>
             </div>
           </>
@@ -472,7 +781,7 @@ const RegisteredUserHomepage = () => {
                 Educational Contents
               </h2>
               <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
-                {latestEducationalContents.map((post) =>
+                {mostPopularEduContent.map((post) =>
                   renderEducationContentCard(post)
                 )}
               </div>

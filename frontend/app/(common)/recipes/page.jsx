@@ -1740,7 +1740,7 @@ const RecipesPageForUser = () => {
                 ) : (
                   // If no search/filter has been performed, display latest and other recipes
                   <>
-                    <div className="mb-5">
+                    <div className="mb-14">
                       <h2 className="text-4xl font-bold mb-4 mt-4">
                         Latest Recipes
                       </h2>

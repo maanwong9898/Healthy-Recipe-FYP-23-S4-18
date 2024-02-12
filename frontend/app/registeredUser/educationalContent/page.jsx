@@ -567,8 +567,8 @@ const EducationalContentPageForUser = () => {
                     <>
                       {!searchPerformed && !categoryFilter && !sortOption ? (
                         <>
-                          <div className="mb-5">
-                            <h2 className="text-3xl font-bold mb-4 mt-4">
+                          <div className="mb-14">
+                            <h2 className="text-4xl font-bold mb-4 mt-4">
                               Latest Educational Content
                             </h2>
                             <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
@@ -578,7 +578,7 @@ const EducationalContentPageForUser = () => {
                             </div>
                           </div>
                           <div className="mt-14 mb-5">
-                            <h2 className="text-3xl font-bold mb-4 mt-4">
+                            <h2 className="text-4xl font-bold mb-4 mt-4">
                               Other Educational Content
                             </h2>
                           </div>

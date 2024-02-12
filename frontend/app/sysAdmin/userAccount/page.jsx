@@ -279,7 +279,7 @@ const UserAccount = () => {
                               : user.role === "BUSINESS_USER"
                               ? "Business User"
                               : user.role === "NUTRITIONIST"
-                              ? "Nutrionist"
+                              ? "Nutritionist"
                               : "Unknown"}
                           </td>
                           <td className="px-3 py-2 text-base text-center">

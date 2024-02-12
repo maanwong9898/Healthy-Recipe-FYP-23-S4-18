@@ -684,8 +684,8 @@ const MealPlanPage = () => {
                           {/* Display personalised meal plans */}
                           {displayPersonalisedSection &&
                           mealPlansByHealthGoals.length > 0 ? (
-                            <div className="mb-5">
-                              <h2 className="text-3xl font-bold mb-4 mt-8">
+                            <div className="mb-14 bg-orange-100 rounded-lg p-6">
+                              <h2 className="text-4xl font-bold mb-4 mt-4">
                                 Just For You
                               </h2>
                               <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
@@ -696,8 +696,8 @@ const MealPlanPage = () => {
                             </div>
                           ) : (
                             // If user did not set health goal, display message
-                            <div className="mb-5">
-                              <h2 className="text-3xl font-bold mb-4 mt-8">
+                            <div className="mb-14 bg-orange-100 rounded-lg p-6">
+                              <h2 className="text-4xl font-bold mb-4 mt-4">
                                 Just For You
                               </h2>
                               <p className="text-gray-500">
@@ -718,10 +718,11 @@ const MealPlanPage = () => {
                               )}
                             </div>
                           </div> */}
-
-                          <h2 className="text-3xl font-semibold mb-4 mt-4">
-                            Other Meal Plan
-                          </h2>
+                          <div className="mt-14 mb-5">
+                            <h2 className="text-4xl font-bold mb-4 mt-4">
+                              Other Meal Plan
+                            </h2>
+                          </div>
                           <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
                             {otherMealPlans.map((post) => renderPostCard(post))}
                           </div>

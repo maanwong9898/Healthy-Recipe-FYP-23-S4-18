@@ -45,38 +45,17 @@ const UpdateDietaryPreference = () => {
   const [isChecking, setIsChecking] = useState(true);
   const [isLoading, setIsLoading] = useState(true);
 
-  // const viewUserDashboard = async () => {
-  //   try {
-  //     const userId = SecureStorage.getItem("userId");
-  //     const token = SecureStorage.getItem("token");
-
-  //     const config = {
-  //       headers: { Authorization: `Bearer ${token}` },
-  //     };
-
-  //     // Make the GET request to the userAndAdmin endpoint
-  //     const response = await axiosInterceptorInstance.get(
-  //       "/register/dashboard/" + userId,
-  //       config
-  //     );
-
-  //     console.log("User data fetched from backend:", response.data);
-  //     console.log(response.data);
-  //     setUserAccount(response.data);
-  //   } catch (error) {
-  //     console.error("Error fetching user data", error);
-  //   }
-  // };
-
-  // useEffect(() => {
-  //   viewUserDashboard();
-  // }, []);
-
   useEffect(() => {
     const userId = SecureStorage.getItem("userId");
     const token = SecureStorage.getItem("token");
+    const tokenExpiration = SecureStorage.getItem("token_expiration");
+    const now = new Date().getTime(); // Current time in milliseconds
 
-    if (!token || SecureStorage.getItem("role") !== "REGISTERED_USER") {
+    if (
+      !token ||
+      SecureStorage.getItem("role") !== "REGISTERED_USER" ||
+      now >= parseInt(tokenExpiration)
+    ) {
       SecureStorage.clear();
       router.push("/");
       return;
@@ -183,80 +162,6 @@ const UpdateDietaryPreference = () => {
     return <div>Checking...</div>;
   }
 
-  // useEffect(() => {
-  //   // Set the initial value when userAccount changes
-  //   setFullName(userAccount ? userAccount.fullName : "");
-  //   setUsername(userAccount ? userAccount.username : "");
-  //   setEmail(userAccount ? userAccount.email : "");
-  //   setDOB(userAccount ? userAccount.dob : "");
-  //   setContactNumber(userAccount ? userAccount.contactNumber : "");
-  //   setCompanyName(userAccount ? userAccount.companyName : "");
-  //   setCompanyAddress(userAccount ? userAccount.companyAddress : "");
-  //   setUen(userAccount ? userAccount.uen : "");
-  //   // Set dietary preferences if available
-  //   if (userAccount.dietaryPreferences && userAccount.dietaryPreferences.id) {
-  //     setDietaryPreference(userAccount.dietaryPreferences.id);
-  //   }
-
-  //   // Set allergies if available
-  //   if (userAccount.allergies && userAccount.allergies.length > 0) {
-  //     setAllergyRestriction(userAccount.allergies.map((allergy) => allergy.id));
-  //   }
-  //   setAllergiesLoaded(true); // Set the flag here
-
-  //   // Set health goal if available
-  //   if (userAccount.healthGoal && userAccount.healthGoal.id) {
-  //     setHealthGoals(userAccount.healthGoal.id);
-  //   }
-  // }, [userAccount]);
-
-  // useEffect(() => {
-  //   const fetchHealthGoals = async () => {
-  //     console.log("Fetching health goals...");
-  //     try {
-  //       const response = await axiosInterceptorInstance.get(
-  //         "/category/getAllHealthGoals"
-  //       );
-  //       console.log("Health Goals Categories Fetched", response.data);
-  //       setHealthGoalsCategory(response.data);
-  //     } catch (error) {
-  //       console.log(error);
-  //     }
-  //   };
-
-  //   // Fetch all dietary preferences categories from backend
-  //   const fetchDietaryPreferences = async () => {
-  //     console.log("Fetching dietary preferences...");
-  //     try {
-  //       const response = await axiosInterceptorInstance.get(
-  //         "/category/getAllDietaryPreferences"
-  //       );
-  //       console.log("Dietary Preferences Categories Fetched", response.data);
-  //       setDietaryPreferencesCategory(response.data);
-  //     } catch (error) {
-  //       console.log(error);
-  //     }
-  //   };
-
-  //   // Fetch all allergies categories from backend
-  //   const fetchAllergies = async () => {
-  //     console.log("Fetching allergies...");
-  //     try {
-  //       const response = await axiosInterceptorInstance.get(
-  //         "/category/getAllAllergies"
-  //       );
-  //       console.log("Allergies Categories Fetched", response.data);
-  //       setAllergyCategory(response.data);
-  //     } catch (error) {
-  //       console.log(error);
-  //     }
-  //   };
-
-  //   fetchHealthGoals();
-  //   fetchDietaryPreferences();
-  //   fetchAllergies();
-  // }, []);
-
   // Function to handle health goals category change
   const handleHealthCategoryChange = (e) => {
     setHealthGoals(e.target.value);
@@ -281,18 +186,6 @@ const UpdateDietaryPreference = () => {
   const handleDietaryPreferenceCategoryChange = (e) => {
     setDietaryPreference(e.target.value);
   };
-
-  // To check the state of dietary preference immediately after the state is updated(because of async nature of setState)
-  // useEffect(() => {
-  //   console.log(
-  //     "Dietary preference being selected from user:",
-  //     dietaryPreference
-  //   );
-
-  //   console.log("Allergies being selected from user:", allergyRestriction);
-
-  //   console.log("Health goal being selected from user:", healthGoals);
-  // }, [dietaryPreference, allergyRestriction, healthGoals]);
 
   // Function to handle update
   const handlePreferencesUpdate = async (event) => {

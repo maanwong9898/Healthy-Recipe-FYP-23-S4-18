@@ -20,51 +20,17 @@ const ViewDietaryPreference = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [isChecking, setIsChecking] = useState(true);
 
-  // const viewUserDashboard = async () => {
-  //   try {
-  //     const userId = SecureStorage.getItem("userId");
-  //     const token = SecureStorage.getItem("token");
-
-  //     const config = {
-  //       headers: { Authorization: `Bearer ${token}` },
-  //     };
-
-  //     const response = await axiosInterceptorInstance.get(
-  //       "/register/dashboard/" + userId,
-  //       config
-  //     );
-
-  //     setUserAccount(response.data);
-  //     setDietaryPreference(
-  //       response.data.dietaryPreferences?.subcategoryName || "Not specified"
-  //     );
-  //     setAllergies(response.data.allergies || []);
-  //     // setAllergies(response.data.allergies || ["Not specified"]);
-  //     // Set the state to "Not specified" if the allergies array is empty
-  //     // setAllergies(
-  //     //   response.data.allergies?.length
-  //     //     ? response.data.allergies
-  //     //     : ["Not specified"]
-  //     // );
-
-  //     setHealthGoal(
-  //       response.data.healthGoal?.subcategoryName || "Not specified"
-  //     );
-
-  //     console.log(
-  //       "User data fetched from backend in view dietary :",
-  //       response.data
-  //     );
-  //   } catch (error) {
-  //     console.error("Error fetching user data", error);
-  //   }
-  // };
-
   useEffect(() => {
     const userId = SecureStorage.getItem("userId");
     const token = SecureStorage.getItem("token");
+    const tokenExpiration = SecureStorage.getItem("token_expiration");
+    const now = new Date().getTime(); // Current time in milliseconds
 
-    if (!token || SecureStorage.getItem("role") !== "REGISTERED_USER") {
+    if (
+      !token ||
+      SecureStorage.getItem("role") !== "REGISTERED_USER" ||
+      now >= parseInt(tokenExpiration)
+    ) {
       SecureStorage.clear();
       router.push("/");
       return;

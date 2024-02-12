@@ -20,8 +20,14 @@ const checkBMI = () => {
   useEffect(() => {
     const userId = SecureStorage.getItem("userId");
     const token = SecureStorage.getItem("token");
+    const tokenExpiration = SecureStorage.getItem("token_expiration");
+    const now = new Date().getTime(); // Current time in milliseconds
 
-    if (!token || SecureStorage.getItem("role") !== "REGISTERED_USER") {
+    if (
+      !token ||
+      SecureStorage.getItem("role") !== "REGISTERED_USER" ||
+      now >= parseInt(tokenExpiration)
+    ) {
       SecureStorage.clear();
       router.push("/");
       return;

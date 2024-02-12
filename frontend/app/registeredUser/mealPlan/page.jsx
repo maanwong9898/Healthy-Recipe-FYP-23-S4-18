@@ -97,9 +97,15 @@ const MealPlanPage = () => {
     // Perform your token and role check here
     const token = SecureStorage.getItem("token");
     const role = SecureStorage.getItem("role");
+    const tokenExpiration = SecureStorage.getItem("token_expiration");
+    const now = new Date().getTime(); // Current time in milliseconds
 
     // Replace 'REGISTERED_USER' with the actual role you're checking for
-    if (!token || role !== "REGISTERED_USER") {
+    if (
+      !token ||
+      role !== "REGISTERED_USER" ||
+      now >= parseInt(tokenExpiration)
+    ) {
       // If the user is not authorized, redirect them
       router.push("/"); // Adjust the route as needed
     } else {

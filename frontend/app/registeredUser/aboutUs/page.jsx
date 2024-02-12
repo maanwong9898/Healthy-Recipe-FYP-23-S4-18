@@ -46,9 +46,12 @@ const AboutUs = () => {
   };
 
   useEffect(() => {
+    const tokenExpiration = SecureStorage.getItem("token_expiration");
+    const now = new Date().getTime(); // Current time in milliseconds
     if (
       !SecureStorage.getItem("token") ||
-      SecureStorage.getItem("role") !== "REGISTERED_USER"
+      SecureStorage.getItem("role") !== "REGISTERED_USER" ||
+      now >= parseInt(tokenExpiration)
     ) {
       // clear the secure storage
       SecureStorage.clear();

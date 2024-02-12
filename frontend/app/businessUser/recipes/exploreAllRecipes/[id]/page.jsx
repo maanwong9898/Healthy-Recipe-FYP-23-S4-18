@@ -4,9 +4,7 @@ import React, { use } from "react";
 import { useState, useEffect } from "react";
 import axiosInterceptorInstance from "../../../../axiosInterceptorInstance.js";
 import SecureStorage from "react-secure-storage";
-import RegisteredUserNavBar from "../../../../components/navigation/registeredUserNavBar";
-
-// router path: /registeredUser/recipes/viewRecipe/[id]
+import BusinessUserNavBar from "../../../../components/navigation/businessUserNavBar";
 
 // To render the steps as a list
 const renderSteps = (stepsString) => {
@@ -68,7 +66,7 @@ const ViewRecipe = ({ params }) => {
 
     if (
       !token ||
-      role !== "REGISTERED_USER" ||
+      role !== "BUSINESS_USER" ||
       now >= parseInt(tokenExpiration)
     ) {
       // If token is invalid or role is not business user, redirect to login
@@ -165,10 +163,6 @@ const ViewRecipe = ({ params }) => {
     }
   };
 
-  const handleRatingChange = (ratingValue) => {
-    setNewRating(ratingValue);
-  };
-
   const renderStars = (rating) => {
     let stars = [];
     for (let i = 0; i < 5; i++) {
@@ -246,14 +240,14 @@ const ViewRecipe = ({ params }) => {
       .map((word) => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
       .join(" ");
   };
-
+  
   return (
     <div>
       {isLoading && isChecking ? (
         <div>Checking...</div>
       ) : (
         <>
-          <RegisteredUserNavBar />
+          <BusinessUserNavBar />
           <div className="pt-8 pb-16 lg:pt-16 lg:pb-24 bg-white">
             {isLoading ? (
               <div className="loading-indicator text-center">
@@ -500,65 +494,6 @@ const ViewRecipe = ({ params }) => {
                   ) : (
                     <p className="text-center text-gray-600">
                       No ratings and reviews yet.
-                    </p>
-                  )}
-
-                  {/* Ask to write reviews */}
-                  {!hasAlreadyReviewed ? (
-                    <div className="blog-post-reviews mt-10 px-9 mx-auto max-w-screen-xl text-left">
-                      <p className="font-sans font-bold text-2xl text-gray-900">
-                        Write a Review
-                      </p>
-                      <div className="my-4">
-                        <textarea
-                          value={newReview}
-                          onChange={(e) => setNewReview(e.target.value)}
-                          placeholder="Write your review here"
-                          className="w-full p-2.5 border border-gray-300 bg-gray-50 rounded-lg"
-                        />
-                        <div className="flex my-2">
-                          {[...Array(5)].map((_, index) => {
-                            const ratingValue = index + 1;
-                            return (
-                              <label key={ratingValue}>
-                                <input
-                                  type="radio"
-                                  name="rating"
-                                  value={ratingValue}
-                                  checked={newRating === ratingValue}
-                                  onChange={() =>
-                                    handleRatingChange(ratingValue)
-                                  }
-                                  className="hidden"
-                                />
-                                <span
-                                  className={
-                                    ratingValue <= newRating
-                                      ? "text-yellow-300 cursor-pointer"
-                                      : "text-gray-300 cursor-pointer"
-                                  }
-                                >
-                                  ★
-                                </span>
-                              </label>
-                            );
-                          })}
-                        </div>
-                        <p className="text-red-500 font-semibold text-sm">
-                          {validationMessage}
-                        </p>
-                        <button
-                          onClick={submitReview}
-                          disabled={submitting}
-                          className="mt-3 bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg"
-                        >
-                          {submitting ? "Submitting..." : "Submit Review"}
-                        </button>
-                      </div>
-                    </div>
-                  ) : (
-                    <p className="p-4">
-                      You have already submitted a review for this recipe.
                     </p>
                   )}
                 </div>

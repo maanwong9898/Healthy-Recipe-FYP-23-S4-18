@@ -37,7 +37,10 @@ VALUES
     ('Thai'),
     ('Indian'),
     ('Mediterranean'),
-    ('Vietnamese');
+    ('Vietnamese'),
+    ('Moroccan'),
+    ('Korean'),
+    ('Southeast Asian');
 
 -- 4. Health goals
 Insert into health_goal

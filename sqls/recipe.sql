@@ -1479,6 +1479,101 @@ VALUES
         4, -- dietary_preference
         320, -- cooking_time  
         6   -- meal type (cuisines)
+    ),
+    (
+        76,
+        'Gina',
+        'Corn Tomato Avocado Salad',
+        'Not Specified',
+        128, 14, 2.5, 8.5, 4, 83, -- calories, carbs, protein, fat, fibre, sodium
+        4,
+        'In a dish, this corn tomato avocado salad tastes like summer! Serve half of it as a main course, or as the ideal side to anything you grill.',
+        'Steam corn in steamer or microwave (or you can grill or boil) until tender, about 5 minutes.\nLet it cool then transfer to a large bowl.\nToss all the remaining ingredients together and serve immediately.',
+        '1 cup corn kernels , from 1 large steamed corn on the cobb \n5 ounces diced avocado, from 1 medium \n1 1/2 cup diced Persian cucumbers, about 3 small \n1 cup halved cherry tomatoes \n2 tablespoons diced red onion \n2 teaspoons extra virgin olive oil \n2 tablespoon fresh lemon juice, from 1 medium lemon \n1/4 teaspoon kosher salt \nfresh black pepper, to taste',
+        '3', -- UserID
+        TRUE,
+        '2023-07-23 11:30:00',
+        'https://www.skinnytaste.com/wp-content/uploads/2018/07/Corn-Tomato-Avocado-Salad-1-9.jpg',
+        'Author : skinnytaste, Designed by skinnytaste',  -- img_title
+        2, -- dietary_preference
+        10, -- cooking_time  
+        9   -- meal type (cuisines)
+    ),
+    (
+        77
+        'Gina',
+        'Mini Pumpkin Chocolate Chip Muffins',
+        'Not Specified',
+        160, 27, 2, 5, 2, 118, -- calories, carbs, protein, fat, fibre, sodium
+        14,
+        'Mini Pumpkin Chocolate Chip Muffins made lighter by swapping out butter for pumpkin puree loaded with chocolate chips in every bite!',
+        'Preheat the oven to 350°F. Line a mini muffin tin with paper liners and lightly spray liners with oil for easy removal.\nIn a medium bowl, combine flours, sugar, baking soda, pumpkin spice, cinnamon, and salt with a wire whisk. Set aside.\nIn a large bowl mix pumpkin puree, oil, egg whites and vanilla; beat at medium speed until thick. Scrape down sides of the bowl.\nAdd flour mixture to the wet mixture, then blend at low speed until combined; do not over mix. Fold in chocolate chips.\nPour batter into prepared muffin tin and bake on the center rack for 22 to 24 minutes, or until a toothpick inserted in the center comes out clean.\nLet them cool at least 15 minutes before serving.',
+        '1/2 cup white whole wheat flour \n3/4 cups unbleached all purpose flour \n3/4 cup monk fruit sweetener (Lakanto), or raw sugar \n3/4 tsp baking soda \n1 3/4 tsp pumpkin pie spice \n1/4 tsp cinnamon \n1/4 tsp salt \n1 1/2 cups canned pumpkin puree, not pumpkin pie filling \n2 tbsp virgin coconut oil, or canola \n2 large egg whites \n2 tsp vanilla extract \nbaking spray \n2/3 cup mini chocolate chips',
+        '3', -- UserID
+        TRUE,
+        '2023-09-10 11:30:00',
+        'https://www.skinnytaste.com/wp-content/uploads/2013/09/Mini-Pumpkin-Chocolate-Chip-Muffins-7.jpg',
+        'Author : skinnytaste, Designed by skinnytaste',  -- img_title
+        2, -- dietary_preference
+        40, -- cooking_time  
+        2   -- meal type (cuisines)
+    ),
+    (
+        78
+        'Gina',
+        'Maple-Cinnamon Banana-Pear Baked Oatmeal with Walnuts',
+        'Not Specified',
+        225, 39.5, 5.5, 6, 4.5, 72, -- calories, carbs, protein, fat, fibre, sodium
+        6,
+        'Breakfast with baked oats is akin to having dessert! You will feel full all morning long because it is made with nutritious ingredients like bananas, pears, oats, almonds, and maple syrup.',
+        'Preheat the oven to 375° Lightly spray a 8 x 8″ or 9 x 9″ ceramic baking dish with cooking spray; set aside.\nArrange the banana slices in a single layer on the bottom of the ceramic dish. Top with the pears, 1/4 teaspoon of the cinnamon, 2 tablespoon of the maple and cover with foil.\nBake 20 minutes, until the bananas get soft.\nMeanwhile, in a medium bowl, combine the oats, half of the walnuts, baking powder, 1/2 teaspoon cinnamon, and salt; stir together.\nIn a separate bowl, whisk together the remaining maple syrup, milk, egg, and vanilla extract.\nRemove the fruit from the oven, then pour the oat mixture over the baked fruit.\nPour the milk mixture over the oats, making sure to distribute the mixture as evenly as possible over the oats.\nSprinkle the remaining 1/4 teaspoon cinnamon and walnuts over the the top.\nBake the oatmeal for about 35 minutes, or until the top is golden brown and the oatmeal has set. Serve warm from the oven.',
+        '2 large ripe bananas, (the riper the better) sliced into 1/2″ pieces \n1 1/2 cup diced and peeled ripe pears, 1-/2 inch dice \n5 tablespoons pure maple syrup \n1 cup uncooked quick oats \n5 tablespoons chopped walnuts \n1/2 tsp baking powder \n1 tsp cinnamon \npinch of salt \n1 cup fat-free milk, or dairy-free milk such as almond or soy \n1 large egg \n1 teaspoon vanilla extract',
+        '3', -- UserID
+        TRUE,
+        '2023-09-13 11:00:00',
+        'https://www.skinnytaste.com/wp-content/uploads/2019/09/Maple-Cinnamon-Banana-Pear-Baked-Oatmeal-with-Walnuts-7.jpg',
+        'Author : skinnytaste, Designed by skinnytaste',  -- img_title
+        2, -- dietary_preference
+        35, -- cooking_time  
+        2   -- meal type (cuisines)
+    ),
+    (
+        79
+        'Gina',
+        'Air Fryer Steak',
+        'Not Specified',
+        221, 0.5, 39.5, 7, 0.5, 391, -- calories, carbs, protein, fat, fibre, sodium
+        4,
+        'Cook the ideal air-fried steak so that it is juicy inside and charred outside. Steak cooked by air is quick, simple, and creates no mess in the kitchen!',
+        'Combine the spices in a small bowl.\nSpray the steak with olive oil and coat both sides with the spices.\nPreheat the air fryer so the basket gets hot. For a 1-inch steak, air fry 400F 10 minutes turning halfway, for medium rare, for medium, cook 12 minutes, flipping halfway. See temp chart below, time may vary slightly with different air fryer models, and the thickness of the steaks.\nFinish with a pinch of more salt and black pepper.\nLet it rest, tented with foil 5 minutes before slicing.',
+        '1 teaspoon garlic powder \n1/2 teaspoon sweet paprika \n1 teaspoon kosher salt \n1/4 teaspoon black pepper \n4 sirloin steaks, 1 inch thick (1 1/2 lbs total) \nolive oil spray',
+        '2', -- UserID
+        TRUE,
+        '2023-03-29 10:00:00',
+        'https://www.skinnytaste.com/wp-content/uploads/2022/03/Air-Fryer-Steak-7.jpg',
+        'Author : skinnytaste, Designed by skinnytaste',  -- img_title
+        4, -- dietary_preference
+        15, -- cooking_time  
+        2   -- meal type (cuisines)
+    ),
+    (
+        80
+        'Gina',
+        'Rainbow Quinoa Salad with Lemon Dressing',
+        'Not Specified',
+        394, 51, 10.5, 17, 7, 184, -- calories, carbs, protein, fat, fibre, sodium
+        4,
+        'Eat the rainbow! This delicious vegan, gluten-free rainbow quinoa salad with lemon dressing is ideal for meal prep and do not need to be reheated.',
+        'Combine lemon juice, olive oil, salt and pepper in a small bowl and whisk well.\nAdd one cup quinoa in each bowl. Top with 1/4 cup of each of the vegetables in rainbow order starting with purple, ending in red.\nPour the dressing over the salad, adjust salt and pepper, as needed.',
+        '4 tablespoons lemon juice \n4 tablespoons olive oil \n1/2 teaspoon kosher salt \n▢fresh black pepper, to taste \n4 cups cooked quinoa, from about 1 1/3 cups \n1 cup shredded brussels sprouts \n1 cup shredded red cabbage \n▢1 cup shredded or thin sliced carrots \n1 cup yellow bell peppers \n1 cup diced mini cucumbers \n1 cup halved cherry tomatoes',
+        '2', -- UserID
+        TRUE,
+        '2023-12-12 10:30:00',
+        'https://www.skinnytaste.com/wp-content/uploads/2022/12/Rainbow-Quinoa-Salad-with-Lemon-Dressing-3.jpg',
+        'Author : skinnytaste, Designed by skinnytaste',  -- img_title
+        1, -- dietary_preference
+        15, -- cooking_time  
+        9   -- meal type (cuisines)
     );
 
 
@@ -1526,7 +1621,7 @@ VALUES
     (17, 4),
     (17, 9),
     (18, 3),
-    (19, ),
+    (19, 5),
     (20, 4),
     (21, 6),
     (22, 1),
@@ -1601,7 +1696,14 @@ VALUES
     (74, 2),
     (74, 10),
     (75, ), --none
-    (76, ),
+    (76, ), --none
+    (77, 2),
+    (77, 9),
+    (78, 1),
+    (78, 2),
+    (78, 7),
+    (79, ), --none
+    (80, ), --none
 
 -- second set of recipes
 INSERT INTO recipe

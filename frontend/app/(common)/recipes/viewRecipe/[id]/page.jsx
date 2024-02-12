@@ -181,7 +181,7 @@ const ViewRecipe = ({ params }) => {
         ) : (
           <>
             <div className="px-10 text-center font-semibold font-sans">
-              <h1 className="mb-4 text-2xl font-extrabold leading-tight text-gray-900 lg:mb-6 lg:text-6xl">
+              <h1 className="flex flex-wrap justify-center mb-4 text-2xl font-extrabold text-gray-900 lg:mb-6 lg:text-4xl">
                 {recipe?.title || "Untitled Recipe"}
               </h1>
 
@@ -211,7 +211,7 @@ const ViewRecipe = ({ params }) => {
               {/* End of publisher and published date section  */}
 
               {/* Combined Allergens and Dietary Preferences section */}
-              <div className="mt-14 flex justify-center space-x-4">
+              <div className="mt-10 lg:mt-14 grid grid-cols-2 lg:grid-cols-3 gap-4 justify-center">
                 {/* Allergens section */}
                 <div className="flex-1 p-3" role="alert">
                   <p className="font-bold text-base lg:text-xl text-gray-900 mb-1">
@@ -268,7 +268,7 @@ const ViewRecipe = ({ params }) => {
                 />
               )}
               <div className="flex flex-col ml-0 lg:ml-4 mt-4">
-                <div className="flex flex-row font-bold">
+                <div className="flex lg:flex-row lg:space-x-8 lg:space-y-0 flex-col space-y-4 font-bold">
                   <p className="mr-4 text-bold text-lg tracking-tight">
                     Cooking Time:{" "}
                     <span className="text-orange-600 font-semibold text-base">
@@ -410,7 +410,6 @@ const ViewRecipe = ({ params }) => {
           </>
         )}
       </div>
-      <Footer />
     </div>
   );
 };

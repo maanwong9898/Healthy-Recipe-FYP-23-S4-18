@@ -223,7 +223,6 @@ const ViewEducationalContent = ({ params }) => {
           </>
         )}
       </div>
-      <Footer />
     </div>
   );
 };

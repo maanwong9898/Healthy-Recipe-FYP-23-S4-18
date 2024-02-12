@@ -924,8 +924,6 @@ const Home = () => {
         </div>
         {/* End of Educational Contents cards */}
       </div>
-
-      <Footer />
     </div>
   );
 };

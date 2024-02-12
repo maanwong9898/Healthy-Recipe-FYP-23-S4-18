@@ -74,7 +74,6 @@ const RegistrationSelection = () => {
           </div>
         </div>
       </div>
-      <Footer />
     </div>
   );
 };

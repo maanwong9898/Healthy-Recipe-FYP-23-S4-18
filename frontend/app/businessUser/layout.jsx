@@ -20,8 +20,7 @@ function BusinessUserLayout({ children }) {
         {/* Other meta tags and links to stylesheets can be added here */}
       </Head>
       {/* <BusinessUserNavigation /> */}
-      <div className="w-full overflow-x-hidden">{children}</div>
-      <Footer />
+      <div>{children}</div>
     </>
   );
 }

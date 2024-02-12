@@ -231,7 +231,6 @@ const ViewBusinessBlogPost = ({ params }) => {
           </>
         )}
       </div>
-      <Footer />
     </div>
   );
 };

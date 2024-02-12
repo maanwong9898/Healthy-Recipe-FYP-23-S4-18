@@ -19,8 +19,7 @@ function SysAdminLayout({ children }) {
         {/* Other meta tags and links to stylesheets can be added here */}
       </Head>
       {/* <UserNavigation /> */}
-      <div className="w-full overflow-x-hidden">{children}</div>
-      <Footer />
+      <div>{children}</div>
     </>
   );
 }

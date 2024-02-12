@@ -438,7 +438,6 @@ const NutritionistRegistration = () => {
           </div>
         </div>
       </div>
-      <Footer />
     </div>
   );
 };

@@ -252,7 +252,6 @@ const userLogin = () => {
           </div>
         </div>
       </div>
-      <Footer />
     </div>
   );
 };

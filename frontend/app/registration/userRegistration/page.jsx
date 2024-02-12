@@ -509,7 +509,6 @@ const userRegistration = () => {
           </div>
         </div>
       </div>
-      <Footer />
     </div>
   );
 };

@@ -19,10 +19,7 @@ function NutritionistLayout({ children }) {
         {/* Other meta tags and links to stylesheets can be added here */}
       </Head>
       {/* <NutritionistNavigation /> */}
-      <div className="flex flex-col min-h-screen">
-        <main className="flex-grow">{children}</main>
-        <Footer />
-      </div>
+      <div>{children}</div>
     </>
   );
 }

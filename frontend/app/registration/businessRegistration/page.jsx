@@ -277,7 +277,7 @@ const businessRegistration = () => {
                       onChange={clearErrorOnChange(setWorkEmail)}
                     />
                   </div>
-                  
+
                   {/* UEN */}
                   <div className="flex flex-col mb-3.5">
                     <label htmlFor="uen" className="font-medium text-base mb-1">
@@ -378,7 +378,6 @@ const businessRegistration = () => {
           </div>
         </div>
       </div>
-      <Footer />
     </div>
   );
 };

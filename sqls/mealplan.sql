@@ -323,6 +323,20 @@ VALUES
         'https://img.freepik.com/free-photo/chicken-steak-topped-with-white-sesame-peas-tomatoes-broccoli-pumpkin-white-plate_1150-24770.jpg?w=1060&t=st=1707560531~exp=1707561131~hmac=e401d7d512d5669f917b593e36a1935fe06eba3259863cc7b63990a9a3189e8c',
         'Designed by Freepik',  -- img_title
         '4' -- userid
+    ),
+    (
+        23,
+        'Gina',
+        'Healthy Eating Meal Plan for Weight Loss',
+        TRUE,
+        'In a fast-paced society, keeping a healthy weight might be challenging. However, reaching weight loss objectives is not only possible but can also result in enhanced general health and well-being if diet and lifestyle choices are made appropriately.',
+        'By concentrating on balanced nutrition, portion control, and mindful eating, individuals can build durable habits that support their goals.',
+        'Incorporating a variety of nutrient-rich foods throughout the day ensures that nutritional needs are met while keeping meals interesting and enjoyable. Remember, consistency is key, and small, gradual changes can lead to long-term success.',
+        '2023-09-15',
+        3, -- weight loss
+        'https://img.freepik.com/free-photo/nice-salad-near-measuring-tape_23-2147778453.jpg?w=1060&t=st=1707711272~exp=1707711872~hmac=b72fb49d1575a9af7fc3966ea4f24951d88e0a9dc9d24630477246522effda02',
+        'Designed by Freepik',  -- img_title
+        '4' -- userid
     );
     
     
@@ -399,4 +413,5 @@ values
     (21, 56),
     (22, 20),
     (22, 53),
-    (22, 55);
+    (22, 55),
+    (23, );

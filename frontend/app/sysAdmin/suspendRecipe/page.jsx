@@ -86,9 +86,11 @@ const SuspendRecipe = () => {
     // Perform your token and role check here
     const token = SecureStorage.getItem("token");
     const role = SecureStorage.getItem("role");
+    const tokenExpiration = SecureStorage.getItem("token_expiration");
+    const now = new Date().getTime(); // Current time in milliseconds
 
     // Replace 'ADMIN' with the actual role you're checking for
-    if (!token || role !== "ADMIN") {
+    if (!token || role !== "ADMIN" || now >= parseInt(tokenExpiration)) {
       // If the user is not authorized, redirect them
       router.push("/"); // Adjust the route as needed
     } else {

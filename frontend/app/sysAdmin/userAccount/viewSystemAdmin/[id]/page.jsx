@@ -32,9 +32,13 @@ const ViewSystemAdmin = ({ params }) => {
   };
 
   useEffect(() => {
+    const tokenExpiration = SecureStorage.getItem("token_expiration");
+    const now = new Date().getTime(); // Current time in milliseconds
+
     if (
       !SecureStorage.getItem("token") ||
-      SecureStorage.getItem("role") !== "ADMIN"
+      SecureStorage.getItem("role") !== "ADMIN" ||
+      now >= parseInt(tokenExpiration)
     ) {
       // clear the secure storage to prevent any unauthorized access
       SecureStorage.clear();

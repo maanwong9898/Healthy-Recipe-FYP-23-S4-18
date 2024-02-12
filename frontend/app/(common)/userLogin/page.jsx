@@ -30,20 +30,6 @@ const userLogin = () => {
   const [passwordVisible, setPasswordVisible] = useState(false); // New state for password visibility
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
-  // // Function to convert UNIX epoch time to a human-readable date
-  // function convertEpochToHumanReadable(epoch) {
-  //   return new Date(epoch * 1000).toUTCString();
-  // }
-
-  // // Convert the given times
-  // const iatHumanReadable = convertEpochToHumanReadable(1704900795);
-  // const expHumanReadable = convertEpochToHumanReadable(1704901395);
-  // const currentHumanReadable = convertEpochToHumanReadable(1704900795.588);
-
-  // console.log(`Issued at: ${iatHumanReadable}`);
-  // console.log(`Expires at: ${expHumanReadable}`);
-  // console.log(`Current time: ${currentHumanReadable}`);
-
   // Function to toggle password visibility
   const togglePasswordVisibility = () => {
     setPasswordVisible(!passwordVisible);
@@ -77,21 +63,34 @@ const userLogin = () => {
       // check what payload is in the token
       console.log(decodedToken);
 
+      // Convert UNIX epoch times to human-readable UTC dates
+      const iatUtc = new Date(decodedToken.iat * 1000).toUTCString();
+      const expUtc = new Date(decodedToken.exp * 1000).toUTCString();
+      const currentUtc = new Date().toUTCString();
+
+      // Display the times
+      console.log(`Issued at (UTC): ${iatUtc}`);
+      console.log(`Expires at (UTC): ${expUtc}`);
+      console.log(`Current time (UTC): ${currentUtc}`);
+
+      const expDate = decodedToken.exp * 1000; // Convert to milliseconds
+
       SecureStorage.setItem("role", decodedToken.role);
       SecureStorage.setItem("userId", decodedToken.id);
+      SecureStorage.setItem("token_expiration", expDate.toString()); // Store as string
 
       // Set up the authorization header with the bearer token
-      const config = {
-        headers: { Authorization: `Bearer ${token}` },
-      };
+      // const config = {
+      //   headers: { Authorization: `Bearer ${token}` },
+      // };
 
-      // Make the GET request to the particular role endpoint (testing purposes)
-      const response = await axiosInterceptorInstance.get(
-        "/test/admin",
-        config
-      );
+      // // Make the GET request to the particular role endpoint (testing purposes)
+      // const response = await axiosInterceptorInstance.get(
+      //   "/test/admin",
+      //   config
+      // );
 
-      console.log("Admin data:", response.data);
+      // console.log("Admin data:", response.data);
 
       // Handle the response data as needed
     } catch (error) {

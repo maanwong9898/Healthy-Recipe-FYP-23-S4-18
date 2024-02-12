@@ -6,6 +6,8 @@ import BusinessNavBar from "../../../components/navigation/businessUserNavBar";
 import axiosInterceptorInstance from "../../../axiosInterceptorInstance.js";
 import { QueryClientProvider, useQuery } from "react-query"; // Added useQuery here
 import { queryClient } from "../../../queryClient"; // Adjust the path as necessary
+import SecureStorage from "react-secure-storage";
+
 // rouuter path: /businessBlogPost
 
 // Sorting options
@@ -81,19 +83,47 @@ const BusinessBlogPostsPage = () => {
   // Additional state to track if search button has been clicked
   const [searchButtonClicked, setSearchButtonClicked] = useState(false);
   // const [isLoading, setIsLoading] = useState(false);
+  const [isAuthorized, setIsAuthorized] = useState(false);
+  const [isChecking, setIsChecking] = useState(true);
+
+  useEffect(() => {
+    // Perform your token and role check here
+    const token = SecureStorage.getItem("token");
+    const role = SecureStorage.getItem("role");
+    const tokenExpiration = SecureStorage.getItem("token_expiration");
+    const now = new Date().getTime(); // Current time in milliseconds
+
+    // Replace 'REGISTERED_USER' with the actual role you're checking for
+    if (
+      !token ||
+      role !== "BUSINESS_USER" ||
+      now >= parseInt(tokenExpiration)
+    ) {
+      // If the user is not authorized, redirect them
+      router.push("/"); // Adjust the route as needed
+    } else {
+      setIsChecking(false);
+      // If the user is authorized, allow the component to proceed
+      setIsAuthorized(true);
+    }
+  }, []);
 
   // Fetch blog posts
   const {
     data: AllBusinessBlogPosts,
     isLoading,
     isError,
-  } = useQuery("businessBlogPosts", fetchBlogPosts);
+  } = useQuery("businessBlogPosts", fetchBlogPosts, {
+    enabled: isAuthorized, // Only run query if authorized
+  });
 
   const {
     data: categories,
     isLoading: isCategoriesLoading,
     isError: isCategoriesError,
-  } = useQuery("blogCategories", fetchCategories);
+  } = useQuery("blogCategories", fetchCategories, {
+    enabled: isAuthorized, // Only run query if authorized
+  });
 
   // Handle error state
   if (isError) {
@@ -282,11 +312,13 @@ const BusinessBlogPostsPage = () => {
     }
   };
 
-  function capitalizeFirstLetter(string) {
-    if (!string) return "";
-    return string.charAt(0).toUpperCase() + string.slice(1);
-  }
-
+  const capitalizeFirstLetter = (name) => {
+    if (!name) return "";
+    return name
+      .split(" ")
+      .map((word) => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
+      .join(" ");
+  };
   // Render stars and count
   const renderStarsAndCount = (post) => {
     if (
@@ -530,15 +562,17 @@ const BusinessBlogPostsPage = () => {
                       {latestPosts.map((post) => renderPostCard(post))}
                     </div>
                   </div>
-                  <h2 className="text-3xl font-bold mb-4 mt-4">
-                    Other Blog Posts
-                  </h2>
-                  <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                  <div className="mt-14 mb-5">
+                    <h2 className="text-3xl font-bold mb-4 mt-4">
+                      Other Blog Posts
+                    </h2>
+                  </div>
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
                     {otherBusinessBlogPosts.map((post) => renderPostCard(post))}
                   </div>
                 </>
               ) : (
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
                   {displayedBlogPosts.map((post) => renderPostCard(post))}
                 </div>
               )}

@@ -317,10 +317,13 @@ const BusinessBlogPostsPage = () => {
     }
   };
 
-  function capitalizeFirstLetter(string) {
-    if (!string) return "";
-    return string.charAt(0).toUpperCase() + string.slice(1);
-  }
+  const capitalizeFirstLetter = (name) => {
+    if (!name) return "";
+    return name
+      .split(" ")
+      .map((word) => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
+      .join(" ");
+  };
 
   // Render stars and count
   const renderStarsAndCount = (post) => {
@@ -571,9 +574,11 @@ const BusinessBlogPostsPage = () => {
                               {latestPosts.map((post) => renderPostCard(post))}
                             </div>
                           </div>
-                          <h2 className="text-3xl font-bold mb-4 mt-4">
-                            Other Blog Posts
-                          </h2>
+                          <div className="mt-14 mb-5">
+                            <h2 className="text-3xl font-bold mb-4 mt-4">
+                              Other Blog Posts
+                            </h2>
+                          </div>
                           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                             {otherBusinessBlogPosts.map((post) =>
                               renderPostCard(post)

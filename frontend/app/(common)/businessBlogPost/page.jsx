@@ -548,12 +548,12 @@ const BusinessBlogPostsPage = () => {
                   <h2 className="text-3xl font-bold mb-4 mt-4">
                     Other Blog Posts
                   </h2>
-                  <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
                     {otherBusinessBlogPosts.map((post) => renderPostCard(post))}
                   </div>
                 </>
               ) : (
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
                   {displayedBlogPosts.map((post) => renderPostCard(post))}
                 </div>
               )}

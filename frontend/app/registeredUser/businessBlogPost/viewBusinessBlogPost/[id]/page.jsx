@@ -177,6 +177,14 @@ const ViewBusinessBlogPost = ({ params }) => {
     return stars;
   };
 
+  const capitalizeFirstLetter = (name) => {
+    if (!name) return "";
+    return name
+      .split(" ")
+      .map((word) => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
+      .join(" ");
+  };
+
   return (
     <div>
       {isLoading && isChecking ? (
@@ -203,7 +211,8 @@ const ViewBusinessBlogPost = ({ params }) => {
                     <p>
                       Published by:{" "}
                       <span className="text-orange-600 font-bold tracking-tight">
-                        {businessBlogPost.publisher || "Not specified"}
+                        {capitalizeFirstLetter(businessBlogPost.publisher) ||
+                          "Not specified"}
                       </span>
                     </p>
                     <p>

@@ -285,7 +285,7 @@ const BusinessUserHomePage = () => {
                     </div>
                   </div>
                   {/* Blog management */}
-                  <div className="relative flex flex-col rounded-xl h-96 bg-slate-200 p-8">
+                  <div className="relative flex flex-col rounded-xl bg-slate-200 p-8">
                     <h4 className="text-2xl text-center font-semibold text-gray-900 mb-4">
                       Blogs Management
                     </h4>
@@ -393,47 +393,6 @@ const BusinessUserHomePage = () => {
               </div>
             </div>
             {/* End of quick link table/card */}
-
-            {/* Start of latest blogs created */}
-            {/* <div className="p-6 mb-4 grid grid-cols-1 xl:grid-cols-1">
-        <div className="p-6 relative rounded-xl bg-white text-gray-700 overflow-hidden xl:col-span-2 border border-gray-100 shadow-sm">
-          <div className="relative bg-clip-border rounded-xl overflow-hidden bg-transparent text-gray-700 shadow-none m-0 flex items-center justify-between p-6">
-            <div>
-              <h1 className="text-4xl font-bold">Blogs</h1>
-              <table className="w-full min-w-[640px] table-auto">
-                <thead>
-                  <tr>
-                    <th className="border-b border-gray-200 py-3 px-6 text-left">
-                      <p class="mt-6 block antialiased font-sans text-[11px] font-medium uppercase text-gray-900">
-                        Blog Post Title
-                      </p>
-                    </th>
-                    <th className="border-b border-gray-200 py-3 px-6 text-left">
-                      <p class="mt-6 block antialiased font-sans text-[11px] font-medium uppercase text-gray-900">
-                        Date Published
-                      </p>
-                    </th>
-                    <th className="border-b border-gray-200 py-3 px-6 text-left">
-                      <p class="mt-6 block antialiased font-sans text-[11px] font-medium uppercase text-gray-900">
-                        Category
-                      </p>
-                    </th>
-                  </tr>
-                </thead>
-              </table>
-            </div>
-          </div>
-        </div>
-      </div> */}
-            {/* insert a table in a card */}
-
-            {/* End of latest blogs created */}
-
-            {/* Start of latest recipes created */}
-            {/* End of latest recipes created */}
-
-            {/* Start of latest educational content created */}
-            {/* End of latest educational content created */}
           </div>
         </>
       )}

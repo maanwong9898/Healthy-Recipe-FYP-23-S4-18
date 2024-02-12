@@ -5,20 +5,10 @@ import Link from "next/link";
 import { useState, useEffect } from "react";
 import axiosInterceptorInstance from "../../../../axiosInterceptorInstance.js";
 import BusinessUserNavBar from "../../../../components/navigation/businessUserNavBar";
+import SecureStorage from "react-secure-storage";
 
 // this is to view particular blog post from landing page
 // router path: /businessBlogPost
-
-// Slugify utility function
-const slugify = (text) =>
-  text
-    .toString()
-    .toLowerCase()
-    .replace(/\s+/g, "-") // Replace spaces with -
-    .replace(/[^\w\-]+/g, "") // Remove all non-word chars
-    .replace(/\-\-+/g, "-") // Replace multiple - with single -
-    .replace(/^-+/, "") // Trim - from start of text
-    .replace(/-+$/, ""); // Trim - from end of text
 
 const fetchBlogPostById = async (postId) => {
   try {
@@ -48,23 +38,41 @@ const ViewBusinessBlogPost = ({ params }) => {
   const [businessBlogPost, setBusinessBlogPost] = useState(null);
   const [reviewsAndRatings, setReviewsAndRatings] = useState([]);
   const router = useRouter();
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
+  const [isChecking, setIsChecking] = useState(true);
 
   useEffect(() => {
-    setIsLoading(true); // Set loading state to true
-    const postId = decodeURIComponent(params.id); // Make sure to decode the ID
-    fetchBlogPostById(postId)
-      .then((data) => {
-        setBusinessBlogPost(data);
-        // Assuming the blog ID is needed to fetch the reviews
-        fetchBlogRatingsAndReviews(data.id);
-      })
-      .catch((error) => {
-        console.error("Error fetching blog post:", error);
-      })
-      .finally(() => {
-        setIsLoading(false); // Set loading to false when operation is complete
-      });
+    const token = SecureStorage.getItem("token");
+    const role = SecureStorage.getItem("role");
+    const tokenExpiration = SecureStorage.getItem("token_expiration");
+    const now = new Date().getTime(); // Current time in milliseconds
+
+    if (
+      !token ||
+      role !== "BUSINESS_USER" ||
+      now >= parseInt(tokenExpiration)
+    ) {
+      // If token is invalid or role is not business user, redirect to login
+      SecureStorage.clear();
+      router.push("/");
+      return;
+    } else {
+      setIsChecking(false);
+
+      const postId = decodeURIComponent(params.id); // Make sure to decode the ID
+      fetchBlogPostById(postId)
+        .then((data) => {
+          setBusinessBlogPost(data);
+          // Assuming the blog ID is needed to fetch the reviews
+          fetchBlogRatingsAndReviews(data.id);
+        })
+        .catch((error) => {
+          console.error("Error fetching blog post:", error);
+        })
+        .finally(() => {
+          setIsLoading(false); // Set loading to false when operation is complete
+        });
+    }
   }, [params.id]);
 
   const fetchBlogRatingsAndReviews = async (blogId) => {
@@ -118,6 +126,14 @@ const ViewBusinessBlogPost = ({ params }) => {
     return "";
   };
 
+  const capitalizeFirstLetter = (name) => {
+    if (!name) return "";
+    return name
+      .split(" ")
+      .map((word) => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
+      .join(" ");
+  };
+
   return (
     <div>
       <BusinessUserNavBar />
@@ -139,7 +155,8 @@ const ViewBusinessBlogPost = ({ params }) => {
                 <p>
                   Published by:{" "}
                   <span className="text-orange-600 font-bold tracking-tight">
-                    {businessBlogPost.publisher || "Not specified"}
+                    {capitalizeFirstLetter(businessBlogPost.publisher) ||
+                      "Not specified"}
                   </span>
                 </p>
                 <p>

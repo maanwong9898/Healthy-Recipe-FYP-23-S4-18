@@ -1,31 +1,27 @@
 package com.FYP18.HealthyRecipe.Service;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.ArrayList; 
+import java.util.List; 
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.FYP18.HealthyRecipe.ObjectToMapConverter;
-import com.FYP18.HealthyRecipe.DTO.MealPlanDTO;
+import com.FYP18.HealthyRecipe.DTO.EduCoDTO;
 import com.FYP18.HealthyRecipe.DTO.PopularReviewRatingDTO;
+import com.FYP18.HealthyRecipe.DTO.RecipeDTO;
 import com.FYP18.HealthyRecipe.DTO.ReviewRatingDTO;
 import com.FYP18.HealthyRecipe.DTO.UserInfoDTO;
 import com.FYP18.HealthyRecipe.Entity.EducationalContent;
 import com.FYP18.HealthyRecipe.Entity.EducationalContentReviewRating;
 import com.FYP18.HealthyRecipe.Entity.EducationalContentReviewRatingId;
-import com.FYP18.HealthyRecipe.Entity.Categories.EducationalContentCategory;
-import com.FYP18.HealthyRecipe.Entity.Categories.EducationalContentCategory;
+import com.FYP18.HealthyRecipe.Entity.Categories.EducationalContentCategory; 
 import com.FYP18.HealthyRecipe.Repository.EducationalContentRepository;
 import com.FYP18.HealthyRecipe.Repository.EducationalContentReviewRatingRepository;
 import com.FYP18.HealthyRecipe.Repository.UserRepository;
-import com.FYP18.HealthyRecipe.Repository.Categories.EducationalContentCategoryRepo;
-import com.FYP18.HealthyRecipe.Repository.Categories.EducationalContentCategoryRepo;
+import com.FYP18.HealthyRecipe.Repository.Categories.EducationalContentCategoryRepo; 
  
 // import org.springframework.transaction.annotation.Transactional;
 // import jakarta.transaction.Transactional;
@@ -112,28 +108,7 @@ public class EducationalContentService {
         return educationalContentRepository.findById(educationalContentId)
             .orElseThrow(()->  new RuntimeException("EducationalContent Id: "+ educationalContentId + "is not found"));
     }
-    
-
-      public Map<String, String> findEducationalContentBy(long id)
-      {
-        Map<String,String> kvp = new HashMap<>(),
-        educationalContentMap = new HashMap<>();
-
-        EducationalContent educationalContent = educationalContentRepository.findById(id)
-        .orElseThrow(()->  new RuntimeException("EducationalContent Id: "+ id + "is not found")); 
-        
-       List<EducationalContentReviewRating> rrs =  educationalContentReviewRatingRepository.findByEducationalContentId(educationalContent.getId());
-       System.out.println("CAUSED BYY: " + rrs);
-        educationalContentMap = ObjectToMapConverter.convertObjectToMap(educationalContent);
-        if(rrs != null && !rrs.isEmpty() )
-        {
-            kvp = ObjectToMapConverter.convertObjectToMap(rrs);
-            educationalContentMap.putAll(kvp); 
-
-        }
-
-        return educationalContentMap;
-    }
+     
     // this is a failure, i have spent too much time :)
     // public List<EducationalContent> findEducationalContentByUserId(User userId)
     // {
@@ -206,16 +181,5 @@ public class EducationalContentService {
     {
         educationalContentReviewRatingRepository.deleteByEducationalContentId(id.UserID, id.educationalContentID);
     } 
-
-    public List<EducationalContent> getMostPopularEducationalContents()
-    {
-        List<PopularReviewRatingDTO> dto = educationalContentReviewRatingRepository.getMostPopularEducationalContents();
-        List<Long> ids = new ArrayList<>();
-
-        for(PopularReviewRatingDTO id : dto)
-        {
-            ids.add(id.getId());
-        } 
-        return educationalContentRepository.findAllById(ids);
-    }
+  
 }

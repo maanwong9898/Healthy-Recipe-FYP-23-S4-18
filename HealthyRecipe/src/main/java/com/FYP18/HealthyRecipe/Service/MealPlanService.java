@@ -13,17 +13,14 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.FYP18.HealthyRecipe.DTO.MealPlanDTO;
-import com.FYP18.HealthyRecipe.DTO.PopularReviewRatingDTO;
+import com.FYP18.HealthyRecipe.DTO.PopularReviewRatingDTO; 
 import com.FYP18.HealthyRecipe.DTO.ReviewRatingDTO;
 import com.FYP18.HealthyRecipe.DTO.UserInfoDTO;
 import com.FYP18.HealthyRecipe.Entity.MealPlan;
 import com.FYP18.HealthyRecipe.Entity.MealPlanReviewRating;
-import com.FYP18.HealthyRecipe.Entity.Recipe;
-import com.FYP18.HealthyRecipe.Entity.RecipeReviewRating;
-import com.FYP18.HealthyRecipe.Entity.RecipeReviewRatingId;
+import com.FYP18.HealthyRecipe.Entity.Recipe; 
 import com.FYP18.HealthyRecipe.Repository.MealPlanRepository;
-import com.FYP18.HealthyRecipe.Repository.RecipeRepository;
-import com.FYP18.HealthyRecipe.Repository.RecipeReviewRatingRepository;
+import com.FYP18.HealthyRecipe.Repository.RecipeRepository; 
 import com.FYP18.HealthyRecipe.Repository.UserRepository;
 import com.FYP18.HealthyRecipe.Repository.MealPlanReviewRatingRepository;
 import com.FYP18.HealthyRecipe.Entity.MealPlanReviewRatingId;
@@ -190,15 +187,6 @@ public class MealPlanService {
         mealPlanReviewRatingRepository.deleteById(id);
     }
  
-    public List<MealPlanDTO> getMostPopularMealPlans()
-    {
-        List<PopularReviewRatingDTO> dto = mealPlanReviewRatingRepository.getMostPopularMealPlans();
-        List<Long> ids = new ArrayList<>();
-
-        for(PopularReviewRatingDTO id : dto)
-        {
-            ids.add(id.getId());
-        } 
-        return repo.findMealPlanDTOsByIds(ids);
-    }
+   
+ 
 }

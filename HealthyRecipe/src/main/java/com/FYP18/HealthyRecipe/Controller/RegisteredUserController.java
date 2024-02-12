@@ -103,4 +103,11 @@ public class RegisteredUserController {
     {
         return recipeService.findRecipeDTOsByAllergiesAndDP(userId);
     }
+
+    @GetMapping("/findRecipeDTOsByAllergiesAndDP/{userId}/{count}")
+    public List<RecipeDTO> findRecipeDTOsByAllergiesAndDP(@PathVariable String userId, 
+                                                            @PathVariable Integer count)
+    {
+        return recipeService.findRecipeDTOsByAllergiesAndDP(userId, count);
+    }
 }

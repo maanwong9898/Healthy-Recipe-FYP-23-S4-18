@@ -9,10 +9,14 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-import org.springframework.beans.factory.annotation.Autowired; 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.FYP18.HealthyRecipe.DTO.PopularReviewRatingDTO;
@@ -132,17 +136,31 @@ public class RecipeService {
         recipeRepository.deleteByRecipeId(id);
     }
 
+    // this is called on default    
     public List<RecipeDTO> getMostPopularRecipes()
     {
-        List<PopularReviewRatingDTO> dto = recipeReviewRatingRepository.getMostPopularRecipes();
+        List<PopularReviewRatingDTO> dto = recipeReviewRatingRepository.getMostPopularRecipes(3);
         List<Long> ids = new ArrayList<>();
         for(PopularReviewRatingDTO id : dto)
         {
             ids.add(id.getId());
         } 
-        return recipeRepository.findRecipeDTOsByIds(ids);
+
+        List<RecipeDTO> toReturn = recipeRepository.findRecipeDTOsByIds(ids);
+        int missing = 3 - ids.size();
+
+        // if its actually lesser than 3
+        if(missing > 0)
+        { 
+            List<RecipeDTO> addOn = missing == 3 ? recipeRepository.findLatestRecipe(3):
+                                                recipeRepository.findLatestRecipe(ids, missing);
+
+            toReturn.addAll(addOn);
+        }
+        
+        return toReturn;
     }
- 
+    
     //- rating's Create, Update, Read, Delete
     
     public RecipeReviewRating createRating(RecipeReviewRating recipeReviewRating)
@@ -209,7 +227,11 @@ public class RecipeService {
     {
         recipeReviewRatingRepository.deleteById(id);
     }
-  
+    public Page<RecipeDTO> findRecipePages(int page, int size)
+    {   
+        Pageable pageable = PageRequest.of(page, size);
+        return recipeRepository.findRecipesOfPage(pageable);
+    }
     public List<RecipeDTO> findRecipeDTOsByDietaryPreferences( DietaryPreferences dp)
     {
        return recipeRepository.findRecipeDTOsByDietaryPreferences(dp.getId());
@@ -223,11 +245,9 @@ public class RecipeService {
     @Autowired 
     private RegisteredUserRepository ruRepo;
 
-    // havent incldued the checking where they have NO DIETARY PREFERENCE // NO HEALTH GOAL // NO ALLERGIES
-    // so not quite done
-
+ 
     // use in Registered User's Landing page ( limit to 3) and Registered's user's Recipe page, (no limitation as of now)
-    public List<RecipeDTO> findRecipeDTOsByAllergiesAndDP(String userId) 
+    public List<RecipeDTO> findRecipeDTOsByAllergiesAndDP(String userId, Integer num) 
     { 
         RegisteredUser ru = ruRepo.findById(userId).get();
         Set<Allergies> allergies = ru.getAllergies();
@@ -239,7 +259,7 @@ public class RecipeService {
         List<RecipeDTO> toReturn; 
         if(ids.size() == 0)
         {
-            toReturn = dp == null ? recipeRepository.findRandomRecipes(3):
+            toReturn = dp == null ? recipeRepository.findLatestRecipe(num):
                                     recipeRepository.findRecipeDTOsByDietaryPreferences(dp.getId());
         }
         else
@@ -248,16 +268,16 @@ public class RecipeService {
                                     recipeRepository.findRecipeDTOsByAllergiesAndDP(ids, dp.getId());
         }
 
-        if(toReturn.size()  < 3)
+        if(toReturn.size()  < num)
         {
-            int count  = 3 - toReturn.size();
+            int count  = num - toReturn.size();
             List<Long> checked = new ArrayList<>() ;
             for(RecipeDTO r :toReturn)
             {
                 checked.add(r.getId());
             }
-            List<RecipeDTO> addOn = count == 3 ? recipeRepository.findRandomRecipes(count) :
-                                         recipeRepository.findRandomRecipes( checked, count);
+            List<RecipeDTO> addOn = count == num ? recipeRepository.findLatestRecipe(count) :
+                                         recipeRepository.findLatestRecipe(checked, count);
             toReturn.addAll(addOn); 
         }
         HealthGoal hg = ru.getHealthGoal();
@@ -281,6 +301,13 @@ public class RecipeService {
             }   
         }
         return toReturn;
+    }
+
+
+    // this returns 3 everytime, for now it returns random recipe if everything dont fit  
+    public List<RecipeDTO> findRecipeDTOsByAllergiesAndDP(String userId) 
+    { 
+        return findRecipeDTOsByAllergiesAndDP(userId, 3);
     }
 
 

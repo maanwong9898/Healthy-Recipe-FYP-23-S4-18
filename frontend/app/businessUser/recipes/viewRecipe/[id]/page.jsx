@@ -294,7 +294,7 @@ const BusinessViewRecipe = ({ params }) => {
                     <div className="flex flex-row font-bold">
                       <p className="mr-4 text-bold text-lg tracking-tight">
                         Cooking Time:{" "}
-                        <span className="text-orange-600 font-semibold text-base">
+                        <span className="text-orange-600 font-semibold text-lg">
                           {recipe?.cookingTime
                             ? `Approx. ${recipe.cookingTime} mins`
                             : "Not specified"}
@@ -302,7 +302,7 @@ const BusinessViewRecipe = ({ params }) => {
                       </p>
                       <p className="mr-4 text-bold text-lg tracking-tight">
                         Total Serving:{" "}
-                        <span className="text-orange-600 font-semibold text-base">
+                        <span className="text-orange-600 font-semibold text-lg">
                           {recipe?.servingSize || "Not specified"} pax
                         </span>
                       </p>
@@ -310,13 +310,13 @@ const BusinessViewRecipe = ({ params }) => {
                     <p className="font-bold mt-4 lg:mt-8 text-2xl tracking-tight">
                       Description:
                     </p>
-                    <p className="mt-2 items-center whitespace-pre-line">
+                    <p className="mt-2 items-center whitespace-pre-line md:text-lg">
                       {recipe?.description || "Not specified"}
                     </p>
                     <p className="font-bold mt-4 lg:mt-8 text-2xl tracking-tight">
                       Dietary Information:
                     </p>
-                    <p className="mt-2 items-center whitespace-pre-line">
+                    <p className="mt-2 items-center whitespace-pre-line md:text-lg">
                       {recipe?.info || "Not specified"}
                     </p>
 
@@ -379,7 +379,7 @@ const BusinessViewRecipe = ({ params }) => {
                     {recipe?.ingredients
                       .split("\n")
                       .map((ingredient, index) => (
-                        <li key={index} className="list-disc ml-4">
+                        <li key={index} className="list-disc ml-4 md:text-xl">
                           {ingredient}
                         </li>
                       )) || <li>Not specified</li>}
@@ -389,7 +389,7 @@ const BusinessViewRecipe = ({ params }) => {
                     <ol className="font-bold text-2xl tracking-tight mb-2 text-gray-900">
                       Instructions
                     </ol>
-                    <ol>
+                    <ol className="md:text-xl">
                       {recipe ? (
                         renderSteps(recipe.steps)
                       ) : (

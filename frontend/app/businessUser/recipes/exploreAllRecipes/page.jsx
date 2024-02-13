@@ -14,7 +14,7 @@ import BusinessUserNavBar from "../../../components/navigation/businessUserNavBa
 const sortOptions = {
   LATEST: { key: "LATEST", label: "By Latest" },
   OLDEST: { key: "OLDEST", label: "By Oldest" },
-  HIGHEST_RATINGS: { key: "HIGHEST_RATINGS", label: "Highest Ratings" },
+  // HIGHEST_RATINGS: { key: "HIGHEST_RATINGS", label: "Highest Ratings" },
   ALPHABETICAL_AZ: { key: "ALPHABETICAL_AZ", label: "Alphabetically (A to Z)" },
   ALPHABETICAL_ZA: { key: "ALPHABETICAL_ZA", label: "Alphabetically (Z to A)" },
 };
@@ -26,15 +26,15 @@ const fetchRecipes = async () => {
     const response = await axiosInterceptorInstance.get("/recipe/get");
     // console.log("All recipe:", response.data);
     // Fetch average ratings for each blog post
-    const recipesWithAverage = await Promise.all(
-      response.data.map(async (recipe) => {
-        const average = await fetchRecipeAverage(recipe.id);
-        return { ...recipe, average };
-      })
-    );
+    // const recipesWithAverage = await Promise.all(
+    //   response.data.map(async (recipe) => {
+    //     const average = await fetchRecipeAverage(recipe.id);
+    //     return { ...recipe, average };
+    //   })
+    // );
 
     // Filter active blog posts
-    const filteredData = recipesWithAverage.filter(
+    const filteredData = response.data.filter(
       (recipe) => recipe.active === true
     );
 
@@ -45,18 +45,18 @@ const fetchRecipes = async () => {
   }
 };
 
-const fetchRecipeAverage = async (recipeId) => {
-  try {
-    const response = await axiosInterceptorInstance.get(
-      `/recipe/getAverage/${recipeId}`
-    );
-    console.log("Average rating for recipe", recipeId, "is:", response.data);
-    return response.data; // Assuming this returns the average data for the recipe
-  } catch (error) {
-    console.error(`Failed to fetch average for recipe ${recipeId}:`, error);
-    return null; // or handle the error as you see fit
-  }
-};
+// const fetchRecipeAverage = async (recipeId) => {
+//   try {
+//     const response = await axiosInterceptorInstance.get(
+//       `/recipe/getAverage/${recipeId}`
+//     );
+//     console.log("Average rating for recipe", recipeId, "is:", response.data);
+//     return response.data; // Assuming this returns the average data for the recipe
+//   } catch (error) {
+//     console.error(`Failed to fetch average for recipe ${recipeId}:`, error);
+//     return null; // or handle the error as you see fit
+//   }
+// };
 
 // Fetch all dietary preferences categories from backend
 const fetchDietaryPreferences = async () => {
@@ -487,15 +487,15 @@ const RecipesPageForUser = () => {
       case "ALPHABETICAL_ZA":
         sortedRecipes.sort((a, b) => b.title.localeCompare(a.title));
         break;
-      case "HIGHEST_RATINGS":
-        sortedRecipes.sort((a, b) => {
-          const ratingDiff =
-            (b.average?.averageRatings || 0) - (a.average?.averageRatings || 0);
-          if (ratingDiff !== 0) return ratingDiff;
-          // Use getDateForComparison for tiebreaker date comparison
-          return getDateForComparison(b) - getDateForComparison(a); // Latest date first if tie
-        });
-        break;
+      // case "HIGHEST_RATINGS":
+      //   sortedRecipes.sort((a, b) => {
+      //     const ratingDiff =
+      //       (b.average?.averageRatings || 0) - (a.average?.averageRatings || 0);
+      //     if (ratingDiff !== 0) return ratingDiff;
+      //     // Use getDateForComparison for tiebreaker date comparison
+      //     return getDateForComparison(b) - getDateForComparison(a); // Latest date first if tie
+      //   });
+      //   break;
     }
 
     console.log("Filtered recipes:", newFilteredRecipes);
@@ -705,15 +705,15 @@ const RecipesPageForUser = () => {
           }
 
           // Fetch average ratings for each recipe
-          let filteredResultsWithAverage = await Promise.all(
-            finalResults.map(async (recipe) => {
-              const average = await fetchRecipeAverage(recipe.id);
-              return { ...recipe, average }; // Augment each recipes with its average
-            })
-          );
+          // let filteredResultsWithAverage = await Promise.all(
+          //   finalResults.map(async (recipe) => {
+          //     const average = await fetchRecipeAverage(recipe.id);
+          //     return { ...recipe, average }; // Augment each recipes with its average
+          //   })
+          // );
 
           // Sort the results
-          let sortedResults = [...filteredResultsWithAverage];
+          let sortedResults = [...filteredResults];
 
           // Helper function to get the date for comparison
           const getDateForComparison = (recipe) => {
@@ -739,16 +739,16 @@ const RecipesPageForUser = () => {
             case "ALPHABETICAL_ZA":
               sortedResults.sort((a, b) => b.title.localeCompare(a.title));
               break;
-            case "HIGHEST_RATINGS":
-              sortedResults.sort((a, b) => {
-                const ratingDiff =
-                  (b.average?.averageRatings || 0) -
-                  (a.average?.averageRatings || 0);
-                if (ratingDiff !== 0) return ratingDiff;
-                // Use getDateForComparison for tiebreaker date comparison
-                return getDateForComparison(b) - getDateForComparison(a); // Latest date first if tie
-              });
-              break;
+            // case "HIGHEST_RATINGS":
+            //   sortedResults.sort((a, b) => {
+            //     const ratingDiff =
+            //       (b.average?.averageRatings || 0) -
+            //       (a.average?.averageRatings || 0);
+            //     if (ratingDiff !== 0) return ratingDiff;
+            //     // Use getDateForComparison for tiebreaker date comparison
+            //     return getDateForComparison(b) - getDateForComparison(a); // Latest date first if tie
+            //   });
+            //   break;
           }
 
           console.log("Sorted results:", sortedResults);
@@ -924,15 +924,15 @@ const RecipesPageForUser = () => {
           }
 
           // Fetch average ratings for each recipe
-          let filteredResultsWithAverage = await Promise.all(
-            finalResults.map(async (recipe) => {
-              const average = await fetchRecipeAverage(recipe.id);
-              return { ...recipe, average }; // Augment each recipes with its average
-            })
-          );
+          // let filteredResultsWithAverage = await Promise.all(
+          //   finalResults.map(async (recipe) => {
+          //     const average = await fetchRecipeAverage(recipe.id);
+          //     return { ...recipe, average }; // Augment each recipes with its average
+          //   })
+          // );
 
           // Sort the results
-          let sortedResults = [...filteredResultsWithAverage];
+          let sortedResults = [...filteredResults];
 
           // Helper function to get the date for comparison
           const getDateForComparison = (recipe) => {
@@ -958,16 +958,16 @@ const RecipesPageForUser = () => {
             case "ALPHABETICAL_ZA":
               sortedResults.sort((a, b) => b.title.localeCompare(a.title));
               break;
-            case "HIGHEST_RATINGS":
-              sortedResults.sort((a, b) => {
-                const ratingDiff =
-                  (b.average?.averageRatings || 0) -
-                  (a.average?.averageRatings || 0);
-                if (ratingDiff !== 0) return ratingDiff;
-                // Use getDateForComparison for tiebreaker date comparison
-                return getDateForComparison(b) - getDateForComparison(a); // Latest date first if tie
-              });
-              break;
+            // case "HIGHEST_RATINGS":
+            //   sortedResults.sort((a, b) => {
+            //     const ratingDiff =
+            //       (b.average?.averageRatings || 0) -
+            //       (a.average?.averageRatings || 0);
+            //     if (ratingDiff !== 0) return ratingDiff;
+            //     // Use getDateForComparison for tiebreaker date comparison
+            //     return getDateForComparison(b) - getDateForComparison(a); // Latest date first if tie
+            //   });
+            //   break;
           }
 
           console.log("Sorted results:", sortedResults);
@@ -1096,9 +1096,9 @@ const RecipesPageForUser = () => {
               {capitalizeFirstLetter(post?.publisher) || "Not Specified"}
             </span>
           </p>
-          <p className="text-gray-700 text-sm font-semibold">
+          {/* <p className="text-gray-700 text-sm font-semibold">
             {renderStarsAndCount(post)}
-          </p>
+          </p> */}
         </div>
       </div>
     </div>

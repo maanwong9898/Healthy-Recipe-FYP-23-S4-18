@@ -206,7 +206,7 @@ const ViewBusinessBlogPost = ({ params }) => {
                 />
               )}
               {/* Info*/}
-              <section className="main-content mt-10 pl-9 pr-9 mx-auto max-w-screen-xl md:text-base text-left">
+              <section className="main-content mt-10 pl-9 pr-9 mx-auto max-w-screen-xl md:text-xl text-left">
                 <div className="w-full p-2 rounded-lg whitespace-pre-line">
                   {businessBlogPost.info}
                 </div>

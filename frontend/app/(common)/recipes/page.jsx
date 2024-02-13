@@ -28,15 +28,15 @@ const fetchRecipes = async () => {
     const response = await axiosInterceptorInstance.get("/recipe/get");
     // console.log("All recipe:", response.data);
     // Fetch average ratings for each recipe
-    const recipesWithAverage = await Promise.all(
-      response.data.map(async (recipe) => {
-        const average = await fetchRecipeAverage(recipe.id);
-        return { ...recipe, average };
-      })
-    );
+    // const recipesWithAverage = await Promise.all(
+    //   response.data.map(async (recipe) => {
+    //     const average = await fetchRecipeAverage(recipe.id);
+    //     return { ...recipe, average };
+    //   })
+    // );
 
     // Filter active blog posts
-    const filteredData = recipesWithAverage.filter(
+    const filteredData = response.data.filter(
       (recipe) => recipe.active === true
     );
 

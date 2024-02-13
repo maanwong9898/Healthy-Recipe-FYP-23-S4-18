@@ -58,11 +58,12 @@ const NutritionistRegistration = () => {
     ) {
       setError("Please provide both company address and postal code.");
       return;
-    } else {
-      setSuccess(
-        "Account created successfully! You will be notified once your account has been verified."
-      );
     }
+    // } else {
+    //   setSuccess(
+    //     "Account created successfully! You will be notified once your account has been verified."
+    //   );
+    // }
     // else if (postalCode.length !== 6) {
     //   setError("Please enter a valid postal code.");
     //   return;
@@ -89,6 +90,10 @@ const NutritionistRegistration = () => {
         nutritionistData
       );
       console.log("Account successfully:", response.data);
+
+      setSuccess(
+        "Account created successfully! You will be notified once your account has been verified."
+      );
 
       // Reset fields after successful submission
       setFullName("");

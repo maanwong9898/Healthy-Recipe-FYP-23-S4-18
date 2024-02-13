@@ -75,8 +75,6 @@ const CreateUserAccountPage = () => {
     } else if (dob > todayDate) {
       setError("Invalid date of birth.");
       return;
-    } else {
-      setSuccess("Account created successfully!");
     }
 
     console.log("Creating admin account...");
@@ -97,7 +95,8 @@ const CreateUserAccountPage = () => {
         formData
       );
       console.log("Account created successfully:", response.data);
-      setSuccess(true);
+      // setSuccess(true);
+      setSuccess("Account created successfully!");
 
       // Reset fields in the form
       setFullName("");

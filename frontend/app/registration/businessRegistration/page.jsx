@@ -55,11 +55,13 @@ const businessRegistration = () => {
     } else if (postalCode.length !== 6) {
       setError("Please enter a valid postal code.");
       return;
-    } else {
-      setSuccess(
-        "Account created successfully! You will be notified once your account has been verified."
-      );
     }
+
+    // } else {
+    //   setSuccess(
+    //     "Account created successfully! You will be notified once your account has been verified."
+    //   );
+    // }
 
     console.log("Creating business account...");
 
@@ -81,6 +83,11 @@ const businessRegistration = () => {
         "/register/bUser",
         formData
       );
+
+      setSuccess(
+        "Account created successfully! You will be notified once your account has been verified."
+      );
+
       console.log("Account created successfully:", response.data);
       // Clear all fields after submitting form
       setFullName("");

@@ -138,11 +138,12 @@ const userRegistration = () => {
     } else if (password !== confirmPwd) {
       setError("Passwords do not match.");
       return;
-    } else {
-      setSuccess(
-        "Account Successfully Created! A verification link has been sent to your email address."
-      );
     }
+    // } else {
+    //   setSuccess(
+    //     "Account Successfully Created! A verification link has been sent to your email address."
+    //   );
+    // }
 
     console.log("Health goal selected:", healthGoals);
     console.log("Dietary preference selected:", dietaryPreference);
@@ -199,6 +200,10 @@ const userRegistration = () => {
           console.error("Invalid weight input");
         }
       }
+
+      setSuccess(
+        "Account Successfully Created! A verification link has been sent to your email address."
+      );
 
       setFullName("");
       setUsername("");

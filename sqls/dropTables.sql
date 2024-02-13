@@ -1,5 +1,6 @@
 
 drop table verification_token                ; 
+drop table verification_token_seq			 ;
 
 drop table educational_content_review_rating ;
 drop table meal_plan_review_rating           ;

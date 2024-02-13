@@ -74,7 +74,7 @@ public interface RecipeRepository extends JpaRepository<Recipe, Long> {
     @Query(value = getDTOQuery + " WHERE r.mealTypeId = :mealType")
     List<RecipeDTO> findRecipeDTOsByMealType(Long mealType);
      
-    @Query(value =  getDistinctDTOQuery + " JOIN r.allergies al WHERE al.allergy_id NOT IN (:allergies) AND r.dietaryPreferencesId = :dp")
+    @Query(value =  getDistinctDTOQuery + " JOIN r.allergies al WHERE al.id NOT IN (:allergies) AND r.dietaryPreferencesId = :dp")
     List<RecipeDTO> findRecipeDTOsByAllergiesAndDP(@Param("allergies") Set<Long> allergies, @Param("dp") Long dp);
 
 

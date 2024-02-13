@@ -1,9 +1,9 @@
--- 5. Educational content category
-Insert into educational_content_category
-(subcategory_name)
-VALUES
-    ('Healthy Eating'),
-    ('Healthy Lifestyle');
+-- -- 5. Educational content category
+-- Insert into educational_content_category
+-- (subcategory_name)
+-- VALUES
+--     ('Healthy Eating'),
+--     ('Healthy Lifestyle');
 
 -- Educational content
 -- publisher should be author of the educational content
@@ -18,14 +18,14 @@ VALUES
         'healthhub',  -- Publisher
         'Figuring out Your Daily Calorie Intake',  -- Title
         'Being conscious of your calorie intake can help you maintain a healthy weight, or lose a few extra pounds if necessary.
-         The average recommended daily caloric intake is 2200 calories for males and 1800 calories for females.  
+         The average recommended daily caloric intake is 2200 calories for males and 1800 calories for females.
          \nOne of the simplest and most effective methods for controlling your calorie intake is portion control. Often, we eat what is on our plate rather than what our body needs.
          Consuming the right number of calories is a good first step towards achieving a healthier body. However, not all calories are equal. Keeping to the calorie count on a diet consisting of only sugary cakes, meat dishes, or a glass of wine is far from ideal. This is because your body needs a variety of vitamins and minerals, as well as fibre to function properly.
          \nEating healthy is not limited to eating the right amount and the right mix. It is also important for optimum nutrition to choose healthy foods prepared with healthier options and ingredients. Steamed chicken, for example, is far healthier than deep-fried chicken.
          \nFor example, wholegrains are healthier than refined grains (white rice or bread) as they contain more vitamins, antioxidants and fibre. In addition, they also keep you filling full for longer, which reduce the risk of overeating. Choosing healthier cooking oils are also important.
          If fat loss is one of your weight loss goals, merely controlling your calorie intake will not be enough to do the trick. Diet and exercise are pertinent when it comes to healthy weight loss.You should be doing a combination of cardio and strength-training exercises, which are useful in losing fat as well as gaining muscle mass.',
-         3, -- userID
-        'https://img.freepik.com/free-vector/carbohydrate-protein-fat-food-set-vector-illustrations-nutrition-categories-cartoon-carb-fibers-grains-cereal-bread-energy-meals-meat-eggs-isolated-white-complex-diet-concept_74855-22969.jpg?w=1380&t=st=1706756983~exp=1706757583~hmac=9a9542c1b1ed2dcda25fd86008ebd059343238c837acf766afbfd8a46548fedf',
+        3, -- userID
+        'https://img.fs-isolated-white-complex-diet-concept_74855-22969.jpg?w=1380&t=st=1706756983~exp=1706757583~hmac=9a9542c1b1ed2dcda25fd86008ebd059343238c837acf766afbfd8a46548fedf',
         'Author : pch.vector, Designed by Freepik',  -- img_title
         1 -- educational_content_type_id
     ),
@@ -51,11 +51,11 @@ VALUES
         '2024-01-15 15:30:00',  -- CreatedDT
         'healthhub',  -- Publisher
         '5 Exercises to Prevent Chronic Illnesses',  -- Title
-        'Chronic illnesses such as cardiovascular (heart and blood vessel) disease, cancer and diabetes are among the most common and costly health problems in Singapore. Make your weekly workout fun with these exercises that will keep you feeling and looking in the pink of health. 
-         \n#1 Swimming, health benefits beyond preventing chronic conditions \nSwimming is a good physical exercise for diabetes, it is a low-impact aerobic physical activity that reduces stress on your skeletal system, making it suitable for people of all ages, as well as those recovering from injuries. 
+        'Chronic illnesses such as cardiovascular (heart and blood vessel) disease, cancer and diabetes are among the most common and costly health problems in Singapore. Make your weekly workout fun with these exercises that will keep you feeling and looking in the pink of health.
+         \n#1 Swimming, health benefits beyond preventing chronic conditions \nSwimming is a good physical exercise for diabetes, it is a low-impact aerobic physical activity that reduces stress on your skeletal system, making it suitable for people of all ages, as well as those recovering from injuries.
          \n#2 Cycle to lose weight and prevent chronic illnesses \nRegular aerobic exercises like cycling has many health benefits. Engaging in regular aerobic exercises improves cardiovascular fitness and decreases stress and body fat levels. Cycling is a great way to let go of any tension accumulated at work.
          \n#3 Strength Training, a weatherproof physical activity \nStrength training a few times a week will keep you strong and healthy.
-         For healthy bone and muscles, you are recommended to partake in bone and muscle strengthening exercises at least 2-3 days a week. Hitting the gym does make it easy to fit workouts into your schedule. 
+         For healthy bone and muscles, you are recommended to partake in bone and muscle strengthening exercises at least 2-3 days a week. Hitting the gym does make it easy to fit workouts into your schedule.
          \n#4 Yoga for a balance of strength and flexibility \nDoing yoga a few times a week will keep you healthy. Yoga may seem meditative and relaxing, but it also requires a balance of strength and flexibility, and can prove to be a challenging workout. Beginners should start with a Hatha class to pick up the fundamental poses, before trying out more intensive and faster styles of yoga such as Vinyasa.
          \n#5 Running your way to better chronic disease prevention \nAerobic exercises like running will boost your cardiovascular health. Add some variation to your usual running routine to keep things interesting. One option is to include interval training as part of your exercise programme.
          \nLastly, take care of yourself by listening to your body, and easing up the pace if you need to — exercise caution today so you can exercise again tomorrow!',
@@ -64,7 +64,7 @@ VALUES
         'Author : denayune, Designed by Freepik',  -- img_title
         2 -- educational_content_type_id
     ),
-     (
+    (
         '4',
         '2024-01-16 15:30:00',  -- CreatedDT
         'healthhub',  -- Publisher
@@ -72,24 +72,24 @@ VALUES
         'Fruits are packed with health benefits as they are naturally low in fat, calories and sodium. \nFruit also provides a rich resource of nutrients which can be seen from their bright colours! The colour, smell and taste of a fruit comes from the plant’s phytochemicals. These plant-chemicals are believed to offer a wide range of health benefits, including those with antioxidants properties, carotenoid from orange-coloured fruits, and anthocyanin from red, blue and purple coloured fruit and vegetables.
          \nIf you want to keep the doctor away, the magic number is two servings of fruits per day.
          \nHealthy Fruits to Eat \nApples — Besides being a notable source of phytonutrients and antioxidants, apples also work as a natural mouth refresher, cleaning your teeth with each bite, while leaving behind a pleasing aroma in your mouth.
-         \nBananas — Bananas contain one of the highest amounts of potassium found among fruit. A medium-sized banana contains around 422mg of potassium. Potassium is an important nutrient for the functioning of muscles. 
-         \nBerries — Among all the fruits, berries contain the highest amount of antioxidants. The antioxidant properties of these fruit help to fight off diseases and potentially prevent cell deterioration. 
-         \nDurians — Durian lovers will be pleased to know that there are many health benefits of consuming this love-it-or-hate-it fruit. The fruit is full of vitamins and minerals. It is also a good source of dietary fibre. You might be surprised to know that durians actually contain zero cholesterol, since cholesterol is only found in animal products. 
+         \nBananas — Bananas contain one of the highest amounts of potassium found among fruit. A medium-sized banana contains around 422mg of potassium. Potassium is an important nutrient for the functioning of muscles.
+         \nBerries — Among all the fruits, berries contain the highest amount of antioxidants. The antioxidant properties of these fruit help to fight off diseases and potentially prevent cell deterioration.
+         \nDurians — Durian lovers will be pleased to know that there are many health benefits of consuming this love-it-or-hate-it fruit. The fruit is full of vitamins and minerals. It is also a good source of dietary fibre. You might be surprised to know that durians actually contain zero cholesterol, since cholesterol is only found in animal products.
          \nNow that you know your fruity facts, go ahead and grab some healthy fruits to snack on that is not only delicious but also good for your health.',
         3,
         'https://img.freepik.com/free-photo/grapes-strawberries-pineapple-kiwi-apricot-banana-whole-pineapple_23-2147968680.jpg?w=900&t=st=1706872367~exp=1706872967~hmac=3ecd07bc4adca49ee0585aac7f1b06ade28409e30d821ac9258c63b89f718d46',
         'Designed by Freepik',  -- img_title
         1 -- educational_content_type_id
     ),
-       (
+    (
         '5',
         '2024-01-01 15:30:00',  -- CreatedDT
         'healthhub',  -- Publisher
         'Ways to Live Healthy and Stay Healthy',  -- Title
         'A healthy lifestyle is about having a healthy diet, active lifestyle and caring for your mental wellbeing.
-         \nBeing healthy or leading a healthy lifestyle is more than just keeping yourself from falling sick. Good health or healthy living encompasses many other areas, which include physical health, mental health and health management. Every area is important and cannot be neglected for you to achieve better health. 
+         \nBeing healthy or leading a healthy lifestyle is more than just keeping yourself from falling sick. Good health or healthy living encompasses many other areas, which include physical health, mental health and health management. Every area is important and cannot be neglected for you to achieve better health.
          \nPhysical Activity and An Active Lifestyle \nBoost your physical health with an active lifestyle. Taking care of your body is important for good health, but the problem is that people often neglect their own bodies. If you do not eat a proper diet or do not get enough sleep, you are depriving yourself of good physical health! Keeping yourself physically healthy with an active lifestyle and physical activity will allow you to feel better and more energetic every day.
-         \nActive Lifestyle \nAnother thing you should do to be healthy is to get active! An active lifestyle with adequate physical activity and exercise can really help to improve your health, not only by reducing the risk of cardiovascular (heart and blood vessel) disease but also helps you feel more confident and better about yourself, improves your energy level and concentration, relieves stress and anxiety. Some moderate-intensity activities you can do are brisk walking, swimming, cycling or dancing. 
+         \nActive Lifestyle \nAnother thing you should do to be healthy is to get active! An active lifestyle with adequate physical activity and exercise can really help to improve your health, not only by reducing the risk of cardiovascular (heart and blood vessel) disease but also helps you feel more confident and better about yourself, improves your energy level and concentration, relieves stress and anxiety. Some moderate-intensity activities you can do are brisk walking, swimming, cycling or dancing.
          \nMental Wellness and Health \nBesides a healthy body, you also need to have a healthy mind. Diseases not only affect the physical body but the mind as well. Mental health is therefore a very important component of your overall health and well-being. The absence of mental illnesses or disorders does not mean that a person is mentally healthy. The WHO defines good mental health as the state of wellbeing in which an individual can cope with the normal stresses of life, work productively and fruitfully, realises his or her own potential, contribute to his or her community.
          \nBeing healthy does not stop at keeping yourself free from disease and illness. Being healthy requires you to take care of your physical, mental and emotional health. There are no limits to how much health you can achieve. The healthier you are, the better you will be able to enjoy life.',
         3,
@@ -97,7 +97,7 @@ VALUES
         'Author : user5117301, Designed by Freepik',  -- img_title
         2 -- educational_content_type_id
     ),
-     (
+    (
         '6',
         '2023-12-01 15:30:00',  -- CreatedDT
         'healthhub',  -- Publisher
@@ -105,7 +105,7 @@ VALUES
         'A hot, healthy drink could be a simple cup of tea. Learn more about the different types of tea and the health benefits of tea.Tea has been known to be a healthy beverage for many centuries. What are the differences between the different types of teas? All teas are made from leaves of the Camellia Sinensis plant. The main difference between these teas lies in the way the tea leaves are processed.
          \nWhite vs Green Tea \nThe way tea leaves are processed determines the types of tea produced. White tea is made from the buds and young leaves while green tea is made from mature leaves. To prevent oxidation, white and green tea leaves are steamed before drying. This process helps in the retention of the naturally occurring phytochemicals of the tea leaf.
          \nOolong vs Black Tea \nOolong tea and black tea are healthy, hot beverages. Oolong tea and black tea are made from mature leaves. To enhance the tea’s flavour, oolong and black tea leaves are bruised and broken into bits respectively, before they are left to oxidise. Oolong tea is less oxidised as compared to black tea. The oxidation process also converts catechins into other beneficial phytochemicals. Hence, the content and type of phytochemicals present in oolong and black teas generally differ from those of white and green teas.
-         \nBenefits of Drinking Tea \nPhytochemicals in tea have antioxidant properties. For a refreshing change from drinking plain water, try drinking a cup of tea instead. Teas are rich in beneficial phytochemicals such as those mentioned above. Freshly brewed tea generally contains more phytochemicals as compared to instant preparations and ready-to-drink teas. The phytochemicals present in teas have antioxidant properties that have health-promoting benefits. 
+         \nBenefits of Drinking Tea \nPhytochemicals in tea have antioxidant properties. For a refreshing change from drinking plain water, try drinking a cup of tea instead. Teas are rich in beneficial phytochemicals such as those mentioned above. Freshly brewed tea generally contains more phytochemicals as compared to instant preparations and ready-to-drink teas. The phytochemicals present in teas have antioxidant properties that have health-promoting benefits.
          \nRemember to add less sugar or omit it completely when preparing tea to experience the original tea’s flavour, or choose ready-to-drink teas that are unsweetened or sweetened with less sugar.
          \nRegular tea consumption has been shown to improve the function of the blood vessels and may also help with weight loss by reducing visceral fat. Regular tea drinking may reduce the risk of cardiovascular disease too.',
         3,
@@ -119,7 +119,7 @@ VALUES
         'healthhub',  -- Publisher
         'Healthy Eating Tips to Feast Without Guilt',  -- Title
         'We love a good feast. Mindful eating and switching out sinful foods for healthier options are some ways you can feast without guilt. \nOnce we sit down and help ourselves generously to some pen cai or pineapple tarts during Chinese New Year, the primal mind takes over, and we are gripped by the impulse to eat as much as possible.
-         \nHealthy Eating Tip 1: Practice Mindful Eating \nDo not give in and always practice mindful eating. You can control your intake using smaller plates when dining so that you do not overload a bigger plate with excessive food. \nDrink plenty of water during the day and practice mindful eating. Pause during your meal to monitor your hunger. Easier said than done? Maybe. But before you start feasting this festive season, stop and take a moment to remember that those calories gained are not as easily shed. 
+         \nHealthy Eating Tip 1: Practice Mindful Eating \nDo not give in and always practice mindful eating. You can control your intake using smaller plates when dining so that you do not overload a bigger plate with excessive food. \nDrink plenty of water during the day and practice mindful eating. Pause during your meal to monitor your hunger. Easier said than done? Maybe. But before you start feasting this festive season, stop and take a moment to remember that those calories gained are not as easily shed.
          \nHealthy Eating Tip 2: Avoid Food high in fat \nAvoid dishes high in fat, especially saturated fat. This can come from fatty meat or poultry skin or from deep frying or coconut milk in sauces. \nBraised pork belly, or just about any dish made with meat that is high in fat, should be replaced with leaner cuts.
          \nHealthy Eating Tip 3: Go for Good, Healthy Food \nBoiled, grilled or steamed dishes such as fish are healthier options. Vegetables are a must — chap chai is a good choice. Traditional yu sheng can be a healthy dish, but only if you limit the oil, sugary sauces and fried crackers​.',
         3,
@@ -132,7 +132,7 @@ VALUES
         '2024-01-09 15:30:00',  -- CreatedDT
         'healthhub',  -- Publisher
         'Healthy Cooking with Sauces',  -- Title
-        'Sauces! They are delicious and also sources of sugar and salt. Learn how to cut down on sugar and how to reduce salt intake when cooking with sauces with these healthy cooking methods. 
+        'Sauces! They are delicious and also sources of sugar and salt. Learn how to cut down on sugar and how to reduce salt intake when cooking with sauces with these healthy cooking methods.
          \nHealthy Cooking with Fish Sauce \nThis high-in-sodium sauce adds that salty oomph to Thai food and Vietnamese spring rolls. Cut back on this sauce if you have high blood pressure or hypertension. So, how to reduce your salt intake? For a slightly lower-in-sodium dipping sauce, try light soy sauce with chopped chili padi and a squeeze of lime.
          \nHealthy Alternatives to Oyster Sauce \nOyster sauce, used to stir-fry veggies like kai lan and bok choy, is high in sodium. Use this sauce sparingly if you are watching your sodium intake - stir-fry your greens with spices like ginger, garlic, and peppercorns instead!
          \nLess Salt with Sambal Belacan \nThis spicy, shrimpy sauce is high in sodium and calories, so eat less if you have high blood pressure or are watching your calories. When frying sambal belacan at home, taste before adding salt as belacan is already salty.
@@ -149,7 +149,7 @@ VALUES
         '2024-01-10 15:30:00',  -- CreatedDT
         'healthhub',  -- Publisher
         'Healthy Home Cooking Meal Tips',  -- Title
-        'Are you worried that you have no time or that you need to be able to cook like a chef to serve nourishing meals? Learn some practical tips to make healthy home cooking quick and easy. 
+        'Are you worried that you have no time or that you need to be able to cook like a chef to serve nourishing meals? Learn some practical tips to make healthy home cooking quick and easy.
         \nBalance Your Food Choices \nYou do not have to give up your favourite food just because it is high in calories. Reducing your portion size or making up for excess calories by eating a lower-calorie meal later are quick tips to help you manage your diet.
         \nEat WholeGrains! \nBe it bread, rice or noodles, natural is best. The less processed your food is and the more wholegrains it contains, the longer and faster you will stay full.
         \nWhen prepared well with less fat or sugar, wholegrains, fruits and vegetables offer you lower-calorie meal choices at any time of the day. Rich in antioxidants, they give you more goodness in a bite than a higher-calorie meal.
@@ -166,8 +166,8 @@ VALUES
         'Tips for Successful Weight Management',  -- Title
         'A healthy lifestyle is the best long-term and sustainable weight management strategy. \nHere are simple things you can do every day that can help you achieve sustainable weight management.
          \n1. Balance Your Food Choices \nCaloric balance is the key to managing your weight. You do not have to give up your favourite foods just because they are high in calories.
-         \n2. Watch What You Eat \nHealthy food does wonders for the body. Be mindful of the food choices you make and select healthier options whenever you can. 
-         \n3. Get Your Recommended Physical Activity Minutes \nPhysical activity is essential for effective weight management, as it burns calories that we have consumed over the day. 
+         \n2. Watch What You Eat \nHealthy food does wonders for the body. Be mindful of the food choices you make and select healthier options whenever you can.
+         \n3. Get Your Recommended Physical Activity Minutes \nPhysical activity is essential for effective weight management, as it burns calories that we have consumed over the day.
          \n4. Building Strength \nStrength-building activities provide additional health benefits. Strength training not only helps to improve bone and muscle strength but also contributes to greater muscle mass, which boosts resting metabolic rate, therefore helping your body burn more calories.
          \n5. Have Regular Meals \nSkipping meals can cause you to snack more often or binge eat, leading you to consume even more calories.',
         3,
@@ -181,7 +181,7 @@ VALUES
         'healthhub',  -- Publisher
         '3 Tips to Achieve A Healthy Weight the Right Way',  -- Title
         'Stop skipping meals and have balanced, healthier meals to achieve and maintain a healthy weight sustainably. Check out these 3 counter-intuitive tips to manage your weight better.
-         \n1. Limit Or Avoid Sugary Drinks \nSugar from drinks provides empty calories, which raise your daily calorie count without adding nutrients. Sugary drinks unlikely to make you full and satiated, thus it is easy to over consume. Make water as your default drink option! The best thirst quencher which is sugar- and calorie-free. 
+         \n1. Limit Or Avoid Sugary Drinks \nSugar from drinks provides empty calories, which raise your daily calorie count without adding nutrients. Sugary drinks unlikely to make you full and satiated, thus it is easy to over consume. Make water as your default drink option! The best thirst quencher which is sugar- and calorie-free.
          \n2. Switch To Wholegrains \nWholegrains could help you manage your weight as they help keep you feeling full longer. It is because wholegrain foods are higher in fibre, which provides bulk. In addition, they are generally digested at a slower rate.
          \n3. Make Friends With Fruit and Vegetables \nYou probably heard this a million times already, but the importance of consuming more fruit and vegetables can never be stressed enough!
          The water and fibre they contain add volume to your meals and fill you up more easily with lower overall calorie intake. Being rich in nutrients, fruit and vegetables are essential for your health.',
@@ -195,14 +195,14 @@ VALUES
         '2024-01-22 15:30:00',  -- CreatedDT
         'UCFSHealth',  -- Publisher
         'Healthy Lifestyles, Healthy Outlook',  -- Title
-        'Healthy Lifestyles \nA healthy lifestyle can help you thrive as you move through your life. Making healthy choices isnt always easy – it can be hard to find the time and energy to exercise regularly or prepare healthy meals. 
+        'Healthy Lifestyles \nA healthy lifestyle can help you thrive as you move through your life. Making healthy choices isnt always easy – it can be hard to find the time and energy to exercise regularly or prepare healthy meals.
          \nSteps you can take: \nBe physically active for 30 minutes most days of the week. Break this up into three 10-minute sessions when pressed for time. Healthy movement may include walking, sports, dancing, yoga or running.
          \nEat a well-balanced, low-fat diet with lots of fruits, vegetables, and whole grains. Choose a diet that is low in saturated fat and cholesterol, and moderate in sugar, salt and total fat.
          \nHealthy Outlook \nYou may feel pulled in different directions and experience stress from dealing with work, family and other matters, leaving little time for yourself. Learning to balance your life with some time for yourself will pay off with big benefits.
          \nSteps you can take: \nStay in touch with family and friends. \nBe involved in your community. \nMaintain a positive attitude and do things that make you happy.
          \nLearn to recognize and manage stress in your life. Good ways to deal with stress include regular exercise, healthy eating habits, and relaxation exercises such as deep breathing or meditation.',
         3,
-        'https://www.freepik.com/free-vector/healthy-lifestyle-diet-fitness-vector-sign-shape-heart-with-multiple-icons-depicting-various-sports-vegetables-cereals-seafood-meat-fruit-sleep-weight-beverages_10703442.htm#query=healthy%20living&position=28&from_view=search&track=ais&uuid=c66ce9cd-0d9d-4713-895a-cbe5bb977b79',
+        'https://www.freepik.cegetables-cereals-seafood-meat-fruit-sleep-weight-beverages_10703442.htm#query=healthy%20living&position=28&from_view=search&track=ais&uuid=c66ce9cd-0d9d-4713-895a-cbe5bb977b79',
         'Author: macrovector, Designed by Freepik',  -- img_title
         1 -- educational_content_type_id
     ),
@@ -212,7 +212,7 @@ VALUES
         'MayoClinic',  -- Publisher
         'Stress basics',  -- Title
         'Stress is a normal psychological and physical reaction to the demands of life. A small amount of stress can be good, motivating you to perform well. But many challenges daily, such as sitting in traffic, meeting deadlines and paying bills, can push you beyond your ability to cope.
-         \nYour brain comes hard-wired with an alarm system for your protection. When your brain perceives a threat, it signals your body to release a burst of hormones that increase your heart rate and raise your blood pressure. Once the threat is gone, your body is meant to return to a normal, relaxed state. 
+         \nYour brain comes hard-wired with an alarm system for your protection. When your brain perceives a threat, it signals your body to release a burst of hormones that increase your heart rate and raise your blood pressure. Once the threat is gone, your body is meant to return to a normal, relaxed state.
          \nStress management gives you a range of tools to reset and to recalibrate your alarm system. It can help your mind and body adapt (resilience). Without it, your body might always be on high alert. Over time, chronic stress can lead to serious health problems.
          \nDo not wait till stress damages your health, relationships or quality of life. Start practicing stress management techniques today.',
         3,
@@ -227,10 +227,10 @@ VALUES
         'Fitness basics',  -- Title
         'Starting a fitness program may be one of the best things you can do for your health. After all, physical activity can reduce your risk of chronic disease, improve your balance and coordination, help you lose weight, and even boost your self-esteem. And you can reap these benefits regardless of your age, sex or physical ability. For most healthy adults, these exercise guidelines are recommended:
         \nAerobic activity. \nGet at least 150 minutes of moderate aerobic activity or 75 minutes of vigorous aerobic activity a week, or an equal combination of moderate and vigorous aerobic activity. Even small amounts of physical activity are helpful. Being active for short periods of time throughout the day can add up to provide health benefits.
-        \nStrength training. \nDo strength training exercises for all major muscle groups at least two times a week. Aim to do a single set of each exercise using a weight or resistance level heavy enough to tire your muscles after about 12 to 15 repetitions. Regular exercise can help you control your weight, reduce your risk of heart disease and certain cancers, and strengthen your bones and muscles. 
+        \nStrength training. \nDo strength training exercises for all major muscle groups at least two times a week. Aim to do a single set of each exercise using a weight or resistance level heavy enough to tire your muscles after about 12 to 15 repetitions. Regular exercise can help you control your weight, reduce your risk of heart disease and certain cancers, and strengthen your bones and muscles.
         \nStarting a fitness program is an important decision, but it does not have to be an overwhelming one. By planning carefully and pacing yourself, you can make fitness a healthy habit that lasts a lifetime.',
         3,
-        'https://img.freepik.com/free-vector/isometic-gym-fitness-club-icons-set-with-males-females-training-indoors-isolated-vector-illustration_1284-75736.jpg?w=740&t=st=1707022776~exp=1707023376~hmac=7ed82bea8e5ec90fa5c39f986225cfe780dd46622b2ad6237132d9bd6dee2fd1',
+        'https://img.freepik.com/free-vector/isomeg?w=740&t=st=1707022776~exp=1707023376~hmac=7ed82bea8e5ec90fa5c39f986225cfe780dd46622b2ad6237132d9bd6dee2fd1',
         'Author: macrovector, Designed by Freepik',  -- img_title
         1 -- educational_content_type_id
     ),
@@ -242,7 +242,7 @@ VALUES
         'Do you feel like you are unable keep up with the latest nutrition news because its always changing? Knowledge about nutrition and diet evolves over time, but there are some nutrition basics that can help you sort through the latest research and advice.
         \nNutrition basics come down to eating wholesome foods that support your health. Want to go beyond the basics? Talk to a healthcare professional, such as a dietitian. You can ask for diet advice that takes into account your health, lifestyle and food preferences.',
         3,
-        'https://img.freepik.com/free-vector/nutritionist-recommendations-cartoon-composition-with-dietitian-appointment-healthy-meal-fruit-vegetables-supplements-diet-planning_1284-59044.jpg?w=740&t=st=1707023087~exp=1707023687~hmac=0c6f38b5356847d5c5595cedc36cceffcb8e5025651af65b658db8e3da891a0a',
+        'https://img.freepik.coms-diet-planning_1284-59044.jpg?w=740&t=st=1707023087~exp=1707023687~hmac=0c6f38b5356847d5c5595cedc36cceffcb8e5025651af65b658db8e3da891a0a',
         'Author: macrovector, Designed by Freepik',  -- img_title
         2 -- educational_content_type_id
     ),
@@ -267,7 +267,7 @@ VALUES
         \nHere is some useful information to follow a healthy diet, and the benefits of doing so.
         \nEat plenty of vegetables and fruit: \nThey are important sources of vitamins, minerals, dietary fibre, plant protein and antioxidants.
         \nEat less fat: \nFats and oils and concentrated sources of energy. Eating too much, particularly the wrong kinds of fat, like saturated and industrially-produced trans-fat, can increase the risk of heart disease and stroke. Use unsaturated vegetable oils rather than animal fats or oils high in saturated fats.
-        \nLimit intake of sugars: \nFor a healthy diet, sugars should represent less than 10% of your total energy intake. Reducing even further to under 5% has additional health benefits. 
+        \nLimit intake of sugars: \nFor a healthy diet, sugars should represent less than 10% of your total energy intake. Reducing even further to under 5% has additional health benefits.
         \nReduce salt intake: \nKeeping your salt intake to less than 5h per day helps prevent hypertension and reduces the risk of heart disease and stroke in the adult population.',
         3,
         'https://img.freepik.com/free-vector/people-healthy-food_24908-55181.jpg?w=740&t=st=1707060287~exp=1707060887~hmac=8f50d4c17a86bbca0eccb52150bcfdb9abc14a8f7a328fe833e8bf3078175a8f',
@@ -319,7 +319,7 @@ VALUES
         'Healthy Eating',  -- Title
         'Eating a healthy diet can help reduce your risk of developing coronary heart disease and stop you from gaining too much weight, reducing your risk of diabetes and high blood pressure. It can also help lower your cholesterol levels and reduce your risk of some cancers. Even if you already have a heart condition, a healthy diet can benefit your heart.
          \nA balanced diet \nEveryone should aim for a well-balanced diet. Strict diets are hard to sustain long term and may not provide the balance of nutrients you need.
-         \nHealthy eating is not about cutting out or focusing on individual foods or nutrients. It is thinking about your whole diet and eating a variety of foods in the right amounts to give your body what it needs. 
+         \nHealthy eating is not about cutting out or focusing on individual foods or nutrients. It is thinking about your whole diet and eating a variety of foods in the right amounts to give your body what it needs.
          \nThere are foods we need to eat more of, like fruit and vegetables, and others we need to eat less of, which are foods high in saturated fat, sugar and salt. It is all about getting the right balance. Eating healthily can be tasty, simple and fun. It is about making small, long-term changes and enjoying the food you eat.',
         3,
         'https://img.freepik.com/free-vector/eating-variety-foods-concept-illustration_114360-11295.jpg?w=740&t=st=1707061728~exp=1707062328~hmac=afbffa590c8b411a91cafeca0e8542287d1e8d50254c1428df438af6559f9049',
@@ -417,7 +417,7 @@ VALUES
         '2024-01-25 16:30:00',  -- CreatedDT
         'myplate',  -- Publisher
         'Dairy',  -- Title
-        'What foods are included in the Dairy Group? \nThe Dairy Group includes milk, yogurt, cheese, lactose-free milk and fortified soy milk and yogurt. 
+        'What foods are included in the Dairy Group? \nThe Dairy Group includes milk, yogurt, cheese, lactose-free milk and fortified soy milk and yogurt.
         \nThe Dairy Group does not include foods made from milk that have little calcium and a high fat content. Examples of this are cream cheese, sour cream, cream, and butter.
         \nWhat counts as a cup in the Dairy Group? \nIn general, the following counts as 1 cup from the Dairy Group: \n1 cup of milk, yogurt, or soy milk \n1 ½ ounces of natural cheese
         \nWhy is it important to eat or drink dairy? \nEating or drinking dairy products offers health benefits, like building and maintaining strong bones. Dairy Group foods provide nutrients that are vital for the health and maintenance of the body. These nutrients include calcium, potassium, vitamin D, and protein.
@@ -434,7 +434,7 @@ VALUES
         'healthhub',  -- Publisher
         'Getting Your Caffeine Hit',  -- Title
         'For a long time, the consumption of caffeinated drinks such as coffee and tea was associated with cardiovascular problems, such as hypertension, rhythm disturbances and heart attacks. Yet in recent years, literature seems to point towards the suggested benefits of coffee and tea consumption, ranging from improved cognitive ability to reduced risk for cancer, gallstones, Parkinson’s and even coronary disease.
-        \nBenefits of Caffeine \nCoffee and tea are rich in antioxidants that help to fight free radicals. These free radicals are elements that damage our cells and have been linked with health issues. Besides being a source of antioxidants, coffee and tea also contain caffeine, which when taken in moderation can have benefits for your body. This stimulant promotes the increased firing of neurons and has been shown to improve various aspects of brain function, including memory, mood, energy levels and general cognitive function. 
+        \nBenefits of Caffeine \nCoffee and tea are rich in antioxidants that help to fight free radicals. These free radicals are elements that damage our cells and have been linked with health issues. Besides being a source of antioxidants, coffee and tea also contain caffeine, which when taken in moderation can have benefits for your body. This stimulant promotes the increased firing of neurons and has been shown to improve various aspects of brain function, including memory, mood, energy levels and general cognitive function.
         \nDangers of Caffeine \nWhile caffeine has its advantages, it is unfortunately still a drug which can cause dependency. Just as with other addictive substances, people who try to quit drinking coffee and tea have been known to exhibit withdrawal symptoms, such as headaches and fatigue.',
         3,
         'https://img.freepik.com/free-vector/restaurant-mural-wallpaper_52683-47917.jpg?w=996&t=st=1707131183~exp=1707131783~hmac=9cdde229dcf6da3e142517aab8091973c32c32e6f9a0ea2be70871aebc5b4a97',
@@ -603,7 +603,7 @@ VALUES
         'We have all experienced "morning madness" — whether a busy commute or working with picky eaters, many things can make for a stressful morning. Breakfast, however, is really an important meal! Research shows that breaking an overnight fast with a balanced meal can make a significant difference in overall health and well-being.
         \nIf You Wake Up on Time, Enjoy.. \nScrambled Eggs: Serve with fruit and whole-grain toast. Mix in extra vegetables such as spinach and mushrooms when cooking the eggs.
         \nWhole-Grain Waffles: If you have a waffle iron, try a whole-grain waffle mix from the grocery store for a special treat. Serve topped with fresh fruit.
-        \nIf You Hit the Snooze Button One Time, Eat.. \nEnglish Muffin Sandwich: Toast a whole-grain English muffin. Put low-fat cheese and sliced deli ham on the toasted muffin. Warm the sandwich in the microwave to melt the cheese. 
+        \nIf You Hit the Snooze Button One Time, Eat.. \nEnglish Muffin Sandwich: Toast a whole-grain English muffin. Put low-fat cheese and sliced deli ham on the toasted muffin. Warm the sandwich in the microwave to melt the cheese.
         \nBreakfast Tacos: Scramble and cook eggs or egg whites. Serve eggs with beans on a tortilla.
         \nIf You Hit the Snooze Button Two (or More) Times, You Can Still Break the Fast.. \nInstant Oatmeal: Look for varieties without added sugar and just add boiling water. Stir in dried cranberries and almonds.
         \n45-Second Scrambled Eggs: Put eggs and a splash of milk in a bowl, whisk it up and put it in a microwave for 30 seconds. Stir and put back in for another 10 seconds.',
@@ -617,7 +617,7 @@ VALUES
         '2024-01-08 16:30:00',  -- CreatedDT
         'eatright',  -- Publisher
         'Family Dinners for a Healthy Heart',  -- Title
-        'Want your family to have healthy hearts? Start at the family dinner table. Not only do many adults consume too much sodium, many kids do as well. Eating too much sodium can increase risk for high blood pressure which can eventually lead to heart disease, stroke and kidney disease. 
+        'Want your family to have healthy hearts? Start at the family dinner table. Not only do many adults consume too much sodium, many kids do as well. Eating too much sodium can increase risk for high blood pressure which can eventually lead to heart disease, stroke and kidney disease.
         \nChoose Spices Over Salt \nIn the kitchen, think out of the box. Opt for spices instead of added salt. When you are cooking, reach for low-sodium seasonings such as fresh lemon or lime juice, fresh herbs or salt-free herb blends and vinegar to boost the flavor of your favorite foods.
         \nRead Nutrition Labels \nYou can trim the sodium  by carefully reading the Nutrition Facts Label when buying canned, frozen and packaged foods. Comparing brands and labels also can go a long way, as the amount of sodium in foods can vary from brand to brand by hundreds of milligrams.
         \nLook for Foods Low in Sodium \nIt also helps to focus on foods that are naturally low in sodium. Eating more vegetables and fruit can help lower your sodium intake and increase your potassium intake. Produce contains little sodium, yet it is rich in potassium, a mineral that helps balance blood pressure. However, few of us get the potassium we require.',
@@ -631,7 +631,7 @@ VALUES
         '2024-01-08 16:30:00',  -- CreatedDT
         'eatright',  -- Publisher
         'Breakfast: Key to Growing Healthy',  -- Title
-        'Breakfast is an important meal for growing children. Studies show that breakfast eaters tend to have higher school attendance, less tardiness and fewer hunger-induced stomach aches in the morning. Their overall test scores are higher, they concentrate better, solve problems more easily and have better muscle coordination. Children who eat breakfast also are more likely to maintain a healthy weight and get enough calcium, too. 
+        'Breakfast is an important meal for growing children. Studies show that breakfast eaters tend to have higher school attendance, less tardiness and fewer hunger-induced stomach aches in the morning. Their overall test scores are higher, they concentrate better, solve problems more easily and have better muscle coordination. Children who eat breakfast also are more likely to maintain a healthy weight and get enough calcium, too.
         \nWhip Up a Quick and Easy Morning Meal \nStart their day in a healthful direction with a balanced breakfast that incorporates a variety of nutrient-dense foods. Try some of these quick and easy options:
         \nPeanut butter spread on whole-grain toast \nGrits and eggs \nPorridge with ginger and cinnamon \nChilaquiles with eggs
         \nMake a Breakfast Bar \nLet your kids build their own breakfast with a breakfast bar. Similar to a salad bar, a breakfast bar includes a variety of foods to mix and match. Little ones love to create unusual combinations by mixing, stacking and organizing ingredients. Here are some ideas:
@@ -665,7 +665,7 @@ VALUES
         \nYounger kids need three meals and about two snacks a day. \nOlder kids need to eat three meals and about one snack a day (they may need two snacks if they are going through a growth spurt or if they are very physically active).
         \nWhere Should Kids Snack? \nWhen at home, designate a certain area as the "eating-only zone'' and limit all snacking to that location. The kitchen table or countertop works well. When kids snack all over the house, that makes it hard for you to know what and how much they are eating. Also, dont let kids eat snacks while watching TV. Studies show that this mindless munching leads to overeating.',
         3,
-        'https://img.freepik.com/free-vector/broken-oatmeal-cookies-set-traditional-american-biscuit-with-chocolate-crunches-isolated-white-illustration-home-baked-food-recipe-snacks-concept_74855-14297.jpg?w=1060&t=st=1707373609~exp=1707374209~hmac=4902ac2f226508f8c665e2011fc574ca66fc287b7278da2d59370d220fcd8e94',
+        'https://img.freepik.com/fchocolate-crunood-recipe-snacks-concept_74855-14297.jpg?w=1060&t=st=1707373609~exp=1707374209~hmac=4902ac2f226508f8c665e2011fc574ca66fc287b7278da2d59370d220fcd8e94',
         'Author: pch.vector, Designed by Freepik',  -- img_title
         1 -- educational_content_type_id
     ),
@@ -690,7 +690,7 @@ VALUES
         'Eating to Boost Energy',  -- Title
         'We, as a society, are busy, stressed, need more physical activity and sometimes have poor eating habits — all contributing to low energy levels. One way to improve our energy levels is by eating better. The right combinations of food may help give you a boost. Follow these strategies to maximize your energy.
         \nEat Regularly \nPlanning to eat every three to four hours may help prevent between-meal hunger that can lead to unwise snacking or overeating at meals. If you only are eating one to two meals a day, this may be an adjustment. As you learn how to eat more frequently throughout the day, remind yourself that you will feel better and be more focused when you have fuel in your system on a regular basis.
-        \nHonor Your Hunger and Fullness Cues \nEating just enough, but not too much, helps to curb cravings and reduces chances of overeating. 
+        \nHonor Your Hunger and Fullness Cues \nEating just enough, but not too much, helps to curb cravings and reduces chances of overeating.
         \nBalance Your Plate \nA balanced meal includes foods from multiple food groups: whole grains, lean protein, fiber-rich fruits and vegetables, and fat-free or low-fat dairy. Balance out your plate with all the food groups.
         \nRemove Energy Zappers \nSkip the foods and beverages with added sugars, such as soda, sugar-sweetened coffee and energy drinks. These beverages may leave you buzzing for an hour, but likely will cause an energy crash. Instead, quench your thirst with water, unsweetened flavored water or unsweetened tea.',
         3,
@@ -734,7 +734,7 @@ VALUES
         'Planning ahead may help relieve mealtime stress. Think about your approach to meal planning — do you: Want to make a weekly or a monthly plan? Prefer to prepare meals ahead of time, just before the meal or a combination of both? Want to pick a day to cook meals for the week or a month that you can store in the freezer?
         Stock Your Pantry and Freezer with the Five Food Groups. To get started with meal planning, take time to stock up on the basics. This includes healthy foods that you like to eat and prepare, add other items based on your personal health needs and food preferences.
         \nVegetables: Keep a variety of canned tomatoes in stock. Use them in soups, stews, sauces. Dried mushrooms are another great pantry item because they can add depth of flavor to your meals.
-        \nFruits: Raisins, dried cranberries, dried apricots are loaded with dietary fiber. 
+        \nFruits: Raisins, dried cranberries, dried apricots are loaded with dietary fiber.
         \nMilk and Dairy Products: Dried milk is a great back-up item to have on stock, boxed milk is also available in single-serving packages.
         \nProtein Foods: Canned or dried lentils, cannellini, garbanzo and kidney beans. These legumes are a great source of protein. Canned tuna, anchovies and sardines are a pantry must.
         \NGrains: Keep a stash of oatmeal and other whole-grain cereals in the pantry. Barley, quinoa and other grains provide staples for healthy meals. Also, keep a variety of rice on hand.',
@@ -775,16 +775,14 @@ VALUES
         '2023-02-01 15:30:00',  -- CreatedDT
         'helpguide',  -- Publisher
         'Choosing Healthy Protein',  -- Title
-        'When it comes to making protein choices in your diet, quality is just as important as quantity. \nWhat is protein? \nProtein in your diet provides energy and supports your mood and cognitive function. It’s a vital nutrient required for building, maintaining, and repairing tissues, cells, and organs throughout the body. Most animal sources of protein deliver all the amino acids your body needs, while plant-based protein sources often lack one or more of the essential amino acids. 
+        'When it comes to making protein choices in your diet, quality is just as important as quantity. \nWhat is protein? \nProtein in your diet provides energy and supports your mood and cognitive function. It’s a vital nutrient required for building, maintaining, and repairing tissues, cells, and organs throughout the body. Most animal sources of protein deliver all the amino acids your body needs, while plant-based protein sources often lack one or more of the essential amino acids.
         \nThe health benefits of protein \nProtein gives you the energy to get up and go—and keep going. While too much protein can be harmful to people with kidney disease, eating the right amount of high-quality protein: Keeps your immune system functioning properly, maintains heart health and your respiratory system, and speeds recovery after exercise. It is vital to the growth and development of children and for maintaining health in your senior years, can help reduce your risk for diabetes and cardiovascular disease.
         \nHigh-quality vs. low-quality protein \nDistinguishing between industrially raised meat and organic, grass-fed meat is only part of separating low- and high-quality sources of protein. While some processed or lunch meats, for example, can be a good source of protein, many are loaded with salt, which can cause high blood pressure and lead to other health problems. Processed meats have also been linked with an increased risk of cancer, likely due to the substances used in the processing of the meat.',
         3,
         'https://img.freepik.com/free-vector/protein-food-concept-card-set_1284-9928.jpg?w=740&t=st=1707736764~exp=1707737364~hmac=65a5f0b5d04bbb72d039fdd158d63acab57d56a517cc32c702fc4a05ab4e3f33',
         'Author: macrovector, Designed by Freepik',  -- img_title
         1 -- educational_content_type_id
-    ),
-    
-    
+    );
     
     
 

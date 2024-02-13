@@ -1,55 +1,55 @@
 
--- Category
--- 1. Allergies
-Insert into allergies 
-(subcategory_name) 
-VALUES
-("Milk"),
-("Egg"),
-("Soy"),
-("Shellfish"),
-("Fish"),
-("Peanut"),
-("Tree Nuts"),
-("Gluten"),
-('Wheat'),
-('Dairy'),
-('Legume');
--- 2. Dietary preferences
-Insert into dietary_preferences 
- (subcategory_name) 
-VALUES
-("Vegan"),
-("Vegetarian"),
-("Pescatarian"),
-("Meat-Based");
+-- -- Category
+-- -- 1. Allergies
+-- Insert into allergies 
+-- (subcategory_name) 
+-- VALUES
+-- ("Milk"),
+-- ("Egg"),
+-- ("Soy"),
+-- ("Shellfish"),
+-- ("Fish"),
+-- ("Peanut"),
+-- ("Tree Nuts"),
+-- ("Gluten"),
+-- ('Wheat'),
+-- ('Dairy'),
+-- ('Legume');
+-- -- 2. Dietary preferences
+-- Insert into dietary_preferences 
+--  (subcategory_name) 
+-- VALUES
+-- ("Vegan"),
+-- ("Vegetarian"),
+-- ("Pescatarian"),
+-- ("Meat-Based");
 
--- Recipe
-  -- publisher should be author of the recipe
-  -- info refers to dietary information
-    -- steps refers to the steps to cook the recipe (separated by \n)
-    -- ingredients refers to the ingredients needed to cook the recipe (separated by \n)
-    -- img_title should be the author of the image and the source of the image (follow their code of conduct)
-    -- dietary_preference refers to the category of the recipe (refer to dietary_preferences)
+-- -- Recipe
+--   -- publisher should be author of the recipe
+--   -- info refers to dietary information
+--     -- steps refers to the steps to cook the recipe (separated by \n)
+--     -- ingredients refers to the ingredients needed to cook the recipe (separated by \n)
+--     -- img_title should be the author of the image and the source of the image (follow their code of conduct)
+--     -- dietary_preference refers to the category of the recipe (refer to dietary_preferences)
 
--- Note that: Some recipes has allergies, insert into recipe_allergies table
--- 3. Meal type
-INSERT INTO
-    meal_type (subcategory_name)
-VALUES
-    ('Chinese'),
-    ('Western'),
-    ('Japanese'),
-    ('Italian'),
-    ('French'),
-    ('Mexican'),
-    ('Thai'),
-    ('Indian'),
-    ('Mediterranean'),
-    ('Vietnamese'),
-    ('Moroccan'),
-    ('Korean'),
-    ('Southeast Asian');
+-- -- Note that: Some recipes has allergies, insert into recipe_allergies table
+-- -- 3. Meal type
+-- INSERT INTO
+--     meal_type (subcategory_name)
+-- VALUES
+--     ('Chinese'),
+--     ('Western'),
+--     ('Japanese'),
+--     ('Italian'),
+--     ('French'),
+--     ('Mexican'),
+--     ('Thai'),
+--     ('Indian'),
+--     ('Mediterranean'),
+--     ('Vietnamese'),
+--     ('Moroccan'),
+--     ('Korean'),
+--     ('Southeast Asian');
 
 -- first set of recipes 
 INSERT INTO recipe
@@ -1645,12 +1645,10 @@ VALUES
     (34, 7),
     (34, 10),
     (35, 2),
-    (36, ), --none
     (37, 7),
     (38, 5),
     (39, 7),
     (39, 10),
-    (40, ), --none
     (41, 7),
     (41, 10),
     (42, 2),
@@ -1658,27 +1656,14 @@ VALUES
     (43, 2),
     (43, 10),
     (44, 10),
-    (45, ), --none
     (46, 7),
     (47, 5),
-    (48, ), --none
     (49, 10),
-    (50, ), --none
-    (51, ), --none
     (52, 3),
-    (53, ), --none
-    (54, ), --none
-    (55, ), --none
-    (56, ), --none
-    (57, ), --none
-    (58, ), --none
     (59, 7),
-    (60, ), --none
     (61, 7),
     (61, 10),
-    (62, ), --none
     (63, 7),
-    (64, ), --none
     (65, 2),
     (66, 2),
     (66, 10),
@@ -1691,20 +1676,13 @@ VALUES
     (71, 1),
     (71, 6),
     (71, 7),
-    (72, ), --none
-    (73, ), --none
     (74, 2),
     (74, 10),
-    (75, ), --none
-    (76, ), --none
     (77, 2),
     (77, 9),
     (78, 1),
     (78, 2),
-    (78, 7),
-    (79, ), --none
-    (80, ), --none
-
+    (78, 7);
 -- second set of recipes
 INSERT INTO recipe
 (id, publisher, title, info, calories, carbs, protein, fat, fibre, sodium, serving_size, description, steps, ingredients, UserID, Active, createddt, img, img_title, dietary_preference, cooking_time)

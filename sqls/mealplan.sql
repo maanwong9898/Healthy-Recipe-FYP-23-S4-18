@@ -5,13 +5,13 @@
 
 -- Note that: meal plan has some suggested recipes, insert into mealplan_recipe table
 
--- 4. Health goals
-Insert into health_goal
-(subcategory_name)
-VALUES
-    ('Weight Gain'),
-    ('Maintain Health'),
-    ('Weight Loss');
+-- -- 4. Health goals
+-- Insert into health_goal
+-- (subcategory_name)
+-- VALUES
+--     ('Weight Gain'),
+--     ('Maintain Health'),
+--     ('Weight Loss');
 
 INSERT INTO meal_plan
 (id, publisher, title, active, introduction,  main_content, conclusion, createddt, health_goal_category, img, img_title, userid)
@@ -421,3 +421,17 @@ values
     (23, 72),
     (23, 73),
     (23, 74);
+
+
+INSERT INTO meal_plan_review_rating 
+(meal_planid, userid, rating, review, createddt)
+VALUES
+(1, 11, 5, 'This meal plan is amazing. I have lost 5 pounds in 2 weeks. I feel great and I am not hungry at all. I highly recommend this meal plan.', '2023-06-15'),
+(1, 12, 4, 'I have been following this meal plan for 3 weeks now. I have lost 3 pounds. I feel great and I am not hungry at all. I highly recommend this meal plan.', '2023-06-15'),
+(1, 13, 5, 'I have been following this meal plan for 3 weeks now. I have lost 3 pounds. I feel great and I am not hungry at all. I highly recommend this meal plan.', '2023-06-15'),
+(2, 11, 5, 'This meal plan is amazing. I have gained 5 pounds in 2 weeks. I feel great and I am not hungry at all. I highly recommend this meal plan.', '2023-06-15'),
+(2, 12, 4, 'I have been following this meal plan for 3 weeks now. I have gained 3 pounds. I feel great and I am not hungry at all. I highly recommend this meal plan.', '2023-06-15'),
+(2, 13, 5, 'I have been following this meal plan for 3 weeks now. I have gained 3 pounds. I feel great and I am not hungry at all. I highly recommend this meal plan.', '2023-06-15'),
+(3, 11, 5, 'This meal plan is amazing. I have lost 5 pounds in 2 weeks. I feel great and I am not hungry at all. I highly recommend this meal plan.', '2023-06-15'),
+(3, 12, 4, 'I have been following this meal plan for 3 weeks now. I have lost 3 pounds. I feel great and I am not hungry at all. I highly recommend this meal plan.', '2023-06-15'),
+(3, 13, 5, 'I have been following this meal plan for 3 weeks now. I have lost 3 pounds. I feel great and I am not hungry at all. I highly recommend this meal plan.', '2023-06-15');

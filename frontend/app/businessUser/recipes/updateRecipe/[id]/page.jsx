@@ -292,11 +292,17 @@ const UpdateRecipePage = ({ params }) => {
       !fibre.trim() ||
       !sodium.trim() ||
       // !imageUrl.trim() ||
-      !imageBlob ||
+      // !imageBlob ||
       ingredientList.some((ingredient) => !ingredient.trim()) ||
       instructionList.some((instruction) => !instruction.trim())
     ) {
       setError("Please fill out all required fields.");
+      return false;
+    }
+
+    // check image blob
+    if (!newImageBlob && !imageBlob) {
+      setError("Image is required.");
       return false;
     }
 

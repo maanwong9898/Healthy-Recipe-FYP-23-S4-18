@@ -16,6 +16,10 @@ const AllCategories = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [isChecking, setIsChecking] = useState(true);
 
+  // state for error and success message
+  const [error, setError] = useState("");
+  const [success, setSuccess] = useState("");
+
   useEffect(() => {
     const tokenExpiration = SecureStorage.getItem("token_expiration");
     const now = new Date().getTime(); // Current time in milliseconds
@@ -75,9 +79,18 @@ const AllCategories = () => {
       try {
         await postSubcategory(selectedCategory, newSubcategoryName);
         await fetchSubcategories(selectedCategory); // Refetch subcategories
+        setSuccess("Subcategory created successfully");
         setNewSubcategoryName(""); // Reset input field after adding
+
+        setTimeout(() => {
+          setSuccess("");
+        }, 3000);
       } catch (error) {
         console.error("Error creating subcategory:", error);
+        setError("Error creating subcategory");
+        setTimeout(() => {
+          setError("");
+        }, 3000);
       }
     }
   };
@@ -217,7 +230,7 @@ const AllCategories = () => {
               </select>
 
               {selectedCategory && !isHealthGoals && (
-                <div className="flex items-center mb-10">
+                <div className="flex items-center mb-5">
                   <input
                     type="text"
                     value={newSubcategoryName}
@@ -233,6 +246,11 @@ const AllCategories = () => {
                   </button>
                 </div>
               )}
+              <div className="text-red-600 text-base font-medium">{error}</div>
+
+              <div className="text-green-500 text-base font-medium">
+                {success}
+              </div>
               <h2 className="text-2xl font-medium font-sans capitalize mb-5 ">
                 {formatDisplayName(selectedCategory)} Category
               </h2>

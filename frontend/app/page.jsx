@@ -795,7 +795,7 @@ const Home = () => {
             <>
               <div className="p-5">
                 <h2 className="text-4xl font-extrabold font-serif mb-4 mt-4 text-black">
-                  Latest Meal Plans
+                  Most Popular Meal Plans
                 </h2>
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
                   {mostPopularMealPlans.map((post) => renderMealPlanCard(post))}
@@ -910,7 +910,7 @@ const Home = () => {
             <>
               <div className="p-5">
                 <h2 className="text-4xl font-extrabold font-serif mb-4 mt-4 text-black">
-                  Blogs
+                  Most Popular Blogs
                 </h2>
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
                   {mostPopularBlogPosts.map((post) => renderBlogPost(post))}

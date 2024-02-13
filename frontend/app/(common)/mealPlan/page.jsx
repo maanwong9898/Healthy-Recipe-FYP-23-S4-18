@@ -14,7 +14,7 @@ import SecureStorage from "react-secure-storage";
 const sortOptions = {
   LATEST: { key: "LATEST", label: "By Latest" },
   OLDEST: { key: "OLDEST", label: "By Oldest" },
-  HIGHEST_RATINGS: { key: "HIGHEST_RATINGS", label: "Highest Ratings" },
+  // HIGHEST_RATINGS: { key: "HIGHEST_RATINGS", label: "Highest Ratings" },
   ALPHABETICAL_AZ: { key: "ALPHABETICAL_AZ", label: "Alphabetically (A to Z)" },
   ALPHABETICAL_ZA: { key: "ALPHABETICAL_ZA", label: "Alphabetically (Z to A)" },
 };
@@ -25,15 +25,15 @@ const fetchMealPlan = async () => {
     console.log("Fetching all meal plan...");
     const response = await axiosInterceptorInstance.get("/mealPlan/get");
 
-    const mealPlansWithAverage = await Promise.all(
-      response.data.map(async (mealPlan) => {
-        const average = await fetchMealPlanAverage(mealPlan.id);
-        return { ...mealPlan, average };
-      })
-    );
+    // const mealPlansWithAverage = await Promise.all(
+    //   response.data.map(async (mealPlan) => {
+    //     const average = await fetchMealPlanAverage(mealPlan.id);
+    //     return { ...mealPlan, average };
+    //   })
+    // );
 
     // Filter active blog posts
-    const filteredData = mealPlansWithAverage.filter(
+    const filteredData = response.data.filter(
       (mealPlan) => mealPlan.active === true
     );
 
@@ -57,26 +57,26 @@ const fetchCategories = async () => {
 };
 
 // Fetch the average rating for each single meal plan
-const fetchMealPlanAverage = async (mealPlanId) => {
-  try {
-    const response = await axiosInterceptorInstance.get(
-      `/mealPlan/getAverage/${mealPlanId}`
-    );
-    console.log(
-      "Average rating for meal plan",
-      mealPlanId,
-      "is:",
-      response.data
-    );
-    return response.data; // Assuming this returns the average data for the meal plan
-  } catch (error) {
-    console.error(
-      `Failed to fetch average for meal plan ${mealPlanId}:`,
-      error
-    );
-    return null; // or handle the error as you see fit
-  }
-};
+// const fetchMealPlanAverage = async (mealPlanId) => {
+//   try {
+//     const response = await axiosInterceptorInstance.get(
+//       `/mealPlan/getAverage/${mealPlanId}`
+//     );
+//     console.log(
+//       "Average rating for meal plan",
+//       mealPlanId,
+//       "is:",
+//       response.data
+//     );
+//     return response.data; // Assuming this returns the average data for the meal plan
+//   } catch (error) {
+//     console.error(
+//       `Failed to fetch average for meal plan ${mealPlanId}:`,
+//       error
+//     );
+//     return null; // or handle the error as you see fit
+//   }
+// };
 
 const MealPlanPage = () => {
   const router = useRouter();
@@ -167,15 +167,15 @@ const MealPlanPage = () => {
       case "ALPHABETICAL_ZA":
         sortedMealPlan.sort((a, b) => b.title.localeCompare(a.title));
         break;
-      case "HIGHEST_RATINGS":
-        sortedMealPlan.sort((a, b) => {
-          const ratingDiff =
-            (b.average?.averageRatings || 0) - (a.average?.averageRatings || 0);
-          if (ratingDiff !== 0) return ratingDiff;
-          // Use getDateForComparison for tiebreaker date comparison
-          return getDateForComparison(b) - getDateForComparison(a); // Latest date first if tie
-        });
-        break;
+      // case "HIGHEST_RATINGS":
+      //   sortedMealPlan.sort((a, b) => {
+      //     const ratingDiff =
+      //       (b.average?.averageRatings || 0) - (a.average?.averageRatings || 0);
+      //     if (ratingDiff !== 0) return ratingDiff;
+      //     // Use getDateForComparison for tiebreaker date comparison
+      //     return getDateForComparison(b) - getDateForComparison(a); // Latest date first if tie
+      //   });
+      //   break;
     }
 
     // switch (sortOption) {
@@ -258,16 +258,16 @@ const MealPlanPage = () => {
         case "ALPHABETICAL_ZA":
           sortedResults.sort((a, b) => b.title.localeCompare(a.title));
           break;
-        case "HIGHEST_RATINGS":
-          sortedResults.sort((a, b) => {
-            const ratingDiff =
-              (b.average?.averageRatings || 0) -
-              (a.average?.averageRatings || 0);
-            if (ratingDiff !== 0) return ratingDiff;
-            // Use getDateForComparison for tiebreaker date comparison
-            return getDateForComparison(b) - getDateForComparison(a); // Latest date first if tie
-          });
-          break;
+        // case "HIGHEST_RATINGS":
+        //   sortedResults.sort((a, b) => {
+        //     const ratingDiff =
+        //       (b.average?.averageRatings || 0) -
+        //       (a.average?.averageRatings || 0);
+        //     if (ratingDiff !== 0) return ratingDiff;
+        //     // Use getDateForComparison for tiebreaker date comparison
+        //     return getDateForComparison(b) - getDateForComparison(a); // Latest date first if tie
+        //   });
+        //   break;
       }
 
       setDisplayedMealPlan(sortedResults);
@@ -288,22 +288,22 @@ const MealPlanPage = () => {
         );
 
         // Fetch average ratings for each meal plans
-        let filteredResultsWithAverage = await Promise.all(
-          filteredResults.map(async (mealPlan) => {
-            const average = await fetchMealPlanAverage(mealPlan.id);
-            return { ...mealPlan, average }; // Augment each meal plans with its average
-          })
-        );
+        // let filteredResultsWithAverage = await Promise.all(
+        //   filteredResults.map(async (mealPlan) => {
+        //     const average = await fetchMealPlanAverage(mealPlan.id);
+        //     return { ...mealPlan, average }; // Augment each meal plans with its average
+        //   })
+        // );
 
         if (categoryFilter) {
-          filteredResultsWithAverage = filteredResultsWithAverage.filter(
+          filteredResults = filteredResults.filter(
             (mealPlan) =>
               mealPlan.healthGoalCategoryId === Number(categoryFilter)
           );
         }
 
         // Sort the results
-        let sortedResults = [...filteredResultsWithAverage];
+        let sortedResults = [...filteredResults];
 
         // Helper function to get the date for comparison
         const getDateForComparison = (mealPlan) => {
@@ -476,10 +476,27 @@ const MealPlanPage = () => {
               {capitalizeFirstLetter(post?.publisher) || "Not Specified"}
             </span>
           </p>
-          <p className="text-gray-700 text-sm font-semibold">
+          {/* <p className="text-gray-700 text-sm font-semibold">
             {renderStarsAndCount(post)}
+          </p> */}
+        </div>
+
+        {/* <div className="flex items-center justify-center">
+          <p className="text-gray-700 text-sm font-semibold">
+            Date:
+            <span>{new Date(post.createdDT).toLocaleDateString()}</span>
           </p>
         </div>
+
+       
+        <div className="flex items-center justify-center">
+          <p className="text-gray-700 text-sm font-semibold">
+            Category:{" "}
+            <span className="text-orange-600 font-semibold tracking-tight">
+              {post.healthGoal.subcategoryName || "Not Specified"}
+            </span>
+          </p>
+        </div> */}
       </div>
     </div>
   );

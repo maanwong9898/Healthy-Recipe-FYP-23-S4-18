@@ -28,29 +28,29 @@ const fetchMostPopularEduContent = async () => {
 };
 
 // Fetch average rating for each single educational content
-const fetchAvgRatingForEduContent = async (educationalContentId) => {
-  try {
-    console.log(
-      "Fetching average rating for each single educational content..."
-    );
-    const response = await axiosInterceptorInstance.get(
-      `/educationalContent/getAverage/${educationalContentId}`
-    );
-    console.log(
-      "Average rating for Educational Content",
-      educationalContentId,
-      "is:",
-      response.data
-    );
-    return response.data;
-  } catch (error) {
-    console.log(
-      "Failed to fetch average rating for each single educational content: ",
-      error
-    );
-    throw error;
-  }
-};
+// const fetchAvgRatingForEduContent = async (educationalContentId) => {
+//   try {
+//     console.log(
+//       "Fetching average rating for each single educational content..."
+//     );
+//     const response = await axiosInterceptorInstance.get(
+//       `/educationalContent/getAverage/${educationalContentId}`
+//     );
+//     console.log(
+//       "Average rating for Educational Content",
+//       educationalContentId,
+//       "is:",
+//       response.data
+//     );
+//     return response.data;
+//   } catch (error) {
+//     console.log(
+//       "Failed to fetch average rating for each single educational content: ",
+//       error
+//     );
+//     throw error;
+//   }
+// };
 
 // Fetch most popular blog posts
 const fetchMostPopularBlogPosts = async () => {
@@ -68,28 +68,28 @@ const fetchMostPopularBlogPosts = async () => {
 };
 
 // Fetch average rating for each single blog post
-const fetchAverageRatingForBlogPost = async (blogPostId) => {
-  try {
-    console.log("Fetching average rating for each single blog post...");
-    const response = await axiosInterceptorInstance.get(
-      `/blog/getAverage/${blogPostId}`
-    );
+// const fetchAverageRatingForBlogPost = async (blogPostId) => {
+//   try {
+//     console.log("Fetching average rating for each single blog post...");
+//     const response = await axiosInterceptorInstance.get(
+//       `/blog/getAverage/${blogPostId}`
+//     );
 
-    console.log(
-      "Average rating for Blog Post",
-      blogPostId,
-      "is:",
-      response.data
-    );
-    return response.data;
-  } catch (error) {
-    console.log(
-      "Failed to fetch average rating for each single blog post: ",
-      error
-    );
-    throw error;
-  }
-};
+//     console.log(
+//       "Average rating for Blog Post",
+//       blogPostId,
+//       "is:",
+//       response.data
+//     );
+//     return response.data;
+//   } catch (error) {
+//     console.log(
+//       "Failed to fetch average rating for each single blog post: ",
+//       error
+//     );
+//     throw error;
+//   }
+// };
 
 // Fetch most popular Recipes
 const fetchMostPopularRecipes = async () => {
@@ -107,23 +107,23 @@ const fetchMostPopularRecipes = async () => {
 };
 
 // Fetch average rating for each single recipe
-const fetchAvgRatingForRecipe = async (recipeId) => {
-  try {
-    console.log("Fetching average rating for each single recipe...");
-    const response = await axiosInterceptorInstance.get(
-      `/recipe/getAverage/${recipeId}`
-    );
+// const fetchAvgRatingForRecipe = async (recipeId) => {
+//   try {
+//     console.log("Fetching average rating for each single recipe...");
+//     const response = await axiosInterceptorInstance.get(
+//       `/recipe/getAverage/${recipeId}`
+//     );
 
-    console.log("Average rating for recipe", recipeId, "is:", response.data);
-    return response.data;
-  } catch (error) {
-    console.log(
-      "Failed to fetch average rating for each single recipe: ",
-      error
-    );
-    throw error;
-  }
-};
+//     console.log("Average rating for recipe", recipeId, "is:", response.data);
+//     return response.data;
+//   } catch (error) {
+//     console.log(
+//       "Failed to fetch average rating for each single recipe: ",
+//       error
+//     );
+//     throw error;
+//   }
+// };
 
 // Fetch most popular meal plans
 const fetchMostPopularMealPlans = async () => {
@@ -140,26 +140,26 @@ const fetchMostPopularMealPlans = async () => {
   }
 };
 
-const fetchMealPlanAverage = async (mealPlanId) => {
-  try {
-    const response = await axiosInterceptorInstance.get(
-      `/mealPlan/getAverage/${mealPlanId}`
-    );
-    console.log(
-      "Average rating for meal plan",
-      mealPlanId,
-      "is:",
-      response.data
-    );
-    return response.data; // Assuming this returns the average data for the meal plan
-  } catch (error) {
-    console.error(
-      `Failed to fetch average for meal plan ${mealPlanId}:`,
-      error
-    );
-    return null; // or handle the error as you see fit
-  }
-};
+// const fetchMealPlanAverage = async (mealPlanId) => {
+//   try {
+//     const response = await axiosInterceptorInstance.get(
+//       `/mealPlan/getAverage/${mealPlanId}`
+//     );
+//     console.log(
+//       "Average rating for meal plan",
+//       mealPlanId,
+//       "is:",
+//       response.data
+//     );
+//     return response.data; // Assuming this returns the average data for the meal plan
+//   } catch (error) {
+//     console.error(
+//       `Failed to fetch average for meal plan ${mealPlanId}:`,
+//       error
+//     );
+//     return null; // or handle the error as you see fit
+//   }
+// };
 
 const Home = () => {
   const router = useRouter();
@@ -188,13 +188,13 @@ const Home = () => {
       const getMostPopularRecipe = async () => {
         try {
           const recipeData = await fetchMostPopularRecipes();
-          const recipetWithAvgRating = await Promise.all(
-            recipeData.map(async (recipe) => {
-              const average = await fetchAvgRatingForEduContent(recipe.id);
-              return { ...recipe, average };
-            })
-          );
-          setMostPopularRecipes(recipetWithAvgRating);
+          // const recipetWithAvgRating = await Promise.all(
+          //   recipeData.map(async (recipe) => {
+          //     const average = await fetchAvgRatingForRecipe(recipe.id);
+          //     return { ...recipe, average };
+          //   })
+          // );
+          setMostPopularRecipes(recipeData);
         } catch (error) {
           console.log("Failed to fetch most popular recipes: ", error);
         }
@@ -204,13 +204,13 @@ const Home = () => {
         try {
           const eduContentData = await fetchMostPopularEduContent();
 
-          const eduContentWithAvgRating = await Promise.all(
-            eduContentData.map(async (eduContent) => {
-              const average = await fetchAvgRatingForEduContent(eduContent.id);
-              return { ...eduContent, average };
-            })
-          );
-          setMostPopularEduContents(eduContentWithAvgRating);
+          // const eduContentWithAvgRating = await Promise.all(
+          //   eduContentData.map(async (eduContent) => {
+          //     const average = await fetchAvgRatingForEduContent(eduContent.id);
+          //     return { ...eduContent, average };
+          //   })
+          // );
+          setMostPopularEduContents(eduContentData);
         } catch (error) {
           console.log("Failed to fetch educational contents: ", error);
         }
@@ -220,13 +220,13 @@ const Home = () => {
         try {
           const blogPostData = await fetchMostPopularBlogPosts();
 
-          const blogPostsWithAvgRating = await Promise.all(
-            blogPostData.map(async (blogPost) => {
-              const average = await fetchAverageRatingForBlogPost(blogPost.id);
-              return { ...blogPost, average };
-            })
-          );
-          setMostPopularBlogPosts(blogPostsWithAvgRating);
+          // const blogPostsWithAvgRating = await Promise.all(
+          //   blogPostData.map(async (blogPost) => {
+          //     const average = await fetchAverageRatingForBlogPost(blogPost.id);
+          //     return { ...blogPost, average };
+          //   })
+          // );
+          setMostPopularBlogPosts(blogPostData);
         } catch (error) {
           console.log("Failed to fetch blog posts: ", error);
         }
@@ -235,14 +235,14 @@ const Home = () => {
       const getMostPopularMealPlans = async () => {
         try {
           const mealPlanData = await fetchMostPopularMealPlans();
-          const mealPlansWithAvgRating = await Promise.all(
-            mealPlanData.map(async (mealPlan) => {
-              const average = await fetchAverageRatingForBlogPost(mealPlan.id);
-              return { ...mealPlan, average };
-            })
-          );
+          // const mealPlansWithAvgRating = await Promise.all(
+          //   mealPlanData.map(async (mealPlan) => {
+          //     const average = await fetchMealPlanAverage(mealPlan.id);
+          //     return { ...mealPlan, average };
+          //   })
+          // );
 
-          setMostPopularMealPlans(mealPlansWithAvgRating);
+          setMostPopularMealPlans(mealPlanData);
         } catch (error) {
           console.log("Failed to fetch most popular meal plans: ", error);
         }
@@ -319,7 +319,7 @@ const Home = () => {
   //   .sort((a, b) => new Date(b.createdDateTime) - new Date(a.createdDateTime))
   //   .slice(0, 3);
 
-  const recipeLimit = [...mostPopularRecipes].slice(0, 3);
+  // const recipeLimit = [...mostPopularRecipes].slice(0, 3);
 
   // Redirect to the specific recipe page
   const handleViewRecipes = (id) => {
@@ -388,9 +388,9 @@ const Home = () => {
               {capitalizeFirstLetter(post?.publisher) || "Not Specified"}
             </span>
           </p>
-          <p className="text-gray-700 text-sm font-semibold">
+          {/* <p className="text-gray-700 text-sm font-semibold">
             {renderStarsAndCount(post)}
-          </p>
+          </p> */}
         </div>
       </div>
     </div>
@@ -403,7 +403,7 @@ const Home = () => {
   //   .sort((a, b) => new Date(b.createdDateTime) - new Date(a.createdDateTime))
   //   .slice(0, 3);
 
-  const blogPostLimit = [...mostPopularBlogPosts].slice(0, 3);
+  // const blogPostLimit = [...mostPopularBlogPosts].slice(0, 3);
 
   const handleViewBlogPost = (id) => {
     // Make sure the Blog title
@@ -453,23 +453,27 @@ const Home = () => {
       <div className="flex-grow flex flex-col justify-between p-4 bg-white">
         {/* Title */}
         <div className="text-center">
-          <h2 className="text-2xl font-extrabold mb-4">{post.title}</h2>
+          <h2 className="text-2xl font-extrabold mb-2">
+            {post?.title || "Untitled Blog Post Title"}
+          </h2>
         </div>
         {/* Description */}
         <div className="flex-grow flex items-center justify-center mb-4">
-          <p className="text-gray-700 text-base line-clamp-3">{post.info}</p>
+          <p className="text-gray-700 text-base line-clamp-3">
+            {post.introduction}
+          </p>
         </div>
         {/* Publisher and Ratings */}
-        <div className="flex flex-col lg:flex-row items-center justify-center space-x-4 mb-4">
+        <div className="flex flex-col lg:flex-row justify-center space-x-4 mb-4">
           <p className="text-gray-700 text-sm font-semibold">
             Publisher:{" "}
             <span className="text-orange-600 font-semibold tracking-tight">
               {capitalizeFirstLetter(post?.publisher) || "Not Specified"}
             </span>
           </p>
-          <p className="text-gray-700 text-sm font-semibold">
+          {/* <p className="text-gray-700 text-sm font-semibold">
             {renderStarsAndCount(post)}
-          </p>
+          </p> */}
         </div>
       </div>
     </div>
@@ -481,7 +485,7 @@ const Home = () => {
   //   .sort((a, b) => new Date(b.createdDateTime) - new Date(a.createdDateTime))
   //   .slice(0, 3);
 
-  const mealPlanLimit = [...mostPopularMealPlans].slice(0, 3);
+  // const mealPlanLimit = [...mostPopularMealPlans].slice(0, 3);
 
   const handleViewMealPlan = (id) => {
     // Make sure the Meal Plan title
@@ -550,9 +554,9 @@ const Home = () => {
               {capitalizeFirstLetter(post?.publisher) || "Not Specified"}
             </span>
           </p>
-          <p className="text-gray-700 text-sm font-semibold">
+          {/* <p className="text-gray-700 text-sm font-semibold">
             {renderStarsAndCount(post)}
-          </p>
+          </p> */}
         </div>
       </div>
     </div>
@@ -564,7 +568,7 @@ const Home = () => {
   //   .sort((a, b) => new Date(b.createdDateTime) - new Date(a.createdDateTime))
   //   .slice(0, 3);
 
-  const educationalContentLimit = [...mostPopularEduContents].slice(0, 3);
+  //const educationalContentLimit = [...mostPopularEduContents].slice(0, 3);
 
   const handleViewEducationalContent = (id) => {
     // Make sure the Educational Content title
@@ -612,13 +616,16 @@ const Home = () => {
       )}
 
       <div className="flex-grow flex flex-col justify-between p-4 bg-white">
-        {/* Title */}
         <div className="text-center">
-          <h2 className="text-2xl font-extrabold mb-4">{post.title}</h2>
+          <h2 className="text-2xl font-extrabold mb-2">
+            {post?.title || "Untitled Meal Plan"}
+          </h2>
         </div>
         {/* Description */}
         <div className="flex-grow flex items-center justify-center mb-4">
-          <p className="text-gray-700 text-base line-clamp-3">{post.info}</p>
+          <p className="text-gray-700 text-base line-clamp-3">
+            {post.introduction}
+          </p>
         </div>
         {/* Publisher and Ratings */}
         <div className="flex flex-col lg:flex-row items-center justify-center space-x-4 mb-4">
@@ -628,9 +635,9 @@ const Home = () => {
               {capitalizeFirstLetter(post?.publisher) || "Not Specified"}
             </span>
           </p>
-          <p className="text-gray-700 text-sm font-semibold">
+          {/* <p className="text-gray-700 text-sm font-semibold">
             {renderStarsAndCount(post)}
-          </p>
+          </p> */}
         </div>
       </div>
     </div>
@@ -769,7 +776,7 @@ const Home = () => {
                   Most Popular Recipes
                 </h2>
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
-                  {recipeLimit.map((post) => renderRecipePostCard(post))}
+                  {mostPopularRecipes.map((post) => renderRecipePostCard(post))}
                 </div>
               </div>
             </>
@@ -791,7 +798,7 @@ const Home = () => {
                   Latest Meal Plans
                 </h2>
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
-                  {mealPlanLimit.map((post) => renderMealPlanCard(post))}
+                  {mostPopularMealPlans.map((post) => renderMealPlanCard(post))}
                 </div>
               </div>
             </>
@@ -906,7 +913,7 @@ const Home = () => {
                   Blogs
                 </h2>
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
-                  {blogPostLimit.map((post) => renderBlogPost(post))}
+                  {mostPopularBlogPosts.map((post) => renderBlogPost(post))}
                 </div>
               </div>
             </>
@@ -927,7 +934,7 @@ const Home = () => {
                   Educational Contents
                 </h2>
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
-                  {educationalContentLimit.map((post) =>
+                  {mostPopularEduContents.map((post) =>
                     renderEducationContentCard(post)
                   )}
                 </div>

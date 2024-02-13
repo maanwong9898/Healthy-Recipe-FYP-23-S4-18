@@ -8,7 +8,9 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
- 
+
+import com.FYP18.HealthyRecipe.DTO.BlogDTO;
+import com.FYP18.HealthyRecipe.DTO.EduCoDTO;
 import com.FYP18.HealthyRecipe.DTO.PopularReviewRatingDTO;
 import com.FYP18.HealthyRecipe.DTO.ReviewRatingDTO;
 import com.FYP18.HealthyRecipe.DTO.UserInfoDTO;
@@ -181,19 +183,36 @@ public class BlogService {
     {
         blogReviewRatingRepository.deleteByBlogId(id.UserID, id.blogID);
     } 
-
-    public List<Blog> getMostPopularBlogs()
+  
+    public List<BlogDTO> getMostPopularBlogs(Integer count)
     {
-        List<PopularReviewRatingDTO> dtos = blogReviewRatingRepository.getMostPopularBlogs();
-
+        List<PopularReviewRatingDTO> dto = blogReviewRatingRepository.getMostPopularBlogs(count);
         List<Long> ids = new ArrayList<>();
-        for(PopularReviewRatingDTO dto: dtos)
+        for(PopularReviewRatingDTO id : dto)
         {
-            ids.add(dto.getId());
+            ids.add(id.getId());
+        } 
+
+        List<BlogDTO> toReturn = blogRepository.findBlogDTOsByIds(ids);
+        int missing = count - ids.size();
+
+        // if its actually lesser than 3
+        if(missing > 0)
+        { 
+            List<BlogDTO> addOn = missing == count ? blogRepository.findLatestBlogDTO(count):
+                                                     blogRepository.findLatestBlogDTO(ids, missing);
+
+            toReturn.addAll(addOn);
         }
-        return blogRepository.findAllById(ids);
-        // return 
+        
+        return toReturn;
     }
+
+    public List<BlogDTO> getMostPopularBlogs()
+    { 
+        return getMostPopularBlogs(3);
+    }
+
 
     public List<Blog> findBlogByBlogType(BlogPostCategory blogType)
     {

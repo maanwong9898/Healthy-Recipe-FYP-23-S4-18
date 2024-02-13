@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.FYP18.HealthyRecipe.DTO.BlogDTO;
 import com.FYP18.HealthyRecipe.DTO.EduCoDTO;
 import com.FYP18.HealthyRecipe.DTO.MealPlanDTO;
 import com.FYP18.HealthyRecipe.DTO.PopularReviewRatingDTO;
@@ -67,7 +68,7 @@ public class LandingPage {
     private BlogService blogService;
     
     @GetMapping("/getMostPopularBlogs")
-    public List<Blog> getMostPopularBlogs()
+    public List<BlogDTO> getMostPopularBlogs()
     {
         return blogService.getMostPopularBlogs();
     } 

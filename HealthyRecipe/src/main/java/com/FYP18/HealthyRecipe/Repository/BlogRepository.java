@@ -61,7 +61,9 @@ public interface BlogRepository extends JpaRepository<Blog, Long>{
     List<BlogDTO> findLatestBlogDTO(@Param("count") Integer count);
  
     @Query(value = getDTOQuery + " WHERE r.id IN :ids", nativeQuery = false)
-    List<BlogDTO> findMealPlanDTOsByIds(@Param("ids") List<Long> ids);
+    List<BlogDTO> findBlogDTOsByIds(@Param("ids") List<Long> ids);
+
+    
 
 }
 

@@ -15,8 +15,7 @@ import com.FYP18.HealthyRecipe.Repository.EducationalContentRepository;
 import com.FYP18.HealthyRecipe.Repository.EducationalContentReviewRatingRepository;
 import com.FYP18.HealthyRecipe.Repository.MealPlanRepository;
 import com.FYP18.HealthyRecipe.Repository.MealPlanReviewRatingRepository;
-import com.FYP18.HealthyRecipe.Repository.UserRepository;
-import com.FYP18.HealthyRecipe.Repository.Categories.EducationalContentCategoryRepo;
+import com.FYP18.HealthyRecipe.Repository.UserRepository; 
 
 
 @Transactional

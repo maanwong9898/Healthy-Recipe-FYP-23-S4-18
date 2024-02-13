@@ -12,7 +12,7 @@ import SecureStorage from "react-secure-storage";
 const sortOptions = {
   LATEST: { key: "LATEST", label: "By Latest" },
   OLDEST: { key: "OLDEST", label: "By Oldest" },
-  HIGHEST_RATINGS: { key: "HIGHEST_RATINGS", label: "Highest Ratings" },
+  //HIGHEST_RATINGS: { key: "HIGHEST_RATINGS", label: "Highest Ratings" },
   // LOWEST_RATINGS: { key: "LOWEST_RATINGS", label: "Lowest Ratings" },
   ALPHABETICAL_AZ: { key: "ALPHABETICAL_AZ", label: "Alphabetically (A to Z)" },
   ALPHABETICAL_ZA: { key: "ALPHABETICAL_ZA", label: "Alphabetically (Z to A)" },
@@ -35,26 +35,26 @@ const fetchMealPlan = async () => {
 };
 
 // Fetch the average rating for each single meal plan
-const fetchMealPlanAverage = async (mealPlanId) => {
-  try {
-    const response = await axiosInterceptorInstance.get(
-      `/mealPlan/getAverage/${mealPlanId}`
-    );
-    console.log(
-      "Average rating for meal plan",
-      mealPlanId,
-      "is:",
-      response.data
-    );
-    return response.data; // Assuming this returns the average data for the meal plan
-  } catch (error) {
-    console.error(
-      `Failed to fetch average for meal plan ${mealPlanId}:`,
-      error
-    );
-    return null; // or handle the error as you see fit
-  }
-};
+// const fetchMealPlanAverage = async (mealPlanId) => {
+//   try {
+//     const response = await axiosInterceptorInstance.get(
+//       `/mealPlan/getAverage/${mealPlanId}`
+//     );
+//     console.log(
+//       "Average rating for meal plan",
+//       mealPlanId,
+//       "is:",
+//       response.data
+//     );
+//     return response.data; // Assuming this returns the average data for the meal plan
+//   } catch (error) {
+//     console.error(
+//       `Failed to fetch average for meal plan ${mealPlanId}:`,
+//       error
+//     );
+//     return null; // or handle the error as you see fit
+//   }
+// };
 
 const ExploreMealPlanPage = () => {
   const router = useRouter();
@@ -97,16 +97,16 @@ const ExploreMealPlanPage = () => {
     const getData = async () => {
       const fetchedMealPlan = await fetchMealPlan();
 
-      const mealPlansWithAverage = await Promise.all(
-        fetchedMealPlan.map(async (mealPlan) => {
-          const average = await fetchMealPlanAverage(mealPlan.id);
-          return { ...mealPlan, average };
-        })
-      );
-      console.log("mealPlan with average:", mealPlansWithAverage);
+      // const mealPlansWithAverage = await Promise.all(
+      //   fetchedMealPlan.map(async (mealPlan) => {
+      //     const average = await fetchMealPlanAverage(mealPlan.id);
+      //     return { ...mealPlan, average };
+      //   })
+      // );
+      //console.log("mealPlan with average:", mealPlansWithAverage);
 
-      setAllMealPlan(mealPlansWithAverage);
-      setDisplayedMealPlan(mealPlansWithAverage);
+      setAllMealPlan(fetchedMealPlan);
+      setDisplayedMealPlan(fetchedMealPlan);
     };
 
     const fetchCategories = async () => {
@@ -162,14 +162,14 @@ const ExploreMealPlanPage = () => {
       case "ALPHABETICAL_ZA":
         sortedMealPlan.sort((a, b) => b.title.localeCompare(a.title));
         break;
-      case "HIGHEST_RATINGS":
-        sortedMealPlan.sort((a, b) => {
-          const ratingDiff =
-            (b.average?.averageRatings || 0) - (a.average?.averageRatings || 0);
-          if (ratingDiff !== 0) return ratingDiff;
-          return new Date(b.createdDT) - new Date(a.createdDT); // Latest date first if tie
-        });
-        break;
+      // case "HIGHEST_RATINGS":
+      //   sortedMealPlan.sort((a, b) => {
+      //     const ratingDiff =
+      //       (b.average?.averageRatings || 0) - (a.average?.averageRatings || 0);
+      //     if (ratingDiff !== 0) return ratingDiff;
+      //     return new Date(b.createdDT) - new Date(a.createdDT); // Latest date first if tie
+      //   });
+      //   break;
     }
 
     console.log("Filtered meal plans:", filteredMealPlans);
@@ -214,15 +214,15 @@ const ExploreMealPlanPage = () => {
         case "ALPHABETICAL_ZA":
           sortedResults.sort((a, b) => b.title.localeCompare(a.title));
           break;
-        case "HIGHEST_RATINGS":
-          sortedResults.sort((a, b) => {
-            const ratingDiff =
-              (b.average?.averageRatings || 0) -
-              (a.average?.averageRatings || 0);
-            if (ratingDiff !== 0) return ratingDiff;
-            return new Date(b.createdDT) - new Date(a.createdDT); // Latest date first if tie
-          });
-          break;
+        // case "HIGHEST_RATINGS":
+        //   sortedResults.sort((a, b) => {
+        //     const ratingDiff =
+        //       (b.average?.averageRatings || 0) -
+        //       (a.average?.averageRatings || 0);
+        //     if (ratingDiff !== 0) return ratingDiff;
+        //     return new Date(b.createdDT) - new Date(a.createdDT); // Latest date first if tie
+        //   });
+        //   break;
       }
 
       setDisplayedMealPlan(sortedResults);
@@ -243,22 +243,22 @@ const ExploreMealPlanPage = () => {
         );
 
         // Fetch average ratings for each meal plans
-        let filteredResultsWithAverage = await Promise.all(
-          filteredResults.map(async (mealPlan) => {
-            const average = await fetchMealPlanAverage(mealPlan.id);
-            return { ...mealPlan, average }; // Augment each meal plans with its average
-          })
-        );
+        // let filteredResultsWithAverage = await Promise.all(
+        //   filteredResults.map(async (mealPlan) => {
+        //     const average = await fetchMealPlanAverage(mealPlan.id);
+        //     return { ...mealPlan, average }; // Augment each meal plans with its average
+        //   })
+        // );
 
         if (categoryFilter) {
-          filteredResultsWithAverage = filteredResultsWithAverage.filter(
+          filteredResults = filteredResults.filter(
             (mealPlan) =>
               mealPlan.healthGoalCategoryId === Number(categoryFilter)
           );
         }
 
         // Sort the results
-        let sortedResults = [...filteredResultsWithAverage];
+        let sortedResults = [...filteredResults];
         switch (sortOption) {
           case "LATEST":
             sortedResults.sort(
@@ -276,15 +276,15 @@ const ExploreMealPlanPage = () => {
           case "ALPHABETICAL_ZA":
             sortedResults.sort((a, b) => b.title.localeCompare(a.title));
             break;
-          case "HIGHEST_RATINGS":
-            sortedResults.sort((a, b) => {
-              const ratingDiff =
-                (b.average?.averageRatings || 0) -
-                (a.average?.averageRatings || 0);
-              if (ratingDiff !== 0) return ratingDiff;
-              return new Date(b.createdDT) - new Date(a.createdDT); // Latest date first if tie
-            });
-            break;
+          // case "HIGHEST_RATINGS":
+          //   sortedResults.sort((a, b) => {
+          //     const ratingDiff =
+          //       (b.average?.averageRatings || 0) -
+          //       (a.average?.averageRatings || 0);
+          //     if (ratingDiff !== 0) return ratingDiff;
+          //     return new Date(b.createdDT) - new Date(a.createdDT); // Latest date first if tie
+          //   });
+          //   break;
         }
 
         console.log("Sorted results:", sortedResults);
@@ -422,9 +422,9 @@ const ExploreMealPlanPage = () => {
               {capitalizeFirstLetter(post?.publisher) || "Not Specified"}
             </span>
           </p>
-          <p className="text-gray-700 text-sm font-semibold">
+          {/* <p className="text-gray-700 text-sm font-semibold">
             {renderStarsAndCount(post)}
-          </p>
+          </p> */}
         </div>
       </div>
     </div>

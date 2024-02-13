@@ -78,6 +78,18 @@ const fetchMealPlanAverage = async (mealPlanId) => {
   }
 };
 
+// Function to fetch dashboard data
+const fetchDashboardData = async () => {
+  const userId = SecureStorage.getItem("userId");
+  const token = SecureStorage.getItem("token");
+  const config = { headers: { Authorization: `Bearer ${token}` } };
+  const response = await axiosInterceptorInstance.get(
+    `/register/dashboard/${userId}`,
+    config
+  );
+  return response.data;
+};
+
 //  Fetch meal plan based on health goals of user
 const fetchMealPlansByHealthGoals = async (healthGoalId) => {
   try {
@@ -137,67 +149,32 @@ const MealPlanPage = () => {
       // If the user is authorized, allow the component to proceed
       setIsAuthorized(true);
     }
-
-    // Sepcifically for fetching meal plans based on health goals + ratings count display
-    const getMealPlansByHealthGoals = async (healthGoalId) => {
-      try {
-        const mealPlans = await fetchMealPlansByHealthGoals(healthGoalId);
-        const mealPlansWithRatings = await Promise.all(
-          mealPlans.map(async (healthGoalMP) => {
-            const average = await fetchMealPlanAverage(healthGoalMP.id);
-            return { ...healthGoalMP, average }; // Combine the plan with its ratings
-          })
-        );
-        //return mealPlansWithRatings;
-        setMealPlansByHealthGoals(mealPlansWithRatings);
-      } catch (error) {
-        console.error("Error fetching meal plans with ratings:", error);
-        throw error;
-      }
-    };
-
-    const viewUserDashboard = async () => {
-      try {
-        const userId = SecureStorage.getItem("userId");
-        const token = SecureStorage.getItem("token");
-
-        const config = {
-          headers: { Authorization: `Bearer ${token}` },
-        };
-
-        // Make the GET request to the userAndAdmin endpoint
-        const response = await axiosInterceptorInstance.get(
-          "/register/dashboard/" + userId,
-          config
-        );
-
-        console.log("User data fetched from backend:", response.data);
-
-        // Extract healthGoalId from user data
-        const healthGoalId = response.data.healthGoal?.id;
-        console.log("Health Goal ID:", healthGoalId);
-
-        // Fetch meal plans based on health goal only if healthGoalId is available
-        if (healthGoalId) {
-          await getMealPlansByHealthGoals(healthGoalId);
-        } else {
-          displayPersonalisedSection(false); // if user no health goal, hide the personalised section
-        }
-      } catch (error) {
-        console.error("Error fetching user data", error);
-      }
-    };
-    viewUserDashboard();
   }, []);
 
-  // Fetch meal plan based on health goals of user
-  // const {
-  //   data: personalizedMealPlans = [],
-  //   isLoading: isPersonalizedLoading,
-  //   isError: isPersonalizedError,
-  // } = useQuery(["mealPlansByHealthGoals", healthGoalId], () =>
-  //   fetchMealPlansByHealthGoals(healthGoalId)
-  // );
+  // Dashboard data query
+  const dashboardQuery = useQuery("dashboard", fetchDashboardData, {
+    onSuccess: (data) => {
+      if (!data.healthGoal?.id) {
+        setDisplayPersonalisedSection(false);
+      }
+    },
+  });
+
+  // Meal plans by health goals query, dependent on dashboardQuery
+  const mealPlansByHealthGoalsQuery = useQuery(
+    ["mealPlansByHealthGoals", dashboardQuery.data?.healthGoal?.id],
+    () => fetchMealPlansByHealthGoals(dashboardQuery.data?.healthGoal?.id),
+    {
+      enabled: !!dashboardQuery.data?.healthGoal?.id, // Only run if healthGoalId is available
+      onSuccess: (data) => {
+        setMealPlansByHealthGoals(data);
+      },
+    }
+  );
+
+  useEffect(() => {
+    console.log("Health Goal ID:", dashboardQuery.data?.healthGoal?.id);
+  }, [dashboardQuery.data?.healthGoal?.id]);
 
   // Fetch all meal plan
   const {

@@ -16,7 +16,7 @@ import RegisteredUserNavBar from "../../components/navigation/registeredUserNavB
 const sortOptions = {
   LATEST: { key: "LATEST", label: "By Latest" },
   OLDEST: { key: "OLDEST", label: "By Oldest" },
-  HIGHEST_RATINGS: { key: "HIGHEST_RATINGS", label: "Highest Ratings" },
+  // HIGHEST_RATINGS: { key: "HIGHEST_RATINGS", label: "Highest Ratings" },
   ALPHABETICAL_AZ: { key: "ALPHABETICAL_AZ", label: "Alphabetically (A to Z)" },
   ALPHABETICAL_ZA: { key: "ALPHABETICAL_ZA", label: "Alphabetically (Z to A)" },
 };
@@ -28,17 +28,15 @@ const fetchBlogPosts = async () => {
     const response = await axiosInterceptorInstance.get("/blog/get");
     console.log("All blogs:", response.data);
     // Fetch average ratings for each blog post
-    const blogsWithAverage = await Promise.all(
-      response.data.map(async (blog) => {
-        const average = await fetchBlogAverage(blog.id);
-        return { ...blog, average };
-      })
-    );
+    // const blogsWithAverage = await Promise.all(
+    //   response.data.map(async (blog) => {
+    //     const average = await fetchBlogAverage(blog.id);
+    //     return { ...blog, average };
+    //   })
+    // );
 
     // Filter active blog posts
-    const filteredData = blogsWithAverage.filter(
-      (post) => post.active === true
-    );
+    const filteredData = response.data.filter((post) => post.active === true);
 
     return filteredData;
   } catch (error) {
@@ -47,18 +45,18 @@ const fetchBlogPosts = async () => {
   }
 };
 
-const fetchBlogAverage = async (blogId) => {
-  try {
-    const response = await axiosInterceptorInstance.get(
-      `/blog/getAverage/${blogId}`
-    );
-    console.log("Average rating for blog post", blogId, "is:", response.data);
-    return response.data; // Assuming this returns the average data for the blog
-  } catch (error) {
-    console.error(`Failed to fetch average for blog post ${blogId}:`, error);
-    return null; // or handle the error as you see fit
-  }
-};
+// const fetchBlogAverage = async (blogId) => {
+//   try {
+//     const response = await axiosInterceptorInstance.get(
+//       `/blog/getAverage/${blogId}`
+//     );
+//     console.log("Average rating for blog post", blogId, "is:", response.data);
+//     return response.data; // Assuming this returns the average data for the blog
+//   } catch (error) {
+//     console.error(`Failed to fetch average for blog post ${blogId}:`, error);
+//     return null; // or handle the error as you see fit
+//   }
+// };
 
 const fetchCategories = async () => {
   try {
@@ -176,14 +174,14 @@ const BusinessBlogPostsPage = () => {
       case "ALPHABETICAL_ZA":
         sortedPosts.sort((a, b) => b.title.localeCompare(a.title));
         break;
-      case "HIGHEST_RATINGS":
-        sortedPosts.sort((a, b) => {
-          const ratingDiff =
-            (b.average?.averageRatings || 0) - (a.average?.averageRatings || 0);
-          if (ratingDiff !== 0) return ratingDiff;
-          return new Date(b.createdDateTime) - new Date(a.createdDateTime); // Latest date first if tie
-        });
-        break;
+      // case "HIGHEST_RATINGS":
+      //   sortedPosts.sort((a, b) => {
+      //     const ratingDiff =
+      //       (b.average?.averageRatings || 0) - (a.average?.averageRatings || 0);
+      //     if (ratingDiff !== 0) return ratingDiff;
+      //     return new Date(b.createdDateTime) - new Date(a.createdDateTime); // Latest date first if tie
+      //   });
+      //   break;
     }
 
     console.log("Filtered posts:", filteredPosts);
@@ -225,15 +223,15 @@ const BusinessBlogPostsPage = () => {
         case "ALPHABETICAL_ZA":
           sortedResults.sort((a, b) => b.title.localeCompare(a.title));
           break;
-        case "HIGHEST_RATINGS":
-          sortedResults.sort((a, b) => {
-            const ratingDiff =
-              (b.average?.averageRatings || 0) -
-              (a.average?.averageRatings || 0);
-            if (ratingDiff !== 0) return ratingDiff;
-            return new Date(b.createdDateTime) - new Date(a.createdDateTime); // Latest date first if tie
-          });
-          break;
+        // case "HIGHEST_RATINGS":
+        //   sortedResults.sort((a, b) => {
+        //     const ratingDiff =
+        //       (b.average?.averageRatings || 0) -
+        //       (a.average?.averageRatings || 0);
+        //     if (ratingDiff !== 0) return ratingDiff;
+        //     return new Date(b.createdDateTime) - new Date(a.createdDateTime); // Latest date first if tie
+        //   });
+        //   break;
       }
 
       setDisplayedBlogPosts(sortedResults);
@@ -254,21 +252,21 @@ const BusinessBlogPostsPage = () => {
         );
 
         // Fetch average ratings for each blog post
-        let filteredResultsWithAverage = await Promise.all(
-          filteredResults.map(async (post) => {
-            const average = await fetchBlogAverage(post.id);
-            return { ...post, average }; // Augment each blog post with its average
-          })
-        );
+        // let filteredResultsWithAverage = await Promise.all(
+        //   filteredResults.map(async (post) => {
+        //     const average = await fetchBlogAverage(post.id);
+        //     return { ...post, average }; // Augment each blog post with its average
+        //   })
+        // );
 
         if (categoryFilter) {
-          filteredResultsWithAverage = filteredResultsWithAverage.filter(
+          filteredResults = filteredResults.filter(
             (post) => post.blogType.subcategoryName === categoryFilter
           );
         }
 
         // Sort the results
-        let sortedResults = [...filteredResultsWithAverage];
+        let sortedResults = [...filteredResults];
         switch (sortOption) {
           case "LATEST":
             sortedResults.sort(
@@ -288,15 +286,15 @@ const BusinessBlogPostsPage = () => {
           case "ALPHABETICAL_ZA":
             sortedResults.sort((a, b) => b.title.localeCompare(a.title));
             break;
-          case "HIGHEST_RATINGS":
-            sortedResults.sort((a, b) => {
-              const ratingDiff =
-                (b.average?.averageRatings || 0) -
-                (a.average?.averageRatings || 0);
-              if (ratingDiff !== 0) return ratingDiff;
-              return new Date(b.createdDateTime) - new Date(a.createdDateTime); // Latest date first if tie
-            });
-            break;
+          // case "HIGHEST_RATINGS":
+          //   sortedResults.sort((a, b) => {
+          //     const ratingDiff =
+          //       (b.average?.averageRatings || 0) -
+          //       (a.average?.averageRatings || 0);
+          //     if (ratingDiff !== 0) return ratingDiff;
+          //     return new Date(b.createdDateTime) - new Date(a.createdDateTime); // Latest date first if tie
+          //   });
+          //   break;
         }
 
         console.log("Sorted results:", sortedResults);
@@ -426,10 +424,26 @@ const BusinessBlogPostsPage = () => {
               {capitalizeFirstLetter(post?.publisher) || "Not Specified"}
             </span>
           </p>
-          <p className="text-gray-700 text-sm font-semibold">
+          {/* <p className="text-gray-700 text-sm font-semibold">
             {renderStarsAndCount(post)}
+          </p> */}
+        </div>
+
+        {/* <div className="flex items-center justify-center">
+          <p className="text-gray-700 text-sm font-semibold">
+            Date:
+            <span>{new Date(post.createdDateTime).toLocaleDateString()}</span>
           </p>
         </div>
+
+        <div className="flex items-center justify-center">
+          <p className="text-gray-700 text-sm font-semibold">
+            Category:{" "}
+            <span className="text-orange-600 font-semibold tracking-tight">
+              {post.blogType.subcategoryName || "Not Specified"}
+            </span>
+          </p>
+        </div> */}
       </div>
     </div>
   );

@@ -26,29 +26,29 @@ const fetchMostPopularEduContent = async () => {
 };
 
 // Fetch average rating for each single educational content
-const fetchAvgRatingForEduContent = async (educationalContentId) => {
-  try {
-    console.log(
-      "Fetching average rating for each single educational content..."
-    );
-    const response = await axiosInterceptorInstance.get(
-      `/educationalContent/getAverage/${educationalContentId}`
-    );
-    // console.log(
-    //   "Average rating for Educational Content",
-    //   educationalContentId,
-    //   "is:",
-    //   response.data
-    // );
-    return response.data;
-  } catch (error) {
-    console.log(
-      "Failed to fetch average rating for each single educational content: ",
-      error
-    );
-    throw error;
-  }
-};
+// const fetchAvgRatingForEduContent = async (educationalContentId) => {
+//   try {
+//     console.log(
+//       "Fetching average rating for each single educational content..."
+//     );
+//     const response = await axiosInterceptorInstance.get(
+//       `/educationalContent/getAverage/${educationalContentId}`
+//     );
+//     // console.log(
+//     //   "Average rating for Educational Content",
+//     //   educationalContentId,
+//     //   "is:",
+//     //   response.data
+//     // );
+//     return response.data;
+//   } catch (error) {
+//     console.log(
+//       "Failed to fetch average rating for each single educational content: ",
+//       error
+//     );
+//     throw error;
+//   }
+// };
 
 // Fetch most popular blog posts
 const fetchMostPopularBlogPosts = async () => {
@@ -66,28 +66,28 @@ const fetchMostPopularBlogPosts = async () => {
 };
 
 // Fetch average rating for each single blog post
-const fetchAverageRatingForBlogPost = async (blogPostId) => {
-  try {
-    console.log("Fetching average rating for each single blog post...");
-    const response = await axiosInterceptorInstance.get(
-      `/blog/getAverage/${blogPostId}`
-    );
+// const fetchAverageRatingForBlogPost = async (blogPostId) => {
+//   try {
+//     console.log("Fetching average rating for each single blog post...");
+//     const response = await axiosInterceptorInstance.get(
+//       `/blog/getAverage/${blogPostId}`
+//     );
 
-    // console.log(
-    //   "Average rating for Blog Post",
-    //   blogPostId,
-    //   "is:",
-    //   response.data
-    // );
-    return response.data;
-  } catch (error) {
-    console.log(
-      "Failed to fetch average rating for each single blog post: ",
-      error
-    );
-    throw error;
-  }
-};
+//     // console.log(
+//     //   "Average rating for Blog Post",
+//     //   blogPostId,
+//     //   "is:",
+//     //   response.data
+//     // );
+//     return response.data;
+//   } catch (error) {
+//     console.log(
+//       "Failed to fetch average rating for each single blog post: ",
+//       error
+//     );
+//     throw error;
+//   }
+// };
 
 //  Fetch meal plan based on health goals of user
 const fetchMealPlansByHealthGoals = async (healthGoalId) => {
@@ -110,26 +110,26 @@ const fetchMealPlansByHealthGoals = async (healthGoalId) => {
 };
 
 // Fetch the average rating for each single meal plan
-const fetchMealPlanAverage = async (mealPlanId) => {
-  try {
-    const response = await axiosInterceptorInstance.get(
-      `/mealPlan/getAverage/${mealPlanId}`
-    );
-    // console.log(
-    //   "Average rating for meal plan",
-    //   mealPlanId,
-    //   "is:",
-    //   response.data
-    // );
-    return response.data; // Assuming this returns the average data for the meal plan
-  } catch (error) {
-    console.error(
-      `Failed to fetch average for meal plan ${mealPlanId}:`,
-      error
-    );
-    return null; // or handle the error as you see fit
-  }
-};
+// const fetchMealPlanAverage = async (mealPlanId) => {
+//   try {
+//     const response = await axiosInterceptorInstance.get(
+//       `/mealPlan/getAverage/${mealPlanId}`
+//     );
+//     // console.log(
+//     //   "Average rating for meal plan",
+//     //   mealPlanId,
+//     //   "is:",
+//     //   response.data
+//     // );
+//     return response.data; // Assuming this returns the average data for the meal plan
+//   } catch (error) {
+//     console.error(
+//       `Failed to fetch average for meal plan ${mealPlanId}:`,
+//       error
+//     );
+//     return null; // or handle the error as you see fit
+//   }
+// };
 
 // Fetch recipes by dietary preferences and allergies
 const fetchRecipesByDPandAllergies = async (userId) => {
@@ -148,23 +148,23 @@ const fetchRecipesByDPandAllergies = async (userId) => {
 };
 
 // Fetch average rating for each single recipe
-const fetchAvgRatingForRecipe = async (recipeId) => {
-  try {
-    console.log("Fetching average rating for each single recipe...");
-    const response = await axiosInterceptorInstance.get(
-      `/recipe/getAverage/${recipeId}`
-    );
+// const fetchAvgRatingForRecipe = async (recipeId) => {
+//   try {
+//     console.log("Fetching average rating for each single recipe...");
+//     const response = await axiosInterceptorInstance.get(
+//       `/recipe/getAverage/${recipeId}`
+//     );
 
-    //console.log("Average rating for recipe", recipeId, "is:", response.data);
-    return response.data;
-  } catch (error) {
-    console.log(
-      "Failed to fetch average rating for each single recipe: ",
-      error
-    );
-    throw error;
-  }
-};
+//     //console.log("Average rating for recipe", recipeId, "is:", response.data);
+//     return response.data;
+//   } catch (error) {
+//     console.log(
+//       "Failed to fetch average rating for each single recipe: ",
+//       error
+//     );
+//     throw error;
+//   }
+// };
 
 const RegisteredUserHomepage = () => {
   const router = useRouter();
@@ -195,13 +195,13 @@ const RegisteredUserHomepage = () => {
         try {
           const eduContentData = await fetchMostPopularEduContent();
 
-          const eduContentWithAvgRating = await Promise.all(
-            eduContentData.map(async (eduContent) => {
-              const average = await fetchAvgRatingForEduContent(eduContent.id);
-              return { ...eduContent, average };
-            })
-          );
-          setMostPopularEduContent(eduContentWithAvgRating);
+          // const eduContentWithAvgRating = await Promise.all(
+          //   eduContentData.map(async (eduContent) => {
+          //     const average = await fetchAvgRatingForEduContent(eduContent.id);
+          //     return { ...eduContent, average };
+          //   })
+          // );
+          setMostPopularEduContent(eduContentData);
         } catch (error) {
           console.log("Failed to fetch educational contents: ", error);
         }
@@ -211,13 +211,13 @@ const RegisteredUserHomepage = () => {
         try {
           const blogPostData = await fetchMostPopularBlogPosts();
 
-          const blogPostsWithAvgRating = await Promise.all(
-            blogPostData.map(async (blogPost) => {
-              const average = await fetchAverageRatingForBlogPost(blogPost.id);
-              return { ...blogPost, average };
-            })
-          );
-          setMostPopularBlogPosts(blogPostsWithAvgRating);
+          // const blogPostsWithAvgRating = await Promise.all(
+          //   blogPostData.map(async (blogPost) => {
+          //     const average = await fetchAverageRatingForBlogPost(blogPost.id);
+          //     return { ...blogPost, average };
+          //   })
+          // );
+          setMostPopularBlogPosts(blogPostData);
         } catch (error) {
           console.log("Failed to fetch blog posts: ", error);
         }
@@ -227,14 +227,14 @@ const RegisteredUserHomepage = () => {
       const getMealPlansByHealthGoals = async (healthGoalId) => {
         try {
           const mealPlans = await fetchMealPlansByHealthGoals(healthGoalId);
-          const mealPlansWithRatings = await Promise.all(
-            mealPlans.map(async (healthGoalMP) => {
-              const average = await fetchMealPlanAverage(healthGoalMP.id);
-              return { ...healthGoalMP, average }; // Combine the plan with its ratings
-            })
-          );
+          // const mealPlansWithRatings = await Promise.all(
+          //   mealPlans.map(async (healthGoalMP) => {
+          //     const average = await fetchMealPlanAverage(healthGoalMP.id);
+          //     return { ...healthGoalMP, average }; // Combine the plan with its ratings
+          //   })
+          // );
           //return mealPlansWithRatings;
-          setMealPlansByHealthGoals(mealPlansWithRatings);
+          setMealPlansByHealthGoals(mealPlans);
         } catch (error) {
           console.error("Error fetching meal plans with ratings:", error);
           throw error;
@@ -245,13 +245,13 @@ const RegisteredUserHomepage = () => {
       const getRecipesByDPandAllergies = async (userId) => {
         try {
           const recipes = await fetchRecipesByDPandAllergies(userId);
-          const recipesWithRatings = await Promise.all(
-            recipes.map(async (recipe) => {
-              const average = await fetchAvgRatingForRecipe(recipe.id);
-              return { ...recipe, average }; // Correctly combine the recipe with its ratings
-            })
-          );
-          setRecipesByDP(recipesWithRatings); // Update state with fetched recipes
+          // const recipesWithRatings = await Promise.all(
+          //   recipes.map(async (recipe) => {
+          //     const average = await fetchAvgRatingForRecipe(recipe.id);
+          //     return { ...recipe, average }; // Correctly combine the recipe with its ratings
+          //   })
+          // );
+          setRecipesByDP(recipes); // Update state with fetched recipes
         } catch (error) {
           console.error(
             "Failed to fetch recipes based on dietary preferences and allergies:",
@@ -437,9 +437,9 @@ const RegisteredUserHomepage = () => {
               {post?.publisher || "Not Specified"}
             </span>
           </p>
-          <p className="text-gray-700 text-sm font-semibold">
+          {/* <p className="text-gray-700 text-sm font-semibold">
             {renderStarsAndCount(post)}
-          </p>
+          </p> */}
         </div>
       </div>
     </div>
@@ -452,7 +452,7 @@ const RegisteredUserHomepage = () => {
   //   .sort((a, b) => new Date(b.createdDateTime) - new Date(a.createdDateTime))
   //   .slice(0, 3);
 
-  const blogPostLimit = [...mostPopularBlogPosts].slice(0, 3);
+  //const blogPostLimit = [...mostPopularBlogPosts].slice(0, 3);
 
   const handleViewBlogPost = (id) => {
     // Make sure the Blog title
@@ -510,7 +510,9 @@ const RegisteredUserHomepage = () => {
 
         {/* Description */}
         <div className="flex-grow flex items-center justify-center mb-4">
-          <p className="text-gray-700 text-base line-clamp-3">{post.info}</p>
+          <p className="text-gray-700 text-base line-clamp-3">
+            {post.introduction}
+          </p>
         </div>
 
         {/* Publisher and Ratings */}
@@ -521,9 +523,9 @@ const RegisteredUserHomepage = () => {
               {post?.publisher || "Not Specified"}
             </span>
           </p>
-          <p className="text-gray-700 text-sm font-semibold">
+          {/* <p className="text-gray-700 text-sm font-semibold">
             {renderStarsAndCount(post)}
-          </p>
+          </p> */}
         </div>
       </div>
     </div>
@@ -603,9 +605,9 @@ const RegisteredUserHomepage = () => {
               {capitalizeFirstLetter(post?.publisher) || "Not Specified"}
             </span>
           </p>
-          <p className="text-gray-700 text-sm font-semibold">
+          {/* <p className="text-gray-700 text-sm font-semibold">
             {renderStarsAndCount(post)}
-          </p>
+          </p> */}
         </div>
         {/* For testing  */}
         {/* Display category  */}
@@ -682,7 +684,9 @@ const RegisteredUserHomepage = () => {
 
         {/* Description */}
         <div className="flex-grow flex items-center justify-center mb-4">
-          <p className="text-gray-700 text-base line-clamp-3">{post.info}</p>
+          <p className="text-gray-700 text-base line-clamp-3">
+            {post.introduction}
+          </p>
         </div>
 
         {/* Publisher and Ratings */}
@@ -693,9 +697,9 @@ const RegisteredUserHomepage = () => {
               {post?.publisher || "Not Specified"}
             </span>
           </p>
-          <p className="text-gray-700 text-sm font-semibold">
+          {/* <p className="text-gray-700 text-sm font-semibold">
             {renderStarsAndCount(post)}
-          </p>
+          </p> */}
         </div>
       </div>
     </div>
@@ -760,7 +764,7 @@ const RegisteredUserHomepage = () => {
                 Blogs
               </h2>
               <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
-                {blogPostLimit.map((post) => renderBlogPost(post))}
+                {mostPopularBlogPosts.map((post) => renderBlogPost(post))}
               </div>
             </div>
           </>

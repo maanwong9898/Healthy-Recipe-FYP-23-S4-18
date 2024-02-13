@@ -16,7 +16,7 @@ import RegisteredUserNavBar from "../../components/navigation/registeredUserNavB
 const sortOptions = {
   LATEST: { key: "LATEST", label: "By Latest" },
   OLDEST: { key: "OLDEST", label: "By Oldest" },
-  HIGHEST_RATINGS: { key: "HIGHEST_RATINGS", label: "Highest Ratings" },
+  // HIGHEST_RATINGS: { key: "HIGHEST_RATINGS", label: "Highest Ratings" },
   ALPHABETICAL_AZ: { key: "ALPHABETICAL_AZ", label: "Alphabetically (A to Z)" },
   ALPHABETICAL_ZA: { key: "ALPHABETICAL_ZA", label: "Alphabetically (Z to A)" },
 };
@@ -28,15 +28,15 @@ const fetchRecipes = async () => {
     const response = await axiosInterceptorInstance.get("/recipe/get");
     // console.log("All recipe:", response.data);
     // Fetch average ratings for each blog post
-    const recipesWithAverage = await Promise.all(
-      response.data.map(async (recipe) => {
-        const average = await fetchRecipeAverage(recipe.id);
-        return { ...recipe, average };
-      })
-    );
+    // const recipesWithAverage = await Promise.all(
+    //   response.data.map(async (recipe) => {
+    //     const average = await fetchRecipeAverage(recipe.id);
+    //     return { ...recipe, average };
+    //   })
+    // );
 
     // Filter active blog posts
-    const filteredData = recipesWithAverage.filter(
+    const filteredData = response.data.filter(
       (recipe) => recipe.active === true
     );
 
@@ -47,18 +47,18 @@ const fetchRecipes = async () => {
   }
 };
 
-const fetchRecipeAverage = async (recipeId) => {
-  try {
-    const response = await axiosInterceptorInstance.get(
-      `/recipe/getAverage/${recipeId}`
-    );
-    console.log("Average rating for recipe", recipeId, "is:", response.data);
-    return response.data; // Assuming this returns the average data for the recipe
-  } catch (error) {
-    console.error(`Failed to fetch average for recipe ${recipeId}:`, error);
-    return null; // or handle the error as you see fit
-  }
-};
+// const fetchRecipeAverage = async (recipeId) => {
+//   try {
+//     const response = await axiosInterceptorInstance.get(
+//       `/recipe/getAverage/${recipeId}`
+//     );
+//     console.log("Average rating for recipe", recipeId, "is:", response.data);
+//     return response.data; // Assuming this returns the average data for the recipe
+//   } catch (error) {
+//     console.error(`Failed to fetch average for recipe ${recipeId}:`, error);
+//     return null; // or handle the error as you see fit
+//   }
+// };
 
 // Fetch all dietary preferences categories from backend
 const fetchDietaryPreferences = async () => {
@@ -116,13 +116,13 @@ const fetchRecipesByDPandAllergies = async (userId) => {
     );
     console.log("Fetched recipe data is:", response.data);
     console.log("User ID: ", userId);
-    const recipesWithAverage = await Promise.all(
-      response.data.map(async (recipe) => {
-        const average = await fetchRecipeAverage(recipe.id);
-        return { ...recipe, average };
-      })
-    );
-    return recipesWithAverage;
+    // const recipesWithAverage = await Promise.all(
+    //   response.data.map(async (recipe) => {
+    //     const average = await fetchRecipeAverage(recipe.id);
+    //     return { ...recipe, average };
+    //   })
+    // );
+    return response.data;
   } catch (error) {
     console.error("Failed to fetch recipe:", error);
     throw error;
@@ -521,15 +521,15 @@ const RecipesPageForUser = () => {
       case "ALPHABETICAL_ZA":
         sortedRecipes.sort((a, b) => b.title.localeCompare(a.title));
         break;
-      case "HIGHEST_RATINGS":
-        sortedRecipes.sort((a, b) => {
-          const ratingDiff =
-            (b.average?.averageRatings || 0) - (a.average?.averageRatings || 0);
-          if (ratingDiff !== 0) return ratingDiff;
-          // Use getDateForComparison for tiebreaker date comparison
-          return getDateForComparison(b) - getDateForComparison(a); // Latest date first if tie
-        });
-        break;
+      // case "HIGHEST_RATINGS":
+      //   sortedRecipes.sort((a, b) => {
+      //     const ratingDiff =
+      //       (b.average?.averageRatings || 0) - (a.average?.averageRatings || 0);
+      //     if (ratingDiff !== 0) return ratingDiff;
+      //     // Use getDateForComparison for tiebreaker date comparison
+      //     return getDateForComparison(b) - getDateForComparison(a); // Latest date first if tie
+      //   });
+      //   break;
     }
 
     console.log("Filtered recipes:", newFilteredRecipes);
@@ -739,15 +739,15 @@ const RecipesPageForUser = () => {
           }
 
           // Fetch average ratings for each recipe
-          let filteredResultsWithAverage = await Promise.all(
-            finalResults.map(async (recipe) => {
-              const average = await fetchRecipeAverage(recipe.id);
-              return { ...recipe, average }; // Augment each recipes with its average
-            })
-          );
+          // let filteredResultsWithAverage = await Promise.all(
+          //   finalResults.map(async (recipe) => {
+          //     const average = await fetchRecipeAverage(recipe.id);
+          //     return { ...recipe, average }; // Augment each recipes with its average
+          //   })
+          // );
 
           // Sort the results
-          let sortedResults = [...filteredResultsWithAverage];
+          let sortedResults = [...filteredResults];
 
           // Helper function to get the date for comparison
           const getDateForComparison = (recipe) => {
@@ -773,16 +773,16 @@ const RecipesPageForUser = () => {
             case "ALPHABETICAL_ZA":
               sortedResults.sort((a, b) => b.title.localeCompare(a.title));
               break;
-            case "HIGHEST_RATINGS":
-              sortedResults.sort((a, b) => {
-                const ratingDiff =
-                  (b.average?.averageRatings || 0) -
-                  (a.average?.averageRatings || 0);
-                if (ratingDiff !== 0) return ratingDiff;
-                // Use getDateForComparison for tiebreaker date comparison
-                return getDateForComparison(b) - getDateForComparison(a); // Latest date first if tie
-              });
-              break;
+            // case "HIGHEST_RATINGS":
+            //   sortedResults.sort((a, b) => {
+            //     const ratingDiff =
+            //       (b.average?.averageRatings || 0) -
+            //       (a.average?.averageRatings || 0);
+            //     if (ratingDiff !== 0) return ratingDiff;
+            //     // Use getDateForComparison for tiebreaker date comparison
+            //     return getDateForComparison(b) - getDateForComparison(a); // Latest date first if tie
+            //   });
+            //   break;
           }
 
           console.log("Sorted results:", sortedResults);
@@ -958,15 +958,15 @@ const RecipesPageForUser = () => {
           }
 
           // Fetch average ratings for each recipe
-          let filteredResultsWithAverage = await Promise.all(
-            finalResults.map(async (recipe) => {
-              const average = await fetchRecipeAverage(recipe.id);
-              return { ...recipe, average }; // Augment each recipes with its average
-            })
-          );
+          // let filteredResultsWithAverage = await Promise.all(
+          //   finalResults.map(async (recipe) => {
+          //     const average = await fetchRecipeAverage(recipe.id);
+          //     return { ...recipe, average }; // Augment each recipes with its average
+          //   })
+          // );
 
           // Sort the results
-          let sortedResults = [...filteredResultsWithAverage];
+          let sortedResults = [...filteredResults];
 
           // Helper function to get the date for comparison
           const getDateForComparison = (recipe) => {
@@ -992,16 +992,16 @@ const RecipesPageForUser = () => {
             case "ALPHABETICAL_ZA":
               sortedResults.sort((a, b) => b.title.localeCompare(a.title));
               break;
-            case "HIGHEST_RATINGS":
-              sortedResults.sort((a, b) => {
-                const ratingDiff =
-                  (b.average?.averageRatings || 0) -
-                  (a.average?.averageRatings || 0);
-                if (ratingDiff !== 0) return ratingDiff;
-                // Use getDateForComparison for tiebreaker date comparison
-                return getDateForComparison(b) - getDateForComparison(a); // Latest date first if tie
-              });
-              break;
+            // case "HIGHEST_RATINGS":
+            //   sortedResults.sort((a, b) => {
+            //     const ratingDiff =
+            //       (b.average?.averageRatings || 0) -
+            //       (a.average?.averageRatings || 0);
+            //     if (ratingDiff !== 0) return ratingDiff;
+            //     // Use getDateForComparison for tiebreaker date comparison
+            //     return getDateForComparison(b) - getDateForComparison(a); // Latest date first if tie
+            //   });
+            //   break;
           }
 
           console.log("Sorted results:", sortedResults);
@@ -1130,9 +1130,9 @@ const RecipesPageForUser = () => {
               {capitalizeFirstLetter(post?.publisher) || "Not Specified"}
             </span>
           </p>
-          <p className="text-gray-700 text-sm font-semibold">
+          {/* <p className="text-gray-700 text-sm font-semibold">
             {renderStarsAndCount(post)}
-          </p>
+          </p> */}
         </div>
       </div>
     </div>
@@ -1309,52 +1309,71 @@ const RecipesPageForUser = () => {
                 </div>
               ) : (
                 <>
-                  <div className="flex sm:justify-between sm:items-center mb-4">
-                    {/* Search Section */}
-                    <div className="flex-grow">
+                  {/* Search Section */}
+                  <div className="flex-grow mb-4">
+                    <input
+                      type="text"
+                      id="titleSearch"
+                      name="titleSearch"
+                      value={searchTerm}
+                      onChange={(e) => setSearchTerm(e.target.value)}
+                      onKeyDown={(e) =>
+                        e.key === "Enter" && handleSearchClick()
+                      }
+                      placeholder={
+                        ingredientSearchTerm.trim()
+                          ? "Disabled"
+                          : "Search recipe title..."
+                      }
+                      disabled={Boolean(ingredientSearchTerm.trim())}
+                      className="mr-2 p-2 rounded-lg border w-full md:w-auto"
+                    />
+                    <button
+                      onClick={handleSearchClick}
+                      className="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-1.5 px-5 rounded-full mt-2 w-full md:w-auto lg:w-auto"
+                    >
+                      Search by title
+                    </button>
+                  </div>
+
+                  {/* Ingredients search section */}
+                  <div className="flex flex-col justify-between lg:flex-row mb-4">
+                    <div className="flex-grow mb-4">
                       <input
                         type="text"
-                        id="titleSearch"
-                        name="titleSearch"
-                        value={searchTerm}
-                        onChange={(e) => setSearchTerm(e.target.value)}
-                        onKeyDown={(e) => {
-                          if (e.key === "Enter") {
-                            handleSearchClick();
-                          }
-                        }}
+                        id="ingredientSearch"
+                        name="ingredientSearch"
+                        value={ingredientSearchTerm}
+                        onChange={(e) =>
+                          setIngredientSearchTerm(e.target.value)
+                        }
+                        onKeyDown={(e) =>
+                          e.key === "Enter" && handleIngredientSearchClick()
+                        }
                         placeholder={
-                          ingredientSearchTerm.trim() !== ""
+                          searchTerm.trim()
                             ? "Disabled"
-                            : "Search recipe title..."
+                            : "Search by ingredient..."
                         }
-                        disabled={ingredientSearchTerm.trim() !== ""}
-                        data-tooltip-id="titleSearchTooltip"
-                        data-tooltip-content={
-                          ingredientSearchTerm.trim() !== ""
-                            ? "Search by title is disabled while using ingredient search"
-                            : ""
-                        }
+                        disabled={Boolean(searchTerm.trim())}
                         className="mr-2 p-2 rounded-lg border w-full md:w-auto"
                       />
-                      {/* Tooltip component activated for the input field */}
-                      {/* Tooltip Component */}
-                      <Tooltip
-                        id="titleSearchTooltip"
-                        place="top"
-                        effect="solid"
-                      />
                       <button
-                        onClick={handleSearchClick}
-                        className="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-1.5 px-5 rounded-full mt-2 w-full lg:w-auto"
-                        style={{ flexShrink: 0 }}
+                        onClick={handleIngredientSearchClick}
+                        className="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-1.5 px-5 rounded-full mt-2 w-full md:w-auto lg:w-auto"
                       >
-                        Search by title
+                        Search by ingredient
                       </button>
+                      {/* Results count */}
+                      {searchButtonClicked && searchPerformed && (
+                        <p className="text-left text-red-500 font-medium text-lg">
+                          {resultsCount} results found.
+                        </p>
+                      )}
                     </div>
 
-                    {/* Sort dropdown */}
-                    <div className="mb-2 md:mb-0 md:mr-6">
+                    {/* Sort dropdown - Aligned next to the search bar on larger screens */}
+                    <div className="flex flex-col lg:flex-row lg:items-center mt-4 lg:mt-0">
                       <label
                         htmlFor="sort"
                         className="text-xl text-black mb-2 sm:mb-0 sm:mr-2"
@@ -1364,10 +1383,8 @@ const RecipesPageForUser = () => {
                       <select
                         id="sort"
                         value={sortOption}
-                        // onChange={(e) => setSortOption(e.target.value)}
-                        onChange={handleSortOptionChange}
-                        className="mr-2 p-2 rounded-lg border w-full md:w-auto"
-                        style={{ maxWidth: "300px" }}
+                        onChange={(e) => setSortOption(e.target.value)}
+                        className="mr-2 p-2 rounded-lg border w-full md:w-64"
                       >
                         {Object.values(sortOptions).map((option) => (
                           <option key={option.key} value={option.key}>
@@ -1376,48 +1393,6 @@ const RecipesPageForUser = () => {
                         ))}
                       </select>
                     </div>
-                  </div>
-                  {/* Ingredient Search Section */}
-                  <div className="flex sm:items-center mb-4">
-                    <input
-                      type="text"
-                      id="ingredientSearch"
-                      name="ingredientSearch"
-                      value={ingredientSearchTerm}
-                      onChange={(e) => setIngredientSearchTerm(e.target.value)}
-                      onKeyDown={(e) => {
-                        if (e.key === "Enter") {
-                          handleIngredientSearchClick();
-                        }
-                      }}
-                      placeholder={
-                        searchTerm.trim() !== ""
-                          ? "Disabled"
-                          : "Search by ingredient..."
-                      }
-                      disabled={searchTerm.trim() !== ""}
-                      data-tooltip-id="ingredientSearchTooltip"
-                      data-tooltip-content={
-                        searchTerm.trim() !== ""
-                          ? "Ingredient search is disabled while using title search"
-                          : ""
-                      }
-                      className="mr-2 p-2 rounded-lg border w-full md:w-auto"
-                    />
-                    {/* Tooltip component activated for the input field */}
-                    {/* Tooltip Component */}
-                    <Tooltip
-                      id="ingredientSearchTooltip"
-                      place="top"
-                      effect="solid"
-                    />
-                    <button
-                      onClick={handleIngredientSearchClick}
-                      className="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-1.5 px-5 rounded-full mt-2 w-full lg:w-auto"
-                      style={{ flexShrink: 0 }}
-                    >
-                      Search by ingredient
-                    </button>
                   </div>
 
                   {/* Results count */}

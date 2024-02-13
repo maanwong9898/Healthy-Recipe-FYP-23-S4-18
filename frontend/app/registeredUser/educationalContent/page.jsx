@@ -14,7 +14,7 @@ import RegisteredUserNavBar from "../../components/navigation/registeredUserNavB
 const sortOptions = {
   LATEST: { key: "LATEST", label: "By Latest" },
   OLDEST: { key: "OLDEST", label: "By Oldest" },
-  HIGHEST_RATINGS: { key: "HIGHEST_RATINGS", label: "Highest Ratings" },
+  // HIGHEST_RATINGS: { key: "HIGHEST_RATINGS", label: "Highest Ratings" },
   ALPHABETICAL_AZ: { key: "ALPHABETICAL_AZ", label: "Alphabetically (A to Z)" },
   ALPHABETICAL_ZA: { key: "ALPHABETICAL_ZA", label: "Alphabetically (Z to A)" },
 };
@@ -30,17 +30,15 @@ const fetchEducationalContent = async () => {
 
     ///////////////////////////////////////////////////////////////
     // Fetch average ratings for each educational content
-    const eduContentWithAverage = await Promise.all(
-      response.data.map(async (eduContent) => {
-        const average = await fetchEduContentAverage(eduContent.id);
-        return { ...eduContent, average };
-      })
-    );
+    // const eduContentWithAverage = await Promise.all(
+    //   response.data.map(async (eduContent) => {
+    //     const average = await fetchEduContentAverage(eduContent.id);
+    //     return { ...eduContent, average };
+    //   })
+    // );
 
     // Filter active blog posts
-    const filteredData = eduContentWithAverage.filter(
-      (post) => post.active === true
-    );
+    const filteredData = response.data.filter((post) => post.active === true);
 
     return filteredData;
   } catch (error) {
@@ -49,26 +47,26 @@ const fetchEducationalContent = async () => {
   }
 };
 
-const fetchEduContentAverage = async (eduContentId) => {
-  try {
-    const response = await axiosInterceptorInstance.get(
-      `/educationalContent/getAverage/${eduContentId}`
-    );
-    console.log(
-      "Average rating for edu content",
-      eduContentId,
-      "is:",
-      response.data
-    );
-    return response.data; // Assuming this returns the average data for the blog
-  } catch (error) {
-    console.error(
-      `Failed to fetch average for edu content ${eduContentId}:`,
-      error
-    );
-    return null; // or handle the error as you see fit
-  }
-};
+// const fetchEduContentAverage = async (eduContentId) => {
+//   try {
+//     const response = await axiosInterceptorInstance.get(
+//       `/educationalContent/getAverage/${eduContentId}`
+//     );
+//     console.log(
+//       "Average rating for edu content",
+//       eduContentId,
+//       "is:",
+//       response.data
+//     );
+//     return response.data; // Assuming this returns the average data for the blog
+//   } catch (error) {
+//     console.error(
+//       `Failed to fetch average for edu content ${eduContentId}:`,
+//       error
+//     );
+//     return null; // or handle the error as you see fit
+//   }
+// };
 
 const fetchCategories = async () => {
   try {
@@ -178,14 +176,14 @@ const EducationalContentPageForUser = () => {
       case "ALPHABETICAL_ZA":
         sortedPosts.sort((a, b) => b.title.localeCompare(a.title));
         break;
-      case "HIGHEST_RATINGS":
-        sortedPosts.sort((a, b) => {
-          const ratingDiff =
-            (b.average?.averageRatings || 0) - (a.average?.averageRatings || 0);
-          if (ratingDiff !== 0) return ratingDiff;
-          return new Date(b.createdDateTime) - new Date(a.createdDateTime); // Latest date first if tie
-        });
-        break;
+      // case "HIGHEST_RATINGS":
+      //   sortedPosts.sort((a, b) => {
+      //     const ratingDiff =
+      //       (b.average?.averageRatings || 0) - (a.average?.averageRatings || 0);
+      //     if (ratingDiff !== 0) return ratingDiff;
+      //     return new Date(b.createdDateTime) - new Date(a.createdDateTime); // Latest date first if tie
+      //   });
+      //   break;
     }
 
     console.log("Filtered posts:", filteredPosts);
@@ -230,15 +228,15 @@ const EducationalContentPageForUser = () => {
         case "ALPHABETICAL_ZA":
           sortedResults.sort((a, b) => b.title.localeCompare(a.title));
           break;
-        case "HIGHEST_RATINGS":
-          sortedResults.sort((a, b) => {
-            const ratingDiff =
-              (b.average?.averageRatings || 0) -
-              (a.average?.averageRatings || 0);
-            if (ratingDiff !== 0) return ratingDiff;
-            return new Date(b.createdDateTime) - new Date(a.createdDateTime); // Latest date first if tie
-          });
-          break;
+        // case "HIGHEST_RATINGS":
+        //   sortedResults.sort((a, b) => {
+        //     const ratingDiff =
+        //       (b.average?.averageRatings || 0) -
+        //       (a.average?.averageRatings || 0);
+        //     if (ratingDiff !== 0) return ratingDiff;
+        //     return new Date(b.createdDateTime) - new Date(a.createdDateTime); // Latest date first if tie
+        //   });
+        //   break;
       }
 
       setDisplayedEduContent(sortedResults);
@@ -257,22 +255,22 @@ const EducationalContentPageForUser = () => {
         );
 
         // Fetch average ratings for each edu content
-        let filteredResultsWithAverage = await Promise.all(
-          filteredResults.map(async (post) => {
-            const average = await fetchEduContentAverage(post.id);
-            return { ...post, average }; // Augment each blog post with its average
-          })
-        );
+        // let filteredResultsWithAverage = await Promise.all(
+        //   filteredResults.map(async (post) => {
+        //     const average = await fetchEduContentAverage(post.id);
+        //     return { ...post, average }; // Augment each blog post with its average
+        //   })
+        // );
 
         if (categoryFilter) {
-          filteredResultsWithAverage = filteredResultsWithAverage.filter(
+          filteredResults = filteredResults.filter(
             (post) =>
               post.educationalContentType.subcategoryName === categoryFilter
           );
         }
 
         // Sort the results
-        let sortedResults = [...filteredResultsWithAverage];
+        let sortedResults = [...filteredResults];
         switch (sortOption) {
           case "LATEST":
             sortedResults.sort(
@@ -292,15 +290,15 @@ const EducationalContentPageForUser = () => {
           case "ALPHABETICAL_ZA":
             sortedResults.sort((a, b) => b.title.localeCompare(a.title));
             break;
-          case "HIGHEST_RATINGS":
-            sortedResults.sort((a, b) => {
-              const ratingDiff =
-                (b.average?.averageRatings || 0) -
-                (a.average?.averageRatings || 0);
-              if (ratingDiff !== 0) return ratingDiff;
-              return new Date(b.createdDateTime) - new Date(a.createdDateTime); // Latest date first if tie
-            });
-            break;
+          // case "HIGHEST_RATINGS":
+          //   sortedResults.sort((a, b) => {
+          //     const ratingDiff =
+          //       (b.average?.averageRatings || 0) -
+          //       (a.average?.averageRatings || 0);
+          //     if (ratingDiff !== 0) return ratingDiff;
+          //     return new Date(b.createdDateTime) - new Date(a.createdDateTime); // Latest date first if tie
+          //   });
+          //   break;
         }
 
         console.log("Sorted results:", sortedResults);
@@ -429,10 +427,26 @@ const EducationalContentPageForUser = () => {
               {capitalizeFirstLetter(post?.publisher) || "Not Specified"}
             </span>
           </p>
-          <p className="text-gray-700 text-sm font-semibold">
+          {/* <p className="text-gray-700 text-sm font-semibold">
             {renderStarsAndCount(post)}
+          </p> */}
+        </div>
+
+        {/* <div className="flex items-center justify-center">
+          <p className="text-gray-700 text-sm font-semibold">
+            Date:
+            <span>{new Date(post.createdDateTime).toLocaleDateString()}</span>
           </p>
         </div>
+
+        <div className="flex items-center justify-center">
+          <p className="text-gray-700 text-sm font-semibold">
+            Category:{" "}
+            <span className="text-orange-600 font-semibold tracking-tight">
+              {post.educationalContentType.subcategoryName || "Not Specified"}
+            </span>
+          </p>
+        </div> */}
       </div>
     </div>
   );

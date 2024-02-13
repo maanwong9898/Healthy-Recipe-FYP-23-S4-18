@@ -312,7 +312,7 @@ const ViewMealPlan = ({ params }) => {
 
                 <article>
                   {/*Intro*/}
-                  <section className="main-content mt-10 pl-9 pr-9 mx-auto max-w-screen-xl md:text-base text-left">
+                  <section className="main-content mt-10 pl-9 pr-9 mx-auto max-w-screen-xl md:text-xl text-left">
                     <div className="w-full p-2 rounded-lg whitespace-pre-line">
                       {mealPlan.introduction}
                     </div>
@@ -334,7 +334,7 @@ const ViewMealPlan = ({ params }) => {
                     />
                   )}
                   {/* Main content */}
-                  <section className="main-content mt-10 pl-9 pr-9 mx-auto max-w-screen-xl md:text-base text-left">
+                  <section className="main-content mt-10 pl-9 pr-9 mx-auto max-w-screen-xl md:text-xl text-left">
                     <div className="w-full p-2 rounded-lg whitespace-pre-line">
                       {mealPlan.mainContent}
                     </div>
@@ -392,7 +392,7 @@ const ViewMealPlan = ({ params }) => {
                   </div>
 
                   {/* Conclusion */}
-                  <section className="main-content mt-10 pl-9 pr-9 mx-auto max-w-screen-xl md:text-base text-left">
+                  <section className="main-content mt-10 pl-9 pr-9 mx-auto max-w-screen-xl md:text-xl text-left">
                     <div className="w-full p-2 rounded-lg whitespace-pre-line">
                       {mealPlan.conclusion}
                     </div>

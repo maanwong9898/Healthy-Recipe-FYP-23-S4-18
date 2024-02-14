@@ -8,7 +8,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.FYP18.HealthyRecipe.DTO.AgeGroupRequest;
-import com.FYP18.HealthyRecipe.DTO.DietaryPreferenceDemographic; 
+import com.FYP18.HealthyRecipe.DTO.DietaryPreferenceDemographic;
+import com.FYP18.HealthyRecipe.DTO.MealPlanDTO;
 import com.FYP18.HealthyRecipe.DTO.WeightDTO;
 import com.FYP18.HealthyRecipe.Entity.MealPlan;
 import com.FYP18.HealthyRecipe.Entity.UserInfoOverTime;
@@ -64,7 +65,7 @@ public class RegisteredUserService {
         return repo.getDemo();
     }
   
-    public List<MealPlan> getMealPlans(Long healthCategoryId)
+    public List<MealPlanDTO> getMealPlans(Long healthCategoryId)
     {
         return mealPlanRepo.getMealPlansWithHealthGoal(healthCategoryId);
     } 

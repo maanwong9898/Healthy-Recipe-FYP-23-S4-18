@@ -40,7 +40,7 @@ VALUES
         'By prioritizing a well-rounded consumption of macronutrients, encompassing sufficient protein, carbohydrates, and beneficial fats, individuals can supply their bodies with the essential fuel required for optimal muscle growth and recovery.',
         '2023-06-15',
         1, -- weight Gain
-        'https://img.freepik.com/free-photo/flat-lay-fish-vegetables_23-2148262195.jpg?w=1060&t=st=1706947179~exp=1706947779~hmac=1d8ec88d4d3ce2cb4c97c6043dd1c10eaab11d5d6dec821c90cb1f49346c60be',
+        'http://tinyurl.com/452tfdja',
         'Designed by Freepik',  -- img_title
         '5' -- userid
     ),
@@ -110,7 +110,7 @@ VALUES
         'Gradually lowering your sugar consumption can help your taste buds adjust. This diet includes substantial meals that will keep you full, so you will not crave sugar.',
         '2023-11-30',
         2, -- maintain health
-        'https://img.freepik.com/free-photo/healthy-food-vs-unhealthy-food_23-2147961022.jpg?w=1060&t=st=1707014411~exp=1707015011~hmac=699970e8b2e172324289e923af3a2ad956dc18c3acad1a09f754787a82449bb2',
+        'http://tinyurl.com/4ateah2b',
         'Designed by pvproductions',  -- img_title
         '32' -- userid
     ),
@@ -124,7 +124,7 @@ VALUES
         'Many studies have found that herbs and spices can provide health advantages in the form of free-radical-fighting antioxidants. Hence, let the harmony of flavor enhance your meals, and your health may reap benefits as well!',
         '2023-11-06',
         3, -- weight loss
-        'https://img.freepik.com/free-photo/fried-meat-with-greens-tomatoes-clay-pot_140725-7317.jpg?w=1060&t=st=1707022112~exp=1707022712~hmac=ef1dc83bcd9b0e12f9e5df228b9b63d87eeb9cc54201e5b510e46ebd50c03ba1',
+        'http://tinyurl.com/5f7vhkcb',
         'Designed by kamranaydinov',  -- img_title
         '32' -- userid
     ),
@@ -236,7 +236,7 @@ VALUES
         'Consider adopting a no-sugar lifestyle to help you lose weight more quickly. With this diet, you can experience what it is like to lessen your dependency on sugar by eliminating all sweets, including natural ones.',
         '2023-11-09',
         3, -- weight loss
-        'https://cdn.cleaneatingmag.com/wp-content/uploads/2017/05/spinach-cauli-rice-salad-with-cashew-dressing-69-web-1.jpg?crop=535:301&width=1070&enable=upscale',
+        'http://tinyurl.com/2ccus8ed',
         'Designed by cleaneating',  -- img_title
         '36' -- userid
     );
@@ -250,7 +250,7 @@ VALUES
         'This are a few recommended recipes that you can include for gaining weight:',
         '2023-11-09',
         1, -- weight gain
-        'https://img.freepik.com/free-photo/close-up-hand-holding-pen_23-2148484639.jpg?w=996&t=st=1707464723~exp=1707465323~hmac=3a6c845c6261ec6be11455686c2ee1903582e1bd61aadc8a6f241772ad9754e1',
+        'http://tinyurl.com/2t24hhbt',
         'Designed by Freepik',  -- img_title
         '37' -- userid
     ),
@@ -264,7 +264,7 @@ VALUES
         'This meal plan includes plenty of tasty and healthy recipes to help make the achievement of your weight loss goals enjoyable!',
         '2023-10-02',
         3, -- weight loss
-        'https://img.freepik.com/free-photo/background-food-bowl-workout-meal-space_1428-677.jpg?w=1060&t=st=1707494903~exp=1707495503~hmac=1415a8278f47334812ad1d009ce75734f4a06080f8cf366da00b29f288601067',
+        'http://tinyurl.com/2dmmw7b2',
         'Designed by Freepik',  -- img_title
         '32' -- userid
     ),
@@ -278,7 +278,7 @@ VALUES
         'This meal plan includes a variety of ideas and dishes that make it simple to consume the correct sorts of healthy fats and receive enough of the fiber that helps regulate blood cholesterol levels. Eating a heart-healthy diet may be tasty and simple!',
         '2023-08-11',
         2, -- maintain health
-        'https://img.freepik.com/free-photo/high-angle-plate-with-keto-diet-food-nuts_23-2149260319.jpg?w=1060&t=st=1707554574~exp=1707555174~hmac=9c8cb27b64e0eb4bcc9268f982710877edf464c7e0034962429c7773c62dc9a6',
+        'http://tinyurl.com/awdrk5yt',
         'Designed by Freepik',  -- img_title
         '32' -- userid
     ),
@@ -292,7 +292,7 @@ VALUES
         'This weight gain for the elderly meal plan provides easy and nutritious meal and snack options that will make it easy for you to meet your needs and enjoy the foods you are eating!',
         '2023-07-20',
         3, -- weight loss
-        'https://img.freepik.com/free-photo/mature-women-ready-cook-together_23-2148354958.jpg?w=1060&t=st=1707559390~exp=1707559990~hmac=372557b0b010ec7a8fd508f2ded1b3b106adaee27f2c083d9daa8fbd5bd169e6',
+        'http://tinyurl.com/3twdjcsz',
         'Designed by Freepik',  -- img_title
         '34' -- userid
     ),
@@ -306,7 +306,7 @@ VALUES
         'If you are looking for great low-carbohydrate ideas that provide sufficient energy and nutrition, this meal plan provides you with various great options.',
         '2023-04-10',
         3, -- weight loss
-        'http://tinyurl.com/ycx57n6f',
+        'http://tinyurl.com/29ceu456',
         'Designed by Freepik',  -- img_title
         '34' -- userid
     ),
@@ -334,7 +334,7 @@ VALUES
         'Incorporating a variety of nutrient-rich foods throughout the day ensures that nutritional needs are met while keeping meals interesting and enjoyable. Remember, consistency is key, and small, gradual changes can lead to long-term success.',
         '2023-09-15',
         3, -- weight loss
-        'https://img.freepik.com/free-photo/nice-salad-near-measuring-tape_23-2147778453.jpg?w=1060&t=st=1707711272~exp=1707711872~hmac=b72fb49d1575a9af7fc3966ea4f24951d88e0a9dc9d24630477246522effda02',
+        'http://tinyurl.com/25fvm6db',
         'Designed by Freepik',  -- img_title
         '35' -- userid
     );

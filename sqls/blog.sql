@@ -141,7 +141,7 @@ VALUES
         'Professional Culinary Tools: A Guide for Aspiring Chefs',
         'Embark on a culinary journey with ChefEssentials as we unveil the essential tools for aspiring chefs. From high-quality chef knives to precision measuring instruments, explore the professional culinary tools that every kitchen should have for achieving perfection in your culinary creations.',
         27, -- userId
-        'https://www.freepik.com/free-photo/front-view-gray-platten-with-big-knife-dark-blue-background-color-photo-sharp-blue-sea-food-kitchen-desk_13061154.htm#query=kitchen%20knives%20and%20measuring%20equipments&position=42&from_view=search&track=ais&uuid=b65f9b16-99c8-4cb1-b7b3-a45522feccca',
+        'http://tinyurl.com/5fxumyzh',
         'Author: mdjaff, Designed by Freepik',  -- img_title
         2 -- blog_type_id kitchenware
     ),
@@ -152,7 +152,7 @@ VALUES
         'Culinary Adventures Across Continents: A Cookbook Showcase',
         'Join GlobalFlavors on a culinary adventure as we showcase a collection of cookbooks that take you on a journey across continents. From spicy dishes of Asia to hearty meals of Europe, explore diverse flavors and expand your cooking repertoire with these delightful culinary treasures.',
         21, -- userId
-        'https://img.freepik.com/free-photo/top-view-notepad-white-plate-green-tomato-black-pepper-bowl-wooden-spoons-garlic-broccoli-mint-leaves-grey-table_140725-145666.jpg?w=996&t=st=1707023966~exp=1707024566~hmac=3b117a6b06320db35cdb78f3de40f95f597b9739efdddee941f4301251cc956c',
+        'http://tinyurl.com/jnat6tkn',
         'Author: KamranAydinov, Designed by Freepik',  -- img_title
         1 -- blog_type_id cookbook
     ),
@@ -284,7 +284,7 @@ VALUES
         'Contemporary Kitchenware: Blending Style and Functionality', -- Title
         'Explore the fusion of style and functionality with ModernCulinarySpaces. Dive into a world of contemporary kitchenware that not only enhances your cooking experience but also elevates the aesthetics of your culinary space. Discover the perfect blend of modern design and practical utility.',
         26, -- userId
-        'https://img.freepik.com/free-vector/bon-appetit-seamless-background-pattern-with-scattered-ingredients-kitchen-utensils-making-italian-ravioli-pasta-square-format-suitable-wallpaper-wrapping-paper-fabric_1284-44086.jpg?w=740&t=st=1707062743~exp=1707063343~hmac=7c803cf6fbff4ff14301668112c4d89f4e6f7782e935437899406dac7dba904c',
+        'http://tinyurl.com/dknj9ve6',
         'Author: macrovector, Designed by Freepik',  -- img_title
         2 -- blog_type_id kitchenware
     ),
@@ -405,7 +405,7 @@ VALUES
         '10 Creative Ways to Use Leftover Ingredients',
         'Reduce food waste and get creative in the kitchen with these 10 ideas for using leftover ingredients. From homemade stocks to inventive salads, make the most out of every ingredient!',
         24, -- userId
-        'https://img.freepik.com/free-photo/salad-from-tomatoes-cucumber-red-onions-lettuce-leaves-healthy-summer-vitamin-menu-vegan-vegetable-food-vegetarian-dinner-table_2829-6473.jpg?w=996&t=st=1707225891~exp=1707226491~hmac=5c8bc78a72585f98fc92d5ee1264eec2896c502277c9e9311c6e2e12808de4ce',
+        'http://tinyurl.com/y624346v',
         'Author: timolina, Designed by Freepik',
         3 -- blog_type_id for miscellaneous
     ),
@@ -449,7 +449,7 @@ VALUES
         'Upgrade Your Culinary Space with Modern Kitchen Gadgets',
         'Transform your kitchen into a modern culinary haven with our selection of innovative kitchen gadgets. From smart sous vide machines to high-speed blenders, discover the latest tools to enhance your cooking experience!',
         27, -- userId
-        'https://img.freepik.com/free-photo/metal-food-blender-close-up-with-fresh-exotic-tropic-fruits-it-kitchen-background-with-empty-space-blender-wooden-table-kitchen_639032-170.jpg?w=996&t=st=1707227020~exp=1707227620~hmac=a29ec81d2222ff77fc36eb36b3c0f3e1af9c530c0b94daac0e3abf4bc83ae10b',
+        'http://tinyurl.com/ycxyba35',
         'Author: YuliiaKa, Designed by Freepik',
         2 -- blog_type_id kitchenware
     ),

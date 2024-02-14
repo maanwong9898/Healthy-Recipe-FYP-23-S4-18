@@ -68,8 +68,8 @@ VALUES
         'It is acceptable to make adjustments to meet your lifestyle and needs. Make an effort to include nutritious options in your daily routine. Vegetables, fruits, lean proteins, legumes, and whole grains are always good choices.',
         '2023-01-18',
         2, -- maintain health
-        'https://img.freepik.com/free-photo/closeup-bright-fresh-vegetables-fruits-berries_169016-20713.jpg?w=1060&t=st=1706974313~exp=1706974913~hmac=c345661003cedc41897386be14c22385dd596ea5dc1b95857079324e75d17c74',
-        'Designed by pvproductions',  -- img_title
+        'https://www.verywellfit.com/thmb/oTNxCgHzNWCkTCRDuUlgWkTi4dY=/750x0/filters:no_upscale():max_bytes(150000):strip_icc():format(webp)/VWFit-Meal-Plan-Journey-1-Week-Healthy-and-Balance-Meal-Plan-6ee43578918947a4b687922d614f2be3.jpg',
+        'Designed by Verywell',  -- img_title
         '5' -- userid
     ),
     (
@@ -82,8 +82,8 @@ VALUES
         'Prioritizing portion control, staying hydrated, and being mindful of added sugars and processed foods contribute to a sustainable and healthy eating pattern. A balanced meal plan also helps to reduce the risk of chronic diseases.',
         '2023-01-04',
         2, -- maintain health
-        'https://img.freepik.com/free-photo/closeup-bright-fresh-vegetables-fruits-berries_169016-20713.jpg?w=1060&t=st=1706974313~exp=1706974913~hmac=c345661003cedc41897386be14c22385dd596ea5dc1b95857079324e75d17c74',
-        'Designed by pvproductions',  -- img_title
+        'https://www.sobeys.com/wp-content/uploads/2015/05/balance_meal-1260x350.jpg',
+        'Designed by sobeys',  -- img_title
         '5' -- userid
     ),
     (
@@ -96,8 +96,8 @@ VALUES
         'The Mediterranean-style diet is considered to be anti-inflammatory, with particular benefits for the brain. In individuals over 65, it has been linked to both slower rates of cognitive deterioration and improved cognitive performance.',
         '2023-01-20',
         2, -- maintain health
-        'https://img.freepik.com/free-photo/closeup-bright-fresh-vegetables-fruits-berries_169016-20713.jpg?w=1060&t=st=1706974313~exp=1706974913~hmac=c345661003cedc41897386be14c22385dd596ea5dc1b95857079324e75d17c74',
-        'Designed by pvproductions',  -- img_title
+        'https://cdn.cleaneatingmag.com/wp-content/uploads/2019/03/spanakopita-egg-casserole_85-web-3.jpg?crop=535:301&width=1070&enable=upscale',
+        'Designed by Darren Kemper',  -- img_title
         '5' -- userid
     ),
     (

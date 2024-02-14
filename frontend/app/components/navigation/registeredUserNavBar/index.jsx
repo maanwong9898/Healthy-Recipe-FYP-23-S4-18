@@ -29,7 +29,7 @@ const AccountDropdownMenu = ({ onLogout }) => {
         <li className="px-4 py-2 text-base lg:text-sm text-gray-700 hover:bg-gray-100">
           <Link href="/registeredUser/myAccount/checkBMI">BMI Calculator</Link>
         </li>
-        <li className="px-4 py-2 text-base lg:text-sm text-gray-700 hover:bg-gray-100 hidden">
+        <li className="px-4 py-2 text-base lg:text-sm text-gray-700 hover:bg-gray-100 hidden lg:block">
           <button onClick={onLogout}>Logout</button>
         </li>
       </ul>

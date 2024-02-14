@@ -65,3 +65,4 @@ Insert into educational_content_category
 VALUES
     ('Healthy Eating'),
     ('Healthy Lifestyle');
+

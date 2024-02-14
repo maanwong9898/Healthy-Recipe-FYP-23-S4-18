@@ -3,16 +3,6 @@
 -- health_goal_category refers to the category of the meal plan (refer to health_goal_category)
 -- img_title should be the author of the image and the source of the image (follow their code of conduct)
 
--- Note that: meal plan has some suggested recipes, insert into mealplan_recipe table
-
--- -- 4. Health goals
--- Insert into health_goal
--- (subcategory_name)
--- VALUES
---     ('Weight Gain'),
---     ('Maintain Health'),
---     ('Weight Loss');
-
 INSERT INTO meal_plan
 (id, publisher, title, active, introduction,  main_content, conclusion, createddt, health_goal_category, img, img_title, userid)
 VALUES
@@ -239,7 +229,7 @@ VALUES
         'http://tinyurl.com/2ccus8ed',
         'Designed by cleaneating',  -- img_title
         '36' -- userid
-    );
+    ),
     (
         17,
         'Australianeggs',
@@ -338,15 +328,15 @@ VALUES
         'Designed by Freepik',  -- img_title
         '35' -- userid
     );
-    
-    
+
+
 
 -- mealplan_recipe
 -- id refers to meal plan id (refer to meal_plan table)
 -- recipe_id refers to recipe id (refer to recipe table)
-insert into mealplan_recipe 
-    (id, recipe_id) 
-values 
+insert into mealplan_recipe
+(id, recipe_id)
+values
     (1, 2),
     (1, 10),
     (1, 18),
@@ -423,18 +413,45 @@ values
     (23, 74);
 
 
-INSERT INTO meal_plan_review_rating 
+INSERT INTO meal_plan_review_rating
 (meal_planid, userid, rating, review, createddt)
 VALUES
-(1, 11, 5, 'This meal plan is amazing. I have lost 5 pounds in 2 weeks. I feel great and I am not hungry at all. I highly recommend this meal plan.', '2023-06-15'),
-(1, 12, 4, 'I have been following this meal plan for 3 weeks now. I have lost 3 pounds. I feel great and I am not hungry at all. I highly recommend this meal plan.', '2023-06-15'),
-(1, 13, 5, 'I have been following this meal plan for 3 weeks now. I have lost 3 pounds. I feel great and I am not hungry at all. I highly recommend this meal plan.', '2023-06-15'),
-(2, 11, 5, 'This meal plan is amazing. I have gained 5 pounds in 2 weeks. I feel great and I am not hungry at all. I highly recommend this meal plan.', '2023-06-15'),
-(2, 12, 4, 'I have been following this meal plan for 3 weeks now. I have gained 3 pounds. I feel great and I am not hungry at all. I highly recommend this meal plan.', '2023-06-15'),
-(2, 13, 5, 'I have been following this meal plan for 3 weeks now. I have gained 3 pounds. I feel great and I am not hungry at all. I highly recommend this meal plan.', '2023-06-15'),
-(3, 11, 5, 'This meal plan is amazing. I have lost 5 pounds in 2 weeks. I feel great and I am not hungry at all. I highly recommend this meal plan.', '2023-06-15'),
-(3, 12, 4, 'I have been following this meal plan for 3 weeks now. I have lost 3 pounds. I feel great and I am not hungry at all. I highly recommend this meal plan.', '2023-06-15'),
-(3, 13, 5, 'I have been following this meal plan for 3 weeks now. I have lost 3 pounds. I feel great and I am not hungry at all. I highly recommend this meal plan.', '2023-06-15'),
-(4, 15, 5, 'This meal plan is amazing. I managed to maintain my weight for 2 weeks. My body feels healthier too! I highly recommend this meal plan.', '2023-07-10'),
-(4, 41, 4, 'I have been following this meal plan for 3 weeks now. My weight did not change and my body feels healthier and in a better mood! I highly recommend this meal plan.', '2023-06-20'),
-(12, 43, 5, 'This meal plan is superb! I managed to maintain my weight for 3 weeks. I feel great and I am not hungry at all. I highly recommend this meal plan.', '2023-06-25');
+    (1, 11, 5, 'This meal plan is amazing. I have lost 5 pounds in 2 weeks. I feel great and I am not hungry at all. I highly recommend this meal plan.', '2023-06-15'),
+    (1, 12, 4, 'I have been following this meal plan for 3 weeks now. I have lost 3 pounds. I feel great and I am not hungry at all. I highly recommend this meal plan.', '2023-06-15'),
+    (1, 13, 5, 'I have been following this meal plan for 3 weeks now. I have lost 3 pounds. I feel great and I am not hungry at all. I highly recommend this meal plan.', '2023-06-15'),
+    (2, 11, 3, 'This meal plan is amazing. I have gained 5 pounds in 2 weeks. I feel great and I am not hungry at all. I highly recommend this meal plan.', '2023-06-15'),
+    (3, 12, 4, 'I have been following this meal plan for 3 weeks now. I have lost 3 pounds. I feel great and I am not hungry at all. I highly recommend this meal plan.', '2023-06-15'),
+    (3, 13, 5, 'I have been following this meal plan for 3 weeks now. I have lost 3 pounds. I feel great and I am not hungry at all. I highly recommend this meal plan.', '2023-06-15'),
+    (4, 15, 5, 'This meal plan is amazing. I managed to maintain my weight for 2 weeks. My body feels healthier too! I highly recommend this meal plan.', '2023-07-10'),
+    (4, 41, 4, 'I have been following this meal plan for 3 weeks now. My weight did not change and my body feels healthier and in a better mood! I highly recommend this meal plan.', '2023-06-20'),
+    (12, 43, 3, 'This meal plan is superb! I managed to maintain my weight for 3 weeks. I feel great and I am not hungry at all. I highly recommend this meal plan.', '2023-06-25'),
+    (13, 7, 3, 'Highly recommended', '2023-06-25'),
+    (14, 7, 3, 'Good meal plan', '2023-06-25'),
+    (15, 7, 3, 'Highly recommended', '2023-12-25'),
+    (16, 7, 4, 'Highly recommended', '2023-10-25'),
+    (17, 7, 3, 'Best meal plan ever', '2023-11-25'),
+    (18, 7, 5, 'Highly recommended', '2023-12-25'),
+    (18, 8, 4, 'Highly recommended', '2023-12-25'),
+    (19, 9, 3, 'Highly recommended', '2023-12-25'),
+    (20, 9, 4, 'Highly recommended', '2023-12-25'),
+    (21, 9, 3, 'Highly recommended', '2023-12-25'),
+    (22, 9, 4, 'Highly recommended', '2023-12-25'),
+    (23, 9, 3, 'Highly recommended', '2023-12-25'),
+    (23, 10, 4, 'Highly recommended', '2023-12-25'),
+    (23, 11, 4, 'Good meal plan', '2023-12-25'),
+    (23, 12, 4, 'Good meal plan', '2023-12-25'),
+    (23, 13, 5, 'Good meal plan', '2023-12-25'),
+    (23, 14, 4, 'Good meal plan', '2023-12-25'),
+    (23, 15, 5, 'Good meal plan', '2023-12-25'),
+    (23, 16, 4, 'Good meal plan', '2023-12-25'),
+    (23, 17, 5, 'Good meal plan', '2023-12-25'),
+    (23, 18, 4, 'Highly recommended', '2023-12-25'),
+    (23, 19, 5, 'Highly recommended', '2023-12-25'),
+    (23, 20, 4, 'Highly recommended', '2023-12-25'),
+    (23, 21, 5, 'Highly recommended', '2023-12-25'),
+    (23, 22, 4, 'Must try it out', '2023-12-25'),
+    (23, 23, 5, 'Must try it out', '2023-12-25'),
+    (23, 24, 4, 'Must try it out', '2023-12-25'),
+    (23, 25, 5, 'Must try it out', '2023-12-25'),
+    (23, 26, 4, 'Highly recommended', '2023-12-25'),
+    (23, 27, 5, 'Highly recommended', '2023-12-25');

@@ -1,15 +1,7 @@
--- -- 4. Blog post category
--- Insert into blog_post_category 
---  (subcategory_name) 
--- VALUES
--- ("Cookbook"),
--- ("Kitchenware"),
--- ("Miscellaneous");
-
 -- Blog
- -- publisher should be author of the blog
-    -- blog_type_id should be the category of the blog (refer to blog_post_category)
-    -- img_title should be the author of the image and the source of the image (follow their code of conduct)
+-- publisher should be author of the blog
+-- blog_type_id should be the category of the blog (refer to blog_post_category)
+-- img_title should be the author of the image and the source of the image (follow their code of conduct)
 INSERT INTO Blog
 (id, CreatedDT, Publisher, Title, Info, UserID, img, img_title, blog_type_id)
 VALUES
@@ -186,7 +178,7 @@ VALUES
         'Explore comprehensive guide to essential tools for every kitchen. From versatile knives to efficient gadgets, make your cooking endeavors seamless and enjoyable.',
         23, -- userId
         'https://img.freepik.com/free-photo/chef-s-male-hand-cutting-tomato-with-sharp-knife-board_23-2147863736.jpg?w=996&t=st=1707891488~exp=1707892088~hmac=a8e49bd313bb1afc3c77b0e883a23c520bba3fac100f2ca75f30c323553fa5f1',
-\        'Designed by Freepik',  -- img_title
+        'Designed by Freepik',  -- img_title
         2 -- blog_type_id kitchenware
     ),
     (
@@ -239,7 +231,7 @@ VALUES
         'WellnessWonders',
         'Holistic Wellness: Integrating Mind, Body, and Kitchen', -- Title
         'Embark on a journey of holistic wellness with WellnessWonders. Explore the connection between mind, body, and kitchen as we delve into mindful cooking practices, nourishing recipes, and wellness tips to enhance your overall well-being.',
-        26, -- userId
+        3, -- userId
         'https://img.freepik.com/free-photo/ai-generated-image-banana_23-2150682982.jpg?t=st=1707893757~exp=1707897357~hmac=01ca6fa737b11e04c2bd34db2fa762fd63f7970de7dbc402636d382ce79291ed&w=1060',
         'Designed by Freepik',  -- img_title
         3 -- blog_type_id Miscellaneous
@@ -250,7 +242,7 @@ VALUES
         'EcoCuisine',
         'Sustainable Kitchenware: Embracing Eco-Friendly Culinary Tools', -- Title
         'Join EcoCuisine in the journey towards sustainability. Discover a range of eco-friendly kitchenware designed to minimize environmental impact. From bamboo utensils to recycled materials, explore how sustainable choices in the kitchen can contribute to a greener lifestyle.',
-        26, -- userId
+        3, -- userId
         'https://img.freepik.com/free-photo/top-view-wooden-spoons-collection_23-2148677992.jpg?w=1380&t=st=1707062250~exp=1707062850~hmac=0efe6151c7dcbcd5f7e12cc16d8ad8cb612dbd90b3e26b202ebe00a2249e99b4',
         'Designed by Freepik',  -- img_title
         2 -- blog_type_id kitchenware
@@ -283,7 +275,7 @@ VALUES
         'ModernCulinarySpaces',
         'Contemporary Kitchenware: Blending Style and Functionality', -- Title
         'Explore the fusion of style and functionality with ModernCulinarySpaces. Dive into a world of contemporary kitchenware that not only enhances your cooking experience but also elevates the aesthetics of your culinary space. Discover the perfect blend of modern design and practical utility.',
-        26, -- userId
+        4, -- userId
         'http://tinyurl.com/dknj9ve6',
         'Author: macrovector, Designed by Freepik',  -- img_title
         2 -- blog_type_id kitchenware
@@ -294,7 +286,7 @@ VALUES
         'KitchenInnovator',
         'Smart Kitchen Gadgets: Revolutionizing Culinary Experiences', -- Title
         'Join KitchenInnovator on a journey through the latest smart kitchen gadgets. Explore how technology is revolutionizing culinary experiences with innovative tools and appliances. From smart ovens to connected utensils, discover the future of cooking in your modern kitchen.',
-        26, -- userId
+        4, -- userId
         'https://images.unsplash.com/photo-1556911220-bff31c812dba?q=80&w=1936&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
         'Author: Jason Briscoe, Designed by Unsplash',  -- img_title
         2 -- blog_type_id kitchenware
@@ -349,7 +341,7 @@ VALUES
         'HealthFoodie',
         'Healthy Meal Prep Cookbook', -- Title
         'Dive into the world of meal prepping with our cookbook featuring nutritious and easy-to-make recipes. Simplify your meal planning and enjoy delicious, homemade meals every day.',
-        24, -- userId
+        3, -- userId
         'https://images.unsplash.com/photo-1495546968767-f0573cca821e?q=80&w=1931&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
         'Author: Dan Gold, Designed by Unsplash',  -- img_title
         1 -- blog_type_id cookbook
@@ -599,10 +591,10 @@ VALUES
 
 
 
-    --  Blog review rating
-INSERT INTO BLOG_REVIEW_RATING 
- (Review, Rating, UserID, BlogID) 
-VALUE  
+--  Blog review rating
+INSERT INTO BLOG_REVIEW_RATING
+(Review, Rating, UserID, BlogID)
+    VALUE
     ('This is very awesome',                                      5.0, '7', 1),
     ('The blog post is very descriptive and informative.',        5.0, '8', 1),
     ('I love this blog post!',                                    4.0, '9', 1),
@@ -618,50 +610,50 @@ VALUE
     ('The blog post is very descriptive and informative.',        5.0, '8', 3),
     ('I love this blog post!',                                    4.0, '9', 3),
     ('Highly recommended',                                        2.0, '10', 4),
-    ('The blog post is very descriptive and informative.',        5.0, '11', 5),
+    ('The blog post is very descriptive and informative.',        3.0, '11', 5),
     ('I love this blog post!',                                    4.0, '12', 6),
     ('The blog post is very descriptive and informative.',        5.0, '11', 7),
     ('I love this blog post!',                                    4.0, '12', 7),
-    ('The blog post is very descriptive and informative.',        5.0, '11', 8),
-    ('I love this blog post!',                                    5.0, '12', 9),
-    ('The blog post is very descriptive and informative.',        5.0, '11', 10),
-    ('I love this blog post!',                                    5.0, '12', 11),
-    ('This is very awesome',                                      5.0, '7', 12),
-    ('The blog post is very descriptive and informative.',        5.0, '8', 13),
+    ('The blog post is very descriptive and informative.',        3.0, '11', 8),
+    ('I love this blog post!',                                    4.0, '12', 9),
+    ('The blog post is very descriptive and informative.',        3.0, '11', 10),
+    ('I love this blog post!',                                    4.0, '12', 11),
+    ('This is very awesome',                                      3.0, '7', 12),
+    ('The blog post is very descriptive and informative.',        4.0, '8', 13),
     ('I love this blog post!',                                    4.0, '9', 14),
-    ('This blog is very useful',                                  5.0, '10', 15),
-    ('I love this blog post!',                                    5.0, '12', 16),
-    ('This is very awesome',                                      5.0, '7', 17),
-    ('The blog post is very descriptive and informative.',        5.0, '8', 18),
+    ('This blog is very useful',                                  4.0, '10', 15),
+    ('I love this blog post!',                                    3.0, '12', 16),
+    ('This is very awesome',                                      4.0, '7', 17),
+    ('The blog post is very descriptive and informative.',        3.0, '8', 18),
     ('I love this blog post!',                                    4.0, '9', 19),
-    ('This blog is very useful',                                  5.0, '10', 20),
-    ('I love this blog post!',                                    5.0, '12', 21),
-    ('This is very awesome',                                      5.0, '7', 22),
-    ('The blog post is very descriptive and informative.',        5.0, '8', 23),
+    ('This blog is very useful',                                  3.0, '10', 20),
+    ('I love this blog post!',                                    4.0, '12', 21),
+    ('This is very awesome',                                      3.0, '7', 22),
+    ('The blog post is very descriptive and informative.',        3.0, '8', 23),
     ('I love this blog post!',                                    4.0, '9', 24),
-    ('This blog is very useful',                                  5.0, '10', 25),
-    ('I love this blog post!',                                    5.0, '12', 26),
-    ('This is very awesome',                                      5.0, '7', 27),
-    ('The blog post is very descriptive and informative.',        5.0, '8', 28),
-    ('I love this blog post!',                                    4.0, '9', 29),
-    ('This blog is very useful',                                  5.0, '10', 30),
-    ('I love this blog post!',                                    5.0, '12', 31),
-    ('This is very awesome',                                      5.0, '7', 32),
-    ('The blog post is very descriptive and informative.',        5.0, '8', 33),
+    ('This blog is very useful',                                  4.0, '10', 25),
+    ('I love this blog post!',                                    4.0, '12', 26),
+    ('This is very awesome',                                      3.0, '7', 27),
+    ('The blog post is very descriptive and informative.',        3.0, '8', 28),
+    ('I love this blog post!',                                    3.0, '9', 29),
+    ('This blog is very useful',                                  3.0, '10', 30),
+    ('I love this blog post!',                                    3.0, '12', 31),
+    ('This is very awesome',                                      4.0, '7', 32),
+    ('The blog post is very descriptive and informative.',        4.0, '8', 33),
     ('I love this blog post!',                                    4.0, '9', 34),
-    ('This blog is very useful',                                  5.0, '10', 35),
-    ('I love this blog post!',                                    5.0, '12', 36),
-    ('This is very awesome',                                      5.0, '7', 37),
-    ('The blog post is very descriptive and informative.',        5.0, '8', 38),
+    ('This blog is very useful',                                  3.0, '10', 35),
+    ('I love this blog post!',                                    4.0, '12', 36),
+    ('This is very awesome',                                      3.0, '7', 37),
+    ('The blog post is very descriptive and informative.',        4.0, '8', 38),
     ('I love this blog post!',                                    4.0, '9', 39),
-    ('This blog is very useful',                                  5.0, '10', 40),
-    ('I love this blog post!',                                    5.0, '12', 41),
-    ('This is very awesome',                                      5.0, '7', 42),
-    ('The blog post is very descriptive and informative.',        5.0, '8', 43),
-    ('I love this blog post!',                                    4.0, '9', 44),
-    ('This blog is very useful',                                  5.0, '10', 45),
-    ('I love this blog post!',                                    5.0, '12', 46),
-    ('This is very awesome',                                      5.0, '7', 47),
-    ('The blog post is very descriptive and informative.',        5.0, '8', 48),
-    ('I love this blog post!',                                    4.0, '9', 49),
-    ('This blog is very useful',                                  5.0, '10', 50);
+    ('This blog is very useful',                                  3.0, '10', 40),
+    ('I love this blog post!',                                    4.0, '12', 41),
+    ('This is very awesome',                                      3.0, '7', 42),
+    ('The blog post is very descriptive and informative.',        4.0, '8', 43),
+    ('I love this blog post!',                                    3.0, '9', 44),
+    ('This blog is very useful',                                  4.0, '10', 45),
+    ('I love this blog post!',                                    3.0, '12', 46),
+    ('This is very awesome',                                      3.0, '7', 47),
+    ('The blog post is very descriptive and informative.',        4.0, '8', 48),
+    ('I love this blog post!',                                    3.0, '9', 49),
+    ('This blog is very useful',                                  4.0, '10', 50);

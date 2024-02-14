@@ -1,57 +1,3 @@
-
--- -- Category
--- -- 1. Allergies
--- Insert into allergies 
--- (subcategory_name) 
--- VALUES
--- ("Milk"),
--- ("Egg"),
--- ("Soy"),
--- ("Shellfish"),
--- ("Fish"),
--- ("Peanut"),
--- ("Tree Nuts"),
--- ("Gluten"),
--- ('Wheat'),
--- ('Dairy'),
--- ('Legume');
--- -- 2. Dietary preferences
--- Insert into dietary_preferences 
---  (subcategory_name) 
--- VALUES
--- ("Vegan"),
--- ("Vegetarian"),
--- ("Pescatarian"),
--- ("Meat-Based");
-
--- -- Recipe
---   -- publisher should be author of the recipe
---   -- info refers to dietary information
---     -- steps refers to the steps to cook the recipe (separated by \n)
---     -- ingredients refers to the ingredients needed to cook the recipe (separated by \n)
---     -- img_title should be the author of the image and the source of the image (follow their code of conduct)
---     -- dietary_preference refers to the category of the recipe (refer to dietary_preferences)
-
--- -- Note that: Some recipes has allergies, insert into recipe_allergies table
--- -- 3. Meal type
--- INSERT INTO
---     meal_type (subcategory_name)
--- VALUES
---     ('Chinese'),
---     ('Western'),
---     ('Japanese'),
---     ('Italian'),
---     ('French'),
---     ('Mexican'),
---     ('Thai'),
---     ('Indian'),
---     ('Mediterranean'),
---     ('Vietnamese'),
---     ('Moroccan'),
---     ('Korean'),
---     ('Southeast Asian');
-
--- first set of recipes 
 INSERT INTO recipe
 (id, publisher, title, info, calories, carbs, protein, fat, fibre, sodium, serving_size, description, steps, ingredients, UserID, Active, createddt, img, img_title, dietary_preference, cooking_time, meal_type)
 VALUES
@@ -59,7 +5,7 @@ VALUES
         1,
         'Gretchen F. Brown, RD',
         'Hearty Pasta Soup',
-        "Not Specified",
+        'Not Specified',
         286, 44, 11, 9, 6, 880, -- calories, carbs, protein, fat, fibre, sodium
         4,
         'Make something unique with a pack of tortellini. This hearty soup is full of fibre and vegetables and it is low in fat. The perfect lunch or supper.',
@@ -90,7 +36,7 @@ VALUES
         'http://tinyurl.com/2ktzpwkv',
         'Author : EyeEm, Designed by Freepik',  -- img_title
         2, -- dietary_preference
-        15, -- cooking_time  
+        15, -- cooking_time
         9   -- meal type (cuisines)
     ),
     (
@@ -109,7 +55,7 @@ VALUES
         'http://tinyurl.com/s5c9ehex',
         'Author : EyeEm, Designed by Freepik',  -- img_title
         2, -- dietary_preference
-        30, -- cooking_time  
+        30, -- cooking_time
         9   -- meal type (cuisines)
     ),
     (
@@ -128,7 +74,7 @@ VALUES
         'https://images.immediate.co.uk/production/volatile/sites/30/2020/08/tagine-5f2d3f6.jpg?quality=90&webp=true&resize=440,400',
         'Author : Cassie Best, Designed by bbcgoodfood',  -- img_title
         3, -- dietary_preference
-        25, -- cooking_time  
+        25, -- cooking_time
         9   -- meal type (cuisines)
     ),
     (
@@ -147,7 +93,7 @@ VALUES
         'https://images.immediate.co.uk/production/volatile/sites/30/2020/08/recipe-image-legacy-id-815477_11-c677a93.jpg?quality=90&webp=true&resize=440,400',
         'Author : James Martin, Designed by bbcgoodfood',  -- img_title
         3, -- dietary_preference
-        30, -- cooking_time  
+        30, -- cooking_time
         6   -- meal type (cuisines)
     ),
     (
@@ -166,7 +112,7 @@ VALUES
         'https://images.immediate.co.uk/production/volatile/sites/30/2020/08/recipe-image-legacy-id-1079512_10-faac687.jpg?quality=90&webp=true&resize=440,400',
         'Author : Roopa Gulati, Designed by bbcgoodfood',  -- img_title
         3, -- dietary_preference
-        15, -- cooking_time  
+        15, -- cooking_time
         7   -- meal type (cuisines)
     ),
     (
@@ -185,7 +131,7 @@ VALUES
         'https://images.immediate.co.uk/production/volatile/sites/30/2020/08/noodles-99a7139.jpg?quality=90&webp=true&resize=440,400',
         'Author : Elena Silcock, Designed by bbcgoodfood',  -- img_title
         1, -- dietary_preference
-        10, -- cooking_time  
+        10, -- cooking_time
         6   -- meal type (cuisines)
     ),
     (
@@ -204,7 +150,7 @@ VALUES
         'https://images.immediate.co.uk/production/volatile/sites/30/2020/08/beetroot-star-anise-red-onion-tart-tatin-6617a3f.jpg?quality=90&webp=true&resize=440,400',
         'Author : Elena Silcock, Designed by bbcgoodfood',  -- img_title
         1, -- dietary_preference
-        80, -- cooking_time  
+        80, -- cooking_time
         5   -- meal type (cuisines)
     ),
     (
@@ -223,7 +169,7 @@ VALUES
         'https://images.immediate.co.uk/production/volatile/sites/30/2022/06/Courgette-curry-c295fa0.jpg?quality=90&webp=true&resize=375,341',
         'Author : Samuel Goldsmith, Designed by bbcgoodfood',  -- img_title
         1, -- dietary_preference
-        40, -- cooking_time  
+        40, -- cooking_time
         8   -- meal type (cuisines)
     ),
     (
@@ -242,7 +188,7 @@ VALUES
         'https://images.immediate.co.uk/production/volatile/sites/30/2020/08/recipe-image-legacy-id-871504_10-a91e5e1.jpg?quality=90&webp=true&resize=440,400',
         'Author : Roopa Gulati, Designed by bbcgoodfood',  -- img_title
         1, -- dietary_preference
-        25, -- cooking_time  
+        25, -- cooking_time
         8   -- meal type (cuisines)
     ),
     (
@@ -261,7 +207,7 @@ VALUES
         'https://images.immediate.co.uk/production/volatile/sites/30/2020/08/yaki-udon-19d4efb.jpg?quality=90&webp=true&resize=440,400',
         'Author : Esther Clark, Designed by bbcgoodfood',  -- img_title
         1, -- dietary_preference
-        15, -- cooking_time  
+        15, -- cooking_time
         3   -- meal type (cuisines)
     ),
     (
@@ -280,7 +226,7 @@ VALUES
         'https://images.immediate.co.uk/production/volatile/sites/30/2020/08/bruschetta-recipe-1-2448fad.jpg?quality=90&webp=true&resize=440,400',
         'Author : Chiwong, Designed by bbcgoodfood',  -- img_title
         1, -- dietary_preference
-        15, -- cooking_time  
+        15, -- cooking_time
         4   -- meal type (cuisines)
     ),
     (
@@ -299,7 +245,7 @@ VALUES
         'https://images.immediate.co.uk/production/volatile/sites/30/2020/08/easy-vegan-pho-0eaa94e.jpg?quality=90&webp=true&resize=440,400',
         'Author : Miriam Nice, Designed by bbcgoodfood',  -- img_title
         1, -- dietary_preference
-        20, -- cooking_time  
+        20, -- cooking_time
         10   -- meal type (cuisines)
     ),
     (
@@ -318,7 +264,7 @@ VALUES
         'https://images.immediate.co.uk/production/volatile/sites/30/2020/08/recipe-image-legacy-id-871464_11-1ff1fe2.jpg?quality=90&webp=true&resize=500,454',
         'Author : Lucy Netherton, Designed by bbcgoodfood',  -- img_title
         3, -- dietary_preference
-        20, -- cooking_time  
+        20, -- cooking_time
         2   -- meal type (cuisines)
     ),
     (
@@ -337,7 +283,7 @@ VALUES
         'https://images.immediate.co.uk/production/volatile/sites/30/2020/08/recipe-image-legacy-id-1233472_8-2834502.jpg?quality=90&webp=true&resize=440,400',
         'Author : Sara Buenfeld, Designed by bbcgoodfood',  -- img_title
         3, -- dietary_preference
-        15, -- cooking_time  
+        15, -- cooking_time
         2   -- meal type (cuisines)
     ),
     (
@@ -356,7 +302,7 @@ VALUES
         'https://www.simplyrecipes.com/thmb/sZ-I3ZBb3qoMUZkij__FvpCCtsI=/750x0/filters:no_upscale():max_bytes(150000):strip_icc():format(webp)/Simply-Recipes-Sole-Piccata-LEAD-18-7fe82170950744bc9d41a75d944fc79b.JPG',
         'Author : Elise Bauer, Designed by simplyrecipes',  -- img_title
         3, -- dietary_preference
-        20, -- cooking_time  
+        20, -- cooking_time
         4   -- meal type (cuisines)
     ),
     (
@@ -375,7 +321,7 @@ VALUES
         'http://tinyurl.com/4jy89mh9',
         'Author : Elise Bauer, Designed by simplyrecipes',  -- img_title
         3, -- dietary_preference
-        15, -- cooking_time  
+        15, -- cooking_time
         2   -- meal type (cuisines)
     ),
     (
@@ -394,7 +340,7 @@ VALUES
         'https://www.simplyrecipes.com/thmb/_Ibx2pOBu4NyMV-Yney9VxuY5k4=/750x0/filters:no_upscale():max_bytes(150000):strip_icc():format(webp)/Simply-Recipes-Steamed-Whole-Fish-LEAD-3-a919bfb94b2d45aeb410dae0b6fbfc66.jpg',
         'Author : Uyen Luu, Designed by simplyrecipes',  -- img_title
         3, -- dietary_preference
-        15, -- cooking_time  
+        15, -- cooking_time
         1   -- meal type (cuisines)
     ),
     (
@@ -413,7 +359,7 @@ VALUES
         'http://tinyurl.com/bdhy9kkz',
         'Author : Sabrina Modelle, Designed by simplyrecipes',  -- img_title
         3, -- dietary_preference
-        10, -- cooking_time  
+        10, -- cooking_time
         6   -- meal type (cuisines)
     ),
     (
@@ -432,7 +378,7 @@ VALUES
         'http://tinyurl.com/2aeskmzp',
         'Author : Elise Bauer, Designed by simplyrecipes',  -- img_title
         3, -- dietary_preference
-        20, -- cooking_time  
+        20, -- cooking_time
         9   -- meal type (cuisines)
     ),
     (
@@ -451,7 +397,7 @@ VALUES
         'https://images.immediate.co.uk/production/volatile/sites/30/2020/08/satay-sweet-potato-curry-17cc62d.jpg?quality=90&webp=true&resize=440,400',
         'Author : Elena Silcock, Designed by bbcgoodfood',  -- img_title
         2, -- dietary_preference
-        45, -- cooking_time  
+        45, -- cooking_time
         7   -- meal type (cuisines)
     ),
     (
@@ -470,7 +416,7 @@ VALUES
         'https://images.immediate.co.uk/production/volatile/sites/30/2020/08/veggie-okonomiyaki-de8fe85.jpg?quality=90&webp=true&resize=440,400',
         'Author : Esther Clark, Designed by bbcgoodfood',  -- img_title
         2, -- dietary_preference
-        10, -- cooking_time  
+        10, -- cooking_time
         3   -- meal type (cuisines)
     ),
     (
@@ -489,7 +435,7 @@ VALUES
         'https://cdn.cleaneatingmag.com/wp-content/uploads/2019/03/spanakopita-egg-casserole_85-web-3.jpg?crop=535:301&width=1070&enable=upscale',
         'Author : Darren Kemper, Designed by cleaneating',  -- img_title
         3, -- dietary_preference
-        40, -- cooking_time  
+        40, -- cooking_time
         9   -- meal type (cuisines)
     ),
     (
@@ -508,7 +454,7 @@ VALUES
         'https://cdn.cleaneatingmag.com/wp-content/uploads/2018/05/grilled-eggplant-caprese_79-web-1.jpg?crop=535:301&width=1070&enable=upscale',
         'Author : Beth Lipton, Designed by cleaneating',  -- img_title
         3, -- dietary_preference
-        15, -- cooking_time  
+        15, -- cooking_time
         9   -- meal type (cuisines)
     ),
     (
@@ -527,7 +473,7 @@ VALUES
         'https://cdn.cleaneatingmag.com/wp-content/uploads/2018/12/HalibutOliveTapenade_Feature.jpg?crop=535:301&width=1070&enable=upscale',
         'Author : Marianne Wren, Designed by cleaneating',  -- img_title
         3, -- dietary_preference
-        20, -- cooking_time  
+        20, -- cooking_time
         9   -- meal type (cuisines)
     ),
     (
@@ -546,7 +492,7 @@ VALUES
         'https://cdn.cleaneatingmag.com/wp-content/uploads/2019/10/veggie-scramble-1.jpg?crop=535:301&width=1070&enable=upscale',
         'Author : Jesse Jane Lee, Designed by cleaneating',  -- img_title
         3, -- dietary_preference
-        20, -- cooking_time  
+        20, -- cooking_time
         9   -- meal type (cuisines)
     ),
     (
@@ -565,7 +511,7 @@ VALUES
         'https://cdn.cleaneatingmag.com/wp-content/uploads/2019/10/banana-almond-chocolate-smoothie-1-1-1-e1611878429924.jpg?crop=535:301&width=1070&enable=upscale',
         'Author : Jesse Jane Lee, Designed by cleaneating',  -- img_title
         2, -- dietary_preference
-        5, -- cooking_time  
+        5, -- cooking_time
         2   -- meal type (cuisines)
     ),
     (
@@ -584,7 +530,7 @@ VALUES
         'https://cdn.cleaneatingmag.com/wp-content/uploads/2019/10/poached-egg-avocado-toast-1.jpg?crop=535:301&width=1070&enable=upscale',
         'Author : Jesse Jane Lee, Designed by cleaneating',  -- img_title
         3, -- dietary_preference
-        10, -- cooking_time  
+        10, -- cooking_time
         3   -- meal type (cuisines)
     ),
     (
@@ -603,7 +549,7 @@ VALUES
         'https://cdn.cleaneatingmag.com/wp-content/uploads/2019/06/poboy-1.jpg?crop=535:301&width=1070&enable=upscale',
         'Author : Heather BainBridge, Designed by cleaneating',  -- img_title
         3, -- dietary_preference
-        25, -- cooking_time  
+        25, -- cooking_time
         3   -- meal type (cuisines)
     ),
     (
@@ -622,7 +568,7 @@ VALUES
         'https://cdn.cleaneatingmag.com/wp-content/uploads/2019/06/chili-1.jpg?crop=535:301&width=1070&enable=upscale',
         'Author : Heather BainBridge, Designed by cleaneating',  -- img_title
         4, -- dietary_preference
-        40, -- cooking_time  
+        40, -- cooking_time
         11   -- meal type (cuisines)
     ),
     (
@@ -641,7 +587,7 @@ VALUES
         'https://cdn.cleaneatingmag.com/wp-content/uploads/2013/04/sesamegarlicchicken_article-1.jpg',
         'Author : Heather BainBridge, Designed by cleaneating',  -- img_title
         4, -- dietary_preference
-        20, -- cooking_time  
+        20, -- cooking_time
         1   -- meal type (cuisines)
     ),
     (
@@ -660,7 +606,7 @@ VALUES
         'https://cdn.cleaneatingmag.com/wp-content/uploads/2017/03/ce68-weightloss-middle-eastern-western-egg-sandwiches-web-1.jpg?crop=535:301&width=1070&enable=upscale',
         'Author : Marianne Wren, Designed by cleaneating',  -- img_title
         3, -- dietary_preference
-        20, -- cooking_time  
+        20, -- cooking_time
         9   -- meal type (cuisines)
     ),
     (
@@ -679,7 +625,7 @@ VALUES
         'https://cdn.cleaneatingmag.com/wp-content/uploads/2022/03/CleanEating_CE101FebMar2022_BurgerSalad_The-California_web.jpg?crop=535:301&width=1070&enable=upscale',
         'Author : Marianne Wren, Designed by cleaneating',  -- img_title
         2, -- dietary_preference
-        15, -- cooking_time  
+        15, -- cooking_time
         9   -- meal type (cuisines)
     ),
     (
@@ -698,7 +644,7 @@ VALUES
         'https://cdn.cleaneatingmag.com/wp-content/uploads/2021/11/YogurtBowl_Feature.jpg?crop=535:301&width=1070&enable=upscale',
         'Author : Marianne Wren, Designed by cleaneating',  -- img_title
         2, -- dietary_preference
-        35, -- cooking_time  
+        35, -- cooking_time
         9   -- meal type (cuisines)
     ),
     (
@@ -717,7 +663,7 @@ VALUES
         'https://cdn.cleaneatingmag.com/wp-content/uploads/2022/02/CleanEating_CE101FebMar2022_MealPlan_Balsamic-Roasted-Portobellos-with-Fried-Eggs_web.jpg?crop=535:301&width=1070&enable=upscale',
         'Author : Olimpia Davies, Designed by cleaneating',  -- img_title
         2, -- dietary_preference
-        20, -- cooking_time  
+        20, -- cooking_time
         9   -- meal type (cuisines)
     ),
     (
@@ -736,7 +682,7 @@ VALUES
         'https://cdn.cleaneatingmag.com/wp-content/uploads/2022/02/CleanEating_CE101FebMar2022_MealPlan_Hearty-Chicken-Quinoa-Soup-with-Kale_web.jpg?crop=535:301&width=1070&enable=upscale',
         'Author : Olimpia Davies, Designed by cleaneating',  -- img_title
         4, -- dietary_preference
-        45, -- cooking_time  
+        45, -- cooking_time
         2   -- meal type (cuisines)
     ),
     (
@@ -755,7 +701,7 @@ VALUES
         'https://cdn.cleaneatingmag.com/wp-content/uploads/2022/03/Steak-Sweet-Potato-Tacos-2400x1350-1.png?crop=535:301&width=1070&enable=upscale',
         'Author : Roberto Caruso, Designed by cleaneating',  -- img_title
         4, -- dietary_preference
-        35, -- cooking_time  
+        35, -- cooking_time
         6   -- meal type (cuisines)
     ),
     (
@@ -774,7 +720,7 @@ VALUES
         'https://cdn.cleaneatingmag.com/wp-content/uploads/2017/11/green-curry-poached-halibut-73-web-1.jpg?crop=535:301&width=1070&enable=upscale',
         'Author : Tiffani Bachus, Designed by cleaneating',  -- img_title
         3, -- dietary_preference
-        30, -- cooking_time  
+        30, -- cooking_time
         7   -- meal type (cuisines)
     ),
     (
@@ -793,7 +739,7 @@ VALUES
         'https://cdn.cleaneatingmag.com/wp-content/uploads/2017/11/meal-plan-lead_zucchini-lasagna-with-cashew-cheese-pesto-73-web-1.jpg?crop=535:301&width=1070&enable=upscale',
         'Author : Tiffani Bachus, Designed by cleaneating',  -- img_title
         2, -- dietary_preference
-        40, -- cooking_time  
+        40, -- cooking_time
         4   -- meal type (cuisines)
     ),
     (
@@ -812,7 +758,7 @@ VALUES
         'https://cdn.cleaneatingmag.com/wp-content/uploads/2017/11/roasted-butternut-squash-73-web-opt2-1.jpg?crop=535:301&width=1070&enable=upscale',
         'Author : Tiffani Bachus, Designed by cleaneating',  -- img_title
         2, -- dietary_preference
-        40, -- cooking_time  
+        40, -- cooking_time
         2   -- meal type (cuisines)
     ),
     (
@@ -831,7 +777,7 @@ VALUES
         'https://cdn.cleaneatingmag.com/wp-content/uploads/2016/09/apple-frise-radicchio-salad-with-lemon-kefir-dressing-2.jpg?crop=535:301&width=1070&enable=upscale',
         'Author : Tiffani Bachus, Designed by cleaneating',  -- img_title
         2, -- dietary_preference
-        25, -- cooking_time  
+        25, -- cooking_time
         2   -- meal type (cuisines)
     ),
     (
@@ -850,7 +796,7 @@ VALUES
         'https://cdn.cleaneatingmag.com/wp-content/uploads/2015/02/kimchi-fried-rice-with-tempeh.jpg?crop=535:301&width=1070&enable=upscale',
         'Author : Ted Gibson, Designed by cleaneating',  -- img_title
         3, -- dietary_preference
-        25, -- cooking_time  
+        25, -- cooking_time
         12   -- meal type (cuisines)
     ),
     (
@@ -869,7 +815,7 @@ VALUES
         'https://cdn.cleaneatingmag.com/wp-content/uploads/2015/01/mediterranean-chicken-and-vegetable-quiche-1.jpg?crop=535:301&width=1070&enable=upscale',
         'Author : Ted Gibson, Designed by cleaneating',  -- img_title
         4, -- dietary_preference
-        50, -- cooking_time  
+        50, -- cooking_time
         9   -- meal type (cuisines)
     ),
     (
@@ -888,7 +834,7 @@ VALUES
         'https://cdn.cleaneatingmag.com/wp-content/uploads/2018/04/roasted-broccoli-steaks-with-miso-butter_78-web-2.jpg?crop=535:301&width=1070&enable=upscale',
         'Author : Beth Lipton, Designed by cleaneating',  -- img_title
         2, -- dietary_preference
-        35, -- cooking_time  
+        35, -- cooking_time
         3   -- meal type (cuisines)
     ),
     (
@@ -907,7 +853,7 @@ VALUES
         'https://cdn.cleaneatingmag.com/wp-content/uploads/2018/04/gingery-braised-chicken-thighs_78-web-2.jpg?crop=535:301&width=1070&enable=upscale',
         'Author : Ronald Tsang, Designed by cleaneating',  -- img_title
         4, -- dietary_preference
-        75, -- cooking_time  
+        75, -- cooking_time
         8   -- meal type (cuisines)
     ),
     (
@@ -926,7 +872,7 @@ VALUES
         'https://cdn.cleaneatingmag.com/wp-content/uploads/2018/10/turkey-and-mushroom-ragu-stuffed-acorn-squash_82-web-1.jpg?crop=535:301&width=1070&enable=upscale',
         'Author : cleaneating, Designed by cleaneating',  -- img_title
         4, -- dietary_preference
-        55, -- cooking_time  
+        55, -- cooking_time
         2   -- meal type (cuisines)
     ),
     (
@@ -945,7 +891,7 @@ VALUES
         'https://cdn.cleaneatingmag.com/wp-content/uploads/2018/10/CE82-Spicy-Salmon-Poke-Bowl-WEB.png?crop=535:301&width=1070&enable=upscale',
         'Author : cleaneating, Designed by cleaneating',  -- img_title
         3, -- dietary_preference
-        55, -- cooking_time  
+        55, -- cooking_time
         3   -- meal type (cuisines)
     ),
     (
@@ -964,7 +910,7 @@ VALUES
         'https://cdn.cleaneatingmag.com/wp-content/uploads/2018/09/sheet-pan-dijon-balsamic-chicken-and-veggies_82-web-1.jpg?crop=535:301&width=1070&enable=upscale',
         'Author : Crayola England, Designed by cleaneating',  -- img_title
         4, -- dietary_preference
-        40, -- cooking_time  
+        40, -- cooking_time
         2   -- meal type (cuisines)
     ),
     (
@@ -983,7 +929,7 @@ VALUES
         'https://www.allrecipes.com/thmb/4ukV1YDU_ehHDsMqOagRHEXBalI=/750x0/filters:no_upscale():max_bytes(150000):strip_icc():format(webp)/7567956-sweet-potati-black-bean-taco-cups-KH-AR15538-4x3-9f9208892b8340a4adce4ff0fc3bf066.jpg',
         'Author : allrecipes, Designed by allrecipes',  -- img_title
         3, -- dietary_preference
-        30, -- cooking_time  
+        30, -- cooking_time
         6   -- meal type (cuisines)
     ),
     (
@@ -1002,7 +948,7 @@ VALUES
         'https://www.allrecipes.com/thmb/uJAHG8X_AOBr-OnMGPdLDEBEFnU=/0x512/filters:no_upscale():max_bytes(150000):strip_icc()/4521556_Guacamole4x3photobybd.weld-c81ae0bd3f2b4893a8e309365dda023b.jpg',
         'Author : bd.weld, Designed by allrecipes',  -- img_title
         2, -- dietary_preference
-        15, -- cooking_time  
+        15, -- cooking_time
         6   -- meal type (cuisines)
     ),
     (
@@ -1021,7 +967,7 @@ VALUES
         'https://assets-global.website-files.com/62d69f8cc65b0055741a8270/648b47a81507b53da2eb9e35_SoupsStews_127964_Bowl_Fork-1.jpg',
         'Author : hungryroot, Designed by hungryroot',  -- img_title
         4, -- dietary_preference
-        30, -- cooking_time  
+        30, -- cooking_time
         2   -- meal type (cuisines)
     ),
     (
@@ -1040,7 +986,7 @@ VALUES
         'https://assets-global.website-files.com/62d69f8cc65b0055741a8270/648b47c6dac40bbe30f67e6e_Main_465213_Plate_Fork-1.jpg',
         'Author : hungryroot, Designed by hungryroot',  -- img_title
         4, -- dietary_preference
-        25, -- cooking_time  
+        25, -- cooking_time
         7   -- meal type (cuisines)
     ),
     (
@@ -1059,7 +1005,7 @@ VALUES
         'https://assets-global.website-files.com/62d69f8cc65b0055741a8270/6480c937f74306ec77a5bdc0_Main%2BSides_464501_Plate.jpg',
         'Author : hungryroot, Designed by hungryroot',  -- img_title
         4, -- dietary_preference
-        15, -- cooking_time  
+        15, -- cooking_time
         6   -- meal type (cuisines)
     ),
     (
@@ -1078,7 +1024,7 @@ VALUES
         'https://assets-global.website-files.com/62d69f8cc65b0055741a8270/648b48651507b53da2ec965e_GrainBowl_123246_Bowl_Fork-1.jpg',
         'Author : hungryroot, Designed by hungryroot',  -- img_title
         4, -- dietary_preference
-        13, -- cooking_time  
+        13, -- cooking_time
         2   -- meal type (cuisines)
     ),
     (
@@ -1097,7 +1043,7 @@ VALUES
         'https://assets-global.website-files.com/62d69f8cc65b0055741a8270/648b487ed81f1d3fd9ddb034_MainSides_126949_Plate-1.jpg',
         'Author : hungryroot, Designed by hungryroot',  -- img_title
         3, -- dietary_preference
-        14, -- cooking_time  
+        14, -- cooking_time
         2   -- meal type (cuisines)
     ),
     (
@@ -1116,7 +1062,7 @@ VALUES
         'https://assets-global.website-files.com/62d69f8cc65b0055741a8270/648b489ad81f1d3fd9ddb4f5_Wrap_122142_Plate-2.jpg',
         'Author : hungryroot, Designed by hungryroot',  -- img_title
         1, -- dietary_preference
-        10, -- cooking_time  
+        10, -- cooking_time
         13   -- meal type (cuisines)
     ),
     (
@@ -1135,7 +1081,7 @@ VALUES
         'https://images.immediate.co.uk/production/volatile/sites/30/2020/08/seitan-and-black-bean-stir-fry-6adb3dd.jpg?quality=90&webp=true&resize=440,400',
         'Author : Miriam Nice, Designed by bbcgoodfood',  -- img_title
         2, -- dietary_preference
-        25, -- cooking_time  
+        25, -- cooking_time
         1   -- meal type (cuisines)
     ),
     (
@@ -1154,7 +1100,7 @@ VALUES
         'https://images.immediate.co.uk/production/volatile/sites/30/2022/05/Tofu-curry-c24b410.jpg?quality=90&webp=true&resize=375,341',
         'Author : Nadine Brown, Designed by bbcgoodfood',  -- img_title
         1, -- dietary_preference
-        20, -- cooking_time  
+        20, -- cooking_time
         8   -- meal type (cuisines)
     ),
     (
@@ -1173,7 +1119,7 @@ VALUES
         'https://images.immediate.co.uk/production/volatile/sites/30/2020/08/recipe-image-legacy-id-487479_11-8abbef4.jpg?quality=90&webp=true&resize=440,400',
         'Author : Good Food team, Designed by bbcgoodfood',  -- img_title
         1, -- dietary_preference
-        10, -- cooking_time  
+        10, -- cooking_time
         2   -- meal type (cuisines)
     ),
     (
@@ -1192,7 +1138,7 @@ VALUES
         'https://images.immediate.co.uk/production/volatile/sites/30/2020/08/recipe-image-legacy-id-279520_11-b0a79cf.jpg?quality=90&webp=true&resize=440,400',
         'Author : Mary Cadogan, Designed by bbcgoodfood',  -- img_title
         1, -- dietary_preference
-        25, -- cooking_time  
+        25, -- cooking_time
         8   -- meal type (cuisines)
     ),
     (
@@ -1211,7 +1157,7 @@ VALUES
         'https://cdn.cleaneatingmag.com/wp-content/uploads/2016/08/green-monster.jpg?crop=535:301&width=1070&enable=upscale',
         'Author : John Berardi, Designed by cleaneating',  -- img_title
         2, -- dietary_preference
-        5, -- cooking_time  
+        5, -- cooking_time
         2   -- meal type (cuisines)
     ),
     (
@@ -1230,7 +1176,7 @@ VALUES
         'https://cdn.cleaneatingmag.com/wp-content/uploads/2016/06/grilled-asparagus-salad-with-feta-and-hazelnut-crumble-1.jpg?crop=535:301&width=1070&enable=upscale',
         'Author : Clean Eating, Designed by cleaneating',  -- img_title
         2, -- dietary_preference
-        15, -- cooking_time  
+        15, -- cooking_time
         9   -- meal type (cuisines)
     ),
     (
@@ -1249,7 +1195,7 @@ VALUES
         'https://cdn.cleaneatingmag.com/wp-content/uploads/2017/12/white-bean-soup-with-caper-almond-pesto-75-web-2.jpg?crop=535:301&width=1070&enable=upscale',
         'Author : Clean Eating, Designed by cleaneating',  -- img_title
         2, -- dietary_preference
-        20, -- cooking_time  
+        20, -- cooking_time
         9   -- meal type (cuisines)
     ),
     (
@@ -1268,7 +1214,7 @@ VALUES
         'https://www.australianeggs.org.au/assets/recipes/willowcreative_Aus-Eggs-_-316431-1__ScaleWidthWzEyMDBd.jpg',
         'Author : Australianeggs, Designed by Australianeggs',  -- img_title
         3, -- dietary_preference
-        20, -- cooking_time  
+        20, -- cooking_time
         8   -- meal type (cuisines)
     ),
     (
@@ -1287,7 +1233,7 @@ VALUES
         'https://www.australianeggs.org.au/assets/recipes/Roast-Cauliflower-egg-salad-0169-__ScaleWidthWzEyMDBd.jpg',
         'Author : Australianeggs, Designed by Australianeggs',  -- img_title
         2, -- dietary_preference
-        50, -- cooking_time  
+        50, -- cooking_time
         8   -- meal type (cuisines)
     ),
     (
@@ -1306,7 +1252,7 @@ VALUES
         'https://www.australianeggs.org.au/assets/recipes/vegetable-fritta-muffins-7440__ScaleWidthWzEyMDBd.jpg',
         'Author : Australianeggs, Designed by Australianeggs',  -- img_title
         2, -- dietary_preference
-        40, -- cooking_time  
+        40, -- cooking_time
         2   -- meal type (cuisines)
     ),
     (
@@ -1325,7 +1271,7 @@ VALUES
         'https://www.australianeggs.org.au/assets/recipes/Spicy-Chickpea-amp-3__ScaleWidthWzEyMDBd.jpg',
         'Author : Australianeggs, Designed by Australianeggs',  -- img_title
         2, -- dietary_preference
-        25, -- cooking_time  
+        25, -- cooking_time
         8   -- meal type (cuisines)
     ),
     (
@@ -1344,7 +1290,7 @@ VALUES
         'https://www.skinnytaste.com/wp-content/uploads/2022/10/Apple-Pie-Overnight-Oats-3.jpg',
         'Author : skinnytaste, Designed by skinnytaste',  -- img_title
         1, -- dietary_preference
-        25, -- cooking_time  
+        25, -- cooking_time
         2   -- meal type (cuisines)
     ),
     (
@@ -1363,7 +1309,7 @@ VALUES
         'https://www.skinnytaste.com/wp-content/uploads/2019/01/Egg-Salad-Finals-9.jpg',
         'Author : skinnytaste, Designed by skinnytaste',  -- img_title
         2, -- dietary_preference
-        25, -- cooking_time  
+        25, -- cooking_time
         2   -- meal type (cuisines)
     ),
     (
@@ -1382,7 +1328,7 @@ VALUES
         'https://www.skinnytaste.com/wp-content/uploads/2023/02/Spicy-Gochujang-Tofu-Bowls-7.jpg',
         'Author : skinnytaste, Designed by skinnytaste',  -- img_title
         1, -- dietary_preference
-        25, -- cooking_time  
+        25, -- cooking_time
         12   -- meal type (cuisines)
     ),
     (
@@ -1401,7 +1347,7 @@ VALUES
         'https://www.skinnytaste.com/wp-content/uploads/2021/03/PB-_-J-Smoothie-Bowl-7.jpg',
         'Author : skinnytaste, Designed by skinnytaste',  -- img_title
         2, -- dietary_preference
-        5, -- cooking_time  
+        5, -- cooking_time
         2   -- meal type (cuisines)
     ),
     (
@@ -1420,7 +1366,7 @@ VALUES
         'https://www.skinnytaste.com/wp-content/uploads/2023/06/Chipotle-Chicken-Thighs-7.jpg',
         'Author : skinnytaste, Designed by skinnytaste',  -- img_title
         4, -- dietary_preference
-        30, -- cooking_time  
+        30, -- cooking_time
         6   -- meal type (cuisines)
     ),
     (
@@ -1439,7 +1385,7 @@ VALUES
         'https://www.skinnytaste.com/wp-content/uploads/2011/10/One-Pan-Roasted-Potatoes-Sausage-and-Peppers-5.jpg',
         'Author : skinnytaste, Designed by skinnytaste',  -- img_title
         4, -- dietary_preference
-        55, -- cooking_time  
+        55, -- cooking_time
         4   -- meal type (cuisines)
     ),
     (
@@ -1458,7 +1404,7 @@ VALUES
         'https://www.skinnytaste.com/wp-content/uploads/2022/03/High-Protein-Scrambled-Eggs-7.jpg',
         'Author : skinnytaste, Designed by skinnytaste',  -- img_title
         4, -- dietary_preference
-        6, -- cooking_time  
+        6, -- cooking_time
         4   -- meal type (cuisines)
     ),
     (
@@ -1477,7 +1423,7 @@ VALUES
         'https://www.skinnytaste.com/wp-content/uploads/2012/10/slow-cooker-pork-and-green-chile-stew-550x798.jpg',
         'Author : skinnytaste, Designed by skinnytaste',  -- img_title
         4, -- dietary_preference
-        320, -- cooking_time  
+        320, -- cooking_time
         6   -- meal type (cuisines)
     ),
     (
@@ -1496,11 +1442,11 @@ VALUES
         'https://www.skinnytaste.com/wp-content/uploads/2018/07/Corn-Tomato-Avocado-Salad-1-9.jpg',
         'Author : skinnytaste, Designed by skinnytaste',  -- img_title
         2, -- dietary_preference
-        10, -- cooking_time  
+        10, -- cooking_time
         9   -- meal type (cuisines)
     ),
     (
-        77
+        77,
         'Gina',
         'Mini Pumpkin Chocolate Chip Muffins',
         'Not Specified',
@@ -1515,11 +1461,11 @@ VALUES
         'https://www.skinnytaste.com/wp-content/uploads/2013/09/Mini-Pumpkin-Chocolate-Chip-Muffins-7.jpg',
         'Author : skinnytaste, Designed by skinnytaste',  -- img_title
         2, -- dietary_preference
-        40, -- cooking_time  
+        40, -- cooking_time
         2   -- meal type (cuisines)
     ),
     (
-        78
+        78,
         'Gina',
         'Maple-Cinnamon Banana-Pear Baked Oatmeal with Walnuts',
         'Not Specified',
@@ -1534,11 +1480,11 @@ VALUES
         'https://www.skinnytaste.com/wp-content/uploads/2019/09/Maple-Cinnamon-Banana-Pear-Baked-Oatmeal-with-Walnuts-7.jpg',
         'Author : skinnytaste, Designed by skinnytaste',  -- img_title
         2, -- dietary_preference
-        35, -- cooking_time  
+        35, -- cooking_time
         2   -- meal type (cuisines)
     ),
     (
-        79
+        79,
         'Gina',
         'Air Fryer Steak',
         'Not Specified',
@@ -1553,11 +1499,11 @@ VALUES
         'https://www.skinnytaste.com/wp-content/uploads/2022/03/Air-Fryer-Steak-7.jpg',
         'Author : skinnytaste, Designed by skinnytaste',  -- img_title
         4, -- dietary_preference
-        15, -- cooking_time  
+        15, -- cooking_time
         2   -- meal type (cuisines)
     ),
     (
-        80
+        80,
         'Gina',
         'Rainbow Quinoa Salad with Lemon Dressing',
         'Not Specified',
@@ -1572,19 +1518,14 @@ VALUES
         'https://www.skinnytaste.com/wp-content/uploads/2022/12/Rainbow-Quinoa-Salad-with-Lemon-Dressing-3.jpg',
         'Author : skinnytaste, Designed by skinnytaste',  -- img_title
         1, -- dietary_preference
-        15, -- cooking_time  
+        15, -- cooking_time
         9   -- meal type (cuisines)
     );
 
 
 -- Recipe allergies
-  -- id refers to recipe id (refer to recipe table)
-    -- allergy_id refers to allergy id (refer to allergies table)
--- Insert Into recipe_allergies (id, allergy_id) VALUES (1, 1); --- served as a reference how u add allergy
--- Insert Into recipe_allergies (id, allergy_id) VALUES (1, 2);
--- Insert Into recipe_allergies (id, allergy_id) VALUES (1, 3);
--- Insert Into recipe_allergies (id, allergy_id) VALUES (2, 2);
--- Insert Into recipe_allergies (id, allergy_id) VALUES (2, 7);
+-- id refers to recipe id (refer to recipe table)
+-- allergy_id refers to allergy id (refer to allergies table)
 Insert Into recipe_allergies
 (id, allergy_id)
 VALUES
@@ -1683,51 +1624,35 @@ VALUES
     (78, 1),
     (78, 2),
     (78, 7);
--- second set of recipes
-INSERT INTO recipe
-(id, publisher, title, info, calories, carbs, protein, fat, fibre, sodium, serving_size, description, steps, ingredients, UserID, Active, createddt, img, img_title, dietary_preference, cooking_time)
-VALUES
-    (
-        1,
-        'test publisher',
-        'test recipe',
-        "Not Specified",
-        286, 44, 11, 9, 6, 880, -- calories, carbs, protein, fat, fibre, sodium
-        4,
-        'testing',
-        'testing',
-        'testing',
-        '3', -- UserID
-        TRUE,
-        '2023-04-26 14:30:00',
-        'https://img.freepik.com/free-photo/grilled-salmon-fillet-with-fresh-vegetable-salad-generated-by-ai_188544-21273.jpg?t=st=1706581041~exp=1706584641~hmac=a5192395751401ed16e80a0043e0f94504123f21393174683c63426ba80cba62&w=996',
-        'Author : Vecstock, Designed by Freepik',  -- img_title
-        1, -- dietary_preference
-        30 -- cooking_time
-    );
 
 
-
--- Recipe allergies
-  -- id refers to recipe id (refer to recipe table)
-    -- allergy_id refers to allergy id (refer to allergies table)
--- Insert Into recipe_allergies (id, allergy_id) VALUES (1, 1); --- served as a reference how u add allergy
--- Insert Into recipe_allergies (id, allergy_id) VALUES (1, 2);
--- Insert Into recipe_allergies (id, allergy_id) VALUES (1, 3);
--- Insert Into recipe_allergies (id, allergy_id) VALUES (2, 2);
--- Insert Into recipe_allergies (id, allergy_id) VALUES (2, 7);
-
--- all the recipes reviews and ratings (can do it once all the recipes are done)
 INSERT INTO RECIPE_REVIEW_RATING
 (Review, Rating, UserID, RecipeID)
 VALUES
-    ('This is very awesome',                            3.2, '7', 1),
+    ('This is very awesome',                            5.0, '7', 1),
     ('The recipe nice.'    ,                            5.0, '8', 1),
     ('I love this recipe!' ,                            4.0, '9', 1),
-    ('I love this recipe!' ,                            4.0, '12', 1),
-    ('This is very awesome',                            3.2, '7', 2),
-    ('The recipe is very nice',                            5.0, '8', 2),
     ('I love this recipe!' ,                            4.0, '9', 2),
-    ('This is very awesome',                            3.2, '12', 2);
-
-
+    ('This is very awesome',                            3.2, '12', 2),
+    ('The recipe is very nice',                         3.0, '8', 3),
+    ('The recipe is very nice',                         3.0, '8', 10),
+    ('I love this recipe!' ,                            4.0, '9', 10),
+    ('I love this recipe!' ,                            4.0, '9', 19),
+    ('This is very awesome',                            3.2, '12', 19),
+    ('The recipe is very nice',                         5.0, '8', 20),
+    ('I love this recipe!' ,                            4.0, '9', 20),
+    ('The recipe is very nice',                         5.0, '8', 25),
+    ('I love this recipe!' ,                            4.0, '9', 25),
+    ('I love this recipe!' ,                            3.0, '9', 27),
+    ('I love this recipe!' ,                            3.0, '9', 30),
+    ('I love this recipe!' ,                            4.0, '9', 32),
+    ('This is very awesome',                            3.2, '7', 32),
+    ('This is very awesome',                            3.2, '12', 35),
+    ('The recipe is very nice',                         5.0, '8', 40),
+    ('I love this recipe!' ,                            4.0, '9', 40),
+    ('The recipe is very nice',                         5.0, '8', 66),
+    ('I love this recipe!' ,                            4.0, '9', 66),
+    ('I love this recipe!' ,                            4.0, '9', 74),
+    ('The recipe is very nice',                         5.0, '8', 79),
+    ('I love this recipe!' ,                            4.0, '9', 79),
+    ('This is very awesome',                            3.2, '12', 79);

@@ -1,10 +1,3 @@
--- -- 5. Educational content category
--- Insert into educational_content_category
--- (subcategory_name)
--- VALUES
---     ('Healthy Eating'),
---     ('Healthy Lifestyle');
-
 -- Educational content
 -- publisher should be author of the educational content
 -- educational_content_type_id should be the category of the blog (refer to educational_content_category)
@@ -21,7 +14,7 @@ VALUES
          The average recommended daily caloric intake is 2200 calories for males and 1800 calories for females.
          \nOne of the simplest and most effective methods for controlling your calorie intake is portion control. Often, we eat what is on our plate rather than what our body needs.
          Consuming the right number of calories is a good first step towards achieving a healthier body. However, not all calories are equal. Keeping to the calorie count on a diet consisting of only sugary cakes, meat dishes, or a glass of wine is far from ideal. This is because your body needs a variety of vitamins and minerals, as well as fibre to function properly.
-         \nEating healthy is not limited to eating the right amount and the right mix. It is also important for optimum nutrition to choose healthy foods prepared with healthier options and ingredients. 
+         \nEating healthy is not limited to eating the right amount and the right mix. It is also important for optimum nutrition to choose healthy foods prepared with healthier options and ingredients.
          \nFor example, wholegrains are healthier than refined grains as they contain more vitamins, antioxidants and fibre. In addition, they also keep you filling full for longer, which reduce the risk of overeating. Choosing healthier cooking oils are also important.
          If fat loss is one of your weight loss goals, merely controlling your calorie intake will not be enough. Diet and exercise are pertinent when it comes to healthy weight loss.You should be doing a combination of cardio and strength-training exercises, which are useful in losing fat as well as gaining muscle mass.',
         3, -- userID
@@ -60,7 +53,7 @@ VALUES
          \n#5 Running your way to better chronic disease prevention \nAerobic exercises like running will boost your cardiovascular health. Add some variation to your usual running routine to keep things interesting. One option is to include interval training as part of your exercise programme.
          \nLastly, take care of yourself by listening to your body, and easing up the pace if you need to.',
         3,
-        'https://img.freepik.com/free-vector/healthy-lifestyle-diet-fitness-vector-sign-shape-heart-with-multiple-icons-depicting-various-sports-vegetables-cereals-seafood-meat-fruit-sleep-weight-beverages_1284-44073.jpg?w=740&t=st=1707887566~exp=1707888166~hmac=48819fa386433e74762c39ffde74a5b267e8489045ace86d30ef6b9ac1907cae',
+        'https://img.freepik.com/free-vector/healthy-lifestyle-concept_1284-14707.jpg?w=740&t=st=1707938184~exp=1707938784~hmac=1275c322edcfa1c9d1599becee809dcaca474ace54e82371c76091c2d31e0ebf',
         'Author : macrovector, Designed by Freepik',  -- img_title
         2 -- educational_content_type_id
     ),
@@ -202,7 +195,7 @@ VALUES
          \nSteps you can take: \nStay in touch with family and friends. \nBe involved in your community. \nMaintain a positive attitude and do things that make you happy.
          \nLearn to recognize and manage stress in your life. Good ways to deal with stress include regular exercise, healthy eating habits, and relaxation exercises such as deep breathing or meditation.',
         4,
-        'https://img.freepik.com/free-vector/healthy-lifestyle-habits-cartoon-composition-with-nonsmoking-woman-practice-stress-relieving-yoga-8h-sleep-diet_1284-59040.jpg?w=740&t=st=1707896448~exp=1707897048~hmac=79b1bca491213206a13132bf7f70d75564a475f127f90ca6058c26260cccbce4',
+        'https://img.freepik.com/free-vector/fitness-4-flat-icons-square-banner_98292-1012.jpg?w=740&t=st=1707938366~exp=1707938966~hmac=93a48f7fabdd6f3c76c9a291ec5f7e0cb71f0ac140c42f7a85e673444d4397e1',
         'Author: macrovector, Designed by Freepik',  -- img_title
         1 -- educational_content_type_id
     ),
@@ -783,36 +776,36 @@ VALUES
         'Author: macrovector, Designed by Freepik',  -- img_title
         1 -- educational_content_type_id
     );
-    
-    
+
+
 
 -- Educational content review rating
 INSERT INTO educational_content_review_rating
 (Review, Rating, UserID, educational_contentid)
 VALUES
-    ('This is awesome!',                                3.2, '7', 1),
+    ('This is awesome!',                                5.0, '7', 1),
     ('The content is very insightful.',                 5.0, '8', 1),
-    ('I love this content!' ,                           4.0, '9', 1),
+    ('I love this content!' ,                           5.0, '9', 1),
     ('I love this content!' ,                           4.0, '12', 1),
-    ('This is awesome stuff!',                          3.2, '7', 2),
+    ('This is awesome stuff!',                          5.0, '7', 2),
     ('The content is very detailed',                    5.0, '8', 2),
     ('I love this content!' ,                           4.0, '9', 3),
     ('The content is very informative!',                5.0, '8', 4),
     ('I love this content!' ,                           4.0, '9', 5),
-    ('This is really helpful!' ,                        5.0, '9', 6),
-    ('The content is very informative!',                5.0, '8', 7),
-    ('The content is very detailed',                    5.0, '8', 8),
-    ('This is really helpful!' ,                        5.0, '9', 9),
-    ('The content is very informative!',                5.0, '8', 10),
-    ('The content is very detailed',                    5.0, '8', 11),
-    ('This is awesome!',                                5.0, '7', 12),
-    ('The content is very insightful.',                 5.0, '8', 13),
-    ('I love this content!' ,                           4.0, '9', 14),
+    ('This is really helpful!' ,                        4.0, '9', 6),
+    ('The content is very informative!',                3.0, '8', 7),
+    ('The content is very detailed',                    3.0, '8', 8),
+    ('This is really helpful!' ,                        4.0, '9', 9),
+    ('The content is very informative!',                3.0, '8', 10),
+    ('The content is very detailed',                    4.0, '8', 11),
+    ('This is awesome!',                                3.0, '7', 12),
+    ('The content is very insightful.',                 4.0, '8', 13),
+    ('I love this content!' ,                           3.0, '9', 14),
     ('I love this content!' ,                           4.0, '12', 15),
-    ('The content is very informative!',                5.0, '8', 16),
-    ('The content is very detailed',                    5.0, '8', 17),
-    ('This is awesome!',                                5.0, '7', 18),
-    ('The content is very insightful.',                 5.0, '8', 19),
+    ('The content is very informative!',                4.0, '8', 16),
+    ('The content is very detailed',                    3.0, '8', 17),
+    ('This is awesome!',                                4.0, '7', 18),
+    ('The content is very insightful.',                 3.0, '8', 19),
     ('I love this content!' ,                           4.0, '9', 20),
     ('I love this content!' ,                           4.0, '12', 21),
     ('I love this content!' ,                           4.0, '9', 22),
@@ -820,30 +813,30 @@ VALUES
     ('I love this content!' ,                           4.0, '12', 24),
     ('I love this content!' ,                           4.0, '9', 25),
     ('I love this content!' ,                           4.0, '12', 26),
-    ('The content is very informative!',                5.0, '8', 27),
-    ('The content is very detailed',                    5.0, '8', 28),
-    ('This is awesome!',                                5.0, '7', 29),
-    ('The content is very insightful.',                 5.0, '8', 30),
-    ('I love this content!' ,                           4.0, '12', 31),
+    ('The content is very informative!',                3.0, '8', 27),
+    ('The content is very detailed',                    3.0, '8', 28),
+    ('This is awesome!',                                4.0, '7', 29),
+    ('The content is very insightful.',                 3.0, '8', 30),
+    ('I love this content!' ,                           3.0, '12', 31),
     ('I love this content!' ,                           4.0, '9', 32),
-    ('I love this content!' ,                           4.0, '12', 33),
-    ('I love this content!' ,                           4.0, '12', 34),
+    ('I love this content!' ,                           3.0, '12', 33),
+    ('I love this content!' ,                           3.0, '12', 34),
     ('I love this content!' ,                           4.0, '9', 35),
     ('I love this content!' ,                           4.0, '12', 36),
-    ('The content is very informative!',                5.0, '8', 37),
-    ('The content is very detailed',                    5.0, '8', 38),
-    ('This is awesome!',                                5.0, '7', 39),
-    ('The content is very insightful.',                 5.0, '8', 40),
+    ('The content is very informative!',                3.0, '8', 37),
+    ('The content is very detailed',                    3.0, '8', 38),
+    ('This is awesome!',                                3.0, '7', 39),
+    ('The content is very insightful.',                 4.0, '8', 40),
     ('I love this content!' ,                           4.0, '12', 41),
-    ('I love this content!' ,                           4.0, '9', 42),
-    ('I love this content!' ,                           4.0, '12', 43),
+    ('I love this content!' ,                           3.0, '9', 42),
+    ('I love this content!' ,                           3.0, '12', 43),
     ('I love this content!' ,                           4.0, '12', 44),
     ('I love this content!' ,                           4.0, '9', 45),
     ('I love this content!' ,                           4.0, '12', 46),
-    ('The content is very informative!',                5.0, '8', 47),
-    ('The content is very detailed',                    5.0, '8', 48),
-    ('This is awesome!',                                5.0, '7', 49),
-    ('The content is very insightful.',                 5.0, '8', 50),
-    ('This is awesome!',                                5.0, '7', 51),
-    ('The content is very insightful.',                 5.0, '8', 52),
-    ('The content is very insightful.',                 5.0, '8', 53);
+    ('The content is very informative!',                3.0, '8', 47),
+    ('The content is very detailed',                    4.0, '8', 48),
+    ('This is awesome!',                                3.0, '7', 49),
+    ('The content is very insightful.',                 4.0, '8', 50),
+    ('This is awesome!',                                3.0, '7', 51),
+    ('The content is very insightful.',                 4.0, '8', 52),
+    ('The content is very insightful.',                 3.0, '8', 53);

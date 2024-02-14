@@ -306,7 +306,7 @@ VALUES
         'If you are looking for great low-carbohydrate ideas that provide sufficient energy and nutrition, this meal plan provides you with various great options.',
         '2023-04-10',
         3, -- weight loss
-        'https://img.freepik.com/free-photo/top-view-boiled-eggs-with-olives-breasts-fresh-vegetables-tomatoes-grey-vegetable-food-meal-breakfast_140725-18886.jpg?w=1060&t=st=1707559930~exp=1707560530~hmac=ab1891ed1eced001a2948ec254058a04b7c75f2be2ace362e350369897452ed9',
+        'http://tinyurl.com/ycx57n6f',
         'Designed by Freepik',  -- img_title
         '34' -- userid
     ),

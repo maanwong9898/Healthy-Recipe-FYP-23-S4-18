@@ -4,105 +4,111 @@ import React, { useState, useRef, useEffect } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
+import MenuIcon from "@mui/icons-material/Menu";
 
 const HomeNavbar = () => {
   const router = useRouter();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [isDropdownVisible, setDropdownVisible] = useState(false);
 
   const handleLogin = () => {
     router.push("/userLogin");
   };
 
+  const handleHomePage = () => {
+    router.push("/");
+  };
+
+  const handleAboutUsPage = () => {
+    router.push("/aboutUs");
+  };
+
+  const handleRecipePage = () => {
+    router.push("/recipes");
+  };
+
+  const handleMealPlanPage = () => {
+    router.push("/mealPlan");
+  };
+
+  const handleEduContentPage = () => {
+    router.push("/educationalContent");
+  };
+
+  const handleBlogPostPage = () => {
+    router.push("/businessBlogPost");
+  };
+
   return (
-    <nav
-      className="bg-orange-50"
-      style={{ position: "sticky", top: 0, zIndex: 1000 }}
-    >
-      <div className="flex flex-wrap items-center justify-between mx-auto p-3 ">
+    <nav className="bg-orange-50 border-gray-200 dark:bg-gray-900">
+      <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
         <Image
           src="/logo.png"
           alt="My Healthy Recipe"
           width={100}
           height={100}
-          className="items-center justify-center"
+          className="flex items-center space-x-3 rtl:space-x-reverse cursor-pointer"
+          onClick={handleHomePage}
         />
-
-        {/* For small screen */}
-        <button
-          className="text-black p-2 rounded-md hover:text-orange-600 md:hidden"
-          onClick={() => setIsMenuOpen(!isMenuOpen)}
-        >
-          {isMenuOpen ? "✖" : "☰"}
-        </button>
-
-        {/* Login button */}
         <div className="flex md:order-2 space-x-3 md:space-x-0 rtl:space-x-reverse">
+          {/* Login button */}
           <button
+            type="button"
             onClick={handleLogin}
             className="text-white bg-orange-500 hover:bg-orange-600 font-semibold rounded-full text-base px-6 py-2 text-center md:mr-12"
           >
             Login
           </button>
+
+          {/* Hamburger menu for Mobile screen*/}
+          <button
+            type="button"
+            onClick={() => setIsMenuOpen(!isMenuOpen)}
+            className="md:hidden"
+          >
+            <MenuIcon fontSize="large" />
+          </button>
         </div>
 
-        {/* Links */}
         <div
-          className={`w-full md:flex md:w-auto ${
+          className={`${
             isMenuOpen ? "block" : "hidden"
-          }`}
+          } md:flex items-center justify-between w-full md:w-auto md:order-1 bg-stone-200 rounded-lg md:bg-transparent`}
         >
-          <div className="flex flex-col md:flex-row md:space-x-8 md:mt-0 md:text-lg md:font-medium">
-            <Link
-              href="/"
-              className="text-gray-900 hover:text-orange-600 rounded-md px-3 py-2 font-bold"
-            >
-              Home
-            </Link>
-            <Link
-              href="/aboutUs"
-              className="text-gray-900 hover:text-orange-600 rounded-md px-3 py-2 font-bold"
-            >
-              About Us
-            </Link>
-            <Link
-              href="/recipes"
-              className="text-gray-900 hover:text-orange-600 rounded-md px-3 py-2 font-bold"
-            >
-              Recipes
-            </Link>
-            <Link
-              href="/mealPlan"
-              className="text-gray-900 hover:text-orange-600 rounded-md px-3 py-2 font-bold"
-            >
-              Meal Plans
-            </Link>
-            <Link
-              href="/educationalContent"
-              className="text-gray-900 hover:text-orange-600 rounded-md px-3 py-2 font-bold"
-            >
-              Educational Contents
-            </Link>
-            <Link
-              href="/businessBlogPost"
-              className="text-gray-900 hover:text-orange-600 rounded-md px-3 py-2 font-bold"
-            >
-              Blogs
-            </Link>
+          <div className="items-center justify-between w-full md:flex md:w-auto md:order-1">
+            <ul className="flex flex-col font-medium p-4 md:p-0 mt-4 rounded-lg md:space-x-8 rtl:space-x-reverse md:flex-row md:mt-0 md:border-0 ">
+              <li
+                className="text-gray-900 hover:text-orange-600 rounded-md px-3 py-2 font-bold cursor-pointer"
+                onClick={handleAboutUsPage}
+              >
+                About Us
+              </li>
+              <li
+                className="text-gray-900 hover:text-orange-600 rounded-md px-3 py-2 font-bold cursor-pointer"
+                onClick={handleRecipePage}
+              >
+                Recipes
+              </li>
+              <li
+                className="text-gray-900 hover:text-orange-600 rounded-md px-3 py-2 font-bold cursor-pointer"
+                onClick={handleMealPlanPage}
+              >
+                Meal Plans
+              </li>
+              <li
+                className="text-gray-900 hover:text-orange-600 rounded-md px-3 py-2 font-bold cursor-pointer"
+                onClick={handleEduContentPage}
+              >
+                Educational Contents
+              </li>
+              <li
+                className="text-gray-900 hover:text-orange-600 rounded-md px-3 py-2 font-bold cursor-pointer"
+                onClick={handleBlogPostPage}
+              >
+                Blog Posts
+              </li>
+            </ul>
           </div>
         </div>
-        {/* Links for large screens*/}
-        {/* <div className="w-full md:flex md:w-auto mr-5">
-          <div className="flex flex-col md:flex-row items-start md:space-x-8 md:mt-0 md:text-sm md:font-medium">
-            <button
-              type="button"
-              onClick={handleLogin}
-              className="text-white bg-orange-500 hover:bg-orange-600 font-bold rounded-full text-base px-6 py-2 text-center"
-            >
-              Login
-            </button>
-          </div>
-        </div> */}
       </div>
     </nav>
   );

@@ -3,13 +3,14 @@ import React, { useState, useRef } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCircleUser } from "@fortawesome/free-solid-svg-icons";
+import AccountCircleIcon from "@mui/icons-material/AccountCircle";
+import MenuIcon from "@mui/icons-material/Menu";
+import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import SecureStorage from "react-secure-storage";
 
 const AccountDropdownMenu = ({ onLogout }) => {
   return (
-    <div className="absolute left-0 top-8 w-44 rounded-md shadow-lg bg-white z-10">
+    <div className="absolute left-0 top-10 w-48 rounded-lg shadow-lg bg-white z-10">
       <ul>
         <li className="px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
           <Link href="/businessUser/myAccount/viewAccount">My Account</Link>
@@ -24,13 +25,18 @@ const AccountDropdownMenu = ({ onLogout }) => {
 
 const RecipesDropdownMenu = () => {
   return (
-    <div className="absolute left-0 top-10 w-40 rounded-md shadow-lg bg-white z-1 text-sm">
+    <div className="lg:absolute lg:left-0 top-10 lg:w-48 rounded-lg lg:shadow-lg lg:bg-white z-50 font-medium">
       <ul>
-        <li className="px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
+        <li className="px-4 py-2 text-base lg:text-sm text-gray-700 hover:bg-gray-100">
           <Link href="/businessUser/recipes/createRecipe">Create Recipe</Link>
         </li>
-        <li className="px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
+        <li className="px-4 py-2 text-base lg:text-sm text-gray-700 hover:bg-gray-100">
           <Link href="/businessUser/recipes">View My Recipes</Link>
+        </li>
+        <li className="px-4 py-2 text-base lg:text-sm text-gray-700 hover:bg-gray-100">
+          <Link href="/businessUser/recipes/exploreAllRecipes">
+            Explore All Recipes
+          </Link>
         </li>
       </ul>
     </div>
@@ -39,15 +45,20 @@ const RecipesDropdownMenu = () => {
 
 const BlogPostDropdownMenu = () => {
   return (
-    <div className="absolute left-0 top-10 w-44 rounded-md shadow-lg bg-white z-10 text-sm">
+    <div className="lg:absolute lg:left-0 top-10 lg:w-48 rounded-lg lg:shadow-lg lg:bg-white z-50 font-medium">
       <ul>
-        <li className="px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
+        <li className="px-4 py-2 text-base lg:text-sm text-gray-700 hover:bg-gray-100">
           <Link href="/businessUser/businessBlogPost/createBusinessBlogPost">
             Create Blog Post
           </Link>
         </li>
-        <li className="px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
+        <li className="px-4 py-2 text-base lg:text-sm text-gray-700 hover:bg-gray-100">
           <Link href="/businessUser/businessBlogPost">View My Blog Posts</Link>
+        </li>
+        <li className="px-4 py-2 text-base lg:text-sm text-gray-700 hover:bg-gray-100">
+          <Link href="/businessUser/businessBlogPost/exploreAllBlogs">
+            Explore All Blog Posts
+          </Link>
         </li>
       </ul>
     </div>
@@ -56,16 +67,21 @@ const BlogPostDropdownMenu = () => {
 
 const EducationalContentDropdownMenu = () => {
   return (
-    <div className="absolute left-0 top-10 w-56 rounded-md shadow-lg bg-white z-10 text-sm">
+    <div className="lg:absolute lg:left-0 top-10 lg:w-48 rounded-lg lg:shadow-lg lg:bg-white z-50 font-medium">
       <ul>
-        <li className="px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
+        <li className="px-4 py-2 text-base lg:text-sm text-gray-700 hover:bg-gray-100">
           <Link href="/businessUser/educationalContent/createEducationalContent">
             Create Educational Content
           </Link>
         </li>
-        <li className="px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
+        <li className="px-4 py-2 text-base lg:text-sm text-gray-700 hover:bg-gray-100">
           <Link href="/businessUser/educationalContent">
             View My Educational Content
+          </Link>
+        </li>
+        <li className="px-4 py-2 text-base lg:text-sm text-gray-700 hover:bg-gray-100">
+          <Link href="/businessUser/educationalContent/exploreAllEducationalContent">
+            Explore All Educational Contents
           </Link>
         </li>
       </ul>
@@ -144,6 +160,18 @@ const BusinessUserNavBar = () => {
     }, 300);
   };
 
+  const toggleRecipesDropdown = () => {
+    setRecipesDropdownVisible(!isRecipesDropdownVisible);
+  };
+
+  const toggleBlogDropdown = () => {
+    seBlogDropdownVisible(!isBlogDropdownVisible);
+  };
+
+  const toggleEducationalContentDropdown = () => {
+    setEducationalContentDropdownVisible(!isEducationalContentDropdownVisible);
+  };
+
   //Logout handler
   const confirmAndLogout = () => {
     console.log("logout");
@@ -157,131 +185,165 @@ const BusinessUserNavBar = () => {
     router.push("/");
   };
 
+  const handleViewDashboard = () => {
+    router.push("/businessUser");
+  };
+
+  const handleViewMyAccount = () => {
+    router.push("/businessUser/myAccount/viewAccount");
+  };
+
   return (
-    <nav
-      className="bg-orange-50"
-      style={{ position: "sticky", top: 0, zIndex: 1000 }}
-    >
-      <div className="flex flex-wrap items-center justify-between mx-auto p-3">
+    <nav className="bg-orange-50 border-gray-200">
+      <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
         <Image
           src="/logo.png"
           alt="My Healthy Recipe"
           width={100}
           height={100}
-          className="items-center justify-center"
+          className="flex items-center space-x-3 rtl:space-x-reverse cursor-pointer"
+          onClick={handleViewDashboard}
+          priority
         />
 
-        {/* For small screen */}
-        <button
-          className="text-gray-900 p-2 rounded-md hover:text-orange-600 md:hidden"
-          onClick={() => setIsMenuOpen(!isMenuOpen)}
-        >
-          {isMenuOpen ? "✖" : "☰"}
-        </button>
-        <button
-          className="p-2 md:hidden"
-          onClick={() => setIsAccountMenuOpen(!isAccountMenuOpen)}
-        >
-          <FontAwesomeIcon icon={faCircleUser} size="xl" />
-          <span className="text-base tracking-normal font-medium ml-2 hover:text-orange-600">
-            {/* need to change to the actual username of logged in user */}
-            {username || "My Account"}
-          </span>
-        </button>
-
-        {/* Links - Dahsboard, Recipes, Blogs, Educational Content */}
-        <div
-          className={`w-full md:flex md:w-auto ${
-            isMenuOpen ? "block" : "hidden"
-          }`}
-        >
-          <div className="flex flex-col md:flex-row md:space-x-8 md:mt-0 md:text-lg md:font-medium">
-            {/* Dashboard */}
-            <Link
-              href="/businessUser"
-              className="text-gray-900 hover:text-orange-600 rounded-md px-3 py-2 font-bold"
+        <div className="relative flex items-center md:order-2 space-x-3 md:space-x-0 rtl:space-x-reverse">
+          <div
+            className="hidden lg:block md:block"
+            onMouseEnter={handleMouseEnterAccount}
+            onMouseLeave={handleMouseLeaveAccount}
+          >
+            {/* Account button */}
+            <button
+              type="button"
+              className="flex items-center justify-center text-sm"
             >
-              Dashboard
-            </Link>
-
-            {/* Recipes */}
-            <div
-              className="relative flex items-center"
-              onMouseEnter={handleMouseEnterRecipes}
-              onMouseLeave={handleMouseLeaveRecipes}
-            >
-              <span className="text-gray-900 hover:text-orange-600 rounded-md px-3 py-2 font-bold">
-                Recipes
+              <AccountCircleIcon fontSize="large" />
+              <span className="text-base font-bold ml-2 hover:text-orange-600">
+                My Account
               </span>
-              {isRecipesDropdownVisible && <RecipesDropdownMenu />}
-            </div>
-
-            {/* Blog Post */}
-            <div
-              className="relative flex items-center"
-              onMouseEnter={handleMouseEnterBlogPosts}
-              onMouseLeave={handleMouseLeaveBlogPosts}
-            >
-              <span className="text-gray-900 hover:text-orange-600 rounded-md px-3 py-2 font-bold">
-                Blogs
-              </span>
-              {isBlogDropdownVisible && <BlogPostDropdownMenu />}
-            </div>
-
-            {/* Educational Content */}
-            <div
-              className="relative flex items-center"
-              onMouseEnter={handleMouseEnterEducationalContent}
-              onMouseLeave={handleMouseLeaveEducationalContent}
-            >
-              <span className="text-gray-900 hover:text-orange-600 rounded-md px-3 py-2 font-bold">
-                Educational Contents
-              </span>
-              {isEducationalContentDropdownVisible && (
-                <EducationalContentDropdownMenu />
-              )}
-            </div>
+            </button>
+            {isAccountDropdownVisible && (
+              <AccountDropdownMenu onLogout={confirmAndLogout} />
+            )}
           </div>
+
+          {/* Hamburger menu for Mobile screen*/}
+          <button
+            type="button"
+            onClick={() => setIsMenuOpen(!isMenuOpen)}
+            className="md:hidden"
+          >
+            <MenuIcon fontSize="large" />
+          </button>
         </div>
 
-        {/* Links for large screens for Acccounts*/}
         <div
-          className={`w-full md:flex md:w-auto mr-5 ${
-            isAccountMenuOpen ? "block" : "hidden"
-          }`}
+          className={`${
+            isMenuOpen ? "block" : "hidden"
+          } md:flex items-center justify-between w-full md:w-auto md:order-1 bg-stone-200 rounded-lg md:bg-transparent`}
         >
-          <div className="flex flex-col md:flex-row items-start md:space-x-8 md:mt-0 md:text-sm md:font-medium">
-            <div
-              className="relative flex items-center"
-              onMouseEnter={handleMouseEnterAccount}
-              onMouseLeave={handleMouseLeaveAccount}
-            >
-              <span className="hidden md:block rounded font-bold  text-base cursor-pointer">
-                <FontAwesomeIcon icon={faCircleUser} size="xl" />
-                <span className="text-base tracking-normal font-bold ml-2 hover:text-orange-600">
-                  {/* need to change to the actual username of logged in user */}
-                  {username || "My Account"}
+          <div className="items-center justify-between w-full md:flex md:w-auto md:order-1">
+            {/* Large Screen View */}
+            <ul className="flex-col font-medium p-4 md:p-0 rounded-lg md:space-x-8 rtl:space-x-reverse md:flex-row md:mt-0 md:border-0 lg:flex hidden">
+              <li
+                className="text-gray-900 hover:text-orange-600 rounded-md px-3 py-2 font-bold cursor-pointer"
+                onClick={handleViewDashboard}
+              >
+                Dashboard
+              </li>
+              <li
+                className="relative text-gray-900 hover:text-orange-600 rounded-md px-3 py-2 font-bold cursor-pointer"
+                onMouseEnter={handleMouseEnterRecipes}
+                onMouseLeave={handleMouseLeaveRecipes}
+              >
+                Recipes
+                <span className="font-medium">
+                  {isRecipesDropdownVisible && <RecipesDropdownMenu />}
                 </span>
-              </span>
-              {/* {isAccountDropdownVisible && <AccountDropdownMenu />} */}
-              {isAccountDropdownVisible && (
-                <AccountDropdownMenu onLogout={confirmAndLogout} />
-              )}
-            </div>
+              </li>
+              <li
+                className="relative text-gray-900 hover:text-orange-600 rounded-md px-3 py-2 font-bold cursor-pointer"
+                onMouseEnter={handleMouseEnterBlogPosts}
+                onMouseLeave={handleMouseLeaveBlogPosts}
+              >
+                Blogs
+                <span className="font-medium">
+                  {isBlogDropdownVisible && <BlogPostDropdownMenu />}
+                </span>
+              </li>
+              <li
+                className="relative text-gray-900 hover:text-orange-600 rounded-md px-3 py-2 font-bold cursor-pointer"
+                onMouseEnter={handleMouseEnterEducationalContent}
+                onMouseLeave={handleMouseLeaveEducationalContent}
+              >
+                Educational Contents
+                <span className="font-medium">
+                  {isEducationalContentDropdownVisible && (
+                    <EducationalContentDropdownMenu />
+                  )}
+                </span>
+              </li>
+            </ul>
 
-            {/* For small screens */}
-            <Link href="/businessUser/myAccount/viewAccount">
-              <button className="block md:hidden py-2 pr-4 pl-3 rounded-lg md:ml-auto md:p-0 text-base font-bold hover:text-orange-600">
-                My Account
-              </button>
-            </Link>
-            <button
-              onClick={confirmAndLogout}
-              className="block md:hidden py-2 pr-4 pl-3 rounded-lg md:ml-auto md:p-0 text-base font-bold hover:text-orange-600"
-            >
-              {" "}
-              Logout
-            </button>
+            {/* Mobile View */}
+            <ul className="flex flex-col font-medium p-4 md:p-0 mt-4 rounded-lg md:space-x-8 rtl:space-x-reverse md:flex-row md:mt-0 md:border-0 lg:hidden">
+              <li
+                className="text-gray-900 hover:text-orange-600 rounded-md px-3 py-2 font-bold cursor-pointer"
+                onClick={handleViewDashboard}
+              >
+                Dashboard
+              </li>
+              <li
+                className="relative text-gray-900 hover:text-orange-600 rounded-md px-3 py-2 font-bold cursor-pointer"
+                onClick={toggleRecipesDropdown}
+              >
+                Recipes
+                <span>
+                  <ExpandMoreIcon />
+                  {isRecipesDropdownVisible && <RecipesDropdownMenu />}
+                </span>
+              </li>
+              <li
+                className="text-gray-900 hover:text-orange-600 rounded-md px-3 py-2 font-bold cursor-pointer"
+                onClick={toggleBlogDropdown}
+              >
+                Blogs
+                <span>
+                  <ExpandMoreIcon />
+                  {isBlogDropdownVisible && <BlogPostDropdownMenu />}
+                </span>
+              </li>
+              <li
+                className="relative text-gray-900 hover:text-orange-600 rounded-md px-3 py-2 font-bold cursor-pointer"
+                onClick={toggleEducationalContentDropdown}
+              >
+                Educational Contents
+                <span>
+                  <ExpandMoreIcon />
+                  {isEducationalContentDropdownVisible && (
+                    <EducationalContentDropdownMenu />
+                  )}
+                </span>
+              </li>
+            </ul>
+
+            {/* My Accounts for Mobile View */}
+            <div className="border-t-2 border-gray-300 lg:hidden md:hidden">
+              <ul className="px-4 py-3">
+                <li
+                  className="text-gray-900 hover:text-orange-600 rounded-md px-3 py-2 font-bold cursor-pointer"
+                  onClick={handleViewMyAccount}
+                >
+                  My Account
+                </li>
+                <li
+                  className="text-gray-900 hover:text-orange-600 rounded-md px-3 py-2 font-bold cursor-pointer"
+                  onClick={confirmAndLogout}
+                >
+                  Logout
+                </li>
+              </ul>
+            </div>
           </div>
         </div>
       </div>

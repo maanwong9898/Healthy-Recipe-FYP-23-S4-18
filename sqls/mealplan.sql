@@ -56,7 +56,7 @@ VALUES
         3, -- weight loss
         'https://img.freepik.com/free-photo/view-arrangement-with-healthy-food-wooden-background_23-2148287512.jpg?w=1060&t=st=1706974108~exp=1706974708~hmac=a572df90688c87112cabf270e182b08731cce78e16b2529019e2a0a621f51498',
         'Designed by Freepik',  -- img_title
-        '4' -- userid
+        '5' -- userid
     ),
     (
         4,
@@ -70,7 +70,7 @@ VALUES
         2, -- maintain health
         'https://img.freepik.com/free-photo/closeup-bright-fresh-vegetables-fruits-berries_169016-20713.jpg?w=1060&t=st=1706974313~exp=1706974913~hmac=c345661003cedc41897386be14c22385dd596ea5dc1b95857079324e75d17c74',
         'Designed by pvproductions',  -- img_title
-        '3' -- userid
+        '5' -- userid
     ),
     (
         5,
@@ -84,7 +84,7 @@ VALUES
         2, -- maintain health
         'https://img.freepik.com/free-photo/closeup-bright-fresh-vegetables-fruits-berries_169016-20713.jpg?w=1060&t=st=1706974313~exp=1706974913~hmac=c345661003cedc41897386be14c22385dd596ea5dc1b95857079324e75d17c74',
         'Designed by pvproductions',  -- img_title
-        '3' -- userid
+        '5' -- userid
     ),
     (
         6,
@@ -98,7 +98,7 @@ VALUES
         2, -- maintain health
         'https://img.freepik.com/free-photo/closeup-bright-fresh-vegetables-fruits-berries_169016-20713.jpg?w=1060&t=st=1706974313~exp=1706974913~hmac=c345661003cedc41897386be14c22385dd596ea5dc1b95857079324e75d17c74',
         'Designed by pvproductions',  -- img_title
-        '1' -- userid
+        '5' -- userid
     ),
     (
         7,
@@ -112,7 +112,7 @@ VALUES
         2, -- maintain health
         'https://img.freepik.com/free-photo/healthy-food-vs-unhealthy-food_23-2147961022.jpg?w=1060&t=st=1707014411~exp=1707015011~hmac=699970e8b2e172324289e923af3a2ad956dc18c3acad1a09f754787a82449bb2',
         'Designed by pvproductions',  -- img_title
-        '1' -- userid
+        '32' -- userid
     ),
     (
         8,
@@ -126,7 +126,7 @@ VALUES
         3, -- weight loss
         'https://img.freepik.com/free-photo/fried-meat-with-greens-tomatoes-clay-pot_140725-7317.jpg?w=1060&t=st=1707022112~exp=1707022712~hmac=ef1dc83bcd9b0e12f9e5df228b9b63d87eeb9cc54201e5b510e46ebd50c03ba1',
         'Designed by kamranaydinov',  -- img_title
-        '2' -- userid
+        '32' -- userid
     ),
     (
         9,
@@ -140,7 +140,7 @@ VALUES
         2, -- maintain health
         'https://cdn.cleaneatingmag.com/wp-content/uploads/2021/11/YogurtBowl_Feature.jpg?crop=535:301&width=1070&enable=upscale',
         'Designed by Olimpia Davies',  -- img_title
-        '6' -- userid
+        '36' -- userid
     ),
     (
         10,
@@ -154,7 +154,7 @@ VALUES
         2, -- maintain health
         'https://cdn.cleaneatingmag.com/wp-content/uploads/2022/02/CleanEating_CE101FebMar2022_MealPlan_Steak-Sweet-Potato-Tacos_web-1.jpg?crop=535:301&width=1070&enable=upscale',
         'Designed by Olimpia Davies',  -- img_title
-        '6' -- userid
+        '36' -- userid
     ),
     (
         11,
@@ -168,7 +168,7 @@ VALUES
         2, -- maintain health
         'https://cdn.cleaneatingmag.com/wp-content/uploads/2022/02/CleanEating_CE101FebMar2022_MealPlan_Steak-Sweet-Potato-Tacos_web-1.jpg?crop=535:301&width=1070&enable=upscale',
         'Designed by Olimpia Davies',  -- img_title
-        '5' -- userid
+        '35' -- userid
     ),
     (
         12,
@@ -182,7 +182,7 @@ VALUES
         2, -- maintain health
         'https://img.freepik.com/free-photo/top-view-person-raising-salad-bowl_1150-37020.jpg?w=1060&t=st=1707051989~exp=1707052589~hmac=9957858c1e731b397cb504c680a76bf57061cd7960acf862631c77276e3ade76',
         'Designed by jcomp',  -- img_title
-        '5' -- userid
+        '35' -- userid
     ),
     (
         13,
@@ -196,7 +196,7 @@ VALUES
         2, -- maintain health
         'https://cdn.cleaneatingmag.com/wp-content/uploads/2020/10/spicy-salmon-poke-bowls_82-web-1.jpg?crop=535:301&width=1070&enable=upscale',
         'Designed by cleaneating',  -- img_title
-        '1' -- userid
+        '31' -- userid
     ),
     (
         14,
@@ -210,7 +210,7 @@ VALUES
         1, -- weight gain
         'https://assets-global.website-files.com/623de5fee0c46d7bf3a5ff45/651c7825f0b63a838180c5a0_iStock-1433432507.jpg',
         'Designed by Shutterstock',  -- img_title
-        '1' -- userid
+        '31' -- userid
     ),
     (
         15,
@@ -224,7 +224,7 @@ VALUES
         1, -- weight gain
         'https://www.verywellfit.com/thmb/213N4bvA4MKDuYWOolfmzD__AFQ=/750x0/filters:no_upscale():max_bytes(150000):strip_icc():format(webp)/VWFit-Meal-Plan-Journey-7-Day-High-Protein-Meal-Plan-edit-2b3cf8e0d09a440f9fa12eb569815456.jpg',
         'Designed by Verywell',  -- img_title
-        '1' -- userid
+        '36' -- userid
     ),
     (
         16,
@@ -238,7 +238,7 @@ VALUES
         3, -- weight loss
         'https://cdn.cleaneatingmag.com/wp-content/uploads/2017/05/spinach-cauli-rice-salad-with-cashew-dressing-69-web-1.jpg?crop=535:301&width=1070&enable=upscale',
         'Designed by cleaneating',  -- img_title
-        '1' -- userid
+        '36' -- userid
     );
     (
         17,
@@ -252,7 +252,7 @@ VALUES
         1, -- weight gain
         'https://img.freepik.com/free-photo/close-up-hand-holding-pen_23-2148484639.jpg?w=996&t=st=1707464723~exp=1707465323~hmac=3a6c845c6261ec6be11455686c2ee1903582e1bd61aadc8a6f241772ad9754e1',
         'Designed by Freepik',  -- img_title
-        '1' -- userid
+        '37' -- userid
     ),
     (
         18,
@@ -266,7 +266,7 @@ VALUES
         3, -- weight loss
         'https://img.freepik.com/free-photo/background-food-bowl-workout-meal-space_1428-677.jpg?w=1060&t=st=1707494903~exp=1707495503~hmac=1415a8278f47334812ad1d009ce75734f4a06080f8cf366da00b29f288601067',
         'Designed by Freepik',  -- img_title
-        '2' -- userid
+        '32' -- userid
     ),
     (
         19,
@@ -280,7 +280,7 @@ VALUES
         2, -- maintain health
         'https://img.freepik.com/free-photo/high-angle-plate-with-keto-diet-food-nuts_23-2149260319.jpg?w=1060&t=st=1707554574~exp=1707555174~hmac=9c8cb27b64e0eb4bcc9268f982710877edf464c7e0034962429c7773c62dc9a6',
         'Designed by Freepik',  -- img_title
-        '2' -- userid
+        '32' -- userid
     ),
     (
         20,
@@ -294,7 +294,7 @@ VALUES
         3, -- weight loss
         'https://img.freepik.com/free-photo/mature-women-ready-cook-together_23-2148354958.jpg?w=1060&t=st=1707559390~exp=1707559990~hmac=372557b0b010ec7a8fd508f2ded1b3b106adaee27f2c083d9daa8fbd5bd169e6',
         'Designed by Freepik',  -- img_title
-        '2' -- userid
+        '34' -- userid
     ),
     (
         21,
@@ -308,7 +308,7 @@ VALUES
         3, -- weight loss
         'https://img.freepik.com/free-photo/top-view-boiled-eggs-with-olives-breasts-fresh-vegetables-tomatoes-grey-vegetable-food-meal-breakfast_140725-18886.jpg?w=1060&t=st=1707559930~exp=1707560530~hmac=ab1891ed1eced001a2948ec254058a04b7c75f2be2ace362e350369897452ed9',
         'Designed by Freepik',  -- img_title
-        '2' -- userid
+        '34' -- userid
     ),
     (
         22,
@@ -322,7 +322,7 @@ VALUES
         1, -- weight gain
         'https://img.freepik.com/free-photo/chicken-steak-topped-with-white-sesame-peas-tomatoes-broccoli-pumpkin-white-plate_1150-24770.jpg?w=1060&t=st=1707560531~exp=1707561131~hmac=e401d7d512d5669f917b593e36a1935fe06eba3259863cc7b63990a9a3189e8c',
         'Designed by Freepik',  -- img_title
-        '4' -- userid
+        '34' -- userid
     ),
     (
         23,
@@ -336,7 +336,7 @@ VALUES
         3, -- weight loss
         'https://img.freepik.com/free-photo/nice-salad-near-measuring-tape_23-2147778453.jpg?w=1060&t=st=1707711272~exp=1707711872~hmac=b72fb49d1575a9af7fc3966ea4f24951d88e0a9dc9d24630477246522effda02',
         'Designed by Freepik',  -- img_title
-        '4' -- userid
+        '35' -- userid
     );
     
     

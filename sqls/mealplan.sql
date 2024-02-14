@@ -434,4 +434,7 @@ VALUES
 (2, 13, 5, 'I have been following this meal plan for 3 weeks now. I have gained 3 pounds. I feel great and I am not hungry at all. I highly recommend this meal plan.', '2023-06-15'),
 (3, 11, 5, 'This meal plan is amazing. I have lost 5 pounds in 2 weeks. I feel great and I am not hungry at all. I highly recommend this meal plan.', '2023-06-15'),
 (3, 12, 4, 'I have been following this meal plan for 3 weeks now. I have lost 3 pounds. I feel great and I am not hungry at all. I highly recommend this meal plan.', '2023-06-15'),
-(3, 13, 5, 'I have been following this meal plan for 3 weeks now. I have lost 3 pounds. I feel great and I am not hungry at all. I highly recommend this meal plan.', '2023-06-15');
+(3, 13, 5, 'I have been following this meal plan for 3 weeks now. I have lost 3 pounds. I feel great and I am not hungry at all. I highly recommend this meal plan.', '2023-06-15'),
+(4, 15, 5, 'This meal plan is amazing. I managed to maintain my weight for 2 weeks. My body feels healthier too! I highly recommend this meal plan.', '2023-07-10'),
+(4, 41, 4, 'I have been following this meal plan for 3 weeks now. My weight did not change and my body feels healthier and in a better mood! I highly recommend this meal plan.', '2023-06-20'),
+(12, 43, 5, 'This meal plan is superb! I managed to maintain my weight for 3 weeks. I feel great and I am not hungry at all. I highly recommend this meal plan.', '2023-06-25');

@@ -1726,7 +1726,7 @@ VALUES
     ('I love this recipe!' ,                            4.0, '9', 1),
     ('I love this recipe!' ,                            4.0, '12', 1),
     ('This is very awesome',                            3.2, '7', 2),
-    ('The recipe is very d',                            5.0, '8', 2),
+    ('The recipe is very nice',                            5.0, '8', 2),
     ('I love this recipe!' ,                            4.0, '9', 2),
     ('This is very awesome',                            3.2, '12', 2);
 

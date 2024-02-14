@@ -7,8 +7,9 @@ import Link from "next/link";
 import axiosInterceptorInstance from "../axiosInterceptorInstance";
 import RegisteredUserNavBar from "../components/navigation/registeredUserNavBar";
 import SecureStorage from "react-secure-storage";
+import { get } from "http";
 
-// NEED TO PASS DASHABORD TO GET USER ID AND HEALTH GOALS /register/dashboard
+// UNABLE TO CALL MEAL PLANS, ISSUE IN CONDITION LOGIC .. NEED HELP TO FIX IT
 
 // fetch most popular educational contents
 const fetchMostPopularEduContent = async () => {
@@ -109,6 +110,23 @@ const fetchMealPlansByHealthGoals = async (healthGoalId) => {
   }
 };
 
+const fetchMostPopularMealPlans = async () => {
+  try {
+    console.log("Fetching most popular meal plans...");
+    const response = await axiosInterceptorInstance.get(
+      "/registeredUsers/getMealPlans"
+    );
+    console.log("Most Popular Meal Plans:", response.data);
+    const filteredData = response.data.filter(
+      (mealPlan) => mealPlan.active === true
+    );
+    return filteredData;
+  } catch (error) {
+    console.error("Failed to fetch most popular meal plans:", error);
+    throw error;
+  }
+};
+
 // Fetch the average rating for each single meal plan
 // const fetchMealPlanAverage = async (mealPlanId) => {
 //   try {
@@ -147,6 +165,20 @@ const fetchRecipesByDPandAllergies = async (userId) => {
   }
 };
 
+const fetchMostPopularRecipes = async () => {
+  try {
+    console.log("Fetching most popular recipes...");
+    const response = await axiosInterceptorInstance.get(
+      "/landingPage/getMostPopularRecipes"
+    );
+    console.log("Most Popular Recipes:", response.data);
+    return response.data;
+  } catch (error) {
+    console.error("Failed to fetch most popular recipes:", error);
+    throw error;
+  }
+};
+
 // Fetch average rating for each single recipe
 // const fetchAvgRatingForRecipe = async (recipeId) => {
 //   try {
@@ -168,10 +200,13 @@ const fetchRecipesByDPandAllergies = async (userId) => {
 
 const RegisteredUserHomepage = () => {
   const router = useRouter();
-  const [recipesByDP, setRecipesByDP] = useState([]);
-  const [mealPlansByHealthGoals, setMealPlansByHealthGoals] = useState([]);
+  // const [recipesByDP, setRecipesByDP] = useState([]);
+  //const [mealPlansByHealthGoals, setMealPlansByHealthGoals] = useState([]);
   const [mostPopularEduContent, setMostPopularEduContent] = useState([]);
   const [mostPopularBlogPosts, setMostPopularBlogPosts] = useState([]);
+  const [recipes, setRecipes] = useState([]);
+  const [mealPlans, setMealPlans] = useState([]);
+
   const [isLoading, setIsLoading] = useState(true);
   const [isChecking, setIsChecking] = useState(true);
 
@@ -224,6 +259,45 @@ const RegisteredUserHomepage = () => {
       };
 
       // Sepcifically for fetching meal plans based on health goals + ratings count display
+      // const getMealPlansByHealthGoals = async (healthGoalId) => {
+      //   try {
+      //     const mealPlans = await fetchMealPlansByHealthGoals(healthGoalId);
+      //     // const mealPlansWithRatings = await Promise.all(
+      //     //   mealPlans.map(async (healthGoalMP) => {
+      //     //     const average = await fetchMealPlanAverage(healthGoalMP.id);
+      //     //     return { ...healthGoalMP, average }; // Combine the plan with its ratings
+      //     //   })
+      //     // );
+      //     //return mealPlansWithRatings;
+      //     setMealPlansByHealthGoals(mealPlans);
+      //   } catch (error) {
+      //     console.error("Error fetching meal plans with ratings:", error);
+      //     throw error;
+      //   }
+      // };
+
+      const getandSetRecipes = async (userId) => {
+        try {
+          // Attempt to fetch recipes based on dietary preferences and allergies
+          const recipesByDPAndAllergies = await fetchRecipesByDPandAllergies(
+            userId
+          );
+
+          if (recipesByDPAndAllergies && recipesByDPAndAllergies.length > 0) {
+            // If there are recipes returned, use these recipes
+            setRecipes(recipesByDPAndAllergies);
+          } else {
+            // If no recipes are returned, fetch and set the most popular recipes
+            const mostPopularRecipes = await fetchMostPopularRecipes();
+            setRecipes(mostPopularRecipes);
+          }
+        } catch (error) {
+          console.error("Error fetching recipes:", error);
+          throw error;
+        }
+      };
+
+      // Sepcifically for fetching meal plans based on health goals + ratings count display
       const getMealPlansByHealthGoals = async (healthGoalId) => {
         try {
           const mealPlans = await fetchMealPlansByHealthGoals(healthGoalId);
@@ -234,33 +308,14 @@ const RegisteredUserHomepage = () => {
           //   })
           // );
           //return mealPlansWithRatings;
-          setMealPlansByHealthGoals(mealPlans);
+          setMealPlans(mealPlans);
         } catch (error) {
           console.error("Error fetching meal plans with ratings:", error);
           throw error;
         }
       };
 
-      // Sepcifically for fetching recipes based on DP and Allergies + ratings count display
-      const getRecipesByDPandAllergies = async (userId) => {
-        try {
-          const recipes = await fetchRecipesByDPandAllergies(userId);
-          // const recipesWithRatings = await Promise.all(
-          //   recipes.map(async (recipe) => {
-          //     const average = await fetchAvgRatingForRecipe(recipe.id);
-          //     return { ...recipe, average }; // Correctly combine the recipe with its ratings
-          //   })
-          // );
-          setRecipesByDP(recipes); // Update state with fetched recipes
-        } catch (error) {
-          console.error(
-            "Failed to fetch recipes based on dietary preferences and allergies:",
-            error
-          );
-        }
-      };
-
-      const viewUserDashboard = async () => {
+      const getandSetMealPlans = async () => {
         try {
           const userId = SecureStorage.getItem("userId");
           const token = SecureStorage.getItem("token");
@@ -272,24 +327,30 @@ const RegisteredUserHomepage = () => {
             config
           );
           console.log("User data fetched from backend:", response.data);
-
-          // Fetch recipes based on dietary preferences and allergies
-          await getRecipesByDPandAllergies(userId);
-
-          // Fetch meal plans based on health goal if available
           const healthGoalId = response.data.healthGoal?.id;
+          console.log("User Health Goal IDssss:", healthGoalId);
+
           if (healthGoalId) {
+            // If a health goal is present, fetch meal plans related to that health goal
             await getMealPlansByHealthGoals(healthGoalId);
+            console.log("Meal Plans based on Health Goalsssss:", mealPlans);
+          } else {
+            // If no health goal is found, fetch the most popular meal plans
+            const mostPopularMealPlans = await fetchMostPopularMealPlans();
+            setMealPlans(mostPopularMealPlans);
+            console.log("Most Popular Meal Plansssss:", mostPopularMealPlans);
           }
         } catch (error) {
-          console.error("Error fetching user data", error);
+          console.error("Error fetching meal plans:", error);
+          throw error;
         }
       };
 
       Promise.all([
         getMostPopularEduContents(),
         getMostPopularBlogs(),
-        viewUserDashboard(),
+        getandSetMealPlans(),
+        getandSetRecipes(SecureStorage.getItem("userId")),
       ])
         .catch((error) => {
           console.error("Error in fetching data: ", error);
@@ -360,11 +421,8 @@ const RegisteredUserHomepage = () => {
   };
 
   // RECIPE RELATED
-  // const latestRecipes = [...AllRecipes]
-  //   .sort((a, b) => new Date(b.createdDateTime) - new Date(a.createdDateTime))
-  //   .slice(0, 3);
 
-  const recipeLimit = [...recipesByDP].slice(0, 3);
+  const recipeLimit = [...recipes].slice(0, 3);
 
   // Redirect to the specific recipe page
   const handleViewRecipes = (id) => {
@@ -536,6 +594,8 @@ const RegisteredUserHomepage = () => {
   // const latestMealPlans = [...AllMealPlans]
   //   .sort((a, b) => new Date(b.createdDateTime) - new Date(a.createdDateTime))
   //   .slice(0, 3);
+
+  const mealPlanLimit = [...mealPlans].slice(0, 3);
 
   const handleViewMealPlan = (id) => {
     // Make sure the Meal Plan title
@@ -742,7 +802,7 @@ const RegisteredUserHomepage = () => {
                 Meal Plans
               </h2>
               <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
-                {mealPlansByHealthGoals.map((post) => renderMealPlanCard(post))}
+                {mealPlans.map((post) => renderMealPlanCard(post))}
               </div>
             </div>
           </>

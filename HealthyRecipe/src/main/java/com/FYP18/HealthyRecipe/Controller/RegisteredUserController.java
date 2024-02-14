@@ -19,6 +19,7 @@ import com.FYP18.HealthyRecipe.Entity.UserInfoOverTime;
 import com.FYP18.HealthyRecipe.Entity.Categories.Allergies;
 import com.FYP18.HealthyRecipe.Repository.RegisteredUserRepository;
 import com.FYP18.HealthyRecipe.Repository.UserInfoRepository;
+import com.FYP18.HealthyRecipe.Service.LandingPageService;
 import com.FYP18.HealthyRecipe.Service.RecipeService;
 import com.FYP18.HealthyRecipe.Service.RegisteredUserService;
 
@@ -46,6 +47,9 @@ public class RegisteredUserController {
 
     @Autowired
     private RecipeService recipeService;
+
+    @Autowired
+    private LandingPageService landingPageService;
     //   @DeleteMapping("/delete/{id}")
     // public ResponseEntity<?> deleteBlog(@PathVariable("id") long id )
   
@@ -92,11 +96,16 @@ public class RegisteredUserController {
     }
 
     @GetMapping("/getMealPlans/{healthGoalId}")
-    public List<MealPlan> getMealPlans(@PathVariable Long healthGoalId)
-    {
+    public List<MealPlanDTO> getMealPlans(@PathVariable Long healthGoalId)
+    { 
         return service.getMealPlans(healthGoalId);
     }
-     
+    
+    @GetMapping("/getMealPlans")
+    public List<MealPlanDTO> getMealPlans()
+    { 
+        return landingPageService.getMostPopularMealPlans();
+    }
     
     @GetMapping("/findRecipeDTOsByAllergiesAndDP/{userId}")
     public List<RecipeDTO> findRecipeDTOsByAllergiesAndDP(@PathVariable String userId)
@@ -110,4 +119,6 @@ public class RegisteredUserController {
     {
         return recipeService.findRecipeDTOsByAllergiesAndDP(userId, count);
     }
+
+    // public List<MealPlanDTO> findMealPlanDTOs()
 }

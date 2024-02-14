@@ -75,8 +75,8 @@ VALUES
         'Culinary Journey Through International Cookbooks',
         'Embark on a flavorful journey with international cookbooks. FlavorsOfWorld presents a collection of cookbooks that transport you to different corners of the globe. From Italian pasta to Japanese sushi, explore diverse cuisines and bring culinary richness to your kitchen.',
         21, -- userId
-        'https://img.freepik.com/free-photo/full-table-italian-meals-ai-generated-image_511042-1707.jpg?t=st=1706875875~exp=1706879475~hmac=3b95110865e269353dee112227db0726c19ee2d31e98f0788d22dcdcfc24aa6f&w=1380',
-        'Author : ojosujono, Designed by Freepik',  -- img_title
+        'https://img.freepik.com/free-vector/hand-drawn-italian-cuisine_23-2149341154.jpg?w=740&t=st=1707890224~exp=1707890824~hmac=55e6f3a2c85ff1fa8644e37a9873ba7e94f2b0f953ed51602d02a8f1d5a836a5',
+        'Designed by Freepik',  -- img_title
         1 -- blog_type_id cookbook
     ),
     (
@@ -86,7 +86,7 @@ VALUES
         'Spruce Up Your Kitchen: Creative Decor Ideas',
         'Transform your kitchen into a stylish haven with creative decor ideas. HomeDecorInspire brings you tips on enhancing the aesthetics of your kitchen space. From vibrant wall art to functional storage solutions, discover ways to infuse personality and charm into your culinary haven.',
         21, -- userId
-        'https://img.freepik.com/free-photo/modern-kitchen-interior-design_23-2150772047.jpg?t=st=1706876107~exp=1706879707~hmac=0793fa78f9321f260c6b56b8dedd55f366471dedf860b4207e41ec203250ea5b&w=996',
+        'https://img.freepik.com/free-photo/modern-kitchen-interior-design_23-2150772053.jpg?t=st=1707890323~exp=1707893923~hmac=8af89928b3fe96388142779aad9337b317a92cacc18178b6aedaf183106d3208&w=996',
         'Designed by Freepik',  -- img_title
         3 -- blog_type_id Miscellaneous
     ),
@@ -97,8 +97,8 @@ VALUES
         'Smart Kitchen Appliances: Embracing Technology in the Culinary Space',
         'Discover the future of cooking with smart kitchen appliances. ModernChef introduces you to innovative gadgets that leverage technology to simplify your culinary endeavors. From smart ovens to connected blenders, explore how the modern kitchen is evolving with cutting-edge technology.',
         21, -- userId
-        'https://img.freepik.com/free-photo/close-up-smartphone-with-kitchen-control_23-2148994128.jpg?w=996&t=st=1706988254~exp=1706988854~hmac=bb68f2552d7ce6deeb01503dad58129ee295910a4820d83f073bb2b7f16bc86f',
-        'Designed by Freepik',  -- img_title
+        'https://img.freepik.com/free-photo/elegant-modern-kitchen-with-stainless-steel-appliances-generated-by-ai_188544-26862.jpg?t=st=1707890271~exp=1707893871~hmac=efc0d8ce84fd9322e0512a7dd230249580081698ecf728e1194b1acf8b8deefe&w=1060',
+        'Author: vecstock, Designed by Freepik',  -- img_title
         2 -- blog_type_id kitchenware
     ),
     (
@@ -152,8 +152,8 @@ VALUES
         'Culinary Adventures Across Continents: A Cookbook Showcase',
         'Join GlobalFlavors on a culinary adventure as we showcase a collection of cookbooks that take you on a journey across continents. From spicy dishes of Asia to hearty meals of Europe, explore diverse flavors and expand your cooking repertoire with these delightful culinary treasures.',
         21, -- userId
-        'http://tinyurl.com/jnat6tkn',
-        'Author: KamranAydinov, Designed by Freepik',  -- img_title
+        'https://img.freepik.com/free-vector/recipe-book-concept-illustration_114360-7481.jpg?w=996&t=st=1707890779~exp=1707891379~hmac=49119d5677ae8d5390f6b4a06b9f7ec1da267314644d15b96874d21a9c7ac219',
+        'Author: storyset, Designed by Freepik',  -- img_title
         1 -- blog_type_id cookbook
     ),
     (
@@ -163,8 +163,8 @@ VALUES
         'Unveiling Culinary Tales: Must-Read Cookbooks for Food Enthusiasts',
         'Join CulinaryChronicles as we unveil captivating culinary tales through must-read cookbooks. Whether you are a seasoned food enthusiast or a novice in the kitchen, these storytelling cookbooks offer a delightful blend of recipes and narratives, making your culinary journey truly memorable.',
         28, -- userId
-        'https://img.freepik.com/free-vector/slicing-tomato-salad_53876-6911.jpg?w=740&t=st=1707024271~exp=1707024871~hmac=b8ae518fd67c49083e87b9cf841a84f3c519aff436869d799df1c0ece289431a',
-        'Author: rawpixel.com, Designed by Freepik',  -- img_title
+        'https://img.freepik.com/free-vector/tiny-chefs-cooking-healthy-food-according-recipe-book_74855-15536.jpg?w=996&t=st=1707891079~exp=1707891679~hmac=f829dffa39dffc1055a8461c20ab17c7ae00d79c7459d86bf2e0562b1f19f1df',
+        'Author: pch.vector, Designed by Freepik',  -- img_title
         1 -- blog_type_id cookbook
     ),
     (
@@ -174,8 +174,8 @@ VALUES
         'Unconventional Kitchen Hacks: Elevate Your Culinary Experience',
         'Dive into the world of KitchenVibes as we share unconventional kitchen hacks to elevate your culinary experience. Discover creative ways to repurpose common kitchen tools, explore time-saving cooking techniques, and embrace innovative solutions for common kitchen challenges. Transform your cooking space into a hub of creativity with these unique and practical kitchen miscellanea!',
         28, -- userId
-        'https://img.freepik.com/premium-vector/kitchen-shelves-with-cooking-tools-set-kitchen-utensils-vector-illustration_263366-27.jpg?w=740',
-        'Author: kuryanovichtatsiana, Designed by Freepik',  -- img_title
+        'https://img.freepik.com/free-psd/dinnerware-elements-wooden-shelf_176382-1728.jpg?w=1060&t=st=1707891343~exp=1707891943~hmac=27481b3b3aca2f6eae40998d165d1a539970787019bd154f807a096bc53e72a5',
+        'Author: alexandercho, Designed by Freepik',  -- img_title
         3 -- blog_type_id Miscellaneous
     ),
     (
@@ -185,8 +185,8 @@ VALUES
         'Essential Tools for Every Kitchen: A Comprehensive Guide',
         'Explore comprehensive guide to essential tools for every kitchen. From versatile knives to efficient gadgets, make your cooking endeavors seamless and enjoyable.',
         23, -- userId
-        'https://img.freepik.com/free-photo/set-kitchen-knifes-table_1373-48.jpg?w=1060&t=st=1707050562~exp=1707051162~hmac=8337310a8d68dba07ddb3cdb979db8ed1044cb269ce64cdc190cd71389060d53',
-        'Author: aopsan, Designed by Freepik',  -- img_title
+        'https://img.freepik.com/free-photo/chef-s-male-hand-cutting-tomato-with-sharp-knife-board_23-2147863736.jpg?w=996&t=st=1707891488~exp=1707892088~hmac=a8e49bd313bb1afc3c77b0e883a23c520bba3fac100f2ca75f30c323553fa5f1',
+\        'Designed by Freepik',  -- img_title
         2 -- blog_type_id kitchenware
     ),
     (
@@ -207,7 +207,7 @@ VALUES
         'Innovative Kitchen Gadgets: Enhance Your Culinary Journey',  -- Title
         'Discover the latest in kitchen innovations with KitchenInnovations. From smart appliances to ingenious gadgets, we unveil a world of innovative tools that can enhance your culinary journey and simplify your time in the kitchen.',
         24, -- userId
-        'https://img.freepik.com/free-photo/smart-application-tablet-placed-kitchen-desk-empty-house-automation-system-turning-l_482257-2841.jpg?w=1380&t=st=1707051079~exp=1707051679~hmac=58c3b4770cab439b1d9d178bc75fb86cc8b1046197329323ad7e32ebe06cef1d',
+        'https://img.freepik.com/free-photo/man-looking-tablet-with-intelligent-software-placed-kitchen-table-controlling-light-with-high_482257-2843.jpg?w=1380&t=st=1707891672~exp=1707892272~hmac=c22434716aec9cbc1db614748864792d3fe28a941227ccf6be04d5616429a0a0',
         'Author: DC Studio, Designed by Freepik',  -- img_title
         2 -- blog_type_id kitchenware
     ),
@@ -218,8 +218,8 @@ VALUES
         'Elevate Your Style: Chic Cookware for Modern Kitchens', -- Title
         'ChicCookware presents a collection of stylish cookware designed to elevate the aesthetic of modern kitchens. From sleek pots and pans to elegant utensils, explore how these chic additions can transform your cooking space into a fashionable culinary haven.',
         25, -- userId
-        'https://img.freepik.com/free-vector/kitchen-tools-with-vegetables_1284-11446.jpg?w=740&t=st=1707051276~exp=1707051876~hmac=521599198dc8ab629ecdc87c53a785e4dc592bca78d6868e92f3cf2ae71e30a7',
-        'Author: Macrovector, Designed by Freepik',  -- img_title
+        'https://img.freepik.com/free-photo/overhead-shot-frying-pan-its-lid-black-table_181624-14812.jpg?w=996&t=st=1707892169~exp=1707892769~hmac=b327bad3c9421cf40a256df1e3e42a2b0d6d06386a7cf9e501bbe59461cb3343',
+        'Author: wirestock, Designed by Freepik',  -- img_title
         2 -- blog_type_id kitchenware
     ),
     (
@@ -240,8 +240,8 @@ VALUES
         'Holistic Wellness: Integrating Mind, Body, and Kitchen', -- Title
         'Embark on a journey of holistic wellness with WellnessWonders. Explore the connection between mind, body, and kitchen as we delve into mindful cooking practices, nourishing recipes, and wellness tips to enhance your overall well-being.',
         26, -- userId
-        'https://img.freepik.com/free-vector/woman-cooking-with-red-tomatoes_24877-76629.jpg?w=740&t=st=1707062080~exp=1707062680~hmac=f54fdf09690a5b27806681003d230a0647fb926e948bdeb23a17b2fa6afd1c18',
-        'Author: studiogstock, Designed by Freepik',  -- img_title
+        'https://img.freepik.com/free-photo/ai-generated-image-banana_23-2150682982.jpg?t=st=1707893757~exp=1707897357~hmac=01ca6fa737b11e04c2bd34db2fa762fd63f7970de7dbc402636d382ce79291ed&w=1060',
+        'Designed by Freepik',  -- img_title
         3 -- blog_type_id Miscellaneous
     ),
     (
@@ -273,7 +273,7 @@ VALUES
         'Unleashing Creativity in the Kitchen: Beyond Recipes', -- Title
         'Join CulinaryCreativity in unlocking the art of culinary expression. Explore creative approaches in the kitchen beyond traditional recipes, from food styling to personalized presentations. Unleash your inner chef and transform your kitchen into a canvas of culinary creativity.',
         26, -- userId
-        'https://img.freepik.com/free-photo/empty-modern-room-with-furniture_23-2149178335.jpg?w=996&t=st=1707062629~exp=1707063229~hmac=b54ee25c22ba4233aba420adaee025d945457cc8f242884cdf093b3267f42b44',
+        'https://img.freepik.com/free-photo/modern-kitchen-interior-design_23-2150772051.jpg?t=st=1707894018~exp=1707897618~hmac=d87808b47848b21c408036ee07d428e613e5acf1176f4f75bd118970a4e7fcda&w=996',
         'Designed by Freepik',  -- img_title
         3 -- blog_type_id Miscellaneous
     ),
@@ -306,8 +306,8 @@ VALUES
         'Global Flavors on Your Bookshelf: Must-Have Cookbooks', -- Title
         'Embark on a global culinary adventure with CulinaryExplorer. Discover a curated list of must-have cookbooks that bring diverse flavors from around the world to your kitchen. From traditional recipes to contemporary twists, these cookbooks are essential for any culinary enthusiast.',
         25, -- userId
-        'https://img.freepik.com/free-vector/recipe-book-concept-illustration_114360-7481.jpg?t=st=1707117163~exp=1707117763~hmac=a4ef94243efe98bf41b6be4cb3e62e8838307defe8cd28c31982e3f28b952862',
-        'Author: storyset, Designed by Freepik',  -- img_title
+        'https://img.freepik.com/free-vector/cartoon-recipe-note-with-food_52683-73978.jpg?w=1380&t=st=1707894569~exp=1707895169~hmac=24598caeb3194518cc0290144a0346e0fc786a90a1ab6fcd1d9c2e17d401aabf',
+        'Author: pikisuperstar, Designed by Freepik',  -- img_title
         1 -- blog_type_id cookbook
     ),
     (
@@ -328,7 +328,7 @@ VALUES
         'Handcrafted Kitchenware: Elevating Culinary Artistry', -- Title
         'Discover the artistry of handcrafted kitchenware with CulinaryCraftsmanship. Explore a collection of meticulously crafted utensils, cookware, and accessories designed to elevate your culinary skills. From artisanal knives to handmade pottery, embrace the beauty of craftsmanship in your kitchen.',
         22, -- userId
-        'https://img.freepik.com/free-photo/front-view-wooden-spoons-with-pots-cinnamon-dark-wall-color-seasoning-salt-food-cutlery-photo_179666-17650.jpg?w=996&t=st=1707118058~exp=1707118658~hmac=2cd943d07f3472b01d4132be6ebb2be74cbdca3548003a079eeb1a02732603ec',
+        'https://img.freepik.com/free-photo/front-view-wooden-spoons-with-pots-cinnamon-dark-wall-color-seasoning-salt-food-cutlery-photo_179666-17650.jpg?w=996&t=st=1707894797~exp=1707895397~hmac=5e4f4969fbeddca9d62308e79a61a339a1836f07344c81a79a4fb34e5a27fc07',
         'Author: mdjaff, Designed by Freepik',  -- img_title
         2 -- blog_type_id kitchenware
     ),
@@ -449,8 +449,8 @@ VALUES
         'Upgrade Your Culinary Space with Modern Kitchen Gadgets',
         'Transform your kitchen into a modern culinary haven with our selection of innovative kitchen gadgets. From smart sous vide machines to high-speed blenders, discover the latest tools to enhance your cooking experience!',
         27, -- userId
-        'http://tinyurl.com/ycxyba35',
-        'Author: YuliiaKa, Designed by Freepik',
+        'http://tinyurl.com/4ud56mnh',
+        'Designed by Freepik',
         2 -- blog_type_id kitchenware
     ),
     (
@@ -581,7 +581,7 @@ VALUES
         'Wholesome Cooking Made Easy with NutriBullet Blenders',
         'Blend your way to healthier meals with NutriBullet blenders. Whether you are whipping up nutrient-packed smoothies or creamy soups, our powerful blenders make meal preparation effortless. Join the NutriBullet community and embark on a journey towards a healthier, happier you.',
         24, -- userId
-        'https://img.freepik.com/free-photo/young-woman-preparing-her-nutrition-diet_23-2149297645.jpg?w=996&t=st=1707737064~exp=1707737664~hmac=f794636e159f17f177d343407ce9b29bce0281e98302095a9699e6b342a5bea2',
+        'https://img.freepik.com/free-vector/flat-smoothies-blender-glass-illustration_23-2148959566.jpg?w=740&t=st=1707895796~exp=1707896396~hmac=40978dc5cbb185d60534ace4203f61d0579fe53f83f3d5cc83f4e86baee2f348',
         'Designed by Freepik',
         2 -- blog_type_id kitchenware
     ),
@@ -596,8 +596,6 @@ VALUES
         'Author: macrovector, Designed by Freepik',
         1 -- blog_type_id cookbook
     );
-
-
 
 
 

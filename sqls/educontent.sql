@@ -21,12 +21,12 @@ VALUES
          The average recommended daily caloric intake is 2200 calories for males and 1800 calories for females.
          \nOne of the simplest and most effective methods for controlling your calorie intake is portion control. Often, we eat what is on our plate rather than what our body needs.
          Consuming the right number of calories is a good first step towards achieving a healthier body. However, not all calories are equal. Keeping to the calorie count on a diet consisting of only sugary cakes, meat dishes, or a glass of wine is far from ideal. This is because your body needs a variety of vitamins and minerals, as well as fibre to function properly.
-         \nEating healthy is not limited to eating the right amount and the right mix. It is also important for optimum nutrition to choose healthy foods prepared with healthier options and ingredients. Steamed chicken, for example, is far healthier than deep-fried chicken.
-         \nFor example, wholegrains are healthier than refined grains (white rice or bread) as they contain more vitamins, antioxidants and fibre. In addition, they also keep you filling full for longer, which reduce the risk of overeating. Choosing healthier cooking oils are also important.
-         If fat loss is one of your weight loss goals, merely controlling your calorie intake will not be enough to do the trick. Diet and exercise are pertinent when it comes to healthy weight loss.You should be doing a combination of cardio and strength-training exercises, which are useful in losing fat as well as gaining muscle mass.',
+         \nEating healthy is not limited to eating the right amount and the right mix. It is also important for optimum nutrition to choose healthy foods prepared with healthier options and ingredients. 
+         \nFor example, wholegrains are healthier than refined grains as they contain more vitamins, antioxidants and fibre. In addition, they also keep you filling full for longer, which reduce the risk of overeating. Choosing healthier cooking oils are also important.
+         If fat loss is one of your weight loss goals, merely controlling your calorie intake will not be enough. Diet and exercise are pertinent when it comes to healthy weight loss.You should be doing a combination of cardio and strength-training exercises, which are useful in losing fat as well as gaining muscle mass.',
         3, -- userID
-        'https://img.fs-isolated-white-complex-diet-concept_74855-22969.jpg?w=1380&t=st=1706756983~exp=1706757583~hmac=9a9542c1b1ed2dcda25fd86008ebd059343238c837acf766afbfd8a46548fedf',
-        'Author : pch.vector, Designed by Freepik',  -- img_title
+        'https://img.freepik.com/free-photo/calories-nutrition-food-exercise-concept_53876-133971.jpg?w=1060&t=st=1707889671~exp=1707890271~hmac=427b505a764fd8bed74a9e6ec2377d9f8578d21610ef4f26658494c15902b667',
+        'Author : rawpixel.com, Designed by Freepik',  -- img_title
         1 -- educational_content_type_id
     ),
     (
@@ -58,10 +58,10 @@ VALUES
          For healthy bone and muscles, you are recommended to partake in bone and muscle strengthening exercises at least 2-3 days a week. Hitting the gym does make it easy to fit workouts into your schedule.
          \n#4 Yoga for a balance of strength and flexibility \nDoing yoga a few times a week will keep you healthy. Yoga may seem meditative and relaxing, but it also requires a balance of strength and flexibility, and can prove to be a challenging workout. Beginners should start with a Hatha class to pick up the fundamental poses, before trying out more intensive and faster styles of yoga such as Vinyasa.
          \n#5 Running your way to better chronic disease prevention \nAerobic exercises like running will boost your cardiovascular health. Add some variation to your usual running routine to keep things interesting. One option is to include interval training as part of your exercise programme.
-         \nLastly, take care of yourself by listening to your body, and easing up the pace if you need to — exercise caution today so you can exercise again tomorrow!',
+         \nLastly, take care of yourself by listening to your body, and easing up the pace if you need to.',
         3,
-        'https://img.freepik.com/premium-vector/healthy-lifestyle-vector-illustration-with-organic-vegetables-fruit-workout_2175-18027.jpg?w=996',
-        'Author : denayune, Designed by Freepik',  -- img_title
+        'https://img.freepik.com/free-vector/healthy-lifestyle-diet-fitness-vector-sign-shape-heart-with-multiple-icons-depicting-various-sports-vegetables-cereals-seafood-meat-fruit-sleep-weight-beverages_1284-44073.jpg?w=740&t=st=1707887566~exp=1707888166~hmac=48819fa386433e74762c39ffde74a5b267e8489045ace86d30ef6b9ac1907cae',
+        'Author : macrovector, Designed by Freepik',  -- img_title
         2 -- educational_content_type_id
     ),
     (
@@ -123,8 +123,8 @@ VALUES
          \nHealthy Eating Tip 2: Avoid Food high in fat \nAvoid dishes high in fat, especially saturated fat. This can come from fatty meat or poultry skin or from deep frying or coconut milk in sauces. \nBraised pork belly, or just about any dish made with meat that is high in fat, should be replaced with leaner cuts.
          \nHealthy Eating Tip 3: Go for Good, Healthy Food \nBoiled, grilled or steamed dishes such as fish are healthier options. Vegetables are a must — chap chai is a good choice. Traditional yu sheng can be a healthy dish, but only if you limit the oil, sugary sauces and fried crackers​.',
         3,
-        'https://img.freepik.com/free-photo/chinese-new-year-lantern_778687-2294.jpg?t=st=1706877341~exp=1706880941~hmac=45ab9e093fcf2ae5b28b7cc27919e86262ceb7dac421ff0a9d2ed75c5bd91d7f&w=1380',
-        'Author: verazinha, Designed by Freepik',  -- img_title
+        'https://img.freepik.com/free-vector/chinese-new-year-celebration-festive-background_53876-96455.jpg?w=996&t=st=1707889994~exp=1707890594~hmac=4ce542b140b585a26c4c940d0f67515dd562035487fb68c2450287163f5ed1e6',
+        'Author: rawpixel.com, Designed by Freepik',  -- img_title
         1 -- educational_content_type_id
     ),
     (
@@ -202,7 +202,7 @@ VALUES
          \nSteps you can take: \nStay in touch with family and friends. \nBe involved in your community. \nMaintain a positive attitude and do things that make you happy.
          \nLearn to recognize and manage stress in your life. Good ways to deal with stress include regular exercise, healthy eating habits, and relaxation exercises such as deep breathing or meditation.',
         4,
-        'https://www.freepik.cegetables-cereals-seafood-meat-fruit-sleep-weight-beverages_10703442.htm#query=healthy%20living&position=28&from_view=search&track=ais&uuid=c66ce9cd-0d9d-4713-895a-cbe5bb977b79',
+        'https://img.freepik.com/free-vector/healthy-lifestyle-habits-cartoon-composition-with-nonsmoking-woman-practice-stress-relieving-yoga-8h-sleep-diet_1284-59040.jpg?w=740&t=st=1707896448~exp=1707897048~hmac=79b1bca491213206a13132bf7f70d75564a475f127f90ca6058c26260cccbce4',
         'Author: macrovector, Designed by Freepik',  -- img_title
         1 -- educational_content_type_id
     ),
@@ -230,8 +230,8 @@ VALUES
         \nStrength training. \nDo strength training exercises for all major muscle groups at least two times a week. Aim to do a single set of each exercise using a weight or resistance level heavy enough to tire your muscles after about 12 to 15 repetitions. Regular exercise can help you control your weight, reduce your risk of heart disease and certain cancers, and strengthen your bones and muscles.
         \nStarting a fitness program is an important decision, but it does not have to be an overwhelming one. By planning carefully and pacing yourself, you can make fitness a healthy habit that lasts a lifetime.',
         23,
-        'https://img.freepik.com/free-vector/isomeg?w=740&t=st=1707022776~exp=1707023376~hmac=7ed82bea8e5ec90fa5c39f986225cfe780dd46622b2ad6237132d9bd6dee2fd1',
-        'Author: macrovector, Designed by Freepik',  -- img_title
+        'https://img.freepik.com/free-vector/woman-practicing-exercice-with-sports-icons_24877-51355.jpg?w=740&t=st=1707896822~exp=1707897422~hmac=1f0f8e4c24ab1e295b2b81b4249d7150abe15761b742927f24d37633869ab843',
+        'Author: studiogstock, Designed by Freepik',  -- img_title
         1 -- educational_content_type_id
     ),
     (
@@ -242,8 +242,8 @@ VALUES
         'Do you feel like you are unable keep up with the latest nutrition news because its always changing? Knowledge about nutrition and diet evolves over time, but there are some nutrition basics that can help you sort through the latest research and advice.
         \nNutrition basics come down to eating wholesome foods that support your health. Want to go beyond the basics? Talk to a healthcare professional, such as a dietitian. You can ask for diet advice that takes into account your health, lifestyle and food preferences.',
         23,
-        'https://img.freepik.coms-diet-planning_1284-59044.jpg?w=740&t=st=1707023087~exp=1707023687~hmac=0c6f38b5356847d5c5595cedc36cceffcb8e5025651af65b658db8e3da891a0a',
-        'Author: macrovector, Designed by Freepik',  -- img_title
+        'https://img.freepik.com/premium-vector/food-sources-set_101903-1246.jpg',
+        'Author: vssstudio, Designed by Freepik',  -- img_title
         2 -- educational_content_type_id
     ),
     (
@@ -296,7 +296,7 @@ VALUES
         'Benefits of Healthy Eating for Adults includes: Keeps skin, teeth, and eyes healthy, Supports muscles, Boosts immunity, Strengthens bones, Lowers risk of heart disease, type 2 diabetes, Helps the digestive system function, Helps achieve and maintain a healthy weight
         \nBenefits of Healthy Eating for Children includes: Keeps skin, teeth, and eyes healthy, Supports muscles, Helps achieve and maintain a healthy weight, Strengthens bones, Supports brain development and healthy growth, Boosts immunity, Helps the digestive system function.',
         23,
-        'https://img.freepik.com/free-photo/portrait-healthy-woman-eating-salad-kitchen_23-2148075987.jpg?w=996&t=st=1707061004~exp=1707061604~hmac=98c9078a5b017111a38abfd355c0755598a3dd7c254db39e47d38dd0b7214e4a',
+        'https://img.freepik.com/free-photo/portrait-healthy-woman-eating-salad-kitchen_23-2148075987.jpg?w=996&t=st=1707897150~exp=1707897750~hmac=c90748bbb2982f45dc43cd8364213cc57f4f6d109e7d9192f01a219769357413',
         'Designed by Freepik',  -- img_title
         1 -- educational_content_type_id
     ),
@@ -308,7 +308,7 @@ VALUES
         'Following a healthy diet has many benefits, including building strong bones, protecting the heart, preventing disease, and boosting mood.
         \nA healthy diet typically includes nutrient-dense foods from all of the major food groups, including lean proteins, whole grains, healthy fats, and fruits and vegetables of many colors. Healthy eating habits also include replacing foods that contain trans fats, added salt, and sugar with more nutritious options. Following a healthy diet has many benefits, including building strong bones, protecting the heart, preventing disease, and boosting the mood.',
         23,
-        'https://img.freepik.com/free-vector/healthy-food-concept-with-people-vegetables_107791-11174.jpg?w=996&t=st=1707061253~exp=1707061853~hmac=bc0d17c0a949982f257043fd094b6af77e1fd0c41de80a7421d25c2f08d5c088',
+        'https://img.freepik.com/free-vector/healthy-food-concept-with-people-vegetables_107791-11174.jpg?w=996&t=st=1707897230~exp=1707897830~hmac=78a566255d8e1e3228f301ef53fe50d161165c37416d53067dfa839a813a817a',
         'Author: upklyak, Designed by Freepik',  -- img_title
         1 -- educational_content_type_id
     ),
@@ -336,8 +336,8 @@ VALUES
         \nHealth Benefits \nAll food and beverage choices matter. Focus on variety, amount, and nutrition. \nEating foods such as fruits that are lower in calories per cup, instead of other higher calorie foods, may help lower overall calorie intake.
         \nEating a diet rich in fruits and vegetables as part of an overall healthy diet may reduce the risk for heart disease, including heart attack and stroke. \nAdding fruit can help increase the amount of fiber and potassium we eat. These are important nutrients that many people do not get enough of.',
         25,
-        'https://img.freepik.com/free-photo/organic-autumn-fruits_114579-44376.jpg?w=996&t=st=1707120350~exp=1707120950~hmac=5cf26463725eeb49c63d4e1dd2bb3ac92f4a28c6d603c84b17d1dd891bcb1682',
-        'Author: azerbaijan_stockers, Designed by Freepik',  -- img_title
+        'https://img.freepik.com/free-vector/hand-drawn-fruit-collection_23-2148938559.jpg?w=740&t=st=1707897415~exp=1707898015~hmac=78b5cbd722c70c27ef1febcc7aadcfcf87005a3fac5c82ec4ad4b6c6eef47649',
+        'Designed by Freepik',  -- img_title
         1 -- educational_content_type_id
     ),
     (
@@ -365,7 +365,7 @@ VALUES
         \nSources of Oils \nMany foods supply oils, like nuts, olives, some fish, and avocados. Most oils are high in monounsaturated fats or polyunsaturated fats, which are healthy fats, and low in saturated fats. Foods that are mainly made of oil include mayonnaise, certain salad dressings, and soft margarine that comes in a tub or can be squeezed from a bottle.
         \nThe fat from some tropical plants like coconut oil, palm oil, and palm kernel oil are not included in the oils category because they are higher in saturated fats than other oils. They can be thought of as solid fats. Solid fats are fats that are solid at room temperature, like butter, lard and shortening. Solid fats come from many animal foods and can be made from vegetable oils.',
         27,
-        'https://img.freepik.com/free-photo/cherry-tomatoes-pastas-garlic-green-pepper-olive-oil-wooden-board_114579-66679.jpg?w=996&t=st=1707125650~exp=1707126250~hmac=c0f6214f8d60c754937dd05a1e48a20150cce9d39146cc7fb277a34fe75b4d6a',
+        'https://img.freepik.com/free-photo/stack-raw-pasta-nests-bottle-olive-oil-vegetables-wooden-plate_114579-18203.jpg?w=996&t=st=1707897642~exp=1707898242~hmac=027f5342b76272e3f3b27ff4cbb910356ba3a8bd072698bfeb759f2762d0f5ea',
         'Author: azerbaijan_stockers, Designed by Freepik',  -- img_title
         1 -- educational_content_type_id
     ),
@@ -451,8 +451,8 @@ VALUES
         \nAre You Drinking Enough? \nWhile we might instinctively reach for a drink after exercise or on a hot day, most of us only drink when we are thirsty. Unfortunately, a parched throat is not a good indicator of dehydration—by the time you feel thirsty, your body is already crying out for help. So, how much is enough? You’ve probably heard “eight glasses a day” (about two litres)—and that is a useful guide in general.
         \nQuick tips to keep hydrated \nBring back your water bottle! It not only ensures you always have a drink at hand, but can be a quirky fashion accessory, too. \nEat foods with high water content, such as lettuce, watermelon and broccoli.',
         24,
-        'https://img.freepik.com/free-photo/woman-pouring-water-into-glass_23-2148728795.jpg?w=996&t=st=1707131691~exp=1707132291~hmac=98688076282ca7a9a18e0c4f95c19a2df367b1248ae993312a9ca57b0337df5a',
-        'Designed by Freepik',  -- img_title
+        'https://img.freepik.com/free-vector/woman-man-drink-water-health-diet-thirst-hot-hydration-summer-sport-illustration-vector-clipart_10045-701.jpg?w=740&t=st=1707897930~exp=1707898530~hmac=ca3a74d8475bd065335005fbf45c7c16888cd97bfb496aa24e0756f90fd90c55',
+        'Author: syarifahbrit, Designed by Freepik',  -- img_title
         2 -- educational_content_type_id
     ),
     (
@@ -464,7 +464,7 @@ VALUES
         \nIt should include: \nProtein (found in fish, meat, poultry) \nFat (found in animal and dairy products) \nCarbohydrates (found in fruits, vegetables, whole grains) \nVitamins and Minerals \nWater (both in what you drink, and naturally in foods)
         \nDieting or not, everyone needs a mix of those nutrients, ideally from foods. Fill half your plate with fruits and vegetables. Split the other half between whole grains and lean protein. Stick to your calorie “budget,” because when you are working on losing weight, you need to burn more calories than you eat or drink.',
         23,
-        'https://img.freepik.com/free-vector/main-food-groups-macronutrients-vector_1308-127916.jpg?w=1060&t=st=1707227650~exp=1707228250~hmac=12d758a1788c0d3d0554c67fc9daed7e833dd0acc7dccd950f75eb2f2356b5b9',
+        'https://img.freepik.com/free-vector/main-food-groups-macronutrients-vector_1308-125548.jpg?w=1060&t=st=1707898038~exp=1707898638~hmac=5bc464e908f2613ee064cef5c3cc7e74bfd81512458bcb25eb459d5e016d647a',
         'Author: brgfx, Designed by Freepik',  -- img_title
         1 -- educational_content_type_id
     ),
@@ -491,7 +491,7 @@ VALUES
         \nTip No. 2: Be choosy about nighttime snacks. \nMindless eating occurs most frequently after dinner, when you finally sit down and relax. Snacking in front of the TV is one of the easiest ways to throw your diet off course. Either close down the kitchen after a certain hour, or allow yourself a low-calorie snack, like a 100-calorie pack of cookies or a half-cup scoop of low-fat ice cream.
         \nTip No. 3: Eat protein at every meal. \nProtein is the ultimate fill-me-up food - its more satisfying than carbs or fats and keeps you feeling full for longer. It also helps preserve muscle mass and encourages fat burning. So be sure to incorporate healthy proteins like seafood, lean meat, egg whites, yogurt, cheese, soy, nuts, or beans into your meals and snacks.',
         21,
-        'https://img.freepik.com/free-photo/healthy-menu-recipe-food-diet_53876-122837.jpg?w=996&t=st=1707228255~exp=1707228855~hmac=cfb5ca41d30cb7dba6735142129e94d9ac331070b45ab6755f6904d0cff7a820',
+        'https://img.freepik.com/free-photo/healthy-menu-recipe-food-diet_53876-122837.jpg?w=996&t=st=1707898209~exp=1707898809~hmac=e9dd6b52cee08eee4f7cb0e47c41c9748a85320aa2ea74d383d15b517910a0ae',
         'Author: rawpixel.com, Designed by Freepik',  -- img_title
         1 -- educational_content_type_id
     ),
@@ -519,7 +519,7 @@ VALUES
         \nBut what does a “healthy” grocery shopping list include? \nGenerally, a healthy, well-rounded diet should primarily comprise whole, nutrient-dense foods. Foods such as veggies, fruits, protein sources like fish and eggs, beans, nuts, and seeds, these are foods to prioritize on your list.
         \nPlanning a weekly menu \nIf you prefer, you can bring a weekly menu to the store instead of a regular shopping list. This menu can list which ingredients you need to make the meals you would like to cook the week ahead.',
         25,
-        'https://img.freepik.com/free-photo/woman-picking-bell-peppers-reusable-bag-ecology-earth-day-thematics_1268-21680.jpg?w=1380&t=st=1707229566~exp=1707230166~hmac=451cc055fff9485580ffe8e17ddc6320e97d2e8c07492985cea1765735496761',
+        'https://img.freepik.com/free-photo/woman-picking-bell-peppers-reusable-bag-ecology-earth-day-thematics_1268-21680.jpg?w=1380&t=st=1707898423~exp=1707899023~hmac=2b546394ed6d9b395aeeb735c213bca2b6720e88053233105fc8e2e68e0cd847',
         'Author: frimufilms, Designed by Freepik',  -- img_title
         1 -- educational_content_type_id
     ),
@@ -533,7 +533,7 @@ VALUES
          \nMay improve blood flow and lower blood pressure \nThe flavanoids in dark chocolate can stimulate the endothelium, the lining of arteries, to produce nitric oxide.One of the functions of NO is to send signals to the arteries to relax, which lowers the resistance to blood flow and therefore reduces blood pressure.
          \nMay reduce heart disease risk \nThe compounds in dark chocolate appear to be highly protective against the oxidation of LDL. In the long term, this should cause much less cholesterol to lodge in the arteries, resulting in a lower risk of heart disease.',
         25,
-        'https://img.freepik.com/free-photo/close-up-view-delicious-chocolate-wooden-table_23-2148746668.jpg?w=1380&t=st=1707230131~exp=1707230731~hmac=26c7f680e3d909ddb7447d4d8357558a53c2ff52df45aff90bcb1b9e88bcf711',
+        'https://img.freepik.com/free-photo/top-view-dark-arrangement-with-chocolate-with-copy-space_23-2148553179.jpg?w=1380&t=st=1707898687~exp=1707899287~hmac=2bf612e7553cded87cc36cd0d9270af33dc427fdf5ad1a3d1c8e33fb31fe082c',
         'Designed by Freepik',  -- img_title
         1 -- educational_content_type_id
     ),
@@ -562,7 +562,7 @@ VALUES
          \n2. Great source of protein \nSalmon is rich in high quality protein. Like omega-3 fats, protein is an essential nutrient that you must get from your diet.
          \nProtein plays a number of important roles in your body, including helping you heal after injury, protecting bone health, and maintaining muscle mass during weight loss and as you get older.',
         26,
-        'https://img.freepik.com/free-photo/salmon-dish-with-herbs-spices_23-2148195516.jpg?w=996&t=st=1707231240~exp=1707231840~hmac=55163b601bef55c8da5fd4f8240762d931c79915e11b0b6827ab0cb9378db6ce',
+        'https://img.freepik.com/free-photo/salmon-dish-with-herbs-spices_23-2148195516.jpg?w=996&t=st=1707898851~exp=1707899451~hmac=585106474b6055e89e61db26fcc83495614c412cc3fac274bb933204ff230ea3',
         'Designed by Freepik',  -- img_title
         1 -- educational_content_type_id
     ),
@@ -577,7 +577,7 @@ VALUES
         \n2. May support weight loss \nApples are high in fiber and water, which makes them filling. Eating whole apples increased fullness more than consuming equal amounts of apple juice. This may happen because whole apples reduce gastric emptying — the rate at which your stomach empties.
         \n3. Could be good for your heart \nApples have been linked to a lower chance of heart disease. Research has found that eating 100-150 g/d of whole apples is associated with a lower chanceTrusted Source of heart disease and risk factors such as high blood pressure.',
         28,
-        'https://img.freepik.com/free-vector/sticker-basket-with-many-red-apples_1308-59661.jpg?w=900&t=st=1707231584~exp=1707232184~hmac=8bb46b54360f7d388a332b4f5f6785684a3f9e9962b7bb94f7172566499402c8',
+        'https://img.freepik.com/free-vector/sticker-basket-with-many-red-apples_1308-59661.jpg?w=900&t=st=1707898962~exp=1707899562~hmac=a128c24d1639876000548d72aecb99a09a10f16804ec33b4f76305cbe4037252',
         'Author: brgfx, Designed by Freepik',  -- img_title
         1 -- educational_content_type_id
     ),
@@ -665,8 +665,8 @@ VALUES
         \nYounger kids need three meals and about two snacks a day. \nOlder kids need to eat three meals and about one snack a day (they may need two snacks if they are going through a growth spurt or if they are very physically active).
         \nWhere Should Kids Snack? \nWhen at home, designate a certain area as the "eating-only zone'' and limit all snacking to that location. The kitchen table or countertop works well. When kids snack all over the house, that makes it hard for you to know what and how much they are eating. Also, dont let kids eat snacks while watching TV. Studies show that this mindless munching leads to overeating.',
         23,
-        'https://img.freepik.com/fchocolate-crunood-recipe-snacks-concept_74855-14297.jpg?w=1060&t=st=1707373609~exp=1707374209~hmac=4902ac2f226508f8c665e2011fc574ca66fc287b7278da2d59370d220fcd8e94',
-        'Author: pch.vector, Designed by Freepik',  -- img_title
+        'https://img.freepik.com/free-vector/people-with-delicious-food-drinks_23-2148470092.jpg?w=740&t=st=1707899467~exp=1707900067~hmac=d50184834e6f2c640100215d67d611ca8e82a2b4279f7a458f89736b7570ea2c',
+        'Designed by Freepik',  -- img_title
         1 -- educational_content_type_id
     ),
     (
@@ -679,7 +679,7 @@ VALUES
         \nSweet Potatoes: The Color of Health \nBeta-carotene gives these tubers their orange color. Your body converts beta-carotene to vitamin A, a nutrient that helps prevent night blindness and age related macular degeneration. Sweet potatoes not your favorite? For beta-carotene, try other deep orange foods, such as carrots and butternut squash
         \nHealthy Fats: Include Sources of Omega-3 Fatty Acids \nBesides helping with the absorption of certain nutrients, some healthy fats also contain omega-3 fatty acids. Salmon is an excellent source of omega-3s, which may be beneficial for eye health.',
         22,
-        'https://img.freepik.com/free-photo/funny-young-woman-with-orange-halves-kitchen_169016-29797.jpg?w=996&t=st=1707374515~exp=1707375115~hmac=64c1bf76269b2739b1b3f48cda3a3802f26534f939f725afaba0d8f38f836ef4',
+        'https://img.freepik.com/free-photo/funny-young-woman-with-orange-halves-kitchen_169016-29797.jpg?w=996&t=st=1707899569~exp=1707900169~hmac=703c4d6822d4f17379a7dfcdb30c82e383db6fb1c8997ae617155613a10d3d50',
         'Author: pvproductions, Designed by Freepik',  -- img_title
         1 -- educational_content_type_id
     ),
@@ -694,8 +694,8 @@ VALUES
         \nBalance Your Plate \nA balanced meal includes foods from multiple food groups: whole grains, lean protein, fiber-rich fruits and vegetables, and fat-free or low-fat dairy. Balance out your plate with all the food groups.
         \nRemove Energy Zappers \nSkip the foods and beverages with added sugars, such as soda, sugar-sweetened coffee and energy drinks. These beverages may leave you buzzing for an hour, but likely will cause an energy crash. Instead, quench your thirst with water, unsweetened flavored water or unsweetened tea.',
         23,
-        'https://img.freepik.com/free-photo/young-blonde-woman-black-jacket_176474-102001.jpg?w=996&t=st=1707376268~exp=1707376868~hmac=7668757679c53c4c0791bad8069e110c437ea74604493720d7605fb06a163e06',
-        'Author: 8photo, Designed by Freepik',  -- img_title
+        'https://img.freepik.com/free-vector/flat-design-overwhelmed-people-illustration_23-2149311636.jpg?w=740&t=st=1707900537~exp=1707901137~hmac=c18e183f85fb8c6f6440d6159858e4ed42e198b727fb00e939eb49d6b626b46b',
+        'Designed by Freepik',  -- img_title
         1 -- educational_content_type_id
     ),
     (
@@ -722,8 +722,8 @@ VALUES
         \nProtein and Muscle Building \nWhen building muscle, the more protein the better, right? Not necessarily. Protein should make up 10 to 35% of total calories for adults. While working to build muscle with physical activity, your needs may be on the higher end of this range. Aim for 3 servings of low-fat or fat-free dairy and 3 ounce-equivalents of protein foods (such as fish, beans, poultry or lean meat) each day, to provide quality sources of protein to help reach that goal. Grains, especially whole grains, also provide some protein.
         \nCarbohydrates and Muscle Building \nCarbohydrates are another important group of foods for fueling your muscles. That is because carbs are partially converted to glycogen, which is a form of energy stored in muscles. Try focusing on good quality carbohydrates that provide dietary fiber, such as whole-grain breads and cereals.',
         24,
-        'https://img.freepik.com/free-vector/set-sporty-people-preparing-competition_1262-19353.jpg?w=1380&t=st=1707377593~exp=1707378193~hmac=d165ab72391a81cf1d292b3850e2388d7e40f13dd21cdeaf7a4c910150326511',
-        'Author: katemangostar, Designed by Freepik',  -- img_title
+        'https://img.freepik.com/free-vector/isometric-fitness-club-banner-collection_1284-32765.jpg?w=740&t=st=1707900723~exp=1707901323~hmac=b9c969bb5f2f059c2855e1aa319c60dc34518fb590fd88938c644236bd303c5e',
+        'Author: macrovector, Designed by Freepik',  -- img_title
         2 -- educational_content_type_id
     ),
     (
@@ -752,7 +752,7 @@ VALUES
         \nWhat is mindful eating? \nMindful eating is maintaining an in-the-moment awareness of the food and drink you put into your body. It involves observing how the food makes you feel and the signals your body sends about taste, satisfaction, and fullness. Mindful eating requires you to simply acknowledge and accept rather than judge the feelings, thoughts, and bodily sensations you observe. It can extend to the process of buying, preparing, and serving your food as well as consuming it.
         \nBenefits of mindful eating \nBy paying close attention to how you feel as you eat—the texture and tastes of each mouthful, your body’s hunger and fullness signals, how different foods affect your energy and mood—you can learn to savor both your food and the experience of eating. Being mindful of the food you eat can promote better digestion, keep you full with less food, and influence wiser choices about what you eat in the future. It can also help you free yourself from unhealthy habits around food and eating.',
         23,
-        'https://img.freepik.com/free-vector/woman-thinking-healthy-unhealthy-snacks-choice_74855-15577.jpg?w=996&t=st=1707735062~exp=1707735662~hmac=b5cf4ba56196943016394e1d82cd5603e13ad30d0f299b06e8a7cc99a4538834',
+        'https://img.freepik.com/free-vector/woman-thinking-healthy-unhealthy-snacks-choice_74855-15577.jpg?w=996&t=st=1707900878~exp=1707901478~hmac=40ffc03f2097858306f0f3fd490da093551cc7158648d01af5ab658a029c793a',
         'Author: pch.vector, Designed by Freepik',  -- img_title
         1 -- educational_content_type_id
     ),

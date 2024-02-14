@@ -68,7 +68,7 @@ VALUES
         '3', -- UserID
         TRUE,
         '2023-04-26 14:30:00',
-        'https://img.freepik.com/premium-photo/tortellini-soup-dinner-recipe_198067-6671.jpg?w=1060',
+        'http://tinyurl.com/mvdccn8n',
         'Author : Vecstock, Designed by Freepik',  -- img_title
         2, -- dietary_preference
         25, -- cooking_time
@@ -87,7 +87,7 @@ VALUES
         '3', -- UserID
         TRUE,
         '2023-04-20 14:30:00',
-        'https://www.freepik.com/premium-photo/high-angle-view-soup-bowls_110336592.htm#query=spiced%20carrot%20and%20lentil%20soup&position=14&from_view=search&track=ais&uuid=18164050-817b-4251-a7ef-50ed4436d721',
+        'http://tinyurl.com/2ktzpwkv',
         'Author : EyeEm, Designed by Freepik',  -- img_title
         2, -- dietary_preference
         15, -- cooking_time  
@@ -676,7 +676,7 @@ VALUES
         '25', -- UserID
         TRUE,
         '2023-06-02 13:30:00',
-        'https://cdn.cleaneatingmag.com/wp-content/uploads/2017/03/ce68-weightloss-middle-eastern-western-egg-sandwiches-web-1.jpg?crop=535:301&width=1070&enable=upscale',
+        'https://cdn.cleaneatingmag.com/wp-content/uploads/2022/03/CleanEating_CE101FebMar2022_BurgerSalad_The-California_web.jpg?crop=535:301&width=1070&enable=upscale',
         'Author : Marianne Wren, Designed by cleaneating',  -- img_title
         2, -- dietary_preference
         15, -- cooking_time  
@@ -695,7 +695,7 @@ VALUES
         '25', -- UserID
         TRUE,
         '2023-01-10 13:00:00',
-        'https://cdn.cleaneatingmag.com/wp-content/uploads/2017/03/ce68-weightloss-middle-eastern-western-egg-sandwiches-web-1.jpg?crop=535:301&width=1070&enable=upscale',
+        'https://cdn.cleaneatingmag.com/wp-content/uploads/2021/11/YogurtBowl_Feature.jpg?crop=535:301&width=1070&enable=upscale',
         'Author : Marianne Wren, Designed by cleaneating',  -- img_title
         2, -- dietary_preference
         35, -- cooking_time  

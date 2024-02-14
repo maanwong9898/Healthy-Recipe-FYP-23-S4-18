@@ -106,7 +106,7 @@ VALUES
         '3', -- UserID
         TRUE,
         '2023-01-11 15:30:00',
-        'https://www.freepik.com/free-photo/warm-winter-quinoa-salad-with-pumpkin-chorizo-mozzarella-arugula-leaves-pomegranate_34738413.htm#query=roasted%20sweet%20potato%20salad%20recipe&position=43&from_view=search&track=ais&uuid=46b3221c-38e4-4e4d-a2ea-1e748f23e6b0',
+        'http://tinyurl.com/s5c9ehex',
         'Author : EyeEm, Designed by Freepik',  -- img_title
         2, -- dietary_preference
         30, -- cooking_time  
@@ -372,7 +372,7 @@ VALUES
         '4', -- UserID
         TRUE,
         '2023-01-02 08:00:00',
-        'https://www.simplyrecipes.com/thmb/jpNlWSZk6NuxsHr57MRmB1zPKHI=/750x0/filters:no_upscale():max_bytes(150000):strip_icc():format(webp)/__opt__aboutcom__coeus__resources__content_migration__simply_recipes__uploads__2006__01__baked-lingcod-horiz-a-1200-2e25188b62634d30a991b2b29270a5e5.jpg',
+        'http://tinyurl.com/4jy89mh9',
         'Author : Elise Bauer, Designed by simplyrecipes',  -- img_title
         3, -- dietary_preference
         15, -- cooking_time  
@@ -410,7 +410,7 @@ VALUES
         '21', -- UserID
         TRUE,
         '2023-06-03 09:30:00',
-        'https://www.simplyrecipes.com/thmb/W6vMtxhRYZyKqvdWOG35RnKzmzw=/750x0/filters:no_upscale():max_bytes(150000):strip_icc():format(webp)/__opt__aboutcom__coeus__resources__content_migration__simply_recipes__uploads__2017__06__2017-07-22-FishTacos-5-baa8171933fe40f0b737d448b4c47788.jpg',
+        'http://tinyurl.com/bdhy9kkz',
         'Author : Sabrina Modelle, Designed by simplyrecipes',  -- img_title
         3, -- dietary_preference
         10, -- cooking_time  
@@ -429,7 +429,7 @@ VALUES
         '21', -- UserID
         TRUE,
         '2023-06-03 09:30:00',
-        'https://www.simplyrecipes.com/thmb/mx-jiA5vHJwtVVjXaerfCBq4DA0=/750x0/filters:no_upscale():max_bytes(150000):strip_icc():format(webp)/__opt__aboutcom__coeus__resources__content_migration__simply_recipes__uploads__2016__02__dads-fish-stew-horiz-a-1600-8cf962c81e084558a025bf8392e00f32.jpg',
+        'http://tinyurl.com/2aeskmzp',
         'Author : Elise Bauer, Designed by simplyrecipes',  -- img_title
         3, -- dietary_preference
         20, -- cooking_time  
@@ -866,7 +866,7 @@ VALUES
         '27', -- UserID
         TRUE,
         '2023-05-04 13:00:00',
-        'https://cdn.cleaneatingmag.com/wp-content/uploads/2015/02/kimchi-fried-rice-with-tempeh.jpg?crop=535:301&width=1070&enable=upscale',
+        'https://cdn.cleaneatingmag.com/wp-content/uploads/2015/01/mediterranean-chicken-and-vegetable-quiche-1.jpg?crop=535:301&width=1070&enable=upscale',
         'Author : Ted Gibson, Designed by cleaneating',  -- img_title
         4, -- dietary_preference
         50, -- cooking_time  
@@ -936,13 +936,13 @@ VALUES
         'Not Specified',
         558, 43, 32, 32, 14, 532, -- calories, carbs, protein, fat, fibre, sodium
         4,
-        'A delectable combination of spicy ground turkey, mushrooms, and zesty ragu makes for a healthful and high-protein dish. Acorn squash is at its best in the fall.',
-        'Preheat oven to 400ºF. Wrap each squash half in foil and place on baking sheet. Bake until squash flesh is soft when poked with a fork, about 45 minutes.\nMeanwhile, in a large, deep skillet on medium-high, heat oil. Add onion, shiitake and cremini mushrooms, salt and pepper and sauté for 5 minutes. Add turkey and cook for 5 minutes, breaking up with a wooden spoon. Add tomato paste, thyme and smoked paprika. Stir to combine and cook for 3 minutes more.\nStir in marinara, coconut aminos and vinegar. Add bay leaf, cover, reduce heat to low and simmer for 25 minutes. Stir in ¼ cup nutritional yeast. Remove bay leaf.\nTo serve, divide turkey mixture among roasted squash halves. Top with remaining 1 tbsp nutritional yeast and basil.',
-        '2 acorn squash, halved and seeded \n2 tbsp avocado oil \n1 cup chopped yellow onion \n3 and a 1/2 oz shiitake mushrooms, chopped \n5 oz cremini mushrooms, chopped \nPinch each sea salt and ground black pepper \n1 lb lean ground turkey \n2 tbsp unsalted tomato paste \n1 tsp smoked paprika \n1 and a 1/2 cups marinara sauce \n1 tbsp coconut aminos \n1 tbsp balsamic vinegar \n1 bay leaf \n1/4 cup + 1 tbsp nutritional yeast, divided \n1/4 cup sliced fresh basil',
+        'Tasty protein with tastes influenced by Japan? That would make a really tasty and substantial lunch or dinner.',
+        'Using a mandoline or sharp knife, thinly slice cucumbers and place in a bowl. Toss with ½ cup vinegar and let sit at least 15 minutes.\nMeanwhile, cut salmon into cubes and place in a separate bowl. Add chives, cilantro, edamame (if using) and sesame seeds.\nIn a jar with a tight-fitting lid, combine coconut aminos, apricot preserves, remaining 1 tbsp vinegar, ginger, sesame oil and pepper flakes. Close lid and shake to combine. Pour over salmon mixture and toss until coated.\nTo serve, divide lettuce among 2 plates and top each with salmon mixture, pickled cucumbers, mango, avocado and seaweed.',
+        '4 Persian cucumbers \n1/2 cup + 1 tbsp apple cider vinegar, divided \n8 oz sashimi-grade wild Alaskan salmon, skin removed \n2 tbsp each chopped fresh chives and cilantro \n1/2 cup fresh or frozen shelled edamame, thawed, optional \n1 tsp black or white sesame seeds \n3 tbsp coconut aminos \n1 and a 1/2 tbsp no-sugar-added apricot preserves \n3/4 tsp peeled and grated ginger \n1/2 tsp toasted sesame oil \n1/4 tsp red pepper flakes \n4 cups baby lettuce mix \n1/2 mango, peeled and chopped \n1 avocado, peeled, seeded and sliced \n1 sheet seaweed snack, crumbled',
         '27', -- UserID
         TRUE,
         '2023-05-10 12:00:00',
-        'https://cdn.cleaneatingmag.com/wp-content/uploads/2018/10/turkey-and-mushroom-ragu-stuffed-acorn-squash_82-web-1.jpg?crop=535:301&width=1070&enable=upscale',
+        'https://cdn.cleaneatingmag.com/wp-content/uploads/2018/10/CE82-Spicy-Salmon-Poke-Bowl-WEB.png?crop=535:301&width=1070&enable=upscale',
         'Author : cleaneating, Designed by cleaneating',  -- img_title
         3, -- dietary_preference
         55, -- cooking_time  
@@ -1094,7 +1094,7 @@ VALUES
         '25', -- UserID
         TRUE,
         '2023-09-29 09:00:00',
-        'https://assets-global.website-files.com/62d69f8cc65b0055741a8270/648b48651507b53da2ec965e_GrainBowl_123246_Bowl_Fork-1.jpg',
+        'https://assets-global.website-files.com/62d69f8cc65b0055741a8270/648b487ed81f1d3fd9ddb034_MainSides_126949_Plate-1.jpg',
         'Author : hungryroot, Designed by hungryroot',  -- img_title
         3, -- dietary_preference
         14, -- cooking_time  
@@ -1246,7 +1246,7 @@ VALUES
         '25', -- UserID
         TRUE,
         '2023-02-28 12:00:00',
-        'https://cdn.cleaneatingmag.com/wp-content/uploads/2016/06/grilled-asparagus-salad-with-feta-and-hazelnut-crumble-1.jpg?crop=535:301&width=1070&enable=upscale',
+        'https://cdn.cleaneatingmag.com/wp-content/uploads/2017/12/white-bean-soup-with-caper-almond-pesto-75-web-2.jpg?crop=535:301&width=1070&enable=upscale',
         'Author : Clean Eating, Designed by cleaneating',  -- img_title
         2, -- dietary_preference
         20, -- cooking_time  
@@ -1303,7 +1303,7 @@ VALUES
         '24', -- UserID
         TRUE,
         '2023-05-15 14:40:00',
-        'https://www.australianeggs.org.au/assets/recipes/Roast-Cauliflower-egg-salad-0169-__ScaleWidthWzEyMDBd.jpg',
+        'https://www.australianeggs.org.au/assets/recipes/vegetable-fritta-muffins-7440__ScaleWidthWzEyMDBd.jpg',
         'Author : Australianeggs, Designed by Australianeggs',  -- img_title
         2, -- dietary_preference
         40, -- cooking_time  

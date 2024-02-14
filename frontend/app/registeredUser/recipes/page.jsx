@@ -129,6 +129,17 @@ const fetchRecipesByDPandAllergies = async (userId) => {
   }
 };
 
+const fetchDashboardData = async () => {
+  const userId = SecureStorage.getItem("userId");
+  const token = SecureStorage.getItem("token");
+  const config = { headers: { Authorization: `Bearer ${token}` } };
+  const response = await axiosInterceptorInstance.get(
+    `/register/dashboard/${userId}`,
+    config
+  );
+  return response.data;
+};
+
 const RecipesPageForUser = () => {
   const router = useRouter();
   // const [AllRecipes, setAllRecipes] = useState([]);
@@ -188,6 +199,9 @@ const RecipesPageForUser = () => {
   const [isAuthorized, setIsAuthorized] = useState(false);
   const [isChecking, setIsChecking] = useState(true);
 
+  const [displayPersonalisedSection, setDisplayPersonalisedSection] =
+    useState(false);
+
   useEffect(() => {
     // Perform your token and role check here
     const token = SecureStorage.getItem("token");
@@ -211,6 +225,23 @@ const RecipesPageForUser = () => {
   }, []);
 
   const userId = SecureStorage.getItem("userId");
+
+  // const dashboardQuery = useQuery("dashboard", fetchDashboardData, {
+  //   onSuccess: (data) => {
+  //     const hasNoDietaryPreferences =
+  //       !data?.dietaryPreferences?.id ||
+  //       data?.dietaryPreferences?.id.length === 0;
+  //     const hasNoAllergies = !data?.allergies.id || data.allergies.length === 0;
+
+  //     if (hasNoDietaryPreferences && hasNoAllergies) {
+  //       // Set personalized section to false if both conditions are met
+  //       setDisplayPersonalisedSection(false);
+  //     } else {
+  //       // Otherwise, set it to true
+  //       setDisplayPersonalisedSection(true);
+  //     }
+  //   },
+  // });
 
   // Fetch Recipes with dietary preferences and allergies
   const {
@@ -1259,13 +1290,14 @@ const RecipesPageForUser = () => {
   const iterableRecipes = Array.isArray(AllRecipes) ? AllRecipes : [];
 
   // Sorting to get the latest recipes
-  const latestRecipes = iterableRecipes
-    .sort((a, b) => getDateForComparison(b) - getDateForComparison(a))
-    .slice(0, 3);
+  // const latestRecipes = iterableRecipes
+  //   .sort((a, b) => getDateForComparison(b) - getDateForComparison(a))
+  //   .slice(0, 3);
 
   // Filtering out the latest recipes to get the other recipes
   const otherRecipes = iterableRecipes.filter(
-    (post) => !latestRecipes.find((latestPost) => latestPost.id === post.id)
+    (post) =>
+      !personalizedRecipes.find((latestPost) => latestPost.id === post.id)
   );
 
   // Determine if any search or filter has been applied
@@ -1835,6 +1867,32 @@ const RecipesPageForUser = () => {
                           ) : (
                             // If no search/filter has been performed, display latest and other recipes
                             <>
+                              {/* {displayPersonalisedSection &&
+                              personalizedRecipes.length > 0 ? (
+                                <div className="mb-14 bg-orange-100 rounded-lg p-6">
+                                  <h2 className="text-4xl font-bold mb-4 mt-4">
+                                    Just For You
+                                  </h2>
+                                  <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
+                                    {personalizedRecipes.map((post) =>
+                                      renderPostCard(post)
+                                    )}
+                                  </div>
+                                </div>
+                              ) : (
+                                <div className="mb-14 bg-orange-100 rounded-lg p-6">
+                                  <h2 className="text-4xl font-bold mb-4 mt-4">
+                                    Just For You
+                                  </h2>
+                                  <p>
+                                    No personalized recipes found. Set your
+                                    dietary Preference or allergies in your
+                                    dietary preference to find recipes most
+                                    suitable for you!
+                                  </p>
+                                </div>
+                              )} */}
+
                               <div className="mb-14 bg-orange-100 rounded-lg p-6">
                                 <h2 className="text-4xl font-bold mb-4 mt-4">
                                   Just For You
@@ -1845,6 +1903,7 @@ const RecipesPageForUser = () => {
                                   )}
                                 </div>
                               </div>
+
                               <div className="mt-14 mb-5">
                                 <h2 className="text-4xl font-bold mb-4 mt-4">
                                   Other Recipes

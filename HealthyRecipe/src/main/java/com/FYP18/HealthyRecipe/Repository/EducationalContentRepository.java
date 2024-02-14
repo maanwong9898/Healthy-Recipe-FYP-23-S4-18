@@ -63,8 +63,7 @@ public interface EducationalContentRepository extends JpaRepository<EducationalC
     + "WHERE r.id NOT IN (:ids) ORDER BY r.createdDateTime LIMIT :count")
     List<EduCoDTO> findLatestEduCoDTO(@Param("ids") List<Long> ids,@Param("count") Integer count);
  
-    @Query(value= getDTO
-     + "ORDER BY r.createdDateTime")
+    @Query(value= getDTO  + "ORDER BY r.createdDateTime LIMIT :count")
     List<EduCoDTO> findLatestEduCoDTO(@Param("count") Integer count);
 
     @Query(value= getDTO 

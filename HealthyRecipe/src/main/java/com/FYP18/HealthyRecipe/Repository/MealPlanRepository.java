@@ -56,7 +56,7 @@ public interface MealPlanRepository extends JpaRepository<MealPlan,Long> {
     @Query(value= getDTOQuery + " WHERE r.id NOT IN (:ids) ORDER BY r.createdDT LIMIT :count")
     List<MealPlanDTO> findLatestMealPlanDTO(@Param("ids") List<Long> ids,@Param("count") Integer count);
  
-    @Query(value= getDTOQuery + " ORDER BY r.createdDT")
+    @Query(value= getDTOQuery + " ORDER BY r.createdDT LIMIT :count")
     List<MealPlanDTO> findLatestMealPlanDTO(@Param("count") Integer count);
 
     @Query(value= getDTOQuery+ " WHERE r.healthGoalCategoryId = :healthGoalCategoryId")

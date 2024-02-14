@@ -57,7 +57,7 @@ public interface BlogRepository extends JpaRepository<Blog, Long>{
     @Query(value= getDTOQuery + " WHERE r.id NOT IN (:ids) ORDER BY r.createdDateTime LIMIT :count")
     List<BlogDTO> findLatestBlogDTO(@Param("ids") List<Long> ids,@Param("count") Integer count);
  
-    @Query(value= getDTOQuery + " ORDER BY r.createdDateTime")
+    @Query(value= getDTOQuery + " ORDER BY r.createdDateTime LIMIT :count")
     List<BlogDTO> findLatestBlogDTO(@Param("count") Integer count);
  
     @Query(value = getDTOQuery + " WHERE r.id IN :ids", nativeQuery = false)

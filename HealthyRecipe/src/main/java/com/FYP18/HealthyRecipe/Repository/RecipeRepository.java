@@ -101,7 +101,7 @@ public interface RecipeRepository extends JpaRepository<Recipe, Long> {
     @Query(value= getDistinctDTOQuery + " WHERE r.id NOT IN (:ids) ORDER BY r.createdDT LIMIT :count")
     List<RecipeDTO> findLatestRecipe(@Param("ids") List<Long> ids,@Param("count") Integer count);
  
-    @Query(value= getDistinctDTOQuery + " ORDER BY r.createdDT")
+    @Query(value= getDistinctDTOQuery + " ORDER BY r.createdDT LIMIT :count")
     List<RecipeDTO> findLatestRecipe(@Param("count") Integer count);
     
 

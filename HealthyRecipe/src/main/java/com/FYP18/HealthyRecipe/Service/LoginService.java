@@ -342,6 +342,15 @@ public class LoginService {
     }
     public void deleteUser(DeleteUserRequest request )
     { 
+        User user = userRepository.findById(request.getId()).get();
+        try{
+            emailService.sendRejectionEmail(user.getEmail()); 
+        }
+        catch(Exception e)
+        {
+            e.printStackTrace();
+        }
+
         if(request.getRole().equals(Role.BUSINESS_USER))
         {
             businessUserRepository.deleteById(request.getId());
@@ -350,14 +359,7 @@ public class LoginService {
         {
             nutritionistRepository.deleteById(request.getId());
         }
-        User user = userRepository.findById(request.getId()).get();
-        try{
-            emailService.sendVerifiedEmail(user.getEmail()); 
-        }
-        catch(Exception e)
-        {
-            e.printStackTrace();
-        }
+        
         userRepository.deleteById(request.getId());
     }
     // public DashboardDTO verifyUser(String userId)

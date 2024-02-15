@@ -189,34 +189,34 @@ const ViewEduContent = ({ params }) => {
                   {/* End of publihsed, published date, category */}
                 </div>
                 {/* Image Section */}
-                <article>
-                  {/* <img
-                    src={eduContent.img}
-                    alt="Educational Content Image"
-                    className="max-w-full mx-auto mt-8 mb-8 sm:max-w-xl sm:mt-16 sm:mb-16 rounded-lg shadow-xl"
-                  /> */}
+                <div className="h-auto w-full border-0">
                   {eduContent?.imgBlob ? (
                     // If imgBlob is available, display image from blob
                     <img
-                      className="max-w-full mx-auto mt-8 mb-8 sm:max-w-xl sm:mt-16 sm:mb-16 rounded-lg shadow-xl"
+                      className="lg:max-w-4xl max-w-full mx-auto mt-8 mb-8 rounded-lg shadow-xl"
                       src={getImageUrlFromBlob(eduContent?.imgBlob)}
                       alt={"Educational content Image"}
                     />
                   ) : (
                     // If imgBlob is not available, display image from imgUrl
                     <img
-                      className="max-w-full mx-auto mt-8 mb-8 sm:max-w-xl sm:mt-16 sm:mb-16 rounded-lg shadow-xl"
+                      className="lg:max-w-4xl max-w-full mx-auto mt-8 mb-8 rounded-lg shadow-xl"
                       src={eduContent?.img || "Not specified"}
                       alt="Educational content Image"
                     />
                   )}
-                  {/* Info*/}
-                  <section className="main-content mt-10 pl-9 pr-9 mx-auto max-w-screen-xl md:text-xl text-left">
-                    <div className="w-full p-2 rounded-lg whitespace-pre-line">
-                      {eduContent.info}
-                    </div>
-                  </section>
-                </article>
+                  {/* Image title */}
+                  <p className="mt-2 text-center text-gray-900 font-medium text-sm">
+                    {eduContent?.imgTitle || "Image Title Not Specified"}
+                  </p>
+                </div>
+
+                {/* Info*/}
+                <section className="main-content mt-10 pl-9 pr-9 mx-auto max-w-screen-xl md:text-xl text-left">
+                  <div className="w-full p-2 rounded-lg whitespace-pre-line">
+                    {eduContent.info}
+                  </div>
+                </section>
 
                 {/* Ratings and Reviews */}
                 <div className="blog-post-reviews mt-16 mx-auto max-w-screen-xl text-left border-t-2 border-gray-50">

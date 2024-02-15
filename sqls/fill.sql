@@ -453,7 +453,7 @@ VALUES
         '3', -- UserID
         TRUE,
         '2023-04-26 14:30:00',
-        'http://tinyurl.com/mvdccn8n',
+        'https://img.freepik.com/free-photo/cappelletti-brodo-traditional-italian-soup-wooden-table_123827-27475.jpg',
         'Author : Vecstock, Designed by Freepik',  -- img_title
         2, -- dietary_preference
         25, -- cooking_time
@@ -472,7 +472,7 @@ VALUES
         '3', -- UserID
         TRUE,
         '2023-04-20 14:30:00',
-        'http://tinyurl.com/2ktzpwkv',
+        'https://img.freepik.com/free-photo/bowl-delicious-pumpkin-soup-with-seeds_114579-29941.jpg',
         'Author : EyeEm, Designed by Freepik',  -- img_title
         2, -- dietary_preference
         15, -- cooking_time
@@ -744,6 +744,7 @@ VALUES
         20, -- cooking_time
         4   -- meal type (cuisines)
     ),
+
     (
         17,
         'Elise Bauer',
@@ -2198,7 +2199,7 @@ VALUES
         'Gradually lowering your sugar consumption can help your taste buds adjust. This diet includes substantial meals that will keep you full, so you will not crave sugar.',
         '2023-11-30',
         2, -- maintain health
-        'http://tinyurl.com/4ateah2b',
+        'https://img.freepik.com/free-photo/start-diet-nutrition-eating-choice-weight-healthy-concept_53876-122443.jpg',
         'Designed by pvproductions',  -- img_title
         '32' -- userid
     ),
@@ -2212,7 +2213,7 @@ VALUES
         'Many studies have found that herbs and spices can provide health advantages in the form of free-radical-fighting antioxidants. Hence, let the harmony of flavor enhance your meals, and your health may reap benefits as well!',
         '2023-11-06',
         3, -- weight loss
-        'http://tinyurl.com/5f7vhkcb',
+        'https://img.freepik.com/free-photo/top-view-fresh-vegetable-salad-with-olives-lemon-slices-black-floor-food-salad-diet-snack-health_140725-104195.jpg',
         'Designed by kamranaydinov',  -- img_title
         '32' -- userid
     ),
@@ -2324,7 +2325,7 @@ VALUES
         'Consider adopting a no-sugar lifestyle to help you lose weight more quickly. With this diet, you can experience what it is like to lessen your dependency on sugar by eliminating all sweets, including natural ones.',
         '2023-11-09',
         3, -- weight loss
-        'http://tinyurl.com/2ccus8ed',
+        'https://img.freepik.com/free-photo/top-view-unhealthy-food-versus-healthy-foodwith-hand-holding-donut_23-2148541043.jpg',
         'Designed by cleaneating',  -- img_title
         '36' -- userid
     ),
@@ -2338,7 +2339,7 @@ VALUES
         'This are a few recommended recipes that you can include for gaining weight:',
         '2023-11-09',
         1, -- weight gain
-        'http://tinyurl.com/2t24hhbt',
+        'https://img.freepik.com/free-photo/delicious-food-arrangement-top-view_23-2149235805.jpg',
         'Designed by Freepik',  -- img_title
         '37' -- userid
     ),
@@ -2352,7 +2353,7 @@ VALUES
         'This meal plan includes plenty of tasty and healthy recipes to help make the achievement of your weight loss goals enjoyable!',
         '2023-10-02',
         3, -- weight loss
-        'http://tinyurl.com/2dmmw7b2',
+        'https://img.freepik.com/free-photo/background-food-bowl-workout-meal-space_1428-677.jpg',
         'Designed by Freepik',  -- img_title
         '32' -- userid
     ),
@@ -2366,7 +2367,7 @@ VALUES
         'This meal plan includes a variety of ideas and dishes that make it simple to consume the correct sorts of healthy fats and receive enough of the fiber that helps regulate blood cholesterol levels. Eating a heart-healthy diet may be tasty and simple!',
         '2023-08-11',
         2, -- maintain health
-        'http://tinyurl.com/awdrk5yt',
+        'https://img.freepik.com/free-vector/world-health-day_24908-56242.jpg',
         'Designed by Freepik',  -- img_title
         '32' -- userid
     ),
@@ -2380,7 +2381,7 @@ VALUES
         'This weight gain for the elderly meal plan provides easy and nutritious meal and snack options that will make it easy for you to meet your needs and enjoy the foods you are eating!',
         '2023-07-20',
         3, -- weight loss
-        'http://tinyurl.com/3twdjcsz',
+        'https://img.freepik.com/free-vector/tiny-persons-with-unhealthy-diet-carb-foods-sign-delicious-wheat-food-snacks-junk-flat-vector-illustration-food-nutrition-health-concept-banner-website-design-landing-web-page_74855-22075.jpg',
         'Designed by Freepik',  -- img_title
         '34' -- userid
     ),
@@ -2394,7 +2395,7 @@ VALUES
         'If you are looking for great low-carbohydrate ideas that provide sufficient energy and nutrition, this meal plan provides you with various great options.',
         '2023-04-10',
         3, -- weight loss
-        'http://tinyurl.com/29ceu456',
+        'https://img.freepik.com/free-vector/tiny-persons-with-unhealthy-diet-carb-foods-sign-delicious-wheat-food-snacks-junk-flat-vector-illustration-food-nutrition-health-concept-banner-website-design-landing-web-page_74855-22075.jpg',
         'Designed by Freepik',  -- img_title
         '34' -- userid
     ),
@@ -2422,7 +2423,7 @@ VALUES
         'Incorporating a variety of nutrient-rich foods throughout the day ensures that nutritional needs are met while keeping meals interesting and enjoyable. Remember, consistency is key, and small, gradual changes can lead to long-term success.',
         '2023-09-15',
         3, -- weight loss
-        'http://tinyurl.com/25fvm6db',
+        'https://img.freepik.com/free-photo/assortment-vegetables-plate-with-hummus-measuring-tape_23-2148562692.jpg',
         'Designed by Freepik',  -- img_title
         '35' -- userid
     );
@@ -2568,7 +2569,7 @@ VALUES
         'Elevate Your Kitchen with Philips: Top-Quality Kitchenware',  -- Title
         'Upgrade your kitchen experience with Philips! Your trusted partner for top-quality kitchenware. Discover a range of innovative and stylish appliances designed to make cooking a breeze. Efficiency in Every Appliance: Philips brings you kitchenware that simplifies your daily tasks. From powerful blenders to versatile food processors, our appliances are engineered for efficiency, saving you time and effort in the kitchen. Healthy Choices, Delicious Results: Explore our Airfryers and Juicers for a healthier cooking approach. Enjoy crispy dishes with less oil using our Airfryers, and create refreshing, nutrient-packed juices with ease using our Juicers. Sleek Design, Lasting Impressions: Philips kitchenware not only excels in functionality but also adds a touch of elegance to your kitchen. With modern designs and premium materials, our appliances seamlessly blend style with substance. Our kitchenware is crafted to meet your cooking needs while ensuring durability and long-lasting performance. \nUpgrade your kitchen with Philips – where innovation meets style. Explore our range of kitchenware today and discover the joy of cooking with precision and convenience. Philips, transforming kitchens for a better culinary experience.',
         3, -- userId Philips
-        'https://img.freepik.com/free-photo/healthy-meal-preparation-rustic-domestic-kitchen-generated-by-ai_188544-26855.jpg?t=st=1706670340~exp=1706673940~hmac=57ab56c2484a0e9db62779449b2b08c432e1b38703b8be467a9ac92c59beefe2&w=1060',
+        'https://img.freepik.com/free-photo/healthy-meal-preparation-rustic-domestic-kitchen-generated-by-ai_188544-26855.jpg',
         'Author : vecstock, Designed by Freepik',  -- img_title
         2 -- blog_type_id kitchenware
     ),
@@ -2656,7 +2657,7 @@ VALUES
         'Nourishing Recipes for a Healthy Lifestyle: A Cookbook Review',
         'Explore a collection of nourishing recipes designed for a healthy lifestyle. HealthyEats reviews a cookbook filled with delicious and nutritious dishes that promote overall well-being. From plant-based meals to wholesome desserts, discover the art of cooking for a healthier you.',
         25, -- userId
-        'https://www.freepik.com/free-photo/top-view-empty-menu-with-tomatoes-salad_7770971.htm#query=recipe%20cookbook&position=3&from_view=search&track=ais&uuid=932c26a4-5ecb-403c-a356-e81943a1b733',
+        'https://img.freepik.com/free-photo/top-view-empty-menu-with-tomatoes-salad_23-2148496886.jpg',
         'Designed by Freepik',  -- img_title
         1 -- blog_type_id cookbook
     ),
@@ -2678,7 +2679,7 @@ VALUES
         'Artisanal Kitchenware: Elevate Your Cooking with Handcrafted Tools',
         'Immerse yourself in the world of artisanal kitchenware. CulinaryArtistry explores the beauty of handcrafted tools that bring a touch of craftsmanship to your culinary space. From hand-forged knives to bespoke utensils, discover how artisanal kitchenware combines functionality with exquisite craftsmanship.',
         26, -- userId
-        'https://www.freepik.com/free-photo/human-hand-cutting-mushroom-making-delicious-pasta-wooden-surface_4165862.htm#query=handcrafted%20kitchen%20knives&position=19&from_view=search&track=ais&uuid=42585427-0fd6-4c52-bbc1-9880b2538694',
+        'https://img.freepik.com/free-photo/human-hand-cutting-mushroom-making-delicious-pasta-wooden-surface_23-2148087351.jpg',
         'Designed by Freepik',  -- img_title
         2 -- blog_type_id kitchenware
     ),
@@ -2689,7 +2690,7 @@ VALUES
         'Professional Culinary Tools: A Guide for Aspiring Chefs',
         'Embark on a culinary journey with ChefEssentials as we unveil the essential tools for aspiring chefs. From high-quality chef knives to precision measuring instruments, explore the professional culinary tools that every kitchen should have for achieving perfection in your culinary creations.',
         27, -- userId
-        'http://tinyurl.com/5fxumyzh',
+        'https://img.freepik.com/free-photo/front-view-gray-platten-with-big-knife-dark-blue-background-color-photo-sharp-blue-sea-food-kitchen-desk_179666-17513.jpg',
         'Author: mdjaff, Designed by Freepik',  -- img_title
         2 -- blog_type_id kitchenware
     ),
@@ -2832,7 +2833,7 @@ VALUES
         'Contemporary Kitchenware: Blending Style and Functionality', -- Title
         'Explore the fusion of style and functionality with ModernCulinarySpaces. Dive into a world of contemporary kitchenware that not only enhances your cooking experience but also elevates the aesthetics of your culinary space. Discover the perfect blend of modern design and practical utility.',
         4, -- userId
-        'http://tinyurl.com/dknj9ve6',
+        'https://img.freepik.com/free-vector/bon-appetit-seamless-background-pattern-with-scattered-ingredients-kitchen-utensils-making-italian-ravioli-pasta-square-format-suitable-wallpaper-wrapping-paper-fabric_1284-44086.jpg',
         'Author: macrovector, Designed by Freepik',  -- img_title
         2 -- blog_type_id kitchenware
     ),
@@ -2953,7 +2954,7 @@ VALUES
         '10 Creative Ways to Use Leftover Ingredients',
         'Reduce food waste and get creative in the kitchen with these 10 ideas for using leftover ingredients. From homemade stocks to inventive salads, make the most out of every ingredient!',
         24, -- userId
-        'http://tinyurl.com/y624346v',
+        'https://img.freepik.com/free-photo/salad-from-tomatoes-cucumber-red-onions-lettuce-leaves-healthy-summer-vitamin-menu-vegan-vegetable-food-vegetarian-dinner-table_2829-6473.jpg',
         'Author: timolina, Designed by Freepik',
         3 -- blog_type_id for miscellaneous
     ),
@@ -2997,7 +2998,7 @@ VALUES
         'Upgrade Your Culinary Space with Modern Kitchen Gadgets',
         'Transform your kitchen into a modern culinary haven with our selection of innovative kitchen gadgets. From smart sous vide machines to high-speed blenders, discover the latest tools to enhance your cooking experience!',
         27, -- userId
-        'http://tinyurl.com/4ud56mnh',
+        'https://img.freepik.com/free-vector/hand-drawn-smoothies-blender-glass-illustration_23-2148952465.jpg',
         'Designed by Freepik',
         2 -- blog_type_id kitchenware
     ),
@@ -3364,8 +3365,8 @@ VALUES
         \nWhen prepared well with less fat or sugar, wholegrains, fruits and vegetables offer you lower-calorie meal choices at any time of the day. Rich in antioxidants, they give you more goodness in a bite than a higher-calorie meal.
         \nLove wholegrains? \nWholegrains are not being limited to bread and rice. Do you know that wholegrains now come in kway teow, noodles, man tou and biscuits? \nWho says being healthy cant be fun and easy?',
         3,
-        'https://www.freepik.com/premium-vector/woman-drinks-coffee-tea-cozy-kitchen-kitchen-utensils-concept-banner-website-apps_47579163.htm#query=healthy%20home%20cooking%20tips&position=32&from_view=search&track=ais&uuid=16984310-7df8-4616-9a06-cca8a223d444',
-        'Author: i.serik, Designed by Freepik',  -- img_title
+        'https://img.freepik.com/free-photo/senior-woman-making-dish-with-figs-kitchen_23-2150304452.jpg',
+        'Author: Freepik, Designed by Freepik',  -- img_title
         1 -- educational_content_type_id
     ),
     (
@@ -3380,7 +3381,7 @@ VALUES
          \n4. Building Strength \nStrength-building activities provide additional health benefits. Strength training not only helps to improve bone and muscle strength but also contributes to greater muscle mass, which boosts resting metabolic rate, therefore helping your body burn more calories.
          \n5. Have Regular Meals \nSkipping meals can cause you to snack more often or binge eat, leading you to consume even more calories.',
         4,
-        'https://www.freepik.com/free-vector/healthy-people-carrying-different-icons_3226124.htm#query=healthy%20living&position=12&from_view=search&track=ais&uuid=415dd0fe-a18c-4182-9b34-7c748a53d7fa',
+        'https://img.freepik.com/free-vector/healthy-people-carrying-different-icons_53876-43069.jpg',
         'Author: rawpixel.com, Designed by Freepik',  -- img_title
         2 -- educational_content_type_id
     ),
@@ -3493,7 +3494,7 @@ VALUES
         \nAdults aged 18–64 years \nShould do at least 150 minutes of moderate-intensity physical activity throughout the week, or do at least 75 minutes of vigorous-intensity physical activity, or an equivalent combination of both. For additional health benefits, adults should increase their moderate-intensity physical activity to 300 minutes per week, or equivalent.
         \nAdults aged 65 years and above \nShould do at least 150 minutes of moderate-intensity physical activity throughout the week, or at least 75 minutes of vigorous-intensity physical activity, or an equivalent combination of both. Those with poor mobility should perform physical activity to enhance balance and prevent falls, 3 or more days per week.',
         23,
-        'https://www.freepik.com/free-vector/flat-happy-children-play-run-cycling-public-park_27059506.htm#query=physical%20activity&position=9&from_view=search&track=ais&uuid=70a23307-fd12-4673-81dd-281d900cc9b4',
+        'https://img.freepik.com/free-vector/flat-happy-children-play-run-cycling-public-park_88138-982.jpg',
         'Author: redgreystock, Designed by Freepik',  -- img_title
         2 -- educational_content_type_id
     ),

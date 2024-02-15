@@ -315,19 +315,25 @@ const ViewMealPlan = ({ params }) => {
           </section>
 
           {/* Image */}
-          {mealPlan?.imgBlob ? (
-            <img
-              src={getImageURLFromBlob(mealPlan?.imgBlob)}
-              alt={mealPlan.img_title || "Meal Plan Image"}
-              className="max-w-full mx-auto mt-8 mb-8 sm:max-w-xl sm:mt-16 sm:mb-16 rounded-lg shadow-xl"
-            />
-          ) : (
-            <img
-              src={mealPlan.img}
-              alt={mealPlan.img_title || "Meal Plan Image"}
-              className="max-w-full mx-auto mt-8 mb-8 sm:max-w-xl sm:mt-16 sm:mb-16 rounded-lg shadow-xl"
-            />
-          )}
+          <div className="h-auto w-full border-0">
+            {mealPlan?.imgBlob ? (
+              <img
+                src={getImageUrlFromBlob(mealPlan?.imgBlob)}
+                alt={mealPlan.img_title || "Meal Plan Image"}
+                className="max-w-full mx-auto mt-8 mb-8 sm:max-w-xl rounded-lg shadow-xl"
+              />
+            ) : (
+              <img
+                src={mealPlan.img}
+                alt={mealPlan.img_title || "Meal Plan Image"}
+                className="max-w-full mx-auto mt-8 mb-8 sm:max-w-xl rounded-lg shadow-xl"
+              />
+            )}
+            {/* Image title */}
+            <p className="mt-2 text-center text-gray-900 font-medium text-sm">
+              {mealPlan?.imgTitle || "Image Title Not Specified"}
+            </p>
+          </div>
 
           {/* Main content */}
           <section className="main-content mt-10 pl-9 pr-9 mx-auto max-w-screen-xl md:text-xl text-left">

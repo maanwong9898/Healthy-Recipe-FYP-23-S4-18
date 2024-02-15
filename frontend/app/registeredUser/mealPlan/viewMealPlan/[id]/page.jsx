@@ -416,19 +416,25 @@ const ViewMealPlan = ({ params }) => {
                   </section>
 
                   {/* Image */}
-                  {mealPlan?.imgBlob ? (
-                    <img
-                      src={getImageUrlFromBlob(mealPlan?.imgBlob)}
-                      alt={mealPlan.img_title || "Meal Plan Image"}
-                      className="max-w-full mx-auto mt-8 mb-8 sm:max-w-xl sm:mt-16 sm:mb-16 rounded-lg shadow-xl"
-                    />
-                  ) : (
-                    <img
-                      src={mealPlan.img}
-                      alt={mealPlan.img_title || "Meal Plan Image"}
-                      className="max-w-full mx-auto mt-8 mb-8 sm:max-w-xl sm:mt-16 sm:mb-16 rounded-lg shadow-xl"
-                    />
-                  )}
+                  <div className="h-auto w-full border-0">
+                    {mealPlan?.imgBlob ? (
+                      <img
+                        src={getImageUrlFromBlob(mealPlan?.imgBlob)}
+                        alt={mealPlan.img_title || "Meal Plan Image"}
+                        className="max-w-full mx-auto mt-8 mb-8 sm:max-w-xl rounded-lg shadow-xl"
+                      />
+                    ) : (
+                      <img
+                        src={mealPlan.img}
+                        alt={mealPlan.img_title || "Meal Plan Image"}
+                        className="max-w-full mx-auto mt-8 mb-8 sm:max-w-xl rounded-lg shadow-xl"
+                      />
+                    )}
+                    {/* Image title */}
+                    <p className="mt-2 text-center text-gray-900 font-medium text-sm">
+                      {mealPlan?.imgTitle || "Image Title Not Specified"}
+                    </p>
+                  </div>
 
                   {/* Main content */}
                   <section className="main-content mt-10 pl-9 pr-9 mx-auto max-w-screen-xl md:text-xl text-left">
@@ -481,30 +487,7 @@ const ViewMealPlan = ({ params }) => {
                     <p className="font-sans font-bold text-4xl text-gray-900 mb-4 md:mt-8 ml-4">
                       Suggested Recipes
                     </p>
-                    {/* <div className="flex justify-between items-center mb-4 md:mt-8 ml-4">
-              <div></div>
-              <div className="flex gap-4">
-                <button
-                  onClick={prevRecipe}
-                  className="rounded-md bg-orange-500 hover:bg-orange-600 transition duration-300 ease-in-out"
-                >
-                  <ChevronLeftIcon
-                    style={{ fontSize: "2.5rem", color: "white" }}
-                  />
-                </button>
-                <button
-                  onClick={nextRecipe}
-                  className="rounded-md bg-orange-500 hover:bg-orange-600 transition duration-300 ease-in-out"
-                  style={{
-                    marginRight: "1rem",
-                  }}
-                >
-                  <ChevronRightIcon
-                    style={{ fontSize: "2.5rem", color: "white" }}
-                  />
-                </button>
-              </div>
-            </div> */}
+
                     {mealPlan?.recipes && mealPlan.recipes.length > 0 ? (
                       <div className="grid grid-cols-1 gap-4 justify-center items-center relative">
                         {/* Render recipe cards here */}

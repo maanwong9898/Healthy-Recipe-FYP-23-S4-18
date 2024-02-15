@@ -109,13 +109,14 @@ const fetchAllergies = async () => {
 };
 
 // Fetch recipes by dietary preferences and allergies
-const fetchRecipesByDPandAllergies = async (userId) => {
+const fetchRecipesByDPandAllergies = async (userId, count) => {
   try {
     const response = await axiosInterceptorInstance.get(
-      `/registeredUsers/findRecipeDTOsByAllergiesAndDP/${userId}`
+      `/registeredUsers/findRecipeDTOsByAllergiesAndDP/${userId}/${count}`
     );
     console.log("Fetched recipe data is:", response.data);
     console.log("User ID: ", userId);
+    console.log("Number of recipes displayed: ", count);
     // const recipesWithAverage = await Promise.all(
     //   response.data.map(async (recipe) => {
     //     const average = await fetchRecipeAverage(recipe.id);
@@ -205,6 +206,11 @@ const RecipesPageForUser = () => {
   // For search type
   const [searchType, setSearchType] = useState("title");
 
+  const [dietaryPreferences, setDietaryPreferences] = useState(null);
+  const [allergies, setAllergies] = useState([]);
+
+  const [otherRecipes, setOtherRecipes] = useState([]);
+
   useEffect(() => {
     // Perform your token and role check here
     const token = SecureStorage.getItem("token");
@@ -228,31 +234,33 @@ const RecipesPageForUser = () => {
   }, []);
 
   const userId = SecureStorage.getItem("userId");
+  const count = 100;
 
-  // const dashboardQuery = useQuery("dashboard", fetchDashboardData, {
-  //   onSuccess: (data) => {
-  //     const hasNoDietaryPreferences =
-  //       !data?.dietaryPreferences?.id ||
-  //       data?.dietaryPreferences?.id.length === 0;
-  //     const hasNoAllergies = !data?.allergies.id || data.allergies.length === 0;
+  const dashboardQuery = useQuery("dashboard", fetchDashboardData, {
+    onSuccess: (data) => {
+      const hasNoDietaryPreferences =
+        !data?.dietaryPreferences?.id ||
+        data?.dietaryPreferences?.id.length === 0;
+      const hasNoAllergies = data?.allergies?.length === 0;
 
-  //     if (hasNoDietaryPreferences && hasNoAllergies) {
-  //       // Set personalized section to false if both conditions are met
-  //       setDisplayPersonalisedSection(false);
-  //     } else {
-  //       // Otherwise, set it to true
-  //       setDisplayPersonalisedSection(true);
-  //     }
-  //   },
-  // });
+      if (hasNoDietaryPreferences && hasNoAllergies) {
+        // Set personalized section to false if both conditions are met
+        setDisplayPersonalisedSection(false);
+      } else {
+        // Otherwise, set it to true
+        setDisplayPersonalisedSection(true);
+      }
+    },
+  });
 
   // Fetch Recipes with dietary preferences and allergies
   const {
     data: personalizedRecipes,
     isLoading: isLoadingPersonalizedRecipes,
     isError: isErrorPersonalizedRecipes,
-  } = useQuery(["recipesByDPandAllergies", userId], () =>
-    fetchRecipesByDPandAllergies(userId)
+  } = useQuery(
+    ["recipesByDPandAllergies", userId, count],
+    () => fetchRecipesByDPandAllergies(userId, count) // Pass count here
   );
 
   // Fetch all recipes
@@ -1050,9 +1058,35 @@ const RecipesPageForUser = () => {
   //   .slice(0, 3);
 
   // Filtering out the latest recipes to get the other recipes
-  const otherRecipes = iterableRecipes.filter(
-    (post) => !personalizedRecipes.find((recipe) => recipe.id === post.id)
-  );
+
+  // const otherRecipes = personalizedRecipes
+  //   ? iterableRecipes.filter(
+  //       (post) => !personalizedRecipes.find((recipe) => recipe.id === post.id)
+  //     )
+  //   : iterableRecipes;
+
+  useEffect(() => {
+    // If there are no personalized recipes, or if personalized recipes contain all recipes, set other recipes to all recipes
+    if (
+      !personalizedRecipes ||
+      personalizedRecipes.length === 0 ||
+      personalizedRecipes.length === iterableRecipes.length
+    ) {
+      setOtherRecipes([...iterableRecipes]);
+    } else {
+      // Otherwise, filter out personalized recipes from all recipes
+      const filteredRecipes = iterableRecipes.filter(
+        (recipe) =>
+          !personalizedRecipes.some(
+            (personalizedRecipe) => personalizedRecipe.id === recipe.id
+          )
+      );
+      setOtherRecipes(filteredRecipes);
+    }
+
+    console.log("Personalized Recipes: ", personalizedRecipes);
+    console.log("Other Recipes: ", otherRecipes);
+  }, [iterableRecipes, personalizedRecipes]);
 
   // Determine if any search or filter has been applied
   const hasSearchOrFilterBeenApplied =
@@ -1597,7 +1631,7 @@ const RecipesPageForUser = () => {
                           ) : (
                             // If no search/filter has been performed, display latest and other recipes
                             <>
-                              {/* {displayPersonalisedSection &&
+                              {displayPersonalisedSection &&
                               personalizedRecipes.length > 0 ? (
                                 <div className="mb-14 bg-orange-100 rounded-lg p-6">
                                   <h2 className="text-4xl font-bold mb-4 mt-4">
@@ -1614,16 +1648,16 @@ const RecipesPageForUser = () => {
                                   <h2 className="text-4xl font-bold mb-4 mt-4">
                                     Just For You
                                   </h2>
-                                  <p>
+                                  <p className="text-gray-500">
                                     No personalized recipes found. Set your
                                     dietary Preference or allergies in your
                                     dietary preference to find recipes most
                                     suitable for you!
                                   </p>
                                 </div>
-                              )} */}
+                              )}
 
-                              <div className="mb-14 bg-orange-100 rounded-lg p-6">
+                              {/* <div className="mb-14 bg-orange-100 rounded-lg p-6">
                                 <h2 className="text-4xl font-bold mb-4 mt-4">
                                   Just For You
                                 </h2>
@@ -1632,7 +1666,7 @@ const RecipesPageForUser = () => {
                                     renderPostCard(post)
                                   )}
                                 </div>
-                              </div>
+                              </div> */}
 
                               <div className="mt-14 mb-5">
                                 <h2 className="text-4xl font-bold mb-4 mt-4">

@@ -96,11 +96,14 @@ public class LoginService {
         {
             return "User not found!";
         }
-        if(!user.get().getPassword().equals(dto.getOldPassword()))
+        if(!passwordEncoder.matches(dto.getOldPassword(), user.get().getPassword()))
+        // if(!user.get().getPassword().equals(dto.getOldPassword()))
         {
             return "Password doesn't match!";
         } 
-        user.get().setPassword(dto.getNewPassword());
+        
+        String encodedPW = passwordEncoder.encode(dto.getNewPassword());
+        user.get().setPassword(encodedPW);
         userRepository.save(user.get());     
 
         return "Password Updated!";

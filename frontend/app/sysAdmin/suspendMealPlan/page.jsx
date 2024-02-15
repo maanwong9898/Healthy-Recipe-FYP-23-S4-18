@@ -17,8 +17,8 @@ import { useMutation } from "react-query";
 const sortOptions = {
   LATEST: { key: "LATEST", label: "By Latest" },
   OLDEST: { key: "OLDEST", label: "By Oldest" },
-  HIGHEST_RATINGS: { key: "HIGHEST_RATINGS", label: "Highest Ratings" },
-  LOWEST_RATINGS: { key: "LOWEST_RATINGS", label: "Lowest Ratings" },
+  // HIGHEST_RATINGS: { key: "HIGHEST_RATINGS", label: "Highest Ratings" },
+  // LOWEST_RATINGS: { key: "LOWEST_RATINGS", label: "Lowest Ratings" },
   ALPHABETICAL_AZ: { key: "ALPHABETICAL_AZ", label: "Alphabetically (A to Z)" },
   ALPHABETICAL_ZA: { key: "ALPHABETICAL_ZA", label: "Alphabetically (Z to A)" },
 };
@@ -30,15 +30,15 @@ const fetchMealPlans = async () => {
 
     console.log("All meal plans:", response.data);
 
-    // return response.data;
-    const mealPlansWithAverage = await Promise.all(
-      response.data.map(async (mealPlan) => {
-        const average = await fetchMealPlanAverage(mealPlan.id);
-        return { ...mealPlan, average };
-      })
-    );
+    return response.data;
+    // const mealPlansWithAverage = await Promise.all(
+    //   response.data.map(async (mealPlan) => {
+    //     const average = await fetchMealPlanAverage(mealPlan.id);
+    //     return { ...mealPlan, average };
+    //   })
+    // );
 
-    return mealPlansWithAverage;
+    // return mealPlansWithAverage;
   } catch (error) {
     console.error("Failed to fetch meal plans:", error);
     throw error;
@@ -100,7 +100,7 @@ const SuspendMealPlan = () => {
   const [categoryFilter, setCategoryFilter] = useState("ALL");
   const [alphabeticalOrder, setAlphabeticalOrder] = useState("AZ");
   const [datePublishedOrder, setDatePublishedOrder] = useState("LATEST");
-  const [ratingsOrder, setRatingsOrder] = useState("HIGHEST");
+  // const [ratingsOrder, setRatingsOrder] = useState("HIGHEST");
   const [statusOrder, setStatusOrder] = useState("ACTIVE");
   // const [isLoading, setIsLoading] = useState(true);
   const [isChecking, setIsChecking] = useState(true);
@@ -177,24 +177,24 @@ const SuspendMealPlan = () => {
         case "ALPHABETICAL_ZA":
           processedMealPlans.sort((a, b) => b.title.localeCompare(a.title));
           break;
-        case "HIGHEST_RATINGS":
-          processedMealPlans.sort((a, b) => {
-            const ratingDiff =
-              (b.average?.averageRatings || 0) -
-              (a.average?.averageRatings || 0);
-            if (ratingDiff !== 0) return ratingDiff;
-            return getDateOrFallback(b) - getDateOrFallback(a); // Latest date first if tie
-          });
-          break;
-        case "LOWEST_RATINGS":
-          processedMealPlans.sort((a, b) => {
-            const ratingDiff =
-              (a.average?.averageRatings || 0) -
-              (b.average?.averageRatings || 0);
-            if (ratingDiff !== 0) return ratingDiff;
-            return getDateOrFallback(b) - getDateOrFallback(a); // Latest date first if tie
-          });
-          break;
+        // case "HIGHEST_RATINGS":
+        //   processedMealPlans.sort((a, b) => {
+        //     const ratingDiff =
+        //       (b.average?.averageRatings || 0) -
+        //       (a.average?.averageRatings || 0);
+        //     if (ratingDiff !== 0) return ratingDiff;
+        //     return getDateOrFallback(b) - getDateOrFallback(a); // Latest date first if tie
+        //   });
+        //   break;
+        // case "LOWEST_RATINGS":
+        //   processedMealPlans.sort((a, b) => {
+        //     const ratingDiff =
+        //       (a.average?.averageRatings || 0) -
+        //       (b.average?.averageRatings || 0);
+        //     if (ratingDiff !== 0) return ratingDiff;
+        //     return getDateOrFallback(b) - getDateOrFallback(a); // Latest date first if tie
+        //   });
+        //   break;
         case "STATUS_ACTIVE":
           processedMealPlans.sort((a, b) => {
             const statusDiff = b.active - a.active;
@@ -238,15 +238,15 @@ const SuspendMealPlan = () => {
   };
 
   // Sort by ratings order
-  const handleSortByRatings = () => {
-    if (ratingsOrder === "HIGHEST") {
-      setSortOption("LOWEST_RATINGS");
-      setRatingsOrder("LOWEST");
-    } else {
-      setSortOption("HIGHEST_RATINGS");
-      setRatingsOrder("HIGHEST");
-    }
-  };
+  // const handleSortByRatings = () => {
+  //   if (ratingsOrder === "HIGHEST") {
+  //     setSortOption("LOWEST_RATINGS");
+  //     setRatingsOrder("LOWEST");
+  //   } else {
+  //     setSortOption("HIGHEST_RATINGS");
+  //     setRatingsOrder("HIGHEST");
+  //   }
+  // };
 
   // Sort by status order
   const handleSortByStatus = () => {
@@ -388,7 +388,7 @@ const SuspendMealPlan = () => {
                               <SwapVertIcon />
                             </button>
                           </th>
-                          <th className="px-3 py-2">
+                          {/* <th className="px-3 py-2">
                             Ratings
                             <button
                               className="ml-1 focus:outline-none"
@@ -396,7 +396,7 @@ const SuspendMealPlan = () => {
                             >
                               <SwapVertIcon />
                             </button>
-                          </th>
+                          </th> */}
                           <th className="px-3 py-2"></th>
                           <th className="px-3 py-2"></th>
                         </tr>
@@ -435,7 +435,7 @@ const SuspendMealPlan = () => {
                                 {mealPlan.active ? "Active" : "Inactive"}
                               </span>
                             </td>
-                            <td className="px-3 py-2 text-base text-center">
+                            {/* <td className="px-3 py-2 text-base text-center">
                               <div
                                 className="rating-container flex flex-col"
                                 style={{ minWidth: "100px" }}
@@ -474,7 +474,7 @@ const SuspendMealPlan = () => {
                                     </span>
                                   )}
                               </div>
-                            </td>
+                            </td> */}
                             <td className="px-3 py-2 text-base text-center"></td>
                             <td className="px-3 py-2 justify-center sm:justify-start">
                               <button
@@ -574,7 +574,7 @@ const SuspendMealPlan = () => {
                             </span>
                           </p>
                           {/* Ratings */}
-                          <div className="px-3 py-2 text-lg">
+                          {/* <div className="px-3 py-2 text-lg">
                             <div
                               className="rating-container flex flex-row gap-2"
                               style={{ minWidth: "100px" }}
@@ -617,7 +617,7 @@ const SuspendMealPlan = () => {
                                   </span>
                                 )}
                             </div>
-                          </div>
+                          </div> */}
                           {/* Buttons */}
                           <div className="mt-2 flex flex-col space-y-3 items-center">
                             <button

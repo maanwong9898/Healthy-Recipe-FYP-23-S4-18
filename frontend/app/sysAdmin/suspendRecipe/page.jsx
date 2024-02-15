@@ -77,7 +77,7 @@ const SuspendRecipe = () => {
   const [searchResultsCount, setSearchResultsCount] = useState(0);
   const [alphabeticalOrder, setAlphabeticalOrder] = useState("AZ");
   const [datePublishedOrder, setDatePublishedOrder] = useState("LATEST");
-  const [ratingsOrder, setRatingsOrder] = useState("HIGHEST");
+  // const [ratingsOrder, setRatingsOrder] = useState("HIGHEST");
   const [statusOrder, setStatusOrder] = useState("ACTIVE");
   const [isChecking, setIsChecking] = useState(true);
   const [isAuthorized, setIsAuthorized] = useState(false);
@@ -144,24 +144,24 @@ const SuspendRecipe = () => {
         case "ALPHABETICAL_ZA":
           processedRecipes.sort((a, b) => b.title.localeCompare(a.title));
           break;
-        case "HIGHEST_RATINGS":
-          processedRecipes.sort((a, b) => {
-            const ratingDiff =
-              (b.average?.averageRatings || 0) -
-              (a.average?.averageRatings || 0);
-            if (ratingDiff !== 0) return ratingDiff;
-            return getDateOrFallback(b) - getDateOrFallback(a); // Latest date first if tie
-          });
-          break;
-        case "LOWEST_RATINGS":
-          processedRecipes.sort((a, b) => {
-            const ratingDiff =
-              (a.average?.averageRatings || 0) -
-              (b.average?.averageRatings || 0);
-            if (ratingDiff !== 0) return ratingDiff;
-            return getDateOrFallback(b) - getDateOrFallback(a); // Latest date first if tie
-          });
-          break;
+        // case "HIGHEST_RATINGS":
+        //   processedRecipes.sort((a, b) => {
+        //     const ratingDiff =
+        //       (b.average?.averageRatings || 0) -
+        //       (a.average?.averageRatings || 0);
+        //     if (ratingDiff !== 0) return ratingDiff;
+        //     return getDateOrFallback(b) - getDateOrFallback(a); // Latest date first if tie
+        //   });
+        //   break;
+        // case "LOWEST_RATINGS":
+        //   processedRecipes.sort((a, b) => {
+        //     const ratingDiff =
+        //       (a.average?.averageRatings || 0) -
+        //       (b.average?.averageRatings || 0);
+        //     if (ratingDiff !== 0) return ratingDiff;
+        //     return getDateOrFallback(b) - getDateOrFallback(a); // Latest date first if tie
+        //   });
+        //   break;
         case "STATUS_ACTIVE":
           processedRecipes.sort((a, b) => {
             const statusDiff = b.active - a.active;
@@ -207,15 +207,15 @@ const SuspendRecipe = () => {
   };
 
   // Sort by ratings order
-  const handleSortByRatings = () => {
-    if (ratingsOrder === "HIGHEST") {
-      setSortOption("LOWEST_RATINGS");
-      setRatingsOrder("LOWEST");
-    } else {
-      setSortOption("HIGHEST_RATINGS");
-      setRatingsOrder("HIGHEST");
-    }
-  };
+  // const handleSortByRatings = () => {
+  //   if (ratingsOrder === "HIGHEST") {
+  //     setSortOption("LOWEST_RATINGS");
+  //     setRatingsOrder("LOWEST");
+  //   } else {
+  //     setSortOption("HIGHEST_RATINGS");
+  //     setRatingsOrder("HIGHEST");
+  //   }
+  // };
 
   // Sort by status order
   const handleSortByStatus = () => {
@@ -321,7 +321,7 @@ const SuspendRecipe = () => {
                               <SwapVertIcon />
                             </button>
                           </th>
-                          <th className="px-3 py-2">
+                          {/* <th className="px-3 py-2">
                             Ratings
                             <button
                               className="ml-1 focus:outline-none"
@@ -329,7 +329,7 @@ const SuspendRecipe = () => {
                             >
                               <SwapVertIcon />
                             </button>
-                          </th>
+                          </th> */}
                           <th className="px-3 py-2"></th>
                         </tr>
                       </thead>
@@ -362,7 +362,7 @@ const SuspendRecipe = () => {
                                 {recipe.active ? "Active" : "Inactive"}
                               </span>
                             </td>
-                            <td className="px-3 py-2 text-base text-center">
+                            {/* <td className="px-3 py-2 text-base text-center">
                               <div
                                 className="rating-container flex flex-col"
                                 style={{ minWidth: "100px" }}
@@ -401,7 +401,7 @@ const SuspendRecipe = () => {
                                     </span>
                                   )}
                               </div>
-                            </td>
+                            </td> */}
 
                             <td className="px-3 py-2 text-base text-center">
                               <button
@@ -493,7 +493,7 @@ const SuspendRecipe = () => {
                           </p>
 
                           {/* Ratings */}
-                          <div className="px-3 py-2 text-lg">
+                          {/* <div className="px-3 py-2 text-lg">
                             <div
                               className="rating-container flex flex-row gap-2"
                               style={{ minWidth: "100px" }}
@@ -535,7 +535,7 @@ const SuspendRecipe = () => {
                                   </span>
                                 )}
                             </div>
-                          </div>
+                          </div> */}
 
                           {/* Buttons */}
                           <div className="mt-2 flex flex-col space-y-3 items-center">

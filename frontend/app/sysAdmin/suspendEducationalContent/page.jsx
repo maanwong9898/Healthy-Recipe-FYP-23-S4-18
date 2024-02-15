@@ -16,8 +16,8 @@ import { useMutation } from "react-query";
 const sortOptions = {
   LATEST: { key: "LATEST", label: "By Latest" },
   OLDEST: { key: "OLDEST", label: "By Oldest" },
-  HIGHEST_RATINGS: { key: "HIGHEST_RATINGS", label: "Highest Ratings" },
-  LOWEST_RATINGS: { key: "LOWEST_RATINGS", label: "Lowest Ratings" },
+  // HIGHEST_RATINGS: { key: "HIGHEST_RATINGS", label: "Highest Ratings" },
+  // LOWEST_RATINGS: { key: "LOWEST_RATINGS", label: "Lowest Ratings" },
   ALPHABETICAL_AZ: { key: "ALPHABETICAL_AZ", label: "Alphabetically (A to Z)" },
   ALPHABETICAL_ZA: { key: "ALPHABETICAL_ZA", label: "Alphabetically (Z to A)" },
 };
@@ -31,15 +31,16 @@ const fetchEducationalContent = async () => {
 
     console.log("All edu content:", response.data);
 
-    // return response.data;
-    const educationalContentsWithAverage = await Promise.all(
-      response.data.map(async (eduContent) => {
-        const average = await fetchEduContentAverage(eduContent.id);
-        return { ...eduContent, average };
-      })
-    );
+    // // return response.data;
+    // const educationalContentsWithAverage = await Promise.all(
+    //   response.data.map(async (eduContent) => {
+    //     const average = await fetchEduContentAverage(eduContent.id);
+    //     return { ...eduContent, average };
+    //   })
+    // );
 
-    return educationalContentsWithAverage;
+    // return educationalContentsWithAverage;
+    return response.data;
   } catch (error) {
     console.error("Failed to fetch edu contents:", error);
     throw error;
@@ -93,7 +94,7 @@ const SuspendEducationalContent = () => {
   const [categoryFilter, setCategoryFilter] = useState("ALL");
   const [alphabeticalOrder, setAlphabeticalOrder] = useState("AZ");
   const [datePublishedOrder, setDatePublishedOrder] = useState("LATEST");
-  const [ratingsOrder, setRatingsOrder] = useState("HIGHEST");
+  // const [ratingsOrder, setRatingsOrder] = useState("HIGHEST");
   const [statusOrder, setStatusOrder] = useState("ACTIVE");
   const [isChecking, setIsChecking] = useState(true);
   const [isAuthorized, setIsAuthorized] = useState(false);
@@ -167,24 +168,24 @@ const SuspendEducationalContent = () => {
         case "ALPHABETICAL_ZA":
           processedEduContent.sort((a, b) => b.title.localeCompare(a.title));
           break;
-        case "HIGHEST_RATINGS":
-          processedEduContent.sort((a, b) => {
-            const ratingDiff =
-              (b.average?.averageRatings || 0) -
-              (a.average?.averageRatings || 0);
-            if (ratingDiff !== 0) return ratingDiff;
-            return new Date(b.createdDateTime) - new Date(a.createdDateTime); // Latest date first if tie
-          });
-          break;
-        case "LOWEST_RATINGS":
-          processedEduContent.sort((a, b) => {
-            const ratingDiff =
-              (a.average?.averageRatings || 0) -
-              (b.average?.averageRatings || 0);
-            if (ratingDiff !== 0) return ratingDiff;
-            return new Date(b.createdDateTime) - new Date(a.createdDateTime); // Latest date first if tie
-          });
-          break;
+        // case "HIGHEST_RATINGS":
+        //   processedEduContent.sort((a, b) => {
+        //     const ratingDiff =
+        //       (b.average?.averageRatings || 0) -
+        //       (a.average?.averageRatings || 0);
+        //     if (ratingDiff !== 0) return ratingDiff;
+        //     return new Date(b.createdDateTime) - new Date(a.createdDateTime); // Latest date first if tie
+        //   });
+        //   break;
+        // case "LOWEST_RATINGS":
+        //   processedEduContent.sort((a, b) => {
+        //     const ratingDiff =
+        //       (a.average?.averageRatings || 0) -
+        //       (b.average?.averageRatings || 0);
+        //     if (ratingDiff !== 0) return ratingDiff;
+        //     return new Date(b.createdDateTime) - new Date(a.createdDateTime); // Latest date first if tie
+        //   });
+        //   break;
         case "STATUS_ACTIVE":
           processedEduContent.sort((a, b) => {
             const statusDiff = b.active - a.active;
@@ -228,15 +229,15 @@ const SuspendEducationalContent = () => {
   };
 
   // Sort by ratings order
-  const handleSortByRatings = () => {
-    if (ratingsOrder === "HIGHEST") {
-      setSortOption("LOWEST_RATINGS");
-      setRatingsOrder("LOWEST");
-    } else {
-      setSortOption("HIGHEST_RATINGS");
-      setRatingsOrder("HIGHEST");
-    }
-  };
+  // const handleSortByRatings = () => {
+  //   if (ratingsOrder === "HIGHEST") {
+  //     setSortOption("LOWEST_RATINGS");
+  //     setRatingsOrder("LOWEST");
+  //   } else {
+  //     setSortOption("HIGHEST_RATINGS");
+  //     setRatingsOrder("HIGHEST");
+  //   }
+  // };
 
   // Sort by status order
   const handleSortByStatus = () => {
@@ -390,7 +391,7 @@ const SuspendEducationalContent = () => {
                               <SwapVertIcon />
                             </button>
                           </th>
-                          <th className="px-3 py-2">
+                          {/* <th className="px-3 py-2">
                             Ratings
                             <button
                               className="ml-1 focus:outline-none"
@@ -398,7 +399,7 @@ const SuspendEducationalContent = () => {
                             >
                               <SwapVertIcon />
                             </button>
-                          </th>
+                          </th> */}
                           <th className="px-3 py-2"></th>
                           <th className="px-3 py-2"></th>
                         </tr>
@@ -438,7 +439,7 @@ const SuspendEducationalContent = () => {
                                 {eduContent.active ? "Active" : "Inactive"}
                               </span>
                             </td>
-                            <td className="px-3 py-2 text-base text-center">
+                            {/* <td className="px-3 py-2 text-base text-center">
                               <div
                                 className="rating-container flex flex-col"
                                 style={{ minWidth: "100px" }}
@@ -479,7 +480,7 @@ const SuspendEducationalContent = () => {
                                     </span>
                                   )}
                               </div>
-                            </td>
+                            </td> */}
                             <td className="px-3 py-2 text-base text-center"></td>
                             <td className="px-3 py-2 justify-center sm:justify-start">
                               <button
@@ -584,7 +585,7 @@ const SuspendEducationalContent = () => {
                           </p>
 
                           {/* Ratings */}
-                          <div className="px-3 py-2 text-lg">
+                          {/* <div className="px-3 py-2 text-lg">
                             <div
                               className="rating-container flex flex-row gap-2"
                               style={{ minWidth: "100px" }}
@@ -626,7 +627,7 @@ const SuspendEducationalContent = () => {
                                   </span>
                                 )}
                             </div>
-                          </div>
+                          </div> */}
 
                           {/* Buttons */}
                           <div className="mt-2 flex flex-col space-y-3 items-center">

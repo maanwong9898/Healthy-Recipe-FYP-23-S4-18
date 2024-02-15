@@ -56,14 +56,14 @@ public interface EducationalContentRepository extends JpaRepository<EducationalC
     final String getDTO = "SELECT r.active, r.title AS title, r.id AS id, r.img AS img, SUBSTRING_INDEX(SUBSTRING_INDEX(r.info, ' ', 500), ' ', 50) AS introduction, r.publisher AS publisher FROM EducationalContent r ";
 
     @Query(value= getDTO 
-    + " WHERE r.active = TRUE ORDER BY r.createdDateTime LIMIT 3", nativeQuery = false)
+    + " WHERE r.active = TRUE ORDER BY r.createdDateTime DESC  LIMIT 3", nativeQuery = false)
     List<EduCoDTO> findLatestEduCoDTO();
 
     @Query(value= getDTO 
-    + " WHERE  r.active = TRUE AND r.id NOT IN (:ids) ORDER BY r.createdDateTime LIMIT :count")
+    + " WHERE  r.active = TRUE AND r.id NOT IN (:ids) ORDER BY r.createdDateTime  DESC LIMIT :count")
     List<EduCoDTO> findLatestEduCoDTO(@Param("ids") List<Long> ids,@Param("count") Integer count);
  
-    @Query(value= getDTO  + " WHERE r.active = TRUE ORDER BY r.createdDateTime LIMIT :count")
+    @Query(value= getDTO  + " WHERE r.active = TRUE ORDER BY r.createdDateTime DESC LIMIT :count")
     List<EduCoDTO> findLatestEduCoDTO(@Param("count") Integer count);
 
     @Query(value= getDTO 

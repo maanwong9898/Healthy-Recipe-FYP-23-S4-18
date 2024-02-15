@@ -2,6 +2,7 @@ package com.FYP18.HealthyRecipe.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -60,7 +61,10 @@ public class LandingPageService {
 
             toReturn.addAll(addOn);
         }
-        
+        else if (toReturn.size() > count)
+        {
+            toReturn = toReturn.stream().limit(count).collect(Collectors.toList()); 
+        }
         return toReturn;
     }
 
@@ -104,7 +108,10 @@ public class LandingPageService {
 
             toReturn.addAll(addOn);
         }
-        
+        else if (toReturn.size() > count)
+        {
+            toReturn = toReturn.stream().limit(count).collect(Collectors.toList()); 
+        }
         return toReturn;
     }
 }

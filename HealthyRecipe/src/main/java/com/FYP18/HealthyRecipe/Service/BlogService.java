@@ -4,6 +4,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList; 
 import java.util.List; 
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -194,7 +195,7 @@ public class BlogService {
         } 
 
         List<BlogDTO> toReturn = blogRepository.findBlogDTOsByIds(ids);
-        int missing = count - ids.size();
+        int missing = count - toReturn.size();
 
         // if its actually lesser than 3
         if(missing > 0)
@@ -204,7 +205,10 @@ public class BlogService {
 
             toReturn.addAll(addOn);
         }
-        
+        else if (toReturn.size() > count)
+        {
+            toReturn = toReturn.stream().limit(count).collect(Collectors.toList()); 
+        }
         return toReturn;
     }
 

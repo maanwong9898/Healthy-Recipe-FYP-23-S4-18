@@ -147,7 +147,7 @@ public class RecipeService {
         } 
 
         List<RecipeDTO> toReturn = recipeRepository.findRecipeDTOsByIds(ids);
-        int missing = 3 - ids.size();
+        int missing = 3 - toReturn.size();
 
         // if its actually lesser than 3
         if(missing > 0)
@@ -267,7 +267,7 @@ public class RecipeService {
            toReturn = dp == null ? recipeRepository.findRecipeDTOsByAllergies(ids) : 
                                     recipeRepository.findRecipeDTOsByAllergiesAndDP(ids, dp.getId());
         }
-
+ 
         if(toReturn.size()  < num)
         {
             int count  = num - toReturn.size();
@@ -279,6 +279,10 @@ public class RecipeService {
             List<RecipeDTO> addOn = count == num ? recipeRepository.findLatestRecipe(count) :
                                          recipeRepository.findLatestRecipe(checked, count);
             toReturn.addAll(addOn); 
+        }
+        else if (toReturn.size() > num)
+        {
+            toReturn = toReturn.stream().limit(num).collect(Collectors.toList()); 
         }
         HealthGoal hg = ru.getHealthGoal();
         if(hg != null)

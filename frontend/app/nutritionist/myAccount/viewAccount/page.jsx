@@ -439,7 +439,7 @@ const UpdateAccount = () => {
                               alt="nutritionist certificate"
                               width={400}
                               height={300}
-                              className="rounded-lg h-auto w-full lg:max-w-lg shadow-md cursor-pointer opacity-100 transition duration-500 ease-in-out transform"
+                              className="rounded-lg h-auto w-full lg:max-w-lg shadow-md opacity-100 transition duration-500 ease-in-out transform"
                             />
                             {/* <div className="absolute top-0 left-0 w-full h-full flex items-center justify-center opacity-0 transition duration-500 ease-in-out group-hover:opacity-100">
                               <button
@@ -454,26 +454,26 @@ const UpdateAccount = () => {
 
                         {/* To add during testing, remove in final source code  */}
                         {/* IMAGE file */}
-                        {/* <div className="flex flex-col">
-                  <label
-                    htmlFor="image"
-                    className="block text-xl mb-1 font-bold text-gray-900"
-                  >
-                    Image<span className="text-red-500">*</span>
-                  </label>
-                  <input
-                    type="file"
-                    id="image"
-                    name="image"
-                    accept="image/*"
-                    onChange={handleFileChange}
-                    className="border-solid mt-3 rounded-lg bg-white border border-gray-400 w-full"
-                  />
-                </div>
+                        <div className="flex flex-col">
+                          <label
+                            htmlFor="image"
+                            className="block text-xl mb-1 font-bold text-gray-900"
+                          >
+                            Image<span className="text-red-500">*</span>
+                          </label>
+                          <input
+                            type="file"
+                            id="image"
+                            name="image"
+                            accept="image/*"
+                            onChange={handleFileChange}
+                            className="border-solid mt-3 rounded-lg bg-white border border-gray-400 w-full"
+                          />
+                        </div>
 
-                <div className="mt-2 flex flex-row space-x-4">
-                  {renderImage()}
-                </div> */}
+                        <div className="mt-2 flex flex-row space-x-4">
+                          {renderImage()}
+                        </div>
 
                         {error && (
                           <p className="text-red-500 text-base font-medium">

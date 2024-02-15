@@ -202,6 +202,9 @@ const RecipesPageForUser = () => {
   const [displayPersonalisedSection, setDisplayPersonalisedSection] =
     useState(false);
 
+  // For search type
+  const [searchType, setSearchType] = useState("title");
+
   useEffect(() => {
     // Perform your token and role check here
     const token = SecureStorage.getItem("token");
@@ -553,9 +556,10 @@ const RecipesPageForUser = () => {
         sortedRecipes.sort((a, b) => b.title.localeCompare(a.title));
         break;
       // case "HIGHEST_RATINGS":
-      //   sortedRecipes.sort((a, b) => {
+      //   sortedResults.sort((a, b) => {
       //     const ratingDiff =
-      //       (b.average?.averageRatings || 0) - (a.average?.averageRatings || 0);
+      //       (b.average?.averageRatings || 0) -
+      //       (a.average?.averageRatings || 0);
       //     if (ratingDiff !== 0) return ratingDiff;
       //     // Use getDateForComparison for tiebreaker date comparison
       //     return getDateForComparison(b) - getDateForComparison(a); // Latest date first if tie
@@ -616,439 +620,190 @@ const RecipesPageForUser = () => {
     }
   };
 
-  const handleSearchClick = async () => {
-    setSearchButtonClicked(true); // Set flag when search is performed
+  const handleSearch = async () => {
+    setSearchButtonClicked(true);
     setIsSearchEmpty(false);
     setSearchPerformed(true);
 
     if (!searchTerm.trim()) {
-      // temporary fix
-      const filteredRecipes = AllRecipes;
-
-      setDisplayedRecipes(filteredRecipes);
-      setResultsCount(filteredRecipes.length);
-      setIsSearchEmpty(false);
-      setSearchPerformed(false);
+      // If search term is empty, just apply filters to all recipes
+      applyFilters(AllRecipes);
     } else {
-      // Search for recipes
       try {
         const formattedSearchTerm = searchTerm.trim().replace(/\s+/g, "+");
-        const response = await axiosInterceptorInstance.get(
-          `/recipe/find?keyword=${formattedSearchTerm}`
-        );
-        let filteredResults = response.data.filter(
-          (recipe) => recipe.active === true
-        );
+        let response;
 
-        if (filteredResults.length > 0) {
-          // Apply additional filters to the search results
-          let finalResults = filteredResults;
-
-          // Filter by dietary preference
-          if (selectedDietaryPreference) {
-            finalResults = finalResults.filter(
-              (recipe) =>
-                recipe.dietaryPreferences?.subcategoryName ===
-                selectedDietaryPreference
-            );
-          }
-
-          // Filter by meal type
-          if (selectedMealType) {
-            finalResults = finalResults.filter(
-              (recipe) => recipe.mealType?.subcategoryName === selectedMealType
-            );
-          }
-
-          // Filter by allergies
-          if (selectedAllergies.length > 0) {
-            finalResults = finalResults.filter(
-              (recipe) =>
-                !selectedAllergies.some((allergy) =>
-                  recipe.allergies.some((a) => a.subcategoryName === allergy)
-                )
-            );
-          }
-
-          // Filter all nutrion values
-          // Filter by calories
-          if (caloriesMinFilter || caloriesMaxFilter) {
-            finalResults = finalResults.filter((recipe) => {
-              const calories = recipe.calories;
-              const min = caloriesMinFilter
-                ? parseFloat(caloriesMinFilter, 10)
-                : -Infinity;
-              const max = caloriesMaxFilter
-                ? parseFloat(caloriesMaxFilter, 10)
-                : Infinity;
-              return calories >= min && calories <= max;
-            });
-          }
-
-          // Filter by carbs
-          if (carbsMinFilter || carbsMaxFilter) {
-            finalResults = finalResults.filter((recipe) => {
-              const carbs = recipe.carbs;
-              const min = carbsMinFilter
-                ? parseFloat(carbsMinFilter, 10)
-                : -Infinity;
-              const max = carbsMaxFilter
-                ? parseFloat(carbsMaxFilter, 10)
-                : Infinity;
-              return carbs >= min && carbs <= max;
-            });
-          }
-
-          // Filter by protein
-          if (proteinMinFilter || proteinMaxFilter) {
-            finalResults = finalResults.filter((recipe) => {
-              const protein = recipe.protein;
-              const min = proteinMinFilter
-                ? parseFloat(proteinMinFilter, 10)
-                : -Infinity;
-              const max = proteinMaxFilter
-                ? parseFloat(proteinMaxFilter, 10)
-                : Infinity;
-              return protein >= min && protein <= max;
-            });
-          }
-
-          // Filter by fat
-          if (fatMinFilter || fatMaxFilter) {
-            finalResults = finalResults.filter((recipe) => {
-              const fat = recipe.fat;
-              const min = fatMinFilter
-                ? parseFloat(fatMinFilter, 10)
-                : -Infinity;
-              const max = fatMaxFilter
-                ? parseFloat(fatMaxFilter, 10)
-                : Infinity;
-              return fat >= min && fat <= max;
-            });
-          }
-
-          // Filter by sodium
-          if (sodiumMinFilter || sodiumMaxFilter) {
-            finalResults = finalResults.filter((recipe) => {
-              const sodium = recipe.sodium;
-              const min = sodiumMinFilter
-                ? parseFloat(sodiumMinFilter, 10)
-                : -Infinity;
-              const max = sodiumMaxFilter
-                ? parseFloat(sodiumMaxFilter, 10)
-                : Infinity;
-              return sodium >= min && sodium <= max;
-            });
-          }
-
-          // Filter by fibre
-          if (fibreMinFilter || fibreMaxFilter) {
-            finalResults = finalResults.filter((recipe) => {
-              const fibre = recipe.fibre;
-              const min = fibreMinFilter
-                ? parseFloat(fibreMinFilter, 10)
-                : -Infinity;
-              const max = fibreMaxFilter
-                ? parseFloat(fibreMaxFilter, 10)
-                : Infinity;
-              return fibre >= min && fibre <= max;
-            });
-          }
-
-          // Filter by cooking time
-          if (cookingTimeMinFilter || cookingTimeMaxFilter) {
-            finalResults = finalResults.filter((recipe) => {
-              const cookingTime = recipe.cookingTime;
-              const min = cookingTimeMinFilter
-                ? parseFloat(cookingTimeMinFilter, 10)
-                : -Infinity;
-              const max = cookingTimeMaxFilter
-                ? parseFloat(cookingTimeMaxFilter, 10)
-                : Infinity;
-              return cookingTime >= min && cookingTime <= max;
-            });
-          }
-
-          // Fetch average ratings for each recipe
-          // let filteredResultsWithAverage = await Promise.all(
-          //   finalResults.map(async (recipe) => {
-          //     const average = await fetchRecipeAverage(recipe.id);
-          //     return { ...recipe, average }; // Augment each recipes with its average
-          //   })
-          // );
-
-          // Sort the results
-          let sortedResults = [...filteredResults];
-
-          // Helper function to get the date for comparison
-          const getDateForComparison = (recipe) => {
-            // Use createdDT if not null; otherwise, use updateDT
-            return new Date(recipe.createdDT || recipe.lastUpdatedDT);
-          };
-
-          // Sorting
-          switch (sortOption) {
-            case "LATEST":
-              sortedResults.sort(
-                (a, b) => getDateForComparison(b) - getDateForComparison(a)
-              );
-              break;
-            case "OLDEST":
-              sortedResults.sort(
-                (a, b) => getDateForComparison(a) - getDateForComparison(b)
-              );
-              break;
-            case "ALPHABETICAL_AZ":
-              sortedResults.sort((a, b) => a.title.localeCompare(b.title));
-              break;
-            case "ALPHABETICAL_ZA":
-              sortedResults.sort((a, b) => b.title.localeCompare(a.title));
-              break;
-            // case "HIGHEST_RATINGS":
-            //   sortedResults.sort((a, b) => {
-            //     const ratingDiff =
-            //       (b.average?.averageRatings || 0) -
-            //       (a.average?.averageRatings || 0);
-            //     if (ratingDiff !== 0) return ratingDiff;
-            //     // Use getDateForComparison for tiebreaker date comparison
-            //     return getDateForComparison(b) - getDateForComparison(a); // Latest date first if tie
-            //   });
-            //   break;
-          }
-
-          console.log("Sorted results:", sortedResults);
-
-          setDisplayedRecipes(sortedResults);
-          setResultsCount(sortedResults.length);
-          setIsSearchEmpty(sortedResults.length === 0);
-        } else {
-          setIsSearchEmpty(true);
-          setDisplayedRecipes([]);
-          setResultsCount(0);
+        if (searchType === "title") {
+          response = await axiosInterceptorInstance.get(
+            `/recipe/find?keyword=${formattedSearchTerm}`
+          );
+        } else if (searchType === "ingredient") {
+          response = await axiosInterceptorInstance.get(
+            `/recipe/findByIngredients?keyword=${formattedSearchTerm}`
+          );
         }
-        setSearchPerformed(true);
+
+        // Only proceed if response was successful
+        if (response) {
+          const activeResults = response.data.filter((recipe) => recipe.active);
+          applyFilters(activeResults);
+        }
       } catch (error) {
         console.error("Error searching recipes:", error);
+        setIsSearchEmpty(true); // No results to display due to an error
+        setDisplayedRecipes([]);
+        setResultsCount(0);
       }
     }
   };
 
-  const handleIngredientSearchClick = async () => {
-    setSearchButtonClicked(true); // Set flag when search is performed
-    setIsSearchEmpty(false);
-    setSearchPerformed(true);
+  const applyFilters = (recipes) => {
+    // Start with the full list of recipes
+    let finalResults = recipes;
+    // Apply filters
 
-    if (!ingredientSearchTerm.trim()) {
-      // temporary fix
-      const filteredRecipes = AllRecipes;
+    // Filter by dietary preference
+    if (selectedDietaryPreference) {
+      finalResults = finalResults.filter(
+        (recipe) =>
+          recipe.dietaryPreferences?.subcategoryName ===
+          selectedDietaryPreference
+      );
+    }
 
-      setDisplayedRecipes(filteredRecipes);
-      setResultsCount(filteredRecipes.length);
-      setIsSearchEmpty(false);
-      setSearchPerformed(false);
-    } else {
-      // Search for recipes
-      try {
-        const formattedIngredientSearchTerm = ingredientSearchTerm
-          .trim()
-          .replace(/\s+/g, "+");
-        const response = await axiosInterceptorInstance.get(
-          `/recipe/findByIngredients?keyword=${formattedIngredientSearchTerm}`
+    // Filter by meal type
+    if (selectedMealType) {
+      finalResults = finalResults.filter(
+        (recipe) => recipe.mealType?.subcategoryName === selectedMealType
+      );
+    }
+
+    // Filter by allergies
+    if (selectedAllergies.length > 0) {
+      finalResults = finalResults.filter(
+        (recipe) =>
+          !selectedAllergies.some((allergy) =>
+            recipe.allergies.some((a) => a.subcategoryName === allergy)
+          )
+      );
+    }
+
+    // Filter all nutrion values
+    // Filter by calories
+    if (caloriesMinFilter || caloriesMaxFilter) {
+      finalResults = finalResults.filter((recipe) => {
+        const calories = recipe.calories;
+        const min = caloriesMinFilter
+          ? parseFloat(caloriesMinFilter, 10)
+          : -Infinity;
+        const max = caloriesMaxFilter
+          ? parseFloat(caloriesMaxFilter, 10)
+          : Infinity;
+        return calories >= min && calories <= max;
+      });
+    }
+
+    // Filter by carbs
+    if (carbsMinFilter || carbsMaxFilter) {
+      finalResults = finalResults.filter((recipe) => {
+        const carbs = recipe.carbs;
+        const min = carbsMinFilter ? parseFloat(carbsMinFilter, 10) : -Infinity;
+        const max = carbsMaxFilter ? parseFloat(carbsMaxFilter, 10) : Infinity;
+        return carbs >= min && carbs <= max;
+      });
+    }
+
+    // Filter by protein
+    if (proteinMinFilter || proteinMaxFilter) {
+      finalResults = finalResults.filter((recipe) => {
+        const protein = recipe.protein;
+        const min = proteinMinFilter
+          ? parseFloat(proteinMinFilter, 10)
+          : -Infinity;
+        const max = proteinMaxFilter
+          ? parseFloat(proteinMaxFilter, 10)
+          : Infinity;
+        return protein >= min && protein <= max;
+      });
+    }
+
+    // Filter by fat
+    if (fatMinFilter || fatMaxFilter) {
+      finalResults = finalResults.filter((recipe) => {
+        const fat = recipe.fat;
+        const min = fatMinFilter ? parseFloat(fatMinFilter, 10) : -Infinity;
+        const max = fatMaxFilter ? parseFloat(fatMaxFilter, 10) : Infinity;
+        return fat >= min && fat <= max;
+      });
+    }
+
+    // Filter by sodium
+    if (sodiumMinFilter || sodiumMaxFilter) {
+      finalResults = finalResults.filter((recipe) => {
+        const sodium = recipe.sodium;
+        const min = sodiumMinFilter
+          ? parseFloat(sodiumMinFilter, 10)
+          : -Infinity;
+        const max = sodiumMaxFilter
+          ? parseFloat(sodiumMaxFilter, 10)
+          : Infinity;
+        return sodium >= min && sodium <= max;
+      });
+    }
+
+    // Filter by fibre
+    if (fibreMinFilter || fibreMaxFilter) {
+      finalResults = finalResults.filter((recipe) => {
+        const fibre = recipe.fibre;
+        const min = fibreMinFilter ? parseFloat(fibreMinFilter, 10) : -Infinity;
+        const max = fibreMaxFilter ? parseFloat(fibreMaxFilter, 10) : Infinity;
+        return fibre >= min && fibre <= max;
+      });
+    }
+
+    // Filter by cooking time
+    if (cookingTimeMinFilter || cookingTimeMaxFilter) {
+      finalResults = finalResults.filter((recipe) => {
+        const cookingTime = recipe.cookingTime;
+        const min = cookingTimeMinFilter
+          ? parseFloat(cookingTimeMinFilter, 10)
+          : -Infinity;
+        const max = cookingTimeMaxFilter
+          ? parseFloat(cookingTimeMaxFilter, 10)
+          : Infinity;
+        return cookingTime >= min && cookingTime <= max;
+      });
+    }
+    // After applying all filters, sort and update the state
+    let sortedResults = sortRecipes(finalResults); // Make sure to define this function to sort your recipes
+    setDisplayedRecipes(sortedResults);
+    setResultsCount(sortedResults.length);
+    setIsSearchEmpty(sortedResults.length === 0);
+  };
+
+  const sortRecipes = (recipes) => {
+    // Helper function to get the date for comparison
+    const getDateForComparison = (recipe) => {
+      return new Date(recipe.createdDT || recipe.lastUpdatedDT);
+    };
+
+    // Sorting logic
+    switch (sortOption) {
+      case "LATEST":
+        return recipes.sort(
+          (a, b) => getDateForComparison(b) - getDateForComparison(a)
         );
-        let filteredResults = response.data.filter(
-          (recipe) => recipe.active === true
+      case "OLDEST":
+        return recipes.sort(
+          (a, b) => getDateForComparison(a) - getDateForComparison(b)
         );
-
-        if (filteredResults.length > 0) {
-          // Apply additional filters to the search results
-          let finalResults = filteredResults;
-
-          // Filter by dietary preference
-          if (selectedDietaryPreference) {
-            finalResults = finalResults.filter(
-              (recipe) =>
-                recipe.dietaryPreferences?.subcategoryName ===
-                selectedDietaryPreference
-            );
-          }
-
-          // Filter by meal type
-          if (selectedMealType) {
-            finalResults = finalResults.filter(
-              (recipe) => recipe.mealType?.subcategoryName === selectedMealType
-            );
-          }
-
-          // Filter by allergies
-          if (selectedAllergies.length > 0) {
-            finalResults = finalResults.filter(
-              (recipe) =>
-                !selectedAllergies.some((allergy) =>
-                  recipe.allergies.some((a) => a.subcategoryName === allergy)
-                )
-            );
-          }
-
-          // Filter all nutrion values
-          // Filter by calories
-          if (caloriesMinFilter || caloriesMaxFilter) {
-            finalResults = finalResults.filter((recipe) => {
-              const calories = recipe.calories;
-              const min = caloriesMinFilter
-                ? parseFloat(caloriesMinFilter, 10)
-                : -Infinity;
-              const max = caloriesMaxFilter
-                ? parseFloat(caloriesMaxFilter, 10)
-                : Infinity;
-              return calories >= min && calories <= max;
-            });
-          }
-
-          // Filter by carbs
-          if (carbsMinFilter || carbsMaxFilter) {
-            finalResults = finalResults.filter((recipe) => {
-              const carbs = recipe.carbs;
-              const min = carbsMinFilter
-                ? parseFloat(carbsMinFilter, 10)
-                : -Infinity;
-              const max = carbsMaxFilter
-                ? parseFloat(carbsMaxFilter, 10)
-                : Infinity;
-              return carbs >= min && carbs <= max;
-            });
-          }
-
-          // Filter by protein
-          if (proteinMinFilter || proteinMaxFilter) {
-            finalResults = finalResults.filter((recipe) => {
-              const protein = recipe.protein;
-              const min = proteinMinFilter
-                ? parseFloat(proteinMinFilter, 10)
-                : -Infinity;
-              const max = proteinMaxFilter
-                ? parseFloat(proteinMaxFilter, 10)
-                : Infinity;
-              return protein >= min && protein <= max;
-            });
-          }
-
-          // Filter by fat
-          if (fatMinFilter || fatMaxFilter) {
-            finalResults = finalResults.filter((recipe) => {
-              const fat = recipe.fat;
-              const min = fatMinFilter
-                ? parseFloat(fatMinFilter, 10)
-                : -Infinity;
-              const max = fatMaxFilter
-                ? parseFloat(fatMaxFilter, 10)
-                : Infinity;
-              return fat >= min && fat <= max;
-            });
-          }
-
-          // Filter by sodium
-          if (sodiumMinFilter || sodiumMaxFilter) {
-            finalResults = finalResults.filter((recipe) => {
-              const sodium = recipe.sodium;
-              const min = sodiumMinFilter
-                ? parseFloat(sodiumMinFilter, 10)
-                : -Infinity;
-              const max = sodiumMaxFilter
-                ? parseFloat(sodiumMaxFilter, 10)
-                : Infinity;
-              return sodium >= min && sodium <= max;
-            });
-          }
-
-          // Filter by fibre
-          if (fibreMinFilter || fibreMaxFilter) {
-            finalResults = finalResults.filter((recipe) => {
-              const fibre = recipe.fibre;
-              const min = fibreMinFilter
-                ? parseFloat(fibreMinFilter, 10)
-                : -Infinity;
-              const max = fibreMaxFilter
-                ? parseFloat(fibreMaxFilter, 10)
-                : Infinity;
-              return fibre >= min && fibre <= max;
-            });
-          }
-
-          // Filter by cooking time
-          if (cookingTimeMinFilter || cookingTimeMaxFilter) {
-            finalResults = finalResults.filter((recipe) => {
-              const cookingTime = recipe.cookingTime;
-              const min = cookingTimeMinFilter
-                ? parseFloat(cookingTimeMinFilter, 10)
-                : -Infinity;
-              const max = cookingTimeMaxFilter
-                ? parseFloat(cookingTimeMaxFilter, 10)
-                : Infinity;
-              return cookingTime >= min && cookingTime <= max;
-            });
-          }
-
-          // Fetch average ratings for each recipe
-          // let filteredResultsWithAverage = await Promise.all(
-          //   finalResults.map(async (recipe) => {
-          //     const average = await fetchRecipeAverage(recipe.id);
-          //     return { ...recipe, average }; // Augment each recipes with its average
-          //   })
-          // );
-
-          // Sort the results
-          let sortedResults = [...filteredResults];
-
-          // Helper function to get the date for comparison
-          const getDateForComparison = (recipe) => {
-            // Use createdDT if not null; otherwise, use updateDT
-            return new Date(recipe.createdDT || recipe.lastUpdatedDT);
-          };
-
-          // Sorting
-          switch (sortOption) {
-            case "LATEST":
-              sortedResults.sort(
-                (a, b) => getDateForComparison(b) - getDateForComparison(a)
-              );
-              break;
-            case "OLDEST":
-              sortedResults.sort(
-                (a, b) => getDateForComparison(a) - getDateForComparison(b)
-              );
-              break;
-            case "ALPHABETICAL_AZ":
-              sortedResults.sort((a, b) => a.title.localeCompare(b.title));
-              break;
-            case "ALPHABETICAL_ZA":
-              sortedResults.sort((a, b) => b.title.localeCompare(a.title));
-              break;
-            // case "HIGHEST_RATINGS":
-            //   sortedResults.sort((a, b) => {
-            //     const ratingDiff =
-            //       (b.average?.averageRatings || 0) -
-            //       (a.average?.averageRatings || 0);
-            //     if (ratingDiff !== 0) return ratingDiff;
-            //     // Use getDateForComparison for tiebreaker date comparison
-            //     return getDateForComparison(b) - getDateForComparison(a); // Latest date first if tie
-            //   });
-            //   break;
-          }
-
-          console.log("Sorted results:", sortedResults);
-
-          setDisplayedRecipes(sortedResults);
-          setResultsCount(sortedResults.length);
-          setIsSearchEmpty(sortedResults.length === 0);
-        } else {
-          setIsSearchEmpty(true);
-          setDisplayedRecipes([]);
-          setResultsCount(0);
-        }
-        setSearchPerformed(true);
-      } catch (error) {
-        console.error("Error searching recipes:", error);
-      }
+      case "ALPHABETICAL_AZ":
+        return recipes.sort((a, b) => a.title.localeCompare(b.title));
+      case "ALPHABETICAL_ZA":
+        return recipes.sort((a, b) => b.title.localeCompare(a.title));
+      // Add more sorting cases as needed
+      default:
+        return recipes; // If no sort option is provided, return the list as-is
     }
   };
 
@@ -1203,7 +958,7 @@ const RecipesPageForUser = () => {
   //               "No Dietary Preference"}
   //           </div>
   //         </div>
-  //         <div className="flex justify-between items-center">
+  //         {/* <div className="flex justify-between items-center">
   //           <div className="flex items-center text-black font-semibold text-xl">
   //             {post.allergies.map((allergy) => (
   //               <span
@@ -1214,7 +969,7 @@ const RecipesPageForUser = () => {
   //               </span>
   //             ))}
   //           </div>
-  //         </div>
+  //         </div> */}
   //         <div className="flex flex-col">
   //           <div className="flex items-center text-red-700 font-semibold text-xl">
   //             {post.calories} Calories
@@ -1296,8 +1051,7 @@ const RecipesPageForUser = () => {
 
   // Filtering out the latest recipes to get the other recipes
   const otherRecipes = iterableRecipes.filter(
-    (post) =>
-      !personalizedRecipes.find((latestPost) => latestPost.id === post.id)
+    (post) => !personalizedRecipes.find((recipe) => recipe.id === post.id)
   );
 
   // Determine if any search or filter has been applied
@@ -1342,70 +1096,51 @@ const RecipesPageForUser = () => {
               ) : (
                 <>
                   {/* Search Section */}
-                  <div className="flex-grow mb-4">
-                    <input
-                      type="text"
-                      id="titleSearch"
-                      name="titleSearch"
-                      value={searchTerm}
-                      onChange={(e) => setSearchTerm(e.target.value)}
-                      onKeyDown={(e) =>
-                        e.key === "Enter" && handleSearchClick()
-                      }
-                      placeholder={
-                        ingredientSearchTerm.trim()
-                          ? "Disabled"
-                          : "Search recipe title..."
-                      }
-                      disabled={Boolean(ingredientSearchTerm.trim())}
-                      className="mr-2 p-2 rounded-lg border w-full md:w-auto"
-                    />
-                    <button
-                      onClick={handleSearchClick}
-                      className="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-1.5 px-5 rounded-full mt-2 w-full md:w-auto lg:w-auto"
-                    >
-                      Search by title
-                    </button>
-                  </div>
+                  <div className="flex flex-col justify-between lg:flex-row md:flex-row mb-4">
+                    <div className="flex flex-col mb-4">
+                      <div className="flex border rounded-lg overflow-hidden">
+                        {/* Dropdown for selecting search type */}
+                        <div className="flex">
+                          <select
+                            value={searchType}
+                            onChange={(e) => {
+                              setSearchType(e.target.value);
+                              setSearchTerm(""); // Clear the search term when search type changes
+                            }}
+                            className="p-2 rounded-l-lg border"
+                          >
+                            <option value="title">Title</option>
+                            <option value="ingredient">Ingredient</option>
+                          </select>
+                        </div>
 
-                  {/* Ingredients search section */}
-                  <div className="flex flex-col justify-between lg:flex-row mb-4">
-                    <div className="flex-grow mb-4">
-                      <input
-                        type="text"
-                        id="ingredientSearch"
-                        name="ingredientSearch"
-                        value={ingredientSearchTerm}
-                        onChange={(e) =>
-                          setIngredientSearchTerm(e.target.value)
-                        }
-                        onKeyDown={(e) =>
-                          e.key === "Enter" && handleIngredientSearchClick()
-                        }
-                        placeholder={
-                          searchTerm.trim()
-                            ? "Disabled"
-                            : "Search by ingredient..."
-                        }
-                        disabled={Boolean(searchTerm.trim())}
-                        className="mr-2 p-2 rounded-lg border w-full md:w-auto"
-                      />
-                      <button
-                        onClick={handleIngredientSearchClick}
-                        className="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-1.5 px-5 rounded-full mt-2 w-full md:w-auto lg:w-auto"
-                      >
-                        Search by ingredient
-                      </button>
+                        {/* Search Input */}
+                        <input
+                          type="text"
+                          value={searchTerm}
+                          onChange={(e) => setSearchTerm(e.target.value)}
+                          onKeyDown={(e) => e.key === "Enter" && handleSearch()}
+                          placeholder={`Search by ${searchType}...`}
+                          className="px-4 py-2 w-full"
+                        />
+                        <button
+                          onClick={handleSearch}
+                          className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2"
+                        >
+                          Search
+                        </button>
+                      </div>
+
                       {/* Results count */}
                       {searchButtonClicked && searchPerformed && (
-                        <p className="text-left text-red-500 font-medium text-lg">
+                        <div className="text-red-500 font-medium text-lg mt-2 ml-3">
                           {resultsCount} results found.
-                        </p>
+                        </div>
                       )}
                     </div>
 
-                    {/* Sort dropdown - Aligned next to the search bar on larger screens */}
-                    <div className="flex flex-col lg:flex-row lg:items-center mt-4 lg:mt-0">
+                    {/* Sort dropdown */}
+                    <div className="flex flex-col lg:flex-row lg:items-center mt-2 lg:mt-0">
                       <label
                         htmlFor="sort"
                         className="text-xl text-black mb-2 sm:mb-0 sm:mr-2"
@@ -1426,13 +1161,6 @@ const RecipesPageForUser = () => {
                       </select>
                     </div>
                   </div>
-
-                  {/* Results count */}
-                  {searchButtonClicked && searchPerformed && (
-                    <p className="text-left text-red-500 font-medium text-lg">
-                      {resultsCount} results found.
-                    </p>
-                  )}
 
                   {/* Button to open filter option */}
                   {/* Display message while fetching data ftom backend */}
@@ -1473,6 +1201,7 @@ const RecipesPageForUser = () => {
                                   Dietary Preferences:
                                 </label>
                                 <select
+                                  id="dietaryPreferences"
                                   value={selectedDietaryPreference}
                                   // onChange={(e) =>
                                   //   setSelectedDietaryPreference(e.target.value)
@@ -1503,6 +1232,7 @@ const RecipesPageForUser = () => {
                                   Meal Type:
                                 </label>
                                 <select
+                                  id="mealType"
                                   value={selectedMealType}
                                   onChange={handleMealTypeChange}
                                   className="form-select mr-2 p-2 rounded-lg border w-full md:w-auto"

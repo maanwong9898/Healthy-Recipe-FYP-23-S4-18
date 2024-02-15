@@ -50,7 +50,7 @@ public class LandingPageService {
         } 
 
         List<MealPlanDTO> toReturn = mealPlanRepo.findMealPlanDTOsByIds(ids);
-        int missing = count - ids.size();
+        int missing = count - toReturn.size();
 
         // if its actually lesser than 3
         if(missing > 0)
@@ -94,7 +94,7 @@ public class LandingPageService {
         } 
 
         List<EduCoDTO> toReturn = eduCoRepo.findEduCoDTOsByIds(ids);
-        int missing = count - ids.size();
+        int missing = count - toReturn.size();
 
         // if its actually lesser than 3
         if(missing > 0)

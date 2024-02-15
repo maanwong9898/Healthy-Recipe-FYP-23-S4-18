@@ -44,22 +44,22 @@ public interface MealPlanRepository extends JpaRepository<MealPlan,Long> {
     
     final String getDTOQuery = "SELECT r.title AS title, r.id AS id, r.img AS img, r.introduction AS introduction, r.publisher AS publisher, r.active AS active FROM MealPlan r ";
 
-    @Query(value =getDTOQuery + " WHERE r.id IN :ids", nativeQuery = false)
+    @Query(value =getDTOQuery + " WHERE r.id IN :ids AND r.active = TRUE", nativeQuery = false)
     List<MealPlanDTO> findMealPlanDTOsByIds(@Param("ids") List<Long> ids);
 
-    @Query(value =getDTOQuery + " WHERE r.id NOT IN :ids ORDER BY r.createdDT LIMIT :count", nativeQuery = false)
+    @Query(value =getDTOQuery + " WHERE r.id NOT IN :ids AND r.active = TRUE ORDER BY r.createdDT LIMIT :count", nativeQuery = false)
     List<MealPlanDTO> findMealPlanDTOsExceptIds(@Param("ids") List<Long> ids, @Param("count") Integer count);
 
-    @Query(value =getDTOQuery +" ORDER BY r.createdDT LIMIT 3", nativeQuery = false)
+    @Query(value =getDTOQuery +" WHERE r.active = TRUE ORDER BY r.createdDT LIMIT 3", nativeQuery = false)
     List<MealPlanDTO> findLatestMealPlanDTO();
 
-    @Query(value= getDTOQuery + " WHERE r.id NOT IN (:ids) ORDER BY r.createdDT LIMIT :count")
+    @Query(value= getDTOQuery + " WHERE r.id NOT IN (:ids) AND r.active = TRUE ORDER BY r.createdDT LIMIT :count")
     List<MealPlanDTO> findLatestMealPlanDTO(@Param("ids") List<Long> ids,@Param("count") Integer count);
  
-    @Query(value= getDTOQuery + " ORDER BY r.createdDT LIMIT :count")
+    @Query(value= getDTOQuery + " WHERE r.active = TRUE ORDER BY r.createdDT LIMIT :count")
     List<MealPlanDTO> findLatestMealPlanDTO(@Param("count") Integer count);
 
-    @Query(value= getDTOQuery+ " WHERE r.healthGoalCategoryId = :healthGoalCategoryId")
+    @Query(value= getDTOQuery+ " WHERE r.healthGoalCategoryId = :healthGoalCategoryId AND r.active = TRUE")
     List<MealPlanDTO> getMealPlansWithHealthGoal(Long healthGoalCategoryId);
  
 }

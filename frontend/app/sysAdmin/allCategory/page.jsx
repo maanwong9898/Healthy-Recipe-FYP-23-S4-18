@@ -256,8 +256,9 @@ const AllCategories = () => {
               </h2>
 
               {/* Table */}
-              <div className="rounded-lg">
-                <table className="w-2/5 rounded-lg border-zinc-200 border-2">
+              <div className="rounded-lg overflow-x-auto">
+                <table className="w-full sm:w-2/5 rounded-lg border-zinc-200 border-2">
+                  {/* Table headers */}
                   <thead className="bg-zinc-700 font-normal text-white border-gray-800 border-2">
                     <tr className="text-center">
                       <th className="px-3 py-2 text-xl">Subcategories</th>
@@ -266,6 +267,7 @@ const AllCategories = () => {
                     </tr>
                   </thead>
                   <tbody>
+                    {/* Table rows */}
                     {subcategories.map((subcategory) => (
                       <tr
                         key={subcategory.id}

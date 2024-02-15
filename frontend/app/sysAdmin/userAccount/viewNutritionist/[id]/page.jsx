@@ -255,15 +255,15 @@ const ViewNutritionist = ({ params }) => {
                     {/* Certificate */}
                     <div className="flex flex-col lg:flex-row mt-4 p-5 bg-slate-100 mx-auto">
                       {userAccount?.imgBlob ? (
-                        <div>
+                        <div className="justify-center items-center flex flex-col">
                           <img
-                            className="h-auto w-full lg:max-w-lg rounded-lg ml-0 lg:ml-5 shadow-md"
+                            className="h-auto w-full lg:max-w-lg rounded-lg ml-0 lg:ml-5"
                             src={getImageUrlFromBlob(userAccount?.imgBlob)}
                             alt="Nutritionist Certificate"
                           />
                           <button
                             onClick={handleDownloadCertificate}
-                            className="mt-2 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+                            className="mt-2 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-md"
                           >
                             Download Certificate
                           </button>

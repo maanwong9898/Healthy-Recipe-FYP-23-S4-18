@@ -665,6 +665,7 @@ const CreateMealPlan = () => {
                           {imageUrlCharCount}/255 characters
                         </span>
                       </div> */}
+
                       {/* IMAGE file */}
                       <div className="flex flex-col">
                         <label
@@ -679,7 +680,7 @@ const CreateMealPlan = () => {
                           name="image"
                           accept="image/*"
                           onChange={handleFileChange}
-                          className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-base rounded-lg block w-full p-2.5"
+                          className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-base rounded-lg block w-full"
                         />
                       </div>
 

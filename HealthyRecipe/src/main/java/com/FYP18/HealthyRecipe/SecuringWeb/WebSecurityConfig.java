@@ -66,12 +66,12 @@ public class WebSecurityConfig {
     // }
 
     @Bean
-    @SuppressWarnings("deprecation")
+    // @SuppressWarnings("deprecation")
     public PasswordEncoder passwordEncoder() {
 
         System.out.println("passwordEncoder");
-        return (NoOpPasswordEncoder) NoOpPasswordEncoder.getInstance();
-        // return new BCryptPasswordEncoder(); //
+        // return (NoOpPasswordEncoder) NoOpPasswordEncoder.getInstance();
+        return new BCryptPasswordEncoder(); //
         // PasswordEncoderFactories.createDelegatingPasswordEncoder();
     }
 

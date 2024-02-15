@@ -10,6 +10,7 @@ import java.util.concurrent.TimeUnit;
 import java.util.regex.Pattern;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.FYP18.HealthyRecipe.DTO.DashboardDTO;
@@ -104,6 +105,11 @@ public class LoginService {
 
         return "Password Updated!";
     }
+
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
     public BusinessUser CreateNewBusinessUser(BusinessUser user) throws Exception
     {
         CheckForUsername(user.getUsername());
@@ -116,7 +122,9 @@ public class LoginService {
         user.setEnabled(true);
         user.setCreatedDate(LocalDate.now());
         BusinessUser businessUser = businessUserRepository.findByUEN(user.getUEN());
- 
+        String encodedPW = passwordEncoder.encode(user.getPassword());
+        user.setPassword(encodedPW);
+        
         if(businessUser != null)
         {
             throw new Exception("UEN already exist");
@@ -132,6 +140,9 @@ public class LoginService {
         user.setRole(Role.ADMIN);
         user.setCreatedDate(LocalDate.now()); 
         user.setEnabled(true);
+
+        String encodedPW = passwordEncoder.encode(user.getPassword());
+        user.setPassword(encodedPW);
         return systemAdminRepository.save(user); 
     }
     @Autowired
@@ -145,7 +156,9 @@ public class LoginService {
         user.setVerified(false);
         user.setEnabled(true);
 
- 
+        String encodedPW = passwordEncoder.encode(user.getPassword());
+        user.setPassword(encodedPW);
+    
         // TODO: hash the password
         RegisteredUser userSaved = registeredUserRepository.save(user); 
 
@@ -191,6 +204,8 @@ public class LoginService {
         
         user.setEnabled(true);
         user.setCreatedDate(LocalDate.now());
+        String encodedPW = passwordEncoder.encode(user.getPassword());
+        user.setPassword(encodedPW);
         return nutritionistRepository.save(user);
     }
       

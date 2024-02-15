@@ -439,7 +439,7 @@ const UpdateAccount = () => {
                               alt="nutritionist certificate"
                               width={400}
                               height={300}
-                              className="rounded-lg h-auto w-full lg:max-w-lg shadow-md opacity-100 transition duration-500 ease-in-out transform"
+                              className="rounded-lg h-auto w-full lg:max-w-lg opacity-100 transition duration-500 ease-in-out transform"
                             />
                             {/* <div className="absolute top-0 left-0 w-full h-full flex items-center justify-center opacity-0 transition duration-500 ease-in-out group-hover:opacity-100">
                               <button
@@ -454,7 +454,7 @@ const UpdateAccount = () => {
 
                         {/* To add during testing, remove in final source code  */}
                         {/* IMAGE file */}
-                        <div className="flex flex-col">
+                        {/* <div className="flex flex-col">
                           <label
                             htmlFor="image"
                             className="block text-xl mb-1 font-bold text-gray-900"
@@ -473,7 +473,7 @@ const UpdateAccount = () => {
 
                         <div className="mt-2 flex flex-row space-x-4">
                           {renderImage()}
-                        </div>
+                        </div> */}
 
                         {error && (
                           <p className="text-red-500 text-base font-medium">

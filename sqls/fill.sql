@@ -454,7 +454,7 @@ VALUES
         TRUE,
         '2023-04-26 14:30:00',
         'https://img.freepik.com/free-photo/cappelletti-brodo-traditional-italian-soup-wooden-table_123827-27475.jpg',
-        'Author: Vecstock, Designed by Freepik',  -- img_title
+        'Vecstock, Designed by Freepik',  -- img_title
         2, -- dietary_preference
         25, -- cooking_time
         2   -- meal type (cuisines)
@@ -473,7 +473,7 @@ VALUES
         TRUE,
         '2023-04-20 14:30:00',
         'https://img.freepik.com/free-photo/bowl-delicious-pumpkin-soup-with-seeds_114579-29941.jpg',
-        'Author: EyeEm, Designed by Freepik',  -- img_title
+        'EyeEm, Designed by Freepik',  -- img_title
         2, -- dietary_preference
         15, -- cooking_time
         9   -- meal type (cuisines)
@@ -492,7 +492,7 @@ VALUES
         TRUE,
         '2023-01-11 15:30:00',
         'https://img.freepik.com/free-photo/warm-winter-quinoa-salad-with-pumpkin-chorizo-mozzarella-arugula-leaves-pomegranate_127032-2700.jpg',
-        'Author: EyeEm, Designed by Freepik',  -- img_title
+        'EyeEm, Designed by Freepik',  -- img_title
         2, -- dietary_preference
         30, -- cooking_time
         9   -- meal type (cuisines)
@@ -511,7 +511,7 @@ VALUES
         TRUE,
         '2023-01-11 17:30:00',
         'https://images.immediate.co.uk/production/volatile/sites/30/2020/08/tagine-5f2d3f6.jpg?quality=90&webp=true&resize=440,400',
-        'Author: Cassie Best, Designed by bbcgoodfood',  -- img_title
+        'Cassie Best, Designed by bbcgoodfood',  -- img_title
         3, -- dietary_preference
         25, -- cooking_time
         9   -- meal type (cuisines)
@@ -530,7 +530,7 @@ VALUES
         TRUE,
         '2023-01-11 17:30:00',
         'https://images.immediate.co.uk/production/volatile/sites/30/2020/08/recipe-image-legacy-id-815477_11-c677a93.jpg?quality=90&webp=true&resize=440,400',
-        'Author: James Martin, Designed by bbcgoodfood',  -- img_title
+        'James Martin, Designed by bbcgoodfood',  -- img_title
         3, -- dietary_preference
         30, -- cooking_time
         6   -- meal type (cuisines)
@@ -549,7 +549,7 @@ VALUES
         TRUE,
         '2023-01-20 17:30:00',
         'https://images.immediate.co.uk/production/volatile/sites/30/2020/08/recipe-image-legacy-id-1079512_10-faac687.jpg?quality=90&webp=true&resize=440,400',
-        'Author: Roopa Gulati, Designed by bbcgoodfood',  -- img_title
+        'Roopa Gulati, Designed by bbcgoodfood',  -- img_title
         3, -- dietary_preference
         15, -- cooking_time
         7   -- meal type (cuisines)
@@ -568,7 +568,7 @@ VALUES
         TRUE,
         '2023-02-10 17:30:00',
         'https://images.immediate.co.uk/production/volatile/sites/30/2020/08/noodles-99a7139.jpg?quality=90&webp=true&resize=440,400',
-        'Author: Elena Silcock, Designed by bbcgoodfood',  -- img_title
+        'Elena Silcock, Designed by bbcgoodfood',  -- img_title
         1, -- dietary_preference
         10, -- cooking_time
         6   -- meal type (cuisines)
@@ -587,7 +587,7 @@ VALUES
         TRUE,
         '2023-02-24 17:30:00',
         'https://images.immediate.co.uk/production/volatile/sites/30/2020/08/beetroot-star-anise-red-onion-tart-tatin-6617a3f.jpg?quality=90&webp=true&resize=440,400',
-        'Author: Elena Silcock, Designed by bbcgoodfood',  -- img_title
+        'Elena Silcock, Designed by bbcgoodfood',  -- img_title
         1, -- dietary_preference
         80, -- cooking_time
         5   -- meal type (cuisines)
@@ -606,7 +606,7 @@ VALUES
         TRUE,
         '2023-02-27 17:30:00',
         'https://images.immediate.co.uk/production/volatile/sites/30/2022/06/Courgette-curry-c295fa0.jpg?quality=90&webp=true&resize=375,341',
-        'Author: Samuel Goldsmith, Designed by bbcgoodfood',  -- img_title
+        'Samuel Goldsmith, Designed by bbcgoodfood',  -- img_title
         1, -- dietary_preference
         40, -- cooking_time
         8   -- meal type (cuisines)
@@ -625,7 +625,7 @@ VALUES
         TRUE,
         '2023-03-09 12:30:00',
         'https://images.immediate.co.uk/production/volatile/sites/30/2020/08/recipe-image-legacy-id-871504_10-a91e5e1.jpg?quality=90&webp=true&resize=440,400',
-        'Author: Roopa Gulati, Designed by bbcgoodfood',  -- img_title
+        'Roopa Gulati, Designed by bbcgoodfood',  -- img_title
         1, -- dietary_preference
         25, -- cooking_time
         8   -- meal type (cuisines)
@@ -644,7 +644,7 @@ VALUES
         TRUE,
         '2023-03-07 17:00:00',
         'https://images.immediate.co.uk/production/volatile/sites/30/2020/08/yaki-udon-19d4efb.jpg?quality=90&webp=true&resize=440,400',
-        'Author: Esther Clark, Designed by bbcgoodfood',  -- img_title
+        'Esther Clark, Designed by bbcgoodfood',  -- img_title
         1, -- dietary_preference
         15, -- cooking_time
         3   -- meal type (cuisines)
@@ -663,7 +663,7 @@ VALUES
         TRUE,
         '2023-03-18 10:00:00',
         'https://images.immediate.co.uk/production/volatile/sites/30/2020/08/bruschetta-recipe-1-2448fad.jpg?quality=90&webp=true&resize=440,400',
-        'Author: Chiwong, Designed by bbcgoodfood',  -- img_title
+        'Chiwong, Designed by bbcgoodfood',  -- img_title
         1, -- dietary_preference
         15, -- cooking_time
         4   -- meal type (cuisines)
@@ -682,7 +682,7 @@ VALUES
         TRUE,
         '2023-03-25 11:00:00',
         'https://images.immediate.co.uk/production/volatile/sites/30/2020/08/easy-vegan-pho-0eaa94e.jpg?quality=90&webp=true&resize=440,400',
-        'Author: Miriam Nice, Designed by bbcgoodfood',  -- img_title
+        'Miriam Nice, Designed by bbcgoodfood',  -- img_title
         1, -- dietary_preference
         20, -- cooking_time
         10   -- meal type (cuisines)
@@ -701,7 +701,7 @@ VALUES
         TRUE,
         '2023-03-29 09:00:00',
         'https://images.immediate.co.uk/production/volatile/sites/30/2020/08/recipe-image-legacy-id-871464_11-1ff1fe2.jpg?quality=90&webp=true&resize=500,454',
-        'Author: Lucy Netherton, Designed by bbcgoodfood',  -- img_title
+        'Lucy Netherton, Designed by bbcgoodfood',  -- img_title
         3, -- dietary_preference
         20, -- cooking_time
         2   -- meal type (cuisines)
@@ -720,7 +720,7 @@ VALUES
         TRUE,
         '2023-01-20 12:00:00',
         'https://images.immediate.co.uk/production/volatile/sites/30/2020/08/recipe-image-legacy-id-1233472_8-2834502.jpg?quality=90&webp=true&resize=440,400',
-        'Author: Sara Buenfeld, Designed by bbcgoodfood',  -- img_title
+        'Sara Buenfeld, Designed by bbcgoodfood',  -- img_title
         3, -- dietary_preference
         15, -- cooking_time
         2   -- meal type (cuisines)
@@ -739,7 +739,7 @@ VALUES
         TRUE,
         '2023-01-10 14:00:00',
         'https://www.simplyrecipes.com/thmb/sZ-I3ZBb3qoMUZkij__FvpCCtsI=/750x0/filters:no_upscale():max_bytes(150000):strip_icc():format(webp)/Simply-Recipes-Sole-Piccata-LEAD-18-7fe82170950744bc9d41a75d944fc79b.JPG',
-        'Author: Elise Bauer, Designed by simplyrecipes',  -- img_title
+        'Elise Bauer, Designed by simplyrecipes',  -- img_title
         3, -- dietary_preference
         20, -- cooking_time
         4   -- meal type (cuisines)
@@ -759,7 +759,7 @@ VALUES
         TRUE,
         '2023-01-02 08:00:00',
         'http://tinyurl.com/4jy89mh9',
-        'Author: Elise Bauer, Designed by simplyrecipes',  -- img_title
+        'Elise Bauer, Designed by simplyrecipes',  -- img_title
         3, -- dietary_preference
         15, -- cooking_time
         2   -- meal type (cuisines)
@@ -778,7 +778,7 @@ VALUES
         TRUE,
         '2023-03-02 08:30:00',
         'https://www.simplyrecipes.com/thmb/_Ibx2pOBu4NyMV-Yney9VxuY5k4=/750x0/filters:no_upscale():max_bytes(150000):strip_icc():format(webp)/Simply-Recipes-Steamed-Whole-Fish-LEAD-3-a919bfb94b2d45aeb410dae0b6fbfc66.jpg',
-        'Author: Uyen Luu, Designed by simplyrecipes',  -- img_title
+        'Uyen Luu, Designed by simplyrecipes',  -- img_title
         3, -- dietary_preference
         15, -- cooking_time
         1   -- meal type (cuisines)
@@ -797,7 +797,7 @@ VALUES
         TRUE,
         '2023-06-03 09:30:00',
         'http://tinyurl.com/bdhy9kkz',
-        'Author: Sabrina Modelle, Designed by simplyrecipes',  -- img_title
+        'Sabrina Modelle, Designed by simplyrecipes',  -- img_title
         3, -- dietary_preference
         10, -- cooking_time
         6   -- meal type (cuisines)
@@ -816,7 +816,7 @@ VALUES
         TRUE,
         '2023-06-03 09:30:00',
         'http://tinyurl.com/2aeskmzp',
-        'Author: Elise Bauer, Designed by simplyrecipes',  -- img_title
+        'Elise Bauer, Designed by simplyrecipes',  -- img_title
         3, -- dietary_preference
         20, -- cooking_time
         9   -- meal type (cuisines)
@@ -835,7 +835,7 @@ VALUES
         TRUE,
         '2023-06-11 12:30:00',
         'https://images.immediate.co.uk/production/volatile/sites/30/2020/08/satay-sweet-potato-curry-17cc62d.jpg?quality=90&webp=true&resize=440,400',
-        'Author: Elena Silcock, Designed by bbcgoodfood',  -- img_title
+        'Elena Silcock, Designed by bbcgoodfood',  -- img_title
         2, -- dietary_preference
         45, -- cooking_time
         7   -- meal type (cuisines)
@@ -854,7 +854,7 @@ VALUES
         TRUE,
         '2023-06-20 16:00:00',
         'https://images.immediate.co.uk/production/volatile/sites/30/2020/08/veggie-okonomiyaki-de8fe85.jpg?quality=90&webp=true&resize=440,400',
-        'Author: Esther Clark, Designed by bbcgoodfood',  -- img_title
+        'Esther Clark, Designed by bbcgoodfood',  -- img_title
         2, -- dietary_preference
         10, -- cooking_time
         3   -- meal type (cuisines)
@@ -873,7 +873,7 @@ VALUES
         TRUE,
         '2023-06-01 12:00:00',
         'https://cdn.cleaneatingmag.com/wp-content/uploads/2019/03/spanakopita-egg-casserole_85-web-3.jpg?crop=535:301&width=1070&enable=upscale',
-        'Author: Darren Kemper, Designed by cleaneating',  -- img_title
+        'Darren Kemper, Designed by cleaneating',  -- img_title
         3, -- dietary_preference
         40, -- cooking_time
         9   -- meal type (cuisines)
@@ -892,7 +892,7 @@ VALUES
         TRUE,
         '2023-04-01 16:00:00',
         'https://cdn.cleaneatingmag.com/wp-content/uploads/2018/05/grilled-eggplant-caprese_79-web-1.jpg?crop=535:301&width=1070&enable=upscale',
-        'Author: Beth Lipton, Designed by cleaneating',  -- img_title
+        'Beth Lipton, Designed by cleaneating',  -- img_title
         3, -- dietary_preference
         15, -- cooking_time
         9   -- meal type (cuisines)
@@ -911,7 +911,7 @@ VALUES
         TRUE,
         '2023-11-23 10:00:00',
         'https://cdn.cleaneatingmag.com/wp-content/uploads/2018/12/HalibutOliveTapenade_Feature.jpg?crop=535:301&width=1070&enable=upscale',
-        'Author: Marianne Wren, Designed by cleaneating',  -- img_title
+        'Marianne Wren, Designed by cleaneating',  -- img_title
         3, -- dietary_preference
         20, -- cooking_time
         9   -- meal type (cuisines)
@@ -930,7 +930,7 @@ VALUES
         TRUE,
         '2023-11-23 10:00:00',
         'https://cdn.cleaneatingmag.com/wp-content/uploads/2019/10/veggie-scramble-1.jpg?crop=535:301&width=1070&enable=upscale',
-        'Author: Jesse Jane Lee, Designed by cleaneating',  -- img_title
+        'Jesse Jane Lee, Designed by cleaneating',  -- img_title
         3, -- dietary_preference
         20, -- cooking_time
         9   -- meal type (cuisines)
@@ -949,7 +949,7 @@ VALUES
         TRUE,
         '2023-09-20 15:00:00',
         'https://cdn.cleaneatingmag.com/wp-content/uploads/2019/10/banana-almond-chocolate-smoothie-1-1-1-e1611878429924.jpg?crop=535:301&width=1070&enable=upscale',
-        'Author: Jesse Jane Lee, Designed by cleaneating',  -- img_title
+        'Jesse Jane Lee, Designed by cleaneating',  -- img_title
         2, -- dietary_preference
         5, -- cooking_time
         2   -- meal type (cuisines)
@@ -968,7 +968,7 @@ VALUES
         TRUE,
         '2023-07-04 09:00:00',
         'https://cdn.cleaneatingmag.com/wp-content/uploads/2019/10/poached-egg-avocado-toast-1.jpg?crop=535:301&width=1070&enable=upscale',
-        'Author: Jesse Jane Lee, Designed by cleaneating',  -- img_title
+        'Jesse Jane Lee, Designed by cleaneating',  -- img_title
         3, -- dietary_preference
         10, -- cooking_time
         3   -- meal type (cuisines)
@@ -987,7 +987,7 @@ VALUES
         TRUE,
         '2023-07-10 10:00:00',
         'https://cdn.cleaneatingmag.com/wp-content/uploads/2019/06/poboy-1.jpg?crop=535:301&width=1070&enable=upscale',
-        'Author: Heather BainBridge, Designed by cleaneating',  -- img_title
+        'Heather BainBridge, Designed by cleaneating',  -- img_title
         3, -- dietary_preference
         25, -- cooking_time
         3   -- meal type (cuisines)
@@ -1006,7 +1006,7 @@ VALUES
         TRUE,
         '2023-02-17 17:30:00',
         'https://cdn.cleaneatingmag.com/wp-content/uploads/2019/06/chili-1.jpg?crop=535:301&width=1070&enable=upscale',
-        'Author: Heather BainBridge, Designed by cleaneating',  -- img_title
+        'Heather BainBridge, Designed by cleaneating',  -- img_title
         4, -- dietary_preference
         40, -- cooking_time
         11   -- meal type (cuisines)
@@ -1025,7 +1025,7 @@ VALUES
         TRUE,
         '2023-04-30 17:30:00',
         'https://cdn.cleaneatingmag.com/wp-content/uploads/2013/04/sesamegarlicchicken_article-1.jpg',
-        'Author: Heather BainBridge, Designed by cleaneating',  -- img_title
+        'Heather BainBridge, Designed by cleaneating',  -- img_title
         4, -- dietary_preference
         20, -- cooking_time
         1   -- meal type (cuisines)
@@ -1044,7 +1044,7 @@ VALUES
         TRUE,
         '2023-05-01 17:30:00',
         'https://cdn.cleaneatingmag.com/wp-content/uploads/2017/03/ce68-weightloss-middle-eastern-western-egg-sandwiches-web-1.jpg?crop=535:301&width=1070&enable=upscale',
-        'Author: Marianne Wren, Designed by cleaneating',  -- img_title
+        'Marianne Wren, Designed by cleaneating',  -- img_title
         3, -- dietary_preference
         20, -- cooking_time
         9   -- meal type (cuisines)
@@ -1063,7 +1063,7 @@ VALUES
         TRUE,
         '2023-06-02 13:30:00',
         'https://cdn.cleaneatingmag.com/wp-content/uploads/2022/03/CleanEating_CE101FebMar2022_BurgerSalad_The-California_web.jpg?crop=535:301&width=1070&enable=upscale',
-        'Author: Marianne Wren, Designed by cleaneating',  -- img_title
+        'Marianne Wren, Designed by cleaneating',  -- img_title
         2, -- dietary_preference
         15, -- cooking_time
         9   -- meal type (cuisines)
@@ -1082,7 +1082,7 @@ VALUES
         TRUE,
         '2023-01-10 13:00:00',
         'https://cdn.cleaneatingmag.com/wp-content/uploads/2021/11/YogurtBowl_Feature.jpg?crop=535:301&width=1070&enable=upscale',
-        'Author: Marianne Wren, Designed by cleaneating',  -- img_title
+        'Marianne Wren, Designed by cleaneating',  -- img_title
         2, -- dietary_preference
         35, -- cooking_time
         9   -- meal type (cuisines)
@@ -1101,7 +1101,7 @@ VALUES
         TRUE,
         '2023-01-10 13:00:00',
         'https://cdn.cleaneatingmag.com/wp-content/uploads/2022/02/CleanEating_CE101FebMar2022_MealPlan_Balsamic-Roasted-Portobellos-with-Fried-Eggs_web.jpg?crop=535:301&width=1070&enable=upscale',
-        'Author: Olimpia Davies, Designed by cleaneating',  -- img_title
+        'Olimpia Davies, Designed by cleaneating',  -- img_title
         2, -- dietary_preference
         20, -- cooking_time
         9   -- meal type (cuisines)
@@ -1120,7 +1120,7 @@ VALUES
         TRUE,
         '2023-01-27 19:00:00',
         'https://cdn.cleaneatingmag.com/wp-content/uploads/2022/02/CleanEating_CE101FebMar2022_MealPlan_Hearty-Chicken-Quinoa-Soup-with-Kale_web.jpg?crop=535:301&width=1070&enable=upscale',
-        'Author: Olimpia Davies, Designed by cleaneating',  -- img_title
+        'Olimpia Davies, Designed by cleaneating',  -- img_title
         4, -- dietary_preference
         45, -- cooking_time
         2   -- meal type (cuisines)
@@ -1139,7 +1139,7 @@ VALUES
         TRUE,
         '2023-01-13 11:00:00',
         'https://cdn.cleaneatingmag.com/wp-content/uploads/2022/03/Steak-Sweet-Potato-Tacos-2400x1350-1.png?crop=535:301&width=1070&enable=upscale',
-        'Author: Roberto Caruso, Designed by cleaneating',  -- img_title
+        'Roberto Caruso, Designed by cleaneating',  -- img_title
         4, -- dietary_preference
         35, -- cooking_time
         6   -- meal type (cuisines)
@@ -1158,7 +1158,7 @@ VALUES
         TRUE,
         '2023-01-26 19:00:00',
         'https://cdn.cleaneatingmag.com/wp-content/uploads/2017/11/green-curry-poached-halibut-73-web-1.jpg?crop=535:301&width=1070&enable=upscale',
-        'Author: Tiffani Bachus, Designed by cleaneating',  -- img_title
+        'Tiffani Bachus, Designed by cleaneating',  -- img_title
         3, -- dietary_preference
         30, -- cooking_time
         7   -- meal type (cuisines)
@@ -1177,7 +1177,7 @@ VALUES
         TRUE,
         '2023-01-26 19:00:00',
         'https://cdn.cleaneatingmag.com/wp-content/uploads/2017/11/meal-plan-lead_zucchini-lasagna-with-cashew-cheese-pesto-73-web-1.jpg?crop=535:301&width=1070&enable=upscale',
-        'Author: Tiffani Bachus, Designed by cleaneating',  -- img_title
+        'Tiffani Bachus, Designed by cleaneating',  -- img_title
         2, -- dietary_preference
         40, -- cooking_time
         4   -- meal type (cuisines)
@@ -1196,7 +1196,7 @@ VALUES
         TRUE,
         '2023-03-14 09:00:00',
         'https://cdn.cleaneatingmag.com/wp-content/uploads/2017/11/roasted-butternut-squash-73-web-opt2-1.jpg?crop=535:301&width=1070&enable=upscale',
-        'Author: Tiffani Bachus, Designed by cleaneating',  -- img_title
+        'Tiffani Bachus, Designed by cleaneating',  -- img_title
         2, -- dietary_preference
         40, -- cooking_time
         2   -- meal type (cuisines)
@@ -1215,7 +1215,7 @@ VALUES
         TRUE,
         '2023-03-25 10:40:00',
         'https://cdn.cleaneatingmag.com/wp-content/uploads/2016/09/apple-frise-radicchio-salad-with-lemon-kefir-dressing-2.jpg?crop=535:301&width=1070&enable=upscale',
-        'Author: Tiffani Bachus, Designed by cleaneating',  -- img_title
+        'Tiffani Bachus, Designed by cleaneating',  -- img_title
         2, -- dietary_preference
         25, -- cooking_time
         2   -- meal type (cuisines)
@@ -1234,7 +1234,7 @@ VALUES
         TRUE,
         '2023-05-04 13:00:00',
         'https://cdn.cleaneatingmag.com/wp-content/uploads/2015/02/kimchi-fried-rice-with-tempeh.jpg?crop=535:301&width=1070&enable=upscale',
-        'Author: Ted Gibson, Designed by cleaneating',  -- img_title
+        'Ted Gibson, Designed by cleaneating',  -- img_title
         3, -- dietary_preference
         25, -- cooking_time
         12   -- meal type (cuisines)
@@ -1253,7 +1253,7 @@ VALUES
         TRUE,
         '2023-05-04 13:00:00',
         'https://cdn.cleaneatingmag.com/wp-content/uploads/2015/01/mediterranean-chicken-and-vegetable-quiche-1.jpg?crop=535:301&width=1070&enable=upscale',
-        'Author: Ted Gibson, Designed by cleaneating',  -- img_title
+        'Ted Gibson, Designed by cleaneating',  -- img_title
         4, -- dietary_preference
         50, -- cooking_time
         9   -- meal type (cuisines)
@@ -1272,7 +1272,7 @@ VALUES
         TRUE,
         '2023-05-04 13:00:00',
         'https://cdn.cleaneatingmag.com/wp-content/uploads/2018/04/roasted-broccoli-steaks-with-miso-butter_78-web-2.jpg?crop=535:301&width=1070&enable=upscale',
-        'Author: Beth Lipton, Designed by cleaneating',  -- img_title
+        'Beth Lipton, Designed by cleaneating',  -- img_title
         2, -- dietary_preference
         35, -- cooking_time
         3   -- meal type (cuisines)
@@ -1291,7 +1291,7 @@ VALUES
         TRUE,
         '2023-05-10 12:00:00',
         'https://cdn.cleaneatingmag.com/wp-content/uploads/2018/04/gingery-braised-chicken-thighs_78-web-2.jpg?crop=535:301&width=1070&enable=upscale',
-        'Author: Ronald Tsang, Designed by cleaneating',  -- img_title
+        'Ronald Tsang, Designed by cleaneating',  -- img_title
         4, -- dietary_preference
         75, -- cooking_time
         8   -- meal type (cuisines)
@@ -1310,7 +1310,7 @@ VALUES
         TRUE,
         '2023-05-10 12:00:00',
         'https://cdn.cleaneatingmag.com/wp-content/uploads/2018/10/turkey-and-mushroom-ragu-stuffed-acorn-squash_82-web-1.jpg?crop=535:301&width=1070&enable=upscale',
-        'Author: cleaneating, Designed by cleaneating',  -- img_title
+        'cleaneating, Designed by cleaneating',  -- img_title
         4, -- dietary_preference
         55, -- cooking_time
         2   -- meal type (cuisines)
@@ -1329,7 +1329,7 @@ VALUES
         TRUE,
         '2023-05-10 12:00:00',
         'https://cdn.cleaneatingmag.com/wp-content/uploads/2018/10/CE82-Spicy-Salmon-Poke-Bowl-WEB.png?crop=535:301&width=1070&enable=upscale',
-        'Author: cleaneating, Designed by cleaneating',  -- img_title
+        'cleaneating, Designed by cleaneating',  -- img_title
         3, -- dietary_preference
         55, -- cooking_time
         3   -- meal type (cuisines)
@@ -1348,7 +1348,7 @@ VALUES
         TRUE,
         '2023-05-10 12:00:00',
         'https://cdn.cleaneatingmag.com/wp-content/uploads/2018/09/sheet-pan-dijon-balsamic-chicken-and-veggies_82-web-1.jpg?crop=535:301&width=1070&enable=upscale',
-        'Author: Crayola England, Designed by cleaneating',  -- img_title
+        'Crayola England, Designed by cleaneating',  -- img_title
         4, -- dietary_preference
         40, -- cooking_time
         2   -- meal type (cuisines)
@@ -1367,7 +1367,7 @@ VALUES
         TRUE,
         '2023-08-16 14:00:00',
         'https://www.allrecipes.com/thmb/4ukV1YDU_ehHDsMqOagRHEXBalI=/750x0/filters:no_upscale():max_bytes(150000):strip_icc():format(webp)/7567956-sweet-potati-black-bean-taco-cups-KH-AR15538-4x3-9f9208892b8340a4adce4ff0fc3bf066.jpg',
-        'Author: allrecipes, Designed by allrecipes',  -- img_title
+        'allrecipes, Designed by allrecipes',  -- img_title
         3, -- dietary_preference
         30, -- cooking_time
         6   -- meal type (cuisines)
@@ -1386,7 +1386,7 @@ VALUES
         TRUE,
         '2023-08-14 14:30:00',
         'https://www.allrecipes.com/thmb/uJAHG8X_AOBr-OnMGPdLDEBEFnU=/0x512/filters:no_upscale():max_bytes(150000):strip_icc()/4521556_Guacamole4x3photobybd.weld-c81ae0bd3f2b4893a8e309365dda023b.jpg',
-        'Author: bd.weld, Designed by allrecipes',  -- img_title
+        'bd.weld, Designed by allrecipes',  -- img_title
         2, -- dietary_preference
         15, -- cooking_time
         6   -- meal type (cuisines)
@@ -1405,7 +1405,7 @@ VALUES
         TRUE,
         '2023-12-15 15:30:00',
         'https://assets-global.website-files.com/62d69f8cc65b0055741a8270/648b47a81507b53da2eb9e35_SoupsStews_127964_Bowl_Fork-1.jpg',
-        'Author: hungryroot, Designed by hungryroot',  -- img_title
+        'hungryroot, Designed by hungryroot',  -- img_title
         4, -- dietary_preference
         30, -- cooking_time
         2   -- meal type (cuisines)
@@ -1424,7 +1424,7 @@ VALUES
         TRUE,
         '2023-12-15 15:30:00',
         'https://assets-global.website-files.com/62d69f8cc65b0055741a8270/648b47c6dac40bbe30f67e6e_Main_465213_Plate_Fork-1.jpg',
-        'Author: hungryroot, Designed by hungryroot',  -- img_title
+        'hungryroot, Designed by hungryroot',  -- img_title
         4, -- dietary_preference
         25, -- cooking_time
         7   -- meal type (cuisines)
@@ -1443,7 +1443,7 @@ VALUES
         TRUE,
         '2023-12-15 15:30:00',
         'https://assets-global.website-files.com/62d69f8cc65b0055741a8270/6480c937f74306ec77a5bdc0_Main%2BSides_464501_Plate.jpg',
-        'Author: hungryroot, Designed by hungryroot',  -- img_title
+        'hungryroot, Designed by hungryroot',  -- img_title
         4, -- dietary_preference
         15, -- cooking_time
         6   -- meal type (cuisines)
@@ -1462,7 +1462,7 @@ VALUES
         TRUE,
         '2023-09-29 09:00:00',
         'https://assets-global.website-files.com/62d69f8cc65b0055741a8270/648b48651507b53da2ec965e_GrainBowl_123246_Bowl_Fork-1.jpg',
-        'Author: hungryroot, Designed by hungryroot',  -- img_title
+        'hungryroot, Designed by hungryroot',  -- img_title
         4, -- dietary_preference
         13, -- cooking_time
         2   -- meal type (cuisines)
@@ -1481,7 +1481,7 @@ VALUES
         TRUE,
         '2023-09-29 09:00:00',
         'https://assets-global.website-files.com/62d69f8cc65b0055741a8270/648b487ed81f1d3fd9ddb034_MainSides_126949_Plate-1.jpg',
-        'Author: hungryroot, Designed by hungryroot',  -- img_title
+        'hungryroot, Designed by hungryroot',  -- img_title
         3, -- dietary_preference
         14, -- cooking_time
         2   -- meal type (cuisines)
@@ -1500,7 +1500,7 @@ VALUES
         TRUE,
         '2023-09-29 09:00:00',
         'https://assets-global.website-files.com/62d69f8cc65b0055741a8270/648b489ad81f1d3fd9ddb4f5_Wrap_122142_Plate-2.jpg',
-        'Author: hungryroot, Designed by hungryroot',  -- img_title
+        'hungryroot, Designed by hungryroot',  -- img_title
         1, -- dietary_preference
         10, -- cooking_time
         13   -- meal type (cuisines)
@@ -1519,7 +1519,7 @@ VALUES
         TRUE,
         '2023-09-29 09:00:00',
         'https://images.immediate.co.uk/production/volatile/sites/30/2020/08/seitan-and-black-bean-stir-fry-6adb3dd.jpg?quality=90&webp=true&resize=440,400',
-        'Author: Miriam Nice, Designed by bbcgoodfood',  -- img_title
+        'Miriam Nice, Designed by bbcgoodfood',  -- img_title
         2, -- dietary_preference
         25, -- cooking_time
         1   -- meal type (cuisines)
@@ -1538,7 +1538,7 @@ VALUES
         TRUE,
         '2023-09-02 10:00:00',
         'https://images.immediate.co.uk/production/volatile/sites/30/2022/05/Tofu-curry-c24b410.jpg?quality=90&webp=true&resize=375,341',
-        'Author: Nadine Brown, Designed by bbcgoodfood',  -- img_title
+        'Nadine Brown, Designed by bbcgoodfood',  -- img_title
         1, -- dietary_preference
         20, -- cooking_time
         8   -- meal type (cuisines)
@@ -1557,7 +1557,7 @@ VALUES
         TRUE,
         '2023-09-10 16:00:00',
         'https://images.immediate.co.uk/production/volatile/sites/30/2020/08/recipe-image-legacy-id-487479_11-8abbef4.jpg?quality=90&webp=true&resize=440,400',
-        'Author: Good Food team, Designed by bbcgoodfood',  -- img_title
+        'Good Food team, Designed by bbcgoodfood',  -- img_title
         1, -- dietary_preference
         10, -- cooking_time
         2   -- meal type (cuisines)
@@ -1576,7 +1576,7 @@ VALUES
         TRUE,
         '2023-08-04 10:00:00',
         'https://images.immediate.co.uk/production/volatile/sites/30/2020/08/recipe-image-legacy-id-279520_11-b0a79cf.jpg?quality=90&webp=true&resize=440,400',
-        'Author: Mary Cadogan, Designed by bbcgoodfood',  -- img_title
+        'Mary Cadogan, Designed by bbcgoodfood',  -- img_title
         1, -- dietary_preference
         25, -- cooking_time
         8   -- meal type (cuisines)
@@ -1595,7 +1595,7 @@ VALUES
         TRUE,
         '2023-04-11 12:00:00',
         'https://cdn.cleaneatingmag.com/wp-content/uploads/2016/08/green-monster.jpg?crop=535:301&width=1070&enable=upscale',
-        'Author: John Berardi, Designed by cleaneating',  -- img_title
+        'John Berardi, Designed by cleaneating',  -- img_title
         2, -- dietary_preference
         5, -- cooking_time
         2   -- meal type (cuisines)
@@ -1614,7 +1614,7 @@ VALUES
         TRUE,
         '2023-02-28 12:00:00',
         'https://cdn.cleaneatingmag.com/wp-content/uploads/2016/06/grilled-asparagus-salad-with-feta-and-hazelnut-crumble-1.jpg?crop=535:301&width=1070&enable=upscale',
-        'Author: Clean Eating, Designed by cleaneating',  -- img_title
+        'Clean Eating, Designed by cleaneating',  -- img_title
         2, -- dietary_preference
         15, -- cooking_time
         9   -- meal type (cuisines)
@@ -1633,7 +1633,7 @@ VALUES
         TRUE,
         '2023-02-28 12:00:00',
         'https://cdn.cleaneatingmag.com/wp-content/uploads/2017/12/white-bean-soup-with-caper-almond-pesto-75-web-2.jpg?crop=535:301&width=1070&enable=upscale',
-        'Author: Clean Eating, Designed by cleaneating',  -- img_title
+        'Clean Eating, Designed by cleaneating',  -- img_title
         2, -- dietary_preference
         20, -- cooking_time
         9   -- meal type (cuisines)
@@ -1652,7 +1652,7 @@ VALUES
         TRUE,
         '2023-04-12 14:00:00',
         'https://www.australianeggs.org.au/assets/recipes/willowcreative_Aus-Eggs-_-316431-1__ScaleWidthWzEyMDBd.jpg',
-        'Author: Australianeggs, Designed by Australianeggs',  -- img_title
+        'Australianeggs, Designed by Australianeggs',  -- img_title
         3, -- dietary_preference
         20, -- cooking_time
         8   -- meal type (cuisines)
@@ -1671,7 +1671,7 @@ VALUES
         TRUE,
         '2023-05-11 14:30:00',
         'https://www.australianeggs.org.au/assets/recipes/Roast-Cauliflower-egg-salad-0169-__ScaleWidthWzEyMDBd.jpg',
-        'Author: Australianeggs, Designed by Australianeggs',  -- img_title
+        'Australianeggs, Designed by Australianeggs',  -- img_title
         2, -- dietary_preference
         50, -- cooking_time
         8   -- meal type (cuisines)
@@ -1690,7 +1690,7 @@ VALUES
         TRUE,
         '2023-05-15 14:40:00',
         'https://www.australianeggs.org.au/assets/recipes/vegetable-fritta-muffins-7440__ScaleWidthWzEyMDBd.jpg',
-        'Author: Australianeggs, Designed by Australianeggs',  -- img_title
+        'Australianeggs, Designed by Australianeggs',  -- img_title
         2, -- dietary_preference
         40, -- cooking_time
         2   -- meal type (cuisines)
@@ -1709,7 +1709,7 @@ VALUES
         TRUE,
         '2023-04-07 16:00:00',
         'https://www.australianeggs.org.au/assets/recipes/Spicy-Chickpea-amp-3__ScaleWidthWzEyMDBd.jpg',
-        'Author: Australianeggs, Designed by Australianeggs',  -- img_title
+        'Australianeggs, Designed by Australianeggs',  -- img_title
         2, -- dietary_preference
         25, -- cooking_time
         8   -- meal type (cuisines)
@@ -1728,7 +1728,7 @@ VALUES
         TRUE,
         '2023-10-29 14:00:00',
         'https://www.skinnytaste.com/wp-content/uploads/2022/10/Apple-Pie-Overnight-Oats-3.jpg',
-        'Author: skinnytaste, Designed by skinnytaste',  -- img_title
+        'skinnytaste, Designed by skinnytaste',  -- img_title
         1, -- dietary_preference
         25, -- cooking_time
         2   -- meal type (cuisines)
@@ -1747,7 +1747,7 @@ VALUES
         TRUE,
         '2023-09-11 13:00:00',
         'https://www.skinnytaste.com/wp-content/uploads/2019/01/Egg-Salad-Finals-9.jpg',
-        'Author: skinnytaste, Designed by skinnytaste',  -- img_title
+        'skinnytaste, Designed by skinnytaste',  -- img_title
         2, -- dietary_preference
         25, -- cooking_time
         2   -- meal type (cuisines)
@@ -1766,7 +1766,7 @@ VALUES
         TRUE,
         '2023-02-21 13:00:00',
         'https://www.skinnytaste.com/wp-content/uploads/2023/02/Spicy-Gochujang-Tofu-Bowls-7.jpg',
-        'Author: skinnytaste, Designed by skinnytaste',  -- img_title
+        'skinnytaste, Designed by skinnytaste',  -- img_title
         1, -- dietary_preference
         25, -- cooking_time
         12   -- meal type (cuisines)
@@ -1785,7 +1785,7 @@ VALUES
         TRUE,
         '2023-03-25 13:20:00',
         'https://www.skinnytaste.com/wp-content/uploads/2021/03/PB-_-J-Smoothie-Bowl-7.jpg',
-        'Author: skinnytaste, Designed by skinnytaste',  -- img_title
+        'skinnytaste, Designed by skinnytaste',  -- img_title
         2, -- dietary_preference
         5, -- cooking_time
         2   -- meal type (cuisines)
@@ -1804,7 +1804,7 @@ VALUES
         TRUE,
         '2023-03-25 13:20:00',
         'https://www.skinnytaste.com/wp-content/uploads/2023/06/Chipotle-Chicken-Thighs-7.jpg',
-        'Author: skinnytaste, Designed by skinnytaste',  -- img_title
+        'skinnytaste, Designed by skinnytaste',  -- img_title
         4, -- dietary_preference
         30, -- cooking_time
         6   -- meal type (cuisines)
@@ -1823,7 +1823,7 @@ VALUES
         TRUE,
         '2023-12-13 12:00:00',
         'https://www.skinnytaste.com/wp-content/uploads/2011/10/One-Pan-Roasted-Potatoes-Sausage-and-Peppers-5.jpg',
-        'Author: skinnytaste, Designed by skinnytaste',  -- img_title
+        'skinnytaste, Designed by skinnytaste',  -- img_title
         4, -- dietary_preference
         55, -- cooking_time
         4   -- meal type (cuisines)
@@ -1842,7 +1842,7 @@ VALUES
         TRUE,
         '2023-03-13 12:00:00',
         'https://www.skinnytaste.com/wp-content/uploads/2022/03/High-Protein-Scrambled-Eggs-7.jpg',
-        'Author: skinnytaste, Designed by skinnytaste',  -- img_title
+        'skinnytaste, Designed by skinnytaste',  -- img_title
         4, -- dietary_preference
         6, -- cooking_time
         4   -- meal type (cuisines)
@@ -1861,7 +1861,7 @@ VALUES
         TRUE,
         '2023-10-02 11:00:00',
         'https://www.skinnytaste.com/wp-content/uploads/2012/10/slow-cooker-pork-and-green-chile-stew-550x798.jpg',
-        'Author: skinnytaste, Designed by skinnytaste',  -- img_title
+        'skinnytaste, Designed by skinnytaste',  -- img_title
         4, -- dietary_preference
         320, -- cooking_time
         6   -- meal type (cuisines)
@@ -1880,7 +1880,7 @@ VALUES
         TRUE,
         '2023-07-23 11:30:00',
         'https://www.skinnytaste.com/wp-content/uploads/2018/07/Corn-Tomato-Avocado-Salad-1-9.jpg',
-        'Author: skinnytaste, Designed by skinnytaste',  -- img_title
+        'skinnytaste, Designed by skinnytaste',  -- img_title
         2, -- dietary_preference
         10, -- cooking_time
         9   -- meal type (cuisines)
@@ -1899,7 +1899,7 @@ VALUES
         TRUE,
         '2023-09-10 11:30:00',
         'https://www.skinnytaste.com/wp-content/uploads/2013/09/Mini-Pumpkin-Chocolate-Chip-Muffins-7.jpg',
-        'Author: skinnytaste, Designed by skinnytaste',  -- img_title
+        'skinnytaste, Designed by skinnytaste',  -- img_title
         2, -- dietary_preference
         40, -- cooking_time
         2   -- meal type (cuisines)
@@ -1918,7 +1918,7 @@ VALUES
         TRUE,
         '2023-09-13 11:00:00',
         'https://www.skinnytaste.com/wp-content/uploads/2019/09/Maple-Cinnamon-Banana-Pear-Baked-Oatmeal-with-Walnuts-7.jpg',
-        'Author: skinnytaste, Designed by skinnytaste',  -- img_title
+        'skinnytaste, Designed by skinnytaste',  -- img_title
         2, -- dietary_preference
         35, -- cooking_time
         2   -- meal type (cuisines)
@@ -1937,7 +1937,7 @@ VALUES
         TRUE,
         '2023-03-29 10:00:00',
         'https://www.skinnytaste.com/wp-content/uploads/2022/03/Air-Fryer-Steak-7.jpg',
-        'Author: skinnytaste, Designed by skinnytaste',  -- img_title
+        'skinnytaste, Designed by skinnytaste',  -- img_title
         4, -- dietary_preference
         15, -- cooking_time
         2   -- meal type (cuisines)
@@ -1956,7 +1956,7 @@ VALUES
         TRUE,
         '2023-12-12 10:30:00',
         'https://www.skinnytaste.com/wp-content/uploads/2022/12/Rainbow-Quinoa-Salad-with-Lemon-Dressing-3.jpg',
-        'Author: skinnytaste, Designed by skinnytaste',  -- img_title
+        'skinnytaste, Designed by skinnytaste',  -- img_title
         1, -- dietary_preference
         15, -- cooking_time
         9   -- meal type (cuisines)
@@ -2570,7 +2570,7 @@ VALUES
         'Upgrade your kitchen experience with Philips! Your trusted partner for top-quality kitchenware. Discover a range of innovative and stylish appliances designed to make cooking a breeze. Efficiency in Every Appliance: Philips brings you kitchenware that simplifies your daily tasks. From powerful blenders to versatile food processors, our appliances are engineered for efficiency, saving you time and effort in the kitchen. Healthy Choices, Delicious Results: Explore our Airfryers and Juicers for a healthier cooking approach. Enjoy crispy dishes with less oil using our Airfryers, and create refreshing, nutrient-packed juices with ease using our Juicers. Sleek Design, Lasting Impressions: Philips kitchenware not only excels in functionality but also adds a touch of elegance to your kitchen. With modern designs and premium materials, our appliances seamlessly blend style with substance. Our kitchenware is crafted to meet your cooking needs while ensuring durability and long-lasting performance. \nUpgrade your kitchen with Philips – where innovation meets style. Explore our range of kitchenware today and discover the joy of cooking with precision and convenience. Philips, transforming kitchens for a better culinary experience.',
         3, -- userId Philips
         'https://img.freepik.com/free-photo/healthy-meal-preparation-rustic-domestic-kitchen-generated-by-ai_188544-26855.jpg',
-        'Author: vecstock, Designed by Freepik',  -- img_title
+        'vecstock, Designed by Freepik',  -- img_title
         2 -- blog_type_id kitchenware
     ),
     (
@@ -2581,7 +2581,7 @@ VALUES
         'Unleash your inner chef with exceptional range of kitchenware from IKEA. Elevate your culinary space with stylish and functional tools designed to make cooking a joy. Quality Cookware: IKEA offers a diverse collection of cookware crafted with quality materials. From durable pots and pans to precision kitchen utensils, each piece is designed to enhance your cooking experience. Organize with Style: Transform your kitchen into an organized haven with storage solutions. Trendy Tableware: Serve your culinary creations with flair using trendy tableware from IKEA. From elegant dinner sets to vibrant serving dishes, discover tableware that complements your personal style. Affordable Luxury: Enjoy luxury without the hefty price tag. Our kitchenware combines affordability with sophistication, allowing you to create a stylish and functional kitchen on any budget. Explore the IKEA Kitchenware Collection today and redefine your culinary space.',
         4, -- userId IKEA
         'https://img.freepik.com/premium-photo/kitchen-with-pots-pans-counter-green-apple-side_889227-22098.jpg?w=1060',
-        'Author: outkassdesign, Designed by Freepik',  -- img_title
+        'outkassdesign, Designed by Freepik',  -- img_title
         2 -- blog_type_id kitchenware
     ),
     (
@@ -2592,7 +2592,7 @@ VALUES
         'Embark on a culinary journey with extensive collection of cookbooks from OpenTrolley. Whether you are a seasoned chef or a kitchen novice, discover inspiration and expertise within the pages of these culinary treasures. Diverse Culinary Genres: OpenTrolley brings you a diverse range of cookbooks covering various cuisines, dietary preferences, and cooking skill levels. From international flavors to healthy living, find the perfect cookbook to suit your culinary interests. \nExpert Tips and Techniques: Enhance your cooking skills with expert tips and techniques shared by renowned chefs and culinary experts. OpenTrolley cookbooks offer a wealth of knowledge, making every recipe a learning experience. Specialized Dietary Choices: Explore cookbooks catering to specialized dietary choices, including vegetarian, vegan, gluten-free, and more. OpenTrolley ensures that everyone can enjoy the pleasure of cooking, regardless of dietary restrictions. \nCurated Collections: Discover curated collections of cookbooks that take you on thematic journeys, from baking extravaganzas to quick and easy weeknight dinners. OpenTrolley makes it easy to find cookbooks that align with your specific culinary interests. The Joy of Gifting: Share the joy of cooking by gifting OpenTrolley cookbooks to friends and family. Explore the world of culinary literature with OpenTrolley Cookbooks and elevate your kitchen adventures.',
         23, -- userId OpenTrolley
         'https://img.freepik.com/premium-photo/process-cooking-document-various-stages-food-preparation-kitchen_977107-1249.jpg?w=740',
-        'Author: drakensang, Designed by Freepik',  -- img_title
+        'drakensang, Designed by Freepik',  -- img_title
         1 -- blog_type_id cookbook
     ),
     (
@@ -2603,7 +2603,7 @@ VALUES
         'Dive into a world of culinary delights with the Penguin Random House Cookbook Collection. Our curated selection of cookbooks spans diverse cuisines, culinary techniques, and skill levels. Our collection offers a treasure trove of recipes, tips, and inspiration. Discover the art of cooking through the eyes of renowned chefs and culinary experts. From mouthwatering desserts to savory main courses, each cookbook is a culinary journey waiting to be explored. Enhance your kitchen adventures with the Penguin Random House Cookbook Collection today!',
         24, -- userId PenguinRandomHouse
         'https://img.freepik.com/premium-photo/print-recipe-book-with-fresh-herbs-spices-wooden-background_176841-24644.jpg?w=1380',
-        'Author: 8icons, Designed by Freepik',  -- img_title
+        '8icons, Designed by Freepik',  -- img_title
         1 -- blog_type_id cookbook
     ),
     (
@@ -2614,7 +2614,7 @@ VALUES
         'Explore the world of culinary craftsmanship with essential kitchen gadgets. CulinaryCrafts brings you a curated list of must-have tools to elevate your cooking experience. From high-quality knives to innovative cooking utensils, discover the key elements that every chef needs in their kitchen.',
         21, -- userId
         'https://img.freepik.com/free-photo/healthy-cooking-modern-domestic-kitchen-indoors-generated-by-ai_24640-87927.jpg?t=st=1706874662~exp=1706878262~hmac=8bc6946595b31303b9031a48030ff431d83b5db801ad0126230508bc676cb619&w=1060',
-        'Author: stockgiu, Designed by Freepik',  -- img_title
+        'stockgiu, Designed by Freepik',  -- img_title
         2 -- blog_type_id kitchenware
     ),
     (
@@ -2647,7 +2647,7 @@ VALUES
         'Discover the future of cooking with smart kitchen appliances. ModernChef introduces you to innovative gadgets that leverage technology to simplify your culinary endeavors. From smart ovens to connected blenders, explore how the modern kitchen is evolving with cutting-edge technology.',
         21, -- userId
         'https://img.freepik.com/free-photo/elegant-modern-kitchen-with-stainless-steel-appliances-generated-by-ai_188544-26862.jpg?t=st=1707890271~exp=1707893871~hmac=efc0d8ce84fd9322e0512a7dd230249580081698ecf728e1194b1acf8b8deefe&w=1060',
-        'Author: vecstock, Designed by Freepik',  -- img_title
+        'vecstock, Designed by Freepik',  -- img_title
         2 -- blog_type_id kitchenware
     ),
     (
@@ -2669,7 +2669,7 @@ VALUES
         'Transform your kitchen with a DIY herb garden and infuse fresh, aromatic flavors into your dishes. HomeGardenVibes provides a guide on creating a simple yet vibrant herb garden right in your home. Learn about the best herbs for indoor gardening, tips for care and maintenance, and creative ways to incorporate homegrown herbs into your favorite',
         24, -- userId
         'https://img.freepik.com/premium-vector/watercolkor-background-with-culinary-herbs-plants_154848-268.jpg?w=996',
-        'Author: user6633193, Designed by Freepik',  -- img_title
+        'user6633193, Designed by Freepik',  -- img_title
         3 -- blog_type_id Miscellaneous
     ),
     (
@@ -2691,7 +2691,7 @@ VALUES
         'Embark on a culinary journey with ChefEssentials as we unveil the essential tools for aspiring chefs. From high-quality chef knives to precision measuring instruments, explore the professional culinary tools that every kitchen should have for achieving perfection in your culinary creations.',
         27, -- userId
         'https://img.freepik.com/free-photo/front-view-gray-platten-with-big-knife-dark-blue-background-color-photo-sharp-blue-sea-food-kitchen-desk_179666-17513.jpg',
-        'Author: mdjaff, Designed by Freepik',  -- img_title
+        'mdjaff, Designed by Freepik',  -- img_title
         2 -- blog_type_id kitchenware
     ),
     (
@@ -2702,7 +2702,7 @@ VALUES
         'Join GlobalFlavors on a culinary adventure as we showcase a collection of cookbooks that take you on a journey across continents. From spicy dishes of Asia to hearty meals of Europe, explore diverse flavors and expand your cooking repertoire with these delightful culinary treasures.',
         21, -- userId
         'https://img.freepik.com/free-vector/recipe-book-concept-illustration_114360-7481.jpg?w=996&t=st=1707890779~exp=1707891379~hmac=49119d5677ae8d5390f6b4a06b9f7ec1da267314644d15b96874d21a9c7ac219',
-        'Author: storyset, Designed by Freepik',  -- img_title
+        'storyset, Designed by Freepik',  -- img_title
         1 -- blog_type_id cookbook
     ),
     (
@@ -2713,7 +2713,7 @@ VALUES
         'Join CulinaryChronicles as we unveil captivating culinary tales through must-read cookbooks. Whether you are a seasoned food enthusiast or a novice in the kitchen, these storytelling cookbooks offer a delightful blend of recipes and narratives, making your culinary journey truly memorable.',
         28, -- userId
         'https://img.freepik.com/free-vector/tiny-chefs-cooking-healthy-food-according-recipe-book_74855-15536.jpg?w=996&t=st=1707891079~exp=1707891679~hmac=f829dffa39dffc1055a8461c20ab17c7ae00d79c7459d86bf2e0562b1f19f1df',
-        'Author: pch.vector, Designed by Freepik',  -- img_title
+        'pch.vector, Designed by Freepik',  -- img_title
         1 -- blog_type_id cookbook
     ),
     (
@@ -2724,7 +2724,7 @@ VALUES
         'Dive into the world of KitchenVibes as we share unconventional kitchen hacks to elevate your culinary experience. Discover creative ways to repurpose common kitchen tools, explore time-saving cooking techniques, and embrace innovative solutions for common kitchen challenges. Transform your cooking space into a hub of creativity with these unique and practical kitchen miscellanea!',
         28, -- userId
         'https://img.freepik.com/free-psd/dinnerware-elements-wooden-shelf_176382-1728.jpg?w=1060&t=st=1707891343~exp=1707891943~hmac=27481b3b3aca2f6eae40998d165d1a539970787019bd154f807a096bc53e72a5',
-        'Author: alexandercho, Designed by Freepik',  -- img_title
+        'alexandercho, Designed by Freepik',  -- img_title
         3 -- blog_type_id Miscellaneous
     ),
     (
@@ -2746,7 +2746,7 @@ VALUES
         'Embark on culinary adventures with FlavorfulReads as we recommend must-read cookbooks that blend the art of cooking with the joy of literature. From fictional feasts to culinary memoirs, these books will ignite your passion for both reading and cooking.',
         23, -- userId
         'https://img.freepik.com/free-vector/fresh-cook_1042-280.jpg?w=826&t=st=1707050845~exp=1707051445~hmac=4a640647c7d665194274e0846038f9552917187af680efb0e885309a6b8cd0e6',
-        'Author: elsystudio, Designed by Freepik',  -- img_title
+        'elsystudio, Designed by Freepik',  -- img_title
         1 -- blog_type_id cookbook
     ),
     (
@@ -2757,7 +2757,7 @@ VALUES
         'Discover the latest in kitchen innovations with KitchenInnovations. From smart appliances to ingenious gadgets, we unveil a world of innovative tools that can enhance your culinary journey and simplify your time in the kitchen.',
         24, -- userId
         'https://img.freepik.com/free-photo/man-looking-tablet-with-intelligent-software-placed-kitchen-table-controlling-light-with-high_482257-2843.jpg?w=1380&t=st=1707891672~exp=1707892272~hmac=c22434716aec9cbc1db614748864792d3fe28a941227ccf6be04d5616429a0a0',
-        'Author: DC Studio, Designed by Freepik',  -- img_title
+        'DC Studio, Designed by Freepik',  -- img_title
         2 -- blog_type_id kitchenware
     ),
     (
@@ -2768,7 +2768,7 @@ VALUES
         'ChicCookware presents a collection of stylish cookware designed to elevate the aesthetic of modern kitchens. From sleek pots and pans to elegant utensils, explore how these chic additions can transform your cooking space into a fashionable culinary haven.',
         25, -- userId
         'https://img.freepik.com/free-photo/overhead-shot-frying-pan-its-lid-black-table_181624-14812.jpg?w=996&t=st=1707892169~exp=1707892769~hmac=b327bad3c9421cf40a256df1e3e42a2b0d6d06386a7cf9e501bbe59461cb3343',
-        'Author: wirestock, Designed by Freepik',  -- img_title
+        'wirestock, Designed by Freepik',  -- img_title
         2 -- blog_type_id kitchenware
     ),
     (
@@ -2779,7 +2779,7 @@ VALUES
         'Join CulinaryEscape on a journey to explore international flavors through carefully curated cookbooks. From Asian delicacies to European classics, these cookbooks bring global culinary experiences to your kitchen, allowing you to create diverse and delicious meals at home.',
         26, -- userId
         'https://img.freepik.com/free-photo/rustic-wood-tray-holds-gourmet-appetizers-indoors-generated-by-ai_188544-13380.jpg?w=1060&t=st=1707051497~exp=1707052097~hmac=2ff8b109775d45a9b8dc416c76d89b1bcded9b1f1ffc87ce7d343aecff6a26d7',
-        'Author: Vecstock, Designed by Freepik',  -- img_title
+        'Vecstock, Designed by Freepik',  -- img_title
         1 -- blog_type_id cookbook
     ),
     (
@@ -2812,7 +2812,7 @@ VALUES
         'Take a culinary journey with FlavorsOfCulture as we explore cookbooks that act as passports to diverse flavors. From regional cuisines to international fusion, these cookbooks offer a taste of cultural diversity, allowing you to bring global flavors to your home kitchen.',
         25, -- userId
         'https://img.freepik.com/premium-photo/sweet-globe-manipulation-background-with-cupcakes-representing-global-desserts-culture_674594-5287.jpg?w=1060',
-        'Author: 3DdarkZone, Designed by Freepik',  -- img_title
+        '3DdarkZone, Designed by Freepik',  -- img_title
         1 -- blog_type_id cookbook
     ),
     (
@@ -2834,7 +2834,7 @@ VALUES
         'Explore the fusion of style and functionality with ModernCulinarySpaces. Dive into a world of contemporary kitchenware that not only enhances your cooking experience but also elevates the aesthetics of your culinary space. Discover the perfect blend of modern design and practical utility.',
         4, -- userId
         'https://img.freepik.com/free-vector/bon-appetit-seamless-background-pattern-with-scattered-ingredients-kitchen-utensils-making-italian-ravioli-pasta-square-format-suitable-wallpaper-wrapping-paper-fabric_1284-44086.jpg',
-        'Author: macrovector, Designed by Freepik',  -- img_title
+        'macrovector, Designed by Freepik',  -- img_title
         2 -- blog_type_id kitchenware
     ),
     (
@@ -2845,7 +2845,7 @@ VALUES
         'Join KitchenInnovator on a journey through the latest smart kitchen gadgets. Explore how technology is revolutionizing culinary experiences with innovative tools and appliances. From smart ovens to connected utensils, discover the future of cooking in your modern kitchen.',
         4, -- userId
         'https://images.unsplash.com/photo-1556911220-bff31c812dba?q=80&w=1936&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
-        'Author: Jason Briscoe, Designed by Unsplash',  -- img_title
+        'Jason Briscoe, Designed by Unsplash',  -- img_title
         2 -- blog_type_id kitchenware
     ),
     (
@@ -2856,7 +2856,7 @@ VALUES
         'Embark on a global culinary adventure with CulinaryExplorer. Discover a curated list of must-have cookbooks that bring diverse flavors from around the world to your kitchen. From traditional recipes to contemporary twists, these cookbooks are essential for any culinary enthusiast.',
         25, -- userId
         'https://img.freepik.com/free-vector/cartoon-recipe-note-with-food_52683-73978.jpg?w=1380&t=st=1707894569~exp=1707895169~hmac=24598caeb3194518cc0290144a0346e0fc786a90a1ab6fcd1d9c2e17d401aabf',
-        'Author: pikisuperstar, Designed by Freepik',  -- img_title
+        'pikisuperstar, Designed by Freepik',  -- img_title
         1 -- blog_type_id cookbook
     ),
     (
@@ -2867,7 +2867,7 @@ VALUES
         'Transform your kitchen into a cozy haven with HomeHarmony. Explore simple tips and tricks to enhance the ambiance of your culinary space. From lighting and decor to organizing essentials, discover how small changes can create a warm and inviting atmosphere in your home kitchen.',
         24, -- userId
         'https://images.unsplash.com/photo-1507089947368-19c1da9775ae?q=80&w=1776&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
-        'Author: Aaron Huber, Designed by Unsplash',  -- img_title
+        'Aaron Huber, Designed by Unsplash',  -- img_title
         3 -- blog_type_id Miscellaneous
     ),
     (
@@ -2878,7 +2878,7 @@ VALUES
         'Discover the artistry of handcrafted kitchenware with CulinaryCraftsmanship. Explore a collection of meticulously crafted utensils, cookware, and accessories designed to elevate your culinary skills. From artisanal knives to handmade pottery, embrace the beauty of craftsmanship in your kitchen.',
         22, -- userId
         'https://img.freepik.com/free-photo/front-view-wooden-spoons-with-pots-cinnamon-dark-wall-color-seasoning-salt-food-cutlery-photo_179666-17650.jpg?w=996&t=st=1707894797~exp=1707895397~hmac=5e4f4969fbeddca9d62308e79a61a339a1836f07344c81a79a4fb34e5a27fc07',
-        'Author: mdjaff, Designed by Freepik',  -- img_title
+        'mdjaff, Designed by Freepik',  -- img_title
         2 -- blog_type_id kitchenware
     ),
     (
@@ -2889,7 +2889,7 @@ VALUES
         'Embark on whimsical culinary adventures with CulinaryCreatures. Explore a collection of cookbooks designed for young chefs, filled with playful recipes and creative kitchen activities. From edible art projects to delightful desserts, bring joy and creativity to your family kitchen.',
         21, -- userId
         'https://images.unsplash.com/photo-1612031736184-77bc60f94c06?q=80&w=2069&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
-        'Author: Mike Gattorna, Designed by Unsplash',  -- img_title
+        'Mike Gattorna, Designed by Unsplash',  -- img_title
         1 -- blog_type_id cookbook
     ),
     (
@@ -2900,7 +2900,7 @@ VALUES
         'Dive into the world of meal prepping with our cookbook featuring nutritious and easy-to-make recipes. Simplify your meal planning and enjoy delicious, homemade meals every day.',
         3, -- userId
         'https://images.unsplash.com/photo-1495546968767-f0573cca821e?q=80&w=1931&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
-        'Author: Dan Gold, Designed by Unsplash',  -- img_title
+        'Dan Gold, Designed by Unsplash',  -- img_title
         1 -- blog_type_id cookbook
     ),
     (
@@ -2911,7 +2911,7 @@ VALUES
         'Embark on a culinary journey around the world with our cookbook featuring diverse and authentic recipes from various cultures. Experience the rich flavors and aromas of international cuisine from the comfort of your kitchen.',
         21, -- userId
         'https://img.freepik.com/free-vector/poster-with-world-food-day-concept-design-advertise-leaflet-watercolor_83728-4276.jpg?w=740&t=st=1707225167~exp=1707225767~hmac=82a4842360eccbcb4bea0973dbeca1278a609ab612ff9708cd12fe81d3f204df',
-        'Author: photographeeasia, Designed by Freepik',  -- img_title
+        'photographeeasia, Designed by Freepik',  -- img_title
         1 -- blog_type_id cookbook
     ),
     (
@@ -2922,7 +2922,7 @@ VALUES
         'Upgrade your kitchen with our selection of smart appliances designed to make cooking and meal preparation easier than ever. From WiFi-enabled ovens to smart refrigerators, revolutionize your kitchen today!',
         21, -- userId
         'https://images.unsplash.com/photo-1541123437800-1bb1317badc2?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
-        'Author: Lotus Design N Print, Designed by Unsplash',  -- img_title
+        'Lotus Design N Print, Designed by Unsplash',  -- img_title
         2 -- blog_type_id kitchenware
     ),
     (
@@ -2933,7 +2933,7 @@ VALUES
         'Discover the latest cutting-edge kitchen tools and gadgets designed to revolutionize your cooking experience. From smart appliances to innovative utensils, equip your kitchen with the best.',
         22, -- userId
         'https://images.unsplash.com/photo-1512914890251-2f96a9b0bbe2?q=80&w=2071&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
-        'Author: Frames For Your Heart, Designed by Unsplash',  -- img_title
+        'Frames For Your Heart, Designed by Unsplash',  -- img_title
         2 -- blog_type_id kitchenware
     ),
     (
@@ -2944,7 +2944,7 @@ VALUES
         'Transform your kitchen into a organized haven with these practical tips. From efficient storage solutions to decluttering strategies, create a space that inspires creativity and makes every cooking experience a joy.',
         23, -- userId
         'https://images.unsplash.com/photo-1556910096-6f5e72db6803?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
-        'Author: Edgar Castrejon, Designed by Unsplash',  -- img_title
+        'Edgar Castrejon, Designed by Unsplash',  -- img_title
         3 -- blog_type_id Miscellaneous
     ),
     (
@@ -2955,7 +2955,7 @@ VALUES
         'Reduce food waste and get creative in the kitchen with these 10 ideas for using leftover ingredients. From homemade stocks to inventive salads, make the most out of every ingredient!',
         24, -- userId
         'https://img.freepik.com/free-photo/salad-from-tomatoes-cucumber-red-onions-lettuce-leaves-healthy-summer-vitamin-menu-vegan-vegetable-food-vegetarian-dinner-table_2829-6473.jpg',
-        'Author: timolina, Designed by Freepik',
+        'timolina, Designed by Freepik',
         3 -- blog_type_id for miscellaneous
     ),
     (
@@ -2966,7 +2966,7 @@ VALUES
         'Simplify your weeknight meals with our collection of quick and easy dinner recipes. From one-pan wonders to simple stir-fries, discover delicious meals that can be whipped up in no time.',
         24, -- userId
         'https://images.unsplash.com/photo-1533777857889-4be7c70b33f7?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
-        'Author: Pablo Merchán Montes, Designed by Unsplash',
+        'Pablo Merchán Montes, Designed by Unsplash',
         1 -- blog_type_id cookbook
     ),
     (
@@ -2977,7 +2977,7 @@ VALUES
         'Discover the world of plant-based cooking with our guide. Learn how to create flavorful and nutritious meals using fruits, vegetables, grains, and legumes.',
         26, -- userId
         'https://images.unsplash.com/photo-1512621776951-a57141f2eefd?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
-        'Author: Anna Pelzer, Designed by Unsplash',
+        'Anna Pelzer, Designed by Unsplash',
         1 -- blog_type_id cookbook
     ),
     (
@@ -2988,7 +2988,7 @@ VALUES
         'Impress your guests with our collection of scrumptious seafood recipes perfect for summer gatherings. From grilled shrimp skewers to refreshing ceviche, elevate your outdoor dining experience with these delicious dishes!',
         26, -- userId
         'https://plus.unsplash.com/premium_photo-1693222065169-e447289b609d?q=80&w=1887&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
-        'Author: Karolina Grabowska, Designed by Unsplash',
+        'Karolina Grabowska, Designed by Unsplash',
         1 -- blog_type_id cookbook
     ),
     (
@@ -3021,7 +3021,7 @@ VALUES
         'Unleash your culinary creativity with CuisineCrafters! Elevate your cooking experience with our premium kitchenware collection, designed to inspire home chefs to create delicious masterpieces.',
         21, -- userId
         'https://images.unsplash.com/photo-1580929753603-10519c6e480a?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
-        'Author: Janko Ferlič, Designed by Unsplash',
+        'Janko Ferlič, Designed by Unsplash',
         2 -- blog_type_id kitchenware
     ),
     (
@@ -3032,7 +3032,7 @@ VALUES
         'Embark on a culinary journey with EpicureanEats! Discover exquisite recipes that tantalize the taste buds and elevate everyday meals into gourmet delights.',
         21, -- userId
         'https://images.unsplash.com/photo-1616669944447-d65d41a222bd?q=80&w=2054&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
-        'Author: Delightin Dee, Designed by Unsplash',
+        'Delightin Dee, Designed by Unsplash',
         1 -- blog_type_id cookbook
     ),
     (
@@ -3054,7 +3054,7 @@ VALUES
         'Upgrade your kitchen with contemporary cookware collection! Discover sleek and stylish pots, pans, and gadgets that bring modern elegance to your culinary space.',
         21, -- userId
         'https://img.freepik.com/free-vector/kitchen-tools-with-vegetables_1284-11446.jpg?w=740&t=st=1707303302~exp=1707303902~hmac=3aa385b0a87b1650c345c1d1de3e8e23e0eb6cad6406d9a3d7bf4a6b016a4c12',
-        'Author: Macrovector, Designed by Freepik',
+        'Macrovector, Designed by Freepik',
         2 -- blog_type_id kitchenware
     ),
     (
@@ -3065,7 +3065,7 @@ VALUES
         'Experience the taste of the Mediterranean with SavorTheFlavors! Delight in the rich flavors and vibrant ingredients of Mediterranean cuisine with our collection of authentic recipes.',
         21, -- userId
         'https://plus.unsplash.com/premium_photo-1667215177072-6539146bc577?q=80&w=1964&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
-        'Author: Marios Gkortsilas, Designed by Unsplash',
+        'Marios Gkortsilas, Designed by Unsplash',
         1 -- blog_type_id cookbook
     ),
     (
@@ -3076,7 +3076,7 @@ VALUES
         'Equip yourself with the tools of culinary mastery from MasterChefTools! Discover professional-grade kitchenware and gadgets that empower you to unleash your inner chef.',
         22, -- userId
         'https://images.unsplash.com/photo-1556909114-44e3e70034e2?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
-        'Author: Becca Tapert, Designed by Unsplash',
+        'Becca Tapert, Designed by Unsplash',
         2 -- blog_type_id kitchenware
     ),
     (
@@ -3087,7 +3087,7 @@ VALUES
         'Discover the joy of cooking with Caraway! Our premium kitchenware sets are designed to make cooking easier, healthier, and more enjoyable. From non-stick ceramic cookware to ergonomic utensils, each product is crafted with quality and functionality in mind, ensuring that every meal you prepare is a culinary masterpiece.',
         22, -- userId
         'https://images.unsplash.com/photo-1556910148-3adb7f0c665a?q=80&w=1887&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
-        'Author: Edgar Castrejon, Designed by Unsplash',
+        'Edgar Castrejon, Designed by Unsplash',
         2 -- blog_type_id kitchenware
     ),
     (
@@ -3098,7 +3098,7 @@ VALUES
         'Embark on a culinary journey with EpicureanReads! Explore our curated collection of cookbooks filled with tantalizing recipes and culinary inspiration. From gourmet meals to everyday delights, our cookbooks are your guide to savoring the flavor of every dish.',
         22, -- userId
         'https://images.unsplash.com/photo-1588960952097-4cf35f0a0306?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
-        'Author: Brett Jordan, Designed by Unsplash',
+        'Brett Jordan, Designed by Unsplash',
         1 -- blog_type_id cookbook
     ),
     (
@@ -3109,7 +3109,7 @@ VALUES
         'Unlock the secrets of the kitchen with these 10 clever hacks! From reviving wilted herbs to rescuing over-salted dishes, these kitchen tricks will save you time and hassle while elevating your cooking game. Discover ingenious ways to organize your pantry, simplify meal prep, and make the most of your kitchen space. Whether you are a novice cook or a seasoned chef, these hacks will help you navigate the kitchen with confidence and creativity.',
         22, -- userId
         'https://img.freepik.com/free-vector/woman-standing-near-stove-kitchen-holding-spoon_74855-20425.jpg?w=826&t=st=1707304750~exp=1707305350~hmac=0202000d1979999c2442a80d81a6c4ab54706522d10050d0ad75bd0a4bcd0945',
-        'Author: pch.vector, Designed by Freepik',
+        'pch.vector, Designed by Freepik',
         3 -- blog_type_id for miscellaneous
     ),
     (
@@ -3120,7 +3120,7 @@ VALUES
         'Discover the artistry of cooking with our premium cookware collection. From iconic Dutch ovens to versatile skillets, each piece is meticulously crafted to elevate your culinary creations. Explore our vibrant range of colors and timeless designs, and unlock a world of culinary possibilities in your kitchen.',
         22, -- userId
         'https://img.freepik.com/free-vector/kitchenware-collection_1308-900.jpg?w=740&t=st=1707736917~exp=1707737517~hmac=1a306a740d5cc62999acf5386e93b966089ee64d96527fbc5a387585acf2ab51',
-        'Author: brgfx, Designed by Freepik',
+        'brgfx, Designed by Freepik',
         2 -- blog_type_id kitchenware
     ),
     (
@@ -3142,7 +3142,7 @@ VALUES
         'Delve into the world of baking with Test Kitchen cookbooks, renowned for their meticulous recipe testing and foolproof techniques. Whether you are a novice baker or a seasoned pastry chef, our comprehensive collection offers something for everyone. From decadent desserts to savory breads, each recipe is expertly crafted to ensure success in the kitchen. Join the Test Kitchen community and elevate your baking skills to new heights.',
         28, -- userId
         'https://img.freepik.com/free-vector/flat-icon-pastry-set_1284-14768.jpg?w=740&t=st=1707737206~exp=1707737806~hmac=c92a8f9091ef7abe1d8e5502febc215b6f29dda94906a899d75ab6790fb4ce9c',
-        'Author: macrovector, Designed by Freepik',
+        'macrovector, Designed by Freepik',
         1 -- blog_type_id cookbook
     );
 
@@ -3236,7 +3236,7 @@ VALUES
          If fat loss is one of your weight loss goals, merely controlling your calorie intake will not be enough. Diet and exercise are pertinent when it comes to healthy weight loss.You should be doing a combination of cardio and strength-training exercises, which are useful in losing fat as well as gaining muscle mass.',
         3, -- userID
         'https://img.freepik.com/free-photo/calories-nutrition-food-exercise-concept_53876-133971.jpg?w=1060&t=st=1707889671~exp=1707890271~hmac=427b505a764fd8bed74a9e6ec2377d9f8578d21610ef4f26658494c15902b667',
-        'Author: rawpixel.com, Designed by Freepik',  -- img_title
+        'rawpixel.com, Designed by Freepik',  -- img_title
         1 -- educational_content_type_id
     ),
     (
@@ -3253,7 +3253,7 @@ VALUES
          \n#5 Swap to Wholegrains \nEating wholegrain foods such as brown rice, wholemeal bread can help reduce the risk of developing heart disease and diabetes. They can also help with weight management because they keep you feeling full longer and reduce the need for snacking.',
         3,
         'https://img.freepik.com/free-vector/healthy-choices-before-after-diet-results-4-flat-icons-square-composition-banner_1284-5424.jpg?t=st=1706758843~exp=1706759443~hmac=2781a669c00a887fe19e1229779c946466acdf525f70ac0b9e865ccfc36b8ed5',
-        'Author: macrovector, Designed by Freepik',  -- img_title
+        'macrovector, Designed by Freepik',  -- img_title
         1 -- educational_content_type_id
     ),
     (
@@ -3271,7 +3271,7 @@ VALUES
          \nLastly, take care of yourself by listening to your body, and easing up the pace if you need to.',
         3,
         'https://img.freepik.com/free-vector/healthy-lifestyle-concept_1284-14707.jpg?w=740&t=st=1707938184~exp=1707938784~hmac=1275c322edcfa1c9d1599becee809dcaca474ace54e82371c76091c2d31e0ebf',
-        'Author: macrovector, Designed by Freepik',  -- img_title
+        'macrovector, Designed by Freepik',  -- img_title
         2 -- educational_content_type_id
     ),
     (
@@ -3304,7 +3304,7 @@ VALUES
          \nBeing healthy does not stop at keeping yourself free from disease and illness. Being healthy requires you to take care of your physical, mental and emotional health. There are no limits to how much health you can achieve. The healthier you are, the better you will be able to enjoy life.',
         3,
         'https://img.freepik.com/premium-photo/several-types-fruits-vegetables-healthy-food-yoga-exercise-lifestyle_39755-139.jpg?w=1060',
-        'Author: user5117301, Designed by Freepik',  -- img_title
+        'user5117301, Designed by Freepik',  -- img_title
         2 -- educational_content_type_id
     ),
     (
@@ -3334,7 +3334,7 @@ VALUES
          \nHealthy Eating Tip 3: Go for Good, Healthy Food \nBoiled, grilled or steamed dishes such as fish are healthier options. Vegetables are a must — chap chai is a good choice. Traditional yu sheng can be a healthy dish, but only if you limit the oil, sugary sauces and fried crackers​.',
         3,
         'https://img.freepik.com/free-vector/chinese-new-year-celebration-festive-background_53876-96455.jpg?w=996&t=st=1707889994~exp=1707890594~hmac=4ce542b140b585a26c4c940d0f67515dd562035487fb68c2450287163f5ed1e6',
-        'Author: rawpixel.com, Designed by Freepik',  -- img_title
+        'rawpixel.com, Designed by Freepik',  -- img_title
         1 -- educational_content_type_id
     ),
     (
@@ -3351,7 +3351,7 @@ VALUES
          \nSwitch up your sauces to enjoy a healthier and equally delicious meal!',
         3,
         'https://img.freepik.com/premium-photo/earthenware-pottery-jar-collection-with-rustic-decoration-ornate-pattern-generated-by-artificial-intelligence_24640-117438.jpg?w=1060',
-        'Author: stockgiu, Designed by Freepik',  -- img_title
+        'stockgiu, Designed by Freepik',  -- img_title
         1 -- educational_content_type_id
     ),
     (
@@ -3366,7 +3366,7 @@ VALUES
         \nLove wholegrains? \nWholegrains are not being limited to bread and rice. Do you know that wholegrains now come in kway teow, noodles, man tou and biscuits? \nWho says being healthy cant be fun and easy?',
         3,
         'https://img.freepik.com/free-photo/senior-woman-making-dish-with-figs-kitchen_23-2150304452.jpg',
-        'Author: Freepik, Designed by Freepik',  -- img_title
+        'Freepik, Designed by Freepik',  -- img_title
         1 -- educational_content_type_id
     ),
     (
@@ -3382,7 +3382,7 @@ VALUES
          \n5. Have Regular Meals \nSkipping meals can cause you to snack more often or binge eat, leading you to consume even more calories.',
         4,
         'https://img.freepik.com/free-vector/healthy-people-carrying-different-icons_53876-43069.jpg',
-        'Author: rawpixel.com, Designed by Freepik',  -- img_title
+        'rawpixel.com, Designed by Freepik',  -- img_title
         2 -- educational_content_type_id
     ),
     (
@@ -3397,7 +3397,7 @@ VALUES
          The water and fibre they contain add volume to your meals and fill you up more easily with lower overall calorie intake. Being rich in nutrients, fruit and vegetables are essential for your health.',
         4,
         'https://img.freepik.com/free-vector/healthy-eating-circle-composition_98292-7506.jpg?w=740&t=st=1706991424~exp=1706992024~hmac=a5a184b33ff7f1a0aa24d71976e96b1251351cd127ae7daabf9ef564628a5c8b',
-        'Author: macrovector_official, Designed by Freepik',  -- img_title
+        'macrovector_official, Designed by Freepik',  -- img_title
         1 -- educational_content_type_id
     ),
     (
@@ -3413,7 +3413,7 @@ VALUES
          \nLearn to recognize and manage stress in your life. Good ways to deal with stress include regular exercise, healthy eating habits, and relaxation exercises such as deep breathing or meditation.',
         4,
         'https://img.freepik.com/free-vector/fitness-4-flat-icons-square-banner_98292-1012.jpg?w=740&t=st=1707938366~exp=1707938966~hmac=93a48f7fabdd6f3c76c9a291ec5f7e0cb71f0ac140c42f7a85e673444d4397e1',
-        'Author: macrovector, Designed by Freepik',  -- img_title
+        'macrovector, Designed by Freepik',  -- img_title
         1 -- educational_content_type_id
     ),
     (
@@ -3427,7 +3427,7 @@ VALUES
          \nDo not wait till stress damages your health, relationships or quality of life. Start practicing stress management techniques today.',
         4,
         'https://img.freepik.com/free-vector/business-stress-professional-burnout-scenes-flat-isolated-vector-illustration_1284-77609.jpg?w=1380&t=st=1707022447~exp=1707023047~hmac=87f6b75edf42a42722b5a5d5e3e70c3a248d58bfe4141d07fdbd534397d3afe1',
-        'Author: macrovector, Designed by Freepik',  -- img_title
+        'macrovector, Designed by Freepik',  -- img_title
         1 -- educational_content_type_id
     ),
     (
@@ -3441,7 +3441,7 @@ VALUES
         \nStarting a fitness program is an important decision, but it does not have to be an overwhelming one. By planning carefully and pacing yourself, you can make fitness a healthy habit that lasts a lifetime.',
         23,
         'https://img.freepik.com/free-vector/woman-practicing-exercice-with-sports-icons_24877-51355.jpg?w=740&t=st=1707896822~exp=1707897422~hmac=1f0f8e4c24ab1e295b2b81b4249d7150abe15761b742927f24d37633869ab843',
-        'Author: studiogstock, Designed by Freepik',  -- img_title
+        'studiogstock, Designed by Freepik',  -- img_title
         1 -- educational_content_type_id
     ),
     (
@@ -3453,7 +3453,7 @@ VALUES
         \nNutrition basics come down to eating wholesome foods that support your health. Want to go beyond the basics? Talk to a healthcare professional, such as a dietitian. You can ask for diet advice that takes into account your health, lifestyle and food preferences.',
         23,
         'https://img.freepik.com/premium-vector/food-sources-set_101903-1246.jpg',
-        'Author: vssstudio, Designed by Freepik',  -- img_title
+        'vssstudio, Designed by Freepik',  -- img_title
         2 -- educational_content_type_id
     ),
     (
@@ -3465,7 +3465,7 @@ VALUES
          \nMaking the switch to a healthy diet \nSwitching to a healthy diet does not have to be an all or nothing proposition. You dont have to completely eliminate foods you enjoy or change everything all at once — that usually only leads to cheating or giving up on your new eating plan.',
         23,
         'https://img.freepik.com/premium-vector/food-diet-healthy-lifestyle-weight-loss-banner-with-dish-salad-table-set-smartphone-diet-plan-notebook_250257-474.jpg?w=1060',
-        'Author: virinaflora, Designed by Freepik',  -- img_title
+        'virinaflora, Designed by Freepik',  -- img_title
         2 -- educational_content_type_id
     ),
     (
@@ -3481,7 +3481,7 @@ VALUES
         \nReduce salt intake: \nKeeping your salt intake to less than 5h per day helps prevent hypertension and reduces the risk of heart disease and stroke in the adult population.',
         23,
         'https://img.freepik.com/free-vector/people-healthy-food_24908-55181.jpg?w=740&t=st=1707060287~exp=1707060887~hmac=8f50d4c17a86bbca0eccb52150bcfdb9abc14a8f7a328fe833e8bf3078175a8f',
-        'Author: gstudioimagen, Designed by Freepik',  -- img_title
+        'gstudioimagen, Designed by Freepik',  -- img_title
         1 -- educational_content_type_id
     ),
     (
@@ -3495,7 +3495,7 @@ VALUES
         \nAdults aged 65 years and above \nShould do at least 150 minutes of moderate-intensity physical activity throughout the week, or at least 75 minutes of vigorous-intensity physical activity, or an equivalent combination of both. Those with poor mobility should perform physical activity to enhance balance and prevent falls, 3 or more days per week.',
         23,
         'https://img.freepik.com/free-vector/flat-happy-children-play-run-cycling-public-park_88138-982.jpg',
-        'Author: redgreystock, Designed by Freepik',  -- img_title
+        'redgreystock, Designed by Freepik',  -- img_title
         2 -- educational_content_type_id
     ),
     (
@@ -3519,7 +3519,7 @@ VALUES
         \nA healthy diet typically includes nutrient-dense foods from all of the major food groups, including lean proteins, whole grains, healthy fats, and fruits and vegetables of many colors. Healthy eating habits also include replacing foods that contain trans fats, added salt, and sugar with more nutritious options. Following a healthy diet has many benefits, including building strong bones, protecting the heart, preventing disease, and boosting the mood.',
         23,
         'https://img.freepik.com/free-vector/healthy-food-concept-with-people-vegetables_107791-11174.jpg?w=996&t=st=1707897230~exp=1707897830~hmac=78a566255d8e1e3228f301ef53fe50d161165c37416d53067dfa839a813a817a',
-        'Author: upklyak, Designed by Freepik',  -- img_title
+        'upklyak, Designed by Freepik',  -- img_title
         1 -- educational_content_type_id
     ),
     (
@@ -3533,7 +3533,7 @@ VALUES
          \nThere are foods we need to eat more of, like fruit and vegetables, and others we need to eat less of, which are foods high in saturated fat, sugar and salt. It is all about getting the right balance. Eating healthily can be tasty, simple and fun. It is about making small, long-term changes and enjoying the food you eat.',
         25,
         'https://img.freepik.com/free-vector/eating-variety-foods-concept-illustration_114360-11295.jpg?w=740&t=st=1707061728~exp=1707062328~hmac=afbffa590c8b411a91cafeca0e8542287d1e8d50254c1428df438af6559f9049',
-        'Author: storyset, Designed by Freepik',  -- img_title
+        'storyset, Designed by Freepik',  -- img_title
         1 -- educational_content_type_id
     ),
     (
@@ -3563,7 +3563,7 @@ VALUES
         \nEating a diet rich in vegetables and fruits as part of an overall healthy diet may reduce the risk for heart disease, including heart attack and stroke.',
         27,
         'https://img.freepik.com/premium-photo/fresh-organic-vegetable_114106-1589.jpg?w=996',
-        'Author: fetrinka, Designed by Freepik',  -- img_title
+        'fetrinka, Designed by Freepik',  -- img_title
         1 -- educational_content_type_id
     ),
     (
@@ -3576,7 +3576,7 @@ VALUES
         \nThe fat from some tropical plants like coconut oil, palm oil, and palm kernel oil are not included in the oils category because they are higher in saturated fats than other oils. They can be thought of as solid fats. Solid fats are fats that are solid at room temperature, like butter, lard and shortening. Solid fats come from many animal foods and can be made from vegetable oils.',
         27,
         'https://img.freepik.com/free-photo/stack-raw-pasta-nests-bottle-olive-oil-vegetables-wooden-plate_114579-18203.jpg?w=996&t=st=1707897642~exp=1707898242~hmac=027f5342b76272e3f3b27ff4cbb910356ba3a8bd072698bfeb759f2762d0f5ea',
-        'Author: azerbaijan_stockers, Designed by Freepik',  -- img_title
+        'azerbaijan_stockers, Designed by Freepik',  -- img_title
         1 -- educational_content_type_id
     ),
     (
@@ -3589,7 +3589,7 @@ VALUES
         \nRegular ground beef (like 85% lean) and cuts of meat with fat you can see \nFried chicken and other chicken dishes with the skin \nWhole milk and full-fat dairy foods and desserts',
         28,
         'https://img.freepik.com/free-vector/variety-fat-foods_1308-126934.jpg?w=360&t=st=1707129359~exp=1707129959~hmac=936040c9da75d996db51d3548f00efccf5482aabdb3111a0c7a988e932298419',
-        'Author: brgfx, Designed by Freepik',  -- img_title
+        'brgfx, Designed by Freepik',  -- img_title
         1 -- educational_content_type_id
     ),
     (
@@ -3604,7 +3604,7 @@ VALUES
         \nHealth Benefits \nEating whole grains as part of a healthy diet may reduce the risk of getting heart disease. \nEating whole grain foods that have fiber, as part of an overall healthy diet, can support healthy digestion. \nEating whole grains, as part of an overall healthy diet, may help with weight management.',
         28,
         'https://img.freepik.com/free-vector/rice-grain-sacks-bowls-sketch-set_74855-16230.jpg?w=740&t=st=1707129738~exp=1707130338~hmac=8bda5efb451e278df360c5dbd2c4a88e7ed45a9a90e69fee993452498e7dd98f',
-        'Author: pch.vector, Designed by Freepik',  -- img_title
+        'pch.vector, Designed by Freepik',  -- img_title
         1 -- educational_content_type_id
     ),
     (
@@ -3619,7 +3619,7 @@ VALUES
         \nNutrients provided by various protein foods can differ. Varying your protein food choices can provide your body with a range of nutrients designed to keep your body functioning well. ',
         26,
         'https://img.freepik.com/free-vector/protein-food-products-flat-illustration-poster_1284-17181.jpg?w=740&t=st=1707130229~exp=1707130829~hmac=b694917c83a4cf0982726727ad1922db8598ac8aed92aa40ed258680958e065f',
-        'Author: macrovector, Designed by Freepik',  -- img_title
+        'macrovector, Designed by Freepik',  -- img_title
         1 -- educational_content_type_id
     ),
     (
@@ -3635,7 +3635,7 @@ VALUES
         \nImprove bone health, especially in children and adolescents when bone mass is being built. \nPromote bone health and prevent the start of osteoporosis in adults.',
         26,
         'https://img.freepik.com/free-vector/fresh-organic-milk-products-set-with-cheese-butter_1284-14075.jpg?w=740&t=st=1707130507~exp=1707131107~hmac=2d8d2f3419e33a0e8acde56f058f9845192f73afd4e7b429290f984bf9fcf802',
-        'Author: macrovector, Designed by Freepik',  -- img_title
+        'macrovector, Designed by Freepik',  -- img_title
         1 -- educational_content_type_id
     ),
     (
@@ -3648,7 +3648,7 @@ VALUES
         \nDangers of Caffeine \nWhile caffeine has its advantages, it is unfortunately still a drug which can cause dependency. Just as with other addictive substances, people who try to quit drinking coffee and tea have been known to exhibit withdrawal symptoms, such as headaches and fatigue.',
         24,
         'https://img.freepik.com/free-vector/restaurant-mural-wallpaper_52683-47917.jpg?w=996&t=st=1707131183~exp=1707131783~hmac=9cdde229dcf6da3e142517aab8091973c32c32e6f9a0ea2be70871aebc5b4a97',
-        'Author: mpikisuperstar, Designed by Freepik',  -- img_title
+        'mpikisuperstar, Designed by Freepik',  -- img_title
         2 -- educational_content_type_id
     ),
     (
@@ -3662,7 +3662,7 @@ VALUES
         \nQuick tips to keep hydrated \nBring back your water bottle! It not only ensures you always have a drink at hand, but can be a quirky fashion accessory, too. \nEat foods with high water content, such as lettuce, watermelon and broccoli.',
         24,
         'https://img.freepik.com/free-vector/woman-man-drink-water-health-diet-thirst-hot-hydration-summer-sport-illustration-vector-clipart_10045-701.jpg?w=740&t=st=1707897930~exp=1707898530~hmac=ca3a74d8475bd065335005fbf45c7c16888cd97bfb496aa24e0756f90fd90c55',
-        'Author: syarifahbrit, Designed by Freepik',  -- img_title
+        'syarifahbrit, Designed by Freepik',  -- img_title
         2 -- educational_content_type_id
     ),
     (
@@ -3675,7 +3675,7 @@ VALUES
         \nDieting or not, everyone needs a mix of those nutrients, ideally from foods. Fill half your plate with fruits and vegetables. Split the other half between whole grains and lean protein. Stick to your calorie “budget,” because when you are working on losing weight, you need to burn more calories than you eat or drink.',
         23,
         'https://img.freepik.com/free-vector/main-food-groups-macronutrients-vector_1308-125548.jpg?w=1060&t=st=1707898038~exp=1707898638~hmac=5bc464e908f2613ee064cef5c3cc7e74bfd81512458bcb25eb459d5e016d647a',
-        'Author: brgfx, Designed by Freepik',  -- img_title
+        'brgfx, Designed by Freepik',  -- img_title
         1 -- educational_content_type_id
     ),
     (
@@ -3689,7 +3689,7 @@ VALUES
         \nFigs Match Milk in Calcium \nTrying to get more calcium? Instead of pouring another glass of milk, you could reach for the fruit bowl. Figs are high in calcium. A cup of dried ones has as much calcium as the same amount of milk. And unlike the cool drink, figs are also a great source of fiber. But dont overdo it. They pack a lot of sugar and calories.',
         22,
         'https://img.freepik.com/free-vector/fruits-berries-colorful-icons-collection_1284-20043.jpg?w=740&t=st=1707228006~exp=1707228606~hmac=95551b0cf671888ea956ab5822108215180ff58760ab50b49bf4ee26ae4a288f',
-        'Author: macrovector, Designed by Freepik',  -- img_title
+        'macrovector, Designed by Freepik',  -- img_title
         1 -- educational_content_type_id
     ),
     (
@@ -3702,7 +3702,7 @@ VALUES
         \nTip No. 3: Eat protein at every meal. \nProtein is the ultimate fill-me-up food - its more satisfying than carbs or fats and keeps you feeling full for longer. It also helps preserve muscle mass and encourages fat burning. So be sure to incorporate healthy proteins like seafood, lean meat, egg whites, yogurt, cheese, soy, nuts, or beans into your meals and snacks.',
         21,
         'https://img.freepik.com/free-photo/healthy-menu-recipe-food-diet_53876-122837.jpg?w=996&t=st=1707898209~exp=1707898809~hmac=e9dd6b52cee08eee4f7cb0e47c41c9748a85320aa2ea74d383d15b517910a0ae',
-        'Author: rawpixel.com, Designed by Freepik',  -- img_title
+        'rawpixel.com, Designed by Freepik',  -- img_title
         1 -- educational_content_type_id
     ),
     (
@@ -3716,7 +3716,7 @@ VALUES
         \nIs it because I am under too much stress? \nIt is possible. It can make you reach for high-calorie, high-fat foods. Your body also tends to store more fat when you are stressed out.',
         21,
         'https://images.unsplash.com/photo-1604480132715-bd70038b74df?q=80&w=1836&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
-        'Author: Total Shape, Designed by Unsplash',  -- img_title
+        'Total Shape, Designed by Unsplash',  -- img_title
         2 -- educational_content_type_id
     ),
     (
@@ -3730,7 +3730,7 @@ VALUES
         \nPlanning a weekly menu \nIf you prefer, you can bring a weekly menu to the store instead of a regular shopping list. This menu can list which ingredients you need to make the meals you would like to cook the week ahead.',
         25,
         'https://img.freepik.com/free-photo/woman-picking-bell-peppers-reusable-bag-ecology-earth-day-thematics_1268-21680.jpg?w=1380&t=st=1707898423~exp=1707899023~hmac=2b546394ed6d9b395aeeb735c213bca2b6720e88053233105fc8e2e68e0cd847',
-        'Author: frimufilms, Designed by Freepik',  -- img_title
+        'frimufilms, Designed by Freepik',  -- img_title
         1 -- educational_content_type_id
     ),
     (
@@ -3758,7 +3758,7 @@ VALUES
         \n3. Oats can lower cholesterol levels \nHeart disease is the leading cause of death globally. One major risk factor is high blood cholesterol. Many studies have shown that the beta-glucan fiber in oats is effective at reducing both total and LDL (bad) cholesterol levels.',
         26,
         'https://img.freepik.com/free-photo/top-close-up-view-berries-bowl-oatmeal-spoon-board-red-currants-black-grapes_140725-71988.jpg?w=996&t=st=1707230882~exp=1707231482~hmac=88e6fd199b63d52545687ae1d45d830c5449606c8dd500514d58c8d1b2530114',
-        'Author: KamranAydinov, Designed by Freepik',  -- img_title
+        'KamranAydinov, Designed by Freepik',  -- img_title
         1 -- educational_content_type_id
     ),
     (
@@ -3788,7 +3788,7 @@ VALUES
         \n3. Could be good for your heart \nApples have been linked to a lower chance of heart disease. Research has found that eating 100-150 g/d of whole apples is associated with a lower chanceTrusted Source of heart disease and risk factors such as high blood pressure.',
         28,
         'https://img.freepik.com/free-vector/sticker-basket-with-many-red-apples_1308-59661.jpg?w=900&t=st=1707898962~exp=1707899562~hmac=a128c24d1639876000548d72aecb99a09a10f16804ec33b4f76305cbe4037252',
-        'Author: brgfx, Designed by Freepik',  -- img_title
+        'brgfx, Designed by Freepik',  -- img_title
         1 -- educational_content_type_id
     ),
     (
@@ -3819,7 +3819,7 @@ VALUES
         \n45-Second Scrambled Eggs: Put eggs and a splash of milk in a bowl, whisk it up and put it in a microwave for 30 seconds. Stir and put back in for another 10 seconds.',
         4,
         'https://img.freepik.com/free-photo/toast-egg-bacon-tomatoes-microgreens-salad_2829-4804.jpg?w=996&t=st=1707371496~exp=1707372096~hmac=efe90efde636cdb14d1126b13ca2848fb9d27339efb181754ce3f9444685cf81',
-        'Author: timolina, Designed by Freepik',  -- img_title
+        'timolina, Designed by Freepik',  -- img_title
         1 -- educational_content_type_id
     ),
     (
@@ -3848,7 +3848,7 @@ VALUES
         \nWhole-grain cereals, waffles, tortillas, bread or English muffins \nPeanut butter \nLow-fat or fat-free yogurt \nCottage cheese \nFig or apricot jam \nVariety of sliced fruit such as bananas strawberries, papaya or passionfruit',
         24,
         'https://images.unsplash.com/photo-1495214783159-3503fd1b572d?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
-        'Author: Brooke Lark, Designed by Unsplash',  -- img_title
+        'Brooke Lark, Designed by Unsplash',  -- img_title
         1 -- educational_content_type_id
     ),
     (
@@ -3862,7 +3862,7 @@ VALUES
         \nStuff Sandwiches with Fruits and Vegetables \nCreate a sandwich bar with whole-grain breads, wraps and rolls, various lean meats, low-fat cheese, sliced tomato, bell pepper rings, cucumber slices, lettuce, marinated artichoke hearts, roasted red peppers, sliced avocado, hummus and mustard.',
         24,
         'https://img.freepik.com/free-photo/breakfast-consists-bread-boiled-eggs-black-grape-salad-dressing-tomatoes-sliced-onions_1150-24465.jpg?w=996&t=st=1707372961~exp=1707373561~hmac=c750d25954f99dc9e6547f11847177952f7b345563a961d0892fe4b149b8da39',
-        'Author: jcomp, Designed by Freepik',  -- img_title
+        'jcomp, Designed by Freepik',  -- img_title
         1 -- educational_content_type_id
     ),
     (
@@ -3890,7 +3890,7 @@ VALUES
         \nHealthy Fats: Include Sources of Omega-3 Fatty Acids \nBesides helping with the absorption of certain nutrients, some healthy fats also contain omega-3 fatty acids. Salmon is an excellent source of omega-3s, which may be beneficial for eye health.',
         22,
         'https://img.freepik.com/free-photo/funny-young-woman-with-orange-halves-kitchen_169016-29797.jpg?w=996&t=st=1707899569~exp=1707900169~hmac=703c4d6822d4f17379a7dfcdb30c82e383db6fb1c8997ae617155613a10d3d50',
-        'Author: pvproductions, Designed by Freepik',  -- img_title
+        'pvproductions, Designed by Freepik',  -- img_title
         1 -- educational_content_type_id
     ),
     (
@@ -3919,7 +3919,7 @@ VALUES
         \nBring Lunch to Work \nHow do you make bringing lunch to work easy? The first step is to plan ahead by thinking through what you want for lunch and adding those foods to your grocery list. Stock your fridge with tasty, satisfying foods to set yourself up for success.',
         27,
         'https://img.freepik.com/free-vector/healthy-eating-advertising-poster-with-young-woman-holding-green-apple-useful-food-elements_1284-28271.jpg?w=740&t=st=1707376991~exp=1707377591~hmac=011c541ddf74e7767329ed513191b5b2d325bab1af07ff05e0b69d77b430efdc',
-        'Author: macrovector, Designed by Freepik',  -- img_title
+        'macrovector, Designed by Freepik',  -- img_title
         1 -- educational_content_type_id
     ),
     (
@@ -3933,7 +3933,7 @@ VALUES
         \nCarbohydrates and Muscle Building \nCarbohydrates are another important group of foods for fueling your muscles. That is because carbs are partially converted to glycogen, which is a form of energy stored in muscles. Try focusing on good quality carbohydrates that provide dietary fiber, such as whole-grain breads and cereals.',
         24,
         'https://img.freepik.com/free-vector/isometric-fitness-club-banner-collection_1284-32765.jpg?w=740&t=st=1707900723~exp=1707901323~hmac=b9c969bb5f2f059c2855e1aa319c60dc34518fb590fd88938c644236bd303c5e',
-        'Author: macrovector, Designed by Freepik',  -- img_title
+        'macrovector, Designed by Freepik',  -- img_title
         2 -- educational_content_type_id
     ),
     (
@@ -3963,7 +3963,7 @@ VALUES
         \nBenefits of mindful eating \nBy paying close attention to how you feel as you eat—the texture and tastes of each mouthful, your body’s hunger and fullness signals, how different foods affect your energy and mood—you can learn to savor both your food and the experience of eating. Being mindful of the food you eat can promote better digestion, keep you full with less food, and influence wiser choices about what you eat in the future. It can also help you free yourself from unhealthy habits around food and eating.',
         23,
         'https://img.freepik.com/free-vector/woman-thinking-healthy-unhealthy-snacks-choice_74855-15577.jpg?w=996&t=st=1707900878~exp=1707901478~hmac=40ffc03f2097858306f0f3fd490da093551cc7158648d01af5ab658a029c793a',
-        'Author: pch.vector, Designed by Freepik',  -- img_title
+        'pch.vector, Designed by Freepik',  -- img_title
         1 -- educational_content_type_id
     ),
     (
@@ -3977,7 +3977,7 @@ VALUES
         \n3. Focus on high-fiber food \nA diet high in fiber can lower “bad” cholesterol and provide nutrients that help protect against heart disease. It may also help you to lose weight. Since fiber stays in the stomach longer than other foods, the feeling of fullness will stay with you much longer. Fiber also moves fat through your digestive system quicker so less of it is absorbed. And when you fill up on fiber, you will also have more energy for exercising.',
         22,
         'https://img.freepik.com/free-vector/world-health-day_24908-56242.jpg?w=740&t=st=1707735993~exp=1707736593~hmac=17dcc577460bec6cf2c10926c520ac8db1c02cfb94fe1b6e34969aaf4fcb96de',
-        'Author: gstudioimagen, Designed by Freepik',  -- img_title
+        'gstudioimagen, Designed by Freepik',  -- img_title
         1 -- educational_content_type_id
     ),
     (
@@ -3990,7 +3990,7 @@ VALUES
         \nHigh-quality vs. low-quality protein \nDistinguishing between industrially raised meat and organic, grass-fed meat is only part of separating low- and high-quality sources of protein. While some processed or lunch meats, for example, can be a good source of protein, many are loaded with salt, which can cause high blood pressure and lead to other health problems. Processed meats have also been linked with an increased risk of cancer, likely due to the substances used in the processing of the meat.',
         21,
         'https://img.freepik.com/free-vector/protein-food-concept-card-set_1284-9928.jpg?w=740&t=st=1707736764~exp=1707737364~hmac=65a5f0b5d04bbb72d039fdd158d63acab57d56a517cc32c702fc4a05ab4e3f33',
-        'Author: macrovector, Designed by Freepik',  -- img_title
+        'macrovector, Designed by Freepik',  -- img_title
         1 -- educational_content_type_id
     );
 

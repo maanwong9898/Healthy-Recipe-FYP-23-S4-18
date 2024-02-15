@@ -253,6 +253,9 @@ const ViewNutritionist = ({ params }) => {
                     </div>
                     {/* Nutrition Certificate */}
                     {/* Certificate */}
+                    <p className="block text-lg mb-1 font-semibold text-gray-900">
+                      Nutritionist Certificate:
+                    </p>
                     <div className="flex flex-col lg:flex-row mt-4 p-5 bg-slate-100 mx-auto">
                       {userAccount?.imgBlob ? (
                         <div className="justify-center items-center flex flex-col">

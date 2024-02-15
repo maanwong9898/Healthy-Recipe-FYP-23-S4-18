@@ -7,4 +7,5 @@ public interface MealPlanDTO {
     String getIntroduction();
     String getImg();
     String getPublisher();
+    Boolean getActive();
 }

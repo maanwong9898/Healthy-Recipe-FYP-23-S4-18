@@ -42,7 +42,7 @@ public interface MealPlanRepository extends JpaRepository<MealPlan,Long> {
     @Query(value="SELECT COUNT(r) AS count FROM MealPlan r")
     Integer findTotalMealPlanCount();
     
-    final String getDTOQuery = "SELECT r.title AS title, r.id AS id, r.img AS img, r.introduction AS introduction, r.publisher AS publisher FROM MealPlan r ";
+    final String getDTOQuery = "SELECT r.title AS title, r.id AS id, r.img AS img, r.introduction AS introduction, r.publisher AS publisher, r.active AS active FROM MealPlan r ";
 
     @Query(value =getDTOQuery + " WHERE r.id IN :ids", nativeQuery = false)
     List<MealPlanDTO> findMealPlanDTOsByIds(@Param("ids") List<Long> ids);

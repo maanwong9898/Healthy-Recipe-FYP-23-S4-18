@@ -18,8 +18,8 @@ import { useMutation } from "react-query";
 const sortOptions = {
   LATEST: { key: "LATEST", label: "By Latest" },
   OLDEST: { key: "OLDEST", label: "By Oldest" },
-  HIGHEST_RATINGS: { key: "HIGHEST_RATINGS", label: "Highest Ratings" },
-  LOWEST_RATINGS: { key: "LOWEST_RATINGS", label: "Lowest Ratings" },
+  // HIGHEST_RATINGS: { key: "HIGHEST_RATINGS", label: "Highest Ratings" },
+  // LOWEST_RATINGS: { key: "LOWEST_RATINGS", label: "Lowest Ratings" },
   ALPHABETICAL_AZ: { key: "ALPHABETICAL_AZ", label: "Alphabetically (A to Z)" },
   ALPHABETICAL_ZA: { key: "ALPHABETICAL_ZA", label: "Alphabetically (Z to A)" },
 };
@@ -31,14 +31,15 @@ const fetchRecipes = async () => {
     const response = await axiosInterceptorInstance.get("/recipe/get");
     // console.log("All recipe:", response.data);
     // Fetch average ratings for each blog post
-    const recipesWithAverage = await Promise.all(
-      response.data.map(async (recipe) => {
-        const average = await fetchRecipeAverage(recipe.id);
-        return { ...recipe, average };
-      })
-    );
+    // const recipesWithAverage = await Promise.all(
+    //   response.data.map(async (recipe) => {
+    //     const average = await fetchRecipeAverage(recipe.id);
+    //     return { ...recipe, average };
+    //   })
+    // );
 
-    return recipesWithAverage;
+    // return recipesWithAverage;
+    return response.data;
   } catch (error) {
     console.error("Failed to fetch recipes:", error);
     throw error;

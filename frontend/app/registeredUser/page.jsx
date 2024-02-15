@@ -802,7 +802,7 @@ const RegisteredUserHomepage = () => {
                 Meal Plans
               </h2>
               <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
-                {mealPlans.map((post) => renderMealPlanCard(post))}
+                {mealPlanLimit.map((post) => renderMealPlanCard(post))}
               </div>
             </div>
           </>

@@ -319,35 +319,36 @@ const ViewRecipe = ({ params }) => {
                         : "Not specified"}
                     </div>
                   </div>
-
-                  {/* Show ratings at the top of the title temporary no need*/}
-                  {/* <div className="flex justify-left ml-3 text-base lg:text-base text-black space-x-6 mx-auto max-w-screen-xl">
-          <p>
-            Rating: <span className="text-orange-600 font-bold">{recipe.ratings}</span>
-          </p>
-          <p>
-            Reviews: <span className="text-orange-600 font-bold">{recipe.reviews}</span>
-          </p>
-        </div> */}
                 </div>
 
                 {/* start of summary card */}
-                <div className="flex flex-col lg:flex-row mt-4 p-5 bg-slate-100 mx-auto">
-                  {recipe?.imgBlob ? (
-                    // If imgBlob is available, display image from blob
-                    <img
-                      className="h-auto w-full lg:max-w-lg rounded-lg ml-0 lg:ml-5 shadow-md"
-                      src={getImageUrlFromBlob(recipe?.imgBlob)}
-                      alt={recipe?.title || "Recipe Image"}
-                    />
-                  ) : (
-                    // If imgBlob is not available, display image from imgUrl
-                    <img
-                      className="h-auto w-full lg:max-w-lg rounded-lg ml-0 lg:ml-5 shadow-md"
-                      src={recipe?.img || "Not specified"}
-                      alt="Not found"
-                    />
-                  )}
+                <div className="grid grid-rows-1 md:grid-cols-2 lg:grid-cols-2 gap-8 mt-4 p-5 bg-slate-100 mx-auto">
+                  <div className="flex flex-col items-center justify-center">
+                    {/* Container div for image */}
+                    <div className="h-auto w-full border-0">
+                      {recipe?.imgBlob ? (
+                        // If imgBlob is available, display image from blob
+                        <img
+                          className="rounded-lg h-full lg:h-96 w-full object-cover" // Positioning image to cover the container
+                          src={getImageUrlFromBlob(recipe?.imgBlob)}
+                          alt={recipe?.title || "Recipe Image"}
+                        />
+                      ) : (
+                        // If imgBlob is not available, display image from imgUrl
+                        <img
+                          className="rounded-lg h-full lg:h-96 w-full object-cover" // Positioning image to cover the container
+                          src={recipe?.img || "Not specified"}
+                          alt="Not found"
+                        />
+                      )}
+                    </div>
+                    {/* Image title */}
+                    <p className="mt-4 text-center text-gray-900 font-medium text-sm">
+                      {recipe?.imgTitle || "Image Title Not Specified"}
+                    </p>
+                  </div>
+
+                  {/* Cooking time, description etc section */}
                   <div className="flex flex-col ml-0 lg:ml-4 mt-4">
                     <div className="flex lg:flex-row lg:space-x-8 lg:space-y-0 flex-col space-y-4 font-bold">
                       <p className="mr-4 text-bold text-lg tracking-tight">
@@ -378,10 +379,8 @@ const ViewRecipe = ({ params }) => {
                       {recipe?.info || "Not specified"}
                     </p>
 
-                    {/* I need to display the info divided by serving size in future  */}
-
-                    <div className="mt-4 lg:mt-28 mb-4">
-                      <p className="font-bold text-2xl tracking-tight">
+                    <div className="mt-4 lg:mt-4 mb-4">
+                      <p className="font-bold mt-4 lg:mt-8 text-2xl tracking-tight">
                         Nutrition Information:{" "}
                         <span className="font-medium text-sm ">
                           (per serving)

@@ -49,18 +49,18 @@ public interface BlogRepository extends JpaRepository<Blog, Long>{
     @Query(value= "SELECT b FROM Blog b WHERE b.blogTypeId = :blogType")
     List<Blog> findBlogByBlogType(Long blogType);
  
-    final String getDTOQuery = "SELECT r.title AS title, r.id AS id, r.img AS img, SUBSTRING_INDEX(SUBSTRING_INDEX(r.info, ' ', 500), ' ', 50) AS introduction, r.publisher AS publisher FROM Blog r ";
+    final String getDTOQuery = "SELECT r.createdDateTime, r.active, r.title AS title, r.id AS id, r.img AS img, SUBSTRING_INDEX(SUBSTRING_INDEX(r.info, ' ', 500), ' ', 50) AS introduction, r.publisher AS publisher FROM Blog r ";
 
-    @Query(value= getDTOQuery + " ORDER BY r.createdDateTime LIMIT 3", nativeQuery = false)
+    @Query(value= getDTOQuery + "WHERE r.active = TRUE ORDER BY r.createdDateTime ", nativeQuery = false)
     List<BlogDTO> findLatestBlogDTO();
 
-    @Query(value= getDTOQuery + " WHERE r.id NOT IN (:ids) ORDER BY r.createdDateTime LIMIT :count")
+    @Query(value= getDTOQuery + " WHERE r.active = TRUE AND r.id NOT IN (:ids) ORDER BY r.createdDateTime LIMIT :count")
     List<BlogDTO> findLatestBlogDTO(@Param("ids") List<Long> ids,@Param("count") Integer count);
  
-    @Query(value= getDTOQuery + " ORDER BY r.createdDateTime LIMIT :count")
+    @Query(value= getDTOQuery + " WHERE r.active = TRUE ORDER BY r.createdDateTime LIMIT :count")
     List<BlogDTO> findLatestBlogDTO(@Param("count") Integer count);
  
-    @Query(value = getDTOQuery + " WHERE r.id IN :ids", nativeQuery = false)
+    @Query(value = getDTOQuery + " WHERE r.active = TRUE AND r.id IN :ids", nativeQuery = false)
     List<BlogDTO> findBlogDTOsByIds(@Param("ids") List<Long> ids);
 
     

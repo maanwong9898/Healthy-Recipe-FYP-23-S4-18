@@ -257,11 +257,11 @@ const ViewBusinessUser = ({ params }) => {
                     )}
 
                     {/* Buttons */}
-                    <div className="flex space-x-5 justify-center">
+                    <div className="flex flex-row space-x-5">
                       <div className="flex-1">
                         <button
                           onClick={() => handleBackButton()}
-                          className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md bg-slate-700 hover:bg-slate-800 text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-slate-700"
+                          className="text-center font-semibold py-2 px-4 rounded-lg w-full bg-slate-700 hover:bg-slate-800 text-white"
                         >
                           Back
                         </button>
@@ -278,7 +278,7 @@ const ViewBusinessUser = ({ params }) => {
                             userAccount.enabled
                               ? "bg-red-600 hover:bg-red-700"
                               : "bg-stone-400 hover:bg-stone-500"
-                          } rounded-lg text-base px-5 py-2 text-center`}
+                          } text-white text-center font-semibold py-2 px-4 rounded-lg w-full`}
                         >
                           {userAccount.enabled ? "Suspend" : "Unsuspend"}
                         </button>

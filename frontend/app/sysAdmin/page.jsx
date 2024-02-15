@@ -456,7 +456,7 @@ const AdminHomePage = () => {
                       {/* User Account management */}
                       <div className="relative flex flex-col rounded-xl max-h-screen bg-slate-200 p-8">
                         <h4 className="text-2xl text-center font-semibold text-gray-900 mb-4">
-                          User Account Management
+                          Account Management
                         </h4>
                         <div className="grid grid-rows-2 gap-10 place-content-center mt-14 content-center">
                           <div className="flex items-center justify-center">

@@ -491,7 +491,7 @@ VALUES
         '3', -- UserID
         TRUE,
         '2023-01-11 15:30:00',
-        'http://tinyurl.com/s5c9ehex',
+        'https://img.freepik.com/free-photo/warm-winter-quinoa-salad-with-pumpkin-chorizo-mozzarella-arugula-leaves-pomegranate_127032-2700.jpg',
         'Author : EyeEm, Designed by Freepik',  -- img_title
         2, -- dietary_preference
         30, -- cooking_time
@@ -2129,7 +2129,7 @@ VALUES
         'By prioritizing a well-rounded consumption of macronutrients, encompassing sufficient protein, carbohydrates, and beneficial fats, individuals can supply their bodies with the essential fuel required for optimal muscle growth and recovery.',
         '2023-06-15',
         1, -- weight Gain
-        'http://tinyurl.com/452tfdja',
+        'https://img.freepik.com/free-photo/fitness-body-builder-challenge_53876-121379.jpg',
         'Designed by Freepik',  -- img_title
         '5' -- userid
     ),

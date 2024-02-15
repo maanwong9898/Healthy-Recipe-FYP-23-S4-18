@@ -2,10 +2,8 @@
 import { useRouter } from "next/router";
 import { useState } from "react";
 import Link from "next/link";
-import Image from "next/image";
 import HomeNavbar from "@/app/components/navigation/homeNavBar";
 import axiosInterceptorInstance from "../../axiosInterceptorInstance.js";
-import Footer from "../../components/footer";
 
 const businessRegistration = () => {
   const [fullName, setFullName] = useState("");
@@ -57,11 +55,6 @@ const businessRegistration = () => {
       return;
     }
 
-    // } else {
-    //   setSuccess(
-    //     "Account created successfully! You will be notified once your account has been verified."
-    //   );
-    // }
 
     console.log("Creating business account...");
 
@@ -110,7 +103,6 @@ const businessRegistration = () => {
       setSuccess(false); // Ensure success is false on error
       console.error("Error creating business user account:", error);
       setError("Failed to create account.");
-      //setError(error.message || "Failed to create account.");
     }
   };
 

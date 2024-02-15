@@ -14,7 +14,6 @@ import SecureStorage from "react-secure-storage";
 const sortOptions = {
   LATEST: { key: "LATEST", label: "By Latest" },
   OLDEST: { key: "OLDEST", label: "By Oldest" },
-  // HIGHEST_RATINGS: { key: "HIGHEST_RATINGS", label: "Highest Ratings" },
   ALPHABETICAL_AZ: { key: "ALPHABETICAL_AZ", label: "Alphabetically (A to Z)" },
   ALPHABETICAL_ZA: { key: "ALPHABETICAL_ZA", label: "Alphabetically (Z to A)" },
 };
@@ -26,15 +25,6 @@ const fetchEducationalContent = async () => {
     const response = await axiosInterceptorInstance.get(
       "/educationalContent/get"
     );
-    console.log("All Edu:", response.data);
-
-    // Fetch average ratings for each educational content
-    // const eduContentWithAverage = await Promise.all(
-    //   response.data.map(async (eduContent) => {
-    //     const average = await fetchEduContentAverage(eduContent.id);
-    //     return { ...eduContent, average };
-    //   })
-    // );
 
     // Filter active blog posts
     const filteredData = response.data.filter((post) => post.active === true);
@@ -46,33 +36,11 @@ const fetchEducationalContent = async () => {
   }
 };
 
-// const fetchEduContentAverage = async (eduContentId) => {
-//   try {
-//     const response = await axiosInterceptorInstance.get(
-//       `/educationalContent/getAverage/${eduContentId}`
-//     );
-//     console.log(
-//       "Average rating for edu content",
-//       eduContentId,
-//       "is:",
-//       response.data
-//     );
-//     return response.data; // Assuming this returns the average data for the blog
-//   } catch (error) {
-//     console.error(
-//       `Failed to fetch average for edu content ${eduContentId}:`,
-//       error
-//     );
-//     return null; // or handle the error as you see fit
-//   }
-// };
-
 const fetchCategories = async () => {
   try {
     const response = await axiosInterceptorInstance.get(
       "category/getAllEducationalContentCategories"
     );
-    // setCategories(response.data);
     return response.data;
   } catch (error) {
     console.error("Error fetching categories:", error);
@@ -82,17 +50,13 @@ const fetchCategories = async () => {
 const EducationalContentPageForUser = () => {
   const router = useRouter();
   const [categoryFilter, setCategoryFilter] = useState("");
-  // const [AllEduContent, setAllEduContent] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [sortOption, setSortOption] = useState("");
   const [isSearchEmpty, setIsSearchEmpty] = useState(false);
   const [searchPerformed, setSearchPerformed] = useState(false);
-  // const [categories, setCategories] = useState([]);
   const [displayedEduContent, setDisplayedEduContent] = useState([]);
   const [resultsCount, setResultsCount] = useState(0);
-  // Additional state to track if search button has been clicked
   const [searchButtonClicked, setSearchButtonClicked] = useState(false);
-  // const [isLoading, setIsLoading] = useState(false);
 
   // Fetch blog posts
   const {
@@ -160,17 +124,7 @@ const EducationalContentPageForUser = () => {
       case "ALPHABETICAL_ZA":
         sortedPosts.sort((a, b) => b.title.localeCompare(a.title));
         break;
-      // case "HIGHEST_RATINGS":
-      //   sortedPosts.sort((a, b) => {
-      //     const ratingDiff =
-      //       (b.average?.averageRatings || 0) - (a.average?.averageRatings || 0);
-      //     if (ratingDiff !== 0) return ratingDiff;
-      //     return new Date(b.createdDateTime) - new Date(a.createdDateTime); // Latest date first if tie
-      //   });
-      //   break;
     }
-
-    console.log("Filtered posts:", filteredPosts);
 
     setDisplayedEduContent(sortedPosts);
     setIsSearchEmpty(sortedPosts.length === 0);
@@ -212,15 +166,6 @@ const EducationalContentPageForUser = () => {
         case "ALPHABETICAL_ZA":
           sortedResults.sort((a, b) => b.title.localeCompare(a.title));
           break;
-        // case "HIGHEST_RATINGS":
-        //   sortedResults.sort((a, b) => {
-        //     const ratingDiff =
-        //       (b.average?.averageRatings || 0) -
-        //       (a.average?.averageRatings || 0);
-        //     if (ratingDiff !== 0) return ratingDiff;
-        //     return new Date(b.createdDateTime) - new Date(a.createdDateTime); // Latest date first if tie
-        //   });
-        //   break;
       }
 
       setDisplayedEduContent(sortedResults);
@@ -237,14 +182,6 @@ const EducationalContentPageForUser = () => {
         let filteredResults = response.data.filter(
           (post) => post.active === true
         );
-
-        // Fetch average ratings for each edu content
-        // let filteredResultsWithAverage = await Promise.all(
-        //   filteredResults.map(async (post) => {
-        //     const average = await fetchEduContentAverage(post.id);
-        //     return { ...post, average }; // Augment each blog post with its average
-        //   })
-        // );
 
         if (categoryFilter) {
           filteredResults = filteredResults.filter(
@@ -274,18 +211,7 @@ const EducationalContentPageForUser = () => {
           case "ALPHABETICAL_ZA":
             sortedResults.sort((a, b) => b.title.localeCompare(a.title));
             break;
-          // case "HIGHEST_RATINGS":
-          //   sortedResults.sort((a, b) => {
-          //     const ratingDiff =
-          //       (b.average?.averageRatings || 0) -
-          //       (a.average?.averageRatings || 0);
-          //     if (ratingDiff !== 0) return ratingDiff;
-          //     return new Date(b.createdDateTime) - new Date(a.createdDateTime); // Latest date first if tie
-          //   });
-          //   break;
         }
-
-        console.log("Sorted results:", sortedResults);
 
         if (sortedResults.length > 0) {
           setDisplayedEduContent(sortedResults);
@@ -309,39 +235,6 @@ const EducationalContentPageForUser = () => {
       .split(" ")
       .map((word) => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
       .join(" ");
-  };
-
-  // Render stars and count
-  const renderStarsAndCount = (post) => {
-    if (
-      !post.average ||
-      !post.average.averageRatings ||
-      !post.average.totalNumber
-    ) {
-      return <div>No ratings available</div>;
-    } else {
-      const { averageRatings, totalNumber } = post.average;
-
-      let stars = [];
-      // Render stars based on average rating
-      for (let i = 0; i < 5; i++) {
-        stars.push(
-          <span
-            key={i}
-            className={i < averageRatings ? "text-yellow-300" : "text-gray-300"}
-          >
-            ★
-          </span>
-        );
-      }
-      // Render total count of ratings
-      return (
-        <div className="flex items-center">
-          <span className="mr-1">{stars}</span>
-          <span>({totalNumber} ratings)</span>
-        </div>
-      );
-    }
   };
 
   const handleViewEduContent = (id) => {
@@ -373,12 +266,6 @@ const EducationalContentPageForUser = () => {
       }}
       onClick={() => handleViewEduContent(post.id)}
     >
-      {/* <img
-        src={post.img}
-        alt={post.img_title}
-        className="w-full object-cover rounded-sm text-white text-center"
-        style={{ height: "192px" }}
-      /> */}
       {post?.imgBlob ? (
         // If imgBlob is available, display image from blob
         <img
@@ -418,26 +305,7 @@ const EducationalContentPageForUser = () => {
               {capitalizeFirstLetter(post?.publisher) || "Not Specified"}
             </span>
           </p>
-          {/* <p className="text-gray-700 text-sm font-semibold">
-            {renderStarsAndCount(post)}
-          </p> */}
         </div>
-
-        {/* <div className="flex items-center justify-center">
-          <p className="text-gray-700 text-sm font-semibold">
-            Date:
-            <span>{new Date(post.createdDateTime).toLocaleDateString()}</span>
-          </p>
-        </div>
-
-        <div className="flex items-center justify-center">
-          <p className="text-gray-700 text-sm font-semibold">
-            Category:{" "}
-            <span className="text-orange-600 font-semibold tracking-tight">
-              {post.educationalContentType.subcategoryName || "Not Specified"}
-            </span>
-          </p>
-        </div> */}
       </div>
     </div>
   );
@@ -523,7 +391,7 @@ const EducationalContentPageForUser = () => {
                 ))}
               </select>
             </div>
-            {/* Filter Section - Adjusted to align to the right */}
+            {/* Filter Section */}
             <div className="flex flex-col lg:flex-row lg:items-center mt-4 lg:mt-0">
               <label
                 htmlFor="categoryFilter"

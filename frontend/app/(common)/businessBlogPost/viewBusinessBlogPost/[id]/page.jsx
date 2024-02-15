@@ -8,19 +8,7 @@ import HomeNavbar from "../../../../components/navigation/homeNavBar";
 import Footer from "../../../../components/footer";
 import SecureStorage from "react-secure-storage";
 
-// this is to view particular blog post from landing page
 // router path: /businessBlogPost/viewBusinessBlogPost/[id]
-
-// Slugify utility function
-const slugify = (text) =>
-  text
-    .toString()
-    .toLowerCase()
-    .replace(/\s+/g, "-") // Replace spaces with -
-    .replace(/[^\w\-]+/g, "") // Remove all non-word chars
-    .replace(/\-\-+/g, "-") // Replace multiple - with single -
-    .replace(/^-+/, "") // Trim - from start of text
-    .replace(/-+$/, ""); // Trim - from end of text
 
 const fetchBlogPostById = async (postId) => {
   try {
@@ -28,7 +16,7 @@ const fetchBlogPostById = async (postId) => {
     postId = postId;
 
     const response = await axiosInterceptorInstance.get(`/blog/get/${postId}`);
-    console.log("Fetched blog post data is:", response.data);
+    //console.log("Fetched blog post data is:", response.data);
 
     if (!response.data) {
       console.error(`Blog post with ID ${postId} not found`);
@@ -86,7 +74,7 @@ const ViewBusinessBlogPost = ({ params }) => {
       const response = await axiosInterceptorInstance.get(
         `/blog/rating/getBlog?blogId=${blogId}`
       );
-      console.log("All ratings response data:", response.data);
+      // console.log("All ratings response data:", response.data);
 
       // Assuming response.data is the array of reviews for the given blogId
       setReviewsAndRatings(response.data);
@@ -116,11 +104,6 @@ const ViewBusinessBlogPost = ({ params }) => {
     return stars;
   };
 
-  // Check if the blog post has been fetched
-  // if (!businessBlogPost) {
-  //   return <div>Please wait. It'll just take a moment</div>;
-  // }
-
   const getImageUrlFromBlob = (imgBlob) => {
     // Check if imgBlob is truthy
     if (imgBlob) {
@@ -147,7 +130,6 @@ const ViewBusinessBlogPost = ({ params }) => {
         {isLoading ? (
           <div className="loading-indicator text-center">
             <p>Loading blog post...</p>
-            {/* You can replace this with a spinner or any other visual indicator */}
           </div>
         ) : (
           <>

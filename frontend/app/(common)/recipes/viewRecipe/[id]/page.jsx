@@ -1,12 +1,10 @@
 "use client";
 import { useRouter } from "next/navigation";
 import React, { use } from "react";
-import Link from "next/link";
 import { useState, useEffect } from "react";
 import axiosInterceptorInstance from "../../../../axiosInterceptorInstance.js";
 import HomeNavbar from "../../../../components/navigation/homeNavBar";
 import SecureStorage from "react-secure-storage";
-import Footer from "../../../../components/footer";
 
 // router path: /recipes/viewRecipe/[id]
 
@@ -33,7 +31,6 @@ const fetchRecipesById = async (recipeID) => {
     const response = await axiosInterceptorInstance.get(
       `/recipe/get/${recipeID}`
     );
-    console.log("Fetched recipe data is:", response.data);
 
     if (!response.data) {
       console.error(`Recipe with ID ${recipeID} not found`);
@@ -43,8 +40,6 @@ const fetchRecipesById = async (recipeID) => {
     // Assuming the response contains the recipes directly
     const recipe = response.data;
 
-    // check the content of the recipe
-    console.log("try recipe by id", recipe);
     return recipe;
   } catch (error) {
     console.error("Failed to fetch recipe:", error);
@@ -93,7 +88,6 @@ const ViewRecipe = ({ params }) => {
       const response = await axiosInterceptorInstance.get(
         `/recipe/rating/getRecipe?recipeId=${recipeId}`
       );
-      console.log("All recipe ratings response data:", response.data);
 
       // Assuming response.data is the array of reviews for the given recipeId
       setReviewsAndRatings(response.data);
@@ -167,11 +161,6 @@ const ViewRecipe = ({ params }) => {
     );
   };
 
-  // const getImageUrlFromBlob = (imgBlob) => {
-  //   if (!imgBlob) return ""; // Return an empty string or a placeholder image if blob is not available
-  //   return `data:image/jpeg;base64,${imgBlob}`;
-  // };
-
   const getImageUrlFromBlob = (imgBlob) => {
     // Check if imgBlob is truthy
     if (imgBlob) {
@@ -197,7 +186,6 @@ const ViewRecipe = ({ params }) => {
         {isLoading ? (
           <div className="loading-indicator text-center">
             <p>Loading recipe...</p>
-            {/* You can replace this with a spinner or any other visual indicator */}
           </div>
         ) : (
           <>
@@ -260,16 +248,6 @@ const ViewRecipe = ({ params }) => {
                   {recipe ? renderMealType(recipe.mealType) : "Not specified"}
                 </div>
               </div>
-
-              {/* Show ratings at the top of the title temporary no need*/}
-              {/* <div className="flex justify-left ml-3 text-base lg:text-base text-black space-x-6 mx-auto max-w-screen-xl">
-          <p>
-            Rating: <span className="text-orange-600 font-bold">{recipe.ratings}</span>
-          </p>
-          <p>
-            Reviews: <span className="text-orange-600 font-bold">{recipe.reviews}</span>
-          </p>
-        </div> */}
             </div>
 
             {/* start of summary card */}
@@ -280,14 +258,14 @@ const ViewRecipe = ({ params }) => {
                   {recipe?.imgBlob ? (
                     // If imgBlob is available, display image from blob
                     <img
-                      className="rounded-lg h-full lg:h-96 w-full object-cover" // Positioning image to cover the container
+                      className="rounded-lg h-full lg:h-96 w-full object-cover"
                       src={getImageUrlFromBlob(recipe?.imgBlob)}
                       alt={recipe?.title || "Recipe Image"}
                     />
                   ) : (
                     // If imgBlob is not available, display image from imgUrl
                     <img
-                      className="rounded-lg h-full lg:h-96 w-full object-cover" // Positioning image to cover the container
+                      className="rounded-lg h-full lg:h-96 w-full object-cover"
                       src={recipe?.img || "Not specified"}
                       alt="Not found"
                     />

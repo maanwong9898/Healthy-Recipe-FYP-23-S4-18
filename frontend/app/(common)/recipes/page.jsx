@@ -3,8 +3,6 @@ import { useRouter } from "next/navigation";
 import React from "react";
 import { useState, useEffect } from "react";
 import axiosInterceptorInstance from "../../axiosInterceptorInstance.js";
-import Link from "next/link";
-import { Tooltip } from "react-tooltip";
 import HomeNavbar from "@/app/components/navigation/homeNavBar";
 import { QueryClientProvider, useQuery } from "react-query"; // Added useQuery here
 import { queryClient } from "../../queryClient.js"; // Adjust the path as necessary
@@ -26,14 +24,6 @@ const fetchRecipes = async () => {
   try {
     console.log("Fetching recipes...");
     const response = await axiosInterceptorInstance.get("/recipe/get");
-    // console.log("All recipe:", response.data);
-    // Fetch average ratings for each recipe
-    // const recipesWithAverage = await Promise.all(
-    //   response.data.map(async (recipe) => {
-    //     const average = await fetchRecipeAverage(recipe.id);
-    //     return { ...recipe, average };
-    //   })
-    // );
 
     // Filter active blog posts
     const filteredData = response.data.filter(
@@ -47,19 +37,6 @@ const fetchRecipes = async () => {
   }
 };
 
-// const fetchRecipeAverage = async (recipeId) => {
-//   try {
-//     const response = await axiosInterceptorInstance.get(
-//       `/recipe/getAverage/${recipeId}`
-//     );
-//     console.log("Average rating for recipe", recipeId, "is:", response.data);
-//     return response.data; // Assuming this returns the average data for the recipe
-//   } catch (error) {
-//     console.error(`Failed to fetch average for recipe ${recipeId}:`, error);
-//     return null; // or handle the error as you see fit
-//   }
-// };
-
 // Fetch all categories
 // Fetch all dietary preferences categories from backend
 const fetchDietaryPreferences = async () => {
@@ -68,10 +45,7 @@ const fetchDietaryPreferences = async () => {
     const response = await axiosInterceptorInstance.get(
       "/category/getAllDietaryPreferences"
     );
-    console.log(
-      "Dietary Preferences Categories Successfully Fetched :  ",
-      response.data
-    );
+
     // setDietaryPreferencesCategory(response.data);
     return response.data;
   } catch (error) {
@@ -86,8 +60,6 @@ const fetchMealTypes = async () => {
     const response = await axiosInterceptorInstance.get(
       "/category/getAllMealTypes"
     );
-    console.log("Meal Type Categories Successfully Fetched :  ", response.data);
-    // setMealTypeCategory(response.data);
     return response.data;
   } catch (error) {
     console.log(error);
@@ -101,8 +73,6 @@ const fetchAllergies = async () => {
     const response = await axiosInterceptorInstance.get(
       "/category/getAllAllergies"
     );
-    console.log("Allergies Categories Successfully Fetched :  ", response.data);
-    // setAllergyCategory(response.data);
     return response.data;
   } catch (error) {
     console.log(error);
@@ -120,18 +90,12 @@ const RecipesPageForUser = () => {
   const [resultsCount, setResultsCount] = useState(0);
   // Additional state to track if search button has been clicked
   const [searchButtonClicked, setSearchButtonClicked] = useState(false);
-  // const [dietaryPreferencesCategory, setDietaryPreferencesCategory] = useState(
-  //   []
-  // );
-  // const [allergyCategory, setAllergyCategory] = useState([]);
-  // const [mealTypeCategory, setMealTypeCategory] = useState([]);
 
   // For filter by category
   const [selectedDietaryPreference, setSelectedDietaryPreference] =
     useState("");
   const [selectedMealType, setSelectedMealType] = useState("");
   const [selectedAllergies, setSelectedAllergies] = useState([]);
-  const [filteredRecipes, setFilteredRecipes] = useState([]);
 
   // State variable for cooking time filter
   const [cookingTimeFilter, setCookingTimeFilter] = useState("");
@@ -163,13 +127,9 @@ const RecipesPageForUser = () => {
 
   // State for ingredient search
   const [ingredientSearchTerm, setIngredientSearchTerm] = useState("");
-  const [isIngredientSearchActive, setIsIngredientSearchActive] =
-    useState(false);
 
   // For search type
   const [searchType, setSearchType] = useState("title");
-
-  // const [isLoading, setIsLoading] = useState(false);
 
   // Fetch all recipes
   const {
@@ -189,9 +149,6 @@ const RecipesPageForUser = () => {
 
   // Fetch allergies
   const { data: allergyCategory } = useQuery("allergies", fetchAllergies);
-
-  // if (isLoading) return <div>Loading...</div>;
-  // if (isError) return <div>Error occurred while fetching data.</div>;
 
   // Toggle function for filter section
   const toggleFilterSection = () => {
@@ -456,7 +413,6 @@ const RecipesPageForUser = () => {
       });
     }
 
-    // let sortedRecipes = [...newFilteredRecipes];
     let sortedRecipes = [...(newFilteredRecipes ?? [])];
 
     // Helper function to get the date for comparison
@@ -483,20 +439,8 @@ const RecipesPageForUser = () => {
       case "ALPHABETICAL_ZA":
         sortedRecipes.sort((a, b) => b.title.localeCompare(a.title));
         break;
-      // case "HIGHEST_RATINGS":
-      //   sortedRecipes.sort((a, b) => {
-      //     const ratingDiff =
-      //       (b.average?.averageRatings || 0) - (a.average?.averageRatings || 0);
-      //     if (ratingDiff !== 0) return ratingDiff;
-      //     // Use getDateForComparison for tiebreaker date comparison
-      //     return getDateForComparison(b) - getDateForComparison(a); // Latest date first if tie
-      //   });
-      //   break;
     }
 
-    console.log("Filtered recipes:", newFilteredRecipes);
-
-    console.log("The recipe after multiple filtering: ", newFilteredRecipes);
     console.log("End doing filtering...");
 
     if (searchTerm.trim()) {
@@ -742,39 +686,6 @@ const RecipesPageForUser = () => {
       .join(" ");
   };
 
-  // Render stars and count
-  const renderStarsAndCount = (post) => {
-    if (
-      !post.average ||
-      !post.average.averageRatings ||
-      !post.average.totalNumber
-    ) {
-      return <div>No ratings available</div>;
-    } else {
-      const { averageRatings, totalNumber } = post.average;
-
-      let stars = [];
-      // Render stars based on average rating
-      for (let i = 0; i < 5; i++) {
-        stars.push(
-          <span
-            key={i}
-            className={i < averageRatings ? "text-yellow-300" : "text-gray-300"}
-          >
-            ★
-          </span>
-        );
-      }
-      // Render total count of ratings
-      return (
-        <div className="flex items-center">
-          <span className="mr-1">{stars}</span>
-          <span>({totalNumber} ratings)</span>
-        </div>
-      );
-    }
-  };
-
   const handleViewRecipe = (id) => {
     console.log(`Recipe Title: ${id}`);
     let routePath = `/recipes/viewRecipe/${id}`;
@@ -804,13 +715,6 @@ const RecipesPageForUser = () => {
       }}
       onClick={() => handleViewRecipe(post.id)}
     >
-      {/* <img
-        src={post.img}
-        alt={post.img_title}
-        className="w-full object-cover rounded-sm"
-        style={{ height: "192px" }}
-      /> */}
-
       {post?.imgBlob ? (
         // If imgBlob is available, display image from blob
         <img
@@ -851,124 +755,10 @@ const RecipesPageForUser = () => {
               {capitalizeFirstLetter(post?.publisher) || "Not Specified"}
             </span>
           </p>
-          {/* <p className="text-gray-700 text-sm font-semibold">
-            {renderStarsAndCount(post)}
-          </p> */}
         </div>
       </div>
     </div>
   );
-
-  // // For debugging filtering and searching
-  // const renderPostCard = (post) => (
-  //   <div
-  //     key={post.id}
-  //     className="rounded shadow-lg overflow-hidden flex flex-col"
-  //     style={{
-  //       border: "0.5px solid transparent",
-  //       background:
-  //         "linear-gradient(to right, #22d3ee 0%, #8b5cf6 100%), white",
-  //       backgroundOrigin: "border-box",
-  //       backgroundClip: "content-box, border-box",
-  //     }}
-  //   >
-  //     <img
-  //       src={post.img}
-  //       alt="Credit to the source"
-  //       className="w-full object-cover rounded-sm"
-  //       style={{ height: "192px" }}
-  //     />
-  //     <div className="flex-grow flex flex-col justify-between p-4 bg-white">
-  //       <div>
-  //         <h2 className="text-2xl font-extrabold mb-2">{post.title}</h2>
-  //         <div
-  //           className="text-gray-700 text-base mb-4 line-clamp-3"
-  //           style={{ height: "4.5rem" }}
-  //         >
-  //           <div className="whitespace-pre-line">{post.description}</div>
-  //         </div>
-  //         <div className="flex justify-between items-center">
-  //           <div className="flex items-center text-green-600 font-semibold text-xl">
-  //             {post.dietaryPreferences?.subcategoryName ||
-  //               "No Dietary Preference"}
-  //           </div>
-  //         </div>
-  //         <div className="flex justify-between items-center">
-  //           <div className="flex items-center text-black font-semibold text-xl">
-  //             {post.allergies.map((allergy) => (
-  //               <span
-  //                 key={allergy.id}
-  //                 className="text-xs font-semibold inline-block py-1 px-2 uppercase rounded-full text-red-600 bg-red-200 last:mr-0 mr-1"
-  //               >
-  //                 {allergy.subcategoryName}
-  //               </span>
-  //             ))}
-  //           </div>
-  //         </div>
-  //         <div className="flex flex-col">
-  //           <div className="flex items-center text-red-700 font-semibold text-xl">
-  //             {post.calories} Calories
-  //           </div>
-
-  //           <div className="flex items-center text-red-700 font-semibold text-xl">
-  //             {post.carbs} Carbs
-  //           </div>
-
-  //           <div className="flex items-center text-red-700 font-semibold text-xl">
-  //             {post.protein} Protein
-  //           </div>
-
-  //           <div className="flex items-center text-red-700 font-semibold text-xl">
-  //             {post.fat} Fat
-  //           </div>
-
-  //           <div className="flex items-center text-red-700 font-semibold text-xl">
-  //             {post.sodium} Sodium
-  //           </div>
-
-  //           <div className="flex items-center text-red-700 font-semibold text-xl">
-  //             {post.fibre} Fibre
-  //           </div>
-  //         </div>
-  //         <div className="flex justify-between items-center">
-  //           <div className="flex items-center text-blue-900 font-semibold text-xl">
-  //             {post.cookingTime} Minutes
-  //           </div>
-  //         </div>
-  //         <div className="flex justify-between items-center">
-  //           <div className="flex items-center text-blue-900 font-semibold text-xl">
-  //             {post.mealType?.subcategoryName || "No Meal Type"}
-  //           </div>
-  //         </div>
-
-  //         <div className="flex justify-between items-center">
-  //           <div className="flex items-center text-blue-900 font-semibold text-xl">
-  //             {post.createdDT || "No Date"}
-  //           </div>
-  //         </div>
-
-  //         <div className="flex justify-between items-center">
-  //           <div className="flex items-center text-blue-900 font-semibold text-xl">
-  //             {post.lastUpdatedDT || "No Date"}
-  //           </div>
-  //         </div>
-
-  //         {/* Displaying Ingredients */}
-  //         <div className="mb-4">
-  //           <strong>Ingredients:</strong>
-  //           <p className="text-gray-700">{post.ingredients}</p>
-  //         </div>
-
-  //         <button
-  //           onClick={() => handleViewRecipe(post.id)}
-  //           className="text-white font-bold bg-gradient-to-br from-cyan-400 to-cyan-800 hover:bg-blue-950 border-2 border-black focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 rounded-lg text-sm mt-3 px-4 py-2 text-center"
-  //         >
-  //           Read more
-  //         </button>
-  //       </div>
-  //     </div>
-  //   </div>
-  // );
 
   // Helper function to get the date for comparison
   const getDateForComparison = (recipe) => {
@@ -1104,12 +894,9 @@ const RecipesPageForUser = () => {
             </div>
             {/*Main Content including the filter and recipe display*/}
             <div className="flex flex-col md:flex-row">
-              {" "}
-              {/* Flex container for sidebar and main content */}
               {/* Sidebar for Filters */}
               <div className="w-full lg:w-1/4 md:pr-4 mb-4 md:mb-0">
                 {" "}
-                {/* Full width on small screens, 1/4 width on larger screens */}
                 {/* Conditional rendering of the filter section */}
                 {isFilterSectionOpen && (
                   <div className="flex flex-col gap-4 mb-4 p-4 bg-gray-50 border rounded-lg text-xl">
@@ -1123,9 +910,6 @@ const RecipesPageForUser = () => {
                       </label>
                       <select
                         value={selectedDietaryPreference}
-                        // onChange={(e) =>
-                        //   setSelectedDietaryPreference(e.target.value)
-                        // }
                         onChange={handleDietaryPreferenceChange}
                         className="form-select mr-2 p-2 rounded-lg border w-full md:w-auto"
                       >
@@ -1220,7 +1004,7 @@ const RecipesPageForUser = () => {
                             value={caloriesMinFilter}
                             onChange={handleCaloriesMinFilterChange}
                             className="form-control block rounded-lg border border-gray-400"
-                            style={{ width: "80px", marginRight: "8px" }} // adjust the width as needed
+                            style={{ width: "80px", marginRight: "8px" }}
                           />
 
                           <label
@@ -1235,7 +1019,7 @@ const RecipesPageForUser = () => {
                             value={caloriesMaxFilter}
                             onChange={handleCaloriesMaxFilterChange}
                             className="form-control block rounded-lg border border-gray-400"
-                            style={{ width: "80px" }} // adjust the width as needed
+                            style={{ width: "80px" }}
                           />
                         </div>
 
@@ -1256,7 +1040,7 @@ const RecipesPageForUser = () => {
                             value={carbsMinFilter}
                             onChange={handleCarbsMinFilterChange}
                             className="form-control block rounded-lg border border-gray-400"
-                            style={{ width: "80px", marginRight: "8px" }} // adjust the width as needed
+                            style={{ width: "80px", marginRight: "8px" }}
                           />
 
                           <label
@@ -1271,7 +1055,7 @@ const RecipesPageForUser = () => {
                             value={carbsMaxFilter}
                             onChange={handleCarbsMaxFilterChange}
                             className="form-control block rounded-lg border border-gray-400"
-                            style={{ width: "80px" }} // adjust the width as needed
+                            style={{ width: "80px" }}
                           />
                         </div>
 
@@ -1292,7 +1076,7 @@ const RecipesPageForUser = () => {
                             value={proteinMinFilter}
                             onChange={handleProteinMinFilterChange}
                             className="form-control block rounded-lg border border-gray-400"
-                            style={{ width: "80px", marginRight: "8px" }} // adjust the width as needed
+                            style={{ width: "80px", marginRight: "8px" }}
                           />
 
                           <label
@@ -1307,7 +1091,7 @@ const RecipesPageForUser = () => {
                             value={proteinMaxFilter}
                             onChange={handleProteinMaxFilterChange}
                             className="form-control block rounded-lg border border-gray-400"
-                            style={{ width: "80px" }} // adjust the width as needed
+                            style={{ width: "80px" }}
                           />
                         </div>
 
@@ -1328,7 +1112,7 @@ const RecipesPageForUser = () => {
                             value={fatMinFilter}
                             onChange={handleFatMinFilterChange}
                             className="form-control block rounded-lg border border-gray-400"
-                            style={{ width: "80px", marginRight: "8px" }} // adjust the width as needed
+                            style={{ width: "80px", marginRight: "8px" }}
                           />
 
                           <label
@@ -1343,7 +1127,7 @@ const RecipesPageForUser = () => {
                             value={fatMaxFilter}
                             onChange={handleFatMaxFilterChange}
                             className="form-control block rounded-lg border border-gray-400"
-                            style={{ width: "80px" }} // adjust the width as needed
+                            style={{ width: "80px" }}
                           />
                         </div>
 
@@ -1364,7 +1148,7 @@ const RecipesPageForUser = () => {
                             value={sodiumMinFilter}
                             onChange={handleSodiumMinFilterChange}
                             className="form-control block rounded-lg border border-gray-400"
-                            style={{ width: "80px", marginRight: "8px" }} // adjust the width as needed
+                            style={{ width: "80px", marginRight: "8px" }}
                           />
 
                           <label
@@ -1379,7 +1163,7 @@ const RecipesPageForUser = () => {
                             value={sodiumMaxFilter}
                             onChange={handleSodiumMaxFilterChange}
                             className="form-control block rounded-lg border border-gray-400"
-                            style={{ width: "80px" }} // adjust the width as needed
+                            style={{ width: "80px" }}
                           />
                         </div>
 
@@ -1400,7 +1184,7 @@ const RecipesPageForUser = () => {
                             value={fibreMinFilter}
                             onChange={handleFibreMinFilterChange}
                             className="form-control block rounded-lg border border-gray-400"
-                            style={{ width: "80px", marginRight: "8px" }} // adjust the width as needed
+                            style={{ width: "80px", marginRight: "8px" }}
                           />
 
                           <label
@@ -1415,7 +1199,7 @@ const RecipesPageForUser = () => {
                             value={fibreMaxFilter}
                             onChange={handleFibreMaxFilterChange}
                             className="form-control block rounded-lg border border-gray-400"
-                            style={{ width: "80px" }} // adjust the width as needed
+                            style={{ width: "80px" }}
                           />
                         </div>
                       </div>
@@ -1442,7 +1226,7 @@ const RecipesPageForUser = () => {
                           value={cookingTimeMinFilter}
                           onChange={handleCookingTimeMinFilterChange}
                           className="form-control block rounded-lg border border-gray-400"
-                          style={{ width: "80px", marginRight: "8px" }} // adjust the width as needed
+                          style={{ width: "80px", marginRight: "8px" }}
                         />
 
                         <label
@@ -1457,7 +1241,7 @@ const RecipesPageForUser = () => {
                           value={cookingTimeMaxFilter}
                           onChange={handleCookingTimeMaxFilterChange}
                           className="form-control block rounded-lg border border-gray-400"
-                          style={{ width: "80px" }} // adjust the width as needed
+                          style={{ width: "80px" }}
                         />
                       </div>
                     </div>

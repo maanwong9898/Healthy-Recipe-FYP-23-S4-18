@@ -25,13 +25,6 @@ const fetchMealPlan = async () => {
     console.log("Fetching all meal plan...");
     const response = await axiosInterceptorInstance.get("/mealPlan/get");
 
-    // const mealPlansWithAverage = await Promise.all(
-    //   response.data.map(async (mealPlan) => {
-    //     const average = await fetchMealPlanAverage(mealPlan.id);
-    //     return { ...mealPlan, average };
-    //   })
-    // );
-
     // Filter active blog posts
     const filteredData = response.data.filter(
       (mealPlan) => mealPlan.active === true
@@ -49,47 +42,21 @@ const fetchCategories = async () => {
     const response = await axiosInterceptorInstance.get(
       "category/getAllHealthGoals"
     );
-    // setCategories(response.data);
     return response.data;
   } catch (error) {
     console.error("Error fetching categories:", error);
   }
 };
 
-// Fetch the average rating for each single meal plan
-// const fetchMealPlanAverage = async (mealPlanId) => {
-//   try {
-//     const response = await axiosInterceptorInstance.get(
-//       `/mealPlan/getAverage/${mealPlanId}`
-//     );
-//     console.log(
-//       "Average rating for meal plan",
-//       mealPlanId,
-//       "is:",
-//       response.data
-//     );
-//     return response.data; // Assuming this returns the average data for the meal plan
-//   } catch (error) {
-//     console.error(
-//       `Failed to fetch average for meal plan ${mealPlanId}:`,
-//       error
-//     );
-//     return null; // or handle the error as you see fit
-//   }
-// };
-
 const MealPlanPage = () => {
   const router = useRouter();
   const [categoryFilter, setCategoryFilter] = useState("");
-  // const [AllMealPlan, setAllMealPlan] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [sortOption, setSortOption] = useState("");
   const [isSearchEmpty, setIsSearchEmpty] = useState(false);
   const [searchPerformed, setSearchPerformed] = useState(false);
-  // const [categories, setCategories] = useState([]);
   const [displayedMealPlan, setDisplayedMealPlan] = useState([]);
   const [resultsCount, setResultsCount] = useState(0);
-  // const [isLoading, setIsLoading] = useState(false);
 
   // Additional state to track if search button has been clicked
   const [searchButtonClicked, setSearchButtonClicked] = useState(false);
@@ -146,9 +113,6 @@ const MealPlanPage = () => {
       return new Date(mealPlan.createdDT || mealPlan.lastUpdatedDT);
     };
 
-    // let sortedMealPlan = [...filteredMealPlans];
-    // Sorting
-
     // Sorting
     switch (sortOption) {
       case "LATEST":
@@ -167,52 +131,13 @@ const MealPlanPage = () => {
       case "ALPHABETICAL_ZA":
         sortedMealPlan.sort((a, b) => b.title.localeCompare(a.title));
         break;
-      // case "HIGHEST_RATINGS":
-      //   sortedMealPlan.sort((a, b) => {
-      //     const ratingDiff =
-      //       (b.average?.averageRatings || 0) - (a.average?.averageRatings || 0);
-      //     if (ratingDiff !== 0) return ratingDiff;
-      //     // Use getDateForComparison for tiebreaker date comparison
-      //     return getDateForComparison(b) - getDateForComparison(a); // Latest date first if tie
-      //   });
-      //   break;
     }
-
-    // switch (sortOption) {
-    //   case "LATEST":
-    //     sortedMealPlan.sort(
-    //       (a, b) => new Date(b.createdDT) - new Date(a.createdDT)
-    //     );
-    //     break;
-    //   case "OLDEST":
-    //     sortedMealPlan.sort(
-    //       (a, b) => new Date(a.createdDT) - new Date(b.createdDT)
-    //     );
-    //     break;
-    //   case "ALPHABETICAL_AZ":
-    //     sortedMealPlan.sort((a, b) => a.title.localeCompare(b.title));
-    //     break;
-    //   case "ALPHABETICAL_ZA":
-    //     sortedMealPlan.sort((a, b) => b.title.localeCompare(a.title));
-    //     break;
-    //   case "HIGHEST_RATINGS":
-    //     sortedMealPlan.sort((a, b) => {
-    //       const ratingDiff =
-    //         (b.average?.averageRatings || 0) - (a.average?.averageRatings || 0);
-    //       if (ratingDiff !== 0) return ratingDiff;
-    //       return new Date(b.createdDT) - new Date(a.createdDT); // Latest date first if tie
-    //     });
-    //     break;
-    // }
-
-    console.log("Filtered meal plans:", filteredMealPlans);
 
     setDisplayedMealPlan(sortedMealPlan);
     setIsSearchEmpty(sortedMealPlan.length === 0);
 
     // Reset searchButtonClicked when searchTerm changes
     setSearchButtonClicked(false);
-    console.log("Displayed meal plans:", displayedMealPlan);
   }, [searchTerm, categoryFilter, AllMealPlan, sortOption]);
 
   const handleSearchClick = async () => {
@@ -230,9 +155,6 @@ const MealPlanPage = () => {
 
       // Sort the results
       let sortedResults = [...filteredMealPlans];
-
-      // Sort the results
-      //  let sortedResults = [...filteredResultsWithAverage];
 
       // Helper function to get the date for comparison
       const getDateForComparison = (mealPlan) => {
@@ -258,16 +180,6 @@ const MealPlanPage = () => {
         case "ALPHABETICAL_ZA":
           sortedResults.sort((a, b) => b.title.localeCompare(a.title));
           break;
-        // case "HIGHEST_RATINGS":
-        //   sortedResults.sort((a, b) => {
-        //     const ratingDiff =
-        //       (b.average?.averageRatings || 0) -
-        //       (a.average?.averageRatings || 0);
-        //     if (ratingDiff !== 0) return ratingDiff;
-        //     // Use getDateForComparison for tiebreaker date comparison
-        //     return getDateForComparison(b) - getDateForComparison(a); // Latest date first if tie
-        //   });
-        //   break;
       }
 
       setDisplayedMealPlan(sortedResults);
@@ -286,14 +198,6 @@ const MealPlanPage = () => {
         let filteredResults = response.data.filter(
           (mealPlan) => mealPlan.active === true
         );
-
-        // Fetch average ratings for each meal plans
-        // let filteredResultsWithAverage = await Promise.all(
-        //   filteredResults.map(async (mealPlan) => {
-        //     const average = await fetchMealPlanAverage(mealPlan.id);
-        //     return { ...mealPlan, average }; // Augment each meal plans with its average
-        //   })
-        // );
 
         if (categoryFilter) {
           filteredResults = filteredResults.filter(
@@ -340,7 +244,6 @@ const MealPlanPage = () => {
             });
             break;
         }
-        console.log("Sorted results:", sortedResults);
 
         if (sortedResults.length > 0) {
           setDisplayedMealPlan(sortedResults);
@@ -428,13 +331,6 @@ const MealPlanPage = () => {
       }}
       onClick={() => handleViewMealPlan(post.id)}
     >
-      {/* <img
-        src={post.img}
-        alt={post.img_title}
-        className="w-full object-cover rounded-sm"
-        style={{ height: "192px" }}
-      /> */}
-
       {post?.imgBlob ? (
         // If imgBlob is available, display image from blob
         <img
@@ -476,43 +372,10 @@ const MealPlanPage = () => {
               {capitalizeFirstLetter(post?.publisher) || "Not Specified"}
             </span>
           </p>
-          {/* <p className="text-gray-700 text-sm font-semibold">
-            {renderStarsAndCount(post)}
-          </p> */}
         </div>
-
-        {/* <div className="flex items-center justify-center">
-          <p className="text-gray-700 text-sm font-semibold">
-            Date:
-            <span>{new Date(post.createdDT).toLocaleDateString()}</span>
-          </p>
-        </div>
-
-       
-        <div className="flex items-center justify-center">
-          <p className="text-gray-700 text-sm font-semibold">
-            Category:{" "}
-            <span className="text-orange-600 font-semibold tracking-tight">
-              {post.healthGoal.subcategoryName || "Not Specified"}
-            </span>
-          </p>
-        </div> */}
       </div>
     </div>
   );
-
-  // // Get the latest 3 meal plan
-  // const latestMealPlan = [...AllMealPlan]
-  //   .sort((a, b) => new Date(b.createdDT) - new Date(a.createdDT))
-  //   .slice(0, 3);
-
-  // // Get the other meal plans that are not the latest 3
-  // const otherMealPlan = AllMealPlan.filter(
-  //   (mealPlan) =>
-  //     !latestMealPlan.find(
-  //       (latestMealPlan) => latestMealPlan.id === mealPlan.id
-  //     )
-  // );
 
   // Helper function to get the date for comparison
   const getDateForComparison = (mealPlan) => {

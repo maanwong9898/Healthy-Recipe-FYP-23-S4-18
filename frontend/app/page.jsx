@@ -15,7 +15,6 @@ import SecureStorage from "react-secure-storage";
 // fetch most popular educational contents
 const fetchMostPopularEduContent = async () => {
   try {
-    console.log("Fetching most popular educational contents...");
     const response = await axiosInterceptorInstance.get(
       "/landingPage/getMostPopularEducationalContents"
     );
@@ -27,35 +26,9 @@ const fetchMostPopularEduContent = async () => {
   }
 };
 
-// Fetch average rating for each single educational content
-// const fetchAvgRatingForEduContent = async (educationalContentId) => {
-//   try {
-//     console.log(
-//       "Fetching average rating for each single educational content..."
-//     );
-//     const response = await axiosInterceptorInstance.get(
-//       `/educationalContent/getAverage/${educationalContentId}`
-//     );
-//     console.log(
-//       "Average rating for Educational Content",
-//       educationalContentId,
-//       "is:",
-//       response.data
-//     );
-//     return response.data;
-//   } catch (error) {
-//     console.log(
-//       "Failed to fetch average rating for each single educational content: ",
-//       error
-//     );
-//     throw error;
-//   }
-// };
-
 // Fetch most popular blog posts
 const fetchMostPopularBlogPosts = async () => {
   try {
-    console.log("Fetching most popular blog posts...");
     const response = await axiosInterceptorInstance.get(
       "/landingPage/getMostPopularBlogs"
     );
@@ -67,34 +40,9 @@ const fetchMostPopularBlogPosts = async () => {
   }
 };
 
-// Fetch average rating for each single blog post
-// const fetchAverageRatingForBlogPost = async (blogPostId) => {
-//   try {
-//     console.log("Fetching average rating for each single blog post...");
-//     const response = await axiosInterceptorInstance.get(
-//       `/blog/getAverage/${blogPostId}`
-//     );
-
-//     console.log(
-//       "Average rating for Blog Post",
-//       blogPostId,
-//       "is:",
-//       response.data
-//     );
-//     return response.data;
-//   } catch (error) {
-//     console.log(
-//       "Failed to fetch average rating for each single blog post: ",
-//       error
-//     );
-//     throw error;
-//   }
-// };
-
 // Fetch most popular Recipes
 const fetchMostPopularRecipes = async () => {
   try {
-    console.log("Fetching most popular recipes...");
     const response = await axiosInterceptorInstance.get(
       "/landingPage/getMostPopularRecipes"
     );
@@ -106,29 +54,9 @@ const fetchMostPopularRecipes = async () => {
   }
 };
 
-// Fetch average rating for each single recipe
-// const fetchAvgRatingForRecipe = async (recipeId) => {
-//   try {
-//     console.log("Fetching average rating for each single recipe...");
-//     const response = await axiosInterceptorInstance.get(
-//       `/recipe/getAverage/${recipeId}`
-//     );
-
-//     console.log("Average rating for recipe", recipeId, "is:", response.data);
-//     return response.data;
-//   } catch (error) {
-//     console.log(
-//       "Failed to fetch average rating for each single recipe: ",
-//       error
-//     );
-//     throw error;
-//   }
-// };
-
 // Fetch most popular meal plans
 const fetchMostPopularMealPlans = async () => {
   try {
-    console.log("Fetching most popular meal plans...");
     const response = await axiosInterceptorInstance.get(
       "/landingPage/getPopularMealPlans"
     );
@@ -139,27 +67,6 @@ const fetchMostPopularMealPlans = async () => {
     throw error;
   }
 };
-
-// const fetchMealPlanAverage = async (mealPlanId) => {
-//   try {
-//     const response = await axiosInterceptorInstance.get(
-//       `/mealPlan/getAverage/${mealPlanId}`
-//     );
-//     console.log(
-//       "Average rating for meal plan",
-//       mealPlanId,
-//       "is:",
-//       response.data
-//     );
-//     return response.data; // Assuming this returns the average data for the meal plan
-//   } catch (error) {
-//     console.error(
-//       `Failed to fetch average for meal plan ${mealPlanId}:`,
-//       error
-//     );
-//     return null; // or handle the error as you see fit
-//   }
-// };
 
 const Home = () => {
   const router = useRouter();
@@ -188,12 +95,6 @@ const Home = () => {
       const getMostPopularRecipe = async () => {
         try {
           const recipeData = await fetchMostPopularRecipes();
-          // const recipetWithAvgRating = await Promise.all(
-          //   recipeData.map(async (recipe) => {
-          //     const average = await fetchAvgRatingForRecipe(recipe.id);
-          //     return { ...recipe, average };
-          //   })
-          // );
           setMostPopularRecipes(recipeData);
         } catch (error) {
           console.log("Failed to fetch most popular recipes: ", error);
@@ -203,13 +104,6 @@ const Home = () => {
       const getMostPopularEduContents = async () => {
         try {
           const eduContentData = await fetchMostPopularEduContent();
-
-          // const eduContentWithAvgRating = await Promise.all(
-          //   eduContentData.map(async (eduContent) => {
-          //     const average = await fetchAvgRatingForEduContent(eduContent.id);
-          //     return { ...eduContent, average };
-          //   })
-          // );
           setMostPopularEduContents(eduContentData);
         } catch (error) {
           console.log("Failed to fetch educational contents: ", error);
@@ -219,13 +113,6 @@ const Home = () => {
       const getMostPopularBlogs = async () => {
         try {
           const blogPostData = await fetchMostPopularBlogPosts();
-
-          // const blogPostsWithAvgRating = await Promise.all(
-          //   blogPostData.map(async (blogPost) => {
-          //     const average = await fetchAverageRatingForBlogPost(blogPost.id);
-          //     return { ...blogPost, average };
-          //   })
-          // );
           setMostPopularBlogPosts(blogPostData);
         } catch (error) {
           console.log("Failed to fetch blog posts: ", error);
@@ -235,13 +122,6 @@ const Home = () => {
       const getMostPopularMealPlans = async () => {
         try {
           const mealPlanData = await fetchMostPopularMealPlans();
-          // const mealPlansWithAvgRating = await Promise.all(
-          //   mealPlanData.map(async (mealPlan) => {
-          //     const average = await fetchMealPlanAverage(mealPlan.id);
-          //     return { ...mealPlan, average };
-          //   })
-          // );
-
           setMostPopularMealPlans(mealPlanData);
         } catch (error) {
           console.log("Failed to fetch most popular meal plans: ", error);
@@ -281,45 +161,7 @@ const Home = () => {
     return "";
   };
 
-  // Function to render stars for ratings display
-  const renderStarsAndCount = (post) => {
-    if (
-      !post.average ||
-      !post.average.averageRatings ||
-      !post.average.totalNumber
-    ) {
-      return <div>No ratings available</div>;
-    }
-
-    const { averageRatings, totalNumber } = post.average;
-
-    let stars = [];
-    // Render stars based on average rating
-    for (let i = 0; i < 5; i++) {
-      stars.push(
-        <span
-          key={i}
-          className={i < averageRatings ? "text-yellow-300" : "text-gray-300"}
-        >
-          ★
-        </span>
-      );
-    }
-    // Render total count of ratings
-    return (
-      <div className="flex items-center">
-        <span className="mr-1">{stars}</span>
-        <span>({totalNumber} ratings)</span>
-      </div>
-    );
-  };
-
   // RECIPE RELATED
-  // const latestRecipes = [...AllRecipes]
-  //   .sort((a, b) => new Date(b.createdDateTime) - new Date(a.createdDateTime))
-  //   .slice(0, 3);
-
-  // const recipeLimit = [...mostPopularRecipes].slice(0, 3);
 
   // Redirect to the specific recipe page
   const handleViewRecipes = (id) => {
@@ -343,14 +185,6 @@ const Home = () => {
       }}
       onClick={() => handleViewRecipes(post.id)}
     >
-      {/* Image */}
-      {/* <img
-        src={post.img}
-        alt={post.img_title}
-        className="w-full object-cover rounded-sm text-white text-center"
-        style={{ height: "192px" }}
-      /> */}
-
       {post?.imgBlob ? (
         // If imgBlob is available, display image from blob
         <img
@@ -388,9 +222,6 @@ const Home = () => {
               {capitalizeFirstLetter(post?.publisher) || "Not Specified"}
             </span>
           </p>
-          {/* <p className="text-gray-700 text-sm font-semibold">
-            {renderStarsAndCount(post)}
-          </p> */}
         </div>
       </div>
     </div>
@@ -399,12 +230,6 @@ const Home = () => {
   // END OF RECIPE RELATED
 
   // BLOG POSTS RELATED
-  // const latestBlogs = [...AllBusinessBlogPosts]
-  //   .sort((a, b) => new Date(b.createdDateTime) - new Date(a.createdDateTime))
-  //   .slice(0, 3);
-
-  // const blogPostLimit = [...mostPopularBlogPosts].slice(0, 3);
-
   const handleViewBlogPost = (id) => {
     // Make sure the Blog title
     console.log(`Blog Title: ${id}`);
@@ -426,13 +251,6 @@ const Home = () => {
       }}
       onClick={() => handleViewBlogPost(post.id)}
     >
-      {/* Image */}
-      {/* <img
-        src={post.img}
-        alt={post.img_title}
-        className="w-full object-cover rounded-sm text-white text-center"
-        style={{ height: "192px" }}
-      /> */}
       {post?.imgBlob ? ( // If imgBlob is available, display image from blob
         <img
           className="w-full object-cover rounded-sm text-white text-center"
@@ -471,9 +289,6 @@ const Home = () => {
               {capitalizeFirstLetter(post?.publisher) || "Not Specified"}
             </span>
           </p>
-          {/* <p className="text-gray-700 text-sm font-semibold">
-            {renderStarsAndCount(post)}
-          </p> */}
         </div>
       </div>
     </div>
@@ -481,12 +296,6 @@ const Home = () => {
   // END OF BLOG POST RELATED
 
   // MEAL PLAN RELATED
-  // const latestMealPlans = [...AllMealPlans]
-  //   .sort((a, b) => new Date(b.createdDateTime) - new Date(a.createdDateTime))
-  //   .slice(0, 3);
-
-  // const mealPlanLimit = [...mostPopularMealPlans].slice(0, 3);
-
   const handleViewMealPlan = (id) => {
     // Make sure the Meal Plan title
     console.log(`Meal Plan Title: ${id}`);
@@ -508,14 +317,6 @@ const Home = () => {
       }}
       onClick={() => handleViewMealPlan(post.id)}
     >
-      {/* Image */}
-      {/* <img
-        src={post.img}
-        alt={post.img_title}
-        className="w-full object-cover rounded-sm text-white text-center"
-        style={{ height: "192px" }}
-      /> */}
-
       {post?.imgBlob ? (
         // If imgBlob is available, display image from blob
         <img
@@ -554,9 +355,6 @@ const Home = () => {
               {capitalizeFirstLetter(post?.publisher) || "Not Specified"}
             </span>
           </p>
-          {/* <p className="text-gray-700 text-sm font-semibold">
-            {renderStarsAndCount(post)}
-          </p> */}
         </div>
       </div>
     </div>
@@ -564,11 +362,6 @@ const Home = () => {
   // END OF MEAL PLAN RELATED
 
   // EDUCATIONAL CONTENTS RELATED
-  // const latestEducationalContents = [...AllEducationalContents]
-  //   .sort((a, b) => new Date(b.createdDateTime) - new Date(a.createdDateTime))
-  //   .slice(0, 3);
-
-  //const educationalContentLimit = [...mostPopularEduContents].slice(0, 3);
 
   const handleViewEducationalContent = (id) => {
     // Make sure the Educational Content title
@@ -590,13 +383,6 @@ const Home = () => {
       }}
       onClick={() => handleViewEducationalContent(post.id)}
     >
-      {/* <img
-        src={post.img}
-        alt={post.img_title}
-        className="w-full object-cover rounded-sm text-white text-center"
-        style={{ height: "192px" }}
-      /> */}
-
       {post?.imgBlob ? (
         // If imgBlob is available, display image from blob
         <img
@@ -635,9 +421,6 @@ const Home = () => {
               {capitalizeFirstLetter(post?.publisher) || "Not Specified"}
             </span>
           </p>
-          {/* <p className="text-gray-700 text-sm font-semibold">
-            {renderStarsAndCount(post)}
-          </p> */}
         </div>
       </div>
     </div>
@@ -652,7 +435,7 @@ const Home = () => {
       const response = await axiosInterceptorInstance.get(
         "/landingPage/getRoleCount"
       );
-      console.log("User Role Counts: ", response.data);
+      //console.log("User Role Counts: ", response.data);
       setTotalUserCount(response.data);
     } catch (error) {
       console.log("Failed to fetch user role counts: ", error);

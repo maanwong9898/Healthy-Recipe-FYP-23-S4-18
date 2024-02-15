@@ -15,7 +15,6 @@ import SecureStorage from "react-secure-storage";
 const sortOptions = {
   LATEST: { key: "LATEST", label: "By Latest" },
   OLDEST: { key: "OLDEST", label: "By Oldest" },
-  // HIGHEST_RATINGS: { key: "HIGHEST_RATINGS", label: "Highest Ratings" },
   ALPHABETICAL_AZ: { key: "ALPHABETICAL_AZ", label: "Alphabetically (A to Z)" },
   ALPHABETICAL_ZA: { key: "ALPHABETICAL_ZA", label: "Alphabetically (Z to A)" },
 };
@@ -25,14 +24,6 @@ const fetchBlogPosts = async () => {
   try {
     console.log("Fetching blog posts...");
     const response = await axiosInterceptorInstance.get("/blog/get");
-    console.log("All blogs:", response.data);
-    // Fetch average ratings for each blog post
-    // const blogsWithAverage = await Promise.all(
-    //   response.data.map(async (blog) => {
-    //     const average = await fetchBlogAverage(blog.id);
-    //     return { ...blog, average };
-    //   })
-    // );
 
     // Filter active blog posts
     const filteredData = response.data.filter((post) => post.active === true);
@@ -44,19 +35,7 @@ const fetchBlogPosts = async () => {
   }
 };
 
-// const fetchBlogAverage = async (blogId) => {
-//   try {
-//     const response = await axiosInterceptorInstance.get(
-//       `/blog/getAverage/${blogId}`
-//     );
-//     console.log("Average rating for blog post", blogId, "is:", response.data);
-//     return response.data; // Assuming this returns the average data for the blog
-//   } catch (error) {
-//     console.error(`Failed to fetch average for blog post ${blogId}:`, error);
-//     return null; // or handle the error as you see fit
-//   }
-// };
-
+// Fetch all cetegories
 const fetchCategories = async () => {
   try {
     const response = await axiosInterceptorInstance.get(
@@ -71,17 +50,13 @@ const fetchCategories = async () => {
 const BusinessBlogPostsPage = () => {
   const router = useRouter();
   const [categoryFilter, setCategoryFilter] = useState("");
-  // const [AllBusinessBlogPosts, setAllBusinessBlogPosts] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [sortOption, setSortOption] = useState("");
   const [isSearchEmpty, setIsSearchEmpty] = useState(false);
   const [searchPerformed, setSearchPerformed] = useState(false);
-  // const [categories, setCategories] = useState([]);
   const [displayedBlogPosts, setDisplayedBlogPosts] = useState([]);
   const [resultsCount, setResultsCount] = useState(0);
-  // Additional state to track if search button has been clicked
   const [searchButtonClicked, setSearchButtonClicked] = useState(false);
-  // const [isLoading, setIsLoading] = useState(false);
 
   // Fetch blog posts
   const {
@@ -154,17 +129,8 @@ const BusinessBlogPostsPage = () => {
       case "ALPHABETICAL_ZA":
         sortedPosts.sort((a, b) => b.title.localeCompare(a.title));
         break;
-      // case "HIGHEST_RATINGS":
-      //   sortedPosts.sort((a, b) => {
-      //     const ratingDiff =
-      //       (b.average?.averageRatings || 0) - (a.average?.averageRatings || 0);
-      //     if (ratingDiff !== 0) return ratingDiff;
-      //     return new Date(b.createdDateTime) - new Date(a.createdDateTime); // Latest date first if tie
-      //   });
-      //   break;
     }
 
-    console.log("Filtered posts:", filteredPosts);
     setDisplayedBlogPosts(sortedPosts);
     setIsSearchEmpty(sortedPosts.length === 0);
     // Reset searchButtonClicked when searchTerm changes
@@ -203,15 +169,6 @@ const BusinessBlogPostsPage = () => {
         case "ALPHABETICAL_ZA":
           sortedResults.sort((a, b) => b.title.localeCompare(a.title));
           break;
-        // case "HIGHEST_RATINGS":
-        //   sortedResults.sort((a, b) => {
-        //     const ratingDiff =
-        //       (b.average?.averageRatings || 0) -
-        //       (a.average?.averageRatings || 0);
-        //     if (ratingDiff !== 0) return ratingDiff;
-        //     return new Date(b.createdDateTime) - new Date(a.createdDateTime); // Latest date first if tie
-        //   });
-        //   break;
       }
 
       setDisplayedBlogPosts(sortedResults);
@@ -230,14 +187,6 @@ const BusinessBlogPostsPage = () => {
         let filteredResults = response.data.filter(
           (post) => post.active === true
         );
-
-        // Fetch average ratings for each blog post
-        // let filteredResultsWithAverage = await Promise.all(
-        //   filteredResults.map(async (post) => {
-        //     const average = await fetchBlogAverage(post.id);
-        //     return { ...post, average }; // Augment each blog post with its average
-        //   })
-        // );
 
         if (categoryFilter) {
           filteredResults = filteredResults.filter(
@@ -266,18 +215,7 @@ const BusinessBlogPostsPage = () => {
           case "ALPHABETICAL_ZA":
             sortedResults.sort((a, b) => b.title.localeCompare(a.title));
             break;
-          // case "HIGHEST_RATINGS":
-          //   sortedResults.sort((a, b) => {
-          //     const ratingDiff =
-          //       (b.average?.averageRatings || 0) -
-          //       (a.average?.averageRatings || 0);
-          //     if (ratingDiff !== 0) return ratingDiff;
-          //     return new Date(b.createdDateTime) - new Date(a.createdDateTime); // Latest date first if tie
-          //   });
-          //   break;
         }
-
-        console.log("Sorted results:", sortedResults);
 
         if (sortedResults.length > 0) {
           setDisplayedBlogPosts(sortedResults);
@@ -300,39 +238,7 @@ const BusinessBlogPostsPage = () => {
     return string.charAt(0).toUpperCase() + string.slice(1);
   }
 
-  // Render stars and count
-  const renderStarsAndCount = (post) => {
-    if (
-      !post.average ||
-      !post.average.averageRatings ||
-      !post.average.totalNumber
-    ) {
-      return <div>No ratings available</div>;
-    } else {
-      const { averageRatings, totalNumber } = post.average;
-
-      let stars = [];
-      // Render stars based on average rating
-      for (let i = 0; i < 5; i++) {
-        stars.push(
-          <span
-            key={i}
-            className={i < averageRatings ? "text-yellow-300" : "text-gray-300"}
-          >
-            ★
-          </span>
-        );
-      }
-      // Render total count of ratings
-      return (
-        <div className="flex items-center">
-          <span className="mr-1">{stars}</span>
-          <span>({totalNumber} ratings)</span>
-        </div>
-      );
-    }
-  };
-
+  // Redirect to specific blog page
   const handleViewBlogPost = (id) => {
     console.log(`Blog Title: ${id}`);
     let routePath = `/businessBlogPost/viewBusinessBlogPost/${id}`;
@@ -362,13 +268,6 @@ const BusinessBlogPostsPage = () => {
       }}
       onClick={() => handleViewBlogPost(post.id)}
     >
-      {/* <img
-        src={post.img}
-        alt={post.imgTitle}
-        className="w-full object-cover rounded-sm text-white text-center"
-        style={{ height: "192px" }}
-      /> */}
-
       {post?.imgBlob ? (
         // If imgBlob is available, display image from blob
         <img
@@ -408,26 +307,7 @@ const BusinessBlogPostsPage = () => {
               {capitalizeFirstLetter(post?.publisher) || "Not Specified"}
             </span>
           </p>
-          {/* <p className="text-gray-700 text-sm font-semibold">
-            {renderStarsAndCount(post)}
-          </p> */}
         </div>
-
-        {/* <div className="flex items-center justify-center">
-          <p className="text-gray-700 text-sm font-semibold">
-            Date:
-            <span>{new Date(post.createdDateTime).toLocaleDateString()}</span>
-          </p>
-        </div>
-
-        <div className="flex items-center justify-center">
-          <p className="text-gray-700 text-sm font-semibold">
-            Category:{" "}
-            <span className="text-orange-600 font-semibold tracking-tight">
-              {post.blogType.subcategoryName || "Not Specified"}
-            </span>
-          </p>
-        </div> */}
       </div>
     </div>
   );
@@ -515,7 +395,7 @@ const BusinessBlogPostsPage = () => {
                 ))}
               </select>
             </div>
-            {/* Filter Section - Adjusted to align to the right */}
+            {/* Filter Section  */}
             <div className="flex flex-col lg:flex-row lg:items-center mt-4 lg:mt-0">
               <label
                 htmlFor="categoryFilter"

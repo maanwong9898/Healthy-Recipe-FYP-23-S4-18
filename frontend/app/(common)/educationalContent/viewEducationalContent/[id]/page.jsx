@@ -8,7 +8,6 @@ import HomeNavbar from "@/app/components/navigation/homeNavBar/index.jsx";
 import Footer from "@/app/components/footer/index.jsx";
 import SecureStorage from "react-secure-storage";
 
-// this is to view particular educational content from landing page
 // router path: /educationalContent/viewEducationalContent/[id]
 
 const fetchEduContentById = async (postId) => {
@@ -19,7 +18,7 @@ const fetchEduContentById = async (postId) => {
     const response = await axiosInterceptorInstance.get(
       `/educationalContent/get/${postId}`
     );
-    console.log("Fetched educational content is:", response.data);
+    // console.log("Fetched educational content is:", response.data);
 
     if (!response.data) {
       console.error(`Educational Content with ID ${postId} not found`);
@@ -77,7 +76,7 @@ const ViewEducationalContent = ({ params }) => {
       const response = await axiosInterceptorInstance.get(
         `/educationalContent/rating/getEducationalContent?educationalContentId=${educationalContentId}`
       );
-      console.log("All ratings response data:", response.data);
+      // console.log("All ratings response data:", response.data);
 
       // Assuming response.data is the array of reviews for the given eduContentId
       setReviewsAndRatings(response.data);
@@ -106,11 +105,6 @@ const ViewEducationalContent = ({ params }) => {
     }
     return stars;
   };
-
-  // Check if the educational content has been fetched yet
-  // if (!eduContent) {
-  //   return <div className="text-xl">Please wait. It'll just take a moment</div>;
-  // }
 
   const getImageUrlFromBlob = (imgBlob) => {
     // Check if imgBlob is truthy

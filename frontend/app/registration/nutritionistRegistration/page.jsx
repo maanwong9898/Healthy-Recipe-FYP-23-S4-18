@@ -16,11 +16,8 @@ const NutritionistRegistration = () => {
   const [companyName, setCompanyName] = useState("");
   const [companyAddress, setCompanyAddress] = useState("");
   const [postalCode, setPostalCode] = useState("");
-  // const [nutriCert, setNutriCert] = useState("");
   const [error, setError] = useState("");
   const [success, setSuccess] = useState(false);
-  const [filePreviews, setFilePreviews] = useState([]);
-  const [imageFile, setImageFile] = useState(null);
   const [newImageBlob, setNewImageBlob] = useState(null); // New uploaded image
   const emailValidation = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
@@ -59,15 +56,6 @@ const NutritionistRegistration = () => {
       setError("Please provide both company address and postal code.");
       return;
     }
-    // } else {
-    //   setSuccess(
-    //     "Account created successfully! You will be notified once your account has been verified."
-    //   );
-    // }
-    // else if (postalCode.length !== 6) {
-    //   setError("Please enter a valid postal code.");
-    //   return;
-    // }
 
     console.log("Creating account...");
     const nutritionistData = {
@@ -80,7 +68,6 @@ const NutritionistRegistration = () => {
       contactNumber: contactNumber,
       postalCode: postalCode,
       imgBlob: newImageBlob, // Use updated image blob
-      // nutriCert: nutriCert,
     };
     console.log(nutritionistData);
 
@@ -114,7 +101,6 @@ const NutritionistRegistration = () => {
     } catch (error) {
       setSuccess(false); // Ensure success is false on error
       console.error("Error creating nutritionist account:", error);
-      //setError(error.message || "Failed to create account.");
     }
   };
 
@@ -207,11 +193,7 @@ const NutritionistRegistration = () => {
                 <h1 className="text-3xl md:text-4xl font-semibold mb-4">
                   Create an Account
                 </h1>
-                <form
-                // action="https://localhost:8080/register/upload"
-                // method="POST"
-                // encType="multipart/formdata"
-                >
+                <form>
                   {/* Name and Username */}
                   <div className="grid gap-3 mt-2 sm:grid-cols-2">
                     <div className="flex flex-col mb-3.5">

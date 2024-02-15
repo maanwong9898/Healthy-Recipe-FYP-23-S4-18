@@ -30,7 +30,6 @@ const fetchMealPlanById = async (mealPlanId) => {
     const response = await axiosInterceptorInstance.get(
       `/mealPlan/get/${mealPlanId}`
     );
-    console.log("Fetched meal plan data is:", response.data);
 
     if (!response.data) {
       console.error(`Meal plan with ID ${mealPlanId} not found`);
@@ -39,7 +38,6 @@ const fetchMealPlanById = async (mealPlanId) => {
 
     // Assuming the response contains the meal plan directly
     const mealPlan = response.data;
-
     return mealPlan;
   } catch (error) {
     console.error("Failed to fetch meal plan:", error);
@@ -75,11 +73,7 @@ const RecipeCard = ({ recipe, onViewRecipe }) => {
           alt={"Image of " + recipe.title}
         />
       )}
-      {/* <img
-        className="w-full h-48 object-cover rounded-sm text-white text-center"
-        src={recipe.img}
-        alt={"Image of " + recipe.title}
-      /> */}
+
       <div className="flex-grow flex flex-col justify-between p-4 bg-white">
         {/* Title */}
         <div className="grid grid-rows-3 items-center">
@@ -135,7 +129,6 @@ const ViewMealPlan = ({ params }) => {
   // Add additional state for carousel index
   const [currentRecipeIndex, setCurrentRecipeIndex] = useState(0);
   const [isLoading, setIsLoading] = useState(true);
-  const [isChecking, setIsChecking] = useState(true);
 
   useEffect(() => {
     if (SecureStorage.getItem("token")) {
@@ -171,7 +164,6 @@ const ViewMealPlan = ({ params }) => {
       const response = await axiosInterceptorInstance.get(
         `/mealPlan/rating/getMealPlan?mealPlanId=${mealPlanId}`
       );
-      console.log("All ratings response data:", response.data);
 
       // Assuming response.data is the array of reviews for the given meal plan id
       setReviewsAndRatings(response.data);
@@ -193,10 +185,6 @@ const ViewMealPlan = ({ params }) => {
 
     router.push(routePath);
   };
-
-  // if (!mealPlan) {
-  //   return <div>Loading...</div>;
-  // }
 
   // Function to render stars based on rating
   const renderStars = (rating) => {

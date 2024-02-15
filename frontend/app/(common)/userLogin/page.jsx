@@ -8,7 +8,6 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
 import axiosInterceptorInstance from "../../axiosInterceptorInstance.js";
 import { jwtDecode } from "jwt-decode";
-import Footer from "../../components/footer";
 import SecureStorage from "react-secure-storage";
 
 // router path: /userLogin
@@ -60,9 +59,6 @@ const userLogin = () => {
       // Decode the token
       const decodedToken = jwtDecode(token);
 
-      // check what payload is in the token
-      console.log(decodedToken);
-
       // Convert UNIX epoch times to human-readable UTC dates
       const iatUtc = new Date(decodedToken.iat * 1000).toUTCString();
       const expUtc = new Date(decodedToken.exp * 1000).toUTCString();
@@ -78,19 +74,6 @@ const userLogin = () => {
       SecureStorage.setItem("role", decodedToken.role);
       SecureStorage.setItem("userId", decodedToken.id);
       SecureStorage.setItem("token_expiration", expDate.toString()); // Store as string
-
-      // Set up the authorization header with the bearer token
-      // const config = {
-      //   headers: { Authorization: `Bearer ${token}` },
-      // };
-
-      // // Make the GET request to the particular role endpoint (testing purposes)
-      // const response = await axiosInterceptorInstance.get(
-      //   "/test/admin",
-      //   config
-      // );
-
-      // console.log("Admin data:", response.data);
 
       // Handle the response data as needed
     } catch (error) {
@@ -113,9 +96,6 @@ const userLogin = () => {
 
       SecureStorage.setItem("token", token);
 
-      console.log("the current token ", SecureStorage.getItem("token"));
-
-      console.log("Login details :", response.data);
       console.log("the error message : ", response.data.error);
 
       // set the error message to the state
@@ -168,6 +148,7 @@ const userLogin = () => {
               <div className="w-full p-4 md:p-10">
                 <Image
                   src="/logo.png"
+                  alt="logo"
                   width={180}
                   height={180}
                   className="mx-auto mb-3"
@@ -199,8 +180,7 @@ const userLogin = () => {
                       placeholder="Email"
                       value={email}
                       className="pl-12 pr-3 bg-white border border-gray-300 text-gray-900 sm:text-sm rounded-lg p-2.5 w-full"
-                      // className="w-full bg-white py-2 pl-12 pr-3 rounded-full border border-white focus:border-black focus:outline-none focus:ring-1 focus:ring-black"
-                      onChange={(e) => setEmail(e.target.value)} // Assuming you have a setEmail function
+                      onChange={(e) => setEmail(e.target.value)}
                     />
                   </div>
 
@@ -257,36 +237,3 @@ const userLogin = () => {
 };
 
 export default userLogin;
-
-/* 
-    exp : 1706024535
-
-    iat : 1705160535
-    
-    id : "1"
-
-    role : "ADMIN"
-
-    sub  : "1@gmail.com"
-  */
-
-// const payload = JSON.parse(atob(token.split(".")[1])); // Decode base64 payload of the token
-// const currentTime = Date.now() / 1000; // Get current time in seconds
-
-// if (payload.exp < currentTime) {
-//   // Token has expired
-//   // Prompt user to log in again or automatically log out
-//   localStorage.removeItem("token"); // Remove the expired token
-//   // Redirect to login or do a full page refresh to clear app state
-//   window.location.href = "/login";
-// } else if (payload.exp > currentTime) {
-//   // Token is still valid
-//   // check what time is it
-//   console.log("Current time: " + currentTime);
-
-//   // check what time is the token expired
-//   console.log("Token expired at: " + payload.exp);
-
-//   // Do whatever you want with the token
-//   console.log("token is still valid");
-// }

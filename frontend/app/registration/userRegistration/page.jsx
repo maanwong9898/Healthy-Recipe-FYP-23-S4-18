@@ -53,7 +53,6 @@ const userRegistration = () => {
         const response = await axiosInterceptorInstance.get(
           "/category/getAllHealthGoals"
         );
-        console.log("Health Goals Categories Fetched", response.data);
         setHealthGoalsCategory(response.data);
       } catch (error) {
         console.log(error);
@@ -67,7 +66,6 @@ const userRegistration = () => {
         const response = await axiosInterceptorInstance.get(
           "/category/getAllDietaryPreferences"
         );
-        console.log("Dietary Preferences Categories Fetched", response.data);
         setDietaryPreferencesCategory(response.data);
       } catch (error) {
         console.log(error);
@@ -81,7 +79,6 @@ const userRegistration = () => {
         const response = await axiosInterceptorInstance.get(
           "/category/getAllAllergies"
         );
-        console.log("Allergies Categories Fetched", response.data);
         setAllergyCategory(response.data);
       } catch (error) {
         console.log(error);
@@ -139,11 +136,6 @@ const userRegistration = () => {
       setError("Passwords do not match.");
       return;
     }
-    // } else {
-    //   setSuccess(
-    //     "Account Successfully Created! A verification link has been sent to your email address."
-    //   );
-    // }
 
     console.log("Health goal selected:", healthGoals);
     console.log("Dietary preference selected:", dietaryPreference);

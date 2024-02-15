@@ -421,13 +421,13 @@ const ViewMealPlan = ({ params }) => {
                       <img
                         src={getImageUrlFromBlob(mealPlan?.imgBlob)}
                         alt={mealPlan.img_title || "Meal Plan Image"}
-                        className="max-w-full mx-auto mt-8 mb-8 sm:max-w-xl rounded-lg shadow-xl"
+                        className="lg:max-w-4xl max-w-full mx-auto mt-8 mb-8 rounded-lg shadow-xl"
                       />
                     ) : (
                       <img
                         src={mealPlan.img}
                         alt={mealPlan.img_title || "Meal Plan Image"}
-                        className="max-w-full mx-auto mt-8 mb-8 sm:max-w-xl rounded-lg shadow-xl"
+                        className="lg:max-w-4xl max-w-full mx-auto mt-8 mb-8 rounded-lg shadow-xl"
                       />
                     )}
                     {/* Image title */}

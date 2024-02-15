@@ -324,13 +324,13 @@ const ViewMealPlan = ({ params }) => {
                       <img
                         src={getImageUrlFromBlob(mealPlan?.imgBlob)}
                         alt={mealPlan.img_title || "Meal Plan Image"}
-                        className="max-w-full mx-auto mt-8 mb-8 sm:max-w-xl rounded-lg shadow-xl"
+                        className="lg:max-w-4xl max-w-full mx-auto mt-8 mb-8 rounded-lg shadow-xl"
                       />
                     ) : (
                       <img
                         src={mealPlan.img}
                         alt={mealPlan.img_title || "Meal Plan Image"}
-                        className="max-w-full mx-auto mt-8 mb-8 sm:max-w-xl rounded-lg shadow-xl"
+                        className="lg:max-w-4xl max-w-full mx-auto mt-8 mb-8 rounded-lg shadow-xl"
                       />
                     )}
                     {/* Image title */}
@@ -338,7 +338,7 @@ const ViewMealPlan = ({ params }) => {
                       {mealPlan?.imgTitle || "Image Title Not Specified"}
                     </p>
                   </div>
-                  
+
                   {/* Main content */}
                   <section className="main-content mt-10 pl-9 pr-9 mx-auto max-w-screen-xl md:text-xl text-left">
                     <div className="w-full p-2 rounded-lg whitespace-pre-line">

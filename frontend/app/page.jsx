@@ -814,9 +814,10 @@ const Home = () => {
               {/* Mobile View */}
               <div className="bg-white border border-gray-200 rounded-xl shadow lg:hidden">
                 <img
-                  src="/pokeBowl.jpg"
+                  src="/PokeBowl.jpg"
                   alt="Raw Pixel, Designed by Freepik"
                   className="relative w-full h-full object-cover transition-all rounded-ss-xl duration-300 hover:grayscale-0 cursor-pointer"
+                  onClick={() => router.push("/aboutUs")}
                 />
                 <div className="p-5">
                   <h2 className="text-3xl font-semibold text-gray-900 text-center">
@@ -839,7 +840,7 @@ const Home = () => {
               {/* Large Screen View */}
               <div className="relative hidden lg:block">
                 <img
-                  src="/pokeBowl.jpg"
+                  src="/PokeBowl.jpg"
                   alt="Raw Pixel, Designed by Freepik"
                   className="relative w-full h-full object-cover rounded-xl transition-all duration-300 hover:grayscale-0 cursor-pointer"
                   onClick={() => router.push("/aboutUs")}

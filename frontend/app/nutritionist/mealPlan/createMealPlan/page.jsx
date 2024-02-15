@@ -118,7 +118,9 @@ const CreateMealPlan = () => {
         `/recipe/find?keyword=${formattedSearchTerm}`
       );
       let filteredResults = response.data.filter(
-        (recipe) => recipe.active === true
+        (recipe) =>
+          recipe.active === true &&
+          !selectedRecipes.find((r) => r.id === recipe.id)
       );
 
       // Update the map with new recipes without losing previous entries
@@ -519,7 +521,7 @@ const CreateMealPlan = () => {
                             value={searchTerm}
                             onChange={handleSearchChange}
                             placeholder="Search recipes by title..."
-                            className="bg-gray-50 border border-gray-300 text-black sm:text-base rounded-lg block w-full mr-auto p-2.5 pl-10"
+                            className="bg-gray-50 border border-gray-300 text-black sm:text-base rounded-lg block w-full mr-auto pl-10"
                           />
                           {/* Search Icon */}
                           <span className="absolute inset-y-0 left-2 flex items-center">
@@ -527,7 +529,7 @@ const CreateMealPlan = () => {
                           </span>
                           <button
                             onClick={handleSearch}
-                            className="bg-blue-600 hover:bg-blue-700 text-white font-semibold px-4 py-2.5 rounded-full"
+                            className="bg-blue-600 hover:bg-blue-700 text-white font-semibold px-4 rounded-full"
                           >
                             Search
                           </button>
@@ -541,12 +543,8 @@ const CreateMealPlan = () => {
                               value={searchTerm}
                               onChange={handleSearchChange}
                               placeholder="Search recipes by title..."
-                              className="bg-gray-50 border border-gray-300 text-black sm:text-base rounded-lg block w-full mr-auto p-2.5"
+                              className="bg-gray-50 border border-gray-300 text-black sm:text-base rounded-lg block w-full mr-auto"
                             />
-                            {/* Search Icon
-                    <span className="absolute inset-y-0 left-2 flex items-center">
-                      <SearchIcon />
-                    </span> */}
                           </div>
                           <button
                             onClick={handleSearch}
@@ -588,7 +586,9 @@ const CreateMealPlan = () => {
                                       }
                                       className="lg:hidden"
                                     >
-                                      <AddCircleIcon />
+                                      <AddCircleIcon
+                                        style={{ color: "#22c55e" }}
+                                      />
                                     </button>
                                   </li>
                                 ))}
@@ -635,7 +635,9 @@ const CreateMealPlan = () => {
                                   }
                                   className="lg:hidden"
                                 >
-                                  <RemoveCircleIcon />
+                                  <RemoveCircleIcon
+                                    style={{ color: "#ef4444" }}
+                                  />
                                 </button>
                               </li>
                             ))}
@@ -710,12 +712,12 @@ const CreateMealPlan = () => {
 
                       {/* ERROR MESSAGE */}
                       {error && (
-                        <p className="text-red-500 font-semibold text-base">
+                        <p className="text-red-500 text-base font-medium">
                           Failed to create meal plan: {error}
                         </p>
                       )}
                       {success && (
-                        <p className="text-green-500 font-semibold text-base">
+                        <p className="text-green-500 font-medium text-base">
                           Meal plan was created successfully!
                         </p>
                       )}

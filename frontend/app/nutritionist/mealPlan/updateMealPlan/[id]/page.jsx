@@ -428,6 +428,16 @@ const UpdateMealPlan = ({ params }) => {
     setError("");
   };
 
+  const getImageUrlFromBlob = (imgBlob) => {
+    // Check if imgBlob is truthy
+    if (imgBlob) {
+      // Return the image URL created from the blob
+      return `data:image/jpeg;base64,${imgBlob}`;
+    }
+    // Return an empty string or a placeholder image URL if imgBlob is not available
+    return "";
+  };
+
   return (
     <div className="min-h-screen flex flex-col justify-center px-6 lg:px-8">
       {isLoading && isChecking ? (
@@ -581,7 +591,7 @@ const UpdateMealPlan = ({ params }) => {
                             value={searchTerm}
                             onChange={handleSearchChange}
                             placeholder="Search recipes by title..."
-                            className="bg-gray-50 border border-gray-300 text-black sm:text-base rounded-lg block w-full mr-auto p-2.5 pl-10"
+                            className="bg-gray-50 border border-gray-300 text-black sm:text-base rounded-lg block w-full mr-auto pl-10"
                           />
                           {/* Search Icon */}
                           <span className="absolute inset-y-0 left-2 flex items-center">
@@ -589,7 +599,7 @@ const UpdateMealPlan = ({ params }) => {
                           </span>
                           <button
                             onClick={handleSearch}
-                            className="bg-blue-600 hover:bg-blue-700 text-white font-semibold px-4 py-2.5 rounded-full"
+                            className="bg-blue-600 hover:bg-blue-700 text-white font-semibold px-4 rounded-full"
                           >
                             Search
                           </button>
@@ -603,13 +613,9 @@ const UpdateMealPlan = ({ params }) => {
                               value={searchTerm}
                               onChange={handleSearchChange}
                               placeholder="Search recipes by title..."
-                              className="bg-gray-50 border border-gray-300 text-black sm:text-base rounded-lg block w-full ml-auto p-2.5"
+                              className="bg-gray-50 border border-gray-300 text-black sm:text-base rounded-lg block w-full ml-auto"
                               style={{ width: "100%" }}
                             />
-                            {/* Search Icon
-                    <span className="absolute inset-y-0 left-2 flex items-center">
-                      <SearchIcon />
-                    </span> */}
                           </div>
                           <button
                             onClick={handleSearch}
@@ -651,7 +657,9 @@ const UpdateMealPlan = ({ params }) => {
                                       }
                                       className="lg:hidden"
                                     >
-                                      <AddCircleIcon />
+                                      <AddCircleIcon
+                                        style={{ color: "#22c55e" }}
+                                      />
                                     </button>
                                   </li>
                                 ))}
@@ -697,36 +705,15 @@ const UpdateMealPlan = ({ params }) => {
                                   }
                                   className="lg:hidden"
                                 >
-                                  <RemoveCircleIcon />
+                                  <RemoveCircleIcon
+                                    style={{ color: "#ef4444" }}
+                                  />
                                 </button>
                               </li>
                             ))}
                           </ul>
                         </div>
                       </div>
-
-                      {/* IMAGE URL */}
-                      {/* <div className="flex flex-col">
-                <label
-                  htmlFor="imageUrl"
-                  className="block text-lg mb-1 font-semibold text-gray-900"
-                >
-                  Image URL<span className="text-red-500">*</span>
-                </label>
-                <input
-                  type="text"
-                  id="imageUrl"
-                  name="imageUrl"
-                  placeholder="Image URL (Max 255 characters)"
-                  maxLength="255"
-                  value={imageUrl}
-                  onChange={handleImageUrlChange}
-                  className="bg-gray-50 border border-gray-300 text-black sm:text-base rounded-lg block w-full p-2.5"
-                />
-                <span className="text-sm text-gray-600">
-                  {imageUrlCharCount}/255 characters
-                </span>
-              </div> */}
 
                       {/* IMAGE file */}
                       <div className="flex flex-col">
@@ -772,13 +759,13 @@ const UpdateMealPlan = ({ params }) => {
 
                       {/* ERROR MESSAGE */}
                       {error && (
-                        <p className="text-red-500 font-semibold text-base">
-                          Failed to update meal plan: {error}
+                        <p className="text-red-500 text-base font-medium">
+                          Failed to create meal plan: {error}
                         </p>
                       )}
                       {success && (
-                        <p className="text-green-500 font-semibold text-base">
-                          Meal plan was updated successfully!
+                        <p className="text-green-500 font-medium text-base">
+                          Meal plan was created successfully!
                         </p>
                       )}
                       {/* SUBMIT BUTTON */}

@@ -191,6 +191,16 @@ const ViewMealPlan = ({ params }) => {
     return stars;
   };
 
+  const getImageUrlFromBlob = (imgBlob) => {
+    // Check if imgBlob is truthy
+    if (imgBlob) {
+      // Return the image URL created from the blob
+      return `data:image/jpeg;base64,${imgBlob}`;
+    }
+    // Return an empty string or a placeholder image URL if imgBlob is not available
+    return "";
+  };
+
   const nextRecipe = () => {
     setCurrentRecipeIndex((prevIndex) =>
       prevIndex === mealPlan.recipes.length - 1 ? 0 : prevIndex + 1
@@ -386,7 +396,7 @@ const ViewMealPlan = ({ params }) => {
             <p className="font-sans font-bold text-4xl text-gray-900 mb-4 md:mt-8 ml-4">
               Suggested Recipes
             </p>
-           
+
             {mealPlan?.recipes && mealPlan.recipes.length > 0 ? (
               <div className="grid grid-cols-1 gap-4 justify-center items-center relative">
                 {/* Render recipe cards here */}

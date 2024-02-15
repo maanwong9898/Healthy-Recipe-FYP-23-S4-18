@@ -185,6 +185,16 @@ const ViewMealPlan = ({ params }) => {
     return <div>Loading...</div>;
   }
 
+  const getImageUrlFromBlob = (imgBlob) => {
+    // Check if imgBlob is truthy
+    if (imgBlob) {
+      // Return the image URL created from the blob
+      return `data:image/jpeg;base64,${imgBlob}`;
+    }
+    // Return an empty string or a placeholder image URL if imgBlob is not available
+    return "";
+  };
+
   // Function to render stars based on rating
   const renderStars = (rating) => {
     let stars = [];

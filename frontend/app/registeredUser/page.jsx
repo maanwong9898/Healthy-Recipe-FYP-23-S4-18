@@ -7,9 +7,6 @@ import Link from "next/link";
 import axiosInterceptorInstance from "../axiosInterceptorInstance";
 import RegisteredUserNavBar from "../components/navigation/registeredUserNavBar";
 import SecureStorage from "react-secure-storage";
-import { get } from "http";
-
-// UNABLE TO CALL MEAL PLANS, ISSUE IN CONDITION LOGIC .. NEED HELP TO FIX IT
 
 // fetch most popular educational contents
 const fetchMostPopularEduContent = async () => {
@@ -778,7 +775,7 @@ const RegisteredUserHomepage = () => {
             <div className="p-5">
               <RegisteredUserNavBar />
               <h2 className="text-4xl font-extrabold font-serif mb-4 mt-4 text-black">
-                Recipes
+                Recipes Recommended
               </h2>
               <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
                 {recipeLimit.map((post) => renderRecipePostCard(post))}
@@ -799,7 +796,7 @@ const RegisteredUserHomepage = () => {
           <>
             <div className="p-5">
               <h2 className="text-4xl font-extrabold font-serif mb-4 mt-4 text-black">
-                Meal Plans
+                Meal Plans For You
               </h2>
               <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
                 {mealPlanLimit.map((post) => renderMealPlanCard(post))}
@@ -821,7 +818,7 @@ const RegisteredUserHomepage = () => {
           <>
             <div className="p-5">
               <h2 className="text-4xl font-extrabold font-serif mb-4 mt-4 text-black">
-                Blogs
+                Most Popular Blogs
               </h2>
               <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
                 {mostPopularBlogPosts.map((post) => renderBlogPost(post))}
@@ -842,7 +839,7 @@ const RegisteredUserHomepage = () => {
           <>
             <div className="p-5">
               <h2 className="text-4xl font-extrabold font-serif mb-4 mt-4 text-black">
-                Educational Contents
+                Top Health Insights
               </h2>
               <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
                 {mostPopularEduContent.map((post) =>

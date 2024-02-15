@@ -932,7 +932,7 @@ const Home = () => {
             <>
               <div className="p-5">
                 <h2 className="text-4xl font-extrabold font-serif mb-4 mt-4 text-black">
-                  Educational Contents
+                  Top Health Insights
                 </h2>
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
                   {mostPopularEduContents.map((post) =>

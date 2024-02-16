@@ -11,18 +11,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
-
-import com.FYP18.HealthyRecipe.DTO.PopularReviewRatingDTO;
+ 
 import com.FYP18.HealthyRecipe.DTO.RecipeDTO;
-import com.FYP18.HealthyRecipe.DTO.ReviewRatingDTO;
-import com.FYP18.HealthyRecipe.Entity.BlogReviewRating;
+import com.FYP18.HealthyRecipe.DTO.ReviewRatingDTO; 
 import com.FYP18.HealthyRecipe.Entity.Recipe;
 import com.FYP18.HealthyRecipe.Entity.RecipeReviewRating;
 import com.FYP18.HealthyRecipe.Entity.RecipeReviewRatingId; 
 import com.FYP18.HealthyRecipe.Service.RecipeService;
 
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PatchMapping;
+import org.springframework.web.bind.annotation.GetMapping; 
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -130,16 +127,10 @@ public class RecipeController {
         headers.setContentType(MediaType.IMAGE_JPEG); // Set the appropriate content type
 
         return new ResponseEntity<>(imageData, headers, HttpStatus.OK);
-    }
-    // @PutMapping("/edit")
-    // public ResponseEntity<Recipe> editBlog(@RequestBody Recipe blog)  
-    // { 
-    //    Recipe toReturn = recipeService.updateRecipe(blog); 
-    //     return new ResponseEntity<>(toReturn, HttpStatus.OK);
-    // }
+    } 
     
     @PutMapping("/update")
-    public ResponseEntity<Recipe> updateBlog(@RequestBody Recipe recipe)  
+    public ResponseEntity<Recipe> updateRecipe(@RequestBody Recipe recipe)  
     { 
        Recipe toReturn = recipeService.updateRecipe(recipe); 
         return new ResponseEntity<>(toReturn, HttpStatus.OK);
@@ -153,7 +144,7 @@ public class RecipeController {
     }
 
     @DeleteMapping("/delete/{id}")
-    public ResponseEntity<?> deleteBlog(@PathVariable("id") long id )
+    public ResponseEntity<?> deleteRecipe(@PathVariable("id") long id )
     {  
         recipeService.deleteRecipeById(id);
         return new ResponseEntity<>(HttpStatus.OK);
@@ -162,7 +153,7 @@ public class RecipeController {
 
 
     @GetMapping("/rating/get")
-    public ResponseEntity<List<RecipeReviewRating>> getAllBlogReviewRatingOfUserId
+    public ResponseEntity<List<RecipeReviewRating>> getAllRecipeReviewRatingOfUserId
                 (@RequestParam(required = false) String userId)  
     { 
        List<RecipeReviewRating> toReturn = userId ==null ? recipeService.getAllRecipeReviewRating():
@@ -172,7 +163,7 @@ public class RecipeController {
 
 
     @PostMapping("/rating/add")
-    public ResponseEntity<RecipeReviewRating> addBlogReviewRating(@RequestBody RecipeReviewRating recipe)  
+    public ResponseEntity<RecipeReviewRating> addRecipeReviewRating(@RequestBody RecipeReviewRating recipe)  
     { 
        RecipeReviewRating toReturn = recipeService.createRating(recipe); 
         return new ResponseEntity<>(toReturn, HttpStatus.CREATED);
@@ -180,14 +171,14 @@ public class RecipeController {
     
 
     @PutMapping("/rating/edit")
-    public ResponseEntity<RecipeReviewRating> editBlogReviewRating(@RequestBody RecipeReviewRating recipe)  
+    public ResponseEntity<RecipeReviewRating> editRecipeReviewRating(@RequestBody RecipeReviewRating recipe)  
     { 
        RecipeReviewRating toReturn = recipeService.updateRating(recipe); 
         return new ResponseEntity<>(toReturn, HttpStatus.OK);
     }
        
     @DeleteMapping("/rating/delete")
-    public ResponseEntity<?> deleteBlogReviewRating(@RequestBody RecipeReviewRatingId id )
+    public ResponseEntity<?> deleteRecipeReviewRating(@RequestBody RecipeReviewRatingId id )
     {  
         recipeService.deleteReviewById(id);
         return new ResponseEntity<>(HttpStatus.OK);

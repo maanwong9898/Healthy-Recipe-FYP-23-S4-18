@@ -103,6 +103,11 @@ public class RegisterController {
             {   
                 User user = (User) auth.getPrincipal(); 
                 Role role = user.getRole(); 
+                if(!user.getEnabled())
+                {
+                    return JWTResponseDTO.builder()
+                    .error("User is currently suspended. ").build();
+                }
 
                 if (role != Role.ADMIN)
                 {
@@ -121,12 +126,7 @@ public class RegisterController {
                                 }  
                                 return JWTResponseDTO.builder()
                                         .error("User is not verified yet, please check your email").build();
-                            }
-                            else if(!rUser.getEnabled())
-                            {
-                                return JWTResponseDTO.builder()
-                                        .error("User is currently suspended. ").build();
-                            }
+                            } 
                             break;
                         case BUSINESS_USER:
                             BusinessUser bUser = loginService.getBusinessUser(user.getEmail());

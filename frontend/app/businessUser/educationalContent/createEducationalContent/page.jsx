@@ -29,6 +29,11 @@ const CreateEducationalContent = () => {
   // image file state
   const [imageFile, setImageFile] = useState(null);
   const [newImageBlob, setNewImageBlob] = useState(null); // New uploaded image
+
+  // image title state
+  const [imgTitle, setImgTitle] = useState("");
+  const [imgTitleCharCount, setImgTitleCharCount] = useState(0);
+
   // success and error state
   const [error, setError] = useState("");
   const [success, setSuccess] = useState(false);
@@ -59,6 +64,12 @@ const CreateEducationalContent = () => {
   const handleImageUrlChange = (e) => {
     setImageUrl(e.target.value);
     setImageUrlCharCount(e.target.value.length);
+    setError("");
+  };
+
+  const handleImgTitleChange = (e) => {
+    setImgTitle(e.target.value);
+    setImgTitleCharCount(e.target.value.length);
     setError("");
   };
 
@@ -161,6 +172,12 @@ const CreateEducationalContent = () => {
       setError("Info cannot be empty.");
       return false;
     }
+
+    if (!imgTitle.trim()) {
+      setError("Image title cannot be empty.");
+      return false;
+    }
+
     // if (!imageUrl.trim()) {
     //   setError("Image URL cannot be empty.");
     //   return false;
@@ -201,6 +218,7 @@ const CreateEducationalContent = () => {
       img: imageUrl, // Retrieved from state
       educationalContentTypeId: category, // Pass the entire selected category id
       imgBlob: newImageBlob, // Use updated image blob
+      imgTitle: imgTitle, // Retrieved from state
       userID: { id: userId }, // replace above
     };
 
@@ -226,12 +244,14 @@ const CreateEducationalContent = () => {
       setCategory("");
       setInfo("");
       setImageUrl("");
+      setImgTitle("");
       setError("");
 
       // Reset character counters
       setTitleCharCount(0);
       setInfoCharCount(0);
       setImageUrlCharCount(0);
+      setImgTitleCharCount(0);
     } catch (error) {
       setSuccess(false); // Ensure success is false on error
       console.error("Error creating educational content", error);
@@ -382,6 +402,30 @@ const CreateEducationalContent = () => {
                       </div>
 
                       <div className="image-section">{renderImage()}</div>
+
+                      {/* IMAGE TITLE */}
+                      <div className="flex flex-col">
+                        <label
+                          htmlFor="imgTitle"
+                          className="block text-lg mb-1 font-semibold text-gray-900"
+                        >
+                          Image Title<span className="text-red-500">*</span>
+                        </label>
+                        <input
+                          type="text"
+                          id="imgTitle"
+                          name="imgTitle"
+                          placeholder="Describe your image here"
+                          maxLength="255"
+                          value={imgTitle}
+                          onChange={handleImgTitleChange}
+                          className="bg-gray-50 border border-gray-300 text-black sm:text-base rounded-lg block w-full p-2.5"
+                        />
+                        <span className="text-sm text-gray-600">
+                          {imgTitleCharCount}/255 characters
+                        </span>
+                      </div>
+
                       {/* ERROR MESSAGE */}
                       {error && (
                         <p className="text-red-500 font-semibold text-sm">

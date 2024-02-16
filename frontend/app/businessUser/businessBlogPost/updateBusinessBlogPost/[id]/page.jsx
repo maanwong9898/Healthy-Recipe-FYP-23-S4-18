@@ -46,6 +46,9 @@ const UpdateBusinessBlogPostPage = ({ params }) => {
   // image states
   const [imageUrl, setImageUrl] = useState("");
   const [imageUrlCharCount, setImageUrlCharCount] = useState(0);
+  // image title state
+  const [imgTitle, setImgTitle] = useState("");
+  const [imgTitleCharCount, setImgTitleCharCount] = useState(0);
   // error and success states
   const [error, setError] = useState("");
   const [success, setSuccess] = useState(false);
@@ -86,6 +89,8 @@ const UpdateBusinessBlogPostPage = ({ params }) => {
           setInfoCharCount(data.info ? data.info.length : 0); // Set info character count
           setImageUrl(data.img || "Not Specified");
           setImageUrlCharCount(data.img ? data.img.length : 0); // Set image URL character count
+          setImgTitle(data.imgTitle || "Not Specified");
+          setImgTitleCharCount(data.imgTitle ? data.imgTitle.length : 0); // Set image title character count
           if (data.imgBlob) {
             console.log("Image blob available");
             console.log("Image blob:", data.imgBlob);
@@ -176,6 +181,12 @@ const UpdateBusinessBlogPostPage = ({ params }) => {
     console.log("New image url:", e.target.value);
   };
 
+  const handleImgTitleChange = (e) => {
+    setImgTitle(e.target.value);
+    setImgTitleCharCount(e.target.value.length);
+    setError("");
+  };
+
   const handleFileChange = (e) => {
     console.log("File change event:", e);
     const file = e.target.files[0];
@@ -234,16 +245,22 @@ const UpdateBusinessBlogPostPage = ({ params }) => {
       setError("Info cannot be empty.");
       return false;
     }
+
+    // check if image title is empty
+    if (!imgTitle.trim()) {
+      setError("Image title cannot be empty.");
+      return false;
+    }
     // if (!imageUrl.trim()) {
     //   setError("Image URL cannot be empty.");
     //   return false;
     // }
 
     // check image blob
-    if (!newImageBlob && !imageBlob) {
-      setError("Image is required.");
-      return false;
-    }
+    // if (!newImageBlob && !imageBlob) {
+    //   setError("Image is required.");
+    //   return false;
+    // }
     // Clear any existing errors if all validations pass
     setError("");
     return true;
@@ -269,7 +286,8 @@ const UpdateBusinessBlogPostPage = ({ params }) => {
         active: true,
         title: title,
         info: info,
-        // img: imageUrl,
+        imgTitle: imgTitle,
+        img: imageUrl,
         blogTypeId: category,
         imgBlob: updatedImageBlob, // Use updated image blob
         userID: { id: userId }, // Need to change to the current user ID
@@ -420,6 +438,30 @@ const UpdateBusinessBlogPostPage = ({ params }) => {
                       </div>
 
                       <div className="image-section">{renderImage()}</div>
+
+                      {/* IMAGE TITLE */}
+                      <div className="flex flex-col">
+                        <label
+                          htmlFor="imgTitle"
+                          className="block text-lg mb-1 font-semibold text-gray-900"
+                        >
+                          Image Title<span className="text-red-500">*</span>
+                        </label>
+                        <input
+                          type="text"
+                          id="imgTitle"
+                          name="imgTitle"
+                          placeholder="Describe your image here"
+                          maxLength="255"
+                          value={imgTitle}
+                          onChange={handleImgTitleChange}
+                          className="bg-gray-50 border border-gray-300 text-black sm:text-base rounded-lg block w-full p-2.5"
+                        />
+                        <span className="text-sm text-gray-600">
+                          {imgTitleCharCount}/255 characters
+                        </span>
+                      </div>
+
                       {/* ERROR MESSAGE */}
                       {error && (
                         <p className="text-red-500 font-semibold text-sm">

@@ -36,8 +36,6 @@ const CreateRecipePage = () => {
   // State for image URL
   const [imageUrl, setImageUrl] = useState("");
   const [imageUrlCharCount, setImageUrlCharCount] = useState(0); // To display the number of characters in the image URL
-  const [imageTitle, setImageTitle] = useState("");
-
   // Display success or error message after submission
   const [success, setSuccess] = useState("");
   const [error, setError] = useState("");
@@ -60,6 +58,10 @@ const CreateRecipePage = () => {
 
   const [imageFile, setImageFile] = useState(null);
   const [newImageBlob, setNewImageBlob] = useState(null); // New uploaded image
+
+  // image title state
+  const [imgTitle, setImgTitle] = useState("");
+  const [imgTitleCharCount, setImgTitleCharCount] = useState(0);
 
   const [isChecking, setIsChecking] = useState(true);
   const [isLoading, setIsLoading] = useState(true);
@@ -202,6 +204,12 @@ const CreateRecipePage = () => {
     setError("");
   };
 
+  const handleImgTitleChange = (e) => {
+    setImgTitle(e.target.value);
+    setImgTitleCharCount(e.target.value.length);
+    setError("");
+  };
+
   const handleFileChange = (e) => {
     console.log("File change event:", e);
     const file = e.target.files[0];
@@ -260,6 +268,7 @@ const CreateRecipePage = () => {
       !fat.trim() ||
       !fibre.trim() ||
       !sodium.trim() ||
+      !imgTitle.trim() ||
       !newImageBlob ||
       // imgblob cannot be empty
       // !newImageBlob.trim() ||/ssww
@@ -340,6 +349,7 @@ const CreateRecipePage = () => {
       allergies: allergyRestriction.map((id) => ({ id })),
       // img: imageUrl,
       imgBlob: newImageBlob, // Use updated image blob
+      imgTitle: imgTitle, // Retrieved from state
     };
 
     console.log("The recipe data from the form : ", recipeData);
@@ -384,7 +394,8 @@ const CreateRecipePage = () => {
       setSodium("");
       setImageUrl("");
       setImageUrlCharCount(0);
-      setImageTitle("");
+      // setImageTitle("");
+      setImgTitle("");
       setIngredientList([""]);
       setInstructionList([""]);
       setDietaryPreference("");
@@ -858,6 +869,28 @@ const CreateRecipePage = () => {
                       </div>
 
                       <div className="image-section">{renderImage()}</div>
+                      {/* IMAGE TITLE */}
+                      <div className="flex flex-col">
+                        <label
+                          htmlFor="imgTitle"
+                          className="block text-lg mb-1 font-semibold text-gray-900"
+                        >
+                          Image Title<span className="text-red-500">*</span>
+                        </label>
+                        <input
+                          type="text"
+                          id="imgTitle"
+                          name="imgTitle"
+                          placeholder="Describe your image here"
+                          maxLength="255"
+                          value={imgTitle}
+                          onChange={handleImgTitleChange}
+                          className="bg-gray-50 border border-gray-300 text-black sm:text-base rounded-lg block w-full p-2.5"
+                        />
+                        <span className="text-sm text-gray-600">
+                          {imgTitleCharCount}/255 characters
+                        </span>
+                      </div>
 
                       {/* Display error or success message */}
                       {error && (

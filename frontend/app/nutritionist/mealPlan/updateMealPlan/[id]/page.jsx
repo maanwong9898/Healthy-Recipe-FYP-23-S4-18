@@ -77,7 +77,7 @@ const UpdateMealPlan = ({ params }) => {
   const [searchAttempted, setSearchAttempted] = useState(false);
   const [isChecking, setIsChecking] = useState(true);
   const [isLoading, setIsLoading] = useState(true);
-  const [imageBlob, setImageBlob] = useState(""); // Original image
+  const [imageBlob, setImageBlob] = useState(null); // Original image
   const [newImageBlob, setNewImageBlob] = useState(null); // New uploaded image
 
   useEffect(() => {
@@ -370,10 +370,10 @@ const UpdateMealPlan = ({ params }) => {
     }
 
     // check image blob
-    if (!newImageBlob && !imageBlob) {
-      setError("Image is required.");
-      return false;
-    }
+    // if (!newImageBlob && !imageBlob) {
+    //   setError("Image is required.");
+    //   return false;
+    // }
 
     // Clear any existing errors if all validations pass
     setError("");
@@ -406,7 +406,7 @@ const UpdateMealPlan = ({ params }) => {
         mainContent: mainContent,
         conclusion: conclusion,
         imgTitle: imgTitle,
-        // img: imageUrl,
+        img: imageUrl, // Use original image URL
         imgBlob: updatedImageBlob, // Use updated image blob
         healthGoalCategoryId: category, // Pass the entire selected category id
         recipes: selectedRecipes.map((recipe) => ({ id: recipe.id })),

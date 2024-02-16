@@ -12,12 +12,18 @@ import BusinessUserNavBar from "../../../../components/navigation/businessUserNa
 const UpdateRecipePage = ({ params }) => {
   const router = useRouter();
   const [title, setTitle] = useState("");
+  const [titleCharCount, setTitleCharCount] = useState(0); // To display the number of characters in the title
+
   const [publisher, setPublisher] = useState("");
   const [category, setCategory] = useState("");
   const [cookingTime, setCookingTime] = useState("");
   const [servingSize, setServingSize] = useState("");
   const [description, setDescription] = useState("");
+  const [descriptionCharCount, setDescriptionCharCount] = useState(0); // To display the number of characters in the description
+
   const [dietaryInformation, setDietaryInformation] = useState("");
+  const [dietaryInformationCharCount, setDietaryInformationCharCount] =
+    useState(0); // To display the number of characters in the dietary information
   const [ingredients, setIngredients] = useState("");
   const [instructions, setInstructions] = useState("");
   const [totalCalories, setTotalCalories] = useState("");
@@ -27,7 +33,9 @@ const UpdateRecipePage = ({ params }) => {
   const [fibre, setFibre] = useState("");
   const [sodium, setSodium] = useState("");
   const [imageUrl, setImageUrl] = useState("");
-  const [imageTitle, setImageTitle] = useState("");
+  // image title state
+  const [imgTitle, setImgTitle] = useState("");
+  const [imgTitleCharCount, setImgTitleCharCount] = useState(0);
 
   // Display success or error message after submission
   const [success, setSuccess] = useState("");
@@ -51,7 +59,7 @@ const UpdateRecipePage = ({ params }) => {
 
   const [imageFile, setImageFile] = useState(null);
 
-  const [imageBlob, setImageBlob] = useState(""); // Original image
+  const [imageBlob, setImageBlob] = useState(null); // Original image
   const [newImageBlob, setNewImageBlob] = useState(null); // New uploaded image
   const [isLoading, setLoading] = useState(true);
   const [isChecking, setIsChecking] = useState(true);
@@ -138,8 +146,13 @@ const UpdateRecipePage = ({ params }) => {
 
           // Update state variables with fetched recipe data
           setTitle(recipe.title || "");
+          setTitleCharCount(recipe.title ? recipe.title.length : 0);
           setDescription(recipe.description || "");
+          setDescriptionCharCount(
+            recipe.description ? recipe.description.length : 0
+          );
           setDietaryInformation(recipe.info || "");
+          setDietaryInformationCharCount(recipe.info ? recipe.info.length : 0);
           setIngredients(
             recipe.ingredients ? recipe.ingredients.split("\n") : [""]
           );
@@ -162,6 +175,8 @@ const UpdateRecipePage = ({ params }) => {
             recipe.ingredients ? recipe.ingredients.split("\n") : []
           );
           setInstructionList(recipe.steps ? recipe.steps.split("\n") : []);
+          setImgTitle(recipe.imgTitle || "Not Specified");
+          setImgTitleCharCount(recipe.imgTitle ? recipe.imgTitle.length : 0);
 
           if (recipe.allergies) {
             setAllergyRestriction(
@@ -223,6 +238,30 @@ const UpdateRecipePage = ({ params }) => {
   // Function to handle meal type category change
   const handleMealTypeCategoryChange = (e) => {
     setMealType(e.target.value);
+  };
+
+  const handleTitleChange = (e) => {
+    setTitle(e.target.value);
+    setTitleCharCount(e.target.value.length);
+    setError("");
+  };
+
+  const handleDietaryInformationChange = (e) => {
+    setDietaryInformation(e.target.value);
+    setDietaryInformationCharCount(e.target.value.length);
+    setError("");
+  };
+
+  const handleDescriptionChange = (e) => {
+    setDescription(e.target.value);
+    setDescriptionCharCount(e.target.value.length);
+    setError("");
+  };
+
+  const handleImgTitleChange = (e) => {
+    setImgTitle(e.target.value);
+    setImgTitleCharCount(e.target.value.length);
+    setError("");
   };
 
   const handleFileChange = (e) => {
@@ -301,8 +340,14 @@ const UpdateRecipePage = ({ params }) => {
     }
 
     // check image blob
-    if (!newImageBlob && !imageBlob) {
-      setError("Image is required.");
+    // if (!newImageBlob && !imageBlob) {
+    //   setError("Image is required.");
+    //   return false;
+    // }
+
+    // check if image title is empty
+    if (!imgTitle.trim()) {
+      setError("Image title cannot be empty.");
       return false;
     }
 
@@ -366,11 +411,12 @@ const UpdateRecipePage = ({ params }) => {
       // createdDT: null, // Set this accordingly
       // lastUpdatedDT: new Date().toISOString(), // Current timestamp
       ingredients: formattedIngredients,
-      // img: imageUrl,
+      imgTitle: imgTitle,
       userID: { id: userId }, // Replace with actual user ID or fetch dynamically
       dietaryPreferencesId: parseInt(dietaryPreference),
       mealTypeId: parseInt(mealType),
       allergies: allergyRestriction.map((id) => ({ id })),
+      img: imageUrl, // Use original image URL
       imgBlob: updatedImageBlob, // Use updated image blob
     };
 
@@ -463,11 +509,15 @@ const UpdateRecipePage = ({ params }) => {
                           type="text"
                           id="title"
                           name="title"
-                          placeholder="Title"
+                          placeholder="Title (Max 80 characters)"
+                          maxLength="80"
                           value={title}
-                          onChange={clearErrorOnChange(setTitle)}
+                          onChange={handleTitleChange}
                           className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-base rounded-lg block w-full p-2.5"
                         />
+                        <span className="text-sm text-gray-600">
+                          {titleCharCount}/80 characters
+                        </span>
                       </div>
                       {/* DIETARY PREFERENCE */}
                       <div className="flex flex-col">
@@ -596,12 +646,16 @@ const UpdateRecipePage = ({ params }) => {
                         <textarea
                           name="description"
                           id="description"
-                          placeholder="Write a short description about your recipe"
+                          placeholder="Write a detailed description about the recipe (Max 1000 characters)"
+                          maxLength={1000}
                           value={description}
-                          onChange={clearErrorOnChange(setDescription)}
+                          onChange={handleDescriptionChange}
                           rows={7} // Adjust this number to increase height
                           className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-base rounded-lg block w-full p-2.5"
                         />
+                        <span className="text-sm text-gray-600">
+                          {descriptionCharCount}/1000 characters
+                        </span>
                       </div>
 
                       {/* Dietary Information for user to input */}
@@ -616,12 +670,16 @@ const UpdateRecipePage = ({ params }) => {
                         <textarea
                           name="dietaryInformation"
                           id="dietaryInformation"
-                          placeholder="Write a short description about your recipe"
+                          placeholder="Write a short description about the dietary information (Max 230 characters)"
+                          maxLength={230}
                           value={dietaryInformation}
-                          onChange={clearErrorOnChange(setDietaryInformation)}
+                          onChange={handleDietaryInformationChange}
                           rows={7} // Adjust this number to increase height
                           className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-base rounded-lg block w-full p-2.5"
                         />
+                        <span className="text-sm text-gray-600">
+                          {dietaryInformationCharCount}/230 characters
+                        </span>
                       </div>
 
                       {/* INGREDIENTS */}
@@ -846,6 +904,28 @@ const UpdateRecipePage = ({ params }) => {
                       </div>
 
                       <div className="image-section">{renderImage()}</div>
+                      {/* IMAGE TITLE */}
+                      <div className="flex flex-col">
+                        <label
+                          htmlFor="imgTitle"
+                          className="block text-lg mb-1 font-semibold text-gray-900"
+                        >
+                          Image Title<span className="text-red-500">*</span>
+                        </label>
+                        <input
+                          type="text"
+                          id="imgTitle"
+                          name="imgTitle"
+                          placeholder="Describe your image here"
+                          maxLength="255"
+                          value={imgTitle}
+                          onChange={handleImgTitleChange}
+                          className="bg-gray-50 border border-gray-300 text-black sm:text-base rounded-lg block w-full p-2.5"
+                        />
+                        <span className="text-sm text-gray-600">
+                          {imgTitleCharCount}/255 characters
+                        </span>
+                      </div>
                       {/* Display error or success message */}
                       {error && (
                         <p className="text-red-500 font-semibold text-sm">

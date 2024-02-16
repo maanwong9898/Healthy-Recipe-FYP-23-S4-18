@@ -1,5 +1,8 @@
 package com.FYP18.HealthyRecipe.Entity.Categories;
 
+import java.nio.charset.StandardCharsets;
+import java.util.Base64;
+
 import org.springframework.beans.factory.annotation.Value;
 
 import jakarta.persistence.Column;
@@ -35,4 +38,35 @@ public class Allergies {
     // shouldn't be empty la
     @Column(name = "subcategoryName", nullable = false) 
     private String subcategoryName;
+
+
+    
+    public void setSubcategoryName(String name) {
+        String encryptedName = encodeString(name);
+        this.subcategoryName = encryptedName;
+    }
+
+    public String getSubcategoryName() {
+        String decryptedName = decodeString(subcategoryName);
+        return decryptedName;
+    }
+
+    public String encodeString(String originalString) { 
+        if(originalString == null || originalString.length() == 0)
+        { 
+            return "";
+        }
+        byte[] encodedBytes = Base64.getEncoder().encode(originalString.getBytes(StandardCharsets.UTF_8));
+        return new String(encodedBytes, StandardCharsets.UTF_8);
+    }
+
+    public String decodeString(String encodedString) {
+        if(encodedString == null || encodedString.length() == 0)
+        { 
+            return "";
+        }
+        byte[] decodedBytes = Base64.getDecoder().decode(encodedString.getBytes(StandardCharsets.UTF_8));
+        return new String(decodedBytes, StandardCharsets.UTF_8);
+    }
+    
 }

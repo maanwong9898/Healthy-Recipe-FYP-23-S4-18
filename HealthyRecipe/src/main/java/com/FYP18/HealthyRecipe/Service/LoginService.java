@@ -5,6 +5,7 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 import java.util.regex.Pattern;
@@ -22,6 +23,7 @@ import com.FYP18.HealthyRecipe.Entity.Nutritionist;
 import com.FYP18.HealthyRecipe.Entity.RegisteredUser;
 import com.FYP18.HealthyRecipe.Entity.SystemAdmin;
 import com.FYP18.HealthyRecipe.Entity.User;
+import com.FYP18.HealthyRecipe.Entity.Categories.Allergies;
 import com.FYP18.HealthyRecipe.Entity.User.Role;
 import com.FYP18.HealthyRecipe.Repository.BusinessUserRepository;
 import com.FYP18.HealthyRecipe.Repository.NutritionistRepository;
@@ -297,7 +299,13 @@ public class LoginService {
             case REGISTERED_USER:
                 RegisteredUser registeredUser =  registeredUserRepository.findById(user.getId()).get();
                 // registeredUser.
-                dto.setAllergies(registeredUser.getAllergies());
+                Set<Allergies> al = registeredUser.getAllergies();
+                for(Allergies a : al)
+                {
+                    System.out.println("AAAA" + a.getSubcategoryName());
+                    a.setSubcategoryName(a.getSubcategoryName()); 
+                }
+                dto.setAllergies(al); 
                 dto.setHealthGoal(registeredUser.getHealthGoal());
                 dto.setDietaryPreferences(registeredUser.getDietaryPreferences());
                 dto.setDob(registeredUser.getDob());

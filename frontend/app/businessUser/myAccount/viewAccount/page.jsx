@@ -10,7 +10,7 @@ import BusinessUserNavBar from "../../../components/navigation/businessUserNavBa
 // router path for this page: /businessUser/myAccount/viewAccount
 // things to do:
 
-const UpdateAccount = () => {
+const MyAccount = () => {
   const router = useRouter();
   const [userAccount, setUserAccount] = useState("");
   const [fullName, setFullName] = useState("");
@@ -399,4 +399,4 @@ const UpdateAccount = () => {
   );
 };
 
-export default UpdateAccount;
+export default MyAccount;

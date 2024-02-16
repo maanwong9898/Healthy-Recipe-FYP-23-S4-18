@@ -11,7 +11,7 @@ import SysAdminNavBar from "../../../components/navigation/sysAdminNavBar";
 // edit the user account details
 // router path for this page: /sysAdmin/myAccount/viewAccount
 
-const UpdateAccount = () => {
+const MyAccount = () => {
   const router = useRouter();
   const [userAccount, setUserAccount] = useState(null);
   const [fullName, setFullName] = useState("");
@@ -333,4 +333,4 @@ const UpdateAccount = () => {
   );
 };
 
-export default UpdateAccount;
+export default MyAccount;

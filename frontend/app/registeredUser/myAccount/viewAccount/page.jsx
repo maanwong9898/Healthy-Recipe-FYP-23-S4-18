@@ -9,7 +9,7 @@ import RegisteredUserNavBar from "../../../components/navigation/registeredUserN
 
 // router path = /registeredUser/myAccount/viewAccount
 
-const UpdateAccount = () => {
+const MyAccount = () => {
   const router = useRouter();
   const [userAccount, setUserAccount] = useState("");
   const [fullName, setFullName] = useState("");
@@ -412,4 +412,4 @@ const UpdateAccount = () => {
   );
 };
 
-export default UpdateAccount;
+export default MyAccount;

@@ -13,7 +13,7 @@ import NutritionistNavBar from "../../../components/navigation/nutritionistNavBa
 
 // Need to add the image preview for actual certificate upload during registration
 
-const UpdateAccount = () => {
+const MyAccount = () => {
   const router = useRouter();
   const [userAccount, setUserAccount] = useState("");
   const [fullName, setFullName] = useState("");
@@ -509,4 +509,4 @@ const UpdateAccount = () => {
   );
 };
 
-export default UpdateAccount;
+export default MyAccount;

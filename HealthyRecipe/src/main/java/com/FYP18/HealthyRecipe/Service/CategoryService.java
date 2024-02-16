@@ -45,29 +45,29 @@ public class CategoryService {
  
 
 
-    public Allergies createNewAllergy(Allergies allergy)
+    public Allergies createNewAllergy(Allergies category)
     {  
-        return allergiesRepo.save(allergy);
+        return allergiesRepo.save(category);
     }
 
-    public BlogPostCategory createNewBlogPostCategory(BlogPostCategory allergy)
+    public BlogPostCategory createNewBlogPostCategory(BlogPostCategory category)
     {
-        return blogPostCategoryRepo.save(allergy);
+        return blogPostCategoryRepo.save(category);
     }
 
-    public DietaryPreferences createNewDietaryPreferences(DietaryPreferences allergy)
+    public DietaryPreferences createNewDietaryPreferences(DietaryPreferences category)
     {
-        return dietaryPreferenceRepo.save(allergy);
+        return dietaryPreferenceRepo.save(category);
     }
 
-    public EducationalContentCategory createNewEducationalContentCategory(EducationalContentCategory allergy)
+    public EducationalContentCategory createNewEducationalContentCategory(EducationalContentCategory category)
     {
-        return educationalContentCategoryRepo.save(allergy);
+        return educationalContentCategoryRepo.save(category);
     }
 
-    public HealthGoal createNewHealthGoal(HealthGoal allergy)
+    public HealthGoal createNewHealthGoal(HealthGoal category)
     {
-        return healthGoalRepo.save(allergy);
+        return healthGoalRepo.save(category);
     }
  
     public MealType createNewMealType(MealType mealType)

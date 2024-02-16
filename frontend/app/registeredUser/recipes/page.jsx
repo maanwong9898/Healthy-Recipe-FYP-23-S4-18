@@ -1217,12 +1217,10 @@ const RecipesPageForUser = () => {
                       </div>
                       {/*Main Content including the filter and recipe display*/}
                       <div className="flex flex-col md:flex-row">
-                        {" "}
                         {/* Flex container for sidebar and main content */}
                         {/* Sidebar for Filters */}
                         <div className="w-full lg:w-1/4 md:pr-4 mb-4 md:mb-0">
                           {" "}
-                          {/* Full width on small screens, 1/4 width on larger screens */}
                           {/* Conditional rendering of the filter section */}
                           {isFilterSectionOpen && (
                             <div className="flex flex-col gap-4 mb-4 p-4 bg-gray-50 border rounded-lg text-xl">
@@ -1235,11 +1233,7 @@ const RecipesPageForUser = () => {
                                   Dietary Preferences:
                                 </label>
                                 <select
-                                  id="dietaryPreferences"
                                   value={selectedDietaryPreference}
-                                  // onChange={(e) =>
-                                  //   setSelectedDietaryPreference(e.target.value)
-                                  // }
                                   onChange={handleDietaryPreferenceChange}
                                   className="form-select mr-2 p-2 rounded-lg border w-full md:w-auto"
                                 >
@@ -1266,7 +1260,6 @@ const RecipesPageForUser = () => {
                                   Meal Type:
                                 </label>
                                 <select
-                                  id="mealType"
                                   value={selectedMealType}
                                   onChange={handleMealTypeChange}
                                   className="form-select mr-2 p-2 rounded-lg border w-full md:w-auto"
@@ -1333,7 +1326,7 @@ const RecipesPageForUser = () => {
                                   <p className="text-orange-600 text-xl font-semibold mb-2">
                                     Calories:
                                   </p>
-                                  <div className="flex items-center">
+                                  <div className="flex items-center text-base">
                                     <label
                                       htmlFor="caloriesMinFilter"
                                       style={{ marginRight: "8px" }}
@@ -1349,7 +1342,7 @@ const RecipesPageForUser = () => {
                                       style={{
                                         width: "80px",
                                         marginRight: "8px",
-                                      }} // adjust the width as needed
+                                      }}
                                     />
 
                                     <label
@@ -1364,7 +1357,7 @@ const RecipesPageForUser = () => {
                                       value={caloriesMaxFilter}
                                       onChange={handleCaloriesMaxFilterChange}
                                       className="form-control block rounded-lg border border-gray-400"
-                                      style={{ width: "80px" }} // adjust the width as needed
+                                      style={{ width: "80px" }}
                                     />
                                   </div>
 
@@ -1372,7 +1365,7 @@ const RecipesPageForUser = () => {
                                   <p className="text-orange-600 text-xl font-semibold mb-2">
                                     Carbs:
                                   </p>
-                                  <div className="flex items-center">
+                                  <div className="flex items-center text-base">
                                     <label
                                       htmlFor="carbsMinFilter"
                                       style={{ marginRight: "8px" }}
@@ -1388,7 +1381,7 @@ const RecipesPageForUser = () => {
                                       style={{
                                         width: "80px",
                                         marginRight: "8px",
-                                      }} // adjust the width as needed
+                                      }}
                                     />
 
                                     <label
@@ -1403,7 +1396,7 @@ const RecipesPageForUser = () => {
                                       value={carbsMaxFilter}
                                       onChange={handleCarbsMaxFilterChange}
                                       className="form-control block rounded-lg border border-gray-400"
-                                      style={{ width: "80px" }} // adjust the width as needed
+                                      style={{ width: "80px" }}
                                     />
                                   </div>
 
@@ -1411,7 +1404,7 @@ const RecipesPageForUser = () => {
                                   <p className="text-orange-600 text-xl font-semibold mb-2">
                                     Protein:
                                   </p>
-                                  <div className="flex items-center">
+                                  <div className="flex items-center text-base">
                                     <label
                                       htmlFor="proteinMinFilter"
                                       style={{ marginRight: "8px" }}
@@ -1427,7 +1420,7 @@ const RecipesPageForUser = () => {
                                       style={{
                                         width: "80px",
                                         marginRight: "8px",
-                                      }} // adjust the width as needed
+                                      }}
                                     />
 
                                     <label
@@ -1442,7 +1435,7 @@ const RecipesPageForUser = () => {
                                       value={proteinMaxFilter}
                                       onChange={handleProteinMaxFilterChange}
                                       className="form-control block rounded-lg border border-gray-400"
-                                      style={{ width: "80px" }} // adjust the width as needed
+                                      style={{ width: "80px" }}
                                     />
                                   </div>
 
@@ -1450,7 +1443,7 @@ const RecipesPageForUser = () => {
                                   <p className="text-orange-600 text-xl font-semibold mb-2">
                                     Fat:
                                   </p>
-                                  <div className="flex items-center">
+                                  <div className="flex items-center text-base">
                                     <label
                                       htmlFor="fatMinFilter"
                                       style={{ marginRight: "8px" }}
@@ -1466,7 +1459,7 @@ const RecipesPageForUser = () => {
                                       style={{
                                         width: "80px",
                                         marginRight: "8px",
-                                      }} // adjust the width as needed
+                                      }}
                                     />
 
                                     <label
@@ -1481,7 +1474,7 @@ const RecipesPageForUser = () => {
                                       value={fatMaxFilter}
                                       onChange={handleFatMaxFilterChange}
                                       className="form-control block rounded-lg border border-gray-400"
-                                      style={{ width: "80px" }} // adjust the width as needed
+                                      style={{ width: "80px" }}
                                     />
                                   </div>
 
@@ -1489,7 +1482,7 @@ const RecipesPageForUser = () => {
                                   <p className="text-orange-600 text-xl font-semibold mb-2">
                                     Sodium:
                                   </p>
-                                  <div className="flex items-center">
+                                  <div className="flex items-center text-base">
                                     <label
                                       htmlFor="sodiumMinFilter"
                                       style={{ marginRight: "8px" }}
@@ -1505,7 +1498,7 @@ const RecipesPageForUser = () => {
                                       style={{
                                         width: "80px",
                                         marginRight: "8px",
-                                      }} // adjust the width as needed
+                                      }}
                                     />
 
                                     <label
@@ -1520,7 +1513,7 @@ const RecipesPageForUser = () => {
                                       value={sodiumMaxFilter}
                                       onChange={handleSodiumMaxFilterChange}
                                       className="form-control block rounded-lg border border-gray-400"
-                                      style={{ width: "80px" }} // adjust the width as needed
+                                      style={{ width: "80px" }}
                                     />
                                   </div>
 
@@ -1528,7 +1521,7 @@ const RecipesPageForUser = () => {
                                   <p className="text-orange-600 text-xl font-semibold mb-2">
                                     Fibre:
                                   </p>
-                                  <div className="flex items-center">
+                                  <div className="flex items-center text-base">
                                     <label
                                       htmlFor="fibreMinFilter"
                                       style={{ marginRight: "8px" }}
@@ -1544,7 +1537,7 @@ const RecipesPageForUser = () => {
                                       style={{
                                         width: "80px",
                                         marginRight: "8px",
-                                      }} // adjust the width as needed
+                                      }}
                                     />
 
                                     <label
@@ -1559,7 +1552,7 @@ const RecipesPageForUser = () => {
                                       value={fibreMaxFilter}
                                       onChange={handleFibreMaxFilterChange}
                                       className="form-control block rounded-lg border border-gray-400"
-                                      style={{ width: "80px" }} // adjust the width as needed
+                                      style={{ width: "80px" }}
                                     />
                                   </div>
                                 </div>
@@ -1569,11 +1562,11 @@ const RecipesPageForUser = () => {
                               <div className="flex-1 min-w-[200px]">
                                 <label
                                   htmlFor="cookingTimeFilter"
-                                  className="text-2xl text-black font-bold mb-2 sm:mb-0 sm:mr-2"
+                                  className="text-2xl text-black font-bold mb-4 sm:mb-0 sm:mr-2"
                                 >
                                   Cooking Time:
                                 </label>
-                                <div className="flex items-center">
+                                <div className="flex items-center text-base">
                                   <label
                                     htmlFor="cookingTimeMinFilter"
                                     style={{ marginRight: "8px" }}
@@ -1589,7 +1582,7 @@ const RecipesPageForUser = () => {
                                     style={{
                                       width: "80px",
                                       marginRight: "8px",
-                                    }} // adjust the width as needed
+                                    }}
                                   />
 
                                   <label
@@ -1604,7 +1597,7 @@ const RecipesPageForUser = () => {
                                     value={cookingTimeMaxFilter}
                                     onChange={handleCookingTimeMaxFilterChange}
                                     className="form-control block rounded-lg border border-gray-400"
-                                    style={{ width: "80px" }} // adjust the width as needed
+                                    style={{ width: "80px" }}
                                   />
                                 </div>
                               </div>

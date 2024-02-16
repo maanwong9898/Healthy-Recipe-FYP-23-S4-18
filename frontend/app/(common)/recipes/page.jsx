@@ -3,6 +3,7 @@ import { useRouter } from "next/navigation";
 import React from "react";
 import { useState, useEffect } from "react";
 import axiosInterceptorInstance from "../../axiosInterceptorInstance.js";
+
 import HomeNavbar from "@/app/components/navigation/homeNavBar";
 import { QueryClientProvider, useQuery } from "react-query"; // Added useQuery here
 import { queryClient } from "../../queryClient.js"; // Adjust the path as necessary
@@ -991,7 +992,7 @@ const RecipesPageForUser = () => {
                         <p className="text-orange-600 text-xl font-semibold mb-2">
                           Calories:
                         </p>
-                        <div className="flex items-center">
+                        <div className="flex items-center text-base">
                           <label
                             htmlFor="caloriesMinFilter"
                             style={{ marginRight: "8px" }}
@@ -1027,7 +1028,7 @@ const RecipesPageForUser = () => {
                         <p className="text-orange-600 text-xl font-semibold mb-2">
                           Carbs:
                         </p>
-                        <div className="flex items-center">
+                        <div className="flex items-center text-base">
                           <label
                             htmlFor="carbsMinFilter"
                             style={{ marginRight: "8px" }}
@@ -1063,7 +1064,7 @@ const RecipesPageForUser = () => {
                         <p className="text-orange-600 text-xl font-semibold mb-2">
                           Protein:
                         </p>
-                        <div className="flex items-center">
+                        <div className="flex items-center text-base">
                           <label
                             htmlFor="proteinMinFilter"
                             style={{ marginRight: "8px" }}
@@ -1099,7 +1100,7 @@ const RecipesPageForUser = () => {
                         <p className="text-orange-600 text-xl font-semibold mb-2">
                           Fat:
                         </p>
-                        <div className="flex items-center">
+                        <div className="flex items-center text-base">
                           <label
                             htmlFor="fatMinFilter"
                             style={{ marginRight: "8px" }}
@@ -1135,7 +1136,7 @@ const RecipesPageForUser = () => {
                         <p className="text-orange-600 text-xl font-semibold mb-2">
                           Sodium:
                         </p>
-                        <div className="flex items-center">
+                        <div className="flex items-center text-base">
                           <label
                             htmlFor="sodiumMinFilter"
                             style={{ marginRight: "8px" }}
@@ -1171,7 +1172,7 @@ const RecipesPageForUser = () => {
                         <p className="text-orange-600 text-xl font-semibold mb-2">
                           Fibre:
                         </p>
-                        <div className="flex items-center">
+                        <div className="flex items-center text-base">
                           <label
                             htmlFor="fibreMinFilter"
                             style={{ marginRight: "8px" }}
@@ -1209,11 +1210,11 @@ const RecipesPageForUser = () => {
                     <div className="flex-1 min-w-[200px]">
                       <label
                         htmlFor="cookingTimeFilter"
-                        className="text-2xl text-black font-bold mb-2 sm:mb-0 sm:mr-2"
+                        className="text-2xl text-black font-bold mb-4 sm:mb-0 sm:mr-2"
                       >
                         Cooking Time:
                       </label>
-                      <div className="flex items-center">
+                      <div className="flex items-center text-base">
                         <label
                           htmlFor="cookingTimeMinFilter"
                           style={{ marginRight: "8px" }}

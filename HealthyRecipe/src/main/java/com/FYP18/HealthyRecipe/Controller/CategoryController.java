@@ -37,7 +37,7 @@ public class CategoryController {
         Allergies allergy = categoryService.createNewAllergy(allergies);
         return new ResponseEntity<>(allergy, HttpStatus.CREATED);
     }
-
+ 
     @PostMapping("/allergies")
     private ResponseEntity<List<Allergies>> addAllergies(@RequestBody List<Allergies> allergies) throws Exception
     { 
@@ -49,9 +49,9 @@ public class CategoryController {
     }
 
     @PostMapping("/blogPost")
-    private ResponseEntity<BlogPostCategory> addBlogPostCategory(@RequestBody BlogPostCategory allergies) throws Exception
+    private ResponseEntity<BlogPostCategory> addBlogPostCategory(@RequestBody BlogPostCategory blogPostCategory) throws Exception
     { 
-        BlogPostCategory allergy = categoryService.createNewBlogPostCategory(allergies);
+        BlogPostCategory allergy = categoryService.createNewBlogPostCategory(blogPostCategory);
         return new ResponseEntity<>(allergy, HttpStatus.CREATED);
     }
     @PostMapping("/dietaryPreference")
@@ -62,16 +62,16 @@ public class CategoryController {
     }
 
     @PostMapping("/educational")
-    private ResponseEntity<EducationalContentCategory> addEducationalContent(@RequestBody EducationalContentCategory allergies) throws Exception
+    private ResponseEntity<EducationalContentCategory> addEducationalContent(@RequestBody EducationalContentCategory educationalContentCategory) throws Exception
     { 
-        EducationalContentCategory allergy = categoryService.createNewEducationalContentCategory(allergies);
+        EducationalContentCategory allergy = categoryService.createNewEducationalContentCategory(educationalContentCategory);
         return new ResponseEntity<>(allergy, HttpStatus.CREATED);
     }
 
     @PostMapping("/healthGoal")
-    private ResponseEntity<HealthGoal> addHealthGoal(@RequestBody HealthGoal allergies) throws Exception
+    private ResponseEntity<HealthGoal> addHealthGoal(@RequestBody HealthGoal healthGoal) throws Exception
     { 
-        HealthGoal allergy = categoryService.createNewHealthGoal(allergies);
+        HealthGoal allergy = categoryService.createNewHealthGoal(healthGoal);
         return new ResponseEntity<>(allergy, HttpStatus.CREATED);
     }
  

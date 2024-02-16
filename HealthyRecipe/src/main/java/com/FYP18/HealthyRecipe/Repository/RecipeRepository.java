@@ -107,4 +107,19 @@ public interface RecipeRepository extends JpaRepository<Recipe, Long> {
 
     @Query(value = getDTOQuery)
     Page<RecipeDTO> findRecipesOfPage(Pageable pageable); 
+
+
+    @Query(value = "SELECT r FROM Recipe r JOIN r.allergies al WHERE al.id = :id")
+    List<Recipe> findRecipeWITHAllergies(@Param("id") Long id);
+
+
+    @Query(value = "SELECT r FROM Recipe r WHERE r.mealTypeId = :id")
+    List<Recipe> findRecipeWITHMealType(@Param("id") Long id);
+
+    @Query(value = "SELECT r FROM Recipe r WHERE r.dietaryPreferencesId = :id")
+    List<Recipe> findRecipeWITHDP(@Param("id") Long id);
+
+    
+    
+
 }

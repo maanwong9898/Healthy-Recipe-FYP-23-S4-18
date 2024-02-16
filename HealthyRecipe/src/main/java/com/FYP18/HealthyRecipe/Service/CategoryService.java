@@ -1,16 +1,24 @@
 package com.FYP18.HealthyRecipe.Service;
 
+import java.nio.charset.StandardCharsets;
+import java.util.Base64; 
 import java.util.List;
-import java.util.Optional;
+import java.util.Optional; 
 
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Autowired; 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
+ 
 import com.FYP18.HealthyRecipe.Entity.Blog;
+import com.FYP18.HealthyRecipe.Entity.EducationalContent;
+import com.FYP18.HealthyRecipe.Entity.Recipe;
+import com.FYP18.HealthyRecipe.Entity.RegisteredUser;
 import com.FYP18.HealthyRecipe.Entity.Categories.*;
 import com.FYP18.HealthyRecipe.Repository.BlogRepository;
-import com.FYP18.HealthyRecipe.Repository.Categories.*;
+import com.FYP18.HealthyRecipe.Repository.EducationalContentRepository;
+import com.FYP18.HealthyRecipe.Repository.RecipeRepository;
+import com.FYP18.HealthyRecipe.Repository.RegisteredUserRepository;
+import com.FYP18.HealthyRecipe.Repository.Categories.*; 
 @Transactional 
 @Service
 public class CategoryService {
@@ -34,11 +42,11 @@ public class CategoryService {
     private MealTypeRepo mealTypeRepo;
     
     //Only System admin can edit, add, remove
+ 
 
 
     public Allergies createNewAllergy(Allergies allergy)
-    {
-        // Allergies find = allergiesRepo.find
+    {  
         return allergiesRepo.save(allergy);
     }
 
@@ -68,8 +76,26 @@ public class CategoryService {
     }
     
 
+    @Autowired
+    private RecipeRepository recipeRepo;
+
+    @Autowired 
+    private RegisteredUserRepository registeredUserRepo;
     public void deleteAllergy(long id)
-    { 
+    {   
+        List<Recipe> recipe = recipeRepo.findRecipeWITHAllergies(id);
+        Allergies allergy = allergiesRepo.findById(id).get();
+        for(Recipe r: recipe)
+        {
+            r.getAllergies().remove(allergy);  
+        } 
+        List<RegisteredUser> list = registeredUserRepo.findByAllergies(id); 
+        for(RegisteredUser ru: list)
+        {
+            ru.getAllergies().remove(allergy); 
+        }
+        recipeRepo.saveAll(recipe);
+        registeredUserRepo.saveAll(list); 
         allergiesRepo.deleteById(id);  
     }
 
@@ -77,46 +103,80 @@ public class CategoryService {
     private BlogRepository blogRepo;
    
     public void deleteBlogPostCategory(long id)
-    { 
-
-        Optional<BlogPostCategory> al = blogPostCategoryRepo.findById(id) ;
-                                // 
-        
+    {  
+        Optional<BlogPostCategory> al = blogPostCategoryRepo.findById(id) ; 
         if(al.isPresent())
         {
            List<Blog> list = blogRepo.findByBlogTypeId(id);
             for(Blog b: list)
             {
                 b.setBlogTypeId(null);
-            }
-            System.out.println("FOUND: " +list.size());
+                b.setBlogType(null);
+            } 
             blogRepo.saveAll(list);
        
             blogPostCategoryRepo.delete(al.get());
-        } 
-        else
-        {
-            System.out.println("FOUND: EMPTY");
-
-        }
-        blogPostCategoryRepo.deleteById(id);  
+        }  
     }
     public void deleteDietaryPreference(long id)
-    { 
+    {  
+        Optional<DietaryPreferences> al = dietaryPreferenceRepo.findById(id) ; 
+        if(al.isPresent())
+        {
+            List<Recipe> recipes = recipeRepo.findRecipeWITHDP(id);
+            for(Recipe r: recipes)
+            {
+                r.setDietaryPreferencesId(null);
+                r.setDietaryPreferences(null);
+            }
+            List<RegisteredUser> users  = registeredUserRepo.findByDP(id);
+            for(RegisteredUser ru: users)
+            {
+                ru.setDietaryPreferencesId(null);
+                ru.setDietaryPreferences(null);
+            }
+            registeredUserRepo.saveAll(users);
+
+            recipeRepo.saveAll(recipes);
+       
+            dietaryPreferenceRepo.delete(al.get());
+        }  
         dietaryPreferenceRepo.deleteById(id);  
     }
+
+    @Autowired
+    private EducationalContentRepository ecRepo;
     public void deleteEducationalContent(long id)
-    { 
+    {  
+        List<EducationalContent> list = ecRepo.findByEducationalContentTypeId(id);
+        for(EducationalContent ec : list)
+        { 
+            ec.setEducationalContentTypeId(null); 
+            ec.setEducationalContentType(null);
+        }
+        ecRepo.saveAll(list); 
         educationalContentCategoryRepo.deleteById(id);  
     }
     public void deleteHealthGoal(long id)
     { 
         healthGoalRepo.deleteById(id);  
     }
-    
+     
     public void deleteMealType(long id)
-    {
-        mealTypeRepo.deleteById(id);
+    { 
+        Optional<MealType> al = mealTypeRepo.findById(id) ; 
+        if(al.isPresent())
+        {
+            List<Recipe> recipes = recipeRepo.findRecipeWITHMealType(id);
+            for(Recipe r: recipes)
+            {
+                r.setMealTypeId(null);
+                r.setMealType(null);
+            }
+            recipeRepo.saveAll(recipes);
+            
+            mealTypeRepo.delete(al.get());
+        }   
     }
 
     public Allergies updateNewAllergy(Allergies allergy) throws Exception
@@ -124,6 +184,7 @@ public class CategoryService {
         Allergies al = allergiesRepo.findById(allergy.getId()) 
                     .orElseThrow(()-> new Exception("Cant find allergy: " + allergy.getSubcategoryName()));
         
+        // String encoded = encodeString(allergy.getSubcategoryName());  
         al.setSubcategoryName(allergy.getSubcategoryName());
 
         return allergiesRepo.save(al);
@@ -173,12 +234,27 @@ public class CategoryService {
         mealType.setSubcategoryName(_mealType.getSubcategoryName());
         return mealTypeRepo.save(mealType);
     }
+    public String encodeString(String originalString) {
+        byte[] encodedBytes = Base64.getEncoder().encode(originalString.getBytes(StandardCharsets.UTF_8));
+        return new String(encodedBytes, StandardCharsets.UTF_8);
+    }
 
+    public String decodeString(String encodedString) {
+        
+        byte[] decodedBytes = Base64.getDecoder().decode(encodedString.getBytes(StandardCharsets.UTF_8));
+        return new String(decodedBytes, StandardCharsets.UTF_8);
+    }
     
     // the rest can only read 
+    @Transactional(readOnly = true)
     public List<Allergies> getAllAllergies()
     {
-        return allergiesRepo.findAll();
+        List<Allergies> toReturn = allergiesRepo.findAll();
+        for(Allergies al: toReturn)
+        {   
+            al.setSubcategoryName(al.getSubcategoryName());
+        }
+        return toReturn;
     }
 
     public List<BlogPostCategory> getAllBlogPostCategories()

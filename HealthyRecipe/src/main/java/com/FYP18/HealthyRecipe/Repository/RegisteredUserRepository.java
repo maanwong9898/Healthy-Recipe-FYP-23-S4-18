@@ -27,4 +27,10 @@ public interface RegisteredUserRepository extends JpaRepository<RegisteredUser, 
     @Query("SELECT b FROM RegisteredUser b WHERE b.email = :email")
     RegisteredUser findByEmail(String email); 
  
+    @Query("SELECT b FROM RegisteredUser b JOIN b.allergies al WHERE al.id = :id")
+    List<RegisteredUser> findByAllergies(Long id);;
+
+
+    @Query("SELECT b FROM RegisteredUser b WHERE b.dietaryPreferencesId = :id")
+    List<RegisteredUser> findByDP(Long id);
 }

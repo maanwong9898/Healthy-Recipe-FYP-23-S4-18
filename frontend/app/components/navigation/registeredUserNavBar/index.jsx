@@ -48,19 +48,6 @@ const RegisteredUserNavBar = () => {
 
   const hideTimer = useRef(null);
 
-  // const handleMouseEnter = () => {
-  //   if (hideTimer.current) {
-  //     clearTimeout(hideTimer.current);
-  //   }
-  //   setDropdownVisible(true);
-  // };
-
-  // const handleMouseLeave = () => {
-  //   hideTimer.current = setTimeout(() => {
-  //     setDropdownVisible(false);
-  //   }, 300);
-  // };
-
   const handleMouseEnterAccount = () => {
     if (hideTimer.current) {
       clearTimeout(hideTimer.current);

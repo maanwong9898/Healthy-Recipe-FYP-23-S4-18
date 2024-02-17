@@ -89,7 +89,7 @@ public class MealPlanController {
     }
      
     @PutMapping("/update")
-    public ResponseEntity<MealPlan> updateBlog(@RequestBody MealPlan mealPlan)  
+    public ResponseEntity<MealPlan> updateMealPlan(@RequestBody MealPlan mealPlan)  
     { 
        MealPlan toReturn = mealPlanService.updateMealPlan(mealPlan); 
         return new ResponseEntity<>(toReturn, HttpStatus.OK);
@@ -103,7 +103,7 @@ public class MealPlanController {
     }
 
     @DeleteMapping("/delete/{id}")
-    public ResponseEntity<?> deleteBlog(@PathVariable("id") long id )
+    public ResponseEntity<?> deleteMealPlan(@PathVariable("id") long id )
     {  
         mealPlanService.deleteMealPlanById(id);
         return new ResponseEntity<>(HttpStatus.OK);

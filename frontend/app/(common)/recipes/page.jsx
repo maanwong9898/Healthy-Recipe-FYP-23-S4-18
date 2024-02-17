@@ -9,7 +9,7 @@ import { QueryClientProvider, useQuery } from "react-query"; // Added useQuery h
 import { queryClient } from "../../queryClient.js"; // Adjust the path as necessary
 import SecureStorage from "react-secure-storage";
 
-// rouuter path: /registeredUser/recipes
+// rouuter path: /recipes
 
 // Sorting options
 const sortOptions = {
@@ -23,7 +23,6 @@ const sortOptions = {
 // Fetch all recipes
 const fetchRecipes = async () => {
   try {
-    console.log("Fetching recipes...");
     const response = await axiosInterceptorInstance.get("/recipe/get");
 
     // Filter active blog posts
@@ -38,51 +37,39 @@ const fetchRecipes = async () => {
   }
 };
 
-// Fetch all categories
 // Fetch all dietary preferences categories from backend
 const fetchDietaryPreferences = async () => {
-  console.log("Fetching dietary preferences categories...");
   try {
     const response = await axiosInterceptorInstance.get(
       "/category/getAllDietaryPreferences"
     );
 
-    // setDietaryPreferencesCategory(response.data);
     return response.data;
-  } catch (error) {
-    console.log(error);
-  }
+  } catch (error) {}
 };
 
 // Fetch all meal type categories from backend
 const fetchMealTypes = async () => {
-  console.log("Fetching meal type categories...");
   try {
     const response = await axiosInterceptorInstance.get(
       "/category/getAllMealTypes"
     );
     return response.data;
-  } catch (error) {
-    console.log(error);
-  }
+  } catch (error) {}
 };
 
 // Fetch all allergies categories from backend
 const fetchAllergies = async () => {
-  console.log("Fetching allergies categories...");
   try {
     const response = await axiosInterceptorInstance.get(
       "/category/getAllAllergies"
     );
     return response.data;
-  } catch (error) {
-    console.log(error);
-  }
+  } catch (error) {}
 };
 
 const RecipesPageForUser = () => {
   const router = useRouter();
-  // const [AllRecipes, setAllRecipes] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [sortOption, setSortOption] = useState("");
   const [isSearchEmpty, setIsSearchEmpty] = useState(false);
@@ -300,7 +287,6 @@ const RecipesPageForUser = () => {
 
     let newFilteredRecipes = AllRecipes;
 
-    console.log("Start doing filtering...");
     // Filter by dietary preference
     if (selectedDietaryPreference) {
       newFilteredRecipes = newFilteredRecipes.filter(
@@ -442,8 +428,6 @@ const RecipesPageForUser = () => {
         break;
     }
 
-    console.log("End doing filtering...");
-
     if (searchTerm.trim()) {
     } else {
       setSearchPerformed(false); // To prevent results count from showing when no search is performed
@@ -454,9 +438,7 @@ const RecipesPageForUser = () => {
       setSearchPerformed(false);
     }
 
-    // setFilteredRecipes(sortedRecipes);
     setDisplayedRecipes(sortedRecipes);
-    // setIsSearchEmpty(searchResults.length === 0);
     setIsSearchEmpty(sortedRecipes.length === 0);
   }, [
     AllRecipes,
@@ -532,7 +514,6 @@ const RecipesPageForUser = () => {
   const applyFilters = (recipes) => {
     // Start with the full list of recipes
     let finalResults = recipes;
-    // Apply filters
 
     // Filter by dietary preference
     if (selectedDietaryPreference) {
@@ -688,7 +669,6 @@ const RecipesPageForUser = () => {
   };
 
   const handleViewRecipe = (id) => {
-    console.log(`Recipe Title: ${id}`);
     let routePath = `/recipes/viewRecipe/${id}`;
     router.push(routePath);
   };

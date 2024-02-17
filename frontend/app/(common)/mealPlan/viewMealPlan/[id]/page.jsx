@@ -167,19 +167,12 @@ const ViewMealPlan = ({ params }) => {
 
       // Assuming response.data is the array of reviews for the given meal plan id
       setReviewsAndRatings(response.data);
-
-      // Optionally, log each review to the console
-      response.data.forEach((reviewData, index) => {
-        console.log(`Review ${index + 1}:`, reviewData.review);
-      });
     } catch (error) {
       console.error("Failed to fetch ratings and reviews:", error);
     }
   };
 
   const handleViewRecipe = (id) => {
-    console.log("Viewing recipe with id:", id);
-
     // Redirect to the correct route
     let routePath = `/recipes/viewRecipe/${id}`;
 
@@ -283,7 +276,6 @@ const ViewMealPlan = ({ params }) => {
         {isLoading ? (
           <div className="loading-indicator text-center">
             <p>Loading meal plan...</p>
-            {/* You can replace this with a spinner or any other visual indicator */}
           </div>
         ) : (
           <>
@@ -405,30 +397,6 @@ const ViewMealPlan = ({ params }) => {
                 <p className="font-sans font-bold text-4xl text-gray-900 mb-4 md:mt-8 ml-4">
                   Suggested Recipes
                 </p>
-                {/* <div className="flex justify-between items-center mb-4 md:mt-8 ml-4">
-              <div></div>
-              <div className="flex gap-4">
-                <button
-                  onClick={prevRecipe}
-                  className="rounded-md bg-orange-500 hover:bg-orange-600 transition duration-300 ease-in-out"
-                >
-                  <ChevronLeftIcon
-                    style={{ fontSize: "2.5rem", color: "white" }}
-                  />
-                </button>
-                <button
-                  onClick={nextRecipe}
-                  className="rounded-md bg-orange-500 hover:bg-orange-600 transition duration-300 ease-in-out"
-                  style={{
-                    marginRight: "1rem",
-                  }}
-                >
-                  <ChevronRightIcon
-                    style={{ fontSize: "2.5rem", color: "white" }}
-                  />
-                </button>
-              </div>
-            </div> */}
                 {mealPlan?.recipes && mealPlan.recipes.length > 0 ? (
                   <div className="grid grid-cols-1 gap-4 justify-center items-center relative">
                     {/* Render recipe cards here */}

@@ -5,10 +5,7 @@ import Link from "next/link";
 import { useState, useEffect } from "react";
 import axiosInterceptorInstance from "../../../../axiosInterceptorInstance.js";
 import HomeNavbar from "@/app/components/navigation/homeNavBar/index.jsx";
-import Footer from "@/app/components/footer/index.jsx";
 import SecureStorage from "react-secure-storage";
-
-// router path: /educationalContent/viewEducationalContent/[id]
 
 const fetchEduContentById = async (postId) => {
   try {
@@ -18,14 +15,12 @@ const fetchEduContentById = async (postId) => {
     const response = await axiosInterceptorInstance.get(
       `/educationalContent/get/${postId}`
     );
-    // console.log("Fetched educational content is:", response.data);
 
     if (!response.data) {
       console.error(`Educational Content with ID ${postId} not found`);
       throw new Error(`Educational Content with ID ${postId} not found`);
     }
 
-    // Assuming the response contains the educational content directly
     const eduContent = response.data;
 
     return eduContent;
@@ -76,15 +71,9 @@ const ViewEducationalContent = ({ params }) => {
       const response = await axiosInterceptorInstance.get(
         `/educationalContent/rating/getEducationalContent?educationalContentId=${educationalContentId}`
       );
-      // console.log("All ratings response data:", response.data);
 
       // Assuming response.data is the array of reviews for the given eduContentId
       setReviewsAndRatings(response.data);
-
-      // Optionally, log each review to the console
-      response.data.forEach((reviewData, index) => {
-        console.log(`Review ${index + 1}:`, reviewData.review);
-      });
     } catch (error) {
       console.error("Failed to fetch ratings and reviews:", error);
     }
@@ -205,7 +194,7 @@ const ViewEducationalContent = ({ params }) => {
             </section>
 
             {/* Ratings and Reviews */}
-            <div className="blog-post-reviews mt-16 mx-auto max-w-screen-xl text-left border-t-2 border-gray-50">
+            <div className="mt-16 mx-auto max-w-screen-xl text-left border-t-2 border-gray-50">
               <p className="font-sans font-bold text-2xl md:text-4xl text-gray-900 mb-4 md:mt-8 ml-4 lg:ml-0">
                 Rating and Reviews
               </p>

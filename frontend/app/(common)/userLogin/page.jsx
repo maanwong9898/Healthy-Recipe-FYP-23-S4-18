@@ -45,7 +45,6 @@ const userLogin = () => {
 
   // Function to retrieve user info from the token
   const fetchUserInfo = async () => {
-    console.log("Fetching user info...");
     try {
       const token = SecureStorage.getItem("token");
 
@@ -63,11 +62,6 @@ const userLogin = () => {
       const iatUtc = new Date(decodedToken.iat * 1000).toUTCString();
       const expUtc = new Date(decodedToken.exp * 1000).toUTCString();
       const currentUtc = new Date().toUTCString();
-
-      // Display the times
-      console.log(`Issued at (UTC): ${iatUtc}`);
-      console.log(`Expires at (UTC): ${expUtc}`);
-      console.log(`Current time (UTC): ${currentUtc}`);
 
       const expDate = decodedToken.exp * 1000; // Convert to milliseconds
 
@@ -95,8 +89,6 @@ const userLogin = () => {
       const { token } = response.data; // Destructure the token from response data
 
       SecureStorage.setItem("token", token);
-
-      console.log("the error message : ", response.data.error);
 
       // set the error message to the state
       setError(response.data.error);

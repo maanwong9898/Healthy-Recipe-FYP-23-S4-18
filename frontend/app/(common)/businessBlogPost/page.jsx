@@ -4,12 +4,9 @@ import React from "react";
 import { useState, useEffect } from "react";
 import HomeNavbar from "@/app/components/navigation/homeNavBar";
 import axiosInterceptorInstance from "../../axiosInterceptorInstance.js";
-import SearchIcon from "@mui/icons-material/Search";
 import { QueryClientProvider, useQuery } from "react-query"; // Added useQuery here
 import { queryClient } from "../../queryClient.js"; // Adjust the path as necessary
 import SecureStorage from "react-secure-storage";
-
-// rouuter path: /businessBlogPost
 
 // Sorting options
 const sortOptions = {
@@ -22,7 +19,6 @@ const sortOptions = {
 // Fetch all blog posts
 const fetchBlogPosts = async () => {
   try {
-    console.log("Fetching blog posts...");
     const response = await axiosInterceptorInstance.get("/blog/get");
 
     // Filter active blog posts
@@ -89,7 +85,6 @@ const BusinessBlogPostsPage = () => {
       }
     }
 
-    console.log("All in one useEffect triggered");
     // Ensure AllBusinessBlogPosts is an array
     let allPosts = Array.isArray(AllBusinessBlogPosts)
       ? AllBusinessBlogPosts
@@ -106,8 +101,6 @@ const BusinessBlogPostsPage = () => {
     // Search term logic
     if (!searchTerm.trim()) {
       setSearchPerformed(false);
-    } else {
-      // Apply search logic here if needed
     }
 
     // Sorting logic
@@ -133,12 +126,12 @@ const BusinessBlogPostsPage = () => {
 
     setDisplayedBlogPosts(sortedPosts);
     setIsSearchEmpty(sortedPosts.length === 0);
+
     // Reset searchButtonClicked when searchTerm changes
     setSearchButtonClicked(false);
   }, [searchTerm, categoryFilter, AllBusinessBlogPosts, sortOption]);
 
   const handleSearchClick = async () => {
-    console.log("Search button clicked");
     setSearchButtonClicked(true); // Set flag when search is performed
     setIsSearchEmpty(false);
     setSearchPerformed(true);
@@ -175,8 +168,6 @@ const BusinessBlogPostsPage = () => {
       setResultsCount(sortedResults.length);
       setIsSearchEmpty(false);
       setSearchPerformed(false);
-
-      console.log("Displayed blog posts after click:", displayedBlogPosts);
     } else {
       // Search for blog posts
       try {
@@ -240,7 +231,6 @@ const BusinessBlogPostsPage = () => {
 
   // Redirect to specific blog page
   const handleViewBlogPost = (id) => {
-    console.log(`Blog Title: ${id}`);
     let routePath = `/businessBlogPost/viewBusinessBlogPost/${id}`;
     router.push(routePath);
   };

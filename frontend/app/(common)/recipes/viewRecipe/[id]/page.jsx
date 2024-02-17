@@ -8,8 +8,6 @@ import SecureStorage from "react-secure-storage";
 
 // router path: /recipes/viewRecipe/[id]
 
-// rating and reviews not done yet
-
 // To render the steps as a list
 const renderSteps = (stepsString) => {
   // Split the steps string into an array, one element per step
@@ -91,11 +89,6 @@ const ViewRecipe = ({ params }) => {
 
       // Assuming response.data is the array of reviews for the given recipeId
       setReviewsAndRatings(response.data);
-
-      // Optionally, log each review to the console
-      response.data.forEach((reviewData, index) => {
-        console.log(`Review ${index + 1}:`, reviewData.review);
-      });
     } catch (error) {
       console.error("Failed to fetch ratings and reviews:", error);
     }

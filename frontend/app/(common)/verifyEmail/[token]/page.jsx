@@ -49,7 +49,6 @@ const VerifyEmail = () => {
       {showMessage && (
         <p className="font-medium text-base m-3">{message}</p>
       )}{" "}
-      {/* Conditionally render the message */}
     </div>
   );
 };

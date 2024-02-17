@@ -14,7 +14,6 @@ import SecureStorage from "react-secure-storage";
 const sortOptions = {
   LATEST: { key: "LATEST", label: "By Latest" },
   OLDEST: { key: "OLDEST", label: "By Oldest" },
-  // HIGHEST_RATINGS: { key: "HIGHEST_RATINGS", label: "Highest Ratings" },
   ALPHABETICAL_AZ: { key: "ALPHABETICAL_AZ", label: "Alphabetically (A to Z)" },
   ALPHABETICAL_ZA: { key: "ALPHABETICAL_ZA", label: "Alphabetically (Z to A)" },
 };
@@ -22,7 +21,6 @@ const sortOptions = {
 // Fetch all meal plan
 const fetchMealPlan = async () => {
   try {
-    console.log("Fetching all meal plan...");
     const response = await axiosInterceptorInstance.get("/mealPlan/get");
 
     // Filter active blog posts
@@ -104,7 +102,6 @@ const MealPlanPage = () => {
       setSearchPerformed(false);
     }
 
-    // let sortedMealPlan = [...newFilteredRecipes];
     let sortedMealPlan = [...(filteredMealPlans ?? [])];
 
     // Helper function to get the date for comparison
@@ -186,8 +183,6 @@ const MealPlanPage = () => {
       setResultsCount(sortedResults.length);
       setIsSearchEmpty(false);
       setSearchPerformed(false);
-
-      console.log("Displayed meal plans after click:", displayedMealPlan);
     } else {
       // Search for meal plans
       try {
@@ -303,7 +298,6 @@ const MealPlanPage = () => {
   };
 
   const handleViewMealPlan = (id) => {
-    console.log(`Meal plan Title: ${id}`);
     let routePath = `/mealPlan/viewMealPlan/${id}`;
     router.push(routePath);
   };

@@ -8,8 +8,6 @@ import { QueryClientProvider, useQuery } from "react-query"; // Added useQuery h
 import { queryClient } from "../../queryClient.js"; // Adjust the path as necessary
 import SecureStorage from "react-secure-storage";
 
-// rouuter path: /educationalContent
-
 // Sorting options
 const sortOptions = {
   LATEST: { key: "LATEST", label: "By Latest" },
@@ -21,12 +19,11 @@ const sortOptions = {
 // Fetch all educational content
 const fetchEducationalContent = async () => {
   try {
-    console.log("Fetching educational Content...");
     const response = await axiosInterceptorInstance.get(
       "/educationalContent/get"
     );
 
-    // Filter active blog posts
+    // Filter active educational contents
     const filteredData = response.data.filter((post) => post.active === true);
 
     return filteredData;
@@ -58,7 +55,7 @@ const EducationalContentPageForUser = () => {
   const [resultsCount, setResultsCount] = useState(0);
   const [searchButtonClicked, setSearchButtonClicked] = useState(false);
 
-  // Fetch blog posts
+  // Fetch educational contents posts
   const {
     data: AllEduContent,
     isLoading,
@@ -76,7 +73,7 @@ const EducationalContentPageForUser = () => {
     return <div>Error fetching data</div>;
   }
 
-  // Filter blog posts based on search term and category filter
+  // Filter educational content based on search term and category filter
   useEffect(() => {
     if (SecureStorage.getItem("token")) {
       if (SecureStorage.getItem("role") == "ADMIN") {
@@ -134,7 +131,6 @@ const EducationalContentPageForUser = () => {
   }, [searchTerm, categoryFilter, AllEduContent, sortOption]);
 
   const handleSearchClick = async () => {
-    console.log("Search button clicked");
     setSearchButtonClicked(true); // Set flag when search is performed
     setIsSearchEmpty(false);
     setSearchPerformed(true);
@@ -173,7 +169,7 @@ const EducationalContentPageForUser = () => {
       setIsSearchEmpty(false);
       setSearchPerformed(false);
     } else {
-      // Search for blog posts
+      // Search for educational contents posts
       try {
         const formattedSearchTerm = searchTerm.trim().replace(/\s+/g, "+");
         const response = await axiosInterceptorInstance.get(
@@ -238,7 +234,6 @@ const EducationalContentPageForUser = () => {
   };
 
   const handleViewEduContent = (id) => {
-    console.log(`Educational Content Title: ${id}`);
     let routePath = `/educationalContent/viewEducationalContent/${id}`;
     router.push(routePath);
   };

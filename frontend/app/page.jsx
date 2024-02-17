@@ -18,10 +18,8 @@ const fetchMostPopularEduContent = async () => {
     const response = await axiosInterceptorInstance.get(
       "/landingPage/getMostPopularEducationalContents"
     );
-    console.log("Most Popular Educational Contents: ", response.data);
     return response.data;
   } catch (error) {
-    console.log("Failed to fetch most popular educational contents: ", error);
     throw error;
   }
 };
@@ -32,7 +30,6 @@ const fetchMostPopularBlogPosts = async () => {
     const response = await axiosInterceptorInstance.get(
       "/landingPage/getMostPopularBlogs"
     );
-    console.log("Most Popular Blog Posts:", response.data);
     return response.data;
   } catch (error) {
     console.error("Failed to fetch most popular blog posts:", error);
@@ -46,7 +43,6 @@ const fetchMostPopularRecipes = async () => {
     const response = await axiosInterceptorInstance.get(
       "/landingPage/getMostPopularRecipes"
     );
-    console.log("Most Popular Recipes: ", response.data);
     return response.data;
   } catch (error) {
     console.log("Failed to fetch most popular recipes: ", error);
@@ -60,7 +56,6 @@ const fetchMostPopularMealPlans = async () => {
     const response = await axiosInterceptorInstance.get(
       "/landingPage/getPopularMealPlans"
     );
-    console.log("Most Popular Meal Plans: ", response.data);
     return response.data;
   } catch (error) {
     console.log("Failed to fetch most popular meal plans: ", error);
@@ -165,8 +160,6 @@ const Home = () => {
 
   // Redirect to the specific recipe page
   const handleViewRecipes = (id) => {
-    // Make sure the recipeTitle
-    console.log(`Recipe Title: ${id}`);
     // Redirect to the correct route
     let routePath = `/recipes/viewRecipe/${id}`;
     router.push(routePath);
@@ -231,14 +224,12 @@ const Home = () => {
 
   // BLOG POSTS RELATED
   const handleViewBlogPost = (id) => {
-    // Make sure the Blog title
-    console.log(`Blog Title: ${id}`);
     // Redirect to the correct route
     let routePath = `/businessBlogPost/viewBusinessBlogPost/${id}`;
     router.push(routePath);
   };
 
-  // Function to render Recipe a single post card
+  // Function to render blog post a single post card
   const renderBlogPost = (post) => (
     <div
       key={post.id}
@@ -298,7 +289,6 @@ const Home = () => {
   // MEAL PLAN RELATED
   const handleViewMealPlan = (id) => {
     // Make sure the Meal Plan title
-    console.log(`Meal Plan Title: ${id}`);
     // Redirect to the correct route
     let routePath = `/mealPlan/viewMealPlan/${id}`;
     router.push(routePath);
@@ -365,7 +355,6 @@ const Home = () => {
 
   const handleViewEducationalContent = (id) => {
     // Make sure the Educational Content title
-    console.log(`Educational Content Title: ${id}`);
     // Redirect to the correct route
     let routePath = `/educationalContent/viewEducationalContent/${id}`;
     router.push(routePath);
@@ -430,12 +419,10 @@ const Home = () => {
 
   // Get user counts
   const fetchUserCounts = async () => {
-    console.log("Fetching user accounts...");
     try {
       const response = await axiosInterceptorInstance.get(
         "/landingPage/getRoleCount"
       );
-      //console.log("User Role Counts: ", response.data);
       setTotalUserCount(response.data);
     } catch (error) {
       console.log("Failed to fetch user role counts: ", error);

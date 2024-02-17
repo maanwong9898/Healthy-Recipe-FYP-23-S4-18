@@ -5,10 +5,7 @@ import Link from "next/link";
 import { useState, useEffect } from "react";
 import axiosInterceptorInstance from "../../../../axiosInterceptorInstance.js";
 import HomeNavbar from "../../../../components/navigation/homeNavBar";
-import Footer from "../../../../components/footer";
 import SecureStorage from "react-secure-storage";
-
-// router path: /businessBlogPost/viewBusinessBlogPost/[id]
 
 const fetchBlogPostById = async (postId) => {
   try {
@@ -16,14 +13,11 @@ const fetchBlogPostById = async (postId) => {
     postId = postId;
 
     const response = await axiosInterceptorInstance.get(`/blog/get/${postId}`);
-    //console.log("Fetched blog post data is:", response.data);
-
     if (!response.data) {
       console.error(`Blog post with ID ${postId} not found`);
       throw new Error(`Blog post with ID ${postId} not found`);
     }
 
-    console.log("try blog post by id");
     // Assuming the response contains the blog post directly
     const blogPost = response.data;
 
@@ -74,15 +68,8 @@ const ViewBusinessBlogPost = ({ params }) => {
       const response = await axiosInterceptorInstance.get(
         `/blog/rating/getBlog?blogId=${blogId}`
       );
-      // console.log("All ratings response data:", response.data);
-
       // Assuming response.data is the array of reviews for the given blogId
       setReviewsAndRatings(response.data);
-
-      // Optionally, log each review to the console
-      response.data.forEach((reviewData, index) => {
-        console.log(`Review ${index + 1}:`, reviewData.review);
-      });
     } catch (error) {
       console.error("Failed to fetch ratings and reviews:", error);
     }
@@ -202,7 +189,7 @@ const ViewBusinessBlogPost = ({ params }) => {
             </section>
 
             {/* Ratings and Reviews */}
-            <div className="blog-post-reviews mt-16 mx-auto max-w-screen-xl text-left border-t-2 border-gray-50">
+            <div className="mt-16 mx-auto max-w-screen-xl text-left border-t-2 border-gray-50">
               <p className="font-sans font-bold text-2xl md:text-4xl text-gray-900 mb-4 md:mt-8 ml-4 lg:ml-0">
                 Rating and Reviews
               </p>

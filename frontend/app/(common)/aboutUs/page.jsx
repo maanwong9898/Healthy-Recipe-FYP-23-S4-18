@@ -23,7 +23,6 @@ const AboutUs = () => {
       const response = await axiosInterceptorInstance.get(
         "/registeredUsers/getDemo"
       );
-      console.log("Fetched dietary preferences:", response.data);
       setUserDietaryPreferenceCount(response.data);
     } catch (error) {
       console.error("Error fetching dietary preferences:", error);
@@ -35,9 +34,7 @@ const AboutUs = () => {
       const response = await axiosInterceptorInstance.get(
         "/registeredUsers/getAgeGroup"
       );
-      console.log("Fetched age groups:", response.data);
       const ageData = groupedAgeData(response.data);
-      console.log("Grouped age data:", ageData);
       setUserAgeGroup(ageData);
     } catch (error) {
       console.error("Error fetching age groups:", error);

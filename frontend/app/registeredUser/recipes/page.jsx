@@ -16,7 +16,6 @@ import RegisteredUserNavBar from "../../components/navigation/registeredUserNavB
 const sortOptions = {
   LATEST: { key: "LATEST", label: "By Latest" },
   OLDEST: { key: "OLDEST", label: "By Oldest" },
-  // HIGHEST_RATINGS: { key: "HIGHEST_RATINGS", label: "Highest Ratings" },
   ALPHABETICAL_AZ: { key: "ALPHABETICAL_AZ", label: "Alphabetically (A to Z)" },
   ALPHABETICAL_ZA: { key: "ALPHABETICAL_ZA", label: "Alphabetically (Z to A)" },
 };
@@ -24,16 +23,7 @@ const sortOptions = {
 // Fetch all recipes
 const fetchRecipes = async () => {
   try {
-    console.log("Fetching recipes...");
     const response = await axiosInterceptorInstance.get("/recipe/get");
-    // console.log("All recipe:", response.data);
-    // Fetch average ratings for each blog post
-    // const recipesWithAverage = await Promise.all(
-    //   response.data.map(async (recipe) => {
-    //     const average = await fetchRecipeAverage(recipe.id);
-    //     return { ...recipe, average };
-    //   })
-    // );
 
     // Filter active blog posts
     const filteredData = response.data.filter(
@@ -47,30 +37,13 @@ const fetchRecipes = async () => {
   }
 };
 
-// const fetchRecipeAverage = async (recipeId) => {
-//   try {
-//     const response = await axiosInterceptorInstance.get(
-//       `/recipe/getAverage/${recipeId}`
-//     );
-//     console.log("Average rating for recipe", recipeId, "is:", response.data);
-//     return response.data; // Assuming this returns the average data for the recipe
-//   } catch (error) {
-//     console.error(`Failed to fetch average for recipe ${recipeId}:`, error);
-//     return null; // or handle the error as you see fit
-//   }
-// };
-
 // Fetch all dietary preferences categories from backend
 const fetchDietaryPreferences = async () => {
-  console.log("Fetching dietary preferences categories...");
   try {
     const response = await axiosInterceptorInstance.get(
       "/category/getAllDietaryPreferences"
     );
-    console.log(
-      "Dietary Preferences Categories Successfully Fetched :  ",
-      response.data
-    );
+
     // setDietaryPreferencesCategory(response.data);
     return response.data;
   } catch (error) {
@@ -80,13 +53,10 @@ const fetchDietaryPreferences = async () => {
 
 // Fetch all meal type categories from backend
 const fetchMealTypes = async () => {
-  console.log("Fetching meal type categories...");
   try {
     const response = await axiosInterceptorInstance.get(
       "/category/getAllMealTypes"
     );
-    console.log("Meal Type Categories Successfully Fetched :  ", response.data);
-    // setMealTypeCategory(response.data);
     return response.data;
   } catch (error) {
     console.log(error);
@@ -95,13 +65,10 @@ const fetchMealTypes = async () => {
 
 // Fetch all allergies categories from backend
 const fetchAllergies = async () => {
-  console.log("Fetching allergies categories...");
   try {
     const response = await axiosInterceptorInstance.get(
       "/category/getAllAllergies"
     );
-    console.log("Allergies Categories Successfully Fetched :  ", response.data);
-    // setAllergyCategory(response.data);
     return response.data;
   } catch (error) {
     console.log(error);
@@ -114,15 +81,7 @@ const fetchRecipesByDPandAllergies = async (userId, count) => {
     const response = await axiosInterceptorInstance.get(
       `/registeredUsers/findRecipeDTOsByAllergiesAndDP/${userId}/${count}`
     );
-    console.log("Fetched recipe data is:", response.data);
-    console.log("User ID: ", userId);
-    console.log("Number of recipes displayed: ", count);
-    // const recipesWithAverage = await Promise.all(
-    //   response.data.map(async (recipe) => {
-    //     const average = await fetchRecipeAverage(recipe.id);
-    //     return { ...recipe, average };
-    //   })
-    // );
+
     return response.data;
   } catch (error) {
     console.error("Failed to fetch recipe:", error);
@@ -143,7 +102,6 @@ const fetchDashboardData = async () => {
 
 const RecipesPageForUser = () => {
   const router = useRouter();
-  // const [AllRecipes, setAllRecipes] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [sortOption, setSortOption] = useState("");
   const [isSearchEmpty, setIsSearchEmpty] = useState(false);
@@ -152,11 +110,6 @@ const RecipesPageForUser = () => {
   const [resultsCount, setResultsCount] = useState(0);
   // Additional state to track if search button has been clicked
   const [searchButtonClicked, setSearchButtonClicked] = useState(false);
-  // const [dietaryPreferencesCategory, setDietaryPreferencesCategory] = useState(
-  //   []
-  // );
-  // const [allergyCategory, setAllergyCategory] = useState([]);
-  // const [mealTypeCategory, setMealTypeCategory] = useState([]);
 
   // For filter by category
   const [selectedDietaryPreference, setSelectedDietaryPreference] =
@@ -281,9 +234,6 @@ const RecipesPageForUser = () => {
 
   // Fetch allergies
   const { data: allergyCategory } = useQuery("allergies", fetchAllergies);
-
-  // if (isLoading) return <div>Loading...</div>;
-  // if (isError) return <div>Error occurred while fetching data.</div>;
 
   // Toggle function for filter section
   const toggleFilterSection = () => {
@@ -422,7 +372,6 @@ const RecipesPageForUser = () => {
   useEffect(() => {
     let newFilteredRecipes = AllRecipes;
 
-    console.log("Start doing filtering...");
     // Filter by dietary preference
     if (selectedDietaryPreference) {
       newFilteredRecipes = newFilteredRecipes.filter(
@@ -563,22 +512,7 @@ const RecipesPageForUser = () => {
       case "ALPHABETICAL_ZA":
         sortedRecipes.sort((a, b) => b.title.localeCompare(a.title));
         break;
-      // case "HIGHEST_RATINGS":
-      //   sortedResults.sort((a, b) => {
-      //     const ratingDiff =
-      //       (b.average?.averageRatings || 0) -
-      //       (a.average?.averageRatings || 0);
-      //     if (ratingDiff !== 0) return ratingDiff;
-      //     // Use getDateForComparison for tiebreaker date comparison
-      //     return getDateForComparison(b) - getDateForComparison(a); // Latest date first if tie
-      //   });
-      //   break;
     }
-
-    console.log("Filtered recipes:", newFilteredRecipes);
-
-    console.log("The recipe after multiple filtering: ", newFilteredRecipes);
-    console.log("End doing filtering...");
 
     if (searchTerm.trim()) {
     } else {
@@ -590,9 +524,7 @@ const RecipesPageForUser = () => {
       setSearchPerformed(false);
     }
 
-    // setFilteredRecipes(sortedRecipes);
     setDisplayedRecipes(sortedRecipes);
-    // setIsSearchEmpty(searchResults.length === 0);
     setIsSearchEmpty(sortedRecipes.length === 0);
   }, [
     AllRecipes,
@@ -857,7 +789,6 @@ const RecipesPageForUser = () => {
   };
 
   const handleViewRecipe = (id) => {
-    console.log(`Recipe Title: ${id}`);
     let routePath = `/registeredUser/recipes/viewRecipe/${id}`;
     router.push(routePath);
   };
@@ -924,124 +855,10 @@ const RecipesPageForUser = () => {
               {capitalizeFirstLetter(post?.publisher) || "Not Specified"}
             </span>
           </p>
-          {/* <p className="text-gray-700 text-sm font-semibold">
-            {renderStarsAndCount(post)}
-          </p> */}
         </div>
       </div>
     </div>
   );
-
-  // // For debugging filtering and searching
-  // const renderPostCard = (post) => (
-  //   <div
-  //     key={post.id}
-  //     className="rounded shadow-lg overflow-hidden flex flex-col"
-  //     style={{
-  //       border: "0.5px solid transparent",
-  //       background:
-  //         "linear-gradient(to right, #22d3ee 0%, #8b5cf6 100%), white",
-  //       backgroundOrigin: "border-box",
-  //       backgroundClip: "content-box, border-box",
-  //     }}
-  //   >
-  //     <img
-  //       src={post.img}
-  //       alt="Credit to the source"
-  //       className="w-full object-cover rounded-sm"
-  //       style={{ height: "192px" }}
-  //     />
-  //     <div className="flex-grow flex flex-col justify-between p-4 bg-white">
-  //       <div>
-  //         <h2 className="text-2xl font-extrabold mb-2">{post.title}</h2>
-  //         <div
-  //           className="text-gray-700 text-base mb-4 line-clamp-3"
-  //           style={{ height: "4.5rem" }}
-  //         >
-  //           <div className="whitespace-pre-line">{post.description}</div>
-  //         </div>
-  //         <div className="flex justify-between items-center">
-  //           <div className="flex items-center text-green-600 font-semibold text-xl">
-  //             {post.dietaryPreferences?.subcategoryName ||
-  //               "No Dietary Preference"}
-  //           </div>
-  //         </div>
-  //         {/* <div className="flex justify-between items-center">
-  //           <div className="flex items-center text-black font-semibold text-xl">
-  //             {post.allergies.map((allergy) => (
-  //               <span
-  //                 key={allergy.id}
-  //                 className="text-xs font-semibold inline-block py-1 px-2 uppercase rounded-full text-red-600 bg-red-200 last:mr-0 mr-1"
-  //               >
-  //                 {allergy.subcategoryName}
-  //               </span>
-  //             ))}
-  //           </div>
-  //         </div> */}
-  //         <div className="flex flex-col">
-  //           <div className="flex items-center text-red-700 font-semibold text-xl">
-  //             {post.calories} Calories
-  //           </div>
-
-  //           <div className="flex items-center text-red-700 font-semibold text-xl">
-  //             {post.carbs} Carbs
-  //           </div>
-
-  //           <div className="flex items-center text-red-700 font-semibold text-xl">
-  //             {post.protein} Protein
-  //           </div>
-
-  //           <div className="flex items-center text-red-700 font-semibold text-xl">
-  //             {post.fat} Fat
-  //           </div>
-
-  //           <div className="flex items-center text-red-700 font-semibold text-xl">
-  //             {post.sodium} Sodium
-  //           </div>
-
-  //           <div className="flex items-center text-red-700 font-semibold text-xl">
-  //             {post.fibre} Fibre
-  //           </div>
-  //         </div>
-  //         <div className="flex justify-between items-center">
-  //           <div className="flex items-center text-blue-900 font-semibold text-xl">
-  //             {post.cookingTime} Minutes
-  //           </div>
-  //         </div>
-  //         <div className="flex justify-between items-center">
-  //           <div className="flex items-center text-blue-900 font-semibold text-xl">
-  //             {post.mealType?.subcategoryName || "No Meal Type"}
-  //           </div>
-  //         </div>
-
-  //         <div className="flex justify-between items-center">
-  //           <div className="flex items-center text-blue-900 font-semibold text-xl">
-  //             {post.createdDT || "No Date"}
-  //           </div>
-  //         </div>
-
-  //         <div className="flex justify-between items-center">
-  //           <div className="flex items-center text-blue-900 font-semibold text-xl">
-  //             {post.lastUpdatedDT || "No Date"}
-  //           </div>
-  //         </div>
-
-  //         {/* Displaying Ingredients */}
-  //         <div className="mb-4">
-  //           <strong>Ingredients:</strong>
-  //           <p className="text-gray-700">{post.ingredients}</p>
-  //         </div>
-
-  //         <button
-  //           onClick={() => handleViewRecipe(post.id)}
-  //           className="text-white font-bold bg-gradient-to-br from-cyan-400 to-cyan-800 hover:bg-blue-950 border-2 border-black focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 rounded-lg text-sm mt-3 px-4 py-2 text-center"
-  //         >
-  //           Read more
-  //         </button>
-  //       </div>
-  //     </div>
-  //   </div>
-  // );
 
   // Helper function to get the date for comparison
   const getDateForComparison = (recipe) => {
@@ -1051,19 +868,6 @@ const RecipesPageForUser = () => {
 
   // Ensure AllRecipes is an array or default to an empty array
   const iterableRecipes = Array.isArray(AllRecipes) ? AllRecipes : [];
-
-  // Sorting to get the latest recipes
-  // const latestRecipes = iterableRecipes
-  //   .sort((a, b) => getDateForComparison(b) - getDateForComparison(a))
-  //   .slice(0, 3);
-
-  // Filtering out the latest recipes to get the other recipes
-
-  // const otherRecipes = personalizedRecipes
-  //   ? iterableRecipes.filter(
-  //       (post) => !personalizedRecipes.find((recipe) => recipe.id === post.id)
-  //     )
-  //   : iterableRecipes;
 
   useEffect(() => {
     // If there are no personalized recipes, or if personalized recipes contain all recipes, set other recipes to all recipes
@@ -1084,8 +888,6 @@ const RecipesPageForUser = () => {
       setOtherRecipes(filteredRecipes);
     }
 
-    console.log("Personalized Recipes: ", personalizedRecipes);
-    console.log("Other Recipes: ", otherRecipes);
   }, [iterableRecipes, personalizedRecipes]);
 
   // Determine if any search or filter has been applied
@@ -1649,17 +1451,6 @@ const RecipesPageForUser = () => {
                                   </p>
                                 </div>
                               )}
-
-                              {/* <div className="mb-14 bg-orange-100 rounded-lg p-6">
-                                <h2 className="text-4xl font-bold mb-4 mt-4">
-                                  Just For You
-                                </h2>
-                                <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
-                                  {personalizedRecipes.map((post) =>
-                                    renderPostCard(post)
-                                  )}
-                                </div>
-                              </div> */}
 
                               <div className="mt-14 mb-5">
                                 <h2 className="text-4xl font-bold mb-4 mt-4">

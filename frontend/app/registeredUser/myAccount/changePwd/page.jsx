@@ -59,12 +59,6 @@ const changeUserPwd = () => {
       return;
     }
 
-    // For checking purposes
-    console.log("User Password Details:", {
-      oldPwd,
-      newPwd,
-      repeatPwd,
-    });
 
     try {
       const userId = SecureStorage.getItem("userId");
@@ -79,7 +73,6 @@ const changeUserPwd = () => {
         updatedData
       );
 
-      console.log("Response:", response);
       setSuccess(response.data);
       setTimeout(() => {
         setSuccess("");

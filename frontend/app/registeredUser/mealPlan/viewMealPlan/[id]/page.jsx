@@ -29,7 +29,6 @@ const fetchMealPlanById = async (mealPlanId) => {
     const response = await axiosInterceptorInstance.get(
       `/mealPlan/get/${mealPlanId}`
     );
-    console.log("Fetched meal plan data is:", response.data);
 
     if (!response.data) {
       console.error(`Meal plan with ID ${mealPlanId} not found`);
@@ -74,11 +73,7 @@ const RecipeCard = ({ recipe, onViewRecipe }) => {
           alt={"Image of " + recipe.title}
         />
       )}
-      {/* <img
-        className="w-full h-48 object-cover rounded-sm text-white text-center"
-        src={recipe.img}
-        alt={"Image of " + recipe.title}
-      /> */}
+
       <div className="flex-grow flex flex-col justify-between p-4 bg-white">
         {/* Title */}
         <div className="grid grid-rows-3 items-center">
@@ -181,15 +176,9 @@ const ViewMealPlan = ({ params }) => {
       const response = await axiosInterceptorInstance.get(
         `/mealPlan/rating/getMealPlan?mealPlanId=${mealPlanId}`
       );
-      console.log("All ratings response data:", response.data);
 
       // Assuming response.data is the array of reviews for the given meal plan id
       setReviewsAndRatings(response.data);
-
-      // Optionally, log each review to the console
-      response.data.forEach((reviewData, index) => {
-        console.log(`Review ${index + 1}:`, reviewData.review);
-      });
 
       // Get the ID of the current user
       const currentUserId = SecureStorage.getItem("userId");
@@ -205,7 +194,6 @@ const ViewMealPlan = ({ params }) => {
   };
 
   const handleViewRecipe = (id) => {
-    console.log("Viewing recipe with id:", id);
 
     // Redirect to the correct route
     let routePath = `/registeredUser/recipes/viewRecipe/${id}`;
@@ -229,7 +217,7 @@ const ViewMealPlan = ({ params }) => {
     const payload = {
       mealPlanReviewRatingId: {
         UserID: SecureStorage.getItem("userId"), // The ID of the user submitting the review
-        MealPlanID: mealPlan.id, // The ID of the blog post being reviewed
+        MealPlanID: mealPlan.id, 
       },
       rating: newRating,
       review: newReview,
@@ -240,7 +228,6 @@ const ViewMealPlan = ({ params }) => {
         "/mealPlan/rating/add",
         payload
       );
-      console.log("Review submitted: ", response.data);
 
       // Clear the form fields on successful submission
       setNewRating(0);
@@ -260,9 +247,6 @@ const ViewMealPlan = ({ params }) => {
     setNewRating(ratingValue);
   };
 
-  // if (!mealPlan) {
-  //   return <div>Loading...</div>;
-  // }
 
   // Function to render stars based on rating
   const renderStars = (rating) => {
@@ -530,7 +514,7 @@ const ViewMealPlan = ({ params }) => {
                 </article>
 
                 {/* Ratings and Reviews */}
-                <div className="blog-post-reviews mt-16 mx-auto max-w-screen-xl text-left border-t-2 border-gray-50">
+                <div className="mt-16 mx-auto max-w-screen-xl text-left border-t-2 border-gray-50">
                   <p className="font-sans font-bold text-2xl md:text-4xl text-gray-900 mb-4 md:mt-8 ml-4 lg:ml-0">
                     Rating and Reviews
                   </p>
@@ -568,7 +552,7 @@ const ViewMealPlan = ({ params }) => {
                   )}
                   {/* Ask to write reviews */}
                   {!hasAlreadyReviewed ? (
-                    <footer className="blog-post-reviews mt-10 px-9 mx-auto max-w-screen-xl text-left">
+                    <footer className="mt-10 px-9 mx-auto max-w-screen-xl text-left">
                       <p className="font-sans font-bold text-2xl text-gray-900">
                         Write a Review
                       </p>

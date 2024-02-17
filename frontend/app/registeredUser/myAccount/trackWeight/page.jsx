@@ -24,7 +24,6 @@ const TrackWeight = () => {
       const response = await axiosInterceptorInstance.get(
         `/registeredUsers/getWeights/${userId}`
       );
-      console.log(response.data);
 
       // Sort the weight data in descending order of date
       const sortedData = response.data.sort((a, b) => {
@@ -65,7 +64,6 @@ const TrackWeight = () => {
         );
 
         // Handle response here, update UI based on response
-        console.log(response);
         setSuccess("Weight has been saved.");
         setTimeout(() => {
           setSuccess("");
@@ -99,24 +97,16 @@ const TrackWeight = () => {
         },
       };
 
-      console.log("payload to delete weight", payload);
-      // const response = await axiosInterceptorInstance.delete(
-      //   "/registeredUsers/deleteWeight",
-      //   payload
-      // );
-
-      // because axios doesn't support DELETE with body, we need to use the following workaround
       const response = await axiosInterceptorInstance.delete(
         "/registeredUsers/deleteWeight",
         {
-          data: payload, // Here you send the payload as the body of the DELETE request
+          data: payload, // Send payload as data
           headers: {
             "Content-Type": "application/json",
           },
         }
       );
 
-      console.log(response);
       setSuccess("Weight record deleted successfully.");
       setTimeout(() => {
         setSuccess("");
@@ -308,9 +298,6 @@ const TrackWeight = () => {
                       {success}
                     </p>
                   )}
-
-                  {/* <p className="text-red-500 text-base font-medium">{error}</p>
-              <p className="text-green-500 text-base font-medium">{success}</p> */}
 
                   {/* BUTTONS */}
                   <div className="flex flex-row justify-start gap-4 mt-3">

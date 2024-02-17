@@ -6,7 +6,6 @@ import { useState, useEffect } from "react";
 import axiosInterceptorInstance from "../../../../axiosInterceptorInstance.js";
 import RegisteredUserNavBar from "../../../../components/navigation/registeredUserNavBar";
 import SecureStorage from "react-secure-storage";
-import Footer from "@/app/components/footer/index.jsx";
 
 // this is to view particular educational content from landing page
 // router path: registeredUser/educationalContent/viewEducationalContent/[id]
@@ -19,7 +18,6 @@ const fetchEduContentById = async (postId) => {
     const response = await axiosInterceptorInstance.get(
       `/educationalContent/get/${postId}`
     );
-    console.log("Fetched educational content is:", response.data);
 
     if (!response.data) {
       console.error(`Educational Content with ID ${postId} not found`);
@@ -87,15 +85,9 @@ const ViewEducationalContent = ({ params }) => {
       const response = await axiosInterceptorInstance.get(
         `/educationalContent/rating/getEducationalContent?educationalContentId=${educationalContentId}`
       );
-      console.log("All ratings response data:", response.data);
 
       // Assuming response.data is the array of reviews for the given eduContentId
       setReviewsAndRatings(response.data);
-
-      // Optionally, log each review to the console
-      response.data.forEach((reviewData, index) => {
-        console.log(`Review ${index + 1}:`, reviewData.review);
-      });
 
       // Get the ID of the current user
       const currentUserId = SecureStorage.getItem("userId");
@@ -137,7 +129,6 @@ const ViewEducationalContent = ({ params }) => {
         "/educationalContent/rating/add",
         payload
       );
-      console.log("Review submitted: ", response.data);
 
       // Clear the form fields on successful submission
       setNewRating(0);

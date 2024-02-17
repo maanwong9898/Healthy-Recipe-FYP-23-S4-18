@@ -23,13 +23,11 @@ const renderSteps = (stepsString) => {
 
 const fetchRecipesById = async (recipeID) => {
   try {
-    // Ensure recipeID is a string if the IDs in your URL need to be strings
     recipeID = recipeID;
 
     const response = await axiosInterceptorInstance.get(
       `/recipe/get/${recipeID}`
     );
-    console.log("Fetched recipe data is:", response.data);
 
     if (!response.data) {
       console.error(`Recipe with ID ${recipeID} not found`);
@@ -39,8 +37,6 @@ const fetchRecipesById = async (recipeID) => {
     // Assuming the response contains the recipes directly
     const recipe = response.data;
 
-    // check the content of the recipe
-    console.log("try recipe by id", recipe);
     return recipe;
   } catch (error) {
     console.error("Failed to fetch recipe:", error);
@@ -81,7 +77,6 @@ const ViewRecipe = ({ params }) => {
       fetchRecipesById(recipeId)
         .then((data) => {
           setRecipe(data);
-          // Assuming the recipe ID is needed to fetch the reviews
           fetchRecipesRatingsAndReviews(data.id);
         })
         .catch((error) => {
@@ -99,15 +94,9 @@ const ViewRecipe = ({ params }) => {
       const response = await axiosInterceptorInstance.get(
         `/recipe/rating/getRecipe?recipeId=${recipeId}`
       );
-      console.log("All recipe ratings response data:", response.data);
 
       // Assuming response.data is the array of reviews for the given recipeId
       setReviewsAndRatings(response.data);
-
-      // Optionally, log each review to the console
-      response.data.forEach((reviewData, index) => {
-        console.log(`Review ${index + 1}:`, reviewData.review);
-      });
 
       // Get the ID of the current user
       const currentUserId = SecureStorage.getItem("userId");
@@ -149,7 +138,6 @@ const ViewRecipe = ({ params }) => {
         "/recipe/rating/add",
         payload
       );
-      console.log("Review submitted: ", response.data);
 
       // Clear the form fields on successful submission
       setNewRating(0);
@@ -504,7 +492,7 @@ const ViewRecipe = ({ params }) => {
 
                   {/* Ask to write reviews */}
                   {!hasAlreadyReviewed ? (
-                    <div className="blog-post-reviews mt-10 px-9 mx-auto max-w-screen-xl text-left">
+                    <div className="mt-10 px-9 mx-auto max-w-screen-xl text-left">
                       <p className="font-sans font-bold text-2xl text-gray-900">
                         Write a Review
                       </p>

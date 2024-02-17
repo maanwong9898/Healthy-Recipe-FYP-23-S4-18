@@ -51,7 +51,6 @@ const checkBMI = () => {
   const normalClass = "text-green-500";
 
   const calculateBMI = () => {
-    console.log("Calculating BMI...");
     // Check if height and weight is not null
     if (!height || !weight) {
       setError("Please enter both height and weight.");

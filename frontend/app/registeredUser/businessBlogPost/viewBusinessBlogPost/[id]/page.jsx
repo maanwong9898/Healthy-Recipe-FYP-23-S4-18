@@ -16,14 +16,12 @@ const fetchBlogPostById = async (postId) => {
     postId = postId;
 
     const response = await axiosInterceptorInstance.get(`/blog/get/${postId}`);
-    console.log("Fetched blog post data is:", response.data);
 
     if (!response.data) {
       console.error(`Blog post with ID ${postId} not found`);
       throw new Error(`Blog post with ID ${postId} not found`);
     }
 
-    console.log("try blog post by id");
     // Assuming the response contains the blog post directly
     const blogPost = response.data;
 
@@ -86,15 +84,8 @@ const ViewBusinessBlogPost = ({ params }) => {
       const response = await axiosInterceptorInstance.get(
         `/blog/rating/getBlog?blogId=${blogId}`
       );
-      console.log("All ratings response data:", response.data);
-
       // Assuming response.data is the array of reviews for the given blogId
       setReviewsAndRatings(response.data);
-
-      // Optionally, log each review to the console
-      response.data.forEach((reviewData, index) => {
-        console.log(`Review ${index + 1}:`, reviewData.review);
-      });
 
       // Get the ID of the current user
       const currentUserId = SecureStorage.getItem("userId");
@@ -136,7 +127,6 @@ const ViewBusinessBlogPost = ({ params }) => {
         "/blog/rating/add",
         payload
       );
-      console.log("Review submitted: ", response.data);
 
       // Clear the form fields on successful submission
       setNewRating(0);
@@ -155,11 +145,6 @@ const ViewBusinessBlogPost = ({ params }) => {
   const handleRatingChange = (ratingValue) => {
     setNewRating(ratingValue);
   };
-
-  // Check if the blog post has been fetched
-  // if (!businessBlogPost) {
-  //   return <div>Please wait. It'll just take a moment</div>;
-  // }
 
   // Function to render stars based on rating
   const renderStars = (rating) => {

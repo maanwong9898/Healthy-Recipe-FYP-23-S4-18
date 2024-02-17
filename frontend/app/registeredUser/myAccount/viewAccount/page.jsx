@@ -45,14 +45,11 @@ const MyAccount = () => {
         headers: { Authorization: `Bearer ${token}` },
       };
 
-      // Make the GET request to the userAndAdmin endpoint
       const response = await axiosInterceptorInstance.get(
         "/register/dashboard/" + userId,
         config
       );
 
-      console.log("User data fetched from backend:", response.data);
-      console.log(response.data);
       setUserAccount(response.data);
     } catch (error) {
       console.error("Error fetching user data", error);
@@ -79,10 +76,6 @@ const MyAccount = () => {
       setIsLoading(false);
     }
   }, []);
-
-  // if (isChecking) {
-  //   return <div>Checking...</div>;
-  // }
 
   const getFormattedDate = (date) => {
     return date.toISOString().split("T")[0];
@@ -153,15 +146,12 @@ const MyAccount = () => {
           healthGoal: healthGoals ? { id: healthGoals } : { id: null },
         };
 
-        console.log("Updated data:", updatedData);
-
         const response = await axiosInterceptorInstance.post(
-          "/register/dashboardSet", // Adjust URL if needed
+          "/register/dashboardSet", 
           updatedData,
           config
         );
 
-        console.log("Account updated:", response.data);
         setSuccess("Account updated successfully!");
       } catch (error) {
         console.error("Error updating account", error);

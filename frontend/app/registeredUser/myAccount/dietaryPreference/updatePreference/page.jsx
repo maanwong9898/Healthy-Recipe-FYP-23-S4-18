@@ -9,7 +9,6 @@ import SecureStorage from "react-secure-storage";
 import RegisteredUserNavBar from "../../../../components/navigation/registeredUserNavBar";
 
 // router path: /registeredUser/dietaryPreference/updatePreference
-// cancel btn to redirect to dietary preference page
 
 const UpdateDietaryPreference = () => {
   const [isTabSelected, setIsTabSelected] = useState("dietaryPreference");
@@ -70,13 +69,6 @@ const UpdateDietaryPreference = () => {
 
           // Assuming response.data contains user data
           const userData = response.data || {};
-          // setAllergies(userData.allergies || []);
-          // setDietaryPreference(
-          //   userData.dietaryPreferences?.subcategoryName || "Not specified"
-          // );
-          // setHealthGoal(
-          //   userData.healthGoal?.subcategoryName || "Not specified"
-          // );
 
           // Set dietary preferences if available
           setFullName(userData.fullName);
@@ -111,12 +103,10 @@ const UpdateDietaryPreference = () => {
       };
 
       const fetchHealthGoals = async () => {
-        console.log("Fetching health goals...");
         try {
           const response = await axiosInterceptorInstance.get(
             "/category/getAllHealthGoals"
           );
-          console.log("Health Goals Categories Fetched", response.data);
           setHealthGoalsCategory(response.data);
         } catch (error) {
           console.log(error);
@@ -125,12 +115,10 @@ const UpdateDietaryPreference = () => {
 
       // Fetch all dietary preferences categories from backend
       const fetchDietaryPreferences = async () => {
-        console.log("Fetching dietary preferences...");
         try {
           const response = await axiosInterceptorInstance.get(
             "/category/getAllDietaryPreferences"
           );
-          console.log("Dietary Preferences Categories Fetched", response.data);
           setDietaryPreferencesCategory(response.data);
         } catch (error) {
           console.log(error);
@@ -139,12 +127,10 @@ const UpdateDietaryPreference = () => {
 
       // Fetch all allergies categories from backend
       const fetchAllergies = async () => {
-        console.log("Fetching allergies...");
         try {
           const response = await axiosInterceptorInstance.get(
             "/category/getAllAllergies"
           );
-          console.log("Allergies Categories Fetched", response.data);
           setAllergyCategory(response.data);
         } catch (error) {
           console.log(error);
@@ -218,15 +204,12 @@ const UpdateDietaryPreference = () => {
         healthGoal: healthGoals ? { id: healthGoals } : { id: null },
       };
 
-      console.log("Updated data:", updatedData);
-
       const response = await axiosInterceptorInstance.post(
         "/register/dashboardSet", // Adjust URL if needed
         updatedData,
         config
       );
 
-      console.log("preferences updated:", response.data);
       setSuccess("Preferences updated successfully!");
     } catch (error) {
       console.error("Error updating preferences", error);

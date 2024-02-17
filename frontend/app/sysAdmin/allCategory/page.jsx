@@ -31,7 +31,6 @@ const AllCategories = () => {
     ) {
       // clear the secure storage
       SecureStorage.clear();
-      console.log("Redirecting to home page");
       router.push("/");
     } else {
       setIsChecking(false);
@@ -110,7 +109,6 @@ const AllCategories = () => {
     const data = { subcategoryName };
 
     if (endpoint) {
-      console.log("Create category Posting to endpoint:", endpoint);
       const response = await axiosInterceptorInstance.post(endpoint, data);
       return response.data;
     } else {

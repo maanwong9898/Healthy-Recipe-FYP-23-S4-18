@@ -16,8 +16,6 @@ import { useMutation } from "react-query";
 const sortOptions = {
   LATEST: { key: "LATEST", label: "By Latest" },
   OLDEST: { key: "OLDEST", label: "By Oldest" },
-  // HIGHEST_RATINGS: { key: "HIGHEST_RATINGS", label: "Highest Ratings" },
-  // LOWEST_RATINGS: { key: "LOWEST_RATINGS", label: "Lowest Ratings" },
   ALPHABETICAL_AZ: { key: "ALPHABETICAL_AZ", label: "Alphabetically (A to Z)" },
   ALPHABETICAL_ZA: { key: "ALPHABETICAL_ZA", label: "Alphabetically (Z to A)" },
 };
@@ -25,16 +23,7 @@ const sortOptions = {
 // Fetch all blog posts
 const fetchBlogPosts = async () => {
   try {
-    console.log("Fetching blog posts...");
     const response = await axiosInterceptorInstance.get("/blog/get");
-    console.log("All blogs:", response.data);
-    // Fetch average ratings for each blog post
-    // const blogsWithAverage = await Promise.all(
-    //   response.data.map(async (blog) => {
-    //     const average = await fetchBlogAverage(blog.id);
-    //     return { ...blog, average };
-    //   })
-    // );
 
     // return blogsWithAverage;
     return response.data;
@@ -49,7 +38,7 @@ const fetchBlogAverage = async (blogId) => {
     const response = await axiosInterceptorInstance.get(
       `/blog/getAverage/${blogId}`
     );
-    console.log("Average rating for blog post", blogId, "is:", response.data);
+
     return response.data; // Assuming this returns the average data for the blog
   } catch (error) {
     console.error(`Failed to fetch average for blog post ${blogId}:`, error);
@@ -156,24 +145,7 @@ const SuspendBusinessBlogs = () => {
         case "ALPHABETICAL_ZA":
           processedBlogs.sort((a, b) => b.title.localeCompare(a.title));
           break;
-        // case "HIGHEST_RATINGS":
-        //   processedBlogs.sort((a, b) => {
-        //     const ratingDiff =
-        //       (b.average?.averageRatings || 0) -
-        //       (a.average?.averageRatings || 0);
-        //     if (ratingDiff !== 0) return ratingDiff;
-        //     return new Date(b.createdDateTime) - new Date(a.createdDateTime); // Latest date first if tie
-        //   });
-        //   break;
-        // case "LOWEST_RATINGS":
-        //   processedBlogs.sort((a, b) => {
-        //     const ratingDiff =
-        //       (a.average?.averageRatings || 0) -
-        //       (b.average?.averageRatings || 0);
-        //     if (ratingDiff !== 0) return ratingDiff;
-        //     return new Date(b.createdDateTime) - new Date(a.createdDateTime); // Latest date first if tie
-        //   });
-        //   break;
+
         case "STATUS_ACTIVE":
           processedBlogs.sort((a, b) => {
             const statusDiff = b.active - a.active;
@@ -215,17 +187,6 @@ const SuspendBusinessBlogs = () => {
       setDatePublishedOrder("LATEST");
     }
   };
-
-  // // Sort by ratings order
-  // const handleSortByRatings = () => {
-  //   if (ratingsOrder === "HIGHEST") {
-  //     setSortOption("LOWEST_RATINGS");
-  //     setRatingsOrder("LOWEST");
-  //   } else {
-  //     setSortOption("HIGHEST_RATINGS");
-  //     setRatingsOrder("HIGHEST");
-  //   }
-  // };
 
   // Sort by status order
   const handleSortByStatus = () => {
@@ -352,7 +313,7 @@ const SuspendBusinessBlogs = () => {
                             >
                               <SwapVertIcon />
                             </button>
-                          </th>{" "}
+                          </th>
                           <th className="px-3 py-2">Publisher</th>
                           <th className="px-3 py-2">Company</th>
                           <th className="px-3 py-2">
@@ -374,15 +335,6 @@ const SuspendBusinessBlogs = () => {
                               <SwapVertIcon />
                             </button>
                           </th>
-                          {/* <th className="px-3 py-2">
-                            Ratings
-                            <button
-                              className="ml-1 focus:outline-none"
-                              onClick={handleSortByRatings}
-                            >
-                              <SwapVertIcon />
-                            </button>
-                          </th> */}
                           <th className="px-3 py-2"></th>
                           <th className="px-3 py-2"></th>
                         </tr>
@@ -423,50 +375,7 @@ const SuspendBusinessBlogs = () => {
                                   : "Inactive"}
                               </span>
                             </td>
-                            {/* <td className="px-3 py-2 text-base text-center">
-                              <div
-                                className="rating-container flex flex-col"
-                                style={{ minWidth: "100px" }}
-                              >
-                                {businessBlogPost.average !== null &&
-                                typeof businessBlogPost.average
-                                  .averageRatings === "number" &&
-                                typeof businessBlogPost.average.totalNumber ===
-                                  "number" ? (
-                                  <span
-                                    className="rating-text"
-                                    style={{
-                                      fontWeight: "bold",
-                                      color: "#0a0a0a",
-                                    }}
-                                  >
-                                    {businessBlogPost.average.averageRatings.toFixed(
-                                      1
-                                    )}
-                                  </span>
-                                ) : (
-                                  "No ratings yet"
-                                )}
-                                {businessBlogPost.average &&
-                                  businessBlogPost.average.totalNumber > 0 && (
-                                    <span
-                                      className="rating-count"
-                                      style={{
-                                        fontSize: "0.8rem",
-                                        color: "#666",
-                                      }}
-                                    >
-                                      ({businessBlogPost.average.totalNumber}{" "}
-                                      rating
-                                      {businessBlogPost.average.totalNumber !==
-                                      1
-                                        ? "s"
-                                        : ""}
-                                      )
-                                    </span>
-                                  )}
-                              </div>
-                            </td> */}
+
                             <td className="px-3 py-2 text-base text-center"></td>
 
                             <td className="px-3 py-2 justify-center sm:justify-start">
@@ -505,7 +414,7 @@ const SuspendBusinessBlogs = () => {
                           {/* Title */}
                           <p className="px-3 py-2 text-lg">
                             <span className="font-semibold text-gray-900">
-                              Title:{" "}
+                              Title:
                             </span>
                             <span className="font-normal text-gray-900">
                               {businessBlogPost.title}
@@ -515,7 +424,7 @@ const SuspendBusinessBlogs = () => {
                           {/* Publisher */}
                           <p className="px-3 py-2 text-lg">
                             <span className="font-semibold text-gray-900">
-                              Publisher:{" "}
+                              Publisher:
                             </span>
                             <span className="font-normal text-gray-900">
                               {businessBlogPost.userID?.fullName || "nil"}
@@ -525,7 +434,7 @@ const SuspendBusinessBlogs = () => {
                           {/* Company */}
                           <p className="px-3 py-2 text-lg">
                             <span className="font-semibold text-gray-900">
-                              Company:{" "}
+                              Company:
                             </span>
                             <span className="font-normal text-gray-900">
                               {businessBlogPost.userID?.companyName || "nil"}
@@ -535,7 +444,7 @@ const SuspendBusinessBlogs = () => {
                           {/* Date Published */}
                           <p className="px-3 py-2 text-lg">
                             <span className="font-semibold text-gray-900">
-                              Date Published:{" "}
+                              Date Published:
                             </span>
                             <span className="font-normal text-gray-900">
                               {new Date(
@@ -547,7 +456,7 @@ const SuspendBusinessBlogs = () => {
                           {/* Category */}
                           <p className="px-3 py-2 text-lg">
                             <span className="font-semibold text-gray-900">
-                              Category:{" "}
+                              Category:
                             </span>
                             <span className="font-normal text-gray-900">
                               {businessBlogPost.blogType
@@ -559,7 +468,7 @@ const SuspendBusinessBlogs = () => {
                           {/* Status */}
                           <p className="px-3 py-2 text-lg">
                             <span className="font-semibold text-gray-900 mr-2">
-                              Status:{" "}
+                              Status:
                             </span>
                             <span
                               className={`rounded-full px-3 py-1 text-base font-semibold ${
@@ -572,53 +481,6 @@ const SuspendBusinessBlogs = () => {
                             </span>
                           </p>
 
-                          {/* Ratings */}
-                          {/* <div className="px-3 py-2 text-lg">
-                            <div
-                              className="rating-container flex flex-row gap-2"
-                              style={{ minWidth: "100px" }}
-                            >
-                              <p className="font-semibold text-gray-900">
-                                Ratings:{" "}
-                              </p>
-                              {businessBlogPost.average !== null &&
-                              typeof businessBlogPost.average.averageRatings ===
-                                "number" &&
-                              typeof businessBlogPost.average.totalNumber ===
-                                "number" ? (
-                                <span
-                                  className="rating-text"
-                                  style={{
-                                    fontWeight: "bold",
-                                    color: "#0a0a0a",
-                                  }}
-                                >
-                                  {businessBlogPost.average.averageRatings.toFixed(
-                                    1
-                                  )}
-                                </span>
-                              ) : (
-                                "No ratings yet"
-                              )}
-                              {businessBlogPost.average &&
-                                businessBlogPost.average.totalNumber > 0 && (
-                                  <span
-                                    className="rating-count"
-                                    style={{
-                                      fontSize: "0.8rem",
-                                      color: "#666",
-                                    }}
-                                  >
-                                    ({businessBlogPost.average.totalNumber}{" "}
-                                    rating
-                                    {businessBlogPost.average.totalNumber !== 1
-                                      ? "s"
-                                      : ""}
-                                    )
-                                  </span>
-                                )}
-                            </div>
-                          </div> */}
                           {/* /* Buttons */}
                           <div className="mt-2 flex flex-col space-y-3 items-center">
                             <button

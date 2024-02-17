@@ -11,15 +11,12 @@ import SecureStorage from "react-secure-storage";
 // router path: /sysAdmin/businessAccountPendingList
 // this is to view the list of business users and dietitians that status are waiting for verification
 
-// Called the controller to get the list of business users and dietitians that status are "Unverified"
-
 // Sorting options
 const sortOptions = {
   LATEST: { key: "LATEST", label: "By Latest" },
   OLDEST: { key: "OLDEST", label: "By Oldest" },
   ALPHABETICAL_AZ: { key: "ALPHABETICAL_AZ", label: "Alphabetically (A to Z)" },
   ALPHABETICAL_ZA: { key: "ALPHABETICAL_ZA", label: "Alphabetically (Z to A)" },
-  // ... add more sorting options if needed ...
 };
 
 const BusinessAccountPendingList = () => {
@@ -44,7 +41,6 @@ const BusinessAccountPendingList = () => {
     ) {
       // clear the secure storage
       SecureStorage.clear();
-      console.log("Redirecting to home page");
       router.push("/");
     } else {
       setIsChecking(false);
@@ -64,8 +60,6 @@ const BusinessAccountPendingList = () => {
             ...businessUsersResponse.data,
             ...nutritionistsResponse.data,
           ];
-
-          console.log("All unverified :", combinedData);
 
           setUserAccounts(combinedData);
 
@@ -106,12 +100,6 @@ const BusinessAccountPendingList = () => {
 
   // this function is to verify particular user account (the route will be vary based on the user profile type)
   const handleViewUnverifiedAccount = (viewId, profileType) => {
-    // Check the profile type
-    console.log(`Role Type: ${profileType}`);
-
-    // Make sure the username
-    console.log(`ID IS : ${viewId}`);
-
     // Redirect to the correct route based on the profile type
     let thePath = "";
     switch (profileType) {
@@ -234,9 +222,7 @@ const BusinessAccountPendingList = () => {
                         <td className="px-3 py-2 text-base text-center">
                           {user.email}
                         </td>
-                        {/* <td className="px-3 py-2 text-sm text-center sm:text-left">
-                  {user.UEN}
-                </td> */}
+
                         <td className="px-3 py-2 text-base text-center">
                           {user.createdDate}
                         </td>

@@ -17,8 +17,6 @@ import { useMutation } from "react-query";
 const sortOptions = {
   LATEST: { key: "LATEST", label: "By Latest" },
   OLDEST: { key: "OLDEST", label: "By Oldest" },
-  // HIGHEST_RATINGS: { key: "HIGHEST_RATINGS", label: "Highest Ratings" },
-  // LOWEST_RATINGS: { key: "LOWEST_RATINGS", label: "Lowest Ratings" },
   ALPHABETICAL_AZ: { key: "ALPHABETICAL_AZ", label: "Alphabetically (A to Z)" },
   ALPHABETICAL_ZA: { key: "ALPHABETICAL_ZA", label: "Alphabetically (Z to A)" },
 };
@@ -28,17 +26,7 @@ const fetchMealPlans = async () => {
   try {
     const response = await axiosInterceptorInstance.get("/mealPlan/get");
 
-    console.log("All meal plans:", response.data);
-
     return response.data;
-    // const mealPlansWithAverage = await Promise.all(
-    //   response.data.map(async (mealPlan) => {
-    //     const average = await fetchMealPlanAverage(mealPlan.id);
-    //     return { ...mealPlan, average };
-    //   })
-    // );
-
-    // return mealPlansWithAverage;
   } catch (error) {
     console.error("Failed to fetch meal plans:", error);
     throw error;
@@ -51,12 +39,7 @@ const fetchMealPlanAverage = async (mealPlanId) => {
     const response = await axiosInterceptorInstance.get(
       `/mealPlan/getAverage/${mealPlanId}`
     );
-    console.log(
-      "Average rating for meal plan",
-      mealPlanId,
-      "is:",
-      response.data
-    );
+
     return response.data; // Assuming this returns the average data for the meal plan
   } catch (error) {
     console.error(
@@ -89,20 +72,16 @@ const toggleMealPlanActiveStatus = async ({ mealPlanId, active }) => {
 
 const SuspendMealPlan = () => {
   const router = useRouter();
-  // const [mealPlans, setMealPlans] = useState([]);
   const [displayedMealPlans, setDisplayedMealPlans] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [sortOption, setSortOption] = useState("LATEST");
   const [isSearchEmpty, setIsSearchEmpty] = useState(false);
   const [searchPerformed, setSearchPerformed] = useState(false);
   const [searchResultsCount, setSearchResultsCount] = useState(0);
-  // const [categories, setCategories] = useState([]);
   const [categoryFilter, setCategoryFilter] = useState("ALL");
   const [alphabeticalOrder, setAlphabeticalOrder] = useState("AZ");
   const [datePublishedOrder, setDatePublishedOrder] = useState("LATEST");
-  // const [ratingsOrder, setRatingsOrder] = useState("HIGHEST");
   const [statusOrder, setStatusOrder] = useState("ACTIVE");
-  // const [isLoading, setIsLoading] = useState(true);
   const [isChecking, setIsChecking] = useState(true);
   const [isAuthorized, setIsAuthorized] = useState(false);
 
@@ -177,24 +156,6 @@ const SuspendMealPlan = () => {
         case "ALPHABETICAL_ZA":
           processedMealPlans.sort((a, b) => b.title.localeCompare(a.title));
           break;
-        // case "HIGHEST_RATINGS":
-        //   processedMealPlans.sort((a, b) => {
-        //     const ratingDiff =
-        //       (b.average?.averageRatings || 0) -
-        //       (a.average?.averageRatings || 0);
-        //     if (ratingDiff !== 0) return ratingDiff;
-        //     return getDateOrFallback(b) - getDateOrFallback(a); // Latest date first if tie
-        //   });
-        //   break;
-        // case "LOWEST_RATINGS":
-        //   processedMealPlans.sort((a, b) => {
-        //     const ratingDiff =
-        //       (a.average?.averageRatings || 0) -
-        //       (b.average?.averageRatings || 0);
-        //     if (ratingDiff !== 0) return ratingDiff;
-        //     return getDateOrFallback(b) - getDateOrFallback(a); // Latest date first if tie
-        //   });
-        //   break;
         case "STATUS_ACTIVE":
           processedMealPlans.sort((a, b) => {
             const statusDiff = b.active - a.active;
@@ -236,17 +197,6 @@ const SuspendMealPlan = () => {
       setDatePublishedOrder("LATEST");
     }
   };
-
-  // Sort by ratings order
-  // const handleSortByRatings = () => {
-  //   if (ratingsOrder === "HIGHEST") {
-  //     setSortOption("LOWEST_RATINGS");
-  //     setRatingsOrder("LOWEST");
-  //   } else {
-  //     setSortOption("HIGHEST_RATINGS");
-  //     setRatingsOrder("HIGHEST");
-  //   }
-  // };
 
   // Sort by status order
   const handleSortByStatus = () => {
@@ -388,15 +338,6 @@ const SuspendMealPlan = () => {
                               <SwapVertIcon />
                             </button>
                           </th>
-                          {/* <th className="px-3 py-2">
-                            Ratings
-                            <button
-                              className="ml-1 focus:outline-none"
-                              onClick={handleSortByRatings}
-                            >
-                              <SwapVertIcon />
-                            </button>
-                          </th> */}
                           <th className="px-3 py-2"></th>
                           <th className="px-3 py-2"></th>
                         </tr>
@@ -435,46 +376,6 @@ const SuspendMealPlan = () => {
                                 {mealPlan.active ? "Active" : "Inactive"}
                               </span>
                             </td>
-                            {/* <td className="px-3 py-2 text-base text-center">
-                              <div
-                                className="rating-container flex flex-col"
-                                style={{ minWidth: "100px" }}
-                              >
-                                {mealPlan.average !== null &&
-                                typeof mealPlan.average.averageRatings ===
-                                  "number" &&
-                                typeof mealPlan.average.totalNumber ===
-                                  "number" ? (
-                                  <span
-                                    className="rating-text"
-                                    style={{
-                                      fontWeight: "bold",
-                                      color: "#0a0a0a",
-                                    }}
-                                  >
-                                    {mealPlan.average.averageRatings.toFixed(1)}
-                                  </span>
-                                ) : (
-                                  "No ratings yet"
-                                )}
-                                {mealPlan.average &&
-                                  mealPlan.average.totalNumber > 0 && (
-                                    <span
-                                      className="rating-count"
-                                      style={{
-                                        fontSize: "0.8rem",
-                                        color: "#666",
-                                      }}
-                                    >
-                                      ({mealPlan.average.totalNumber} rating
-                                      {mealPlan.average.totalNumber !== 1
-                                        ? "s"
-                                        : ""}
-                                      )
-                                    </span>
-                                  )}
-                              </div>
-                            </td> */}
                             <td className="px-3 py-2 text-base text-center"></td>
                             <td className="px-3 py-2 justify-center sm:justify-start">
                               <button
@@ -573,51 +474,7 @@ const SuspendMealPlan = () => {
                               {mealPlan.active ? "Active" : "Inactive"}
                             </span>
                           </p>
-                          {/* Ratings */}
-                          {/* <div className="px-3 py-2 text-lg">
-                            <div
-                              className="rating-container flex flex-row gap-2"
-                              style={{ minWidth: "100px" }}
-                            >
-                              <p className="font-semibold text-gray-900">
-                                Ratings:{" "}
-                              </p>
-
-                              {mealPlan.average !== null &&
-                              typeof mealPlan.average.averageRatings ===
-                                "number" &&
-                              typeof mealPlan.average.totalNumber ===
-                                "number" ? (
-                                <span
-                                  className="rating-text"
-                                  style={{
-                                    fontWeight: "bold",
-                                    color: "#0a0a0a",
-                                  }}
-                                >
-                                  {mealPlan.average.averageRatings.toFixed(1)}
-                                </span>
-                              ) : (
-                                "No ratings yet"
-                              )}
-                              {mealPlan.average &&
-                                mealPlan.average.totalNumber > 0 && (
-                                  <span
-                                    className="rating-count"
-                                    style={{
-                                      fontSize: "0.8rem",
-                                      color: "#666",
-                                    }}
-                                  >
-                                    ({mealPlan.average.totalNumber} rating
-                                    {mealPlan.average.totalNumber !== 1
-                                      ? "s"
-                                      : ""}
-                                    )
-                                  </span>
-                                )}
-                            </div>
-                          </div> */}
+                          
                           {/* Buttons */}
                           <div className="mt-2 flex flex-col space-y-3 items-center">
                             <button

@@ -31,7 +31,6 @@ const ViewNutritionist = ({ params }) => {
     ) {
       // clear the secure storage to prevent any unauthorized access
       SecureStorage.clear();
-      console.log("Redirecting to home page");
       router.push("/");
     } else {
       setIsChecking(false);
@@ -46,7 +45,6 @@ const ViewNutritionist = ({ params }) => {
           );
 
           setUserAccount(response.data);
-          console.log(response.data);
           setIsLoading(false);
         } catch (error) {
           console.error("Error fetching user data", error);
@@ -66,7 +64,6 @@ const ViewNutritionist = ({ params }) => {
       const response = await axiosInterceptorInstance.post(
         "/allUsers/verifyUser/" + id
       );
-      console.log(response.data);
       setSuccess("Account approved successfully!");
       setActionCompleted(true);
       setError("");
@@ -79,21 +76,17 @@ const ViewNutritionist = ({ params }) => {
 
   const handleRejectAccount = async (userid) => {
     try {
-      console.log("User ID:", userid);
       const userRole = "NUTRITIONIST";
-      console.log("User Role:", userRole);
       const response = await axiosInterceptorInstance.delete(
         "/allUsers/rejectUser",
         {
           data: {
-            // Note: Axios uses the 'data' property for the request body in DELETE requests
             id: userid,
             role: userRole,
           },
         }
       );
 
-      console.log("User deleted successfully");
       setSuccess("Account rejected successfully!");
       setError("");
       setActionCompleted(true);
@@ -135,7 +128,7 @@ const ViewNutritionist = ({ params }) => {
           <SysAdminNavBar />
           <div
             className="mt-16 mb-16 mx-auto bg-white rounded-lg shadow-lg p-4 md:p-8 lg:p-12"
-            style={{ maxWidth: "600px", width: "100%" }} // Increase maxWidth and set width to 100%
+            style={{ maxWidth: "600px", width: "100%" }}
           >
             <div className="p-6 space-y-4 md:space-y-2 sm:p-4">
               <h1 className="text-3xl lg:text-4xl font-bold leading-tight tracking-tight text-center text-gray-900 mb-8">
@@ -273,13 +266,6 @@ const ViewNutritionist = ({ params }) => {
                                 <DownloadIcon />
                               </button>
                             </div>
-
-                            {/* <button
-                      onClick={handleDownloadCertificate}
-                      className="mt-2 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-md text-center justify-center align-middle"
-                    >
-                      Download Certificate
-                    </button> */}
                           </div>
                         ) : (
                           <p>No certificate available</p>

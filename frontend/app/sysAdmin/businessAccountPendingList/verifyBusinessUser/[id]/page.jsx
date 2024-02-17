@@ -28,7 +28,6 @@ const ViewBusinessUser = ({ params }) => {
     ) {
       // clear the secure storage to prevent any unauthorized access
       SecureStorage.clear();
-      console.log("Redirecting to home page");
       router.push("/");
     } else {
       setIsChecking(false);
@@ -43,7 +42,6 @@ const ViewBusinessUser = ({ params }) => {
           );
 
           setUserAccount(response.data);
-          console.log(response.data);
           setIsLoading(false);
         } catch (error) {
           console.error("Error fetching user data", error);
@@ -63,7 +61,6 @@ const ViewBusinessUser = ({ params }) => {
       const response = await axiosInterceptorInstance.post(
         "/allUsers/verifyUser/" + id
       );
-      console.log(response.data);
       setSuccess("Account approved successfully!");
       setError("");
       setActionCompleted(true);
@@ -76,21 +73,17 @@ const ViewBusinessUser = ({ params }) => {
 
   const handleRejectAccount = async (userid) => {
     try {
-      console.log("User ID:", userid);
       const userRole = "BUSINESS_USER";
-      console.log("User Role:", userRole);
       const response = await axiosInterceptorInstance.delete(
         "/allUsers/rejectUser",
         {
           data: {
-            // Note: Axios uses the 'data' property for the request body in DELETE requests
             id: userid,
             role: userRole,
           },
         }
       );
 
-      console.log("User deleted successfully");
       setSuccess("Account rejected successfully!");
       setError("");
       setActionCompleted(true);

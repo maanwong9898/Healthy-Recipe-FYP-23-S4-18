@@ -24,8 +24,6 @@ const fetchBlogPostsCount = async () => {
       "systemAdmin/findTotalBlogCount"
     );
 
-    console.log("Total business blogs count:", response.data);
-
     return response.data;
   } catch (error) {
     console.error("Failed to fetch blog post count:", error);
@@ -39,8 +37,6 @@ const fetchRecipesCount = async () => {
     const response = await axiosInterceptorInstance.get(
       "systemAdmin/findTotalRecipeCount"
     );
-
-    console.log("Total recipes count:", response.data);
 
     return response.data;
   } catch (error) {
@@ -56,8 +52,6 @@ const fetchEducationcalContentCount = async () => {
       "systemAdmin/findTotalEducationalContentCount"
     );
 
-    console.log("Total educational content count:", response.data);
-
     return response.data;
   } catch (error) {
     console.error("Failed to fetch educational content count:", error);
@@ -71,7 +65,6 @@ const fetchMealPlansCount = async () => {
     const response = await axiosInterceptorInstance.get(
       "/systemAdmin/findTotalMealPlanCount"
     );
-    console.log("Total meal plans count:", response.data);
     return response.data;
   } catch (error) {
     console.error("Error fetching meal plans count:", error);
@@ -96,8 +89,6 @@ const viewUserDashboard = async () => {
     );
 
     return response.data;
-    // setUserAccount(response.data);
-    // console.log(response.data);
   } catch (error) {
     console.error("Error fetching user data", error);
   }
@@ -105,12 +96,10 @@ const viewUserDashboard = async () => {
 
 // Get user role counts
 const fetchUserRoleCounts = async () => {
-  console.log("Fetching user role counts...");
   try {
     const response = await axiosInterceptorInstance.get(
       "/landingPage/getRoleCount"
     );
-    console.log("User Role Counts: ", response.data);
     return response.data;
   } catch (error) {
     console.log("Failed to fetch user role counts: ", error);
@@ -141,7 +130,6 @@ const AdminHomePage = () => {
     ) {
       // clear the secure storage
       SecureStorage.clear();
-      console.log("Redirecting to home page");
       router.push("/");
     } else {
       setIsChecking(false);

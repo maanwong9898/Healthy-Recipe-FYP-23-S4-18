@@ -37,7 +37,6 @@ const UserAccount = () => {
       const response = await axiosInterceptorInstance.get(
         "/systemAdmin/getAllUsers"
       );
-      console.log(response.data);
       setUserAccounts(response.data);
     } catch (error) {
       console.error("Error fetching data", error);
@@ -95,12 +94,6 @@ const UserAccount = () => {
 
   // this function is to view particular user account (the route will be vary based on the user profile type)
   const handleViewAccount = (viewId, profileType) => {
-    // Check the profile type
-    console.log(`Role Type: ${profileType}`);
-
-    // Make sure the username
-    console.log(`ID IS : ${viewId}`);
-
     // Redirect to the correct route based on the profile type
     let thePath = "";
     switch (profileType) {
@@ -121,7 +114,6 @@ const UserAccount = () => {
         router.push(thePath);
         break;
       default:
-        // console.error(`Unknown profile type: ${profileType}`);
         return; // Exit the function if profile type is unknown
     }
   };
@@ -310,16 +302,6 @@ const UserAccount = () => {
                               View
                             </button>
                           </td>
-
-                          {/* <button
-                    onClick={() => handleSuspendAccount(user.username)}
-                    disabled={!user.enabled} // This will disable the button if user.enabled is false
-                    className={`text-white bg-gradient-to-br from-orange-600 to-red-700 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 rounded-lg text-base font-bold px-5 py-2.5 ml-7 mr-7 text-center border-2 border-black ${
-                      !user.enabled ? "opacity-50 cursor-not-allowed" : ""
-                    }`}
-                  >
-                    Suspend
-                  </button> */}
                           <td className="px-3 py-2 justify-center sm:justify-start">
                             <button
                               onClick={() =>

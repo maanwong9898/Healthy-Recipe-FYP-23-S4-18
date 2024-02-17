@@ -30,7 +30,6 @@ const ViewRegisteredUser = ({ params }) => {
       );
 
       setUserAccount(response.data);
-      console.log(response.data);
     } catch (error) {
       console.error("Error fetching user data", error);
     }
@@ -47,7 +46,6 @@ const ViewRegisteredUser = ({ params }) => {
     ) {
       // clear the secure storage to prevent any unauthorized access
       SecureStorage.clear();
-      console.log("Redirecting to home page");
       router.push("/");
     } else {
       setIsChecking(false);
@@ -115,8 +113,6 @@ const ViewRegisteredUser = ({ params }) => {
       );
 
       if (response.status === 200) {
-        console.log("User status updated:", response);
-
         // Update the userAccount state with the new status
         setUserAccount((prevState) => ({
           ...prevState,

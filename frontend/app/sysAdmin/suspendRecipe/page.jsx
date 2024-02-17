@@ -18,8 +18,6 @@ import { useMutation } from "react-query";
 const sortOptions = {
   LATEST: { key: "LATEST", label: "By Latest" },
   OLDEST: { key: "OLDEST", label: "By Oldest" },
-  // HIGHEST_RATINGS: { key: "HIGHEST_RATINGS", label: "Highest Ratings" },
-  // LOWEST_RATINGS: { key: "LOWEST_RATINGS", label: "Lowest Ratings" },
   ALPHABETICAL_AZ: { key: "ALPHABETICAL_AZ", label: "Alphabetically (A to Z)" },
   ALPHABETICAL_ZA: { key: "ALPHABETICAL_ZA", label: "Alphabetically (Z to A)" },
 };
@@ -27,18 +25,7 @@ const sortOptions = {
 // Fetch all recipes
 const fetchRecipes = async () => {
   try {
-    console.log("Fetching recipes...");
     const response = await axiosInterceptorInstance.get("/recipe/get");
-    // console.log("All recipe:", response.data);
-    // Fetch average ratings for each blog post
-    // const recipesWithAverage = await Promise.all(
-    //   response.data.map(async (recipe) => {
-    //     const average = await fetchRecipeAverage(recipe.id);
-    //     return { ...recipe, average };
-    //   })
-    // );
-
-    // return recipesWithAverage;
     return response.data;
   } catch (error) {
     console.error("Failed to fetch recipes:", error);
@@ -51,7 +38,6 @@ const fetchRecipeAverage = async (recipeId) => {
     const response = await axiosInterceptorInstance.get(
       `/recipe/getAverage/${recipeId}`
     );
-    console.log("Average rating for recipe", recipeId, "is:", response.data);
     return response.data; // Assuming this returns the average data for the recipe
   } catch (error) {
     console.error(`Failed to fetch average for recipe ${recipeId}:`, error);
@@ -69,7 +55,6 @@ const toggleRecipeStatus = async ({ recipeID, active }) => {
 
 const SuspendRecipe = () => {
   const router = useRouter();
-  // const [recipes, setRecipes] = useState([]);
   const [displayedRecipes, setDisplayedRecipes] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [sortOption, setSortOption] = useState("LATEST");
@@ -78,7 +63,6 @@ const SuspendRecipe = () => {
   const [searchResultsCount, setSearchResultsCount] = useState(0);
   const [alphabeticalOrder, setAlphabeticalOrder] = useState("AZ");
   const [datePublishedOrder, setDatePublishedOrder] = useState("LATEST");
-  // const [ratingsOrder, setRatingsOrder] = useState("HIGHEST");
   const [statusOrder, setStatusOrder] = useState("ACTIVE");
   const [isChecking, setIsChecking] = useState(true);
   const [isAuthorized, setIsAuthorized] = useState(false);
@@ -145,24 +129,6 @@ const SuspendRecipe = () => {
         case "ALPHABETICAL_ZA":
           processedRecipes.sort((a, b) => b.title.localeCompare(a.title));
           break;
-        // case "HIGHEST_RATINGS":
-        //   processedRecipes.sort((a, b) => {
-        //     const ratingDiff =
-        //       (b.average?.averageRatings || 0) -
-        //       (a.average?.averageRatings || 0);
-        //     if (ratingDiff !== 0) return ratingDiff;
-        //     return getDateOrFallback(b) - getDateOrFallback(a); // Latest date first if tie
-        //   });
-        //   break;
-        // case "LOWEST_RATINGS":
-        //   processedRecipes.sort((a, b) => {
-        //     const ratingDiff =
-        //       (a.average?.averageRatings || 0) -
-        //       (b.average?.averageRatings || 0);
-        //     if (ratingDiff !== 0) return ratingDiff;
-        //     return getDateOrFallback(b) - getDateOrFallback(a); // Latest date first if tie
-        //   });
-        //   break;
         case "STATUS_ACTIVE":
           processedRecipes.sort((a, b) => {
             const statusDiff = b.active - a.active;
@@ -206,17 +172,6 @@ const SuspendRecipe = () => {
       setDatePublishedOrder("LATEST");
     }
   };
-
-  // Sort by ratings order
-  // const handleSortByRatings = () => {
-  //   if (ratingsOrder === "HIGHEST") {
-  //     setSortOption("LOWEST_RATINGS");
-  //     setRatingsOrder("LOWEST");
-  //   } else {
-  //     setSortOption("HIGHEST_RATINGS");
-  //     setRatingsOrder("HIGHEST");
-  //   }
-  // };
 
   // Sort by status order
   const handleSortByStatus = () => {
@@ -363,47 +318,6 @@ const SuspendRecipe = () => {
                                 {recipe.active ? "Active" : "Inactive"}
                               </span>
                             </td>
-                            {/* <td className="px-3 py-2 text-base text-center">
-                              <div
-                                className="rating-container flex flex-col"
-                                style={{ minWidth: "100px" }}
-                              >
-                                {recipe.average !== null &&
-                                typeof recipe.average.averageRatings ===
-                                  "number" &&
-                                typeof recipe.average.totalNumber ===
-                                  "number" ? (
-                                  <span
-                                    className="rating-text"
-                                    style={{
-                                      fontWeight: "bold",
-                                      color: "#0a0a0a",
-                                    }}
-                                  >
-                                    {recipe.average.averageRatings.toFixed(1)}
-                                  </span>
-                                ) : (
-                                  "No ratings yet"
-                                )}
-                                {recipe.average &&
-                                  recipe.average.totalNumber > 0 && (
-                                    <span
-                                      className="rating-count"
-                                      style={{
-                                        fontSize: "0.8rem",
-                                        color: "#666",
-                                      }}
-                                    >
-                                      ({recipe.average.totalNumber} rating
-                                      {recipe.average.totalNumber !== 1
-                                        ? "s"
-                                        : ""}
-                                      )
-                                    </span>
-                                  )}
-                              </div>
-                            </td> */}
-
                             <td className="px-3 py-2 text-base text-center">
                               <button
                                 onClick={() =>
@@ -492,52 +406,6 @@ const SuspendRecipe = () => {
                               {recipe.active ? "Active" : "Inactive"}
                             </span>
                           </p>
-
-                          {/* Ratings */}
-                          {/* <div className="px-3 py-2 text-lg">
-                            <div
-                              className="rating-container flex flex-row gap-2"
-                              style={{ minWidth: "100px" }}
-                            >
-                              <p className="font-semibold text-gray-900">
-                                Ratings:{" "}
-                              </p>
-
-                              {recipe.average !== null &&
-                              typeof recipe.average.averageRatings ===
-                                "number" &&
-                              typeof recipe.average.totalNumber === "number" ? (
-                                <span
-                                  className="rating-text"
-                                  style={{
-                                    fontWeight: "bold",
-                                    color: "#0a0a0a",
-                                  }}
-                                >
-                                  {recipe.average.averageRatings.toFixed(1)}
-                                </span>
-                              ) : (
-                                "No ratings yet"
-                              )}
-                              {recipe.average &&
-                                recipe.average.totalNumber > 0 && (
-                                  <span
-                                    className="rating-count"
-                                    style={{
-                                      fontSize: "0.8rem",
-                                      color: "#666",
-                                    }}
-                                  >
-                                    ({recipe.average.totalNumber} rating
-                                    {recipe.average.totalNumber !== 1
-                                      ? "s"
-                                      : ""}
-                                    )
-                                  </span>
-                                )}
-                            </div>
-                          </div> */}
-
                           {/* Buttons */}
                           <div className="mt-2 flex flex-col space-y-3 items-center">
                             <button

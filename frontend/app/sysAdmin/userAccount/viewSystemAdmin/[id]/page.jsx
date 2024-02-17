@@ -14,6 +14,8 @@ const ViewSystemAdmin = ({ params }) => {
   const [userAccount, setUserAccount] = useState("");
   const [isLoading, setIsLoading] = useState(true);
   const [isChecking, setIsChecking] = useState(true);
+  const [error, setError] = useState("");
+  const [success, setSuccess] = useState("");
 
   const viewUserDashboard = async () => {
     try {
@@ -25,7 +27,6 @@ const ViewSystemAdmin = ({ params }) => {
       );
 
       setUserAccount(response.data);
-      console.log(response.data);
     } catch (error) {
       console.error("Error fetching user data", error);
     }
@@ -42,7 +43,6 @@ const ViewSystemAdmin = ({ params }) => {
     ) {
       // clear the secure storage to prevent any unauthorized access
       SecureStorage.clear();
-      console.log("Redirecting to home page");
       router.push("/");
     } else {
       setIsChecking(false);
@@ -62,6 +62,41 @@ const ViewSystemAdmin = ({ params }) => {
 
   const handleBackButton = () => {
     router.push("/sysAdmin/userAccount");
+  };
+
+  const handleToggleUserStatus = async (suspendedUserId, isEnabled) => {
+    const newStatus = !isEnabled;
+
+    try {
+      const response = await axiosInterceptorInstance.put(
+        "/systemAdmin/suspend",
+        {
+          id: suspendedUserId,
+          enabled: newStatus,
+        }
+      );
+
+      if (response.status === 200) {
+        // Update the userAccount state with the new status
+        setUserAccount((prevState) => ({
+          ...prevState,
+          enabled: newStatus,
+        }));
+
+        // Set success message
+        setSuccess(
+          `User account has been ${
+            newStatus ? "unsuspended" : "suspended"
+          } successfully.`
+        );
+      } else {
+        console.error("Failed to update the user status:", response);
+      }
+    } catch (error) {
+      console.error("Error updating user status", error);
+      // Set error message for unsuccessful response
+      setError("Failed to update the user status.");
+    }
   };
 
   return (
@@ -147,13 +182,47 @@ const ViewSystemAdmin = ({ params }) => {
                         className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-base rounded-lg block w-full p-2.5"
                       />
                     </div>
+
+                    {/*Errors*/}
+                    {error && (
+                      <div className="text-red-500 text-base font-medium">
+                        {error}
+                      </div>
+                    )}
+                    {/*Success*/}
+                    {success && (
+                      <div className="text-green-500 text-base font-medium">
+                        {success}
+                      </div>
+                    )}
+
+                    {/* Buttons */}
                     <div className="flex flex-row space-x-5">
-                      <button
-                        className="bg-red-600 hover:bg-red-700 text-white font-semibold py-2 px-4 rounded-lg"
-                        onClick={handleBackButton}
-                      >
-                        Back
-                      </button>
+                      <div className="flex-1">
+                        <button
+                          onClick={() => handleBackButton()}
+                          className="text-center font-semibold py-2 px-4 rounded-lg w-full bg-slate-700 hover:bg-slate-800 text-white"
+                        >
+                          Back
+                        </button>
+                      </div>
+                      <div className="flex-1">
+                        <button
+                          onClick={() =>
+                            handleToggleUserStatus(
+                              userAccount.id,
+                              userAccount.enabled
+                            )
+                          }
+                          className={`text-white font-bold ${
+                            userAccount.enabled
+                              ? "bg-red-600 hover:bg-red-700"
+                              : "bg-stone-400 hover:bg-stone-500"
+                          } text-white text-center font-semibold py-2 px-4 rounded-lg w-full`}
+                        >
+                          {userAccount.enabled ? "Suspend" : "Unsuspend"}
+                        </button>
+                      </div>
                     </div>
                   </div>
                 </>

@@ -9,6 +9,7 @@ import SysAdminNavBar from "../../../../components/navigation/sysAdminNavBar";
 import SecureStorage from "react-secure-storage";
 
 // router path: /sysAdmin/userAccount/viewNutritionist/[id]
+
 const ViewNutritionist = ({ params }) => {
   const router = useRouter();
   const [userAccount, setUserAccount] = useState("");
@@ -27,7 +28,6 @@ const ViewNutritionist = ({ params }) => {
       );
 
       setUserAccount(response.data);
-      console.log(response.data);
     } catch (error) {
       console.error("Error fetching user data", error);
     }
@@ -44,7 +44,6 @@ const ViewNutritionist = ({ params }) => {
     ) {
       // clear the secure storage to prevent any unauthorized access
       SecureStorage.clear();
-      console.log("Redirecting to home page");
       router.push("/");
     } else {
       setIsChecking(false);
@@ -80,7 +79,6 @@ const ViewNutritionist = ({ params }) => {
       );
 
       if (response.status === 200) {
-        console.log("User status updated:", response);
 
         // Update the userAccount state with the new status
         setUserAccount((prevState) => ({

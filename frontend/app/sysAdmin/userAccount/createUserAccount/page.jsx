@@ -33,7 +33,6 @@ const CreateUserAccountPage = () => {
     ) {
       // clear the secure storage
       SecureStorage.clear();
-      console.log("Redirecting to home page");
       router.push("/");
     } else {
       setIsChecking(false);
@@ -77,8 +76,6 @@ const CreateUserAccountPage = () => {
       return;
     }
 
-    console.log("Creating admin account...");
-
     const formData = {
       password: password,
       username: username,
@@ -87,15 +84,12 @@ const CreateUserAccountPage = () => {
       email: email,
     };
 
-    console.log(formData);
-
     try {
       const response = await axiosInterceptorInstance.post(
         "/register/admin",
         formData
       );
-      console.log("Account created successfully:", response.data);
-      // setSuccess(true);
+      
       setSuccess("Account created successfully!");
 
       // Reset fields in the form
@@ -116,14 +110,6 @@ const CreateUserAccountPage = () => {
       setError(error.messcage || "Failed to create account.");
     }
 
-    console.log("User Account Details:", {
-      fullName,
-      username,
-      email,
-      dob,
-      password,
-      confirmPwd,
-    });
   };
 
   // Function to clear the error when user starts correcting the input

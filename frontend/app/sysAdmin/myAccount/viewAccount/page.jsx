@@ -7,8 +7,6 @@ import axiosInterceptorInstance from "../../../axiosInterceptorInstance.js";
 import SecureStorage from "react-secure-storage";
 import SysAdminNavBar from "../../../components/navigation/sysAdminNavBar";
 
-// things to do:
-// edit the user account details
 // router path for this page: /sysAdmin/myAccount/viewAccount
 
 const MyAccount = () => {
@@ -122,7 +120,6 @@ const MyAccount = () => {
           healthGoal,
         };
 
-        console.log("Updated data:", updatedData);
 
         const response = await axiosInterceptorInstance.post(
           "/register/dashboardSet", // Adjust URL if needed
@@ -130,7 +127,6 @@ const MyAccount = () => {
           config
         );
 
-        console.log("Account updated:", response.data);
         setSuccess("Account updated successfully!");
         setTimeout(() => {
           setSuccess("");

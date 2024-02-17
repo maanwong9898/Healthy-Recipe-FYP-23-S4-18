@@ -85,12 +85,10 @@ const UpdateRecipePage = ({ params }) => {
 
       // Fetch all dietary preferences categories from backend
       const fetchDietaryPreferences = async () => {
-        console.log("Fetching dietary preferences...");
         try {
           const response = await axiosInterceptorInstance.get(
             "/category/getAllDietaryPreferences"
           );
-          console.log("Dietary Preferences Categories Fetched", response.data);
           setDietaryPreferencesCategory(response.data);
         } catch (error) {
           console.log(error);
@@ -99,12 +97,10 @@ const UpdateRecipePage = ({ params }) => {
 
       // Fetch all allergies categories from backend
       const fetchAllergies = async () => {
-        console.log("Fetching allergies...");
         try {
           const response = await axiosInterceptorInstance.get(
             "/category/getAllAllergies"
           );
-          console.log("Allergies Categories Fetched", response.data);
           setAllergyCategory(response.data);
         } catch (error) {
           console.log(error);
@@ -113,12 +109,10 @@ const UpdateRecipePage = ({ params }) => {
 
       // Fetch all meal types categories from backend
       const fetchMealTypes = async () => {
-        console.log("Fetching meal types...");
         try {
           const response = await axiosInterceptorInstance.get(
             "/category/getAllMealTypes"
           );
-          console.log("Meal Types Categories Fetched", response.data);
           setMealTypeCategory(response.data);
         } catch (error) {
           console.log(error);
@@ -134,11 +128,10 @@ const UpdateRecipePage = ({ params }) => {
           const response = await axiosInterceptorInstance.get(
             `/recipe/get/${recipeID}`
           );
-          console.log("Fetched recipe data is:", response.data);
 
           if (!response.data) {
-            console.error(`Recipe with ID ${recipeID} not found`);
-            throw new Error(`Recipe with ID ${recipeID} not found`);
+            console.error(`Recipe not found`);
+            throw new Error(`Recipe not found`);
           }
 
           // Assuming the response contains the recipes directly
@@ -198,18 +191,11 @@ const UpdateRecipePage = ({ params }) => {
             setMealType("");
           }
 
-          // image blob
-          // Inside your fetchRecipesById function
-          // setImageBlob(recipe.imgBlob || "");
-
           if (recipe.imgBlob) {
-            console.log("Image blob available");
-            console.log("Image blob:", recipe.imgBlob);
+           
             // Directly use base64 string as the image source
             setImageBlob(recipe.imgBlob);
           } else {
-            console.log("No image blob available");
-            // Handle the absence of an image blob appropriately
           }
 
           setLoading(false);
@@ -265,23 +251,19 @@ const UpdateRecipePage = ({ params }) => {
   };
 
   const handleFileChange = (e) => {
-    console.log("File change event:", e);
     const file = e.target.files[0];
     if (file) {
       const reader = new FileReader();
       reader.onload = (event) => {
         let dataURL = event.target.result;
-        console.log("Complete Data URL:", dataURL);
 
         // Extract Base64 Data
         let base64Data = dataURL.split(",")[1];
-        console.log("Base64 Data:", base64Data);
 
         // Use base64Data as needed
         setNewImageBlob(base64Data); // Assuming you have a state setter like this
       };
       reader.readAsDataURL(file);
-      console.log("File:", file);
     }
   };
 
@@ -330,20 +312,12 @@ const UpdateRecipePage = ({ params }) => {
       !fat.trim() ||
       !fibre.trim() ||
       !sodium.trim() ||
-      // !imageUrl.trim() ||
-      // !imageBlob ||
       ingredientList.some((ingredient) => !ingredient.trim()) ||
       instructionList.some((instruction) => !instruction.trim())
     ) {
       setError("Please fill out all required fields.");
       return false;
     }
-
-    // check image blob
-    // if (!newImageBlob && !imageBlob) {
-    //   setError("Image is required.");
-    //   return false;
-    // }
 
     // check if image title is empty
     if (!imgTitle.trim()) {
@@ -408,8 +382,6 @@ const UpdateRecipePage = ({ params }) => {
       sodium: parseInt(sodium),
       carbs: parseInt(carbohydrates),
       servingSize: parseInt(servingSize),
-      // createdDT: null, // Set this accordingly
-      // lastUpdatedDT: new Date().toISOString(), // Current timestamp
       ingredients: formattedIngredients,
       imgTitle: imgTitle,
       userID: { id: userId }, // Replace with actual user ID or fetch dynamically
@@ -420,15 +392,12 @@ const UpdateRecipePage = ({ params }) => {
       imgBlob: updatedImageBlob, // Use updated image blob
     };
 
-    console.log("Recipe Data to be sent to update", recipeData);
-
     try {
       // Send PUT request
       const response = await axiosInterceptorInstance.put(
         "/recipe/update",
         recipeData
       );
-      console.log("Recipe Updated", response.data);
 
       // Set success message and clear any existing error messages
       setSuccess("Recipe updated successfully!");

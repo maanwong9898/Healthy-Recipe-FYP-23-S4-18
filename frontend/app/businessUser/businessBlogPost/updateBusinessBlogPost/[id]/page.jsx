@@ -13,14 +13,12 @@ const fetchBlogPostById = async (postId) => {
     postId = postId;
 
     const response = await axiosInterceptorInstance.get(`/blog/get/${postId}`);
-    console.log("Fetched blog post data is:", response.data);
 
     if (!response.data) {
       console.error(`Blog post with ID ${postId} not found`);
       throw new Error(`Blog post with ID ${postId} not found`);
     }
 
-    console.log("try update blog post");
     // Assuming the response contains the blog post directly
     const blogPost = response.data;
 
@@ -79,7 +77,6 @@ const UpdateBusinessBlogPostPage = ({ params }) => {
       fetchBlogPostById(postId)
         .then((data) => {
           setBusinessBlogPost(data);
-          console.log("The displayed particular blog is:", data);
 
           // Set each piece of state with the corresponding data
           setTitle(data.title || "Not Specified");
@@ -92,12 +89,10 @@ const UpdateBusinessBlogPostPage = ({ params }) => {
           setImgTitle(data.imgTitle || "Not Specified");
           setImgTitleCharCount(data.imgTitle ? data.imgTitle.length : 0); // Set image title character count
           if (data.imgBlob) {
-            console.log("Image blob available");
-            console.log("Image blob:", data.imgBlob);
+         
             // Directly use base64 string as the image source
             setImageBlob(data.imgBlob);
           } else {
-            console.log("No image blob available");
             // Handle the absence of an image blob appropriately
           }
           setIsLoading(false);
@@ -108,12 +103,10 @@ const UpdateBusinessBlogPostPage = ({ params }) => {
 
       // Fetch all business blog categories from backend
       const fetchCategories = async () => {
-        console.log("Fetching categories...");
         try {
           const response = await axiosInterceptorInstance.get(
             "category/getAllBlogPostCategories"
           );
-          console.log("Categories fetched:", response.data);
           setCategories(response.data);
         } catch (error) {
           console.error("Error fetching categories:", error);
@@ -130,14 +123,12 @@ const UpdateBusinessBlogPostPage = ({ params }) => {
 
   // Update blog post (calling controller)
   const updateBlogPost = async (updatedPost) => {
-    console.log("Sending the following data to update:", updatedPost);
     try {
       // Ensure all values are simple data types
       const response = await axiosInterceptorInstance.put(
         "/blog/edit",
         updatedPost
       );
-      console.log("Blog post updated successfully:", response.data);
       setSuccess(true);
       setError(""); // Now 'setError' is available
 
@@ -153,7 +144,6 @@ const UpdateBusinessBlogPostPage = ({ params }) => {
     setSuccess(false);
     setTitleCharCount(e.target.value.length);
     setError(""); // Clear error message
-    console.log("New title:", e.target.value);
   };
 
   const handleCategoryChange = (e) => {
@@ -169,7 +159,6 @@ const UpdateBusinessBlogPostPage = ({ params }) => {
     setSuccess(false);
     setInfoCharCount(e.target.value.length);
     setError(""); // Clear error message
-    console.log("New info:", e.target.value);
   };
 
   // handle image url change
@@ -178,7 +167,6 @@ const UpdateBusinessBlogPostPage = ({ params }) => {
     setSuccess(false);
     setImageUrlCharCount(e.target.value.length);
     setError(""); // Clear error message
-    console.log("New image url:", e.target.value);
   };
 
   const handleImgTitleChange = (e) => {
@@ -188,23 +176,19 @@ const UpdateBusinessBlogPostPage = ({ params }) => {
   };
 
   const handleFileChange = (e) => {
-    console.log("File change event:", e);
     const file = e.target.files[0];
     if (file) {
       const reader = new FileReader();
       reader.onload = (event) => {
         let dataURL = event.target.result;
-        console.log("Complete Data URL:", dataURL);
 
         // Extract Base64 Data
         let base64Data = dataURL.split(",")[1];
-        console.log("Base64 Data:", base64Data);
 
         // Use base64Data as needed
         setNewImageBlob(base64Data); // Assuming you have a state setter like this
       };
       reader.readAsDataURL(file);
-      console.log("File:", file);
     }
   };
 
@@ -227,8 +211,7 @@ const UpdateBusinessBlogPostPage = ({ params }) => {
 
   // Validate the form before submitting
   const validateForm = () => {
-    console.log("Type of category:", typeof category);
-    console.log("Value of category:", category);
+
 
     if (!title.trim()) {
       setError("Title cannot be empty.");
@@ -251,16 +234,7 @@ const UpdateBusinessBlogPostPage = ({ params }) => {
       setError("Image title cannot be empty.");
       return false;
     }
-    // if (!imageUrl.trim()) {
-    //   setError("Image URL cannot be empty.");
-    //   return false;
-    // }
 
-    // check image blob
-    // if (!newImageBlob && !imageBlob) {
-    //   setError("Image is required.");
-    //   return false;
-    // }
     // Clear any existing errors if all validations pass
     setError("");
     return true;
@@ -280,7 +254,6 @@ const UpdateBusinessBlogPostPage = ({ params }) => {
     // Use newImageBlob if available, otherwise fallback to original imageBlob
     const updatedImageBlob = newImageBlob || imageBlob;
     try {
-      console.log("Updated category is:", category.id);
       const updatedPost = {
         id: businessBlogPost.id, // Assuming businessBlogPost.id is the right ID
         active: true,
@@ -295,7 +268,6 @@ const UpdateBusinessBlogPostPage = ({ params }) => {
 
       await updateBlogPost(updatedPost);
       // Consider navigation or success message here
-      // setSuccess(true); // Set success to true on successful update
       setError(""); // Clear any previous errors
     } catch (updateError) {
       setSuccess(false); // Ensure success is false on error
@@ -325,7 +297,6 @@ const UpdateBusinessBlogPostPage = ({ params }) => {
                     </h1>
                     <form
                       className="space-y-6 md:space-y-5 lg:space-y-3"
-                      // onSubmit={handleSubmit}
                     >
                       {/* TITLE */}
                       <div className="flex flex-col">
@@ -361,7 +332,6 @@ const UpdateBusinessBlogPostPage = ({ params }) => {
                           id="category"
                           name="category"
                           value={category}
-                          // onChange={(e) => setCategory(e.target.value)}
                           onChange={(e) => setCategory(Number(e.target.value))}
                           className="bg-gray-50 border border-gray-300 text-black sm:text-base rounded-lg block w-full p-2.5"
                         >
@@ -395,29 +365,6 @@ const UpdateBusinessBlogPostPage = ({ params }) => {
                       <span className="text-sm text-gray-600">
                         {infoCharCount}/1000 characters
                       </span>
-
-                      {/* IMAGE URL */}
-                      {/* <div className="flex flex-col">
-                        <label
-                          htmlFor="imageUrl"
-                          className="block text-lg mb-1 font-semibold text-gray-900"
-                        >
-                          Image URL<span className="text-red-500">*</span>
-                        </label>
-                        <input
-                          type="text"
-                          name="imageUrl"
-                          id="imageUrl"
-                          placeholder="Image URL"
-                          maxLength="255"
-                          value={imageUrl}
-                          onChange={handleImageUrlChange}
-                          className="bg-gray-50 border border-gray-300 text-black sm:text-base rounded-lg block w-full p-2.5"
-                        />
-                        <span className="text-sm text-gray-600">
-                          {imageUrlCharCount}/255 characters
-                        </span>
-                      </div> */}
 
                       {/* IMAGE file */}
                       <div className="flex flex-col">
@@ -478,7 +425,6 @@ const UpdateBusinessBlogPostPage = ({ params }) => {
                         <Link href="/businessUser/businessBlogPost">
                           <button
                             className="bg-red-600 hover:bg-red-700 text-white font-semibold py-2 px-4 rounded-lg"
-                            // onClick={handleBackClick}
                           >
                             Back
                           </button>

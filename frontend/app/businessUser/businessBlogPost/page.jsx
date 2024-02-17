@@ -24,13 +24,10 @@ const sortOptions = {
 // Fetch all blog posts from the backend - backend controller is BlogController
 const fetchBlogPosts = async () => {
   const userID = SecureStorage.getItem("userId");
-  console.log("Current id", userID);
   try {
     const response = await axiosInterceptorInstance.get(
       "/blog/findByUserId/" + userID
     );
-
-    console.log("All business blog posts belongs to this user:", response.data);
 
     return response.data;
   } catch (error) {
@@ -45,7 +42,6 @@ const fetchBlogAverage = async (blogId) => {
     const response = await axiosInterceptorInstance.get(
       `/blog/getAverage/${blogId}`
     );
-    console.log("Average rating for blog post", blogId, "is:", response.data);
     return response.data; // Assuming this returns the average data for the blog
   } catch (error) {
     console.error(`Failed to fetch average for blog post ${blogId}:`, error);
@@ -100,7 +96,6 @@ const MyBusinessBlogPosts = () => {
               return { ...blog, average }; // Augment each blog post with its average
             })
           );
-          console.log("Blog with average:", blogsWithAverage);
           setBusinessBlogs(blogsWithAverage);
           // ... [sorting and other logic]
         } catch (error) {
@@ -110,12 +105,10 @@ const MyBusinessBlogPosts = () => {
 
       // Fetch all business blog categories from backend
       const fetchCategories = async () => {
-        console.log("Fetching blog categories...");
         try {
           const response = await axiosInterceptorInstance.get(
             "category/getAllBlogPostCategories"
           );
-          console.log("Categories fetched:", response.data);
           setCategories(response.data);
         } catch (error) {
           console.error("Error fetching categories:", error);
@@ -132,9 +125,6 @@ const MyBusinessBlogPosts = () => {
     }
   }, []);
 
-  // if (isChecking) {
-  //   return <div>Checking...</div>;
-  // }
 
   // All in 1 -- sort, filter, search
   useEffect(() => {
@@ -255,7 +245,6 @@ const MyBusinessBlogPosts = () => {
   // Implement handleViewBlogPost and handleUpdateBlogPost as needed
   // this function is to view particular blog post
   const handleViewBlogPost = (id) => {
-    console.log("Viewing blog post with id:", id);
 
     //Redirect to the correct route
     let routePath = `/businessUser/businessBlogPost/viewBusinessBlogPost/${id}`;
@@ -265,7 +254,6 @@ const MyBusinessBlogPosts = () => {
 
   // this function is to update particular blog post
   const handleUpdateBlogPost = (id) => {
-    console.log("Updating blog post with id:", id);
 
     // Redirect to the correct route
     let routePath = `/businessUser/businessBlogPost/updateBusinessBlogPost/${id}`;
@@ -306,7 +294,6 @@ const MyBusinessBlogPosts = () => {
       const response = await axiosInterceptorInstance.delete(
         `/blog/delete/${id}`
       );
-      console.log("Blog post deleted:", response.data);
 
       // Update UI after delete
       setBusinessBlogs(businessBlogs.filter((post) => post.id !== id));

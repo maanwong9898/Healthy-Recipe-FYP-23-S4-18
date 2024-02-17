@@ -30,18 +30,15 @@ const fetchRecipesById = async (recipeID) => {
     const response = await axiosInterceptorInstance.get(
       `/recipe/get/${recipeID}`
     );
-    console.log("Fetched recipe data is:", response.data);
 
     if (!response.data) {
-      console.error(`Recipe with ID ${recipeID} not found`);
-      throw new Error(`Recipe with ID ${recipeID} not found`);
+      console.error(`Recipe not found`);
+      throw new Error(`Recipe not found`);
     }
 
     // Assuming the response contains the recipes directly
     const recipe = response.data;
 
-    // check the content of the recipe
-    console.log("try recipe by id", recipe);
     return recipe;
   } catch (error) {
     console.error("Failed to fetch recipe:", error);
@@ -62,15 +59,9 @@ const BusinessViewRecipe = ({ params }) => {
       const response = await axiosInterceptorInstance.get(
         `/recipe/rating/getRecipe?recipeId=${recipeId}`
       );
-      console.log("All recipe ratings response data:", response.data);
 
       // Assuming response.data is the array of reviews for the given recipeId
       setReviewsAndRatings(response.data);
-
-      // Optionally, log each review to the console
-      response.data.forEach((reviewData, index) => {
-        console.log(`Review ${index + 1}:`, reviewData.review);
-      });
     } catch (error) {
       console.error("Failed to fetch ratings and reviews:", error);
     }
@@ -112,10 +103,8 @@ const BusinessViewRecipe = ({ params }) => {
     return <div>Checking...</div>;
   }
 
-  // this function is to update particular blog post
+  // this function is to update particular recipe
   const handleUpdateRecipe = (id) => {
-    console.log("Updating recipe with id:", id);
-
     // Redirect to the correct route
     let routePath = `/businessUser/recipes/updateRecipe/${id}`;
 
@@ -191,11 +180,6 @@ const BusinessViewRecipe = ({ params }) => {
     // Return an empty string or a placeholder image URL if imgBlob is not available
     return "";
   };
-
-  // const getImageUrlFromBlob = (imgBlob) => {
-  //   if (!imgBlob) return ""; // Return an empty string or a placeholder image if blob is not available
-  //   return `data:image/jpeg;base64,${imgBlob}`;
-  // };
 
   return (
     <div>

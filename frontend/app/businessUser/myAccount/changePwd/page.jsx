@@ -31,7 +31,6 @@ const changeUserPwd = () => {
     ) {
       // clear the secure storage
       SecureStorage.clear();
-      console.log("Redirecting to home page");
       router.push("/");
     } else {
       setIsChecking(false);
@@ -58,13 +57,6 @@ const changeUserPwd = () => {
       return;
     }
 
-    // For checking purposes
-    console.log("User Password Details:", {
-      oldPwd,
-      newPwd,
-      repeatPwd,
-    });
-
     try {
       const userId = SecureStorage.getItem("userId");
       const updatedData = {
@@ -78,7 +70,6 @@ const changeUserPwd = () => {
         updatedData
       );
 
-      console.log("Response:", response);
       setSuccess(response.data);
       setTimeout(() => {
         setSuccess("");

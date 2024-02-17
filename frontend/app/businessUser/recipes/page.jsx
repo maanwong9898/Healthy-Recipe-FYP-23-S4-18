@@ -24,12 +24,10 @@ const sortOptions = {
 // Fetch all recipes from the backend - backend controller is Recipe Controller
 const fetchRecipes = async () => {
   const userID = SecureStorage.getItem("userId");
-  console.log("Current id", userID);
   try {
     const response = await axiosInterceptorInstance.get(
       "/recipe/findByUserId/" + userID
     );
-    console.log("All recipes belongs to this user:", response.data);
 
     return response.data;
   } catch (error) {
@@ -43,7 +41,6 @@ const fetchRecipeAverage = async (recipeId) => {
     const response = await axiosInterceptorInstance.get(
       `/recipe/getAverage/${recipeId}`
     );
-    console.log("Average rating for recipe", recipeId, "is:", response.data);
     return response.data; // Assuming this returns the average data for the recipe
   } catch (error) {
     console.error(`Failed to fetch average for recipe ${recipeId}:`, error);
@@ -95,7 +92,6 @@ const MyRecipes = () => {
               return { ...recipe, average }; // Augment each recipe with its average
             })
           );
-          console.log("Recipe with average:", recipesWithAverage);
           setRecipes(recipesWithAverage);
           setIsLoading(false);
         } catch (error) {
@@ -109,7 +105,7 @@ const MyRecipes = () => {
 
   // All in 1 -- sort, search
   useEffect(() => {
-    // Start with the full list of blogs
+    // Start with the full list of recipes
     let processedRecipes = [...recipes];
 
     // Search filter
@@ -175,7 +171,7 @@ const MyRecipes = () => {
         break;
     }
 
-    // Update the displayed blogs
+    // Update the displayed recipes
     setDisplayedRecipes(processedRecipes);
   }, [recipes, searchTerm, sortOption]);
 
@@ -226,7 +222,6 @@ const MyRecipes = () => {
   // Implement handleViewRecipe and handleUpdateRecipe as needed
   // this function is to view particular recipe
   const handleViewRecipe = (id) => {
-    console.log("Viewing recipe with id:", id);
 
     //Redirect to the correct route
     let routePath = `/businessUser/recipes/viewRecipe/${id}`;
@@ -236,7 +231,6 @@ const MyRecipes = () => {
 
   // this function is to update particular recipe
   const handleUpdateRecipe = (id) => {
-    console.log("Updating recipe with id:", id);
 
     // Redirect to the correct route
     let routePath = `/businessUser/recipes/updateRecipe/${id}`;
@@ -280,13 +274,11 @@ const MyRecipes = () => {
       const response = await axiosInterceptorInstance.delete(
         `/recipe/delete/${id}`
       );
-      console.log("Recipe deleted:", response.data);
 
       // Update UI after delete
       setRecipes(recipes.filter((post) => post.id !== id));
     } catch (error) {
       console.error("Error deleting recipe:", error);
-      // Handle error, maybe show a message to the user
     }
   };
 
@@ -343,69 +335,7 @@ const MyRecipes = () => {
                 <span className="absolute inset-y-0 left-0 flex items-center pl-2">
                   <SearchIcon />
                 </span>
-                {/* Search button */}
-                {/* <button
-          onClick={handleSearchClick}
-          className="text-white bg-blue-600 hover:bg-blue-700 rounded-full text-base font-semibold px-5 py-1 w-full md:w-auto mt-3 md:mt-0 md:ml-2"
-        >
-          Search
-        </button> */}
-                {/* "Results found" message */}
-                {/* {searchPerformed && !isSearchEmpty && (
-            <p className="text-left text-white font-bold text-xl">
-              {searchResultsCount} results found.
-            </p>
-          )} */}
-                {/* "No results found" message */}
-                {/* {searchPerformed && isSearchEmpty && (
-            <p className="text-left text-white font-bold text-xl">
-              No results found.
-            </p>
-          )} */}
               </div>
-
-              {/* Sort dropdown and filter dropdown */}
-              {/* <div className="flex flex-col md:flex-row items-center"> */}
-              {/* Sort dropdown */}
-              {/* <div className="mb-2 md:mb-0 md:mr-6">
-          <label htmlFor="sort" className="mr-2 font-2xl text-gray-900">
-            Sort By:
-          </label>
-          <select
-            id="sort"
-            value={sortOption}
-            onChange={(e) => setSortOption(e.target.value)}
-            className="p-2 rounded-lg border mr-6"
-          >
-            {Object.values(sortOptions).map((option) => (
-              <option key={option.key} value={option.key}>
-                {option.label}
-              </option>
-            ))}
-          </select>
-        </div> */}
-              {/* Filter dropdown */}
-              {/* <div className="mb-2 md:mb-0 md:mr-6">
-            <label
-              htmlFor="categoryFilter"
-              className="ml-2 mr-2 font-2xl text-gray-900"
-            >
-              Filter By:
-            </label>
-            <select
-              id="categoryFilter"
-              onChange={(e) => setCategoryFilter(e.target.value)}
-              className="p-2 rounded-lg border"
-            >
-              <option value="ALL">All Categories</option>
-              {categories.map((category, index) => (
-                <option key={index} value={category.id} className="text-black">
-                  {category.subcategoryName}
-                </option>
-              ))}
-            </select>
-          </div> */}
-              {/* </div> */}
 
               {/* Table of recipes */}
               <div className="overflow-x-auto rounded-lg hidden lg:block">
@@ -465,11 +395,6 @@ const MyRecipes = () => {
                             recipe?.createdDT || recipe.lastUpdatedDT
                           ).toLocaleDateString("en-GB")}
                         </td>
-                        {/* <td className="px-3 py-2 text-base text-center">
-                  {recipe.blogType
-                    ? recipe.blogType.subcategoryName
-                    : "Not specified"}
-                </td> */}
                         <td className="px-3 py-2 text-base text-center">
                           <span
                             className={`rounded-full px-3 py-1 text-base font-semibold ${

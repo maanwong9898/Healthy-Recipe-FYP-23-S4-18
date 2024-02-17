@@ -1,5 +1,4 @@
 "use client";
-// import axios from "axios";
 import axiosInterceptorInstance from "../../axiosInterceptorInstance.js";
 import { useRouter } from "next/navigation";
 import React, { useState, useEffect } from "react";
@@ -29,8 +28,6 @@ const fetchEducationalContent = async () => {
       "/educationalContent/findByUserId/" + userID
     );
 
-    console.log("All edu content belongs to this user:", response.data);
-
     return response.data;
   } catch (error) {
     console.error("Failed to fetch edu contents:", error);
@@ -44,12 +41,7 @@ const fetchEduContentAverage = async (eduContentId) => {
     const response = await axiosInterceptorInstance.get(
       `/educationalContent/getAverage/${eduContentId}`
     );
-    console.log(
-      "Average rating for educationalContent",
-      eduContentId,
-      "is:",
-      response.data
-    );
+
     return response.data; // Assuming this returns the average data for the educational content
   } catch (error) {
     console.error(
@@ -106,12 +98,8 @@ const MyEducationalContent = () => {
               return { ...eduContent, average }; // Augment each educational content with its average
             })
           );
-          console.log(
-            "Educational contents with average:",
-            eudContentWithAverage
-          );
+
           setEducationalContent(eudContentWithAverage);
-          // ... [sorting and other logic]
         } catch (error) {
           console.error("Error while fetching data:", error);
         }
@@ -119,12 +107,10 @@ const MyEducationalContent = () => {
 
       // Fetch all educational content categories from backend
       const fetchCategories = async () => {
-        console.log("Fetching edu content categories...");
         try {
           const response = await axiosInterceptorInstance.get(
             "category/getAllEducationalContentCategories"
           );
-          console.log("Categories fetched:", response.data);
           setCategories(response.data);
         } catch (error) {
           console.error("Error fetching categories:", error);
@@ -261,7 +247,6 @@ const MyEducationalContent = () => {
   // Implement
   // this function is to view particular educational content
   const handleViewEduContent = (id) => {
-    console.log("Viewing edu content with id:", id);
 
     //Redirect to the correct route
     let routePath = `/businessUser/educationalContent/viewEducationalContent/${id}`;
@@ -271,7 +256,6 @@ const MyEducationalContent = () => {
 
   // this function is to update particular educational content
   const handleUpdateEduContent = (id) => {
-    console.log("Updating edu content with id:", id);
 
     // Redirect to the correct route
     let routePath = `/businessUser/educationalContent/updateEducationalContent/${id}`;
@@ -318,7 +302,6 @@ const MyEducationalContent = () => {
       const response = await axiosInterceptorInstance.delete(
         `/educationalContent/delete/${id}`
       );
-      console.log("Educational content deleted:", response.data);
 
       // Update UI after delete
       setEducationalContent(
@@ -326,7 +309,6 @@ const MyEducationalContent = () => {
       );
     } catch (error) {
       console.error("Error deleting Educational content:", error);
-      // Handle error, maybe show a message to the user
     }
   };
 
@@ -374,8 +356,8 @@ const MyEducationalContent = () => {
                 <div className="relative mb-3 md:mb-8 md:mr-2">
                   <input
                     type="text"
-                    id="eduContentSearch" // Adding an id attribute here
-                    name="eduContentSearch" // Adding a name attribute here
+                    id="eduContentSearch" 
+                    name="eduContentSearch"
                     value={searchTerm}
                     onChange={(e) => setSearchTerm(e.target.value)}
                     placeholder="Search by title"

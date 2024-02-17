@@ -40,7 +40,6 @@ const BusinessUserHomePage = () => {
     ) {
       // clear the storage and redirect to login page
       SecureStorage.clear();
-      console.log("Redirecting to home page");
       router.push("/");
       return;
     } else {

@@ -6,8 +6,6 @@ import axiosInterceptorInstance from "../../../axiosInterceptorInstance.js";
 import SecureStorage from "react-secure-storage";
 import BusinessUserNavBar from "../../../components/navigation/businessUserNavBar";
 
-// https://uiwjs.github.io/react-md-editor/
-
 // router path: /businessUser/educationalContent/createEducationalContent
 // this is the page to create educational content
 
@@ -91,14 +89,12 @@ const CreateEducationalContent = () => {
     } else {
       setIsChecking(false);
 
-      // Fetch all business blog categories from backend
+      // Fetch all business educational content categories from backend
       const fetchCategories = async () => {
-        console.log("Fetching categories...");
         try {
           const response = await axiosInterceptorInstance.get(
             "category/getAllEducationalContentCategories"
           );
-          console.log("Categories fetched:", response.data);
           setCategories(response.data);
           setIsLoading(false);
         } catch (error) {
@@ -115,23 +111,19 @@ const CreateEducationalContent = () => {
   }
 
   const handleFileChange = (e) => {
-    console.log("File change event:", e);
     const file = e.target.files[0];
     if (file) {
       const reader = new FileReader();
       reader.onload = (event) => {
         let dataURL = event.target.result;
-        console.log("Complete Data URL:", dataURL);
 
         // Extract Base64 Data
         let base64Data = dataURL.split(",")[1];
-        console.log("Base64 Data:", base64Data);
 
         // Use base64Data as needed
-        setNewImageBlob(base64Data); // Assuming you have a state setter like this
+        setNewImageBlob(base64Data);
       };
       reader.readAsDataURL(file);
-      console.log("File:", file);
     }
   };
 
@@ -154,9 +146,6 @@ const CreateEducationalContent = () => {
 
   // Validate the form before submitting
   const validateForm = () => {
-    console.log("Type of category:", typeof category);
-    console.log("Value of category:", category);
-
     if (!title.trim()) {
       setError("Title cannot be empty.");
       return false;
@@ -178,11 +167,6 @@ const CreateEducationalContent = () => {
       return false;
     }
 
-    // if (!imageUrl.trim()) {
-    //   setError("Image URL cannot be empty.");
-    //   return false;
-    // }
-
     if (!newImageBlob) {
       setError("Image cannot be empty.");
       return false;
@@ -201,14 +185,12 @@ const CreateEducationalContent = () => {
       return;
     }
 
-    console.log("Create method called.");
     // Check if any of the required fields are empty
     if (!title.trim() || !info.trim()) {
       setError("Please fill in all the required fields.");
       return;
     }
 
-    console.log("category id:", category);
     const userId = SecureStorage.getItem("userId");
 
     // Construct the payload according to the required format
@@ -222,14 +204,11 @@ const CreateEducationalContent = () => {
       userID: { id: userId }, // replace above
     };
 
-    console.log("Educational Content data for creation:", eduContentData);
-
     try {
       const response = await axiosInterceptorInstance.post(
         "/educationalContent/add",
         eduContentData
       );
-      console.log("Edu content created successfully:", response.data);
 
       // Consider navigation or success message here
       setSuccess(true); // Set success to true on successful update
@@ -271,18 +250,14 @@ const CreateEducationalContent = () => {
       ) : (
         <>
           <BusinessUserNavBar />
-          {/* Adjust the max-width and width in the inline style */}
           {isLoading ? (
             <div>Loading...</div>
           ) : (
             <>
-              {/* Adjust the max-width and width in the inline style */}
               <div
                 className="mt-16 mb-16 mx-auto bg-white rounded-lg shadow-lg p-4 md:p-8 lg:p-12"
                 style={{ maxWidth: "600px", width: "100%" }} // Increase maxWidth and set width to 100%
               >
-                {" "}
-                {/* Smaller maxWidth */}
                 <div className="p-4 space-y-4 md:space-y-12 ">
                   <div className="p-6 space-y-4 md:space-y-2 sm:p-4">
                     <h1 className="text-3xl lg:text-4xl font-bold leading-tight tracking-tight text-center text-gray-900 mb-8">
@@ -312,7 +287,6 @@ const CreateEducationalContent = () => {
                         </span>
                       </div>
                       {/* CATEGORY */}
-                      {/* CATEGORY DROPDOWN */}
                       <div className="flex flex-col">
                         <label
                           htmlFor="category"
@@ -325,7 +299,6 @@ const CreateEducationalContent = () => {
                           id="category"
                           name="category"
                           value={category}
-                          // onChange={(e) => setCategory(e.target.value)}
                           onChange={(e) => setCategory(Number(e.target.value))}
                           className="bg-gray-50 border border-gray-300 text-black sm:text-base rounded-lg block w-full p-2.5"
                         >
@@ -348,7 +321,7 @@ const CreateEducationalContent = () => {
                         <textarea
                           id="info"
                           name="info"
-                          placeholder="Describe your blog post here (Max 1000 characters)"
+                          placeholder="Describe your content here (Max 1000 characters)"
                           value={info}
                           rows={10}
                           maxLength="1000"
@@ -359,29 +332,6 @@ const CreateEducationalContent = () => {
                           {infoCharCount}/1000 characters
                         </span>
                       </div>
-
-                      {/* IMAGE URL */}
-                      {/* <div className="flex flex-col">
-                        <label
-                          htmlFor="imageUrl"
-                          className="block text-lg mb-1 font-semibold text-gray-900"
-                        >
-                          Image URL<span className="text-red-500">*</span>
-                        </label>
-                        <input
-                          type="text"
-                          id="imageUrl"
-                          name="imageUrl"
-                          placeholder="Image URL (Max 255 characters)"
-                          maxLength="255"
-                          value={imageUrl}
-                          onChange={handleImageUrlChange}
-                          className="bg-gray-50 border border-gray-300 text-black sm:text-base rounded-lg block w-full p-2.5"
-                        />
-                        <span className="text-sm text-gray-600">
-                          {imageUrlCharCount}/255 characters
-                        </span>
-                      </div> */}
 
                       {/* IMAGE file */}
                       <div className="flex flex-col">

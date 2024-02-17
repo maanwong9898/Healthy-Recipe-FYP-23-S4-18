@@ -15,7 +15,6 @@ const fetchEduContentById = async (eduContentId) => {
     const response = await axiosInterceptorInstance.get(
       `/educationalContent/get/${eduContentId}`
     );
-    console.log("Fetched educational content data is:", response.data);
 
     if (!response.data) {
       console.error(`Educational content with ID ${eduContentId} not found`);
@@ -80,7 +79,6 @@ const UpdateEducationalContent = ({ params }) => {
       fetchEduContentById(eduContentId)
         .then((data) => {
           setEducationalContent(data);
-          console.log("The displayed particular educational content is:", data);
 
           // Set each piece of state with the corresponding data
           setTitle(data.title || "Not Specified");
@@ -93,12 +91,9 @@ const UpdateEducationalContent = ({ params }) => {
           setImgTitle(data.imgTitle || "Not Specified");
           setImgTitleCharCount(data.imgTitle ? data.imgTitle.length : 0); // Set image title character count
           if (data.imgBlob) {
-            console.log("Image blob available");
-            console.log("Image blob:", data.imgBlob);
             // Directly use base64 string as the image source
             setImageBlob(data.imgBlob);
           } else {
-            console.log("No image blob available");
             // Handle the absence of an image blob appropriately
           }
           setIsLoading(false);
@@ -109,12 +104,10 @@ const UpdateEducationalContent = ({ params }) => {
 
       // Fetch all education content categories from backend
       const fetchCategories = async () => {
-        console.log("Fetching categories...");
         try {
           const response = await axiosInterceptorInstance.get(
             "category/getAllEducationalContentCategories"
           );
-          console.log("Categories fetched:", response.data);
           setCategories(response.data);
         } catch (error) {
           console.error("Error fetching categories:", error);
@@ -122,7 +115,6 @@ const UpdateEducationalContent = ({ params }) => {
       };
 
       fetchCategories();
-      console.log("the successful state is:", success);
     }
   }, [params.id]);
 
@@ -132,15 +124,12 @@ const UpdateEducationalContent = ({ params }) => {
 
   // Update educational content (calling controller)
   const handleUpdateEduContent = async (updatedEduContent) => {
-    console.log("Update edu is called");
-    console.log("Sending the following data to update:", updatedEduContent);
     try {
       // Ensure all values are simple data types
       const response = await axiosInterceptorInstance.put(
         "/educationalContent/edit",
         updatedEduContent
       );
-      console.log("Educational content updated successfully:", response.data);
       setSuccess(true);
       setError(""); // Now 'setError' is available
 
@@ -156,7 +145,6 @@ const UpdateEducationalContent = ({ params }) => {
     setSuccess(false);
     setTitleCharCount(e.target.value.length);
     setError(""); // Clear error message
-    console.log("New title:", e.target.value);
   };
 
   const handleCategoryChange = (e) => {
@@ -172,7 +160,6 @@ const UpdateEducationalContent = ({ params }) => {
     setSuccess(false);
     setInfoCharCount(e.target.value.length);
     setError(""); // Clear error message
-    console.log("New info:", e.target.value);
   };
 
   // handle image url change
@@ -181,7 +168,6 @@ const UpdateEducationalContent = ({ params }) => {
     setSuccess(false);
     setImageUrlCharCount(e.target.value.length);
     setError(""); // Clear error message
-    console.log("New image url:", e.target.value);
   };
 
   const handleImgTitleChange = (e) => {
@@ -191,23 +177,19 @@ const UpdateEducationalContent = ({ params }) => {
   };
 
   const handleFileChange = (e) => {
-    console.log("File change event:", e);
     const file = e.target.files[0];
     if (file) {
       const reader = new FileReader();
       reader.onload = (event) => {
         let dataURL = event.target.result;
-        console.log("Complete Data URL:", dataURL);
 
         // Extract Base64 Data
         let base64Data = dataURL.split(",")[1];
-        console.log("Base64 Data:", base64Data);
 
         // Use base64Data as needed
-        setNewImageBlob(base64Data); // Assuming you have a state setter like this
+        setNewImageBlob(base64Data);
       };
       reader.readAsDataURL(file);
-      console.log("File:", file);
     }
   };
 
@@ -230,9 +212,6 @@ const UpdateEducationalContent = ({ params }) => {
 
   // Validate the form before submitting
   const validateForm = () => {
-    console.log("Type of category:", typeof category);
-    console.log("Value of category:", category);
-
     if (!title.trim()) {
       setError("Title cannot be empty.");
       return false;
@@ -255,32 +234,13 @@ const UpdateEducationalContent = ({ params }) => {
       return false;
     }
 
-    // if (!imageUrl.trim()) {
-    //   setError("Image URL cannot be empty.");
-    //   return false;
-    // }
-
-    // check image blob
-    // if (!newImageBlob && !imageBlob) {
-    //   setError("Image is required.");
-    //   return false;
-    // }
-
     // Clear any existing errors if all validations pass
     setError("");
     return true;
   };
 
-  // const handleBackClick = () => {
-  //   setSuccess(false); // Reset the success state
-  //   console.log("Back button is clicked");
-
-  //   router.push("/businessUser/educationalContent"); // Navigate back
-  // };
-
   // Form to update educational content
   const handleUpdateClick = async (e) => {
-    console.log("Submit is called");
     e.preventDefault();
     setSuccess(false); // Reset success state here
 
@@ -295,7 +255,6 @@ const UpdateEducationalContent = ({ params }) => {
     const updatedImageBlob = newImageBlob || imageBlob;
 
     try {
-      console.log("Updated category is:", category.id);
       const updatedEduContent = {
         id: educationalContent.id, // Assuming educationalContent.id is the right ID
         active: true,
@@ -310,7 +269,6 @@ const UpdateEducationalContent = ({ params }) => {
 
       await handleUpdateEduContent(updatedEduContent);
       // Consider navigation or success message here
-      // setSuccess(true); // Set success to true on successful update
       setError(""); // Clear any previous errors
     } catch (updateError) {
       setSuccess(false); // Ensure success is false on error
@@ -338,10 +296,7 @@ const UpdateEducationalContent = ({ params }) => {
                     <h1 className="text-3xl lg:text-4xl font-bold leading-tight tracking-tight text-center text-gray-900 mb-8">
                       Update Educational Content
                     </h1>
-                    <form
-                      className="space-y-6 md:space-y-5 lg:space-y-3"
-                      // onSubmit={handleSubmit}
-                    >
+                    <form className="space-y-6 md:space-y-5 lg:space-y-3">
                       {/* TITLE */}
                       <div className="flex flex-col">
                         <label
@@ -378,7 +333,6 @@ const UpdateEducationalContent = ({ params }) => {
                           id="category"
                           name="category"
                           value={category}
-                          // onChange={(e) => setCategory(e.target.value)}
                           onChange={(e) => setCategory(Number(e.target.value))}
                           className="bg-gray-50 border border-gray-300 text-black sm:text-base rounded-lg block w-full p-2.5"
                         >
@@ -413,30 +367,6 @@ const UpdateEducationalContent = ({ params }) => {
                       <span className="text-sm text-gray-600">
                         {infoCharCount}/1000 characters
                       </span>
-
-                      {/* IMAGE URL */}
-                      {/* <div className="flex flex-col">
-                        <label
-                          htmlFor="imageUrl"
-                          className="block text-lg mb-1 font-semibold text-gray-900"
-                        >
-                          Image URL
-                          <span className="text-red-500">*</span>
-                        </label>
-                        <input
-                          type="text"
-                          name="imageUrl"
-                          id="imageUrl"
-                          placeholder="Image URL"
-                          maxLength="255"
-                          value={imageUrl}
-                          onChange={handleImageUrlChange}
-                          className="bg-gray-50 border border-gray-300 text-black sm:text-base rounded-lg block w-full p-2.5"
-                        />
-                        <span className="text-sm text-gray-600">
-                          {imageUrlCharCount}/255 characters
-                        </span>
-                      </div> */}
 
                       {/* IMAGE file */}
                       <div className="flex flex-col">

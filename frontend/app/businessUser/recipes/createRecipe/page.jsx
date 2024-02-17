@@ -92,15 +92,11 @@ const CreateRecipePage = () => {
 
       // Fetch all dietary preferences categories from backend
       const fetchDietaryPreferences = async () => {
-        console.log("Fetching dietary preferences categories...");
         try {
           const response = await axiosInterceptorInstance.get(
             "/category/getAllDietaryPreferences"
           );
-          console.log(
-            "Dietary Preferences Categories Successfully Fetched :  ",
-            response.data
-          );
+          
           setDietaryPreferencesCategory(response.data);
           setIsLoading(false);
         } catch (error) {
@@ -110,15 +106,11 @@ const CreateRecipePage = () => {
 
       // Fetch all allergies categories from backend
       const fetchAllergies = async () => {
-        console.log("Fetching allergies categories...");
         try {
           const response = await axiosInterceptorInstance.get(
             "/category/getAllAllergies"
           );
-          console.log(
-            "Allergies Categories Successfully Fetched :  ",
-            response.data
-          );
+          
           setAllergyCategory(response.data);
         } catch (error) {
           console.log(error);
@@ -127,15 +119,11 @@ const CreateRecipePage = () => {
 
       // Fetch all meal type categories from backend
       const fetchMealTypes = async () => {
-        console.log("Fetching meal type categories...");
         try {
           const response = await axiosInterceptorInstance.get(
             "/category/getAllMealTypes"
           );
-          console.log(
-            "Meal Type Categories Successfully Fetched :  ",
-            response.data
-          );
+         
           setMealTypeCategory(response.data);
         } catch (error) {
           console.log(error);
@@ -211,23 +199,19 @@ const CreateRecipePage = () => {
   };
 
   const handleFileChange = (e) => {
-    console.log("File change event:", e);
     const file = e.target.files[0];
     if (file) {
       const reader = new FileReader();
       reader.onload = (event) => {
         let dataURL = event.target.result;
-        console.log("Complete Data URL:", dataURL);
 
         // Extract Base64 Data
         let base64Data = dataURL.split(",")[1];
-        console.log("Base64 Data:", base64Data);
 
         // Use base64Data as needed
         setNewImageBlob(base64Data); // Assuming you have a state setter like this
       };
       reader.readAsDataURL(file);
-      console.log("File:", file);
     }
   };
 
@@ -250,11 +234,6 @@ const CreateRecipePage = () => {
 
   // Function to validate the form before submission
   const validateForm = () => {
-    // check image blob
-    // if (!newImageBlob) {
-    //   setError("Please upload an image.");
-    //   return false;
-    // }
 
     // Checking only essential fields
     if (
@@ -270,9 +249,6 @@ const CreateRecipePage = () => {
       !sodium.trim() ||
       !imgTitle.trim() ||
       !newImageBlob ||
-      // imgblob cannot be empty
-      // !newImageBlob.trim() ||/ssww
-      // !imageUrl.trim() ||
       ingredientList.some((ingredient) => !ingredient.trim()) ||
       instructionList.some((instruction) => !instruction.trim())
     ) {
@@ -347,12 +323,9 @@ const CreateRecipePage = () => {
       dietaryPreferencesId: parseInt(dietaryPreference),
       mealTypeId: parseInt(mealType),
       allergies: allergyRestriction.map((id) => ({ id })),
-      // img: imageUrl,
       imgBlob: newImageBlob, // Use updated image blob
       imgTitle: imgTitle, // Retrieved from state
     };
-
-    console.log("The recipe data from the form : ", recipeData);
 
     try {
       // Send POST request
@@ -360,7 +333,6 @@ const CreateRecipePage = () => {
         "/recipe/add",
         recipeData
       );
-      console.log("Recipe Created", response.data);
 
       // Set success message and clear any existing error messages
       setSuccess("Recipe created successfully!");
@@ -394,7 +366,6 @@ const CreateRecipePage = () => {
       setSodium("");
       setImageUrl("");
       setImageUrlCharCount(0);
-      // setImageTitle("");
       setImgTitle("");
       setIngredientList([""]);
       setInstructionList([""]);
@@ -402,7 +373,6 @@ const CreateRecipePage = () => {
       setMealType("");
       setAllergyRestriction([]);
     } catch (error) {
-      // console.error("Error creating recipe", error);
       console.log(error.message);
       setError("Failed to create recipe. ");
       setSuccess(""); // Clear any existing success message

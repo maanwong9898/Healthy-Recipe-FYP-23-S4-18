@@ -8,7 +8,6 @@ import SecureStorage from "react-secure-storage";
 import BusinessUserNavBar from "../../../components/navigation/businessUserNavBar";
 
 // router path for this page: /businessUser/myAccount/viewAccount
-// things to do:
 
 const MyAccount = () => {
   const router = useRouter();
@@ -124,15 +123,12 @@ const MyAccount = () => {
           healthGoal,
         };
 
-        console.log("Updated data:", updatedData);
-
         const response = await axiosInterceptorInstance.post(
           "/register/dashboardSet", // Adjust URL if needed
           updatedData,
           config
         );
 
-        console.log("Account updated:", response.data);
         setSuccess("Account updated successfully!");
       } catch (error) {
         console.error("Error updating account", error);

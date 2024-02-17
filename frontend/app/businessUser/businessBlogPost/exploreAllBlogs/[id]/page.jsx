@@ -16,14 +16,12 @@ const fetchBlogPostById = async (postId) => {
     postId = postId;
 
     const response = await axiosInterceptorInstance.get(`/blog/get/${postId}`);
-    console.log("Fetched blog post data is:", response.data);
 
     if (!response.data) {
       console.error(`Blog post with ID ${postId} not found`);
       throw new Error(`Blog post with ID ${postId} not found`);
     }
 
-    console.log("try blog post by id");
     // Assuming the response contains the blog post directly
     const blogPost = response.data;
 
@@ -81,15 +79,11 @@ const ViewBusinessBlogPost = ({ params }) => {
       const response = await axiosInterceptorInstance.get(
         `/blog/rating/getBlog?blogId=${blogId}`
       );
-      console.log("All ratings response data:", response.data);
 
       // Assuming response.data is the array of reviews for the given blogId
       setReviewsAndRatings(response.data);
 
-      // Optionally, log each review to the console
-      response.data.forEach((reviewData, index) => {
-        console.log(`Review ${index + 1}:`, reviewData.review);
-      });
+     
     } catch (error) {
       console.error("Failed to fetch ratings and reviews:", error);
     }

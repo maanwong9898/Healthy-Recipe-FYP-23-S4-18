@@ -6,10 +6,7 @@ import axiosInterceptorInstance from "../../../axiosInterceptorInstance.js";
 import SecureStorage from "react-secure-storage";
 import BusinessUserNavBar from "../../../components/navigation/businessUserNavBar";
 
-// https://uiwjs.github.io/react-md-editor/
-
 // router path: /businessUser/businessBlogPost/createBusinessBlogPost
-// this is the page to create business blog post according to user story
 
 const CreateBusinessBlogPostPage = () => {
   const router = useRouter();
@@ -92,12 +89,10 @@ const CreateBusinessBlogPostPage = () => {
 
       // Fetch all business blog categories from backend
       const fetchCategories = async () => {
-        console.log("Fetching categories...");
         try {
           const response = await axiosInterceptorInstance.get(
             "category/getAllBlogPostCategories"
           );
-          console.log("Categories fetched:", response.data);
           setCategories(response.data);
           setIsLoading(false);
         } catch (error) {
@@ -114,23 +109,19 @@ const CreateBusinessBlogPostPage = () => {
   }
 
   const handleFileChange = (e) => {
-    console.log("File change event:", e);
     const file = e.target.files[0];
     if (file) {
       const reader = new FileReader();
       reader.onload = (event) => {
         let dataURL = event.target.result;
-        console.log("Complete Data URL:", dataURL);
 
         // Extract Base64 Data
         let base64Data = dataURL.split(",")[1];
-        console.log("Base64 Data:", base64Data);
 
         // Use base64Data as needed
-        setNewImageBlob(base64Data); // Assuming you have a state setter like this
+        setNewImageBlob(base64Data);
       };
       reader.readAsDataURL(file);
-      console.log("File:", file);
     }
   };
 
@@ -153,9 +144,6 @@ const CreateBusinessBlogPostPage = () => {
 
   // Validate the form before submitting
   const validateForm = () => {
-    console.log("Type of category:", typeof category);
-    console.log("Value of category:", category);
-
     if (!title.trim()) {
       setError("Title cannot be empty.");
       return false;
@@ -171,11 +159,7 @@ const CreateBusinessBlogPostPage = () => {
       setError("Info cannot be empty.");
       return false;
     }
-    // if (!imageUrl.trim()) {
-    //   setError("Image URL cannot be empty.");
-    //   return false;
-    // }
-    // check if image title is empty
+
     if (!imgTitle.trim()) {
       setError("Image title cannot be empty.");
       return false;
@@ -198,15 +182,11 @@ const CreateBusinessBlogPostPage = () => {
       // Stop the form submission if validation fails
       return;
     }
-
-    console.log("Create method called.");
     // Check if any of the required fields are empty
     if (!title.trim() || !info.trim()) {
       setError("Please fill in all the required fields.");
       return;
     }
-
-    console.log("category id:", category);
 
     const userId = SecureStorage.getItem("userId"); // Retrieve user ID from SecureStorage
 
@@ -221,14 +201,11 @@ const CreateBusinessBlogPostPage = () => {
       imgTitle: imgTitle, // Retrieved from state
     };
 
-    console.log("Blog post data for creation:", blogPostData);
-
     try {
       const response = await axiosInterceptorInstance.post(
         "/blog/add",
         blogPostData
       );
-      console.log("Blog post created successfully:", response.data);
 
       // Consider navigation or success message here
       setSuccess(true); // Set success to true on successful update
@@ -308,7 +285,6 @@ const CreateBusinessBlogPostPage = () => {
                         </span>
                       </div>
                       {/* CATEGORY */}
-                      {/* CATEGORY DROPDOWN */}
                       <div className="flex flex-col">
                         <label
                           htmlFor="category"
@@ -321,7 +297,6 @@ const CreateBusinessBlogPostPage = () => {
                           id="category"
                           name="category"
                           value={category}
-                          // onChange={(e) => setCategory(e.target.value)}
                           onChange={(e) => setCategory(Number(e.target.value))}
                           className="bg-gray-50 border border-gray-300 text-black sm:text-base rounded-lg block w-full p-2.5"
                         >
@@ -356,28 +331,6 @@ const CreateBusinessBlogPostPage = () => {
                         </span>
                       </div>
 
-                      {/* IMAGE URL */}
-                      {/* <div className="flex flex-col">
-                        <label
-                          htmlFor="imageUrl"
-                          className="block text-lg mb-1 font-semibold text-gray-900"
-                        >
-                          Image URL<span className="text-red-500">*</span>
-                        </label>
-                        <input
-                          type="text"
-                          id="imageUrl"
-                          name="imageUrl"
-                          placeholder="Image URL (Max 255 characters)"
-                          maxLength="255"
-                          value={imageUrl}
-                          onChange={handleImageUrlChange}
-                          className="bg-gray-50 border border-gray-300 text-black sm:text-base rounded-lg block w-full p-2.5"
-                        />
-                        <span className="text-sm text-gray-600">
-                          {imageUrlCharCount}/255 characters
-                        </span>
-                      </div> */}
                       {/* IMAGE file */}
                       <div className="flex flex-col">
                         <label

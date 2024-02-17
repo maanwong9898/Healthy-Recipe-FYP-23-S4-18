@@ -55,9 +55,6 @@ const businessRegistration = () => {
       return;
     }
 
-
-    console.log("Creating business account...");
-
     const formData = {
       fullName: fullName,
       username: username,
@@ -69,7 +66,6 @@ const businessRegistration = () => {
       postalCode: postalCode,
       uen: uen,
     };
-    console.log(formData);
 
     try {
       const response = await axiosInterceptorInstance.post(
@@ -81,7 +77,6 @@ const businessRegistration = () => {
         "Account created successfully! You will be notified once your account has been verified."
       );
 
-      console.log("Account created successfully:", response.data);
       // Clear all fields after submitting form
       setFullName("");
       setUsername("");

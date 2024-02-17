@@ -57,7 +57,6 @@ const NutritionistRegistration = () => {
       return;
     }
 
-    console.log("Creating account...");
     const nutritionistData = {
       password: password,
       username: username,
@@ -69,14 +68,12 @@ const NutritionistRegistration = () => {
       postalCode: postalCode,
       imgBlob: newImageBlob, // Use updated image blob
     };
-    console.log(nutritionistData);
 
     try {
       const response = await axiosInterceptorInstance.post(
         "/register/nut",
         nutritionistData
       );
-      console.log("Account successfully:", response.data);
 
       setSuccess(
         "Account created successfully! You will be notified once your account has been verified."
@@ -110,23 +107,19 @@ const NutritionistRegistration = () => {
   };
 
   const handleFileChange = (e) => {
-    console.log("File change event:", e);
     const file = e.target.files[0];
     if (file) {
       const reader = new FileReader();
       reader.onload = (event) => {
         let dataURL = event.target.result;
-        console.log("Complete Data URL:", dataURL);
 
         // Extract Base64 Data
         let base64Data = dataURL.split(",")[1];
-        console.log("Base64 Data:", base64Data);
 
         // Use base64Data as needed
         setNewImageBlob(base64Data); // Assuming you have a state setter like this
       };
       reader.readAsDataURL(file);
-      console.log("File:", file);
     }
   };
 

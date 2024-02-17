@@ -48,7 +48,6 @@ const userRegistration = () => {
   useEffect(() => {
     // Fetch all health goal from backend
     const fetchHealthGoals = async () => {
-      console.log("Fetching health goals...");
       try {
         const response = await axiosInterceptorInstance.get(
           "/category/getAllHealthGoals"
@@ -61,7 +60,6 @@ const userRegistration = () => {
 
     // Fetch all dietary preferences categories from backend
     const fetchDietaryPreferences = async () => {
-      console.log("Fetching dietary preferences...");
       try {
         const response = await axiosInterceptorInstance.get(
           "/category/getAllDietaryPreferences"
@@ -74,7 +72,6 @@ const userRegistration = () => {
 
     // Fetch all allergies categories from backend
     const fetchAllergies = async () => {
-      console.log("Fetching allergies...");
       try {
         const response = await axiosInterceptorInstance.get(
           "/category/getAllAllergies"
@@ -137,11 +134,6 @@ const userRegistration = () => {
       return;
     }
 
-    console.log("Health goal selected:", healthGoals);
-    console.log("Dietary preference selected:", dietaryPreference);
-    console.log("Allergies selected:", allergyRestriction);
-    console.log("Creating new user account...");
-
     const formData = {
       fullName: fullName,
       username: username,
@@ -153,16 +145,12 @@ const userRegistration = () => {
       healthGoalId: healthGoals,
       weight: weight,
     };
-    console.log(formData);
 
     try {
       const response = await axiosInterceptorInstance.post(
         "/register/user",
         formData
       );
-      console.log("Account successfully:", response.data);
-
-      console.log("user id is:", response.data.id);
 
       // Check if weight is provided and send it to the setWeight endpoint
       if (weight) {
@@ -182,7 +170,6 @@ const userRegistration = () => {
               "registeredUsers/setWeight",
               weightData
             );
-            console.log("Weight set successfully", weightResponse.data);
           } catch (weightError) {
             console.error("Invalid weight input");
             setError("Invalid weight input. Please enter a valid weight.");

@@ -1,22 +1,14 @@
 # FYP-23-S4-18
 
-java version "17.0.1" 2021-10-19 LTS
-Java(TM) SE Runtime Environment (build 17.0.1+12-LTS-39)
-
-mysql  Ver 8.2.0 for macos13.5 on arm64 (Homebrew)
-
-Frontend:
-	cd into frontend folder and run 'npm i' command in terminal to download all of the required modules
-
-	run 'npm run dev' command  in terminal to turnon frontend locally, it'd points to the port, usually http://localhost:3000
-
-Prerequisites to setup backend:
-	made sure MySQL is running and create a database 'fyp'
-
-	Then once we run the java file it should automatically create database tables
-
-	Then we execute sqls/fill.sql to populate the database and run postfill.sql
-
-		As we were trying to make sure the allergies and useraccounts' password to be hashed, the user account thats created via SQL would have plain text passwords, which is something that needs to be overwritten using postfill.sql, that applies to allergies as well.
-
+This app was developed using Java version 17.0.1 (LTS) released on October 19, 2021, and the Java(TM) SE Runtime Environment is built with version 17.0.1+12-LTS-39. The MySQL version employed is 8.2.0 for macOS 13.5 on arm64 architecture, installed via Homebrew.
  
+For setting up the frontend:  
+1. Navigate to the 'frontend' folder using the 'cd' command and execute 'npm i' in the terminal to download all the required modules. 
+2. Run 'npm run dev' in the terminal to locally activate the frontend, typically accessible at http://localhost:3000.
+
+For configuring the backend: 
+1. Ensure that MySQL is running and create a database named 'fyp.' 
+2. Upon executing the Java file, it should automatically generate the necessary database tables. 
+3. Execute 'sqls/fill.sql' to populate the database and run 'postfill.sql.'
+
+Note: To address the security concern of plain text passwords in user accounts and unhashed allergies, use 'postfill.sql' to overwrite these values, especially applicable to user accounts and allergies created through SQL, ensuring passwords are hashed.

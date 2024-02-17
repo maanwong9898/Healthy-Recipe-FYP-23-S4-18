@@ -23,7 +23,7 @@ const fetchRecipes = async () => {
   try {
     const response = await axiosInterceptorInstance.get("/recipe/get");
 
-    // Filter active blog posts
+    // Filter active recipes
     const filteredData = response.data.filter(
       (recipe) => recipe.active === true
     );

@@ -11,8 +11,6 @@ import NutritionistNavBar from "../../../components/navigation/nutritionistNavBa
 
 //router path for this page: /nutritionist/myAccount/viewAccount
 
-// Need to add the image preview for actual certificate upload during registration
-
 const MyAccount = () => {
   const router = useRouter();
   const [userAccount, setUserAccount] = useState("");
@@ -75,13 +73,11 @@ const MyAccount = () => {
           setHealthGoal(userData.healthGoal || null);
 
           if (userData.imgBlob) {
-            console.log("Image blob available");
-            console.log("Image blob:", userData.imgBlob);
+          
             // Directly use base64 string as the image source
             setImageBlob(userData.imgBlob);
           } else {
-            console.log("No image blob available");
-            // Handle the absence of an image blob appropriately
+            
           }
         } catch (error) {
           console.error("Error fetching user data", error);
@@ -136,15 +132,12 @@ const MyAccount = () => {
           imgBlob: updatedImageBlob, // Use updated image blob
         };
 
-        console.log("Updated data:", updatedData);
-
         const response = await axiosInterceptorInstance.post(
           "/register/dashboardSet", // Adjust URL if needed
           updatedData,
           config
         );
 
-        console.log("Account updated:", response.data);
         setSuccess("Account updated successfully!");
         setTimeout(() => {
           setSuccess("");
@@ -184,23 +177,19 @@ const MyAccount = () => {
   };
 
   const handleFileChange = (e) => {
-    console.log("File change event:", e);
     const file = e.target.files[0];
     if (file) {
       const reader = new FileReader();
       reader.onload = (event) => {
         let dataURL = event.target.result;
-        console.log("Complete Data URL:", dataURL);
 
         // Extract Base64 Data
         let base64Data = dataURL.split(",")[1];
-        console.log("Base64 Data:", base64Data);
 
         // Use base64Data as needed
         setNewImageBlob(base64Data); // Assuming you have a state setter like this
       };
       reader.readAsDataURL(file);
-      console.log("File:", file);
     }
   };
 
@@ -441,39 +430,8 @@ const MyAccount = () => {
                               height={300}
                               className="rounded-lg h-auto w-full lg:max-w-lg opacity-100 transition duration-500 ease-in-out transform"
                             />
-                            {/* <div className="absolute top-0 left-0 w-full h-full flex items-center justify-center opacity-0 transition duration-500 ease-in-out group-hover:opacity-100">
-                              <button
-                                onClick={handleDownloadCertificate}
-                                className="bg-gray-600 text-white py-3 px-3 rounded-full opacity-80"
-                              >
-                                <DownloadIcon />
-                              </button>
-                            </div> */}
                           </div>
                         </div>
-
-                        {/* To add during testing, remove in final source code  */}
-                        {/* IMAGE file */}
-                        {/* <div className="flex flex-col">
-                          <label
-                            htmlFor="image"
-                            className="block text-xl mb-1 font-bold text-gray-900"
-                          >
-                            Image<span className="text-red-500">*</span>
-                          </label>
-                          <input
-                            type="file"
-                            id="image"
-                            name="image"
-                            accept="image/*"
-                            onChange={handleFileChange}
-                            className="border-solid mt-3 rounded-lg bg-white border border-gray-400 w-full"
-                          />
-                        </div>
-
-                        <div className="mt-2 flex flex-row space-x-4">
-                          {renderImage()}
-                        </div> */}
 
                         {error && (
                           <p className="text-red-500 text-base font-medium">

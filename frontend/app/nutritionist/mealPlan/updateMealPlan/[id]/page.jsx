@@ -9,8 +9,6 @@ import RemoveCircleIcon from "@mui/icons-material/RemoveCircle";
 import SecureStorage from "react-secure-storage";
 import NutritionistNavBar from "../../../../components/navigation/nutritionistNavBar";
 
-// https://uiwjs.github.io/react-md-editor/
-
 // router path: /nutritionist/mealPlan/updateMealPlan/[id]
 // this is the page to update a meal plan
 
@@ -22,7 +20,6 @@ const fetchMealPlanById = async (mealPlanId) => {
     const response = await axiosInterceptorInstance.get(
       `/mealPlan/get/${mealPlanId}`
     );
-    console.log("Fetched meal plan data is:", response.data);
 
     if (!response.data) {
       console.error(`Meal plan with ID ${mealPlanId} not found`);
@@ -91,7 +88,6 @@ const UpdateMealPlan = ({ params }) => {
     ) {
       // clear the secure storage
       SecureStorage.clear();
-      console.log("Redirecting to home page");
       router.push("/");
     } else {
       setIsChecking(false);
@@ -100,7 +96,6 @@ const UpdateMealPlan = ({ params }) => {
       fetchMealPlanById(mealPlanId)
         .then((data) => {
           setMealPlan(data);
-          console.log("The displayed particular meal plan is:", data);
 
           // Set each piece of state with the corresponding data
           setTitle(data.title || "Not Specified");
@@ -120,19 +115,13 @@ const UpdateMealPlan = ({ params }) => {
           setImageUrlCharCount(data.img ? data.img.length : 0); // Set image URL character count
 
           if (data.imgBlob) {
-            console.log("Image blob available");
-            console.log("Image blob:", data.imgBlob);
             // Directly use base64 string as the image source
             setImageBlob(data.imgBlob);
           } else {
-            console.log("No image blob available");
-            // Handle the absence of an image blob appropriately
           }
 
-          console.log("the displayed recipes are:", data.recipes);
           // Inside the fetchMealPlanById function after receiving response
           if (data.recipes) {
-            console.log("Recipes found:", data.recipes);
             setSelectedRecipes(data.recipes); // assuming response.data.recipes is an array of recipe objects
           }
 
@@ -144,12 +133,10 @@ const UpdateMealPlan = ({ params }) => {
 
       // Fetch all health goal categories from backend
       const fetchCategories = async () => {
-        console.log("Fetching categories...");
         try {
           const response = await axiosInterceptorInstance.get(
             "category/getAllHealthGoals"
           );
-          console.log("Categories fetched:", response.data);
           setCategories(response.data);
         } catch (error) {
           console.error("Error fetching categories:", error);
@@ -166,14 +153,12 @@ const UpdateMealPlan = ({ params }) => {
 
   // Update meal plan (calling controller)
   const updateMealPlan = async (updatedMealPlan) => {
-    console.log("Sending the following data to update:", updatedMealPlan);
     try {
       // Ensure all values are simple data types
       const response = await axiosInterceptorInstance.put(
         "/mealPlan/update",
         updatedMealPlan
       );
-      console.log("Meal plan updated successfully:", response.data);
       setSuccess(true);
       setError(""); // Now 'setError' is available
 
@@ -286,23 +271,19 @@ const UpdateMealPlan = ({ params }) => {
   };
 
   const handleFileChange = (e) => {
-    console.log("File change event:", e);
     const file = e.target.files[0];
     if (file) {
       const reader = new FileReader();
       reader.onload = (event) => {
         let dataURL = event.target.result;
-        console.log("Complete Data URL:", dataURL);
 
         // Extract Base64 Data
         let base64Data = dataURL.split(",")[1];
-        console.log("Base64 Data:", base64Data);
 
         // Use base64Data as needed
         setNewImageBlob(base64Data); // Assuming you have a state setter like this
       };
       reader.readAsDataURL(file);
-      console.log("File:", file);
     }
   };
 
@@ -325,9 +306,6 @@ const UpdateMealPlan = ({ params }) => {
 
   // Validate the form before submitting
   const validateForm = () => {
-    console.log("Type of category:", typeof category);
-    console.log("Value of category:", category);
-
     if (!title.trim()) {
       setError("Title cannot be empty.");
       return false;
@@ -357,23 +335,11 @@ const UpdateMealPlan = ({ params }) => {
       return false;
     }
 
-    // // check if image url is empty
-    // if (!imageUrl.trim()) {
-    //   setError("Image URL cannot be empty.");
-    //   return false;
-    // }
-
     // check if image title is empty
     if (!imgTitle.trim()) {
       setError("Image title cannot be empty.");
       return false;
     }
-
-    // check image blob
-    // if (!newImageBlob && !imageBlob) {
-    //   setError("Image is required.");
-    //   return false;
-    // }
 
     // Clear any existing errors if all validations pass
     setError("");
@@ -390,14 +356,12 @@ const UpdateMealPlan = ({ params }) => {
       return;
     }
 
-    // const userId = localStorage.getItem("userId");
     const userId = SecureStorage.getItem("userId");
 
     // Use newImageBlob if available, otherwise fallback to original imageBlob
     const updatedImageBlob = newImageBlob || imageBlob;
 
     try {
-      console.log("Updated category is:", category.id);
       const updatedMealPlan = {
         id: mealPlan.id, // Assuming mealPlan.id is the right ID
         active: true,
@@ -415,7 +379,6 @@ const UpdateMealPlan = ({ params }) => {
 
       await updateMealPlan(updatedMealPlan);
       // Consider navigation or success message here
-      // setSuccess(true); // Set success to true on successful update
       setError(""); // Clear any previous errors
     } catch (updateError) {
       setSuccess(false); // Ensure success is false on error

@@ -20,11 +20,10 @@ const fetchMealPlanById = async (mealPlanId) => {
     const response = await axiosInterceptorInstance.get(
       `/mealPlan/get/${mealPlanId}`
     );
-    console.log("Fetched meal plan data is:", response.data);
 
     if (!response.data) {
-      console.error(`Meal plan with ID ${mealPlanId} not found`);
-      throw new Error(`Meal plan with ID ${mealPlanId} not found`);
+      console.error(`Meal plan not found`);
+      throw new Error(`Meal plan not found`);
     }
 
     // Assuming the response contains the meal plan directly
@@ -148,15 +147,10 @@ const ViewMealPlan = ({ params }) => {
       const response = await axiosInterceptorInstance.get(
         `/mealPlan/rating/getMealPlan?mealPlanId=${mealPlanId}`
       );
-      console.log("All ratings response data:", response.data);
 
       // Assuming response.data is the array of reviews for the given meal plan id
       setReviewsAndRatings(response.data);
 
-      // Optionally, log each review to the console
-      response.data.forEach((reviewData, index) => {
-        console.log(`Review ${index + 1}:`, reviewData.review);
-      });
     } catch (error) {
       console.error("Failed to fetch ratings and reviews:", error);
     }
@@ -164,7 +158,6 @@ const ViewMealPlan = ({ params }) => {
 
   // this function is to update particular meal plan
   const handleUpdateMealPlan = (id) => {
-    console.log("Updating meal plan with id:", id);
 
     // Redirect to the correct route
     let routePath = `/nutritionist/mealPlan/updateMealPlan/${id}`;
@@ -173,7 +166,6 @@ const ViewMealPlan = ({ params }) => {
   };
 
   const handleViewRecipe = (id) => {
-    console.log("Viewing recipe with id:", id);
 
     // Redirect to the correct route
     let routePath = `/recipes/viewRecipe/${id}`;

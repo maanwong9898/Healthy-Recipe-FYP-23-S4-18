@@ -20,7 +20,6 @@ const fetchMealPlanCount = async () => {
     const response = await axiosInterceptorInstance.get(
       "/nutritionist/findMealPlanCountById/" + userID
     );
-    console.log("Total Meal Plan Count for this user:", response.data);
     return response.data;
   } catch (error) {
     console.error("Error fetching meal plans:", error);
@@ -34,7 +33,6 @@ const fetchRecipesCount = async () => {
     const response = await axiosInterceptorInstance.get(
       "/nutritionist/findRecipeCount"
     );
-    console.log("Total Recipe Count:", response.data);
     return response.data;
   } catch (error) {
     console.error("Error fetching recipes:", error);
@@ -69,7 +67,6 @@ const fetchDietaryPreferences = async () => {
     const response = await axiosInterceptorInstance.get(
       "/registeredUsers/getDemo"
     );
-    console.log("Fetched dietary preferences:", response.data);
     return response.data;
   } catch (error) {
     console.error("Error fetching dietary preferences:", error);
@@ -100,7 +97,6 @@ const NutritionistHomePage = () => {
     ) {
       // clear the secure storage
       SecureStorage.clear();
-      console.log("Redirecting to home page");
       router.push("/");
     } else {
       setIsChecking(false);

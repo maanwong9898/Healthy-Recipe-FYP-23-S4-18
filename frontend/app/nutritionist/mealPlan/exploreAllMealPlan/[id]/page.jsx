@@ -10,7 +10,7 @@ import NutritionistNavBar from "../../../../components/navigation/nutritionistNa
 import SecureStorage from "react-secure-storage";
 
 // this is to view particular meal plan
-// router path: /mealPlan/viewMealPlan/[id]
+// router path: /nutritionist/mealPlan/viewMealPlan/[id]
 
 const fetchMealPlanById = async (mealPlanId) => {
   try {
@@ -20,7 +20,6 @@ const fetchMealPlanById = async (mealPlanId) => {
     const response = await axiosInterceptorInstance.get(
       `/mealPlan/get/${mealPlanId}`
     );
-    console.log("Fetched meal plan data is:", response.data);
 
     if (!response.data) {
       console.error(`Meal plan with ID ${mealPlanId} not found`);
@@ -148,25 +147,17 @@ const ViewMealPlan = ({ params }) => {
       const response = await axiosInterceptorInstance.get(
         `/mealPlan/rating/getMealPlan?mealPlanId=${mealPlanId}`
       );
-      console.log("All ratings response data:", response.data);
 
       // Assuming response.data is the array of reviews for the given meal plan id
       setReviewsAndRatings(response.data);
-
-      // Optionally, log each review to the console
-      response.data.forEach((reviewData, index) => {
-        console.log(`Review ${index + 1}:`, reviewData.review);
-      });
     } catch (error) {
       console.error("Failed to fetch ratings and reviews:", error);
     }
   };
 
   const handleViewRecipe = (id) => {
-    console.log("Viewing recipe with id:", id);
-
     // Redirect to the correct route
-    let routePath = `/recipes/viewRecipe/${id}`;
+    let routePath = `/nutritionist/mealPlan/exploreAllMealPlan/recipes/${id}`;
 
     router.push(routePath);
   };

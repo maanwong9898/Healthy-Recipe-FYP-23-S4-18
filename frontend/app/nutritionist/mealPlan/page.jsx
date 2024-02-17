@@ -29,8 +29,6 @@ const fetchMealPlans = async () => {
       "/mealPlan/findByUserId/" + userID
     );
 
-    console.log("All meal plans belongs to this user:", response.data);
-
     return response.data;
   } catch (error) {
     console.error("Failed to fetch meal plans:", error);
@@ -44,12 +42,7 @@ const fetchMealPlanAverage = async (mealPlanId) => {
     const response = await axiosInterceptorInstance.get(
       `/mealPlan/getAverage/${mealPlanId}`
     );
-    console.log(
-      "Average rating for meal plan",
-      mealPlanId,
-      "is:",
-      response.data
-    );
+
     return response.data; // Assuming this returns the average data for the meal plan
   } catch (error) {
     console.error(
@@ -91,7 +84,6 @@ const MyMealPlan = () => {
     ) {
       // clear the secure storage
       SecureStorage.clear();
-      console.log("Redirecting to home page");
       router.push("/");
     } else {
       setIsChecking(false);
@@ -105,9 +97,7 @@ const MyMealPlan = () => {
               return { ...mealPlan, average }; // Augment each meal plan with its average
             })
           );
-          console.log("mealPlan with average:", mealPlansWithAverage);
           setMealPlans(mealPlansWithAverage);
-          // ... [sorting and other logic]
         } catch (error) {
           console.error("Error while fetching data:", error);
         }
@@ -115,12 +105,10 @@ const MyMealPlan = () => {
 
       // Fetch all meal plan categories from backend
       const fetchCategories = async () => {
-        console.log("Fetching meal plan categories...");
         try {
           const response = await axiosInterceptorInstance.get(
             "category/getAllHealthGoals"
           );
-          console.log("Categories fetched:", response.data);
           setCategories(response.data);
         } catch (error) {
           console.error("Error fetching categories:", error);
@@ -261,7 +249,6 @@ const MyMealPlan = () => {
   // Implement handleViewMealPlan and handleUpdateMealPlan as needed
   // this function is to view particular meal plan
   const handleViewMealPlan = (id) => {
-    console.log("Viewing meal plan with id:", id);
 
     //Redirect to the correct route
     let routePath = `/nutritionist/mealPlan/viewMealPlan/${id}`;
@@ -271,7 +258,6 @@ const MyMealPlan = () => {
 
   // this function is to update particular meal plan
   const handleUpdateMealPlan = (id) => {
-    console.log("Updating meal plan with id:", id);
 
     // Redirect to the correct route
     let routePath = `/nutritionist/mealPlan/updateMealPlan/${id}`;
@@ -315,13 +301,11 @@ const MyMealPlan = () => {
       const response = await axiosInterceptorInstance.delete(
         `/mealPlan/delete/${id}`
       );
-      console.log("Meal plan deleted:", response.data);
 
       // Update UI after delete
       setMealPlans(mealPlans.filter((mealPlan) => mealPlan.id !== id));
     } catch (error) {
       console.error("Error deleting meal plan:", error);
-      // Handle error, maybe show a message to the user
     }
   };
 

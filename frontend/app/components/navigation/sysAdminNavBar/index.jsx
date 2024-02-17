@@ -127,13 +127,8 @@ const SysAdminNavBar = () => {
 
   //Logout handler
   const confirmAndLogout = () => {
-    console.log("logout");
 
     SecureStorage.clear();
-    // check what is the local storage
-    console.log(SecureStorage.getItem("token"));
-    console.log(SecureStorage.getItem("role"));
-    console.log(SecureStorage.getItem("userId"));
 
     // Redirect to the homepage
     router.push("/");

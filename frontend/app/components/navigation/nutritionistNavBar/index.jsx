@@ -84,14 +84,8 @@ const NutritionistNavBar = () => {
 
   //Logout handler
   const confirmAndLogout = () => {
-    console.log("logout");
     SecureStorage.clear();
-    // check what is the local storage
-    console.log(SecureStorage.getItem("token"));
-    console.log(SecureStorage.getItem("role"));
-    console.log(SecureStorage.getItem("userId"));
 
-    console.log("Redirecting to home page");
     router.push("/");
   };
 

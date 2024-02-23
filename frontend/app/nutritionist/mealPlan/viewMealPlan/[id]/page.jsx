@@ -150,7 +150,6 @@ const ViewMealPlan = ({ params }) => {
 
       // Assuming response.data is the array of reviews for the given meal plan id
       setReviewsAndRatings(response.data);
-
     } catch (error) {
       console.error("Failed to fetch ratings and reviews:", error);
     }
@@ -158,7 +157,6 @@ const ViewMealPlan = ({ params }) => {
 
   // this function is to update particular meal plan
   const handleUpdateMealPlan = (id) => {
-
     // Redirect to the correct route
     let routePath = `/nutritionist/mealPlan/updateMealPlan/${id}`;
 
@@ -166,9 +164,8 @@ const ViewMealPlan = ({ params }) => {
   };
 
   const handleViewRecipe = (id) => {
-
     // Redirect to the correct route
-    let routePath = `/recipes/viewRecipe/${id}`;
+    let routePath = `/nutritionist/mealPlan/exploreAllMealPlan/recipes/${id}`;
 
     router.push(routePath);
   };
